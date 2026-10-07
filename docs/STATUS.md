@@ -4,15 +4,20 @@
 a rule or a plan. If a document sounds as if something were built, and this file says it is not,
 this file is right and the other document has a defect.
 
-**As of 2026-10-07 (foundation, architecture and core-pipeline run): there is no production
-pipeline.** Nothing discovers or fetches: there is no network code. No outlet is registered. No
-storage root is configured. No corpus material has been acquired, preserved or extracted by
-COPREPAN 3.0. Nothing is validated. Nothing is activated.
+**As of 2026-10-07 (discovery and acquisition-readiness run): the acquisition pipeline is built
+and tested offline, and it is not activated.** Nothing has been requested from any real site. No
+outlet is registered. No storage root is configured. No corpus material has been acquired,
+preserved or extracted by COPREPAN 3.0. Nothing is validated. Nothing is activated.
 
-What exists beyond documents: the core primitives of Foundation Core I, and one core section of
-the pipeline — fetch record → sealed pack → preservation → document identity → extraction →
-document version — that runs end to end **on recorded exchanges of synthetic fixtures, on
-temporary directories** (§3). It has never seen a real outlet, a real page or a real storage root.
+**External acquisition is impossible as committed**, by three independent, tested refusals: the
+acquisition policy is `NOT_DECIDED`, the crawler identity is `not_configured`, and no outlet is
+`registered`. Removing them is the operator's act, not an agent's (§5).
+
+What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
+HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
+document version → replay, exercised end to end **against an HTTP server on a loopback address
+serving synthetic documents, on temporary directories** (§3). It has never seen a real outlet, a
+real page, a TLS connection or a real storage root.
 
 ---
 
@@ -32,8 +37,8 @@ temporary directories** (§3). It has never seen a real outlet, a real page or a
 | # | Stage | Implementation | Validation | Activation |
 |---|---|---|---|---|
 | 1 | outlet registry | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
-| 2 | discovery | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
-| 3 | fetch | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
+| 2 | discovery | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
+| 3 | fetch | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 4 | raw preservation | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 5 | document identity | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 6 | extraction | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
@@ -44,17 +49,19 @@ temporary directories** (§3). It has never seen a real outlet, a real page or a
 | 11 | release | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 12 | cross-corpus contract | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 
-What `PARTIAL` means for the four stages, exactly:
+What `PARTIAL` means for the six stages, exactly:
 
 | Stage | Exists | Does not exist |
 |---|---|---|
-| outlet registry | schema `coprepan-outlet-registry/v1`, validator, lookup; the legacy import, executed on a copy of the legacy database: **82 proposed outlets, 352 proposed channels** | **any registered outlet**; any attribute beyond what the legacy database held (type, group, time zone, URL rules); the human review of the proposal |
-| raw preservation | fetch record; WARC pack writer, seal, derived and bound index, fixity check, torn-tail quarantine; state machine and ledger; fail-closed root resolution; promotion; outage spool — on temporary directories, with recorded exchanges | a fetcher (stages 2–3); channel documents; scheduled fixity, reconciliation, backup; conformance of the pack against an independent WARC reader; a run against a real target; a configured root |
+| outlet registry | schema `coprepan-outlet-registry/v1`, validator, lookup; the legacy import, executed on a copy of the legacy database: **82 proposed outlets, 352 proposed channels**; a generated review package with a uniform id convention | **any registered outlet**; any attribute beyond what the legacy database held (type, group, time zone, URL rules); the human review |
+| discovery | parsers for RSS, Atom, sitemap `urlset`, sitemap index, HTML listing; discovery events and candidates as append-only evidence; bounded expansion with cycle handling — on synthetic channel documents | anything read from a real outlet; channel health; a re-fetch schedule; per-outlet filters on what is worth fetching |
+| fetch | HTTP transport (`http.client`): redirects, limits, explicit retries, `Retry-After`, pacing; policy gate in front of every request; robots evidence; crawler identity; request log — against a loopback server | **any external request**; TLS exercised; conditional requests; concurrency; behaviour against real servers and bot protection |
+| raw preservation | fetch record; WARC pack writer, seal, derived and bound index, fixity check, torn-tail quarantine; state machine and ledger; fail-closed root resolution; promotion; outage spool; a preservation-target readiness check; packs read by an independent WARC reader (warcio 1.7.5, written subset) — on temporary directories | scheduled fixity, reconciliation, backup; a chosen, configured target; a run against one |
 | document identity | id serialisation and canonical URL key (CPD-0003); document and version assignment, append-only identity tables, collision refusal, `duplicate_of` and `moved_to` relations (CPD-0005 §4) — on recorded exchanges | syndication clusters; URL-key aliases after a rule change; a durable home for the tables; any id minted for corpus material |
 | extraction | the extraction record and its digests; storage by fingerprint; replay from the preservation root; a **baseline** extractor (`baseline_html/0.1.0`) | an adopted extractor; a gold sample; any quality measurement; per-outlet rules; admission labels; date parsing |
 
-Stages 2 and 3 are `NOT_STARTED` although acquisition *records* exist: the only run kind is the
-replay of recorded exchanges. Replaying fixtures is not discovery and not fetching.
+`PARTIAL` for stages 2 and 3 means "code and tests exist, offline". It is not a step towards
+`ACTIVE`: activation needs validation on real material and the operator decisions of §5.
 
 ## 3. Foundation
 
@@ -62,15 +69,26 @@ replay of recorded exchanges. Replaying fixtures is not discovery and not fetchi
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 and CPD-0006 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
 | Outlet registry | schema, validator, lookup implemented and unit-tested; holds **82 proposed outlets, none registered** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
 | Legacy outlet import | executed 2026-10-07 on a copy of the legacy database; deterministic on repetition; real schema equal to the assumed one; legacy-name → `outlet_id` table produced as `hypothesis`. **Not reviewed by a human** | `src/coprepan/legacy_registry_import.py`, `config/registry_review/`, corpus supply §16 |
 | Legacy archaeology and component dispositions | recorded | [`docs/legacy/ARCHAEOLOGY.md`](legacy/ARCHAEOLOGY.md), CPD-0004 |
-| Acquisition run and fetch record | implemented and unit-tested for recorded exchanges; **no fetcher** | `src/coprepan/acquisition.py`, [`docs/acquisition/INDEX.md`](acquisition/INDEX.md) |
-| Sealed WARC pack | implemented and unit-tested (own writer, standard library); **not read by an independent WARC reader** | `src/coprepan/pack.py`, `tests/test_acquisition_pack.py` |
+| Acquisition run and fetch record | implemented and unit-tested; run kinds `recorded_replay` and `http_fetch` | `src/coprepan/acquisition.py`, [`docs/acquisition/INDEX.md`](acquisition/INDEX.md) |
+| Sealed WARC pack | implemented and unit-tested (own writer, standard library); read by warcio 1.7.5 for the record subset it writes — **not a general conformance claim** | `src/coprepan/pack.py`, `tests/test_warc_interoperability.py`, storage §14 |
+| Discovery | implemented; tested on synthetic channel documents | `src/coprepan/discovery.py`, `tests/test_discovery.py` |
+| Policy gate | implemented and tested; **the tracked policy is `NOT_DECIDED` and denies everything** | `src/coprepan/policy.py`, `config/acquisition_policy.json` |
+| Robots evidence | RFC 9309 parser implemented and tested; no robots file of a real site has been read | `src/coprepan/robots.py` |
+| Crawler identity | contract implemented and tested; **the tracked identity is `not_configured`** | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json` |
+| HTTP fetcher | implemented; tested against a real HTTP server on a loopback address; **no TLS, no external request** | `src/coprepan/fetcher.py`, `tests/test_fetcher.py` |
+| HTTP acquisition run, request log | implemented; tested in the offline canary | `src/coprepan/http_acquisition.py` |
+| Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
+| Preservation-target readiness check | implemented and tested on temporary directories; **no target chosen** | `src/coprepan/preservation_target.py`, storage §15 |
+| Capacity model | calculator implemented; **bytes per real page never measured** | `src/coprepan/capacity.py`, storage §16 |
+| Acquisition baseline manifest | implemented; the repository as committed is `PRE_FREEZE` with five blockers | `src/coprepan/freeze.py` |
+| Registry review package | generated, checked against the registry by a test; **a recommendation, nothing registered** | corpus supply §17 |
 | Document identity tables | implemented and tested on recorded exchanges | `src/coprepan/document_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) §7 |
 | Extraction contract and baseline extractor | implemented; behaviour of the contract tested; **quality unknown, extractor not adopted** | `src/coprepan/extraction.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) |
 | Vertical canary (fixture → fetch record → pack → preservation → identity → extraction → version → replay) | passes on four synthetic pages, on temporary directories | `src/coprepan/core_pipeline.py`, `tests/test_core_pipeline.py` |
@@ -88,22 +106,31 @@ replay of recorded exchanges. Replaying fixtures is not discovery and not fetchi
 
 None. No model, provider, crawler, extractor or annotator is active. The NLP pins in
 `pyproject.toml` `[tool.coprepan.nlp]` are marked `PLANNED`: they are not installed and not used.
-The package has no runtime dependency. `baseline_html/0.1.0` and `pack-writer/1` are component
-versions recorded in artefacts; neither is an adopted production component.
+The package has no runtime dependency. `baseline_html/0.1.0`, `pack-writer/1`, `http-fetcher/1`,
+`channel-parser/1` and `robots-parser/1` are component versions recorded in artefacts; none is an
+adopted production component. `warcio==1.7.5` is a test-only dependency (the independent WARC
+reader); no runtime code imports it.
 
 No external API is used by any code in this repository.
 
 ## 5. Open gates blocking production crawling
 
-| Gate | State | Owner |
-|---|---|---|
-| Acquisition policy decided, implemented, tested (O-1) | open | operator / institution |
-| Crawler identity and contact (O-2) | open | operator / institution |
-| Preservation target (O-3) | open | operator / institution |
-| Storage capacity (O-4) | open | operator / institution, then measured |
-| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | open — tests pass on temporary directories (2026-10-07); the half on a real preservation target needs O-3 | engineering, then operator |
-| Phase-2 canary gate | open — no fetcher; the fixture canary of 2026-10-07 is not this gate (it fetches nothing and measures no bytes per fetch) | engineering |
-| **Registry review**: human review of the proposed outlets; registration of the outlets to acquire for | open — proposal delivered 2026-10-07 | operator |
+Two columns, because "the code is ready" and "the gate is passed" are different statements.
+Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. Gate state:
+`OPEN` · `READY_FOR_HUMAN_REVIEW` (everything an agent can prepare is delivered) · `PASS`.
+**No gate is `PASS`.**
+
+| Gate | Technical state | Gate state | What closes it | Owner |
+|---|---|---|---|---|
+| O-1 acquisition policy | `TECHNICALLY_READY` — the gate enforces whatever is decided and denies everything until then | **`OPEN`** | the normative decision: robots mode, absent / unreachable robots, pace per origin, opt-out handling, retention of raw copies; recorded as a decision and committed as a `DECIDED` policy | operator / institution |
+| O-2 crawler identity | `TECHNICALLY_READY` — contract tested (`TECHNICAL_CONTRACT = PASS`) | **`READY_FOR_HUMAN_REVIEW`** (`EXTERNAL_ACTIVATION = BLOCKED`) | four values in `config/crawler_identity.json`: crawler name, organisation, contact URL, contact e-mail — and the public page the URL names | operator / institution |
+| O-3 preservation target | `TECHNICALLY_READY` — readiness check built | **`OPEN`** | choosing the target; then `initialise_target`, a `READY` readiness report, and the second half of the Phase-1 gate on it | operator / institution |
+| O-4 storage capacity | `TECHNICALLY_READY` — model built | **`OPEN`** | one measurement that does not exist: stored body bytes per fetch and fetches per outlet-day **on real outlets** (the Phase-2 canary) | measured, then operator |
+| O-10 legacy freeze manifest | `NOT_BUILT` (not ordered) | **`OPEN`** | the operator's go-ahead; unrelated to the acquisition baseline below | operator |
+| O-11 registry review | `TECHNICALLY_READY` — review package delivered | **`READY_FOR_HUMAN_REVIEW`** | the human decisions of corpus supply §17; registration by reviewed commit | operator, scientific |
+| O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder; state `PRE_FREEZE` | **`OPEN`** | O-1, O-2, O-3, O-4, O-11 answered; then the operator's freeze of a `READY_TO_FREEZE` manifest | operator |
+| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | first half passes on temporary directories | **`OPEN`** | the same tests on the real preservation target (needs O-3) | engineering, then operator |
+| Phase-2 canary gate | the offline canary passes; **it is not this gate** — it requests nothing external and measures no real page | **`OPEN`** | about five registered outlets acquired for real under a decided policy; every fetch traceable; restore test; measured bytes per fetch | engineering, after O-1, O-2, O-3, O-11 |
 
 Full list: [master plan](plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md) §13.
 
@@ -113,15 +140,22 @@ Everything scientific. No extraction, annotation, enrichment or release has been
 first validations are defined by the gates of Phases 1–4 (master plan §11).
 
 What the tests of 2026-10-07 establish is **reproducibility** (same inputs, same ids and bytes;
-replay from preserved bytes) and **robustness** against injected failures (interrupted append,
-crash between steps, damaged stores) — on synthetic fixtures. They establish nothing about
-replicability or generalisability, and nothing about any real outlet.
+two independent acquisition passes byte-identical; replay from preserved bytes) and
+**robustness** against injected failures (parse failure, policy denial, transport failure, retry
+exhaustion, truncated bodies, interrupted runs, failed promotion, damaged pack, index and layer)
+— on synthetic documents and a loopback server. They establish nothing about replicability or
+generalisability, and nothing about any real outlet. Reading the packs with warcio is
+*interoperability with one independent reader*; it is not replication of any result.
 
-Named debts of CPD-0005 (`ACTIVE_WITH_VALIDATION_DEBT`):
+Named debts of CPD-0005 and CPD-0006 (`ACTIVE_WITH_VALIDATION_DEBT`):
 
 | Debt | Closed by |
 |---|---|
-| `pack-writer/1` output read by an independent WARC reader | a conformance check with a pinned third-party reader |
+| `pack-writer/1` output read by an independent WARC reader | **paid 2026-10-07** for the written record subset with warcio 1.7.5 (storage §14). Other tools: not tried |
+| Discovery against real feeds, sitemaps and listing pages | Phase-2 canary |
+| The fetcher against real servers: TLS, real redirect and error behaviour, bot protection, real `Retry-After` | Phase-2 canary |
+| The policy gate under a decided policy; robots files of real sites | after O-1; Phase-2 canary |
+| The identity policy on real URLs: per-outlet rules, the canonical-collapse diagnostic on real templates | Phase-2 canary |
 | Promotion, idempotence, conflict and crash recovery on a real preservation target | second half of the Phase-1 gate; needs O-3 |
 | The legacy importer's proposal reviewed | the registry-review gate (§5) |
 | Baseline extractor against real pages; an adopted extractor | Phase 3: gold sample, preregistered comparison |
@@ -145,8 +179,8 @@ run report that carries the evidence.
   "git_initialised_by_bootstrap": false,
   "stages": {
     "outlet_registry":       {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "discovery":             {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "fetch":                 {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "discovery":             {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "fetch":                 {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "raw_preservation":      {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "document_identity":     {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "extraction":            {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
@@ -157,7 +191,7 @@ run report that carries the evidence.
     "release":               {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "cross_corpus_contract": {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"}
   },
-  "open_production_gates": ["O-1", "O-2", "O-3", "O-4", "PHASE_1_CORE", "PHASE_2_CANARY", "REGISTRY_REVIEW"]
+  "open_production_gates": ["O-1", "O-2", "O-3", "O-4", "O-11", "O-12", "PHASE_1_CORE", "PHASE_2_CANARY"]
 }
 ```
 <!-- status_assertions:end -->
@@ -193,3 +227,14 @@ run report that carries the evidence.
   canary on synthetic fixtures. Stage 6 moves to `PARTIAL`. No network code, no registered outlet,
   no validation, no activation, no gate closed; one gate added (registry review).
   Run report: [`docs/agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md`](agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md).
+- 2026-10-07 — discovery and acquisition-readiness run (implementation; reproducibility and
+  robustness only). CPD-0004 and CPD-0005 audited; CPD-0005 amended forward-only by CPD-0006
+  (fetch kind, the stored body, observation keys). Built and tested offline: discovery, HTTP
+  fetcher, policy gate, robots evidence, crawler identity, HTTP acquisition run with request log,
+  preservation-target readiness check, capacity model, acquisition baseline manifest, registry
+  review package; the complete offline canary with failure injection against a loopback server;
+  packs read by warcio 1.7.5. Stages 2 and 3 move to `PARTIAL`. **No external request was made and
+  none can be made as committed.** No outlet registered, no policy decided, no target chosen, no
+  validation, no activation, no gate passed. Gate O-12 (acquisition baseline freeze) added; the
+  gate named `REGISTRY_REVIEW` in the previous entry is O-11.
+  Run report: [`docs/agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md`](agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md).

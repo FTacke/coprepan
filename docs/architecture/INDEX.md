@@ -25,13 +25,12 @@ its area.
 | Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | root resolution, promotion, spool, ledger, layer store; packs promoted in tests only; no configured root |
 | Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | registry schema; 82 outlets *proposed* by the legacy import; none registered |
 | Identity (id serialisation, canonical URL key, identity tables) | [`docs/identity/INDEX.md`](../identity/INDEX.md) | serialisation, URL key, document and version assignment — on recorded exchanges only |
-| Acquisition (run, fetch record, pack) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | contracts for recorded exchanges; no discovery, no fetcher |
+| Acquisition (run, discovery, fetcher, policy gate, crawler identity, fetch record, pack) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | built and tested offline (loopback server, synthetic documents); externally not activatable as committed |
 | Extraction (record, blocks, metadata, replay) | [`docs/extraction/INDEX.md`](../extraction/INDEX.md) | contract and a baseline extractor; nothing validated or adopted |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
 | Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze not executed |
 
-Discovery and the live fetcher (inside acquisition), admission, normalisation and release
-have no component index or no content of their own yet: until their first implementation run they are specified in the target
+Admission, normalisation and release have no component index yet: until their first implementation run they are specified in the target
 architecture (§1). The run that starts implementing one of them creates its `docs/<component>/INDEX.md`
 and adds it here.
 
@@ -56,7 +55,8 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0002](../decisions/CPD-0002_terminology-and-naming-model.md) | Terminology and naming model | `ACTIVE` |
 | [CPD-0003](../decisions/CPD-0003_id-serialisation-and-canonical-url-key.md) | Id serialisation and canonical URL key | `ACTIVE` |
 | [CPD-0004](../decisions/CPD-0004_legacy-component-dispositions.md) | Legacy component dispositions | `ACTIVE` |
-| [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) | Core pipeline contracts (run, fetch record, pack, identity, extraction, layers) | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) | Core pipeline contracts (run, fetch record, pack, identity, extraction, layers) | `ACTIVE_WITH_VALIDATION_DEBT`; amended by CPD-0006 §1 |
+| [CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md) | Discovery, HTTP transport, policy gate, crawler identity, readiness contracts | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -82,7 +82,17 @@ Machine-checked contracts:
 | Document identity tables and relations (CPD-0005 §4) | `src/coprepan/document_identity.py`, `src/coprepan/jsonl.py` | `tests/test_core_pipeline.py` |
 | Extraction record; baseline extractor (CPD-0005 §5) | `src/coprepan/extraction.py` | `tests/test_extraction.py` |
 | Stage order and gates of the core section; replay | `src/coprepan/core_pipeline.py` | `tests/test_core_pipeline.py` |
-| No deletion call outside the five named places, over every module | — | `tests/test_preservation.py` |
+| No deletion call outside the six named places, over every module | — | `tests/test_preservation.py` |
+| Discovery: parsers, events, candidates, budgets (CPD-0006 §2) | `src/coprepan/discovery.py` | `tests/test_discovery.py` |
+| Policy gate: nothing allowed by default; tracked policy denies everything | `src/coprepan/policy.py`, `config/acquisition_policy.json` | `tests/test_policy.py` |
+| Robots evidence (RFC 9309 parser) | `src/coprepan/robots.py` | `tests/test_policy.py` |
+| Crawler identity: no default, placeholders refused | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json` | `tests/test_policy.py` |
+| HTTP transport: limits, redirects, retries, policy before transport | `src/coprepan/fetcher.py` | `tests/test_fetcher.py` |
+| HTTP acquisition run and request log; the complete offline canary | `src/coprepan/http_acquisition.py` | `tests/test_offline_e2e.py` |
+| Pack interoperability with an independent reader (warcio 1.7.5) | `src/coprepan/pack.py` | `tests/test_warc_interoperability.py` |
+| Preservation-target readiness; capacity model; baseline manifest (`PRE_FREEZE` as committed) | `src/coprepan/preservation_target.py`, `capacity.py`, `freeze.py` | `tests/test_readiness.py` |
+| Registry review package equals what the generator produces from the tracked registry | `src/coprepan/registry_review.py`, `config/registry_review/outlet_review_package.json`, `docs/corpus_supply/REGISTRY_REVIEW_PACKAGE.md` | `tests/test_readiness.py` |
+| Tests reach at most a literal loopback address | `tests/conftest.py` | `tests/test_test_guards.py` |
 | Tracked registry proposal agrees with its review report; nothing registered | `config/outlet_registry.json`, `config/registry_review/` | `tests/test_registry.py` |
 
 ## 4. Open decisions and gates
@@ -103,7 +113,8 @@ Nothing in these registers is a defect. They are the honest boundary of what is 
 | Architecture, Migration, Corpus Supply & Naming Audit, 2026-10-06 — in `corapan_playground`, `docs/agent-runs/2026-10-06_coprepan3-architecture-and-migration-audit.md` | the diagnostic run whose findings this foundation consolidates | historical evidence. Cited as "audit §n". Where it differs from a document of §1–§3, that document governs. Its measurements are of 2026-10-06 and are quoted with that date. |
 | [`docs/agent-runs/`](../agent-runs/README.md) | one report per run | historical records; never specifications |
 | [`docs/legacy/ARCHAEOLOGY.md`](../legacy/ARCHAEOLOGY.md) | reconstruction of the legacy system and its failure mechanisms, 2026-10-07 | historical evidence; the evidence base of CPD-0004 and CPD-0005 |
-| [`config/registry_review/`](../../config/registry_review/) | review report of the legacy registry import | evidence of one import run; the proposal it describes is not a registration |
+| [`config/registry_review/`](../../config/registry_review/) | review report of the legacy registry import; the generated review package | evidence of one import run and a recommendation for review; neither is a registration |
+| [`docs/corpus_supply/REGISTRY_REVIEW_PACKAGE.md`](../corpus_supply/REGISTRY_REVIEW_PACKAGE.md) | the review package as a page | generated; a recommendation, not normative |
 | Documentation inside the legacy repository | legacy design and run notes | historical; partly describes layouts the legacy code no longer writes |
 | Documents of `corapan_playground` (storage targets, retention policy, evolution policy, corpus supply, NLP index, methodology) | the CO.RA.PAN 3.0 sources that principles here were adapted from | authoritative *for CO.RA.PAN 3.0*. Here: reference. A rule binds this repository only where a document of §1–§3 states it. |
 

@@ -336,6 +336,31 @@ above is changed by them.
 "Extracted text" (§3.1, document version) is defined by CPD-0005 §4: the canonical JSON of the
 ordered `[kind, role, text]` of all blocks. **BODY** is the view over the blocks with role `body`.
 
+## 10. Additions of 2026-10-07 (CPD-0006)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **candidate** (term) | a canonical URL key of an outlet that a channel has listed: something to plan a fetch for. Not a document, not an article | CPD-0006 §2 |
+| **discovery event** (term, §3.1) | now with an id: `de1:<32 hex>` | [acquisition](../acquisition/INDEX.md) §5 |
+| `candidate_id` | `{outlet_id}:cand:<16 hex>` over the canonical URL key | same |
+| `request_id` | `rq1:<32 hex>` | CPD-0006 §3 |
+| fetch kind | `item`, `channel_document`, `robots_txt` | CPD-0006 §1 |
+| run kind (added) | `http_fetch` | [acquisition](../acquisition/INDEX.md) §3 |
+| fetch failure reason (added) | `malformed_response`, `body_limit_exceeded`, `redirect_limit_exceeded` | same §4 |
+| channel-document format | `rss`, `atom`, `sitemap_urlset`, `sitemap_index`, `html_listing` | same §5 |
+| discovery input outcome | `PARSED`, `UNPARSEABLE`, `UNAVAILABLE` | same |
+| discovery relation | `item`, `child_document`, `next_page` | same |
+| policy decision | `ALLOW`, `DENY`, `DEFER` | CPD-0006 §5 |
+| policy status | `DECIDED`, `NOT_DECIDED`; value state `not_decided` | same |
+| robots evidence state | `fetched`, `absent`, `unreachable`, `not_consulted` | same |
+| identity scope | `external`, `loopback_test`; value state `not_configured` | CPD-0006 §4 |
+| retry decision | `none`, `retry`, `gave_up` | CPD-0006 §3 |
+| target readiness | `READY`, `NOT_READY`; check status `PASS`, `FAIL`, `INFO` | [storage](../storage/INDEX.md) §15 |
+| quantity label | `measured`, `estimated`, `assumed` | storage §16 |
+| baseline state | `PRE_FREEZE`, `READY_TO_FREEZE`, `FROZEN` | CPD-0006 §9 |
+| extraction reason (added) | `unsupported_content_encoding`, `undecodable_content_encoding` | [extraction](../extraction/INDEX.md) §2 |
+| schema ids minted | `coprepan-discovery-input/v1`, `-discovery-event/v1`, `-discovery-candidate/v1`, `-request-log/v1`, `-acquisition-policy/v1`, `-crawler-identity/v1`, `-preservation-target/v1`, `-preservation-readiness/v1`, `-capacity-model/v1`, `-acquisition-baseline/v1`, `-registry-review/v1` | the indexes above |
+
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

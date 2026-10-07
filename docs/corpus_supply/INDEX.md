@@ -181,7 +181,7 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 | Orientation-target numbers and their rationale | scientific, Phase 6 | this document §6 |
 | Registry schema and vocabulary freeze | **done 2026-10-07** (§15) | master plan §11 |
 | Complete legacy-slug → `outlet_id` mapping | **proposed 2026-10-07** for the names in the legacy database (§16), `mapping_status: hypothesis`; open: human review; names that exist only in directories or exported files | master plan §11 |
-| **Human review of the registry proposal** — final ids, one-outlet questions, attributes, time zones, URL rules, registration | **gate before any acquisition** | §16 |
+| **Human review of the registry proposal** — final ids, one-outlet questions, attributes, time zones, URL rules, registration | **gate before any acquisition**; review package delivered 2026-10-07 | §16, §17 |
 | Value set of `scope`; form of `orientation` | not frozen: free text with `unknown` | §15 |
 | Channel health state | ledgered operational state, not a registry field; not built | §8 |
 
@@ -194,6 +194,9 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
   [`docs/agent-runs/2026-10-07_foundation-core-i.md`](../agent-runs/2026-10-07_foundation-core-i.md).
 - 2026-10-07 — legacy import executed on a copy of the legacy database (§16). Run report:
   [`docs/agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md`](../agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md).
+- 2026-10-07 — registry review package generated; a uniform id convention proposed (§17). Nothing
+  registered. Run report:
+  [`docs/agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md`](../agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md).
 
 ## 15. Registry schema `coprepan-outlet-registry/v1`
 
@@ -275,3 +278,51 @@ What the reviewer has to settle, and the import could not:
    failure reason are observations of a loop that deactivated healthy feeds
    ([archaeology](../legacy/ARCHAEOLOGY.md) F-9); they are not channel health.
 6. **Which outlets to register at all** — registration is not owed to every legacy entry.
+
+## 17. Registry review package (O-11: ready for human review)
+
+Generated from the proposal by `python -m coprepan.registry_review`; a test fails when the package
+and the registry drift apart.
+
+- Page to read: [`REGISTRY_REVIEW_PACKAGE.md`](REGISTRY_REVIEW_PACKAGE.md) — summary, warnings,
+  the cases that need a judgement, the legacy-name → recommended-id table, one row per outlet.
+- Full data: [`config/registry_review/outlet_review_package.json`](../../config/registry_review/outlet_review_package.json)
+  — per outlet the legacy identity, origins, channels with their legacy observations, unknown
+  fields, warnings, a recommended action; per channel a recommended id.
+
+**It recommends and registers nothing.** `config/outlet_registry.json` is unchanged by it: all 82
+entries are still `proposed` under the ids the import produced.
+
+**Id convention proposed** (replacing the inherited legacy spelling):
+`{country_id}_{ASCII slug of the display name, words separated by "_"}`. One rule, derived from
+the name a reader knows; the legacy code remains an alias. On the 82 proposals it changes 21 ids
+(for example `co_elpais` → `co_el_pais`, `bo_lostiempos` → `bo_los_tiempos`,
+`pa_laestrelladepanama` → `pa_la_estrella_de_panama`), leaves 61 as they are, and produces no
+collision. Channel ids: `{outlet_id}:ch:{kind}_{slug of the URL path}`.
+
+What the package found (measured on the proposal, 2026-10-07):
+
+| Finding | Outlets |
+|---|---|
+| routine: confirm the id, complete the attributes | 54 |
+| no channel at all: find channels or leave unregistered | 23 |
+| channels on hosts that are not the outlet's: check attribution | 5 |
+| — of these, channels on the origin of **another outlet** (`pr_primera_hora` ↔ `pr_el_nuevo_dia`) | 1 case |
+| — of these, channels on third-party or other hosts (`feeds.feedburner.com`, `feeds.elpais.com`, `api.diarioabc.com.py`, `larazon.bo`) | 4 |
+| an additional origin seen on the outlet's own channels (apex or `www` variant, or plain `http`) | 6 |
+| no channel that was `active` in the legacy system | 29 (including the 23 without any) |
+| channels of unknown legacy type | 5 |
+| plain-`http` origin | 1 |
+
+**What remains for a human, and only for a human:**
+
+1. Accept or change the id convention, then the 82 ids.
+2. The one attribution case (Puerto Rico), and whether any two entries are one outlet.
+3. For each outlet to be registered: `outlet_type`, `outlet_group`, seat, `access_model`,
+   `medium`, **`timezone`**, the web origins (including the six candidates) and the URL rules.
+4. Which of the 23 channel-less outlets are worth a channel search.
+5. Which outlets to register first — the Phase-2 canary needs about five, from different
+   countries and outlet types.
+
+Nothing in this list can be filled from the legacy database, and none of it was looked up
+elsewhere.

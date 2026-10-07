@@ -25,8 +25,8 @@ storage of extractions and replay. Design background:
 | Field | Content |
 |---|---|
 | `extractor` | `name`, `version` |
-| `input` | `body_sha256`, size, declared content type and charset |
-| `outcome`, `reason` | `EXTRACTED` · `NOT_EXTRACTABLE` with `unsupported_content_type`, `content_type_unknown_and_not_html` or `empty_body` |
+| `input` | `body_sha256`, size, declared content type, charset and content coding |
+| `outcome`, `reason` | `EXTRACTED` · `NOT_EXTRACTABLE` with `unsupported_content_type`, `content_type_unknown_and_not_html`, `empty_body`, `unsupported_content_encoding` or `undecodable_content_encoding` |
 | `decoding` | `charset`, `basis` (`byte_order_mark`, `http_header`, `html_meta`, `default_utf8`, …), `replaced_characters` |
 | `metadata` | per field `value`, `basis`, `candidates[]` — fields `title`, `author`, `publication_date`, `modification_date`, `section`, `language` |
 | `blocks[]` | `index`, `kind`, `role`, `text` |
@@ -66,7 +66,10 @@ templates. It exists to exercise the contract.
 
 ## 5. Rules
 
-- Extraction reads only fetches that are `RAW_PRESERVED`, from the preservation root.
+- Extraction reads only fetches of kind `item` that are `RAW_PRESERVED`, from the preservation root.
+- The stored body keeps its HTTP content coding (CPD-0006 §1.2). Undoing `gzip` / `deflate` is the
+  first recorded step of extraction; the coding is part of the fingerprint. The stored bytes are
+  never changed, and a decoded body above 64 MiB is refused rather than expanded.
 - One answer per fingerprint. A rerun is a no-op; a different answer is an error.
 - A new extractor version is a new fingerprint and a new artefact; old artefacts stay valid for
   their version (forward-only). Re-extracting existing material under a new version for the

@@ -233,8 +233,8 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
 | Storage capacity | institutional, then measured | master plan §13, O-4 |
 | Retention period for raw third-party copies; who may access them | institutional / legal | master plan §13, O-1 |
 | Durable location (role) of the non-released layer store | technical, Phase 1 — **still open**: the store takes any directory | master plan §11 |
-| WARC library, codec, index format, pack rollover | **partly settled 2026-10-07 by CPD-0005 §3**: own standard-library writer (`pack-writer/1`), gzip per record, index derived at seal time and bound by the manifest. Still open: conformance against an independent WARC reader, another codec, rollover by size, `revisit` records | this document §3; [acquisition index](../acquisition/INDEX.md) §6 |
-| Wire bytes or transfer-decoded bytes as the stored body | technical, with the fetcher (Phase 2) | CPD-0005, "Not decided here" |
+| WARC library, codec, index format, pack rollover | **partly settled 2026-10-07 by CPD-0005 §3**: own standard-library writer (`pack-writer/1`), gzip per record, index derived at seal time and bound by the manifest. Read by warcio 1.7.5 for the written subset (§14). Still open: other tools, another codec, rollover by size, `revisit` records | this document §3, §14 |
+| Wire bytes or transfer-decoded bytes as the stored body | **settled 2026-10-07 by CPD-0006 §1.2**: the payload with its content coding, without transfer coding | CPD-0006 |
 | Scheduled fixity re-verification; reconciliation of the ledger from the target manifests | technical, Phase 2 — today: `pack.verify_sealed` and `preservation.verify_master` on demand | §8 |
 | Reuse of the `corapan_playground` storage modules as a dependency | technical, Phase 1 — own code against the same on-disk conventions for now (§13); the consolidation question stays open | master plan §13, O-8 |
 | Phase-1 gate on a **real** preservation target | needs O-3 | master plan §11 |
@@ -250,6 +250,10 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
   index are promoted (areas `raw`, `raw_index`) and read back from the preservation root in the
   vertical canary — on temporary directories, with synthetic fixtures.
   Run report: [`docs/agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md`](../agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md).
+- 2026-10-07 — CPD-0006: the stored body defined (payload with content coding, without transfer
+  coding); pack interoperability checked with an independent reader (§14); preservation-target
+  readiness check (§15) and capacity model (§16) built. No target chosen, no capacity measured.
+  Run report: [`docs/agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md`](../agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md).
 
 ## 13. What exists (Foundation Core I)
 
@@ -277,3 +281,77 @@ Notes that bind later work:
   releases its own copy only after the promoted master has been re-read and verified.
 - Staging name, hash-then-rename order and manifest rendering follow the CO.RA.PAN 3.0 storage
   code as read on 2026-10-07; the manifest *fields* are COPREPAN's own (a pack is not a recording).
+
+## 14. Pack interoperability
+
+**Claim, exactly:** packs written by `pack-writer/1` — the record subset it writes (`warcinfo`,
+`response`, `metadata`; one gzip member per record) — are read by **warcio 1.7.5**
+(`ArchiveIterator`, digest checking on): every record is found, typed and addressed as written;
+every payload comes back byte for byte, including empty, binary and content-coded bodies;
+SHA-256 block and payload digests are verified by the reader (a record with a wrong digest is
+flagged). Tested on a synthetic pack and on the pack of the offline canary after promotion
+(`tests/test_warc_interoperability.py`, `tests/test_offline_e2e.py`).
+
+**Not claimed:** WARC conformance in general; behaviour with other tools (indexers, replay
+systems); anything about record types the writer does not write.
+
+Two findings, kept as tests:
+
+- A `Transfer-Encoding` header rendered as received would make a reader de-chunk bytes that are
+  not chunked. It is written as `X-Coprepan-Orig-Transfer-Encoding` in the pack; the fetch record
+  keeps it as received (CPD-0006 §1.2).
+- warcio reads a **truncated** pack without complaint and returns less. Interoperability is not
+  fixity: a pack is trusted because its bytes hash to its manifest, and this repository's own
+  scan refuses a torn tail.
+
+## 15. Preservation-target readiness (O-3)
+
+**No target is chosen and none is configured**; O-3 is an institutional decision. What exists is
+the contract a target must meet and the check for it (`src/coprepan/preservation_target.py`,
+CPD-0006 §7).
+
+| Check | Passes when |
+|---|---|
+| `usable_root` | absolute, not a filesystem root, not inside the checkout |
+| `reachable` | an existing directory; otherwise its content is *unknown*, not empty |
+| `target_identity` | the marker `coprepan_preservation_target.json` exists and is readable — written once by `initialise_target` when the operator takes the target into service |
+| `free_space` | free bytes known and at least the required amount (an input, no default) |
+| `writable`, `atomic_promotion`, `no_silent_overwrite` | a probe file can be staged, flushed, hashed, renamed atomically and re-read; an exclusive create refuses an existing name |
+| `long_names` | a 190-character file name can be created |
+| `case_sensitivity` | information only |
+| `fixity` | up to 50 held objects per area verify against their manifests |
+
+The probe writes a few hundred bytes into `_readiness_probe/` and removes exactly those; it never
+touches `preservation/`. A report is `READY` or `NOT_READY` with every check listed.
+
+**For the operator, to close O-3:** choose the target; set `COPREPAN_PRESERVATION_ROOT` in the
+workstation `.env`; run `initialise_target` once with a target id; run `check_readiness` with the
+free space the capacity model calls for; then the second half of the Phase-1 gate (promotion,
+idempotence, conflict and crash recovery on that target).
+
+## 16. Capacity model (O-4)
+
+`src/coprepan/capacity.py` (CPD-0006 §8): a calculator whose inputs are labelled `measured`,
+`estimated` or `assumed` and whose outputs carry the weakest label beneath them.
+`python -m coprepan.capacity --help` lists the nine inputs; none has a built-in value.
+
+Evidence available on 2026-10-07:
+
+| Quantity | Value | Label |
+|---|---|---|
+| legacy fetch rows, total | 64,932 over 23 distinct crawl days (2025-12-18 to 2026-06-15), 53 outlets with rows | measured, on a copy of the legacy database, 2026-10-07 |
+| legacy fetch rows per active crawl day | median 3,112; mean 2,823; maximum 5,986 | measured, same |
+| legacy fetch rows per outlet and crawl day | median 115; maximum 367 | measured, same |
+| legacy extracted text per `ok` article | mean 2,854 characters, 467 words | measured, same — **extracted text, not page size** |
+| legacy stores | `json_raw` 127.0 MB (949 files); `json_raw_extended` 40.1 MB; `json_annotated` 17.0 GB (926 files) | measured, file sizes, 2026-10-07 |
+| pack overhead per fetch (WARC headers + fetch record, compressed) | about 1.3 KB | measured, on synthetic exchanges with four response headers; real responses carry more headers |
+| extraction record against the page it was made from | 5.2 KB for a 2.3 KB page | measured, on one synthetic page; **not a rate for real pages** |
+| index row, ledger and request-log rows per fetch | of the order of 0.4 KB and 3 KB | estimated, from the record formats |
+| **stored (compressed) body bytes per fetched page** | **unknown** — the legacy system kept no page | the audit's scenario assumption of 50 KB (20–100 KB) is the only figure |
+| fetches per day under a registered outlet set | unknown — no outlet is registered | — |
+
+**O-4 cannot be closed from this evidence.** The one number that dominates every scenario, the
+size of a real stored page, has never been measured, and the legacy rate describes 53 outlets
+under a crawl loop that fetched each URL once. What is missing, exactly: *stored body bytes per
+fetch and fetches per outlet-day, measured on real outlets* — the Phase-2 canary's job. Until then
+any total is a scenario, and the calculator labels it so.

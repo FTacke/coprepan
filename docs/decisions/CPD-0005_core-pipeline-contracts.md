@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-07 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status note 2026-10-07 | Audited by the following run and **amended forward-only by [CPD-0006](CPD-0006_discovery-transport-policy-gate-and-readiness.md) §1** in three points: the fetch record gains `fetch_kind` and a complete policy block; "the body" is the HTTP payload with its content coding and without transfer coding (the item left open below); identity observations keep each fetch's own URL keys. Everything else stands. The debt "read by an independent WARC reader" is paid for the written record subset (warcio 1.7.5). |
 | Decided by | the operator, in the brief of the foundation, architecture and core-pipeline run (2026-10-07), which ordered the core architecture to be decided from the master plan, the foundation, the legacy evidence and proven CO.RA.PAN 3.0 principles, and authorised that run to decide where the evidence suffices. Recorded by that run; subject to the operator's review. |
 | Kind | architecture |
 | Scope | the contracts of the stages from acquisition run to document version; the separation of corpus layers |

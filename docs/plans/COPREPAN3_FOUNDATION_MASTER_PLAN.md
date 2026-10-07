@@ -330,6 +330,22 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
    an independent WARC reader; discovery on recorded channel documents (feed and sitemap parsing,
    index expansion, discovery events) — again without network; admission labels on extraction
    records. **Next work that needs the operator:** the registry review (O-11); O-1 to O-4.
+7. *Added 2026-10-07 (discovery and acquisition-readiness run).* **Done offline:** discovery,
+   the HTTP fetcher, the policy gate with robots evidence, crawler identity, the HTTP acquisition
+   run, a preservation-target readiness check, a capacity model, the acquisition baseline
+   manifest and the registry review package (CPD-0006); the complete offline canary with failure
+   injection; packs read by an independent WARC reader. Of Phase 2 this delivers the *code* of
+   "discovery with index expansion and channel-document preservation" and "polite fetcher with
+   per-outlet policy". It delivers **none of the Phase-2 gates**: nothing was requested from a
+   real outlet, no bytes per fetch were measured, no policy is decided.
+8. *Added 2026-10-07.* **What stands between this state and the first real fetch is no longer
+   engineering.** In order: (a) the registry review, at least for the canary outlets (O-11);
+   (b) the acquisition policy (O-1) and the crawler identity values (O-2); (c) a preservation
+   target (O-3) with a `READY` readiness report and the Phase-1 gate on it; then (d) the Phase-2
+   canary on about five registered outlets, which also yields the measurement O-4 needs; then
+   (e) the baseline freeze (O-12). Technical work that needs none of this and can run in
+   parallel: admission labels on extraction records; a re-fetch schedule and channel health; the
+   legacy freeze manifest once O-10 is given.
 
 ## 13. Open operator and institutional decisions
 
@@ -348,7 +364,14 @@ Core I.
 | **O-8** | **Code relationship to `corapan_playground`.** Consume its storage / change-decision / accounting modules as a pinned dependency after generalisation there, or keep own implementations against the same on-disk contracts. | technical, operator | nothing now; revisit in Phase 1 | audit §18 |
 | **O-9** | **Existing backup of the legacy data.** Whether any copy exists outside the legacy working copy. Changes the urgency of the freeze, not its necessity. | factual, operator knowledge | nothing | audit Q-5 |
 | **O-10** | **Go-ahead for the legacy freeze manifest.** The hash manifest reads the legacy tree only and needs no preservation target; it may run before O-3 is answered. | operator | Phase 0 closure | legacy index §5 |
-| **O-11** *(added 2026-10-07)* | **Registry review.** Which of the 82 proposed outlets are registered, under which final ids, as how many outlets, with which type, group, time zone, web origins and URL rules. | operator, scientific | any acquisition; the Phase-2 canary | corpus-supply index §16; `config/registry_review/` |
+| **O-11** *(added 2026-10-07)* | **Registry review.** Which of the 82 proposed outlets are registered, under which final ids, as how many outlets, with which type, group, time zone, web origins and URL rules. | operator, scientific | any acquisition; the Phase-2 canary | corpus-supply index §16–§17; `config/registry_review/`; the review package |
+| **O-12** *(added 2026-10-07)* | **Acquisition baseline freeze.** The operator's act of freezing the baseline manifest (registry, policy, identity, code, decisions, schemas, target, tests) before scheduled acquisition. Distinct from O-10, which concerns the legacy corpus. | operator | scheduled crawling | CPD-0006 §9; `src/coprepan/freeze.py` — state `PRE_FREEZE` today |
+
+*Status of the technical side of each question, 2026-10-07 (the questions themselves stay open —
+`docs/STATUS.md` §5 has the table):* O-1 the policy gate exists and denies everything until a
+policy is decided; O-2 the identity contract exists, four values are missing; O-3 a readiness
+check exists, no target is chosen; O-4 a capacity model exists, the decisive measurement (bytes
+per real fetched page) does not; O-11 a review package is delivered.
 
 ## 14. Validation still owed
 

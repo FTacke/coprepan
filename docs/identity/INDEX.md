@@ -109,6 +109,24 @@ Code: `src/coprepan/document_identity.py`; tests: `tests/test_core_pipeline.py`.
 | no URL of the fetch on a registered origin | no document; the fetch stays preserved |
 | a truncated id that would stand for two keys or two texts | refused (`DocumentIdCollision`) |
 
+*Added 2026-10-07 (CPD-0006 §1, audit of the identity policy):*
+
+- **Only a fetch of kind `item` becomes a document.** A channel document or a robots file is
+  preserved evidence and never enters the identity tables.
+- Each observation also keeps `requested_url_key` and `final_url_key` — the keys of the request
+  and of the final URL on their own.
+- **A canonical on another site** (typical of syndicated copy) never keys the document; it is
+  kept in the observation for a later syndication layer.
+- **Many pages declaring one canonical** (a section or home page — a template defect) are filed
+  as one document with many versions. The rule is not bent to hide this:
+  `IdentityTables.canonical_collapse_suspects()` lists documents keyed by `rel=canonical` whose
+  fetches were answered at several different final URLs. It is a diagnosis for review and
+  changes no id; the correction is an outlet URL rule with a new version, and every fetch's own
+  key is on record to re-derive from. Legitimate variants of one article that the outlet's rules
+  do not fold yet produce the same picture — hence a list to look at, not an automatic split.
+- The head scan reads the body after undoing its content coding; an undecodable body has no
+  readable head and is keyed by its URLs.
+
 Ablation behind "an article is not its URL": `tests/test_core_pipeline.py`,
 `test_ablation_url_as_identity_versus_canonical_key_plus_text`. On one controlled set (one
 article under four URLs in two textual states; two pages whose paths differ only in case) the
