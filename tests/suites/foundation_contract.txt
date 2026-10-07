@@ -9,3 +9,7 @@ test_ledger.py               # state machine, ledger before state, torn-tail rec
 test_storage_roots.py        # fail-closed root resolution
 test_preservation.py         # promotion semantics, no deletion path, outage spool
 test_layer_store.py          # write-once layer store: fingerprint, artifact id
+# Core pipeline on recorded exchanges (CPD-0005)
+test_acquisition_pack.py     # acquisition run, fetch record, sealed WARC pack
+test_extraction.py           # extraction contract; baseline extractor behaviour (not quality)
+test_core_pipeline.py        # vertical canary, replay, interruption, identity ablation

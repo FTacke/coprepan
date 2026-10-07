@@ -1,0 +1,21 @@
+{
+  "files": {
+    "nota_republicada.html": {
+      "sha256": "387d95b153d57eba276231e868f0ecbde4db865bbeedfb1ce40fa0cceb1a8517",
+      "size_bytes": 832
+    },
+    "nota_v1.html": {
+      "sha256": "01d6adcdb3151faff659c37acf94e617057e0d4e95cc638df5b152ed7d8c1a51",
+      "size_bytes": 2304
+    },
+    "nota_v2.html": {
+      "sha256": "e7e003896baa92ac11e9711003516867a944570699255982d38342fa765ddfe7",
+      "size_bytes": 1396
+    },
+    "sin_metadatos.html": {
+      "sha256": "6f48057849bafcf7f54b7c1a66d57d828c3c07def9a8a1fb32e4e022c102ec29",
+      "size_bytes": 290
+    }
+  },
+  "schema": "coprepan-fixture-manifest/v1"
+}

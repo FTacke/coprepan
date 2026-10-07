@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "coprepan"
 # Package version of the code. It is NOT the pipeline generation ("3.0" / `generation: v3`), not a
 # release id and not a schema version: docs/architecture/TERMINOLOGY_AND_NAMING.md §2.
-version = "0.1.0"
+version = "0.2.0"
 description = "COPREPAN 3.0 -- preservation-first pipeline for the CO.PRE.PAN press corpus"
 requires-python = ">=3.11"
 # The foundation skeleton has no runtime dependency. Every dependency added later is an exact pin

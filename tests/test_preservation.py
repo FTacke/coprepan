@@ -237,11 +237,17 @@ def test_preservation_code_has_no_deletion_path():
 
 
 def test_the_only_removals_elsewhere_are_the_named_ones():
-    assert deleting_calls("canonical.py") == [("_discard_staging", "unlink")]
-    assert deleting_calls("layer_store.py") == []
-    assert deleting_calls("outage_spool.py") == [("_release", "unlink"), ("_release", "unlink")]
-    assert deleting_calls("storage_roots.py") == [("_writable", "unlink")]
-    assert deleting_calls("ledger.py") == [("quarantine_torn_tail", "truncate")]
+    """Every module of the package, so that a new module cannot bring a deletion in unnoticed."""
+    expected = {
+        "canonical.py": [("_discard_staging", "unlink")],                      # its own .part- file only
+        "outage_spool.py": [("_release", "unlink"), ("_release", "unlink")],   # after the master verified
+        "storage_roots.py": [("_writable", "unlink")],                         # its own empty probe file
+        "ledger.py": [("quarantine_torn_tail", "truncate")],                   # torn bytes moved to a sidecar first
+        "pack.py": [("quarantine_torn_tail", "truncate")],                     # same, open packs in the workspace only
+    }
+    found = {path.name: deleting_calls(path.name) for path in sorted(SRC.glob("*.py"))}
+    assert {name: calls for name, calls in found.items() if calls} == expected
+    assert len(found) >= 17
 
 
 def test_the_staging_cleanup_refuses_anything_that_is_not_a_part_file(tmp_path):
