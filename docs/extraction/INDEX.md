@@ -1,8 +1,10 @@
 # Extraction — component index
 
-**Status: CONTRACT IMPLEMENTED; BASELINE EXTRACTOR ONLY — NOT VALIDATED, NOT ADOPTED.** No
-extraction of corpus material has taken place. Governing decision:
-[CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §5–§6. Current state:
+**Status: CONTRACT IMPLEMENTED; BASELINE EXTRACTOR ONLY (`EXPERIMENTAL`) — NOT VALIDATED, NOT
+ADOPTED. EVALUATION INSTRUMENT BUILT; NO GOLD, NO RESULT.** No extraction of corpus material has
+taken place. Governing decisions:
+[CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §5–§6,
+[CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §9–§10. Current state:
 [`docs/STATUS.md`](../STATUS.md). Method for adopting an extractor:
 [methodology](../methodology/TRANSFORMATION_AND_VALIDATION_PRINCIPLES.md).
 
@@ -19,6 +21,10 @@ storage of extractions and replay. Design background:
 | Extraction record, digests, `Extractor` wrapper | `src/coprepan/extraction.py` | `tests/test_extraction.py` |
 | Baseline extractor `baseline_html/0.1.0` (standard library HTML parser) | `src/coprepan/extraction.py` | same |
 | Storage under a fingerprint; replay from the preservation root | `src/coprepan/core_pipeline.py`, `src/coprepan/layer_store.py` | `tests/test_core_pipeline.py` |
+| Extractor lifecycle | `src/coprepan/extraction.py` | `tests/test_admission_eval.py` |
+| Evaluation harness, metrics, review package | `src/coprepan/extraction_eval.py` | `tests/test_admission_eval.py` |
+| Gold-sample design (no sample) | [`GOLD_SAMPLE_DESIGN.md`](GOLD_SAMPLE_DESIGN.md) | — |
+| Extractor candidates for Phase 3 (a list from general knowledge, unverified) | [`EXTRACTOR_CANDIDATES.md`](EXTRACTOR_CANDIDATES.md) | — |
 
 ## 2. Record (`coprepan-extraction/v1`)
 
@@ -80,9 +86,9 @@ templates. It exists to exercise the contract.
 
 | Item | Kind | Where |
 |---|---|---|
-| Gold sample stratified by outlet; preregistered comparison of extractor candidates; adoption | scientific, Phase 3 | master plan §11 |
+| Gold sample stratified by outlet; preregistered comparison of extractor candidates; adoption | scientific, Phase 3 — **instrument and design delivered 2026-10-07** (§8); the sample, the codebook, the reviewers and the criterion are open | master plan §11; [`GOLD_SAMPLE_DESIGN.md`](GOLD_SAMPLE_DESIGN.md) §9 |
 | Per-outlet rule sets and their versioning | technical, Phase 3 | target architecture §7 |
-| Admission labels (article / not article, access class, language from content, length, type) | technical and scientific, Phase 3 | target architecture §3 |
+| Admission labels: content level (article / not article, access class, language from content, length, type) | scientific, Phase 3 — the **technical** label exists ([admission](../admission/INDEX.md)) | target architecture §3 |
 | DOM anchors per block | technical, Phase 3 | target architecture §7 |
 | Date parsing, time zone, date-basis ranking | scientific, Phase 3 | corpus supply §3 |
 | Section mapping, register, genre, opinion | enrichment layers, not extraction | CPD-0005 §6 |
@@ -91,3 +97,35 @@ templates. It exists to exercise the contract.
 
 - 2026-10-07 — extraction contract decided (CPD-0005), implemented with a baseline extractor,
   stored and replayed in the vertical canary on synthetic fixtures. Nothing validated.
+- 2026-10-07 — extractor lifecycle, evaluation harness and review package decided (CPD-0007) and
+  built; gold-sample design and candidate list written. Exercised on synthetic pages only. No
+  gold, no comparison, nothing adopted.
+
+## 8. Lifecycle and evaluation (CPD-0007 §9–§10)
+
+**Lifecycle**: `EXPERIMENTAL` → `CANDIDATE` → `VALIDATED` → `ACTIVE` → `RETIRED`.
+`baseline_html/0.1.0` is `EXPERIMENTAL`; `Extractor.require_active()` refuses anything that is not
+`ACTIVE`. A step is a decision with evidence.
+
+**Harness** (`extraction-eval/1`):
+
+| Step | Function | Output |
+|---|---|---|
+| draw | `draw_sample(frame, strata, per_stratum, seed)` | cases, by hash order within strata |
+| freeze | `sample_manifest(...)`, `verify_sample` | `coprepan-extraction-sample/v1` with `sample_sha256` |
+| run | `evaluate(manifest, arms, body_of, references=None, catastrophic_retention_below=None)` | `coprepan-extraction-evaluation/v1`: per case and arm the state (`OK` · `EXTRACTOR_ERROR` · `NO_OUTPUT`), digests, pairwise disagreement, scores where a reference is `JUDGED`, a summary |
+| review | `review_package(manifest, result, body_of, out_dir, blind_seed)` | one `coprepan-extraction-review-case/v1` per case, blinded; `blinding_key.json` apart |
+| reference | `reference_from_decisions(review_dir)` | `coprepan-extraction-reference/v1` per decided case |
+
+Arms are extractors or `PrecomputedArm`s. Each arm runs twice per case; two answers stop the run
+(`NonDeterministicArm`). The body a case names must have the hash the manifest froze. A scored
+evaluation needs `catastrophic_retention_below` stated: it has no default.
+
+**Metrics** against a `JUDGED` reference: `text_retention` (share of reference tokens reproduced),
+`boilerplate_inclusion` (share of the arm's tokens not in the reference), `body_boundary` (first
+and last tokens agree), `title_correct`, per-field `metadata`, `catastrophic` (`no_output`,
+`not_extracted`, `empty_body`, `body_mostly_lost`). **Diagnostics, not verdicts**: they are token
+comparisons and cannot see whether a boundary is editorially right.
+
+**What this is not**: a gold sample, a comparison, a result. The harness has seen synthetic pages
+only, and its own numbers on them say nothing about any extractor on any real page.

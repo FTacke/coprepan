@@ -361,6 +361,31 @@ ordered `[kind, role, text]` of all blocks. **BODY** is the view over the blocks
 | extraction reason (added) | `unsupported_content_encoding`, `undecodable_content_encoding` | [extraction](../extraction/INDEX.md) §2 |
 | schema ids minted | `coprepan-discovery-input/v1`, `-discovery-event/v1`, `-discovery-candidate/v1`, `-request-log/v1`, `-acquisition-policy/v1`, `-crawler-identity/v1`, `-preservation-target/v1`, `-preservation-readiness/v1`, `-capacity-model/v1`, `-acquisition-baseline/v1`, `-registry-review/v1` | the indexes above |
 
+## 11. Additions of 2026-10-07 (CPD-0007)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **qualification** (term) | the recorded decision whether a candidate is requested. Not a judgement of the page | CPD-0007 §2 |
+| **candidate lifecycle** (term) | the state of a candidate derived from its request history; never stored | CPD-0007 §3 |
+| **revalidation** (term) | a 304 answer to a conditional request, confirming a body that is held; a fetch of its own, without a body | CPD-0007 §4 |
+| **admission label** (term, §3.1) | now with a first, technical rule set; says whether a fetch yielded readable body text, nothing about content | [admission](../admission/INDEX.md) |
+| **freeze manifest** (term) | the hashed listing of a tree at an instant. Not a copy, not a release | [legacy](../legacy/INDEX.md) §5 |
+| qualification decision | `QUALIFIED`, `REJECTED`, `DEFERRED` | [acquisition](../acquisition/INDEX.md) §11 |
+| candidate state | `NEVER_FETCHED`, `FETCHED`, `SETTLED`, `FAILING`, `SUSPENDED`, `ABSENT`, `RETIRED`, `REFUSED`, `DENIED`, `DEFERRED`, `MOVED` | same |
+| channel health state | `HEALTHY`, `DEGRADED`, `STALE`, `FAILING`, `DISABLED`, `UNKNOWN` | same |
+| reserved channel slug | `robots_sitemaps` (a discovery source, never a registered channel) | same |
+| technical status | `TECHNICALLY_USABLE`, `TECHNICALLY_UNUSABLE`; reason effect `blocks`, `informs` | [admission](../admission/INDEX.md) §2 |
+| extractor lifecycle | `EXPERIMENTAL`, `CANDIDATE`, `VALIDATED`, `ACTIVE`, `RETIRED` | [extraction](../extraction/INDEX.md) §8 |
+| evaluation arm state | `OK`, `EXTRACTOR_ERROR`, `NO_OUTPUT` | same |
+| reference state | `JUDGED`, `NOT_AN_ARTICLE`, `DAMAGED_SOURCE`, `UNJUDGEABLE` | [gold-sample design](../extraction/GOLD_SAMPLE_DESIGN.md) §5 |
+| legacy freeze state | `MANIFEST_ONLY`; verification `VERIFIED`, `DIFFERS` | [legacy](../legacy/INDEX.md) §5 |
+| canary preflight | `READY`, `NOT_READY` | [acquisition](../acquisition/INDEX.md) §12 |
+| component versions (added) | `fetch-planner/1`, `candidate-filter-generic/1`, `admission-technical/1`, `channel-health/1`, `extraction-eval/1`, `legacy-freeze/1` | the indexes above |
+| schema ids minted | `coprepan-legacy-freeze-manifest/v1`, `-legacy-freeze-listing/v1`, `-candidate-qualification/v1`, `-candidate-rules/v1`, `-schedule-policy/v1`, `-admission-label/v1`, `-extraction-sample/v1`, `-extraction-evaluation/v1`, `-extraction-reference/v1`, `-extraction-review-case/v1`, `-canary-plan/v1`, `-canary-preflight/v1` | the indexes above |
+
+Two words used with two meanings, kept apart by their object: `FAILING` (a candidate; a channel)
+and `DEFERRED` (a qualification; a candidate whose request the policy deferred).
+
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

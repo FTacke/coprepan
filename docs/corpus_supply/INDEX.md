@@ -137,6 +137,12 @@ A channel has a state (`ACTIVE`, `EMPTY`, `FAILING`, `BLOCKED`) with last succes
 The legacy feed feedback loop (deactivation after empty runs) becomes this state; a state change is
 ledgered and reversible, never a silent permanent deactivation.
 
+*Amended 2026-10-07 (CPD-0007 §7).* Health is **derived** from the discovery evidence when asked
+for and not stored: `HEALTHY` · `DEGRADED` · `STALE` · `FAILING` · `DISABLED` · `UNKNOWN`
+(`src/coprepan/channel_health.py`). "Readable, nothing new" is `STALE` — information, not a fault.
+Health switches no channel on or off: that is the registry's and the policy's decision, and a
+change there is a reviewed commit. The four state names above are superseded by these six.
+
 ## 9. Syndication and duplicates
 
 Exact duplicates and near-duplicate / syndication clusters are recorded as relations
@@ -183,7 +189,8 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 | Complete legacy-slug → `outlet_id` mapping | **proposed 2026-10-07** for the names in the legacy database (§16), `mapping_status: hypothesis`; open: human review; names that exist only in directories or exported files | master plan §11 |
 | **Human review of the registry proposal** — final ids, one-outlet questions, attributes, time zones, URL rules, registration | **gate before any acquisition**; review package delivered 2026-10-07 | §16, §17 |
 | Value set of `scope`; form of `orientation` | not frozen: free text with `unknown` | §15 |
-| Channel health state | ledgered operational state, not a registry field; not built | §8 |
+| Channel health state | **built 2026-10-07** as a derived report, not a registry field and not a stored state; open: thresholds, and what an operator does with a state | §8 |
+| Outlet rules for candidate qualification; use of an outlet's robots sitemaps | registry content, by review; none exists | [acquisition](../acquisition/INDEX.md) §11 |
 
 ## 14. Milestones
 
@@ -197,6 +204,9 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 - 2026-10-07 — registry review package generated; a uniform id convention proposed (§17). Nothing
   registered. Run report:
   [`docs/agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md`](../agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md).
+- 2026-10-07 — channel health as a derived report; candidate qualification; a canary planner that
+  proposes registered outlets for diversity (it selects none today: none is registered). Run report:
+  [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).
 
 ## 15. Registry schema `coprepan-outlet-registry/v1`
 

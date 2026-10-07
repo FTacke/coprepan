@@ -4,9 +4,11 @@
 Discovery, the HTTP fetcher, the policy gate, crawler identity and the acquisition run exist as
 code and pass an end-to-end canary against a server on a loopback address. **Nothing has been
 requested from any real site, and nothing can be: the tracked policy is `NOT_DECIDED`, the tracked
-crawler identity is `not_configured`, and no outlet is registered** — three independent refusals.
+schedule policy is `NOT_DECIDED`, the tracked crawler identity is `not_configured`, and no outlet
+is registered** — four independent refusals.
 Governing decisions: [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §2–§3,
-[CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md).
+[CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md),
+[CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §2–§7, §11.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
 Entry point for: the acquisition run, discovery, the fetcher, the policy gate, robots evidence,
@@ -27,7 +29,11 @@ crawler identity, the fetch record, the pack. Storage roles, promotion, readines
 | Policy gate | `src/coprepan/policy.py`, `config/acquisition_policy.json` | `tests/test_policy.py`, `tests/test_fetcher.py` |
 | Crawler identity | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json` | `tests/test_policy.py` |
 | HTTP fetcher | `src/coprepan/fetcher.py` | `tests/test_fetcher.py` (real HTTP on loopback) |
-| HTTP acquisition run, request log | `src/coprepan/http_acquisition.py` | `tests/test_offline_e2e.py` |
+| HTTP acquisition run, request log | `src/coprepan/http_acquisition.py` | `tests/test_offline_e2e.py`, `tests/test_refetch_e2e.py` |
+| Candidate qualification | `src/coprepan/candidate_filter.py`, `config/candidate_rules.json` | `tests/test_schedule.py` |
+| Candidate lifecycle and fetch plan | `src/coprepan/schedule.py`, `config/schedule_policy.json` | `tests/test_schedule.py`, `tests/test_refetch_e2e.py` |
+| Channel health | `src/coprepan/channel_health.py` | `tests/test_schedule.py`, `tests/test_refetch_e2e.py` |
+| Canary planner and preflight | `src/coprepan/canary.py` | `tests/test_canary.py` |
 | Recorded-exchange acquisition; seal → promotion → `RAW_PRESERVED` | `src/coprepan/core_pipeline.py` | `tests/test_core_pipeline.py` |
 
 ## 2. The path of a request
@@ -35,7 +41,8 @@ crawler identity, the fetch record, the pack. Storage roles, promotion, readines
 ```text
 registered channel ──► policy gate ──► fetch channel document ──► discovery ──► candidate
                                                                                     │
-                    candidate ──► policy gate ──► fetch item ──► fetch record ──► open pack ──► ledger
+     candidate ──► qualification ──► fetch plan (due?) ──► policy gate ──► fetch item
+                                                               ──► fetch record ──► open pack ──► ledger
 ```
 
 then seal, promotion, identity and extraction ([storage](../storage/INDEX.md),
@@ -48,6 +55,7 @@ Workspace layout written by a run:
 | `runs/<run_id>/run.json`, `result.json` | run record and result, each written once |
 | `requests/requests.jsonl` | `PLANNED` and `FINISHED` rows per request (`coprepan-request-log/v1`) |
 | `discovery/inputs.jsonl`, `events.jsonl`, `candidates.jsonl` | discovery evidence |
+| `discovery/qualifications.jsonl` | one decision per candidate and rule set (`coprepan-candidate-qualification/v1`) |
 | `packs/<pack_id>.warc.gz(.open)`, `.index.jsonl`, `.pack.json` | the pack |
 | `ledgers/preservation.jsonl` | state of every fetch |
 
@@ -68,7 +76,8 @@ without a `FINISHED` row is an interrupted request and stays on record.
 | `outcome` | `FETCHED` (a complete response came back, any status) · `FETCH_FAILED` |
 | `failure_reason`, `failure_detail` | `timeout` · `connection_error` · `incomplete_response` · `malformed_response` · `body_limit_exceeded` · `redirect_limit_exceeded` · `unknown` |
 | `request` | `method`, `requested_url` (as requested), `headers` |
-| `response` | `status`, `final_url`, `redirect_chain`, `redirect_not_followed`, `headers` (ordered pairs, repetitions kept), `content_type`, `content_encoding` |
+| `response` | `status`, `final_url`, `redirect_chain`, `redirect_statuses` *(CPD-0007 §5)*, `redirect_not_followed`, `headers` (ordered pairs, repetitions kept), `content_type`, `content_encoding` |
+| `revalidates` *(CPD-0007 §4)* | `{fetch_id, body_sha256}` on an empty 304 that answered a conditional request; otherwise `not_applicable` |
 | `fetch_started_at`, `fetch_finished_at` | UTC instants, microseconds |
 | `body_sha256`, `body_size_bytes` | of the stored body: the HTTP payload, content coding intact, transfer coding removed |
 | `discovery` | `channel_id`, or `unknown` |
@@ -128,9 +137,11 @@ required; clock and sleep injected. Retry and redirect semantics: CPD-0006 §3.
 | The crawler's public identity values | operator | O-2 |
 | Registration of outlets | operator, scientific | O-11 |
 | Behaviour against real outlets: TLS, real redirects, real feeds, bot protection | validation debt | STATUS §6; Phase-2 canary |
-| Re-fetch schedule; channel health; conditional requests | technical, Phase 2 | master plan §11 |
-| Which listed URLs are worth fetching (per-outlet filters); robots `Sitemap:` lines as a discovery source | technical | CPD-0006, "Not decided here" |
-| Pack rollover by size; `revisit` records; another codec | technical | storage §3 |
+| The schedule policy: every interval and limit of re-fetching; whether `Crawl-delay` binds | institutional, part of O-1 | §11; CPD-0007 §3, §6 |
+| Outlet rules for candidate qualification; whether an outlet's robots sitemaps are read | registry content, by review | §11; O-11 |
+| Channel-health thresholds; any consequence of a health state | operator | §11 |
+| The canary's outlets, limits and budget | operator | §12 |
+| Pack rollover by size; `revisit` records for 304 answers; another codec | technical | storage §3 |
 
 ## 10. Milestones
 
@@ -139,3 +150,72 @@ required; clock and sleep injected. Retry and redirect semantics: CPD-0006 §3.
 - 2026-10-07 — discovery, fetcher, policy gate, crawler identity, HTTP acquisition run decided
   (CPD-0006) and built; offline end-to-end canary with failure injection against a loopback
   server; pack read by an independent WARC reader. External acquisition not activated.
+- 2026-10-07 — candidate qualification, candidate lifecycle and fetch plan, conditional requests,
+  permanent-redirect handling, robots sitemaps and crawl-delay evidence, channel health, canary
+  planner and preflight decided (CPD-0007) and built; re-fetching exercised end to end against a
+  loopback server. External acquisition not activated.
+
+## 11. Qualification, schedule, conditional requests, redirects, health (CPD-0007)
+
+**Qualification** — per candidate `QUALIFIED` / `REJECTED` / `DEFERRED` with reasons and rule set.
+Generic rule set `candidate-filter-generic/1`: `site_root`, asset and binary-document extensions,
+channel-document extensions, a URL that is a registered channel. Outlet rules
+(`config/candidate_rules.json`, schema `coprepan-candidate-rules/v1`): `version`,
+`reject_path_prefixes`, `reject_path_patterns`, `allow_path_patterns` — **none is tracked**. An
+allow and a reject rule on the same URL give `DEFERRED` (`conflicting_rules`). A rejected
+candidate stays in the tables; a new rule version adds a decision beside the old one.
+
+**Lifecycle** — derived from the request log, never stored (`schedule.lifecycle`, `schedule.plan`):
+
+| State | Meaning | Due again |
+|---|---|---|
+| `NEVER_FETCHED` | listed, never requested | at once |
+| `FETCHED` | last answer 2xx, or a 304 that revalidated | after the revisit interval (longer for each unchanged answer) |
+| `SETTLED` | revisit window closed | never |
+| `FAILING` | transport failure, 429, 5xx, a 304 nobody asked for | after the failure backoff; never before a `Retry-After` |
+| `SUSPENDED` | *n* failures in a row | after the cooldown |
+| `ABSENT` | 404 or 410 | after the recheck interval |
+| `RETIRED` | absent on *n* rechecks | never |
+| `REFUSED` | other 4xx; a redirect that was not followed | after the recheck interval |
+| `DENIED` | the policy gate said `DENY` | at once under a new policy version, otherwise after the recheck interval |
+| `DEFERRED` | the policy gate said `DEFER` | when the deferral ends |
+| `MOVED` | permanently redirected to another URL of the outlet | never; the target is its own candidate |
+
+Every interval and *n* is a field of the schedule policy (`coprepan-schedule-policy/v1`); the
+tracked file is `NOT_DECIDED` and `load_schedule_policy` refuses it. The plan is a pure function
+of history, policy and instant: `fetch-planner/1`.
+
+**Request log** — a `FINISHED` row also carries `result` (status, final URL, redirect statuses,
+`etag`, `last_modified`, `body_sha256`, `revalidates`, `moved_permanently_to`) and
+`policy_hints.robots_crawl_delay`. A permanent redirect adds a second `FINISHED` row for the
+target candidate (`attributed_from`).
+
+**Conditional requests** — validators of the last body held are sent on the first hop only. A 304
+is a fetch with an empty body and `revalidates`; no body is invented. A 200 is judged by its body
+hash whatever its `ETag`. Switchable in the schedule policy.
+
+**Robots** — `use_robots_sitemaps=True` reads the sitemaps a robots file names under the reserved
+source `<outlet>:ch:robots_sitemaps`, through the same gate and budget; off by default.
+`Crawl-delay` is recorded and applied by nothing.
+
+**Channel health** (`channel-health/1`) — `HEALTHY` · `DEGRADED` · `STALE` · `FAILING` ·
+`DISABLED` · `UNKNOWN`, read from the discovery tables with the evidence; thresholds are inputs.
+It replaces §8 of the corpus-supply model's stored state. It switches nothing on or off.
+
+## 12. Canary planner and preflight (CPD-0007 §11)
+
+```text
+python -m coprepan.canary plan --outlets 5 --seed <seed>     # a proposal for review
+python -m coprepan.canary preflight --outlet <id> … --commit <hash> --tests-passed <n> \
+       --tests-commit <hash> --approved-baseline <file> --required-free-bytes <n>
+```
+
+Neither makes a request. The plan picks registered outlets for diversity of country, outlet type
+and channel kind and says why; it does not know which outlet is a sensible first target. The
+preflight checks O-11, O-1 (acquisition and schedule policy), O-2, O-3 (target `READY`, runtime
+workspace), the suite green on this commit, and no drift against the baseline manifest the
+operator approved; exit code 1 until `READY`. O-4 is not a precondition.
+
+On the repository as committed (measured 2026-10-07): the plan selects 0 outlets — all 82 are
+ineligible (not registered; placeholder URL rules; no time zone; some without a channel) — and
+the preflight is `NOT_READY` on every check.

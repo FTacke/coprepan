@@ -25,12 +25,13 @@ its area.
 | Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | root resolution, promotion, spool, ledger, layer store; packs promoted in tests only; no configured root |
 | Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | registry schema; 82 outlets *proposed* by the legacy import; none registered |
 | Identity (id serialisation, canonical URL key, identity tables) | [`docs/identity/INDEX.md`](../identity/INDEX.md) | serialisation, URL key, document and version assignment — on recorded exchanges only |
-| Acquisition (run, discovery, fetcher, policy gate, crawler identity, fetch record, pack) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | built and tested offline (loopback server, synthetic documents); externally not activatable as committed |
-| Extraction (record, blocks, metadata, replay) | [`docs/extraction/INDEX.md`](../extraction/INDEX.md) | contract and a baseline extractor; nothing validated or adopted |
+| Acquisition (run, discovery, fetcher, policy gate, crawler identity, fetch record, pack) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | built and tested offline (loopback server, synthetic documents), including re-fetching; externally not activatable as committed |
+| Extraction (record, blocks, metadata, replay) | [`docs/extraction/INDEX.md`](../extraction/INDEX.md) | contract, a baseline extractor (`EXPERIMENTAL`), an evaluation harness and a gold-sample design; no gold; nothing validated or adopted |
+| Admission labels | [`docs/admission/INDEX.md`](../admission/INDEX.md) | the technical label only, offline; no content-level label |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
-| Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze not executed |
+| Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze manifest built and verified (O-10); no preserved copy |
 
-Admission, normalisation and release have no component index yet: until their first implementation run they are specified in the target
+Normalisation and release have no component index yet: until their first implementation run they are specified in the target
 architecture (§1). The run that starts implementing one of them creates its `docs/<component>/INDEX.md`
 and adds it here.
 
@@ -57,6 +58,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0004](../decisions/CPD-0004_legacy-component-dispositions.md) | Legacy component dispositions | `ACTIVE` |
 | [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) | Core pipeline contracts (run, fetch record, pack, identity, extraction, layers) | `ACTIVE_WITH_VALIDATION_DEBT`; amended by CPD-0006 §1 |
 | [CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md) | Discovery, HTTP transport, policy gate, crawler identity, readiness contracts | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) | Legacy freeze manifest; candidate qualification; re-fetch lifecycle and plan; conditional requests; channel health; technical admission labels; extractor lifecycle; evaluation harness; canary preflight | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -94,12 +96,18 @@ Machine-checked contracts:
 | Registry review package equals what the generator produces from the tracked registry | `src/coprepan/registry_review.py`, `config/registry_review/outlet_review_package.json`, `docs/corpus_supply/REGISTRY_REVIEW_PACKAGE.md` | `tests/test_readiness.py` |
 | Tests reach at most a literal loopback address | `tests/conftest.py` | `tests/test_test_guards.py` |
 | Tracked registry proposal agrees with its review report; nothing registered | `config/outlet_registry.json`, `config/registry_review/` | `tests/test_registry.py` |
+| Legacy freeze manifest: builder, verifier; the tracked manifest is self-consistent | `src/coprepan/legacy_freeze.py`, `docs/legacy/freeze/coprepan-legacy-2026-06/` | `tests/test_legacy_freeze.py` |
+| Candidate qualification; candidate lifecycle and fetch plan; the tracked schedule policy plans nothing | `src/coprepan/candidate_filter.py`, `src/coprepan/schedule.py`, `config/candidate_rules.json`, `config/schedule_policy.json` | `tests/test_schedule.py` |
+| Channel health as a derived report | `src/coprepan/channel_health.py` | `tests/test_schedule.py` |
+| Conditional requests, permanent redirects, robots sitemaps, re-fetching end to end | `src/coprepan/fetcher.py`, `src/coprepan/http_acquisition.py` | `tests/test_refetch_e2e.py` |
+| Technical admission labels; extractor lifecycle; evaluation harness and review package | `src/coprepan/admission.py`, `src/coprepan/extraction.py`, `src/coprepan/extraction_eval.py` | `tests/test_admission_eval.py` |
+| Canary planner and fail-closed preflight (`NOT_READY` as committed) | `src/coprepan/canary.py` | `tests/test_canary.py` |
 
 ## 4. Open decisions and gates
 
 | Register | Scope |
 |---|---|
-| Master plan §13 (O-1 … O-10) | operator and institutional decisions |
+| Master plan §13 (O-1 … O-12) | operator and institutional decisions |
 | `docs/STATUS.md` §5 | gates blocking production crawling |
 | "Open" section of each component index | technical and scientific open points of that area |
 | "Not decided here" of each decision | what a decision deliberately left open |

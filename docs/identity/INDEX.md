@@ -87,6 +87,8 @@ never independent of path case.
   unit-tested (Foundation Core I). No identity stage, no minted id.
 - 2026-10-07 — CPD-0003 reviewed against CO.RA.PAN 3.0 (§8): both of its own choices kept.
   Identity policy decided (CPD-0005 §4); identity tables implemented (§7).
+- 2026-10-07 — revalidation observations (CPD-0007 §4): a 304 confirms an existing version and
+  creates none.
 
 ## 7. The identity stage (CPD-0005 §4)
 
@@ -106,6 +108,9 @@ Code: `src/coprepan/document_identity.py`; tests: `tests/test_core_pipeline.py`.
 | another URL of the outlet with the same BODY text | another document, `duplicate_of` the first |
 | a URL that now redirects to, or declares as canonical, another existing document | `moved_to` from the old document to the new |
 | a response that cannot be extracted (PDF, image) | a document, no version |
+| a 304 that revalidates a fetch the tables know *(CPD-0007 §4)* | one more observation (`url_key_basis: revalidation`) of that fetch's document and version; no new version, no extraction |
+| a 304 that revalidates a fetch the tables do not know | nothing assigned (`revalidation_target_unknown`); the fetch stays preserved |
+| a permanent redirect to another URL of the outlet *(CPD-0007 §5)* | the candidate moves ([acquisition](../acquisition/INDEX.md) §11); the document follows the rules above |
 | no URL of the fetch on a registered origin | no document; the fetch stays preserved |
 | a truncated id that would stand for two keys or two texts | refused (`DocumentIdCollision`) |
 

@@ -355,3 +355,10 @@ size of a real stored page, has never been measured, and the legacy rate describ
 under a crawl loop that fetched each URL once. What is missing, exactly: *stored body bytes per
 fetch and fetches per outlet-day, measured on real outlets* — the Phase-2 canary's job. Until then
 any total is a scenario, and the calculator labels it so.
+- 2026-10-07 — CPD-0007: a 304 answer is preserved as its own fetch (empty body, `revalidates`),
+  written to the pack as an ordinary response record — a WARC `revisit` record stays open (§11).
+  Legacy freeze manifest built (legacy index §5): a manifest, **not** a preserved copy; the copy
+  and its restore check need O-3. Admission labels and candidate qualifications are further
+  append-only tables of the runtime workspace, whose durable home is open like that of the
+  identity tables.
+  Run report: [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).

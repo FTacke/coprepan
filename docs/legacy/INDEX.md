@@ -83,7 +83,7 @@ size of that effect may be made until the re-fetch canary (§7) has measured it.
 
 Definitions: [naming](../architecture/TERMINOLOGY_AND_NAMING.md) §5.6.
 
-## 5. The frozen legacy release (PLANNED)
+## 5. The frozen legacy release (MANIFEST BUILT; RELEASE INCOMPLETE)
 
 Target: **`coprepan-legacy-2026-06`** — the legacy corpus exactly as the studies read it, as one
 named, hash-manifested release.
@@ -93,9 +93,9 @@ Scope of the manifest: `json_annotated/`, `json_raw/`, `json_raw_extended/`, bot
 
 Procedure (reading only; nothing is written into the legacy tree):
 
-1. hash manifest written outside the legacy repository;
-2. verified copy on a preservation target;
-3. restore check;
+1. hash manifest written outside the legacy repository — **done 2026-10-07** (below);
+2. verified copy on a preservation target — open, needs O-3;
+3. restore check — open, needs step 2;
 4. gate: manifest verified against the live tree, and a study loader reads the frozen copy with
    identical results on a sample.
 
@@ -103,9 +103,30 @@ Why it matters now: the freeze is also the only backup the legacy corpus would h
 copy exists outside the legacy working copy is unknown (master plan §13, O-9). No study pins its
 corpus input today; after the freeze a study can pin a hash.
 
-**Not executed by the bootstrap run**: the preservation target is undecided (O-3). The manifest
-half (step 1) needs no preservation target and can proceed on operator go-ahead; the release is
-complete only with steps 2–4. See master plan §11, Phase 0.
+**Step 1, executed 2026-10-07 on the operator's go-ahead (O-10 `PASS`).** The release is
+complete only with steps 2–4; the preservation target is undecided (O-3). See master plan §11,
+Phase 0.
+
+| | |
+|---|---|
+| Manifest | [`freeze/coprepan-legacy-2026-06/manifest.json`](freeze/coprepan-legacy-2026-06/manifest.json) (`coprepan-legacy-freeze-manifest/v1`), state `MANIFEST_ONLY` |
+| Listing | `freeze/coprepan-legacy-2026-06/files.jsonl` — one row per file: relative path, size, SHA-256; bound by the manifest (SHA-256 `e7029dd7…c93cc4`, 7,352,041 bytes) |
+| Whole tree (measured) | 32,235 files, 18,782,593,808 bytes — includes the legacy `.venv` (28,557 files) and other working files, so that *nothing* in the tree is outside the record |
+| Release scope of this section (measured) | 3,256 files, 17,370,148,925 bytes under `json_annotated/`, `json_raw/`, `json_raw_extended/`, `data/db/`, `state/annotation/`, `backup/`, `outputs/section_inventory/` |
+| Legacy code commit | `3e6bdd3350913d55c07efe500036bf752de65cc2`, working tree clean |
+| Not in the listing | `.git/` — bound by the commit and by the hash of `git status` |
+| Tool | `python -m coprepan.legacy_freeze build | verify` (`legacy-freeze/1`); reads only |
+| Verification | re-read of the whole tree by the module (`VERIFIED`) and by an independent standard-library script (`identical`), both after the build; legacy `git status` clean before and after |
+
+What the manifest is and is not:
+
+- **Fixity is bytes**: path, size, SHA-256. No modification time is recorded or compared.
+- The two SQLite files are hashed **as the files on disk**, not as checkpointed copies: no
+  database was opened. A checkpointed copy belongs to step 2.
+- It is evidence of what the tree was on 2026-10-07. **It is not a backup.** If the legacy tree
+  is lost, the manifest can prove what was lost and restore nothing.
+- To check the tree against it later:
+  `python -m coprepan.legacy_freeze verify --root <legacy tree> --manifest-dir docs/legacy/freeze/coprepan-legacy-2026-06 --git-head <head>`.
 
 ## 6. What is reused, and what is not
 
@@ -169,3 +190,7 @@ place.
   [CPD-0004](../decisions/CPD-0004_legacy-component-dispositions.md): where the two differ, the
   decision governs.** The legacy import was executed on a copy of `data/db/coprepan.sqlite` made
   outside the legacy tree; the source file's hash was identical before and after.
+- 2026-10-07 — **legacy freeze manifest built and verified** (O-10 on operator go-ahead; §5 step
+  1). The legacy tree was read only; its commit and `git status` are unchanged. No copy was made:
+  steps 2–4 need a preservation target (O-3).
+  Run report: [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).

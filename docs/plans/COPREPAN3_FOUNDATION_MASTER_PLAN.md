@@ -216,6 +216,7 @@ required before scientific use · **O** optional optimisation · **R** future re
 | Open deliverables | legacy freeze `coprepan-legacy-2026-06`: hash manifest, preserved copy, restore check [F]; preservation target and capacity decision [C]; acquisition policy statement — robots and opt-out handling, crawler identity and contact, retention of raw copies [C]; complete legacy-slug → `outlet_id` mapping (delivered with the Phase-1 registry import) [F] |
 | Gate | manifest verified against the live legacy tree; a study loader reads the frozen copy with identical results on a sample |
 | Blocked by | O-3 (preservation target) for the preserved copy; O-10 (go-ahead) for the manifest |
+| Status 2026-10-07 | **hash manifest built and verified against the live legacy tree** (O-10 given; legacy index §5): 32,235 files, 18,782,593,808 bytes (measured). **Phase 0 stays open**: the preserved copy, the restore check and the study-loader half of the gate need O-3 |
 
 ### Phase 1 — Core infrastructure
 
@@ -346,6 +347,20 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
    (e) the baseline freeze (O-12). Technical work that needs none of this and can run in
    parallel: admission labels on extraction records; a re-fetch schedule and channel health; the
    legacy freeze manifest once O-10 is given.
+9. *Added 2026-10-07 (pre-canary completion run).* **All of the parallel technical work of item 8
+   is done**, offline (CPD-0007): the legacy freeze manifest (O-10 `PASS`); candidate
+   qualification; the candidate lifecycle and a deterministic fetch plan; conditional requests;
+   permanent-redirect handling; robots sitemaps and crawl-delay evidence; channel health;
+   technical admission labels. For Phase 3, ahead of its data: the extractor lifecycle, the
+   evaluation harness with review package, a gold-sample design and a candidate list. For the
+   canary: a planner and a fail-closed preflight (`python -m coprepan.canary`). It delivers **no
+   Phase-2 or Phase-3 gate** and no gold.
+10. *Added 2026-10-07.* **The order of item 8 stands, with one addition to (b):** the acquisition
+    policy (O-1) now visibly includes the **schedule policy** — how often a page is asked again,
+    when a failing or absent URL is left alone, whether conditional requests are used, whether
+    `Crawl-delay` binds. No value of it is built in. Engineering that remains is bound to the
+    operator's answers and to real material: the Phase-1 gate on the chosen target, the canary
+    itself, then Phase 3 on what the canary preserved.
 
 ## 13. Open operator and institutional decisions
 
@@ -363,7 +378,7 @@ Core I.
 | **O-7** | **Publication branding** of the generation: "COPREPAN 3.0" or "CO.PRE.PAN 3.0". Changes no identifier. | operator style | nothing | naming §1 |
 | **O-8** | **Code relationship to `corapan_playground`.** Consume its storage / change-decision / accounting modules as a pinned dependency after generalisation there, or keep own implementations against the same on-disk contracts. | technical, operator | nothing now; revisit in Phase 1 | audit §18 |
 | **O-9** | **Existing backup of the legacy data.** Whether any copy exists outside the legacy working copy. Changes the urgency of the freeze, not its necessity. | factual, operator knowledge | nothing | audit Q-5 |
-| **O-10** | **Go-ahead for the legacy freeze manifest.** The hash manifest reads the legacy tree only and needs no preservation target; it may run before O-3 is answered. | operator | Phase 0 closure | legacy index §5 |
+| **O-10** | **Go-ahead for the legacy freeze manifest.** The hash manifest reads the legacy tree only and needs no preservation target; it may run before O-3 is answered. **Answered 2026-10-07: given; manifest built and verified (`PASS`).** The preserved copy and restore check remain under O-3. | operator | Phase 0 closure | legacy index §5; `docs/legacy/freeze/coprepan-legacy-2026-06/` |
 | **O-11** *(added 2026-10-07)* | **Registry review.** Which of the 82 proposed outlets are registered, under which final ids, as how many outlets, with which type, group, time zone, web origins and URL rules. | operator, scientific | any acquisition; the Phase-2 canary | corpus-supply index §16–§17; `config/registry_review/`; the review package |
 | **O-12** *(added 2026-10-07)* | **Acquisition baseline freeze.** The operator's act of freezing the baseline manifest (registry, policy, identity, code, decisions, schemas, target, tests) before scheduled acquisition. Distinct from O-10, which concerns the legacy corpus. | operator | scheduled crawling | CPD-0006 §9; `src/coprepan/freeze.py` — state `PRE_FREEZE` today |
 
@@ -372,6 +387,11 @@ Core I.
 policy is decided; O-2 the identity contract exists, four values are missing; O-3 a readiness
 check exists, no target is chosen; O-4 a capacity model exists, the decisive measurement (bytes
 per real fetched page) does not; O-11 a review package is delivered.
+
+*Added 2026-10-07 (pre-canary completion run):* O-1 also covers the schedule policy
+(`config/schedule_policy.json`, `NOT_DECIDED`) and whether `Crawl-delay` binds; O-10 is answered;
+O-11 additionally carries, per outlet, any candidate-qualification rule and whether the outlet's
+robots sitemaps are read — both optional, neither needed for registration.
 
 ## 14. Validation still owed
 
