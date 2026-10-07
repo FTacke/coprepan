@@ -26,3 +26,5 @@ test_schedule.py             # re-fetch lifecycle and plan, candidate qualificat
 test_admission_eval.py       # admission labels, extractor lifecycle, evaluation harness, review package
 test_refetch_e2e.py          # re-fetching end to end: conditional requests, redirects, robots sitemaps
 test_canary.py               # real-canary planner and fail-closed preflight
+# Cross-corpus analysis contract (CPD-0008)
+test_analysis_contract.py    # crosscorpus-analysis/v1: conformance of a press and a radio fixture, invalid bundles
