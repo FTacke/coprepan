@@ -2,10 +2,10 @@
 
 ```text
 run_started_at:      2026-10-07T20:32:24+02:00   (first clock reading; the session began shortly before)
-run_ended_at:        PENDING                     (filled in by the completing commit, §7)
+run_ended_at:        2026-10-07T20:34:36+02:00   (last clock reading, after the first push; the completing commit followed)
 timezone:            Europe/Berlin
-wall_clock_seconds:  PENDING
-status:              PENDING                     (set by the completing commit, §7)
+wall_clock_seconds:  132   (between the two readings above)
+status:              PASS
 kind of run:         implementation (infrastructure) with reproducibility / infrastructure-integrity validation
 EXTERNAL_API_USAGE = NONE   (no model call, no external API; the only network use is git transport
                              to the repository's own remote, authorised by the operator brief — §7)
@@ -149,7 +149,29 @@ of the first.
 
 ## 7a. Commit, remote and push record
 
-PENDING — written by the completing commit.
+Written after the push of the first commit (measured 2026-10-07, 20:34 +02:00).
+
+| Item | Value |
+|---|---|
+| Staging | explicit pathspecs (the eight root files, `config/storage_targets.yml`, `docs`, `src/coprepan`, `tests`); 36 files staged = the 35 of the census + this report; nothing left untracked, nothing ignored; all 36 `i/lf w/lf` |
+| Foundation commit (first commit, root, no parent) | `4bfb52a06de4ad36ec5c771e1463dad72d335a9f` — "Initial commit: COPREPAN 3.0 foundation", 2026-10-07T20:34:20+02:00, 36 files |
+| Branch | `main` |
+| `origin` before this run | none (`git remote -v` empty after `git init`); nothing was overwritten |
+| `git remote add origin https://github.com/FTacke/coprepan.git` | exit 0 |
+| `git remote -v` | `origin  https://github.com/FTacke/coprepan.git (fetch)` / `origin  https://github.com/FTacke/coprepan.git (push)` |
+| `git ls-remote origin` before the push | no refs: the remote repository was empty |
+| Push conditions of the brief | branch `main`; foundation commit present; working tree clean; 72 passed; `origin` unambiguous — all met before pushing |
+| `git push -u origin main` | exit 0: `* [new branch] main -> main`; `branch 'main' set up to track 'origin/main'` |
+| `git ls-remote origin` after the push | `refs/heads/main` and `HEAD` = `4bfb52a06de4ad36ec5c771e1463dad72d335a9f` |
+| `git rev-parse origin/main` | `4bfb52a06de4ad36ec5c771e1463dad72d335a9f` — equal to the local commit |
+| Working tree after the push | clean (`## main...origin/main`, no entry) |
+
+No force, no history rewrite, no second remote, no tag.
+
+**The completing commit.** This section, the header values and §12 are added by a second commit
+that changes this file only and is pushed to the same branch. A commit cannot name itself: its
+hash is the `HEAD` of `main` after this run and is given in the operator's closing message, not
+here. The **foundation commit is `4bfb52a0…`**; `HEAD` is one report-only commit ahead of it.
 
 ## 8. Directory picture (measured, top level only)
 
@@ -202,6 +224,44 @@ The schema of the brief is reached for `corapan\`, `coprepan\`, `legacy\coprepan
 
 None touched. All acquisition and production gates of `docs/STATUS.md` §5 remain open.
 
-## 12. Working-tree classification, recommended next run, operator report
+## 12. Working-tree classification
 
-PENDING — written by the completing commit (§7a), when the final state is known.
+| Entry | Class |
+|---|---|
+| all 36 files of the repository, including the three changed documents of §5 and this report | committed |
+| ignored or untracked entries | none exist |
+
+Outside the repository: one commit-message file per commit in the session scratchpad (not kept).
+The archives were re-read after the push: `legacy\coprepan` `3e6bdd33…`, clean;
+`legacy\corapan_coprepan_studies` `679e14c1…`, the same 4 foreign entries. Unchanged.
+
+## 13. Gate assessment of the brief
+
+| Condition for `PASS` | Evidence |
+|---|---|
+| `coprepan` works completely from the new place | §3, §6 |
+| tests green there | §6: 72 passed, twice |
+| no active dependency on `C:\dev\coprepan_playground` | §4 |
+| git cleanly initialised, foundation committed | §7, §7a |
+| no legacy holdings changed | §3, §12 |
+
+## 14. Recommended next run
+
+No action is needed to close the migration. The next run in the repository's own sequence is
+**Foundation Core I** (master plan §12 item 3), when the operator orders it.
+
+## 15. Operator report
+
+1. **Result:** CO.PRE.PAN 3.0 lives at `C:\dev\panhispanic_media_corpora\coprepan`, is under git
+   on `main`, and its foundation is on `origin` (`https://github.com/FTacke/coprepan.git`).
+2. **Status:** `PASS` — reproducibility / infrastructure integrity only. No scientific validation,
+   no production activation; the rename itself is reported from the operator's script output, not
+   observed by this run.
+3. **Consequence:** none for method or production. From here on the working-tree rules of
+   `AGENTS.md` §4 apply in full, and the remote is no longer an open point.
+4. **Next:** no action needed for the migration; Foundation Core I when ordered.
+5. **Files:** created this report; changed `docs/STATUS.md` (2 places) and the master plan
+   (1 line). Moved, deleted, overwritten: nothing.
+6. **Untouched:** `C:\dev\corapan`, CO.RA.PAN 3.0, the content of both archives, the predecessor
+   report. No crawl, no feed or sitemap fetch, no external API, no model call; network use was
+   `git ls-remote` and `git push` to `origin` only.
