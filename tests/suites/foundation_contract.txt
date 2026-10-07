@@ -28,3 +28,7 @@ test_refetch_e2e.py          # re-fetching end to end: conditional requests, red
 test_canary.py               # real-canary planner and fail-closed preflight
 # Cross-corpus analysis contract (CPD-0008)
 test_analysis_contract.py    # crosscorpus-analysis/v1: conformance of a press and a radio fixture, invalid bundles
+# Adversarial persistence, crash recovery and concurrency (CPD-0009)
+test_crash_recovery.py       # real process kills at 28 crashpoints; recovery by an independent process
+test_concurrency.py          # real concurrent processes: ledger, tables, layers, promotion, workspace lock
+test_integrity_invariants.py # no false success: corruption, filesystem faults, unknown schemas, generated sequences
