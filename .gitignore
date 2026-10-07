@@ -1,0 +1,155 @@
+# COPREPAN 3.0 -- ignore rules.
+#
+# Principles (AGENTS.md, "Working-tree hygiene"):
+#   * Corpus data, raw captures, derived layers, runtime state and model caches never live in the
+#     checkout; they live under the storage roots resolved from the environment. The rules below
+#     are the second line of defence for a file that lands here anyway.
+#   * Every rule is anchored or extension-specific and says why the file is not versioned.
+#   * No blanket rule on a structured-text format: `*.json`, `*.jsonl`, `*.yml`, `*.csv` are NOT
+#     ignored. Registries, configs, manifests, ledger snapshots and compact evidence are versioned.
+#   * Small documented test fixtures stay trackable: see the negation block at the end.
+
+# --- Python environments, caches, build products (regenerable) ---------------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# --- Secrets and workstation-specific configuration (never versioned) ---------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+/secrets/
+# Storage roots are resolved from the environment; a file holding an absolute local or network
+# path is workstation state, not architecture (docs/storage/INDEX.md).
+/config/*.local.yml
+/config/*.local.yaml
+/config/*.local.json
+/config/*.local.toml
+
+# --- Editor, agent and OS state -----------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+# Per-user agent settings; the shared project settings (.claude/settings.json) stay versioned.
+.claude/settings.local.json
+/.worktrees/
+
+# --- Logs and temporary files (operational, regenerable, not evidence) --------------------------
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.part
+/tmp/
+/scratch/
+
+# --- Runtime state and databases ----------------------------------------------------------------
+# Ledgers, frontiers and job state belong to the runtime workspace outside the checkout. A SQLite
+# file with its WAL/SHM siblings is live state; versioned evidence is a compact, hash-bound record
+# exported from it, never the database.
+*.sqlite
+*.sqlite3
+*.db
+*.duckdb
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite-journal
+/run_state/
+/runtime/
+/state/
+
+# --- Corpus material: raw captures -----------------------------------------------------------------
+# Fetched bytes are preservation objects (sealed WARC packs on the PRESERVATION root). They are
+# large, they are third-party content, and git is not a preservation target.
+*.warc
+*.warc.gz
+*.warc.zst
+*.arc
+*.arc.gz
+*.cdx
+*.cdxj
+/raw/
+/warc/
+/packs/
+/spool/
+
+# --- Corpus material: derived layers, releases, exports ---------------------------------------------
+# Extraction, normalisation, NLP and release layers are regenerable derived layers held in the
+# layer store / on the storage roots. Columnar files are corpus output by construction.
+*.parquet
+*.arrow
+*.feather
+/data/
+/corpus/
+/layers/
+/extracted/
+/nlp_out/
+/releases/
+/exports/
+/outputs/
+/work/
+/cache/
+/workspace/
+
+# --- Models and model caches (installed, never versioned) -----------------------------------------
+/models/
+/model_cache/
+/.cache/
+/hf_cache/
+*.safetensors
+*.onnx
+*.pt
+*.pth
+
+# --- Archives ----------------------------------------------------------------------------------------
+# Default-ignored because an archive in the checkout is almost always a transport copy or a data
+# dump. A deliberately versioned, hash-pinned evidence archive gets its own anchored negation rule
+# with a comment naming the manifest that pins it.
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.tar.zst
+
+# --- Fixtures stay trackable -------------------------------------------------------------------------
+# tests/fixtures/ holds SMALL, documented, non-production samples (recorded responses, miniature
+# packs, miniature layer tables). tests/test_repository_contract.py bounds their size. These
+# negations must stay the last block of this file.
+!/tests/fixtures/**/*.warc
+!/tests/fixtures/**/*.warc.gz
+!/tests/fixtures/**/*.cdxj
+!/tests/fixtures/**/*.parquet
+!/tests/fixtures/**/*.sqlite
+!/tests/fixtures/**/*.zip
+!/tests/fixtures/**/*.log

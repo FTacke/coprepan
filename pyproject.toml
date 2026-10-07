@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coprepan"
+# Package version of the code. It is NOT the pipeline generation ("3.0" / `generation: v3`), not a
+# release id and not a schema version: docs/architecture/TERMINOLOGY_AND_NAMING.md §2.
+version = "0.1.0"
+description = "COPREPAN 3.0 -- preservation-first pipeline for the CO.PRE.PAN press corpus"
+requires-python = ">=3.11"
+# The foundation skeleton has no runtime dependency. Every dependency added later is an exact pin
+# (`==`): scientific artefacts are attributed to a component state, and a range specifier lets that
+# state move under a result (AGENTS.md, "Stack registry and pins").
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+
+[tool.coprepan.nlp]
+# PLANNED, not installed and not active: the shared NLP instrument contract with CO.RA.PAN 3.0
+# (docs/nlp/INDEX.md §2). The values mirror `[tool.corapan.spacy]` in corapan_playground as read on
+# 2026-10-06; they become dependencies only by the Phase-4 implementation run, and a pin change is
+# a joint, forward-only change decision for both corpora.
+status = "PLANNED"
+spacy_version = "3.8.15"
+parser_model = "es_dep_news_trf"
+parser_model_version = "3.8.0"
+transformer_runtime = [
+    "spacy-curated-transformers==0.3.1",
+    "curated-transformers==0.1.1",
+    "curated-tokenizers==0.0.9",
+    "torch==2.13.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-ra"

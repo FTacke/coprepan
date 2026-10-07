@@ -1,0 +1,39 @@
+# COPREPAN 3.0 -- logical storage targets.
+#
+# STATUS: contract only. No code reads this file yet and no root is configured
+# (docs/STATUS.md). The resolver is a Phase-1 deliverable.
+#
+# This file holds logical roles and ${ENVIRONMENT_VARIABLE} references only. A concrete local or
+# network path is workstation state: it lives in a gitignored `.env` or
+# `config/storage_targets.local.yml`, never here. tests/test_repository_contract.py fails if an
+# absolute path appears in a tracked config file.
+#
+# Resolution is fail-closed (docs/storage/INDEX.md §5): an unset, unreachable or read-only root is
+# a refusal. There is no default and no fallback to local disk or to the checkout.
+schema: coprepan-storage-targets/v1
+
+targets:
+  RUNTIME:
+    root: ${COPREPAN_WORKSPACE_ROOT}
+    purpose: open packs, ledgers in flight, frontier, caches, scratch, working layer store
+    authoritative: false
+  PRESERVATION:
+    root: ${COPREPAN_PRESERVATION_ROOT}
+    purpose: sealed packs, manifests, tombstones, release bundles
+    authoritative: true
+  SPOOL:
+    root: ${COPREPAN_SPOOL_ROOT}
+    purpose: bounded write-ahead buffer for preservation outages; not an archive
+    authoritative: false
+  DISTRIBUTION:
+    root: ${COPREPAN_DISTRIBUTION_ROOT}
+    purpose: read-only publication copy of releases; not a source of truth
+    authoritative: false
+  EXCHANGE:
+    root: ${COPREPAN_EXCHANGE_ROOT}
+    purpose: temporary hand-over zone; not an archive
+    authoritative: false
+
+# The checkout itself is the REPOSITORY role: code, configuration, documentation, small fixtures
+# and compact hash-bound evidence records. It is never a storage root for corpus data or runtime
+# state and therefore has no entry above.

@@ -1,0 +1,7 @@
+# Release gate: every production change must pass this suite
+# (`python -m pytest --suite release_gate tests`).
+#
+# Deliberately empty: there is no pipeline and nothing to release (docs/STATUS.md). The first
+# entries arrive with the Phase-1 core (promotion, idempotence, conflict, crash recovery). Do not
+# add a placeholder test: an empty gate that reports "no tests ran" is honest, a green placeholder
+# is not.

@@ -1,0 +1,25 @@
+# COPREPAN 3.0 -- line endings and byte fidelity.
+#
+# This repository pins hashes over file bytes (manifests, freezes, fixtures). CO.RA.PAN 3.0 learned
+# the hard way that `core.autocrlf` rewrites a frozen file on checkout and breaks its hash, and had
+# to pin dozens of paths one by one. Here the rule is set once, before the first commit:
+# every text file is LF in the repository AND in the working tree, on every platform.
+* text=auto eol=lf
+
+# Windows-only scripts keep the line ending their interpreter expects.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Line-oriented records and fixtures are hashed over their raw bytes: never normalised.
+*.jsonl -text
+tests/fixtures/** -text
+
+# Binary containers (only ever tracked as small fixtures; see .gitignore).
+*.warc binary
+*.warc.gz binary
+*.gz binary
+*.zst binary
+*.zip binary
+*.parquet binary
+*.sqlite binary

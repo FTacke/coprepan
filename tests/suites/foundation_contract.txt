@@ -1,0 +1,4 @@
+# Foundation contract: the repository's own rules, machine-checked.
+test_naming.py               # lexical naming rules (CPD-0002)
+test_repository_contract.py  # status assertions, paths, decision registry, links, suites
+test_test_guards.py          # the no-network and no-storage-root guards really guard
