@@ -244,10 +244,11 @@ def test_the_only_removals_elsewhere_are_the_named_ones():
         "storage_roots.py": [("_writable", "unlink")],                         # its own empty probe file
         "ledger.py": [("quarantine_torn_tail", "truncate")],                   # torn bytes moved to a sidecar first
         "pack.py": [("quarantine_torn_tail", "truncate")],                     # same, open packs in the workspace only
+        "preservation_target.py": [("_remove_probe", "rmdir"), ("_remove_probe", "unlink")],  # its own probe files only
     }
-    found = {path.name: deleting_calls(path.name) for path in sorted(SRC.glob("*.py"))}
+    found = {path.name: sorted(deleting_calls(path.name)) for path in sorted(SRC.glob("*.py"))}
     assert {name: calls for name, calls in found.items() if calls} == expected
-    assert len(found) >= 17
+    assert len(found) >= 27
 
 
 def test_the_staging_cleanup_refuses_anything_that_is_not_a_part_file(tmp_path):

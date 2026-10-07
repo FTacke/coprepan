@@ -1,7 +1,7 @@
 # Foundation contract: the repository's own rules, machine-checked.
 test_naming.py               # lexical naming rules (CPD-0002)
 test_repository_contract.py  # status assertions, paths, decision registry, links, suites
-test_test_guards.py          # the no-network and no-storage-root guards really guard
+test_test_guards.py          # no network beyond literal loopback; no storage root
 # Foundation Core I (master plan §12 item 3)
 test_identity.py             # id serialisation and canonical URL key (CPD-0003)
 test_registry.py             # outlet registry schema; legacy import on a synthetic database
@@ -13,3 +13,10 @@ test_layer_store.py          # write-once layer store: fingerprint, artifact id
 test_acquisition_pack.py     # acquisition run, fetch record, sealed WARC pack
 test_extraction.py           # extraction contract; baseline extractor behaviour (not quality)
 test_core_pipeline.py        # vertical canary, replay, interruption, identity ablation
+# Discovery, transport and acquisition readiness (CPD-0006)
+test_discovery.py            # channel-document parsers, events, candidates, bounded expansion
+test_policy.py               # policy gate, robots evidence, crawler identity: fail closed
+test_fetcher.py              # HTTP transport against a loopback server
+test_warc_interoperability.py  # the pack writer read by an independent WARC reader (warcio)
+test_readiness.py            # preservation-target check, capacity model, baseline manifest, registry review
+test_offline_e2e.py          # the complete offline canary and its failure injection

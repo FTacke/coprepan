@@ -27,6 +27,7 @@ from __future__ import annotations
 import codecs
 import json
 import re
+import zlib
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from typing import Any, Mapping
@@ -45,6 +46,11 @@ OUTCOMES = (OUTCOME_EXTRACTED, OUTCOME_NOT_EXTRACTABLE)
 REASON_UNSUPPORTED_CONTENT_TYPE = "unsupported_content_type"
 REASON_NOT_HTML = "content_type_unknown_and_not_html"
 REASON_EMPTY_BODY = "empty_body"
+REASON_UNSUPPORTED_CONTENT_ENCODING = "unsupported_content_encoding"
+REASON_UNDECODABLE_CONTENT_ENCODING = "undecodable_content_encoding"
+IDENTITY = "identity"
+# A decompressed body larger than this is refused rather than expanded (decompression bombs).
+MAX_DECODED_BYTES = 64 * 1024 * 1024
 NOT_APPLICABLE = "not_applicable"
 UNKNOWN = "unknown"
 
@@ -125,9 +131,53 @@ def body_text(blocks: list[Mapping[str, Any]]) -> str:
     return "\n\n".join(block["text"] for block in blocks if block["role"] == ROLE_BODY)
 
 
-def extract(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = UNKNOWN) -> Extraction:
-    """Extract one body. ``content_type`` and ``declared_charset`` are what the server declared
-    in its ``Content-Type`` header, each ``unknown`` when it declared nothing.
+class ContentDecodingError(ValueError):
+    """The stored body cannot be turned back into the representation it encodes."""
+
+    def __init__(self, reason: str, message: str) -> None:
+        super().__init__(message)
+        self.reason = reason
+
+
+def decode_content(body: bytes, content_encoding: str) -> bytes:
+    """Undo the HTTP content coding of a stored body (``identity``, ``gzip``, ``deflate``).
+
+    The stored bytes are never changed; this is a step of reading them. An unknown coding or
+    bytes that do not decode raise — the caller labels the fetch, it does not guess.
+    """
+    data = body
+    for coding in reversed([part for part in content_encoding.split(",") if part]):
+        if coding == IDENTITY:
+            continue
+        if coding not in ("gzip", "x-gzip", "deflate"):
+            raise ContentDecodingError(REASON_UNSUPPORTED_CONTENT_ENCODING, f"unsupported content coding {coding!r}")
+        try:
+            # gzip: wbits 31. deflate: zlib-wrapped (15), and raw (-15) as sent by some servers.
+            for wbits in ((31,) if coding != "deflate" else (15, -15)):
+                decompressor = zlib.decompressobj(wbits)
+                try:
+                    out = decompressor.decompress(data, MAX_DECODED_BYTES + 1)
+                except zlib.error:
+                    if wbits == 15:
+                        continue
+                    raise
+                if len(out) > MAX_DECODED_BYTES:
+                    raise ContentDecodingError(REASON_UNDECODABLE_CONTENT_ENCODING, "decoded body exceeds the size limit")
+                if not decompressor.eof:
+                    raise zlib.error("incomplete stream")
+                data = out
+                break
+        except zlib.error as error:
+            raise ContentDecodingError(REASON_UNDECODABLE_CONTENT_ENCODING, f"{coding}: {error}") from error
+    return data
+
+
+def extract(
+    body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = UNKNOWN,
+    content_encoding: str = IDENTITY,
+) -> Extraction:
+    """Extract one body. ``content_type``, ``declared_charset`` and ``content_encoding`` are what
+    the server declared, ``unknown`` (or ``identity`` for the coding) when it declared nothing.
     """
     if not isinstance(body, bytes):
         raise ExtractionError("a body is bytes")
@@ -140,14 +190,18 @@ def extract(body: bytes, *, body_sha256: str, content_type: str, declared_charse
         "schema": EXTRACTION_SCHEMA,
         "extractor": {"name": EXTRACTOR_NAME, "version": EXTRACTOR_VERSION},
         "input": {"body_sha256": body_sha256, "body_size_bytes": len(body), "declared_content_type": content_type,
-                  "declared_charset": declared_charset},
+                  "declared_charset": declared_charset, "content_encoding": content_encoding},
         "outcome": OUTCOME_EXTRACTED,
         "reason": NOT_APPLICABLE,
         "decoding": {"charset": NOT_APPLICABLE, "basis": NOT_APPLICABLE, "replaced_characters": 0},
         "metadata": {name: {"value": UNKNOWN, "basis": UNKNOWN, "candidates": []} for name in METADATA_FIELDS},
         "blocks": [],
     }
-    reason = _refusal(body, content_type)
+    try:
+        body = decode_content(body, content_encoding) if body else body
+        reason = _refusal(body, content_type)
+    except ContentDecodingError as error:
+        reason = error.reason
     if reason is None:
         text, record["decoding"] = _decode(body, declared_charset)
         parser = _Parser()
@@ -163,12 +217,13 @@ def extract(body: bytes, *, body_sha256: str, content_type: str, declared_charse
 
 
 def fingerprint_inputs(
-    body_sha256: str, content_type: str, declared_charset: str = UNKNOWN
+    body_sha256: str, content_type: str, declared_charset: str = UNKNOWN, content_encoding: str = IDENTITY
 ) -> tuple[dict[str, str], dict[str, str]]:
     """``(inputs, parameters)`` of the layer-store fingerprint of an extraction."""
     return (
         {"body": require_sha256(body_sha256, "body_sha256")},
-        {"declared_content_type": content_type, "declared_charset": declared_charset},
+        {"declared_content_type": content_type, "declared_charset": declared_charset,
+         "content_encoding": content_encoding},
     )
 
 
@@ -193,8 +248,10 @@ class Extractor:
     def stage_version(self) -> str:
         return f"{self.name}/{self.version}"
 
-    def run(self, body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = UNKNOWN) -> Extraction:
-        result = self.function(body, body_sha256=body_sha256, content_type=content_type, declared_charset=declared_charset)
+    def run(self, body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = UNKNOWN,
+            content_encoding: str = IDENTITY) -> Extraction:
+        result = self.function(body, body_sha256=body_sha256, content_type=content_type,
+                               declared_charset=declared_charset, content_encoding=content_encoding)
         if result.record["extractor"] != {"name": self.name, "version": self.version}:
             raise ExtractionError(f"{self.stage_version} returned a record signed {result.record['extractor']}")
         return result

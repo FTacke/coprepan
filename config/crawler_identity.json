@@ -1,0 +1,8 @@
+{
+  "schema": "coprepan-crawler-identity/v1",
+  "note": "The public identity of the crawler (master plan O-2). Operator decision: until every field below holds a real value, no external request can be made. The values are public by nature (they are sent in every request and published in the crawler statement), so they are versioned here rather than kept in a workstation file.",
+  "crawler_name": "not_configured",
+  "organisation": "not_configured",
+  "contact_url": "not_configured",
+  "contact_email": "not_configured"
+}

@@ -145,9 +145,24 @@ class IdentityTables:
         requested = fetch_record["request"]["requested_url"]
         final = fetch_record["response"]["final_url"]
         final = final if final not in ("not_applicable", None) else None
-        canonical = read_rel_canonical(body, final or requested) if body is not None else None
+        canonical = None
+        if body is not None:
+            try:
+                from .extraction import decode_content  # local: extraction does not import this module
+                canonical = read_rel_canonical(decode_content(body, fetch_record["response"]["content_encoding"]),
+                                               final or requested)
+            except ValueError:
+                canonical = None  # an undecodable body has no readable head; the URL still keys it
         key = canonical_url_key(rules, requested_url=requested, final_url=final, rel_canonical=canonical)
         document = document_id(rules.outlet_id, key.key)
+        # The keys of the request and of the final URL on their own, kept beside the chosen key:
+        # they are what makes a mis-declared canonical (many pages naming one URL) detectable.
+        own_keys = {}
+        for name, url in (("requested_url_key", requested), ("final_url_key", final)):
+            try:
+                own_keys[name] = canonical_url_key(rules, requested_url=url).key if url else None
+            except IdentityError:
+                own_keys[name] = None
 
         existing = self.documents.get(document)
         if existing is not None and existing["url_key"] != key.key:
@@ -170,17 +185,14 @@ class IdentityTables:
             self._observations,
             OBSERVATION_SCHEMA,
             {"fetch_id": fetch, "document_id": document, "requested_url": requested, "final_url": final,
-             "rel_canonical": canonical, "head_scan": HEAD_SCAN_VERSION, **key.as_record()},
+             "rel_canonical": canonical, "head_scan": HEAD_SCAN_VERSION, **own_keys, **key.as_record()},
         )
         self.observations[fetch] = observation
 
         # The requested URL, keyed on its own, may be the key of another document: the outlet has
         # moved that article here. Recorded as a relation; neither id changes.
         if key.basis != "requested_url":
-            try:
-                requested_key = canonical_url_key(rules, requested_url=requested).key
-            except IdentityError:
-                requested_key = None
+            requested_key = own_keys["requested_url_key"]
             other = self._by_key.get((rules.outlet_id, requested_key)) if requested_key else None
             if other is not None and other != document:
                 self._relate(RELATION_MOVED_TO, other, document, {"fetch_id": fetch, "requested_url_key": requested_key})
@@ -237,6 +249,22 @@ class IdentityTables:
             self._relate(RELATION_DUPLICATE_OF, document, duplicate_of,
                          {"document_version_id": version, "body_text_sha256": body_text_sha256})
         return VersionAssignment(version, is_new, duplicate_of)
+
+    def canonical_collapse_suspects(self, minimum_distinct_urls: int = 3) -> list[dict[str, Any]]:
+        """Documents whose key came from ``rel=canonical`` while their fetches were answered at
+        several *different* final URLs — the signature of pages that all declare one canonical
+        (a section page, the home page). A diagnosis for review: it changes no id and decides
+        nothing; folding real variants of one article produces the same picture, which is why the
+        threshold is a parameter and the result is a list to look at.
+        """
+        final_keys: dict[str, set[str]] = {}
+        for row in self.observations.values():
+            if row["url_key_basis"] == "rel_canonical" and row.get("final_url_key") not in (None, row["url_key"]):
+                final_keys.setdefault(row["document_id"], set()).add(row["final_url_key"])
+        return [
+            {"document_id": document, "url_key": self.documents[document]["url_key"], "distinct_final_url_keys": sorted(keys)}
+            for document, keys in sorted(final_keys.items()) if len(keys) >= minimum_distinct_urls
+        ]
 
     def versions_of(self, document: str) -> list[str]:
         """The versions of a document, in the order they were first seen."""

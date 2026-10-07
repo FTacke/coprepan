@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "coprepan"
 # Package version of the code. It is NOT the pipeline generation ("3.0" / `generation: v3`), not a
 # release id and not a schema version: docs/architecture/TERMINOLOGY_AND_NAMING.md §2.
-version = "0.2.0"
+version = "0.3.0"
 description = "COPREPAN 3.0 -- preservation-first pipeline for the CO.PRE.PAN press corpus"
 requires-python = ">=3.11"
 # The foundation skeleton has no runtime dependency. Every dependency added later is an exact pin
@@ -15,7 +15,9 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest==9.1.1"]
+# warcio is a test-only dependency: the independent WARC reader the pack writer is checked
+# against (tests/test_warc_interoperability.py). No runtime code imports it.
+dev = ["pytest==9.1.1", "warcio==1.7.5"]
 
 [tool.coprepan.nlp]
 # PLANNED, not installed and not active: the shared NLP instrument contract with CO.RA.PAN 3.0

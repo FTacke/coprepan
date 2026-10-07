@@ -1,0 +1,37 @@
+{
+  "files": {
+    "atom.xml": {
+      "sha256": "db3b58ea4891679352d5e973fefe7aa12647b9b622d789711a673eccf9f061ce",
+      "size_bytes": 1080
+    },
+    "listing.html": {
+      "sha256": "b722e8090427ddcaf564e5d6fa39dd69c45d5dd702ac8749e1adef78fbdee794",
+      "size_bytes": 1091
+    },
+    "malformed.xml": {
+      "sha256": "49834e30435037daa1c19986ab7e3d63677eaa372f9a583e22b68d3da8578a9b",
+      "size_bytes": 302
+    },
+    "rss.xml": {
+      "sha256": "3f87e5f09c8cfa058f0245e6784fdde92a76d91be69a4d313f1ed24f5d5e0f6a",
+      "size_bytes": 1719
+    },
+    "rss_page2.xml": {
+      "sha256": "351885aa9131794af37fd32f084dec487568a4bdaafa3f7659c395729f96a2ba",
+      "size_bytes": 352
+    },
+    "sitemap_index.xml": {
+      "sha256": "23ed1998313b0eed456896c5ff02bd5305ca969677bb71c492aa24ee2282592d",
+      "size_bytes": 540
+    },
+    "sitemap_nested_index.xml": {
+      "sha256": "ace5dadb6d1eff4164f1a3626af3ae8a039d658f61b2c85563d300097c503aec",
+      "size_bytes": 306
+    },
+    "sitemap_urlset.xml": {
+      "sha256": "430c999385016c0e413f0b9b179e2748e0a73b5e6fd5d2b211f0c60e65ed745c",
+      "size_bytes": 1023
+    }
+  },
+  "schema": "coprepan-fixture-manifest/v1"
+}

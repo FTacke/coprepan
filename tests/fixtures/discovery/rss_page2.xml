@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Diario Ejemplo — Portada (2)</title>
+    <atom:link rel="next" href="/rss.xml"/>
+    <item>
+      <title>Informe anual</title>
+      <link>https://www.diario-ejemplo.test/docs/informe.pdf</link>
+    </item>
+  </channel>
+</rss>

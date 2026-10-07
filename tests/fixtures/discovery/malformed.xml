@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Feed truncado</title>
+    <item>
+      <title>Nota uno</title>
+      <link>https://www.diario-ejemplo.test/a</link>
+    </item>
+    <item>
+      <title>Nota dos & compañía
+      <link>https://www.diario-ejemplo.test/b

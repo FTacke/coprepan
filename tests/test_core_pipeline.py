@@ -459,6 +459,75 @@ def test_identity_tables_are_append_only_and_reload_to_the_same_state(canary):
                              extractor_version="1", extraction_fingerprint="0" * 64)
 
 
+# --- hard identity cases re-examined in the audit of CPD-0005 (2026-10-07) ----------------------------
+
+
+def page(title, canonical=None, text="Texto."):
+    link = f'<link rel="canonical" href="{canonical}">' if canonical else ""
+    return f"<html><head>{link}</head><body><article><h1>{title}</h1><p>{text}</p></article></body></html>".encode("utf-8")
+
+
+def test_a_canonical_on_another_site_is_recorded_and_never_keys_the_document(tmp_path):
+    """Syndicated copy often names the agency's page as canonical. The document stays the
+    outlet's own URL; the foreign canonical is kept as evidence for a later syndication layer.
+    """
+    items = [ex(f"{WWW}/mundo/cable-1", page("Cable", "https://agencia-ajena.test/cables/1"), 0),
+             ex(f"{WWW}/mundo/cable-2?utm=x", page("Otro cable", "//agencia-ajena.test/cables/2"), 5)]
+    canary = Canary(tmp_path, items=items).all()
+    tables = IdentityTables(canary.workspace.identity)
+    first, second = (by_fetch(canary)[fid] for fid in canary.fetch_ids())
+    assert (first["url_key"], first["url_key_basis"]) == (f"{WWW}/mundo/cable-1", "final_url")
+    assert second["url_key"] == f"{WWW}/mundo/cable-2" and first["document_id"] != second["document_id"]
+    assert tables.observations[first["fetch_id"]]["rel_canonical"] == "https://agencia-ajena.test/cables/1"
+    assert tables.observations[second["fetch_id"]]["rel_canonical"] == "https://agencia-ajena.test/cables/2"
+    assert tables.canonical_collapse_suspects() == []
+
+
+def test_pages_that_all_declare_one_canonical_collapse_and_the_collapse_is_detectable(tmp_path):
+    """A known template defect: every article names the section page as its canonical. The
+    key rule then files them all under one document. The rule is not bent to hide that; the
+    observations keep each fetch's own URL key, and the collapse can be listed for review.
+    """
+    items = [ex(f"{WWW}/politica/nota-{n}", page(f"Nota {n}", f"{WWW}/politica/", f"Texto {n}."), n) for n in range(4)]
+    items.append(ex(f"{ARTICLE}?utm_source=rss", fixture("nota_v1.html"), 10))  # a correct canonical: not a suspect
+    canary = Canary(tmp_path, items=items).all()
+    tables = IdentityTables(canary.workspace.identity)
+    collapsed = {by_fetch(canary)[fid]["document_id"] for fid in canary.fetch_ids()[:4]}
+    assert len(collapsed) == 1 and len(tables.versions_of(collapsed.pop())) == 4  # four articles as four "versions"
+    suspects = tables.canonical_collapse_suspects()
+    assert [s["url_key"] for s in suspects] == [f"{WWW}/politica/"]
+    assert suspects[0]["distinct_final_url_keys"] == [f"{WWW}/politica/nota-{n}" for n in range(4)]
+    assert tables.canonical_collapse_suspects(minimum_distinct_urls=5) == []
+    # nothing is lost: every fetch's own key is on record, so the documents can be re-derived under a corrected rule
+    assert sorted(o["requested_url_key"] for o in tables.observations.values())[1:] == [f"{WWW}/politica/nota-{n}" for n in range(4)]
+
+
+def test_only_items_become_documents(tmp_path):
+    feed = ex(f"{WWW}/rss", b"<rss><channel/></rss>", 0, headers=(("Content-Type", "application/rss+xml"),), fetch_kind="channel_document")
+    robots_file = ex(f"{WWW}/robots.txt", b"User-agent: *\n", 1, headers=(("Content-Type", "text/plain"),), fetch_kind="robots_txt")
+    canary = Canary(tmp_path, items=[feed, robots_file, ex(f"{WWW}/nota", page("Nota"), 2)]).all()
+    assert set(canary.workspace.ledger().states().values()) == {"RAW_PRESERVED"}  # all three are preserved
+    assert len(canary.results) == 1 and len(IdentityTables(canary.workspace.identity).documents) == 1
+
+
+def test_a_content_coded_body_is_stored_as_sent_and_read_decoded(tmp_path):
+    import gzip
+
+    packed = gzip.compress(fixture("nota_v1.html"), mtime=0)
+    headers = (("Content-Type", "text/html; charset=utf-8"), ("Content-Encoding", "gzip"))
+    canary = Canary(tmp_path, items=[ex(f"{ARTICLE}?a=1", packed, 0, headers=headers),
+                                     ex(f"{ARTICLE}?a=2", fixture("nota_v1.html"), 5),
+                                     ex(f"{WWW}/roto", packed[:60], 9, headers=headers)]).all()
+    coded, plain, broken = (by_fetch(canary)[fid] for fid in canary.fetch_ids())
+    assert C.open_preserved_pack(canary.root, canary.pack_id).body(coded["fetch_id"]) == packed  # raw stays as sent
+    assert coded["url_key_basis"] == "rel_canonical"                    # the head was read from the decoded bytes
+    assert coded["document_version_id"] == plain["document_version_id"]  # same text, however it travelled
+    assert coded["body_sha256"] != plain["body_sha256"] and coded["extraction_fingerprint"] != plain["extraction_fingerprint"]
+    assert (broken["extraction_outcome"], broken["document_version_id"]) == ("NOT_EXTRACTABLE", None)
+    store = canary.workspace.layer_store()
+    assert json.loads(store.read("extraction", broken["extraction_fingerprint"]))["reason"] == "undecodable_content_encoding"
+
+
 # --- ablation: what identifies an article? -------------------------------------------------------------
 
 

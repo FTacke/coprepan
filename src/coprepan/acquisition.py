@@ -28,13 +28,28 @@ FETCH_RECORD_SCHEMA = naming.schema_id("fetch-record", 1)
 RUN_ID_PREFIX = "acq1"
 
 RUN_KIND_RECORDED_REPLAY = "recorded_replay"
-RUN_KINDS = (RUN_KIND_RECORDED_REPLAY,)
+RUN_KIND_HTTP_FETCH = "http_fetch"
+RUN_KINDS = (RUN_KIND_RECORDED_REPLAY, RUN_KIND_HTTP_FETCH)
 RUN_STATUSES = ("COMPLETED", "FAILED")
 
 OUTCOME_FETCHED = "FETCHED"
 OUTCOME_FETCH_FAILED = "FETCH_FAILED"
 OUTCOMES = (OUTCOME_FETCHED, OUTCOME_FETCH_FAILED)
-FAILURE_REASONS = ("timeout", "connection_error", "incomplete_response", "unknown")
+FAILURE_REASONS = (
+    "timeout", "connection_error", "incomplete_response", "malformed_response",
+    "body_limit_exceeded", "redirect_limit_exceeded", "unknown",
+)
+
+# What a fetch was for (CPD-0006 §1). Only an `item` can become a document; a channel document is
+# the evidence of discovery and a robots file the evidence of a policy decision.
+FETCH_KIND_ITEM = "item"
+FETCH_KIND_CHANNEL_DOCUMENT = "channel_document"
+FETCH_KIND_ROBOTS = "robots_txt"
+FETCH_KINDS = (FETCH_KIND_ITEM, FETCH_KIND_CHANNEL_DOCUMENT, FETCH_KIND_ROBOTS)
+POLICY_FIELDS = (
+    "policy_decision", "policy_version", "robots_decision", "robots_txt_sha256",
+    "access_class_observed", "crawler_version", "user_agent",
+)
 
 NOT_APPLICABLE = "not_applicable"
 UNKNOWN = "unknown"
@@ -224,6 +239,11 @@ class RecordedExchange:
     channel_id: str | None = None
     failure_reason: str | None = None
     policy: Mapping[str, str] = field(default_factory=dict)
+    fetch_kind: str = FETCH_KIND_ITEM
+    request_id: str | None = None
+    attempt_number: int = 1
+    failure_detail: str | None = None
+    redirect_not_followed: str | None = None
 
 
 def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedExchange) -> dict[str, Any]:
@@ -238,6 +258,10 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
         raise AcquisitionError("a fetch cannot finish before it starts")
     if exchange.channel_id is not None and not is_channel_id(exchange.channel_id):
         raise AcquisitionError(f"not a channel_id: {exchange.channel_id!r}")
+    if exchange.fetch_kind not in FETCH_KINDS:
+        raise AcquisitionError(f"not a fetch kind: {exchange.fetch_kind!r} (known: {FETCH_KINDS})")
+    if isinstance(exchange.attempt_number, bool) or not isinstance(exchange.attempt_number, int) or exchange.attempt_number < 1:
+        raise AcquisitionError(f"attempt_number is a positive integer: {exchange.attempt_number!r}")
     try:
         _require_url_text(exchange.requested_url, "requested_url")
         for url in (*exchange.redirect_chain, *([exchange.final_url] if exchange.final_url else [])):
@@ -267,8 +291,12 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
         "fetch_id": fetch_id(exchange.requested_url, exchange.fetch_started_at, body_sha256),
         "run_id": run.run_id,
         "outlet_id": outlet_id,
+        "fetch_kind": exchange.fetch_kind,
+        "request_id": exchange.request_id or NOT_APPLICABLE,
+        "attempt_number": exchange.attempt_number,
         "outcome": OUTCOME_FETCHED if fetched else OUTCOME_FETCH_FAILED,
         "failure_reason": exchange.failure_reason if not fetched else NOT_APPLICABLE,
+        "failure_detail": (exchange.failure_detail or UNKNOWN) if not fetched else NOT_APPLICABLE,
         "request": {
             "method": exchange.method,
             "requested_url": exchange.requested_url,
@@ -278,8 +306,10 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
             "status": exchange.status if fetched else NOT_APPLICABLE,
             "final_url": (exchange.final_url or exchange.requested_url) if fetched else NOT_APPLICABLE,
             "redirect_chain": list(exchange.redirect_chain),
+            "redirect_not_followed": exchange.redirect_not_followed or NOT_APPLICABLE,
             "headers": _headers(exchange.response_headers),
             "content_type": _content_type(exchange.response_headers) if fetched else NOT_APPLICABLE,
+            "content_encoding": content_encoding_of(exchange.response_headers) if fetched else NOT_APPLICABLE,
         },
         "fetch_started_at": started,
         "fetch_finished_at": finished,
@@ -304,6 +334,8 @@ def validate_fetch_record(record: Any) -> dict[str, Any]:
             raise ValueError("fetch_id does not cover the record's URL, start instant and body hash")
         if not naming.is_outlet_id(record["outlet_id"]) or not is_run_id(record["run_id"]):
             raise ValueError("outlet_id or run_id")
+        if record["fetch_kind"] not in FETCH_KINDS:
+            raise ValueError("fetch_kind")
     except (KeyError, TypeError, ValueError) as error:
         raise AcquisitionError(f"not a valid fetch record: {error}") from error
     return record
@@ -332,13 +364,32 @@ def _content_type(headers: Sequence[tuple[str, str]]) -> str:
     return UNKNOWN
 
 
+def content_encoding_of(headers: Sequence[tuple[str, str]]) -> str:
+    """The content coding the server declared, lower-cased; ``identity`` when it declared none.
+
+    The stored body is the HTTP payload **with its content coding intact** (and any transfer
+    coding removed): what ``body_sha256`` covers is what the server sent as the representation.
+    Decoding is a recorded step of the stages that read the body (CPD-0006 §1).
+    """
+    for name, value in headers:
+        if name.lower() == "content-encoding":
+            return ",".join(part.strip().lower() for part in value.split(",") if part.strip()) or "identity"
+    return "identity"
+
+
 def _policy(run: AcquisitionRun, policy: Mapping[str, str]) -> dict[str, str]:
     """The policy context of a fetch. A replay consulted no robots.txt and applied no policy: the
-    fields say so explicitly instead of being absent. The acquisition policy itself is undecided.
+    fields say so explicitly instead of being absent. An HTTP fetch must state every field: a
+    request that went out without a recorded policy decision is a defect, not a default.
     """
-    fields = ("robots_decision", "robots_txt_sha256", "access_class_observed", "crawler_version", "policy_version")
-    unknown = set(policy) - set(fields)
+    unknown = set(policy) - set(POLICY_FIELDS)
     if unknown:
         raise AcquisitionError(f"unknown policy field(s): {sorted(unknown)}")
-    default = NOT_APPLICABLE if run.kind == RUN_KIND_RECORDED_REPLAY else UNKNOWN
-    return {name: policy.get(name, default) for name in fields}
+    if run.kind == RUN_KIND_RECORDED_REPLAY:
+        return {name: policy.get(name, NOT_APPLICABLE) for name in POLICY_FIELDS}
+    missing = [name for name in POLICY_FIELDS if not policy.get(name)]
+    if missing:
+        raise AcquisitionError(f"an HTTP fetch records its policy context; missing: {missing}")
+    if policy["policy_decision"] != "ALLOW":
+        raise AcquisitionError("a fetch record exists only for a request the policy allowed")
+    return {name: policy[name] for name in POLICY_FIELDS}

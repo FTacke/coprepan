@@ -141,6 +141,8 @@ class LayerStore:
                     f"{stage}: fingerprint {fingerprint_value[:16]}… already answered by "
                     f"{existing.artifact_id}; refusing a different answer {identifier}"
                 )
+            # "Already stored" is a claim about bytes on disk: re-read them before making it.
+            self.read(stage, fingerprint_value)
             return StoredArtifact(STATUS_ALREADY_STORED, stage, fingerprint_value, identifier, payload_sha256, existing.directory)
 
         manifest = record_json(

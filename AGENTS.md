@@ -135,7 +135,11 @@ here-strings mangle line breaks, backslashes, quotes and line endings here.
 ## 7. Network and acquisition safety
 
 - **No live network access from a test, ever.** Tests replay recorded fixtures. `tests/conftest.py`
-  blocks socket connections; do not bypass it.
+  blocks socket connections; do not bypass it. *One exception, since 2026-10-07 (operator brief of
+  the discovery and acquisition-readiness run):* a test may connect to a **literal loopback
+  address** of an HTTP server it started itself, to exercise the real transport code. The guard
+  enforces exactly this — any name (including `localhost`) and any non-loopback address is still
+  refused before a packet is sent. A loopback test proves nothing about any real outlet.
 - **No live fetch of any outlet** — no crawl, no feed or sitemap retrieval, no "quick check whether
   the site is up" — unless the operator brief of the run authorises acquisition **and** the gates
   for it are closed (`docs/STATUS.md` §5). Today they are open: no run may fetch.

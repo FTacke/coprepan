@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>https://www.diario-ejemplo.test/Economia/Puerto-crecimiento-2026.html</loc>
+    <lastmod>2026-10-06T07:45:00-03:00</lastmod>
+    <image:image>
+      <image:loc>https://www.diario-ejemplo.test/img/puerto.jpg</image:loc>
+    </image:image>
+    <news:news>
+      <news:publication_date>2026-10-05T08:30:00-03:00</news:publication_date>
+      <news:title>El crecimiento del puerto obliga a separar cargas</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://www.diario-ejemplo.test/Regionales/puerto-separan-cargas</loc>
+  </url>
+  <url>
+    <loc>
+      https://www.diario-ejemplo.test/Deportes/Final
+    </loc>
+  </url>
+  <url>
+    <loc>https://www.diario-ejemplo.test/deportes/final</loc>
+  </url>
+  <url>
+    <lastmod>2026-10-01</lastmod>
+  </url>
+</urlset>

@@ -151,7 +151,13 @@ def _response_block(record: Mapping[str, Any], body: bytes) -> bytes:
     except ValueError:
         phrase = ""
     lines = [f"HTTP/1.1 {status} {phrase}".rstrip()]
-    lines += [f"{name}: {value}" for name, value in record["response"]["headers"]]
+    # The stored body has no transfer coding (CPD-0006 §1). A `Transfer-Encoding` header rendered
+    # as received would tell a WARC reader to de-chunk bytes that are not chunked, so it is
+    # written under another name here. The fetch record keeps the header exactly as received.
+    lines += [
+        f"{'X-Coprepan-Orig-Transfer-Encoding' if name.lower() == 'transfer-encoding' else name}: {value}"
+        for name, value in record["response"]["headers"]
+    ]
     return "\r\n".join(lines).encode("utf-8") + _CRLF + _CRLF + body
 
 

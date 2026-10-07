@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Diario Ejemplo — Portada</title>
+    <link>https://www.diario-ejemplo.test/</link>
+    <atom:link rel="self" href="https://www.diario-ejemplo.test/rss.xml" type="application/rss+xml"/>
+    <atom:link rel="next" href="/rss.xml?page=2"/>
+    <item>
+      <title>El crecimiento del puerto obliga a separar cargas</title>
+      <link>https://www.diario-ejemplo.test/Economia/Puerto-crecimiento-2026.html?utm_source=rss&amp;utm_medium=feed</link>
+      <guid isPermaLink="false">ejemplo-000123</guid>
+      <pubDate>Mon, 05 Oct 2026 08:30:00 -0300</pubDate>
+    </item>
+    <item>
+      <title>El crecimiento del puerto obliga a separar cargas (repetido)</title>
+      <link>https://www.diario-ejemplo.test/Economia/Puerto-crecimiento-2026.html?utm_source=rss-destacados#comentarios</link>
+      <pubDate>Mon, 05 Oct 2026 08:30:00 -0300</pubDate>
+    </item>
+    <item>
+      <title>Puerto: separan cargas por el crecimiento</title>
+      <link>/Regionales/puerto-separan-cargas</link>
+      <dc:date>2026-10-06T07:45:00-03:00</dc:date>
+    </item>
+    <item>
+      <title>Sin enlace</title>
+      <guid isPermaLink="false">ejemplo-000124</guid>
+    </item>
+    <item>
+      <title>Solo guid permanente</title>
+      <guid>https://www.diario-ejemplo.test/breves/123</guid>
+    </item>
+    <item>
+      <title>Nota de agencia en otro sitio</title>
+      <link>https://agencia-ajena.test/cables/9</link>
+    </item>
+    <item>
+      <title>Enlace que no es web</title>
+      <link>mailto:redaccion@diario-ejemplo.test</link>
+    </item>
+  </channel>
+</rss>

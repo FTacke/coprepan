@@ -109,27 +109,44 @@ def acquire_recorded(
     packs: dict[str, pack.OpenPack] = {}
     counts = {"fetched": 0, "fetch_failed": 0, "already_recorded": 0}
     for exchange in exchanges:
-        record = acquisition.build_fetch_record(run, outlet_id, exchange)
-        fetch_id = record["fetch_id"]
-        identifier = pack.pack_id(outlet_id, pack.utc_day_of(record["fetch_started_at"]))
-        target = record["outcome"]
-        state = ledger.state(fetch_id)
-        if state not in (None, "DISCOVERED", "FETCH_PLANNED"):
-            counts["already_recorded"] += 1
-            continue
-        if identifier not in packs:
-            packs[identifier] = pack.OpenPack(workspace.packs, identifier, opened_at=run.started_at)
-        if state is None:
-            ledger.transition(fetch_id, "DISCOVERED", at=exchange.fetch_started_at,
-                              details={"run_id": run.run_id, "channel_id": record["discovery"]["channel_id"]})
-        if state in (None, "DISCOVERED"):
-            ledger.transition(fetch_id, "FETCH_PLANNED", at=exchange.fetch_started_at, details={"run_id": run.run_id})
-        if fetch_id not in packs[identifier]:
-            packs[identifier].append(record, exchange.body)
-        ledger.transition(fetch_id, target, at=exchange.fetch_finished_at,
-                          details={"pack_id": identifier, "failure_reason": record["failure_reason"]})
-        counts["fetched" if target == acquisition.OUTCOME_FETCHED else "fetch_failed"] += 1
+        _, status = record_exchange(workspace, ledger, packs, run, outlet_id, exchange)
+        counts[status] += 1
     return {"run_id": run.run_id, "open_pack_ids": sorted(packs), "counts": counts}
+
+
+def record_exchange(
+    workspace: Workspace,
+    ledger: Ledger,
+    packs: dict[str, pack.OpenPack],
+    run: AcquisitionRun,
+    outlet_id: str,
+    exchange: RecordedExchange,
+) -> tuple[dict[str, Any], str]:
+    """Put one exchange on record: fetch record, ledger, open pack — in that order of commitment.
+
+    The ledger says ``FETCH_PLANNED`` before the bytes are written and ``FETCHED`` only after they
+    are on disk. An exchange that is already recorded is recognised and not written twice.
+    Returns the fetch record and ``fetched`` / ``fetch_failed`` / ``already_recorded``.
+    """
+    record = acquisition.build_fetch_record(run, outlet_id, exchange)
+    fetch_id = record["fetch_id"]
+    identifier = pack.pack_id(outlet_id, pack.utc_day_of(record["fetch_started_at"]))
+    target = record["outcome"]
+    state = ledger.state(fetch_id)
+    if state not in (None, "DISCOVERED", "FETCH_PLANNED"):
+        return record, "already_recorded"
+    if identifier not in packs:
+        packs[identifier] = pack.OpenPack(workspace.packs, identifier, opened_at=run.started_at)
+    if state is None:
+        ledger.transition(fetch_id, "DISCOVERED", at=exchange.fetch_started_at,
+                          details={"run_id": run.run_id, "channel_id": record["discovery"]["channel_id"]})
+    if state in (None, "DISCOVERED"):
+        ledger.transition(fetch_id, "FETCH_PLANNED", at=exchange.fetch_started_at, details={"run_id": run.run_id})
+    if fetch_id not in packs[identifier]:
+        packs[identifier].append(record, exchange.body)
+    ledger.transition(fetch_id, target, at=exchange.fetch_finished_at,
+                      details={"pack_id": identifier, "failure_reason": record["failure_reason"]})
+    return record, "fetched" if target == acquisition.OUTCOME_FETCHED else "fetch_failed"
 
 
 # --- preservation ---------------------------------------------------------------------------------
@@ -243,7 +260,10 @@ def identify_and_extract(
             continue
         if ledger.state(fetch_id) != "RAW_PRESERVED":
             raise NotPreserved(f"{fetch_id} is {ledger.state(fetch_id)}, not RAW_PRESERVED")
-        record, body = preserved.fetch_record(fetch_id), preserved.body(fetch_id)
+        record = preserved.fetch_record(fetch_id)
+        if record["fetch_kind"] != acquisition.FETCH_KIND_ITEM:
+            continue  # a channel document or a robots file is evidence, never a document
+        body = preserved.body(fetch_id)
         result: dict[str, Any] = {"fetch_id": fetch_id, "body_sha256": entry.body_sha256, "pack_id": identifier}
         try:
             assignment = tables.assign_document(rules, record, body)
@@ -271,11 +291,16 @@ def identify_and_extract(
     return results
 
 
+def _extraction_arguments(record: Mapping[str, Any]) -> dict[str, str]:
+    return {
+        "content_type": record["response"]["content_type"],
+        "declared_charset": extraction.declared_charset_of(record["response"]["headers"]),
+        "content_encoding": record["response"]["content_encoding"],
+    }
+
+
 def extraction_fingerprint(extractor: extraction.Extractor, record: Mapping[str, Any]) -> str:
-    inputs, parameters = extraction.fingerprint_inputs(
-        record["body_sha256"], record["response"]["content_type"],
-        extraction.declared_charset_of(record["response"]["headers"]),
-    )
+    inputs, parameters = extraction.fingerprint_inputs(record["body_sha256"], **_extraction_arguments(record))
     return layer_store.fingerprint(extraction.STAGE, extractor.stage_version, inputs, parameters)
 
 
@@ -285,10 +310,7 @@ def _extract_stored(store, extractor, record, body, now):
     if held is not None:
         payload = store.read(extraction.STAGE, fingerprint)
         return extraction.Extraction(json.loads(payload.decode("utf-8"))), fingerprint, held
-    extracted = extractor.run(
-        body, body_sha256=record["body_sha256"], content_type=record["response"]["content_type"],
-        declared_charset=extraction.declared_charset_of(record["response"]["headers"]),
-    )
+    extracted = extractor.run(body, body_sha256=record["body_sha256"], **_extraction_arguments(record))
     stored = store.put(
         extraction.STAGE, fingerprint, extracted.payload,
         provenance={"fetch_id": record["fetch_id"], "run_id": record["run_id"], "software_version": __version__},
@@ -316,10 +338,7 @@ def replay_extraction(
     if workspace.ledger().state(fetch_id) != "RAW_PRESERVED":
         raise NotPreserved(f"{fetch_id} is not RAW_PRESERVED")
     record, body = preserved.fetch_record(fetch_id), preserved.body(fetch_id)
-    extracted = extractor.run(
-        body, body_sha256=record["body_sha256"], content_type=record["response"]["content_type"],
-        declared_charset=extraction.declared_charset_of(record["response"]["headers"]),
-    )
+    extracted = extractor.run(body, body_sha256=record["body_sha256"], **_extraction_arguments(record))
     fingerprint = extraction_fingerprint(extractor, record)
     stored = workspace.layer_store().put(
         extraction.STAGE, fingerprint, extracted.payload,

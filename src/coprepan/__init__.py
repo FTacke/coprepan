@@ -9,4 +9,4 @@ Nothing here touches the network, nothing has been acquired or preserved for the
 component is validated or activated. See `docs/STATUS.md`.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

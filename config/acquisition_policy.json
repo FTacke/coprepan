@@ -1,0 +1,20 @@
+{
+  "schema": "coprepan-acquisition-policy/v1",
+  "note": "The acquisition policy (master plan O-1). It is an open institutional decision: every field that carries a normative choice is 'not_decided', and while 'status' is NOT_DECIDED the policy gate denies every external request. Nothing here is a default to be relied on. To decide: set each 'not_decided' value, give the policy a version, set status to DECIDED and external_acquisition to 'enabled', in a reviewed commit with a decision record.",
+  "policy_version": "undecided",
+  "status": "NOT_DECIDED",
+  "scope": "external",
+  "external_acquisition": "disabled",
+  "robots": {
+    "mode": "not_decided",
+    "on_absent": "not_decided",
+    "on_unreachable": "not_decided"
+  },
+  "rate_limit": {
+    "min_interval_seconds_per_origin": "not_decided"
+  },
+  "disabled_outlets": [],
+  "disabled_channels": [],
+  "opt_outs": [],
+  "suppressions": []
+}
