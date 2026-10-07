@@ -61,8 +61,27 @@ def document(*outlets):
 
 
 def test_the_tracked_registry_is_valid_and_registers_nothing_yet():
+    # Registration is a human review step. No run may set `registered` on its own.
     registry = R.load_registry(REPO / "config" / "outlet_registry.json")
     assert [o for o in registry.outlets.values() if o["registration_status"] == "registered"] == []
+
+
+def test_the_tracked_proposal_matches_its_review_report():
+    """The registry holds the proposal of the legacy import of 2026-10-07 and nothing else; the
+    review report beside it is the report of that very proposal. Neither is a registration.
+    """
+    registry = R.load_registry(REPO / "config" / "outlet_registry.json")
+    report = json.loads((REPO / "config" / "registry_review" / "legacy_registry_import_2026-10-07.json").read_text(encoding="utf-8"))
+    assert report["schema"] == "coprepan-legacy-registry-import/v1"
+    proposed = {o["outlet_id"] for o in registry.outlets.values() if o["registration_status"] == "proposed"}
+    assert proposed == set(registry.outlets) == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]}
+    assert report["counts"]["proposed_outlets"] == len(registry.outlets)
+    assert report["counts"]["proposed_channels"] == sum(len(o["channels"]) for o in registry.outlets.values())
+    for row in report["legacy_name_to_outlet_id"]:
+        assert registry.legacy_alias(row["country_code"], row["slug"]) == [row["proposed_outlet_id"]]
+        assert row["mapping_status"] == "hypothesis"
+    codes = I.load_country_codes()
+    assert {o["country_id"] for o in registry.outlets.values()} <= set(codes.values())
 
 
 def test_the_tracked_country_table_is_well_formed():

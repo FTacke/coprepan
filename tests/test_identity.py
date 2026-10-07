@@ -122,6 +122,24 @@ def test_version_and_child_ids_are_pinned():
     assert identity.token_id(version, 345) == f"{version}:TOKEN:00000345"
 
 
+def test_index_base_is_zero_as_reviewed_for_cpd_0003():
+    """Regression for the CPD-0003 review of 2026-10-07 (KEEP): unit, sentence and token indexes
+    are zero-based, like the token and sentence indexes of CO.RA.PAN 3.0 (spaCy ``token.i`` and
+    ``enumerate(doc.sents)``). The first token of a version is ``…:TOKEN:00000000``; a version
+    with ``n`` tokens ends at ``n - 1``.
+    """
+    version = identity.document_version_id(identity.document_id("uy_el_pais", "https://e.test/a"), TEXT)
+    tokens = [identity.token_id(version, i) for i in range(3)]
+    assert tokens[0].endswith(":TOKEN:00000000") and tokens[-1].endswith(":TOKEN:00000002")
+    assert identity.sentence_id(version, 0).endswith(":SENT:0") and identity.unit_id(version, 0).endswith(":UNIT:0")
+    assert [identity.parse_child_id(token).index for token in tokens] == [0, 1, 2]
+
+
+def test_fetch_id_keeps_the_full_digest_as_reviewed_for_cpd_0003():
+    value = identity.fetch_id(URL, STARTED, BODY)
+    assert len(value) == len("ft1:") + 64 and not identity.is_fetch_id(value[:-32])
+
+
 def test_child_ids_parse_back():
     version = identity.document_version_id(identity.document_id("uy_el_pais", "https://e.test/a"), TEXT)
     for builder, kind in ((identity.unit_id, "UNIT"), (identity.sentence_id, "SENT"), (identity.token_id, "TOKEN")):

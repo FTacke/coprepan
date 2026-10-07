@@ -1,0 +1,594 @@
+{
+  "counts": {
+    "legacy_feeds": 352,
+    "legacy_sources": 82,
+    "proposed_channels": 352,
+    "proposed_outlets": 82,
+    "proposed_outlets_folding_several_sources": 0,
+    "unresolved": 0
+  },
+  "input": {
+    "database_file_name": "coprepan.sqlite",
+    "database_sha256": "7fe499073599978a7ead9224f048d4706e322baf320c7de909517b5e918ed5b7",
+    "database_size_bytes": 166174720,
+    "wal_sibling_present": true
+  },
+  "legacy_name_to_outlet_id": [
+    {
+      "country_code": "ARG",
+      "legacy_source_id": 1,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ar_clarin",
+      "slug": "clarin"
+    },
+    {
+      "country_code": "ARG",
+      "legacy_source_id": 2,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ar_la_nacion",
+      "slug": "la_nacion"
+    },
+    {
+      "country_code": "ARG",
+      "legacy_source_id": 3,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ar_pagina12",
+      "slug": "pagina12"
+    },
+    {
+      "country_code": "BOL",
+      "legacy_source_id": 4,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "bo_el_deber",
+      "slug": "el_deber"
+    },
+    {
+      "country_code": "BOL",
+      "legacy_source_id": 74,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "bo_eldiario",
+      "slug": "eldiario"
+    },
+    {
+      "country_code": "BOL",
+      "legacy_source_id": 5,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "bo_la_razon",
+      "slug": "la_razon"
+    },
+    {
+      "country_code": "BOL",
+      "legacy_source_id": 75,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "bo_lostiempos",
+      "slug": "lostiempos"
+    },
+    {
+      "country_code": "BOL",
+      "legacy_source_id": 6,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "bo_pagina_siete",
+      "slug": "pagina_siete"
+    },
+    {
+      "country_code": "CHL",
+      "legacy_source_id": 9,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cl_biobiochile",
+      "slug": "biobiochile"
+    },
+    {
+      "country_code": "CHL",
+      "legacy_source_id": 7,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cl_el_mercurio",
+      "slug": "el_mercurio"
+    },
+    {
+      "country_code": "CHL",
+      "legacy_source_id": 8,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cl_la_tercera",
+      "slug": "la_tercera"
+    },
+    {
+      "country_code": "COL",
+      "legacy_source_id": 11,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "co_el_espectador",
+      "slug": "el_espectador"
+    },
+    {
+      "country_code": "COL",
+      "legacy_source_id": 10,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "co_el_tiempo",
+      "slug": "el_tiempo"
+    },
+    {
+      "country_code": "COL",
+      "legacy_source_id": 82,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "co_elcolombiano",
+      "slug": "elcolombiano"
+    },
+    {
+      "country_code": "COL",
+      "legacy_source_id": 83,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "co_elpais",
+      "slug": "elpaís"
+    },
+    {
+      "country_code": "COL",
+      "legacy_source_id": 12,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "co_semana",
+      "slug": "semana"
+    },
+    {
+      "country_code": "CRI",
+      "legacy_source_id": 14,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cr_crhoy",
+      "slug": "crhoy"
+    },
+    {
+      "country_code": "CRI",
+      "legacy_source_id": 15,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cr_diario_extra",
+      "slug": "diario_extra"
+    },
+    {
+      "country_code": "CRI",
+      "legacy_source_id": 13,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cr_la_nacion",
+      "slug": "la_nacion"
+    },
+    {
+      "country_code": "CUB",
+      "legacy_source_id": 16,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cu_granma",
+      "slug": "granma"
+    },
+    {
+      "country_code": "CUB",
+      "legacy_source_id": 70,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cu_havanatimes",
+      "slug": "havanatimes"
+    },
+    {
+      "country_code": "CUB",
+      "legacy_source_id": 17,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cu_juventud_rebelde",
+      "slug": "juventud_rebelde"
+    },
+    {
+      "country_code": "CUB",
+      "legacy_source_id": 69,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cu_periodico26",
+      "slug": "periódico26"
+    },
+    {
+      "country_code": "CUB",
+      "legacy_source_id": 18,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "cu_trabajadores",
+      "slug": "trabajadores"
+    },
+    {
+      "country_code": "DOM",
+      "legacy_source_id": 20,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "do_diario_libre",
+      "slug": "diario_libre"
+    },
+    {
+      "country_code": "DOM",
+      "legacy_source_id": 21,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "do_el_caribe",
+      "slug": "el_caribe"
+    },
+    {
+      "country_code": "DOM",
+      "legacy_source_id": 19,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "do_listin_diario",
+      "slug": "listin_diario"
+    },
+    {
+      "country_code": "ECU",
+      "legacy_source_id": 22,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ec_el_comercio",
+      "slug": "el_comercio"
+    },
+    {
+      "country_code": "ECU",
+      "legacy_source_id": 23,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ec_el_universo",
+      "slug": "el_universo"
+    },
+    {
+      "country_code": "ECU",
+      "legacy_source_id": 24,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ec_primicias",
+      "slug": "primicias"
+    },
+    {
+      "country_code": "ESP",
+      "legacy_source_id": 59,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "es_el_mundo",
+      "slug": "el_mundo"
+    },
+    {
+      "country_code": "ESP",
+      "legacy_source_id": 58,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "es_el_pais",
+      "slug": "el_pais"
+    },
+    {
+      "country_code": "ESP",
+      "legacy_source_id": 60,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "es_la_vanguardia",
+      "slug": "la_vanguardia"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 30,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_elperiodico",
+      "slug": "elperiodico"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 64,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_elsiglo",
+      "slug": "elsiglo"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 63,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_lahora",
+      "slug": "lahora"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 62,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_nuestrodiario",
+      "slug": "nuestrodiario"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 28,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_prensa_libre",
+      "slug": "prensa_libre"
+    },
+    {
+      "country_code": "GTM",
+      "legacy_source_id": 29,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "gt_publinews",
+      "slug": "publinews"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 72,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_diariotiempo",
+      "slug": "diariotiempo"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 32,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_el_heraldo",
+      "slug": "el_heraldo"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 73,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_hondudiario",
+      "slug": "hondudiario"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 31,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_la_prensa",
+      "slug": "la_prensa"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 71,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_latribuna",
+      "slug": "latribuna"
+    },
+    {
+      "country_code": "HND",
+      "legacy_source_id": 33,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "hn_proceso_digital",
+      "slug": "proceso_digital"
+    },
+    {
+      "country_code": "MEX",
+      "legacy_source_id": 34,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "mx_el_universal",
+      "slug": "el_universal"
+    },
+    {
+      "country_code": "MEX",
+      "legacy_source_id": 35,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "mx_la_jornada",
+      "slug": "la_jornada"
+    },
+    {
+      "country_code": "MEX",
+      "legacy_source_id": 36,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "mx_milenio",
+      "slug": "milenio"
+    },
+    {
+      "country_code": "NIC",
+      "legacy_source_id": 38,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ni_confidencial",
+      "slug": "confidencial"
+    },
+    {
+      "country_code": "NIC",
+      "legacy_source_id": 39,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ni_el_19_digital",
+      "slug": "el_19_digital"
+    },
+    {
+      "country_code": "NIC",
+      "legacy_source_id": 37,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ni_la_prensa",
+      "slug": "la_prensa"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 79,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_critica",
+      "slug": "crítica"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 80,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_diaadia",
+      "slug": "díaadía"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 41,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_el_siglo",
+      "slug": "el_siglo"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 40,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_la_prensa",
+      "slug": "la_prensa"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 78,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_laestrelladepanama",
+      "slug": "laestrelladepanamá"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 42,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_metro_libre",
+      "slug": "metro_libre"
+    },
+    {
+      "country_code": "PAN",
+      "legacy_source_id": 81,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pa_midiario",
+      "slug": "midiario"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 61,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_diariocorreo",
+      "slug": "diariocorreo"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 46,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_el_comercio",
+      "slug": "el_comercio"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 77,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_elperuano",
+      "slug": "elperuano"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 76,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_expreso",
+      "slug": "expreso"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 47,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_la_republica",
+      "slug": "la_republica"
+    },
+    {
+      "country_code": "PER",
+      "legacy_source_id": 48,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pe_peru21",
+      "slug": "peru21"
+    },
+    {
+      "country_code": "PRI",
+      "legacy_source_id": 49,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pr_el_nuevo_dia",
+      "slug": "el_nuevo_dia"
+    },
+    {
+      "country_code": "PRI",
+      "legacy_source_id": 51,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pr_metro_puerto_rico",
+      "slug": "metro_puerto_rico"
+    },
+    {
+      "country_code": "PRI",
+      "legacy_source_id": 50,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "pr_primera_hora",
+      "slug": "primera_hora"
+    },
+    {
+      "country_code": "PRY",
+      "legacy_source_id": 43,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "py_abc_color",
+      "slug": "abc_color"
+    },
+    {
+      "country_code": "PRY",
+      "legacy_source_id": 45,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "py_la_nacion",
+      "slug": "la_nacion"
+    },
+    {
+      "country_code": "PRY",
+      "legacy_source_id": 44,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "py_ultima_hora",
+      "slug": "ultima_hora"
+    },
+    {
+      "country_code": "SLV",
+      "legacy_source_id": 27,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "sv_diario_el_mundo",
+      "slug": "diario_el_mundo"
+    },
+    {
+      "country_code": "SLV",
+      "legacy_source_id": 26,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "sv_el_diario_de_hoy",
+      "slug": "el_diario_de_hoy"
+    },
+    {
+      "country_code": "SLV",
+      "legacy_source_id": 25,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "sv_la_prensa_grafica",
+      "slug": "la_prensa_grafica"
+    },
+    {
+      "country_code": "URY",
+      "legacy_source_id": 54,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "uy_el_observador",
+      "slug": "el_observador"
+    },
+    {
+      "country_code": "URY",
+      "legacy_source_id": 52,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "uy_el_pais",
+      "slug": "el_pais"
+    },
+    {
+      "country_code": "URY",
+      "legacy_source_id": 65,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "uy_ladiaria",
+      "slug": "ladiaria"
+    },
+    {
+      "country_code": "URY",
+      "legacy_source_id": 66,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "uy_larepublica",
+      "slug": "larepública"
+    },
+    {
+      "country_code": "VEN",
+      "legacy_source_id": 57,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ve_efecto_cocuyo",
+      "slug": "efecto_cocuyo"
+    },
+    {
+      "country_code": "VEN",
+      "legacy_source_id": 55,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ve_el_nacional",
+      "slug": "el_nacional"
+    },
+    {
+      "country_code": "VEN",
+      "legacy_source_id": 67,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ve_eldiario",
+      "slug": "eldiario"
+    },
+    {
+      "country_code": "VEN",
+      "legacy_source_id": 68,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ve_eluniversal",
+      "slug": "eluniversal"
+    },
+    {
+      "country_code": "VEN",
+      "legacy_source_id": 56,
+      "mapping_status": "hypothesis",
+      "proposed_outlet_id": "ve_ultimas_noticias",
+      "slug": "ultimas_noticias"
+    }
+  ],
+  "schema": "coprepan-legacy-registry-import/v1",
+  "unresolved": []
+}
