@@ -1,10 +1,16 @@
 # COPREPAN 3.0 — Target Architecture
 
-**Status: NORMATIVE TARGET — NOT IMPLEMENTED.** Decided as the direction by
+**Status: NORMATIVE TARGET — MOSTLY NOT IMPLEMENTED.** Decided as the direction by
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md)
-(2026-10-06). Nothing in this document exists as code. What exists is recorded in
+(2026-10-06). What exists is recorded in
 [`docs/STATUS.md`](../STATUS.md); when the two differ, `STATUS.md` describes reality and this
 document describes the goal.
+
+*Added 2026-10-07:* the records of stages 1 and 3–6 — outlet, acquisition run, fetch record,
+pack, document identity, extraction — and the layer separation are made specific by
+[CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md); where this document is general and
+the decision is specific, the decision governs. Those stages exist as code for *recorded*
+exchanges only. Component entry points: [`INDEX.md`](INDEX.md) §0.
 
 Evidence base: the architecture and migration audit of 2026-10-06 (kept in `corapan_playground`,
 `docs/agent-runs/2026-10-06_coprepan3-architecture-and-migration-audit.md`; cited here as

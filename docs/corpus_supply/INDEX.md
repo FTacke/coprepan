@@ -1,9 +1,10 @@
 # Corpus Supply — component index
 
-**Status: NORMATIVE TARGET — REGISTRY SCHEMA ONLY.** The registry schema, its validator and the
-legacy importer exist (§15). **The registry holds no outlet: the legacy import has not been run on
-the legacy database, and nothing is registered.** No supply snapshot and no acquired material
-exist. Governing decision:
+**Status: NORMATIVE TARGET — REGISTRY SCHEMA AND AN UNREVIEWED PROPOSAL.** The registry schema,
+its validator and the legacy importer exist (§15). The legacy import has been run (§16): the
+registry holds **82 proposed outlets with 352 proposed channels and no registered outlet**. No
+outlet attribute beyond what the legacy database held is filled. No supply snapshot and no
+acquired material exist. Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §5.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
@@ -179,7 +180,8 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 | Shared country list with CO.RA.PAN (Puerto Rico, United States, Equatorial Guinea) | scientific | master plan §13, O-5 |
 | Orientation-target numbers and their rationale | scientific, Phase 6 | this document §6 |
 | Registry schema and vocabulary freeze | **done 2026-10-07** (§15) | master plan §11 |
-| Complete legacy-slug → `outlet_id` mapping | technical, Phase 0/1 — **importer built, not yet run on the legacy database**; then operator review | master plan §11 |
+| Complete legacy-slug → `outlet_id` mapping | **proposed 2026-10-07** for the names in the legacy database (§16), `mapping_status: hypothesis`; open: human review; names that exist only in directories or exported files | master plan §11 |
+| **Human review of the registry proposal** — final ids, one-outlet questions, attributes, time zones, URL rules, registration | **gate before any acquisition** | §16 |
 | Value set of `scope`; form of `orientation` | not frozen: free text with `unknown` | §15 |
 | Channel health state | ledgered operational state, not a registry field; not built | §8 |
 
@@ -190,6 +192,8 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
   validated by code; legacy importer built and tested on a synthetic database. The import itself
   was not executed. Run report:
   [`docs/agent-runs/2026-10-07_foundation-core-i.md`](../agent-runs/2026-10-07_foundation-core-i.md).
+- 2026-10-07 — legacy import executed on a copy of the legacy database (§16). Run report:
+  [`docs/agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md`](../agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md).
 
 ## 15. Registry schema `coprepan-outlet-registry/v1`
 
@@ -233,3 +237,41 @@ python -m coprepan.legacy_registry_import --database <legacy sqlite file> --work
 
 Registration is a review step: a reviewer sets the final `outlet_id`, completes the attributes,
 clears the review notes and sets `registered`, in a commit of `config/outlet_registry.json`.
+
+## 16. The registry proposal of 2026-10-07
+
+Files: [`config/outlet_registry.json`](../../config/outlet_registry.json) (the proposal) and
+[`config/registry_review/legacy_registry_import_2026-10-07.json`](../../config/registry_review/legacy_registry_import_2026-10-07.json)
+(the review report: input fixity, counts, the legacy-name → `outlet_id` table, unresolved rows).
+
+Measured on 2026-10-07, on a copy of the legacy database (source file SHA-256 `7fe49907…8ed5b7`,
+166,174,720 bytes; WAL sibling present and copied; source unchanged afterwards):
+
+| Quantity | Value |
+|---|---|
+| legacy sources → proposed outlets | 82 → 82 (no two sources fold to one id; none unresolved) |
+| legacy feeds → proposed channels | 352 → 352: `rss` 146, `sitemap` 116, `sitemap_index` 82, `unknown` 7, `atom` 1 |
+| countries | 20; every legacy country code is in the code table |
+| outlets without any channel | 23 |
+| outlets without a usable web origin | 0 |
+| legacy codes with non-ASCII characters (proposed id differs from the code) | 6: `COL/elpaís`, `CUB/periódico26`, `PAN/crítica`, `PAN/díaadía`, `PAN/laestrelladepanamá`, `URY/larepública` |
+| display names carried by more than one outlet | 8 (for example *El País*, *La Nación*, *La Prensa*) |
+| repeat of the import | byte-identical outputs |
+
+The real database has exactly the `sources` and `feeds` columns of the legacy model the importer
+was written against; every column is carried through under `legacy_observed`.
+
+What the reviewer has to settle, and the import could not:
+
+1. **Ids.** Proposed ids inherit the legacy codes' two styles (`uy_el_pais` beside `co_elpais`,
+   `bo_lostiempos` beside `bo_la_razon`). An id is permanent once registered: harmonise before.
+2. **One outlet or two.** The import folds nothing on its own. Whether two entries are one outlet
+   is a reviewer's judgement, recorded in `same_outlet_basis`.
+3. **Attributes.** `outlet_type`, `outlet_group`, seat, `access_model`, `medium` and `timezone`
+   are `unknown` for all 82. An outlet without a time zone cannot be dated (§3).
+4. **URL rules** per outlet: additional origins (mobile, AMP), significant query parameters,
+   variant markers. All proposals carry the placeholder version `proposed` and empty lists.
+5. **Channels.** Proposed channel ids are mechanical (`rss_001`, …). The legacy status, score and
+   failure reason are observations of a loop that deactivated healthy feeds
+   ([archaeology](../legacy/ARCHAEOLOGY.md) F-9); they are not channel health.
+6. **Which outlets to register at all** — registration is not owed to every legacy entry.

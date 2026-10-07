@@ -1,10 +1,13 @@
 # Identity — component index
 
 **Status: NORMATIVE for id serialisation and the canonical URL key (implemented, unit-tested).
-The identity *stage* — assigning documents and versions, identity tables, duplicate and
-syndication relations — is NOT IMPLEMENTED.** Governing decisions:
+The identity stage — document and version assignment, append-only identity tables, the
+`duplicate_of` and `moved_to` relations — is implemented and tested on recorded exchanges of
+synthetic fixtures only (§7). Syndication clusters are NOT IMPLEMENTED. No id has been minted for
+corpus material.** Governing decisions:
 [CPD-0002](../decisions/CPD-0002_terminology-and-naming-model.md) (forms),
-[CPD-0003](../decisions/CPD-0003_id-serialisation-and-canonical-url-key.md) (bytes).
+[CPD-0003](../decisions/CPD-0003_id-serialisation-and-canonical-url-key.md) (bytes),
+[CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §4 (identity policy).
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
 Entry point for: how an id is serialised, how a canonical URL key is computed, and what the
@@ -71,9 +74,10 @@ never independent of path case.
 
 | Item | Kind | Where |
 |---|---|---|
-| Identity stage: document and version assignment from fetch records, append-only identity tables, collision check, URL-key aliases | technical, Phase 2 | master plan §11 |
-| Duplicate and syndication relations | technical, Phase 2 / Phase 4 | target architecture §6 |
-| The bytes of "the extracted text" | technical, Phase 3 | CPD-0003, "Not decided here" |
+| URL-key aliases after a rule change (a superseded key kept as an alias) | technical, with the first rule revision | CPD-0003 §8 |
+| Syndication (near-duplicate) clusters across outlets | enrichment, Phase 4 | target architecture §6 |
+| Durable location of the identity tables (today: the runtime workspace) | technical | CPD-0005, "Not decided here" |
+| A content index for the duplicate check (today a scan of the version table) | technical | §7 |
 | Per-outlet URL rules | registry content, by review | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) |
 | Shared index bases in the cross-corpus contract | joint with CO.RA.PAN 3.0 | master plan §13, O-6 |
 
@@ -81,3 +85,49 @@ never independent of path case.
 
 - 2026-10-07 — id serialisation and canonical URL key frozen (CPD-0003), implemented and
   unit-tested (Foundation Core I). No identity stage, no minted id.
+- 2026-10-07 — CPD-0003 reviewed against CO.RA.PAN 3.0 (§8): both of its own choices kept.
+  Identity policy decided (CPD-0005 §4); identity tables implemented (§7).
+
+## 7. The identity stage (CPD-0005 §4)
+
+Code: `src/coprepan/document_identity.py`; tests: `tests/test_core_pipeline.py`.
+
+| Table (append-only, one JSON object per line) | Row |
+|---|---|
+| `identity/documents.jsonl` (`coprepan-document-identity/v1`) | `document_id`, `outlet_id`, `url_key`, rule-set ids, `first_fetch_id` |
+| `identity/observations.jsonl` (`coprepan-document-observation/v1`) | per fetch: `document_id`, requested URL, final URL, `rel_canonical`, the URL-key record, `head_scan` version |
+| `identity/versions.jsonl` (`coprepan-document-version/v1`) | per (version, fetch): `document_version_id`, `document_id`, `extracted_text_sha256`, `body_text_sha256`, extractor and version, extraction fingerprint |
+| `identity/relations.jsonl` (`coprepan-document-relation/v1`) | `relation` (`duplicate_of` · `moved_to`), document, target, evidence |
+
+| Case | Outcome |
+|---|---|
+| the same bytes fetched again, or the same article under a tracking, mobile or AMP URL | one document, one version, one more observation |
+| the same URL with changed text | the same document, a new version |
+| another URL of the outlet with the same BODY text | another document, `duplicate_of` the first |
+| a URL that now redirects to, or declares as canonical, another existing document | `moved_to` from the old document to the new |
+| a response that cannot be extracted (PDF, image) | a document, no version |
+| no URL of the fetch on a registered origin | no document; the fetch stays preserved |
+| a truncated id that would stand for two keys or two texts | refused (`DocumentIdCollision`) |
+
+Ablation behind "an article is not its URL": `tests/test_core_pipeline.py`,
+`test_ablation_url_as_identity_versus_canonical_key_plus_text`. On one controlled set (one
+article under four URLs in two textual states; two pages whose paths differ only in case) the
+observed URL yields 6 "articles", the legacy lower-cased URL 5 (splitting the article and merging
+the two pages), the canonical key 3 documents with 4 versions. This is a check on a constructed
+set, not a measurement on corpus data.
+
+## 8. Review of CPD-0003 against CO.RA.PAN 3.0 (2026-10-07)
+
+| Choice of CPD-0003 | CO.RA.PAN 3.0, as read on 2026-10-07 | Outcome |
+|---|---|---|
+| full SHA-256 digest in `fetch_id` | has no fetch or capture id; uses full SHA-256 for content hashes and truncations of 8 to 32 digits for derived ids | **KEEP.** A fetch id is not embedded in other ids, there will be very many of them, and the full digest needs no collision argument. |
+| zero-based unit, sentence and token indexes | token index is spaCy `token.i` (zero-based, punctuation included); sentence index is `enumerate(doc.sents)` (zero-based); no decision fixes either — the base lives only in code | **KEEP.** Same base; no reason to differ. |
+
+Differences that remain, deliberately: CO.RA.PAN writes `…:SENTENCE:{i:05d}` and counts tokens
+*per analysis unit (turn)*; COPREPAN writes `…:SENT:{i}` (the form of CPD-0002) and counts
+*per document version*, because a press document has no turn and its ids hang on the version. A
+second, one-based index space exists inside CO.RA.PAN's canonical record; it is not the id base.
+Mapping the two conventions is a matter of the cross-corpus contract (master plan §13, O-6).
+For Phase 4: the head of a root token is the token itself in CO.RA.PAN, not a sentinel.
+Regression tests: `test_index_base_is_zero_as_reviewed_for_cpd_0003`,
+`test_fetch_id_keeps_the_full_digest_as_reviewed_for_cpd_0003`.

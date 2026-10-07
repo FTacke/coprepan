@@ -4,9 +4,11 @@ Development repository of **COPREPAN 3.0**, the preservation-first pipeline for 
 press corpus: Spanish-language online press across the Spanish-speaking countries, built to be
 analysed together with the radio corpus CO.RA.PAN 3.0.
 
-> **Status: foundation only.** This repository holds rules, architecture, decisions, a naming
-> module, core primitives and tests. It contains **no pipeline**: nothing here discovers, fetches, preserves,
-> extracts, annotates or releases, and no corpus material has been acquired.
+> **Status: foundation and a first core section, on recorded input only.** This repository holds
+> rules, architecture, decisions, the core primitives and the pipeline section from fetch record to
+> document version — exercised end to end on synthetic fixtures. **There is no discovery and no
+> fetcher, no outlet is registered, no corpus material has been acquired, and nothing is validated
+> or activated.**
 > See [`docs/STATUS.md`](docs/STATUS.md).
 
 ## Where to start
@@ -45,17 +47,21 @@ docs/
   storage/             preservation, storage roles, provenance
   corpus_supply/       supply model, registry attributes, monitoring
   nlp/                 NLP instrument contract, enrichment, LLM policy
-  legacy/              rules for the legacy system and corpus
+  legacy/              rules for the legacy system and corpus; its archaeology
+  identity/            id serialisation, canonical URL key, identity tables
+  acquisition/         acquisition run, fetch record, pack
+  extraction/          extraction record, blocks, metadata, replay
   agent-runs/          one dated report per run
-  identity/            id serialisation and canonical URL key
-config/                logical configuration (no absolute paths); the outlet registry
-src/coprepan/          package: naming, stage vocabulary, and the core primitives — identity,
-                       registry, ledger, storage roots, promotion, outage spool, layer store
-tests/                 contract tests, guards, suite manifests, fixtures
+config/                logical configuration (no absolute paths); the outlet registry (a proposal,
+                       nothing registered) and its review report
+src/coprepan/          package: naming, stage vocabulary, core primitives (identity, registry,
+                       ledger, storage roots, promotion, outage spool, layer store) and the core
+                       section on recorded exchanges (acquisition, pack, document identity,
+                       extraction, core pipeline)
+tests/                 contract tests, guards, suite manifests, fixtures, the vertical canary
 ```
 
-Directories for acquisition, extraction and the like appear when their first implementation run
-creates them. Corpus data, raw captures, derived layers and runtime state never live in this
+Corpus data, raw captures, derived layers and runtime state never live in this
 checkout.
 
 ## Development

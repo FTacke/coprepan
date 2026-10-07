@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-07 |
 | Status | `ACTIVE` |
+| Status note 2026-10-07 | The two choices marked *chosen here* (clauses 3 and 6) were reviewed against CO.RA.PAN 3.0 by the following run: both **kept**; the index base named as unverified under "Not decided here" is verified (zero-based there too). Clause 5's "extracted text" is defined by [CPD-0005](CPD-0005_core-pipeline-contracts.md) §4. Record of the review: [`docs/identity/INDEX.md`](../identity/INDEX.md) §8. |
 | Decided by | the operator, in the brief of the Foundation Core I run (2026-10-07), which ordered the freeze the master plan schedules (§12 item 3.1: "code, property tests, a CPD") and delegated the choice between technically equivalent serialisations to that run. Recorded by that run; the wording of this record and the choices marked *chosen here* are subject to the operator's review. |
 | Kind | naming |
 | Scope | the byte-level form of `fetch_id`, `document_id`, `document_version_id`, `unit_id`, `sentence_id`, `token_id`, `channel_id`; the generic rule set of the canonical URL key |

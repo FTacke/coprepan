@@ -311,8 +311,25 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
    `outlet_id` mapping does not exist. What remains is that one import run and the operator's
    review of its proposal — not a Foundation Core II. See `docs/STATUS.md` and the run report
    `docs/agent-runs/2026-10-07_foundation-core-i.md`.
+
+   *Status 2026-10-07, later the same day (foundation, architecture and core-pipeline run):*
+   **Foundation Core I is complete.** The import ran on a copy of the legacy database and is
+   repeatable byte for byte; the registry holds 82 *proposed* outlets, none registered; CPD-0003
+   was reviewed and kept. What remains of item 2 is not engineering: the operator's review of the
+   proposal (corpus-supply index §16), now a named gate before any acquisition (§13, O-11).
 4. In parallel, on the operator's side: O-1 to O-4 and O-10 (§13). They gate the legacy freeze and
    Phase 2, not Foundation Core I.
+5. *Added 2026-10-07.* **Done ahead of Phase 2, on recorded input only (same run, operator brief):** the contracts of
+   the acquisition run, the fetch record, the sealed pack, document identity and extraction were
+   decided (CPD-0005) and implemented without network code, and exercised in a vertical canary on
+   synthetic fixtures. This delivers, of Phase 2: "sealed packs, promotion" and "document
+   identity" as code; of Phase 3: the extraction *contract* and the replay path. It delivers
+   **none** of the Phase-2 or Phase-3 gates: no discovery, no fetcher, no canary on real outlets,
+   no measured bytes per fetch, no gold sample, no extractor comparison.
+6. *Added 2026-10-07.* **Next technical work that needs no open decision:** a conformance check of the pack against
+   an independent WARC reader; discovery on recorded channel documents (feed and sitemap parsing,
+   index expansion, discovery events) — again without network; admission labels on extraction
+   records. **Next work that needs the operator:** the registry review (O-11); O-1 to O-4.
 
 ## 13. Open operator and institutional decisions
 
@@ -331,6 +348,7 @@ Core I.
 | **O-8** | **Code relationship to `corapan_playground`.** Consume its storage / change-decision / accounting modules as a pinned dependency after generalisation there, or keep own implementations against the same on-disk contracts. | technical, operator | nothing now; revisit in Phase 1 | audit §18 |
 | **O-9** | **Existing backup of the legacy data.** Whether any copy exists outside the legacy working copy. Changes the urgency of the freeze, not its necessity. | factual, operator knowledge | nothing | audit Q-5 |
 | **O-10** | **Go-ahead for the legacy freeze manifest.** The hash manifest reads the legacy tree only and needs no preservation target; it may run before O-3 is answered. | operator | Phase 0 closure | legacy index §5 |
+| **O-11** *(added 2026-10-07)* | **Registry review.** Which of the 82 proposed outlets are registered, under which final ids, as how many outlets, with which type, group, time zone, web origins and URL rules. | operator, scientific | any acquisition; the Phase-2 canary | corpus-supply index §16; `config/registry_review/` |
 
 ## 14. Validation still owed
 

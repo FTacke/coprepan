@@ -163,3 +163,9 @@ place.
   the legacy repository only `src/coprepan/models.py` (table and column names of `sources`,
   `feeds` and `articles`) was read. The slug helper of §6 was not copied: `registry.propose_slug` is a new,
   tested function with the same purpose.
+- 2026-10-07 — legacy archaeology and component dispositions. The legacy code was read
+  systematically (nothing run, no database opened in place); the reconstruction and the failure
+  mechanisms are in [`ARCHAEOLOGY.md`](ARCHAEOLOGY.md). **§6 of this index is refined by
+  [CPD-0004](../decisions/CPD-0004_legacy-component-dispositions.md): where the two differ, the
+  decision governs.** The legacy import was executed on a copy of `data/db/coprepan.sqlite` made
+  outside the legacy tree; the source file's hash was identical before and after.

@@ -308,6 +308,34 @@ governed by the studies' label vocabulary, keyed on the canonical ids.
 `tests/test_naming.py` pins them. A change to a rule here is a decision (CPD), then a code change,
 in the same run.
 
+## 9. Additions of 2026-10-07 (CPD-0005)
+
+New terms, id kinds and vocabulary values introduced with the core pipeline contracts. Nothing
+above is changed by them.
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **acquisition run** (term) | one execution that acquires for a declared set of outlets; a *processing cohort* in the sense of §3.2, never a stratum of the material | CPD-0005 §2 |
+| `run_id` | `acq1-<YYYYMMDDTHHMMSSffffffZ>-<hash12>` | [acquisition](../acquisition/INDEX.md) §2 |
+| run kind | `recorded_replay` | same |
+| run status | `COMPLETED`, `FAILED` | same |
+| `pack_id` | `pk1-<outlet_id>-<YYYYMMDD>-<nnn>` | CPD-0005 §3 |
+| fetch outcome | `FETCHED`, `FETCH_FAILED` (states of the preservation machine) | [acquisition](../acquisition/INDEX.md) §3 |
+| fetch failure reason | `timeout`, `connection_error`, `incomplete_response`, `unknown` | same |
+| **block** (term) | the press `unit` of §3.1 as produced by extraction | CPD-0005 §5 |
+| block `kind` | `title`, `heading`, `paragraph`, `list_item`, `quote_block`, `caption`, `unstructured_text` | [extraction](../extraction/INDEX.md) §2 |
+| block `role` | `title`, `body`, `non_body` — structural, never a linguistic category | same |
+| metadata basis | `json_ld`, `open_graph`, `html_meta`, `html_title`, `html_h1`, `html_lang`, `unknown` | same |
+| extraction outcome | `EXTRACTED`, `NOT_EXTRACTABLE` | same |
+| document relation | `duplicate_of`, `moved_to` | [identity](../identity/INDEX.md) §7 |
+| corpus layer | `RAW`, `EXTRACTED`, `ANNOTATED`, `RELEASE` | CPD-0005 §6 |
+| promotion outcome | `promoted`, `already_preserved`, `repaired`, `duplicate_recorded` | [storage](../storage/INDEX.md) §13 |
+| layer artifact id | `ar1-<32 hex>` | storage §13 |
+| schema ids minted | `coprepan-acquisition-run/v1`, `-acquisition-run-result/v1`, `-fetch-record/v1`, `-pack/v1`, `-pack-index/v1`, `-document-identity/v1`, `-document-observation/v1`, `-document-version/v1`, `-document-relation/v1`, `-extraction/v1` | the indexes above |
+
+"Extracted text" (§3.1, document version) is defined by CPD-0005 §4: the canonical JSON of the
+ordered `[kind, role, text]` of all blocks. **BODY** is the view over the blocks with role `body`.
+
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

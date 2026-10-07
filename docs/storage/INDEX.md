@@ -1,9 +1,12 @@
 # Storage, Preservation and Provenance — component index
 
-**Status: NORMATIVE TARGET — PRIMITIVES ONLY.** Root resolution, promotion, the outage spool, the
-state machine with its ledger and the layer store exist as code tested on temporary directories
-(§13). **No pack format, no fetch record, no fixity schedule and no backup exist; no storage root
-is configured; nothing has been preserved.** Governing decision:
+**Status: NORMATIVE TARGET — IMPLEMENTED ON TEMPORARY DIRECTORIES ONLY.** Root resolution,
+promotion, the outage spool, the state machine with its ledger, the layer store (§13) and — since
+CPD-0005 — the fetch record and the sealed WARC pack with its promotion
+([acquisition index](../acquisition/INDEX.md)) exist as tested code. **No fixity schedule, no
+reconciliation and no backup exist; no storage root is configured; nothing has been preserved
+for the corpus; nothing has run against a real target.** Governing decisions:
+[CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §3 and
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §3.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
@@ -230,7 +233,9 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
 | Storage capacity | institutional, then measured | master plan §13, O-4 |
 | Retention period for raw third-party copies; who may access them | institutional / legal | master plan §13, O-1 |
 | Durable location (role) of the non-released layer store | technical, Phase 1 — **still open**: the store takes any directory | master plan §11 |
-| WARC library, codec, index format, pack rollover | technical, Phase 2 | this document §3 |
+| WARC library, codec, index format, pack rollover | **partly settled 2026-10-07 by CPD-0005 §3**: own standard-library writer (`pack-writer/1`), gzip per record, index derived at seal time and bound by the manifest. Still open: conformance against an independent WARC reader, another codec, rollover by size, `revisit` records | this document §3; [acquisition index](../acquisition/INDEX.md) §6 |
+| Wire bytes or transfer-decoded bytes as the stored body | technical, with the fetcher (Phase 2) | CPD-0005, "Not decided here" |
+| Scheduled fixity re-verification; reconciliation of the ledger from the target manifests | technical, Phase 2 — today: `pack.verify_sealed` and `preservation.verify_master` on demand | §8 |
 | Reuse of the `corapan_playground` storage modules as a dependency | technical, Phase 1 — own code against the same on-disk conventions for now (§13); the consolidation question stays open | master plan §13, O-8 |
 | Phase-1 gate on a **real** preservation target | needs O-3 | master plan §11 |
 | Cross-process locking of ledger and layer store | technical; single writer assumed today | §13 |
@@ -241,6 +246,10 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
 - 2026-10-06 — principles and target design recorded (repository bootstrap). Nothing implemented.
 - 2026-10-07 — Foundation Core I: the primitives of §13, tested on temporary directories only.
   Run report: [`docs/agent-runs/2026-10-07_foundation-core-i.md`](../agent-runs/2026-10-07_foundation-core-i.md).
+- 2026-10-07 — CPD-0005: fetch record and sealed WARC pack decided and implemented; a pack and its
+  index are promoted (areas `raw`, `raw_index`) and read back from the preservation root in the
+  vertical canary — on temporary directories, with synthetic fixtures.
+  Run report: [`docs/agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md`](../agent-runs/2026-10-07_foundation-architecture-and-core-pipeline.md).
 
 ## 13. What exists (Foundation Core I)
 
@@ -256,8 +265,9 @@ Tested on temporary directories. None of it has run against a real storage root.
 
 Notes that bind later work:
 
-- The promotion unit is "a sealed file with an identity". **What a pack is, its id and its relative
-  path are Phase-2 decisions**; the area name and path are parameters today.
+- The promotion unit is "a sealed file with an identity". Since CPD-0005 §3 that is the sealed
+  pack `pk1-<outlet_id>-<YYYYMMDD>-<nnn>` under `preservation/raw/<country_id>/<outlet_id>/`, with
+  its index under `preservation/raw_index/…`; the promotion functions themselves stay generic.
 - The state machine is the one of §4. One edge is implemented that the diagram does not draw:
   `FETCH_FAILED → FETCH_PLANNED`, the retry that `retry_at` implies. The fetch stage (Phase 2)
   confirms or corrects it.
