@@ -1,7 +1,9 @@
 # Storage, Preservation and Provenance — component index
 
-**Status: NORMATIVE TARGET — NOT IMPLEMENTED.** No storage code exists, no storage root is
-configured, nothing has been preserved. Governing decision:
+**Status: NORMATIVE TARGET — PRIMITIVES ONLY.** Root resolution, promotion, the outage spool, the
+state machine with its ledger and the layer store exist as code tested on temporary directories
+(§13). **No pack format, no fetch record, no fixity schedule and no backup exist; no storage root
+is configured; nothing has been preserved.** Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §3.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
@@ -227,10 +229,41 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
 | Preservation target (own allocation or shared with CO.RA.PAN) | institutional | master plan §13, O-3 |
 | Storage capacity | institutional, then measured | master plan §13, O-4 |
 | Retention period for raw third-party copies; who may access them | institutional / legal | master plan §13, O-1 |
-| Durable location (role) of the non-released layer store | technical, Phase 1 | master plan §11 |
+| Durable location (role) of the non-released layer store | technical, Phase 1 — **still open**: the store takes any directory | master plan §11 |
 | WARC library, codec, index format, pack rollover | technical, Phase 2 | this document §3 |
-| Reuse of the `corapan_playground` storage modules as a dependency | technical, Phase 1 | master plan §13, O-8 |
+| Reuse of the `corapan_playground` storage modules as a dependency | technical, Phase 1 — own code against the same on-disk conventions for now (§13); the consolidation question stays open | master plan §13, O-8 |
+| Phase-1 gate on a **real** preservation target | needs O-3 | master plan §11 |
+| Cross-process locking of ledger and layer store | technical; single writer assumed today | §13 |
+| A content index for the duplicate check (today a linear scan of manifests) | technical, Phase 2 | §13 |
 
 ## 12. Milestones
 
 - 2026-10-06 — principles and target design recorded (repository bootstrap). Nothing implemented.
+- 2026-10-07 — Foundation Core I: the primitives of §13, tested on temporary directories only.
+  Run report: [`docs/agent-runs/2026-10-07_foundation-core-i.md`](../agent-runs/2026-10-07_foundation-core-i.md).
+
+## 13. What exists (Foundation Core I)
+
+Tested on temporary directories. None of it has run against a real storage root.
+
+| Mechanism | Code | On-disk contract |
+|---|---|---|
+| Root resolution (§5) | `src/coprepan/storage_roots.py` | reads `config/storage_targets.yml`; refusals `StorageRootNotConfigured`, `StorageRootUnusable` (relative, filesystem root, inside the checkout), `StorageRootUnreachable`, `StorageRootReadOnly`; never creates a root; `.env` is read only on request |
+| Promotion (§6) | `src/coprepan/preservation.py` | master `preservation/<area>/<relative path>`; manifest `preservation/manifests/<area>/<object id>.json`, schema `coprepan-preservation-manifest/v1`; staging `<name>.part-<hex>`; landed bytes re-hashed before the atomic rename; outcomes `promoted`, `already_preserved`, `repaired`, `duplicate_recorded`; refusals `HashMismatch`, `IdentityConflict` |
+| Outage spool (§6) | `src/coprepan/outage_spool.py` | bytes `preservation/pending/<area>/<relative path>`; record `state/pending/<object id>.json`, schema `coprepan-preservation-spool/v1`; both bounds of `SpoolPolicy` are mandatory, no built-in size |
+| State machine and ledger (§4) | `src/coprepan/ledger.py` | one JSON object per line, schema `coprepan-ledger-record/v1`, appended and flushed before the state changes; state is the replay of the ledger; a torn last line is quarantined to `<name>.torn-<n>`, never dropped |
+| Layer store | `src/coprepan/layer_store.py` | `<root>/<stage>/<fp[:2]>/<fingerprint>/<artifact id>/{payload, manifest.json, PROMOTED}`; fingerprint schema `coprepan-layer-fingerprint/v1`; artifact id `ar1-` + 32 hex |
+
+Notes that bind later work:
+
+- The promotion unit is "a sealed file with an identity". **What a pack is, its id and its relative
+  path are Phase-2 decisions**; the area name and path are parameters today.
+- The state machine is the one of §4. One edge is implemented that the diagram does not draw:
+  `FETCH_FAILED → FETCH_PLANNED`, the retry that `retry_at` implies. The fetch stage (Phase 2)
+  confirms or corrects it.
+- A duplicate (same bytes under another identity) gets a manifest with `duplicate_of` pointing at
+  the holder's master; nothing is copied.
+- The preservation module contains no deletion call at all (asserted structurally). The spool
+  releases its own copy only after the promoted master has been re-read and verified.
+- Staging name, hash-then-rename order and manifest rendering follow the CO.RA.PAN 3.0 storage
+  code as read on 2026-10-07; the manifest *fields* are COPREPAN's own (a pack is not a recording).

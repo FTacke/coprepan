@@ -4,7 +4,7 @@ Normative source: ``docs/architecture/TERMINOLOGY_AND_NAMING.md`` (decision CPD-
 holds only the parts of that contract that are frozen: the corpus and generation tokens, the
 provenance classes, and the lexical form of ``country_id``, ``outlet_id``, ``release_id`` and
 schema ids. The serialisation of fetch, document, document-version, sentence and token ids is
-frozen by the Phase-1 identity run and is deliberately absent here.
+frozen by CPD-0003 and lives in ``identity.py``, not here.
 
 A validator checks the *form* of an id. Whether an id is *registered* is a registry question.
 """

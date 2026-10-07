@@ -1,7 +1,8 @@
 # COPREPAN 3.0 -- logical storage targets.
 #
-# STATUS: contract only. No code reads this file yet and no root is configured
-# (docs/STATUS.md). The resolver is a Phase-1 deliverable.
+# STATUS: read by src/coprepan/storage_roots.py (fail-closed resolver). No root is configured
+# (docs/STATUS.md). The reader accepts exactly the shape below: a `schema` line and, under
+# `targets:`, one block per role with `root`, `purpose`, `authoritative`. Anything else is refused.
 #
 # This file holds logical roles and ${ENVIRONMENT_VARIABLE} references only. A concrete local or
 # network path is workstation state: it lives in a gitignored `.env` or

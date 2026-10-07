@@ -19,6 +19,7 @@ File name: `CPD-<nnnn>_<short-kebab-title>.md`. The date lives inside the record
 |---|---|---|---|---|---|
 | CPD-0001 | 2026-10-06 | Strategy C: greenfield core, selective legacy reuse, legacy corpus frozen and separate; the foundation principles (preservation-first, stage separation, labels not deletion, selection at release, shared NLP instrument, classical-first / LLM on net benefit) | `ACTIVE` · implementation `NOT_STARTED` | — | [CPD-0001](CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) |
 | CPD-0002 | 2026-10-06 | Terminology and naming model: levels, human-facing style, machine ids, forward-only legacy naming | `ACTIVE` · implementation `PARTIAL` (lexical rules in `src/coprepan/naming.py`) | — | [CPD-0002](CPD-0002_terminology-and-naming-model.md) |
+| CPD-0003 | 2026-10-07 | Id serialisation (SHA-256 over canonical JSON; `ft1:` fetch ids; 16/12-digit document and version hashes; zero-based unit, sentence and token indexes) and the canonical URL key rule set `coprepan-url-key/v1` | `ACTIVE` · implementation: serialisation and key `IMPLEMENTED` in `src/coprepan/identity.py`; no id minted, identity stage `NOT_STARTED` | builds on CPD-0002 | [CPD-0003](CPD-0003_id-serialisation-and-canonical-url-key.md) |
 
 ## Status vocabulary
 

@@ -303,6 +303,14 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
 
    Cut line: if the run is too large, items 5–6 move to a Foundation Core II run; items 1–4 are the
    minimum that later work cannot start without.
+
+   *Status 2026-10-07 (Foundation Core I run, `PARTIAL`):* items 1, 3, 4, 5 and 6 are implemented
+   and tested (item 1 with CPD-0003; item 6 existed since the bootstrap). Item 2 is half done: the
+   registry schema and the importer exist, **the import itself has not been run on a copy of the
+   legacy database**, so the legacy outlets are not in the registry and the legacy-slug →
+   `outlet_id` mapping does not exist. What remains is that one import run and the operator's
+   review of its proposal — not a Foundation Core II. See `docs/STATUS.md` and the run report
+   `docs/agent-runs/2026-10-07_foundation-core-i.md`.
 4. In parallel, on the operator's side: O-1 to O-4 and O-10 (§13). They gate the legacy freeze and
    Phase 2, not Foundation Core I.
 

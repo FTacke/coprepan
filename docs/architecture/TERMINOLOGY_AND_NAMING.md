@@ -228,6 +228,11 @@ Rules:
   inputs, encodings, separators, truncation lengths) is frozen with tests by the Phase-1 identity
   run and recorded in a decision; until then no id of these kinds is minted for production
   material.
+- *Added 2026-10-07:* the serialisation is frozen by
+  [CPD-0003](../decisions/CPD-0003_id-serialisation-and-canonical-url-key.md) and stated in
+  [`docs/identity/INDEX.md`](../identity/INDEX.md): SHA-256 over canonical JSON, `fetch_id` with
+  the full digest, zero-based unit, sentence and token indexes. No id has been minted yet: no
+  stage exists that would record one.
 
 ### 5.5 Vocabulary values
 
@@ -237,6 +242,10 @@ Rules:
 - Closed vocabularies carry explicit value states (`unknown`, `unavailable`, `not_applicable`)
   instead of nulls or empty strings.
 - An axis that cannot be measured yet reports `NOT_YET_MEASURABLE`, never a zero and never a guess.
+- *Added 2026-10-07 (registry schema `coprepan-outlet-registry/v1`):* `registration_status` of a
+  registry entry is `proposed` or `registered`. A proposed `outlet_id` is not yet an assigned id
+  and does not resolve; it becomes permanent when a reviewer registers it. The frozen value sets of
+  the registry vocabularies are listed in [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) §4.
 
 ### 5.6 `provenance_class`
 
@@ -298,3 +307,7 @@ governed by the studies' label vocabulary, keyed on the canonical ids.
 `src/coprepan/naming.py` implements the frozen lexical rules of §2, §5.1, §5.2 and §5.6;
 `tests/test_naming.py` pins them. A change to a rule here is a decision (CPD), then a code change,
 in the same run.
+
+`src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
+canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
+implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

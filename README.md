@@ -5,7 +5,7 @@ press corpus: Spanish-language online press across the Spanish-speaking countrie
 analysed together with the radio corpus CO.RA.PAN 3.0.
 
 > **Status: foundation only.** This repository holds rules, architecture, decisions, a naming
-> module and tests. It contains **no pipeline**: nothing here discovers, fetches, preserves,
+> module, core primitives and tests. It contains **no pipeline**: nothing here discovers, fetches, preserves,
 > extracts, annotates or releases, and no corpus material has been acquired.
 > See [`docs/STATUS.md`](docs/STATUS.md).
 
@@ -47,8 +47,10 @@ docs/
   nlp/                 NLP instrument contract, enrichment, LLM policy
   legacy/              rules for the legacy system and corpus
   agent-runs/          one dated report per run
-config/                logical configuration (no absolute paths)
-src/coprepan/          package: naming contract and stage vocabulary only
+  identity/            id serialisation and canonical URL key
+config/                logical configuration (no absolute paths); the outlet registry
+src/coprepan/          package: naming, stage vocabulary, and the core primitives — identity,
+                       registry, ledger, storage roots, promotion, outage spool, layer store
 tests/                 contract tests, guards, suite manifests, fixtures
 ```
 

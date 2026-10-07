@@ -2,3 +2,10 @@
 test_naming.py               # lexical naming rules (CPD-0002)
 test_repository_contract.py  # status assertions, paths, decision registry, links, suites
 test_test_guards.py          # the no-network and no-storage-root guards really guard
+# Foundation Core I (master plan §12 item 3)
+test_identity.py             # id serialisation and canonical URL key (CPD-0003)
+test_registry.py             # outlet registry schema; legacy import on a synthetic database
+test_ledger.py               # state machine, ledger before state, torn-tail recovery
+test_storage_roots.py        # fail-closed root resolution
+test_preservation.py         # promotion semantics, no deletion path, outage spool
+test_layer_store.py          # write-once layer store: fingerprint, artifact id

@@ -1,7 +1,9 @@
 # Corpus Supply — component index
 
-**Status: NORMATIVE TARGET — NOT IMPLEMENTED.** No registry, no supply snapshot and no acquired
-material exist. Governing decision:
+**Status: NORMATIVE TARGET — REGISTRY SCHEMA ONLY.** The registry schema, its validator and the
+legacy importer exist (§15). **The registry holds no outlet: the legacy import has not been run on
+the legacy database, and nothing is registered.** No supply snapshot and no acquired material
+exist. Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §5.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
@@ -176,9 +178,58 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 | Population: which outlet types enter the default release | scientific | master plan §13, O-5 |
 | Shared country list with CO.RA.PAN (Puerto Rico, United States, Equatorial Guinea) | scientific | master plan §13, O-5 |
 | Orientation-target numbers and their rationale | scientific, Phase 6 | this document §6 |
-| Registry schema and vocabulary freeze | technical, Phase 1 | master plan §11 |
-| Complete legacy-slug → `outlet_id` mapping | technical, Phase 0/1 | master plan §11 |
+| Registry schema and vocabulary freeze | **done 2026-10-07** (§15) | master plan §11 |
+| Complete legacy-slug → `outlet_id` mapping | technical, Phase 0/1 — **importer built, not yet run on the legacy database**; then operator review | master plan §11 |
+| Value set of `scope`; form of `orientation` | not frozen: free text with `unknown` | §15 |
+| Channel health state | ledgered operational state, not a registry field; not built | §8 |
 
 ## 14. Milestones
 
 - 2026-10-06 — supply model recorded (repository bootstrap). Nothing implemented.
+- 2026-10-07 — Foundation Core I: registry schema `coprepan-outlet-registry/v1` frozen and
+  validated by code; legacy importer built and tested on a synthetic database. The import itself
+  was not executed. Run report:
+  [`docs/agent-runs/2026-10-07_foundation-core-i.md`](../agent-runs/2026-10-07_foundation-core-i.md).
+
+## 15. Registry schema `coprepan-outlet-registry/v1`
+
+File: [`config/outlet_registry.json`](../../config/outlet_registry.json) — `{"schema", "outlets"}`,
+outlets in `outlet_id` order. Code: `src/coprepan/registry.py`. Every field is required; a value
+that is not known is the token `unknown`, never an omission.
+
+| Field | Content |
+|---|---|
+| `outlet_id`, `country_id` | [naming](../architecture/TERMINOLOGY_AND_NAMING.md) §5; `country_id` must be the id's country |
+| `registration_status` | `proposed` · `registered`. Only a registered outlet resolves (`Registry.resolve`). A registered outlet has at least one web origin and no open review note |
+| `display_names[]` | `name`, `valid_from`, `valid_to` (ISO date, `unknown` or `not_applicable`) |
+| `outlet_type` | `national_reference` · `popular_tabloid` · `regional` · `digital_native` · `state_official` · `news_agency` · `broadcaster_website` · `unknown` |
+| `access_model` | `open` · `metered` · `hard_paywall` · `unknown` |
+| `medium` | `print_and_web` · `web_only` · `unknown` |
+| `outlet_group`, `city`, `region`, `scope`, `same_outlet_basis` | text, `unknown` when not known |
+| `timezone` | IANA zone name or `unknown` (form checked; an outlet without a zone cannot be dated, §3) |
+| `editions[]` | text |
+| `web_origins[]` | normalised `scheme://host[:port]`; the first is the canonical origin of the URL key |
+| `url_rules` | `version`, `significant_query_params[]`, `strip_path_prefixes[]`, `strip_path_suffixes[]` — [identity](../identity/INDEX.md) §3 |
+| `channels[]` | `channel_id`, `kind` (`rss` · `atom` · `sitemap` · `sitemap_index` · `section_page` · `archive` · `unknown`), `url_history[]` (`url`, `valid_from`), `legacy_observed` |
+| `legacy_aliases[]` | `country_code`, `slug` (exactly as observed), `observed_in`, `mapping_status` (`hypothesis` · `human_audited`) |
+| `legacy_observed` | the legacy rows an entry was proposed from, verbatim; `{}` otherwise |
+| `review_notes[]` | what a reviewer still has to settle |
+| `orientation` | optional, free form, sourced |
+
+**Legacy import** (`src/coprepan/legacy_registry_import.py`, §12): copies the legacy database file
+to a work directory outside the legacy tree, reads only the copy, and writes a registry of
+`proposed` outlets plus a review report with the legacy-name → `outlet_id` table and everything it
+could not resolve. Proposed ids are `{country_id}_{ASCII slug of the legacy code}`; legacy sources
+that fold to one proposed id are listed together with a review note, not silently merged as a
+fact. Legacy country codes resolve through
+[`config/legacy_country_codes.json`](../../config/legacy_country_codes.json) (`hypothesis`); a code
+not listed there is reported as unresolved. Attributes the legacy database does not hold stay
+`unknown`. Only the names in the database's `sources` table are visible to it; variants that exist
+only in directory names or exported files are not covered.
+
+```text
+python -m coprepan.legacy_registry_import --database <legacy sqlite file> --work-dir <empty dir outside the legacy tree> --registry-out <new file> --report-out <new file>
+```
+
+Registration is a review step: a reviewer sets the final `outlet_id`, completes the attributes,
+clears the review notes and sets `registered`, in a commit of `config/outlet_registry.json`.

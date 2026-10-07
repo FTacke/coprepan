@@ -22,12 +22,13 @@ its area.
 
 | Subsystem | Entry point | Implementation state |
 |---|---|---|
-| Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | not started |
-| Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | not started |
+| Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | primitives only (root resolution, promotion, spool, ledger, layer store); no pack, no configured root |
+| Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | registry schema and legacy importer; no registered outlet |
+| Identity (id serialisation, canonical URL key) | [`docs/identity/INDEX.md`](../identity/INDEX.md) | serialisation and URL key; no identity stage |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
 | Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze not executed |
 
-Acquisition (discovery, fetch), document identity, extraction, admission, normalisation and release
+Acquisition (discovery, fetch), extraction, admission, normalisation and release
 have no component index yet: until their first implementation run they are specified in the target
 architecture (§1). The run that starts implementing one of them creates its `docs/<component>/INDEX.md`
 and adds it here.
@@ -51,6 +52,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 |---|---|---|
 | [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) | Strategy C and the foundation principles | `ACTIVE` |
 | [CPD-0002](../decisions/CPD-0002_terminology-and-naming-model.md) | Terminology and naming model | `ACTIVE` |
+| [CPD-0003](../decisions/CPD-0003_id-serialisation-and-canonical-url-key.md) | Id serialisation and canonical URL key | `ACTIVE` |
 
 ## 3. Component specifications — active
 
@@ -65,7 +67,12 @@ Machine-checked contracts:
 | Stage list and status vocabulary; `docs/STATUS.md` assertions | `src/coprepan/stages.py` | `tests/test_repository_contract.py` |
 | No absolute path in tracked logic/config; decision registry consistency; fixture size; suite membership | — | `tests/test_repository_contract.py` |
 | No network and no storage root in tests | `tests/conftest.py` | `tests/test_test_guards.py` |
-| Logical storage targets (contract only; no resolver) | `config/storage_targets.yml` | `tests/test_repository_contract.py` |
+| Logical storage targets and fail-closed root resolution | `config/storage_targets.yml`, `src/coprepan/storage_roots.py` | `tests/test_repository_contract.py`, `tests/test_storage_roots.py` |
+| Id serialisation and canonical URL key (CPD-0003) | `src/coprepan/identity.py`, `src/coprepan/canonical.py` | `tests/test_identity.py` |
+| Outlet registry schema `coprepan-outlet-registry/v1`; legacy import | `config/outlet_registry.json`, `src/coprepan/registry.py`, `src/coprepan/legacy_registry_import.py`, `config/legacy_country_codes.json` | `tests/test_registry.py` |
+| State machine and ledger (ledger before state) | `src/coprepan/ledger.py` | `tests/test_ledger.py` |
+| Promotion semantics, no deletion path, outage spool | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py` | `tests/test_preservation.py` |
+| Write-once layer store (fingerprint, artifact id) | `src/coprepan/layer_store.py` | `tests/test_layer_store.py` |
 
 ## 4. Open decisions and gates
 

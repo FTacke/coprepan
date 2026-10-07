@@ -4,9 +4,10 @@
 a rule or a plan. If a document sounds as if something were built, and this file says it is not,
 this file is right and the other document has a defect.
 
-**As of 2026-10-06 (repository bootstrap): there is no pipeline.** Nothing discovers, fetches,
+**As of 2026-10-07 (Foundation Core I): there is no pipeline.** Nothing discovers, fetches,
 preserves, extracts, annotates or releases. No storage root is configured. No corpus material has
-been acquired by COPREPAN 3.0. Nothing is validated. Nothing is activated.
+been acquired by COPREPAN 3.0. Nothing is validated. Nothing is activated. What exists beyond
+documents is a set of core primitives, tested on temporary directories only (§3).
 
 ---
 
@@ -25,11 +26,11 @@ been acquired by COPREPAN 3.0. Nothing is validated. Nothing is activated.
 
 | # | Stage | Implementation | Validation | Activation |
 |---|---|---|---|---|
-| 1 | outlet registry | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
+| 1 | outlet registry | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 2 | discovery | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 3 | fetch | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
-| 4 | raw preservation | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
-| 5 | document identity | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
+| 4 | raw preservation | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
+| 5 | document identity | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 6 | extraction | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 7 | admission labels | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 8 | normalisation | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
@@ -38,18 +39,31 @@ been acquired by COPREPAN 3.0. Nothing is validated. Nothing is activated.
 | 11 | release | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 12 | cross-corpus contract | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 
+What `PARTIAL` means for the three stages, exactly:
+
+| Stage | Exists | Does not exist |
+|---|---|---|
+| outlet registry | schema `coprepan-outlet-registry/v1`, validator, lookup, legacy importer (tested on a synthetic database) | **any outlet**: the legacy import has not been run on the legacy database; nothing is registered |
+| raw preservation | state machine and ledger, fail-closed root resolution, promotion, outage spool — on temporary directories | pack format, sealing, fetch records, fixity, reconciliation, backup; a run against a real target; a configured root |
+| document identity | id serialisation and canonical URL key (CPD-0003) | the identity stage: assignment from fetch records, identity tables, collision check, duplicates; any minted id |
+
 ## 3. Foundation
 
 | Item | State | Where |
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001, CPD-0002 `ACTIVE` | `docs/decisions/` |
+| Decisions | CPD-0001, CPD-0002, CPD-0003 `ACTIVE` | `docs/decisions/` |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
-| Naming contract — serialisation of fetch, document, version, unit, sentence, token ids | **not implemented**; target forms only | naming §5.4 |
+| Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
+| Outlet registry | schema, validator, lookup implemented and unit-tested; **registry is empty** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
+| Legacy outlet import | importer implemented, tested on a synthetic database; **not run on the legacy database — no mapping produced** | `src/coprepan/legacy_registry_import.py`, corpus supply §15 |
+| State machine and ledger primitives | implemented and unit-tested | `src/coprepan/ledger.py`, `tests/test_ledger.py` |
 | Stage-status self-check | implemented | `tests/test_repository_contract.py` |
 | Test guards (no network, no storage root, suite membership) | implemented | `tests/conftest.py` |
-| Storage-target configuration | logical roles only; **no root configured, no resolver code** | `config/storage_targets.yml` |
+| Storage-target configuration and root resolution | fail-closed resolver implemented and unit-tested; **no root configured** | `config/storage_targets.yml`, `src/coprepan/storage_roots.py`, `tests/test_storage_roots.py` |
+| Promotion semantics and outage spool | implemented; tested **on temporary directories only** (first half of the Phase-1 gate) | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py`, `tests/test_preservation.py` |
+| Write-once layer store | implemented and unit-tested; its durable location (role) is undecided | `src/coprepan/layer_store.py`, `tests/test_layer_store.py` |
 | Release gate suite | scaffold; **contains no test** | `tests/suites/release_gate.txt` |
 | Git | initialised 2026-10-07 on operator brief: branch `main`, remote `origin` = `https://github.com/FTacke/coprepan.git`; no history taken over from the legacy repository | [closure run report](agent-runs/2026-10-07_coprepan-repository-migration-closure.md) |
 | Legacy freeze `coprepan-legacy-2026-06` | **not executed** | `docs/legacy/INDEX.md` §5 |
@@ -69,7 +83,7 @@ No external API is used by any code in this repository.
 | Crawler identity and contact (O-2) | open | operator / institution |
 | Preservation target (O-3) | open | operator / institution |
 | Storage capacity (O-4) | open | operator / institution, then measured |
-| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | open — nothing built | engineering |
+| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | open — tests pass on temporary directories (2026-10-07); the half on a real preservation target needs O-3 | engineering, then operator |
 | Phase-2 canary gate | open — nothing built | engineering |
 
 Full list: [master plan](plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md) §13.
@@ -90,16 +104,16 @@ run report that carries the evidence.
 ```json
 {
   "schema": "coprepan-status-assertions/v1",
-  "as_of": "2026-10-06",
+  "as_of": "2026-10-07",
   "production_pipeline_exists": false,
   "external_api_in_production_path": false,
   "git_initialised_by_bootstrap": false,
   "stages": {
-    "outlet_registry":       {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "outlet_registry":       {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "discovery":             {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "fetch":                 {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "raw_preservation":      {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "document_identity":     {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "raw_preservation":      {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "document_identity":     {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "extraction":            {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "admission_labels":      {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "normalisation":         {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
@@ -127,3 +141,10 @@ run report that carries the evidence.
   `origin` set to `https://github.com/FTacke/coprepan.git`. This entry supersedes the two
   "handed to the operator" / "not initialised" statements of the entry above.
   Run report: [`docs/agent-runs/2026-10-07_coprepan-repository-migration-closure.md`](agent-runs/2026-10-07_coprepan-repository-migration-closure.md).
+- 2026-10-07 — Foundation Core I (implementation; reproducibility / infrastructure integrity
+  only). Id serialisation and canonical URL key frozen (CPD-0003); outlet registry schema;
+  ledger and state machine; fail-closed root resolution, promotion and outage spool; write-once
+  layer store. Stages 1, 4 and 5 move to `PARTIAL`. **Not done: the legacy import was built but not
+  run on the legacy database**, so the registry is empty and no legacy-name mapping exists. No
+  validation, no activation, no gate closed.
+  Run report: [`docs/agent-runs/2026-10-07_foundation-core-i.md`](agent-runs/2026-10-07_foundation-core-i.md).

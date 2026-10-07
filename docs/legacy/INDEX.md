@@ -158,3 +158,8 @@ place.
 
 - 2026-10-06 — legacy rules recorded (repository bootstrap). Legacy repository read, not changed.
   Freeze not executed.
+- 2026-10-07 — Foundation Core I: a read-only importer for the legacy outlets and feeds exists
+  ([corpus supply](../corpus_supply/INDEX.md) §15). It was **not run** on the legacy database. Of
+  the legacy repository only `src/coprepan/models.py` (table and column names of `sources`,
+  `feeds` and `articles`) was read. The slug helper of §6 was not copied: `registry.propose_slug` is a new,
+  tested function with the same purpose.

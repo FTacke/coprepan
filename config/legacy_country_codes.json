@@ -1,0 +1,29 @@
+{
+  "schema": "coprepan-legacy-country-codes/v1",
+  "note": "Legacy country code -> country_id. The pairs are the ISO 3166-1 alpha-3 / alpha-2 codes of the same country. That the legacy system used each code in its ISO sense is a hypothesis until audited (TERMINOLOGY_AND_NAMING.md §6). A legacy code that is not listed here is reported as unresolved by the import, never guessed. Presence in this table says nothing about which countries the corpus covers (master plan §13, O-5).",
+  "mapping_status": "hypothesis",
+  "codes": {
+    "ARG": "ar",
+    "BOL": "bo",
+    "CHL": "cl",
+    "COL": "co",
+    "CRI": "cr",
+    "CUB": "cu",
+    "DOM": "do",
+    "ECU": "ec",
+    "ESP": "es",
+    "GNQ": "gq",
+    "GTM": "gt",
+    "HND": "hn",
+    "MEX": "mx",
+    "NIC": "ni",
+    "PAN": "pa",
+    "PER": "pe",
+    "PRI": "pr",
+    "PRY": "py",
+    "SLV": "sv",
+    "URY": "uy",
+    "USA": "us",
+    "VEN": "ve"
+  }
+}
