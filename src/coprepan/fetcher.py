@@ -27,7 +27,7 @@ import time
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
-from typing import Callable, Mapping
+from typing import Callable, Mapping, Sequence
 from urllib.parse import urljoin, urlsplit
 
 from . import acquisition, robots
@@ -82,6 +82,23 @@ class FetchRequest:
     fetch_kind: str = acquisition.FETCH_KIND_ITEM
     channel_id: str | None = None
     candidate_id: str | None = None
+    # A conditional request (CPD-0007 §4): the validators of an earlier answer and which fetch
+    # they came from. All four together or none.
+    if_none_match: str | None = None
+    if_modified_since: str | None = None
+    revalidates_fetch_id: str | None = None
+    revalidates_body_sha256: str | None = None
+
+    def __post_init__(self) -> None:
+        conditional = self.if_none_match is not None or self.if_modified_since is not None
+        named = self.revalidates_fetch_id is not None and self.revalidates_body_sha256 is not None
+        if conditional != named or (self.revalidates_fetch_id is None) != (self.revalidates_body_sha256 is None):
+            raise ValueError("a conditional request names the fetch and the body it revalidates, and only it does")
+
+    @property
+    def conditional_headers(self) -> list[tuple[str, str]]:
+        return [(name, value) for name, value in (("If-None-Match", self.if_none_match),
+                                                  ("If-Modified-Since", self.if_modified_since)) if value]
 
 
 @dataclass(frozen=True)
@@ -197,6 +214,11 @@ class HttpFetcher:
                 self._robots[key] = robots.evidence_from_response(exchange.status, exchange.body)
         return self._robots[key]
 
+    def robots_seen(self, outlet_id: str) -> list[robots.RobotsEvidence]:
+        """The robots files this fetcher has read for an outlet's origins, in origin order."""
+        return [evidence for (outlet, _), evidence in sorted(self._robots.items())
+                if outlet == outlet_id and evidence.rules is not None]
+
     # -- policy ----------------------------------------------------------------------------------
 
     def _transport_target(self, url: str) -> tuple[str, str, int]:
@@ -224,7 +246,8 @@ class HttpFetcher:
 
     def _attempt(self, request: FetchRequest, identifier: str, number: int, decision: PolicyDecision) -> RecordedExchange:
         started = self.clock()
-        url, chain, not_followed = request.url, [], None
+        url, chain, statuses, not_followed = request.url, [], [], None
+        extra = request.conditional_headers
         policy = {
             "policy_decision": ALLOW, "policy_version": decision.policy_version,
             "robots_decision": str(decision.evidence.get("robots_decision", "not_evaluated")),
@@ -234,32 +257,41 @@ class HttpFetcher:
         }
         common = dict(requested_url=request.url, fetch_started_at=started, channel_id=request.channel_id,
                       fetch_kind=request.fetch_kind, request_id=identifier, attempt_number=number, policy=policy,
-                      request_headers=tuple(self._request_headers()))
+                      request_headers=tuple(self._request_headers(extra)))
         while True:
             try:
-                status, headers, body = self._request(url)
+                status, headers, body = self._request(url, extra)
             except _TransportFailure as failure:
                 return RecordedExchange(fetch_finished_at=self.clock(), failure_reason=failure.reason,
-                                        failure_detail=failure.detail, redirect_chain=tuple(chain), **common)
+                                        failure_detail=failure.detail, redirect_chain=tuple(chain),
+                                        redirect_statuses=tuple(statuses), **common)
             location = dict((k.lower(), v) for k, v in headers).get("location")
             if status in REDIRECT_STATUSES and location:
                 target = urljoin(url, location.strip())
                 if len(chain) >= self.limits.max_redirects:
                     return RecordedExchange(fetch_finished_at=self.clock(), failure_reason="redirect_limit_exceeded",
                                             failure_detail=f"more than {self.limits.max_redirects} redirects",
-                                            redirect_chain=tuple(chain), **common)
+                                            redirect_chain=tuple(chain), redirect_statuses=tuple(statuses), **common)
                 hop = self._decide(request, target)
                 if hop.allowed:
                     chain.append(url)
+                    statuses.append(status)
                     url = target
+                    extra = []  # validators belong to the URL they came from, not to where it redirects
                     continue
                 not_followed = f"{hop.decision}: {hop.reasons[0]}"  # the redirect answer itself is the response
+            revalidates = None
+            if status == 304 and extra and body == b"":
+                # The server says the body it sent before is still current. No body is stored for
+                # this fetch; it points at the fetch that holds one.
+                revalidates = {"fetch_id": request.revalidates_fetch_id, "body_sha256": request.revalidates_body_sha256}
             return RecordedExchange(fetch_finished_at=self.clock(), status=status, response_headers=tuple(headers),
                                     body=body, final_url=url, redirect_chain=tuple(chain),
-                                    redirect_not_followed=not_followed, **common)
+                                    redirect_statuses=tuple(statuses), redirect_not_followed=not_followed,
+                                    revalidates=revalidates, **common)
 
-    def _request_headers(self) -> list[tuple[str, str]]:
-        return [("User-Agent", self.identity.user_agent), ("Accept", "*/*"), ("Accept-Encoding", "gzip")]
+    def _request_headers(self, extra: Sequence[tuple[str, str]] = ()) -> list[tuple[str, str]]:
+        return [("User-Agent", self.identity.user_agent), ("Accept", "*/*"), ("Accept-Encoding", "gzip"), *extra]
 
     def _pace(self, origin: str) -> None:
         interval = self.gate.min_interval_seconds or 0.0
@@ -270,7 +302,7 @@ class HttpFetcher:
                 self.sleep(wait)
         self._last_request[origin] = self.clock()
 
-    def _request(self, url: str) -> tuple[int, list[tuple[str, str]], bytes]:
+    def _request(self, url: str, extra: Sequence[tuple[str, str]] = ()) -> tuple[int, list[tuple[str, str]], bytes]:
         parts = urlsplit(url)
         scheme, host, port = self._transport_target(url)
         self._pace(_origin(url) or url)
@@ -281,7 +313,7 @@ class HttpFetcher:
             path = (parts.path or "/") + (f"?{parts.query}" if parts.query else "")
             connection.putrequest("GET", path, skip_host=True, skip_accept_encoding=True)
             connection.putheader("Host", parts.netloc)
-            for name, value in self._request_headers():
+            for name, value in self._request_headers(extra):
                 connection.putheader(name, value)
             connection.putheader("Connection", "close")
             connection.endheaders()

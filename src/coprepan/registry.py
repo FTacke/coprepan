@@ -215,6 +215,8 @@ def _validate_outlet(outlet: Any) -> None:
         identifier = channel["channel_id"]
         if not is_channel_id(identifier) or not identifier.startswith(f"{name}:ch:"):
             raise RegistryError(f"{name}: not a channel_id of this outlet: {identifier!r}")
+        if identifier.endswith(":ch:robots_sitemaps"):
+            raise RegistryError(f"{name}: the channel slug 'robots_sitemaps' is reserved for a discovery source")
         _one_of(identifier, channel, "kind", CHANNEL_KINDS)
         history = channel["url_history"]
         if not isinstance(history, list) or not history:

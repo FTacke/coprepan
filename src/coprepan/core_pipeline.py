@@ -265,6 +265,21 @@ def identify_and_extract(
             continue  # a channel document or a robots file is evidence, never a document
         body = preserved.body(fetch_id)
         result: dict[str, Any] = {"fetch_id": fetch_id, "body_sha256": entry.body_sha256, "pack_id": identifier}
+        if record.get("revalidates", "not_applicable") != "not_applicable":
+            # A 304: the server confirmed an earlier body. No body here, so no key of its own and
+            # no extraction: one more observation of the revalidated fetch's document and version.
+            assigned = tables.assign_revalidation(record)
+            if assigned is None:
+                results.append({**result, "identity": "revalidation_target_unknown", "document_id": None,
+                                "document_version_id": None})
+            else:
+                results.append({**result, "identity": "assigned", "document_id": assigned[0], "is_new_document": False,
+                                "url_key": tables.observations[fetch_id]["url_key"], "url_key_basis": "revalidation",
+                                "extraction_outcome": "NOT_APPLICABLE", "extraction_fingerprint": None,
+                                "extraction_artifact_id": None, "extraction_status": "NOT_APPLICABLE",
+                                "document_version_id": assigned[1][-1] if assigned[1] else None,
+                                "is_new_version": False, "duplicate_of": None})
+            continue
         try:
             assignment = tables.assign_document(rules, record, body)
         except OffOriginError:

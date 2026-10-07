@@ -1,0 +1,125 @@
+{
+  "areas": {
+    "(root)": {
+      "bytes": 21326,
+      "files": 9
+    },
+    ".github": {
+      "bytes": 7317,
+      "files": 1
+    },
+    ".pytest_cache": {
+      "bytes": 27034,
+      "files": 5
+    },
+    ".venv": {
+      "bytes": 1327705124,
+      "files": 28557
+    },
+    ".vscode": {
+      "bytes": 88,
+      "files": 1
+    },
+    "backup": {
+      "bytes": 4328270,
+      "files": 19
+    },
+    "config": {
+      "bytes": 15385,
+      "files": 4
+    },
+    "data": {
+      "bytes": 196649378,
+      "files": 10
+    },
+    "docs": {
+      "bytes": 791865,
+      "files": 95
+    },
+    "json_annotated": {
+      "bytes": 16997911087,
+      "files": 926
+    },
+    "json_raw": {
+      "bytes": 126974147,
+      "files": 949
+    },
+    "json_raw_extended": {
+      "bytes": 40078992,
+      "files": 1348
+    },
+    "logs": {
+      "bytes": 448529,
+      "files": 3
+    },
+    "outputs": {
+      "bytes": 84387033,
+      "files": 34
+    },
+    "scripts": {
+      "bytes": 493915,
+      "files": 41
+    },
+    "src": {
+      "bytes": 1105615,
+      "files": 108
+    },
+    "state": {
+      "bytes": 585728,
+      "files": 1
+    },
+    "tests": {
+      "bytes": 920024,
+      "files": 92
+    },
+    "tools": {
+      "bytes": 142951,
+      "files": 32
+    }
+  },
+  "created_at": "2026-10-07T20:55:54.634459Z",
+  "excluded": [
+    ".git/ — represented by git_head and git_status"
+  ],
+  "fixity_semantics": "bytes: path, size and SHA-256. Modification times are not recorded and not compared.",
+  "freeze_id": "coprepan-legacy-2026-06",
+  "hash": "sha256",
+  "legacy_repository": {
+    "directory_name": "coprepan",
+    "git_head": "3e6bdd3350913d55c07efe500036bf752de65cc2",
+    "git_status_clean": true,
+    "git_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "listing": {
+    "file": "files.jsonl",
+    "rows": 32235,
+    "schema": "coprepan-legacy-freeze-listing/v1",
+    "sha256": "e7029dd7063fffd7f271375930f032dcb3bfb53cc3d98fcca87ecdf715c93cc4",
+    "size_bytes": 7352041
+  },
+  "operator": "operator go-ahead of 2026-10-07 (O-10), executed by the agent run",
+  "release_scope": {
+    "bytes": 17370148925,
+    "files": 3256,
+    "prefixes": [
+      "json_annotated/",
+      "json_raw/",
+      "json_raw_extended/",
+      "data/db/",
+      "state/annotation/",
+      "backup/",
+      "outputs/section_inventory/"
+    ]
+  },
+  "schema": "coprepan-legacy-freeze-manifest/v1",
+  "state": "MANIFEST_ONLY",
+  "state_note": "Step 1 of the legacy freeze. The frozen release needs a verified preservation copy and a restore check (O-3).",
+  "tool": {
+    "name": "legacy-freeze/1",
+    "package_version": "0.3.0"
+  },
+  "totals": {
+    "bytes": 18782593808,
+    "files": 32235
+  }
+}

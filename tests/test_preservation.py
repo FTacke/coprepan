@@ -248,7 +248,7 @@ def test_the_only_removals_elsewhere_are_the_named_ones():
     }
     found = {path.name: sorted(deleting_calls(path.name)) for path in sorted(SRC.glob("*.py"))}
     assert {name: calls for name, calls in found.items() if calls} == expected
-    assert len(found) >= 27
+    assert len(found) >= 35
 
 
 def test_the_staging_cleanup_refuses_anything_that_is_not_a_part_file(tmp_path):

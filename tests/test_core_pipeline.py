@@ -52,8 +52,9 @@ def make_registry(status="registered"):
 
 def ex(url, body, minutes, headers=HTML_HEADERS, **kwargs):
     start = T0 + timedelta(minutes=minutes)
+    kwargs.setdefault("status", 200)
     return RecordedExchange(requested_url=url, fetch_started_at=start, fetch_finished_at=start + timedelta(seconds=2),
-                            status=200, response_headers=headers, body=body, channel_id=f"{OUTLET}:ch:rss_001", **kwargs)
+                            response_headers=headers, body=body, channel_id=f"{OUTLET}:ch:rss_001", **kwargs)
 
 
 def exchanges():

@@ -198,6 +198,35 @@ class IdentityTables:
                 self._relate(RELATION_MOVED_TO, other, document, {"fetch_id": fetch, "requested_url_key": requested_key})
         return Assignment(document, is_new, key.key, key.basis)
 
+    def assign_revalidation(self, fetch_record: Mapping[str, Any]) -> tuple[str, list[str]] | None:
+        """Record a ``304 Not Modified`` fetch as one more observation of what it revalidates.
+
+        The fetch has no body, so nothing about it can be keyed or extracted on its own: it
+        belongs to the document of the fetch whose body the server confirmed, and to that fetch's
+        version(s). Returns ``(document_id, version ids)``, or ``None`` when the revalidated fetch
+        is not in these tables — then nothing is assigned, and nothing is guessed.
+        """
+        fetch, target = fetch_record["fetch_id"], fetch_record["revalidates"]
+        if not isinstance(target, Mapping) or target["fetch_id"] not in self.observations:
+            return None
+        held = self.observations[target["fetch_id"]]
+        versions = [version for (version, seen) in sorted(self.version_observations) if seen == target["fetch_id"]]
+        if fetch not in self.observations:
+            self.observations[fetch] = append_row(
+                self._observations, OBSERVATION_SCHEMA,
+                {"fetch_id": fetch, "document_id": held["document_id"], "requested_url": fetch_record["request"]["requested_url"],
+                 "final_url": fetch_record["response"]["final_url"], "rel_canonical": None, "head_scan": HEAD_SCAN_VERSION,
+                 "requested_url_key": held.get("requested_url_key"), "final_url_key": held.get("final_url_key"),
+                 "url_key": held["url_key"], "url_key_basis": "revalidation", "url_key_input": held["url_key_input"],
+                 "url_key_ruleset": held["url_key_ruleset"], "outlet_url_rules_version": held["outlet_url_rules_version"],
+                 "revalidates_fetch_id": target["fetch_id"]})
+        for version in versions:
+            if (version, fetch) not in self.version_observations:
+                append_row(self._versions, VERSION_SCHEMA, {**{k: v for k, v in self.versions[version].items() if k != "schema"},
+                                                            "fetch_id": fetch, "revalidates_fetch_id": target["fetch_id"]})
+                self.version_observations.add((version, fetch))
+        return held["document_id"], versions
+
     # -- versions ------------------------------------------------------------------------------
 
     def assign_version(

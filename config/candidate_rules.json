@@ -1,0 +1,5 @@
+{
+  "schema": "coprepan-candidate-rules/v1",
+  "note": "Per-outlet URL rules for candidate qualification (src/coprepan/candidate_filter.py). Empty on purpose: the legacy system had no per-outlet URL rule that could be carried over, and none may be guessed from how an outlet is assumed to structure its URLs. An entry is added by review, per registered outlet, with a version: {\"<outlet_id>\": {\"version\": \"…\", \"reject_path_prefixes\": [], \"reject_path_patterns\": [], \"allow_path_patterns\": []}}.",
+  "outlets": {}
+}

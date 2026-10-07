@@ -25,6 +25,7 @@ class Response:
     cut_chunked: bool = False            # end a chunked body without its terminating chunk
     delay_seconds: float = 0.0
     no_length: bool = False              # no Content-Length: the body ends when the connection closes
+    etag: str | None = None              # answer 304 to a request whose If-None-Match equals this
 
 
 class LocalSite:
@@ -52,6 +53,11 @@ class LocalSite:
                     response = route[index]
                 else:
                     response = route
+                if response.etag is not None:
+                    if self.headers.get("If-None-Match") == response.etag:
+                        response = Response(304, [("ETag", response.etag)])
+                    else:
+                        response = Response(response.status, response.headers + [("ETag", response.etag)], response.body)
                 if response.delay_seconds:
                     time.sleep(response.delay_seconds)
                 try:

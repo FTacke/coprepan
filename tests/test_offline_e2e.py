@@ -22,7 +22,7 @@ import pytest
 from warcio.archiveiterator import ArchiveIterator
 
 from coprepan import acquisition, core_pipeline as C, discovery, fetcher as F, http_acquisition as H
-from coprepan import layer_store, pack, policy as P, preservation
+from coprepan import layer_store, pack, policy as P, preservation, schedule
 from coprepan.crawler_identity import loopback_test_identity
 from coprepan.document_identity import IdentityTables
 from support_http import FakeClock, LocalSite, Response
@@ -37,6 +37,14 @@ LIMITS = F.FetchLimits(timeout_seconds=2, max_redirects=3, max_body_bytes=500_00
                        backoff_base_seconds=2, backoff_max_seconds=60)
 BUDGET = discovery.DiscoveryBudget(max_depth=3, max_documents=20, max_candidates=100, max_bytes=1_000_000)
 RSS, SITEMAP = f"{OUTLET}:ch:rss_001", f"{OUTLET}:ch:sitemap_001"
+DAY = 86400
+# A schedule policy for the tests. Its numbers are test inputs, not recommendations.
+SCHEDULE = schedule.SchedulePolicy(
+    version="test-schedule/1", revisit_after_success_seconds=7 * DAY, revisit_backoff_factor=2,
+    revisit_max_interval_seconds=28 * DAY, revisit_window_seconds=60 * DAY, retry_after_failure_seconds=3600,
+    failure_backoff_factor=2, failure_max_interval_seconds=DAY, max_consecutive_failures=3,
+    failure_cooldown_seconds=7 * DAY, gone_recheck_seconds=7 * DAY, max_gone_rechecks=2,
+    denied_recheck_seconds=7 * DAY, use_conditional_requests=True)
 ROBOTS = b"User-agent: *\nDisallow: /privado/\nSitemap: https://www.diario-ejemplo.test/sitemap_index.xml\n"
 PDF = b"%PDF-1.7\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<>>\nendobj\n"
 
@@ -91,7 +99,8 @@ def script(site):
 class Pass:
     """One complete acquisition pass against a scripted site, in its own workspace and root."""
 
-    def __init__(self, base, site, *, policy=None, start=T0, run_configuration=None):
+    def __init__(self, base, site, *, policy=None, start=T0, run_configuration=None, schedule_policy=None):
+        self.schedule = schedule_policy or SCHEDULE
         self.workspace = C.Workspace(base / "workspace")
         self.root = base / "preservation_root"
         for directory in (self.workspace.root, self.root):
@@ -105,10 +114,10 @@ class Pass:
         self.run = H.http_fetch_run(start, [OUTLET], run_configuration or {"limits": LIMITS.__dict__, "budget": BUDGET.__dict__}, self.identity)
         self.pack_id = pack.pack_id(OUTLET, start.strftime("%Y%m%d"))
 
-    def acquire(self, channels=(RSS, SITEMAP), max_item_fetches=50):
+    def acquire(self, channels=(RSS, SITEMAP), max_item_fetches=50, **kwargs):
         self.summary = H.run_http_acquisition(self.workspace, self.registry, self.run, OUTLET, fetcher=self.fetcher,
                                               channel_ids=channels, budget=BUDGET, max_item_fetches=max_item_fetches,
-                                              clock=self.clock)
+                                              schedule_policy=self.schedule, clock=self.clock, **kwargs)
         return self.summary
 
     def preserve(self):
@@ -157,28 +166,30 @@ def test_offline_canary_end_to_end(done):
     summary = done.summary
     assert [(d["channel_id"], d["documents_read"], d["candidates_new"], d["stopped_by"]) for d in summary["discovery"]] == [
         (RSS, 2, 4, []), (SITEMAP, 4, 3, [])]
-    assert summary["requests"] == {"channel_document:FETCHED": 6, "item:FETCHED": 7}
-    assert summary["candidates_known"] == summary["candidates_requested"] == 7 and summary["candidates_left"] == 0
+    assert summary["requests"] == {"channel_document:FETCHED": 6, "item:FETCHED": 6}
+    # 7 listed + 1 created by a permanent redirect (/breves/123 → /breves/123/)
+    assert summary["candidates_known"] == 8 and summary["candidates_requested"] == 6
+    assert summary["qualification"] == {"QUALIFIED": 7, "REJECTED": 1}  # the PDF is listed, kept as a candidate, and not requested
+    assert summary["lifecycle"] == {"ABSENT": 1, "FETCHED": 5, "MOVED": 1}  # derived from the request log, stored nowhere
 
     records = done.records()
     kinds = [r["fetch_kind"] for r in records]
-    assert (kinds.count("channel_document"), kinds.count("item"), kinds.count("robots_txt")) == (6, 8, 1)
+    assert (kinds.count("channel_document"), kinds.count("item"), kinds.count("robots_txt")) == (6, 7, 1)
     assert set(done.states().values()) == {"RAW_PRESERVED"}  # every response is preserved, also 404 and 503
     statuses = sorted(r["response"]["status"] for r in records)
     assert statuses.count(404) == 1 and statuses.count(503) == 1  # the unserved page; the first attempt of a retried one
 
     # only items become documents; a feed or a robots file never does
-    assert len(done.results) == 8 and {r["identity"] for r in done.results} == {"assigned"}
+    assert len(done.results) == 7 and {r["identity"] for r in done.results} == {"assigned"}
     tables = IdentityTables(done.workspace.identity)
     assert sorted(d["url_key"] for d in tables.documents.values()) == sorted([
-        ARTICLE, f"{WWW}/Regionales/puerto-separan-cargas", f"{WWW}/breves/123/", f"{WWW}/docs/informe.pdf",
+        ARTICLE, f"{WWW}/Regionales/puerto-separan-cargas", f"{WWW}/breves/123/",
         f"{WWW}/Deportes/Final", f"{WWW}/deportes/final", f"{WWW}/profundo/1"])
     by_key = {tables.documents[r["document_id"]]["url_key"]: r for r in done.results}
     assert by_key[ARTICLE]["url_key_basis"] == "rel_canonical"
     assert by_key[f"{WWW}/breves/123/"]["url_key_basis"] == "final_url"          # followed the redirect, no canonical
     assert by_key[f"{WWW}/Deportes/Final"]["extraction_outcome"] == "EXTRACTED"  # gzip decoded for reading
-    assert by_key[f"{WWW}/docs/informe.pdf"]["document_version_id"] is None
-    assert by_key[f"{WWW}/profundo/1"]["extraction_outcome"] == "EXTRACTED"      # an error page extracts; whether it is an article is a later label
+    assert by_key[f"{WWW}/profundo/1"]["extraction_outcome"] == "EXTRACTED"      # an error page extracts; that it is no article is an admission label
     # the 503 attempt and the 200 attempt of one request are two fetches of one document
     regional = [r for r in done.results if tables.documents[r["document_id"]]["url_key"].endswith("puerto-separan-cargas")]
     assert len(regional) == 2 and len({r["document_id"] for r in regional}) == 1 and len({r["document_version_id"] for r in regional}) == 2
@@ -196,7 +207,11 @@ def test_every_request_went_through_the_gate_and_carries_its_policy_context(done
         if record["fetch_kind"] != "robots_txt":
             assert (record["policy"]["robots_decision"], record["policy"]["robots_txt_sha256"]) == ("allowed", robots_sha)
     log = [json.loads(line) for line in H.request_log_path(done.workspace).read_text(encoding="utf-8").splitlines()]
-    assert [row["event"] for row in log].count("PLANNED") == [row["event"] for row in log].count("FINISHED") == 13
+    events = [row["event"] for row in log]
+    # one FINISHED row more than PLANNED: the answer of the permanently redirected request is also
+    # attributed to the candidate it now belongs to
+    assert (events.count("PLANNED"), events.count("FINISHED")) == (12, 13)
+    assert [row["attributed_from"] for row in log if row.get("attributed_from")] == [discovery.candidate_id(OUTLET, f"{WWW}/breves/123")]
     retried = next(row for row in log if row["event"] == "FINISHED" and len(row["attempts"]) == 2)
     assert [a["retry"] for a in retried["attempts"]] == ["retry", "none"] and retried["attempts"][0]["delay_seconds"] == 5.0
     assert 5.0 in done.clock.slept  # Retry-After honoured by the injected clock
@@ -250,7 +265,9 @@ def test_a_later_run_in_the_same_workspace_adds_and_never_rewrites(done, site):
     assert later.derive() == [] and files(done.workspace.identity) == day_one_identity
     # discovery saw the same listings again: new events (a listing observed twice), no new candidate
     tables = H.discovery_tables(done.workspace)
-    assert len(tables.candidates) == 7 and len({e["run_id"] for e in tables.events.values()}) == 2
+    assert len(tables.candidates) == 8 and len({e["run_id"] for e in tables.events.values()}) == 2
+    # the permanently redirected URL is listed again by the feed and is still not asked again
+    assert later.summary["lifecycle"]["MOVED"] == 1 and "/breves/123" not in later.site.paths()[-8:]
 
 
 def test_no_record_depends_on_the_machine_or_the_port(done, tmp_path):
@@ -296,7 +313,7 @@ def test_the_preserved_pack_is_read_by_an_independent_warc_reader(done):
             elif item.rec_type == "metadata":
                 assert json.loads(payload)["schema"] == "coprepan-fetch-record/v1"
             assert item.digest_checker.passed is True and item.digest_checker.problems == []
-    assert types[0] == "warcinfo" and types.count("response") == types.count("metadata") == len(expected) == 15
+    assert types[0] == "warcinfo" and types.count("response") == types.count("metadata") == len(expected) == 14
     assert seen == {fetch_id: body for fetch_id, (_, body) in expected.items()}
 
 
@@ -316,7 +333,7 @@ def test_replay_needs_no_network_and_reproduces_every_extraction(done, monkeypat
                                      fetch_id=result["fetch_id"])
         assert (replay["status"], replay["artifact_id"]) == ("ALREADY_STORED", result["extraction_artifact_id"])
         replayed += 1
-    assert replayed == 8
+    assert replayed == 7
 
 
 # --- failure injection -------------------------------------------------------------------------------
@@ -350,16 +367,16 @@ def test_robots_disallow_is_enforced_inside_the_run(tmp_path, site):
     site.routes["/robots.txt"] = Response(200, [("Content-Type", "text/plain")], b"User-agent: *\nDisallow: /Deportes/\n")
     run = Pass(tmp_path, site).all()
     assert "/Deportes/Final" not in site.paths() and "/deportes/final" in site.paths()  # robots paths are case-sensitive
-    assert run.summary["requests"]["item:DENIED"] == 1 and run.summary["candidates_left"] == 0
-    assert H.fetched_candidates(run.workspace) == {c for c in H.discovery_tables(run.workspace).candidates} - {
-        discovery.candidate_id(OUTLET, f"{WWW}/Deportes/Final")}
+    assert run.summary["requests"]["item:DENIED"] == 1 and run.summary["lifecycle"]["DENIED"] == 1
+    assert H.answered_candidates(run.workspace) == {c for c in H.discovery_tables(run.workspace).candidates} - {
+        discovery.candidate_id(OUTLET, f"{WWW}/Deportes/Final"), discovery.candidate_id(OUTLET, f"{WWW}/docs/informe.pdf")}
 
 
 def test_transport_failure_and_retry_exhaustion_never_look_like_success(tmp_path, site):
     site.routes["/deportes/final"] = Response(200, HTML, b"<html>cortado", declared_length=5000)   # truncated every time
     site.routes["/Deportes/Final"] = Response(503, HTML, b"<html>caido</html>")                    # down every time
     run = Pass(tmp_path, site).all()
-    assert run.summary["requests"] == {"channel_document:FETCHED": 6, "item:FETCHED": 6, "item:FETCH_FAILED": 1}
+    assert run.summary["requests"] == {"channel_document:FETCHED": 6, "item:FETCHED": 5, "item:FETCH_FAILED": 1}
     states = run.states()
     truncated = [r for r in run.records() if r["request"]["requested_url"].endswith("/deportes/final")]
     assert [r["outcome"] for r in truncated] == ["FETCH_FAILED"] * 3 and {r["failure_reason"] for r in truncated} == {"incomplete_response"}
@@ -370,7 +387,7 @@ def test_transport_failure_and_retry_exhaustion_never_look_like_success(tmp_path
     documents = {d["url_key"] for d in IdentityTables(run.workspace.identity).documents.values()}
     assert f"{WWW}/deportes/final" not in documents                     # nothing came back: no document
     # the candidate whose fetch failed stays open for a later run; the 503 one is "fetched" (a response exists)
-    assert discovery.candidate_id(OUTLET, f"{WWW}/deportes/final") not in H.fetched_candidates(run.workspace)
+    assert discovery.candidate_id(OUTLET, f"{WWW}/deportes/final") not in H.answered_candidates(run.workspace)
 
 
 def test_an_interrupted_run_resumes_and_its_interrupted_request_stays_on_record(tmp_path, site):
@@ -396,8 +413,9 @@ def test_an_interrupted_run_resumes_and_its_interrupted_request_stays_on_record(
     site._served.clear()
     run.all()
     assert H.unfinished_requests(run.workspace) == interrupted          # evidence of the interruption is not erased
-    assert H.fetched_candidates(run.workspace) == set(H.discovery_tables(run.workspace).candidates)
-    assert set(run.states().values()) == {"RAW_PRESERVED"} and len(IdentityTables(run.workspace.identity).documents) == 7
+    assert H.answered_candidates(run.workspace) == set(H.discovery_tables(run.workspace).candidates) - {
+        discovery.candidate_id(OUTLET, f"{WWW}/docs/informe.pdf")}
+    assert set(run.states().values()) == {"RAW_PRESERVED"} and len(IdentityTables(run.workspace.identity).documents) == 6
 
 
 def test_pack_and_promotion_failures_leave_no_false_success(tmp_path, site, monkeypatch):
@@ -417,7 +435,7 @@ def test_pack_and_promotion_failures_leave_no_false_success(tmp_path, site, monk
     opened = run.workspace.packs / f"{run.pack_id}.warc.gz"
     assert opened.exists()  # sealed in the workspace, still not preserved
     assert run.preserve().action == "promoted" and set(run.states().values()) == {"RAW_PRESERVED"}
-    assert len(run.derive()) == 8
+    assert len(run.derive()) == 7
 
 
 def test_a_torn_pack_is_not_sealed_until_the_tail_is_quarantined(tmp_path, site):
@@ -470,7 +488,7 @@ def test_an_identity_conflict_and_an_extraction_failure_stop_loudly(tmp_path, si
     tables = IdentityTables(run.workspace.identity)
     assert len(tables.versions) == 0 and len(tables.documents) == 1  # the document was assigned; no version was invented
     results = run.derive()                                           # the working extractor completes it
-    assert len(results) == 8 and len(IdentityTables(run.workspace.identity).versions) == 7
+    assert len(results) == 7 and len(IdentityTables(run.workspace.identity).versions) == 7
 
     # a stored extraction that no longer matches its marker is refused, not re-used
     store = run.workspace.layer_store()

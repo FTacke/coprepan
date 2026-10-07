@@ -23,8 +23,9 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from . import (
-    __version__, acquisition, capacity, crawler_identity, discovery, document_identity, extraction, http_acquisition,
-    identity, layer_store, ledger, naming, pack, policy, preservation, preservation_target, registry, robots,
+    __version__, acquisition, admission, candidate_filter, capacity, channel_health, crawler_identity, discovery,
+    document_identity, extraction, extraction_eval, http_acquisition, identity, layer_store, ledger, legacy_freeze,
+    naming, pack, policy, preservation, preservation_target, registry, robots, schedule,
 )
 from .canonical import canonical_json, record_json, sha256_bytes, sha256_file
 from .identity import format_instant
@@ -33,8 +34,9 @@ from .storage_roots import CHECKOUT
 BASELINE_SCHEMA = naming.schema_id("acquisition-baseline", 1)
 PRE_FREEZE, READY_TO_FREEZE, FROZEN = "PRE_FREEZE", "READY_TO_FREEZE", "FROZEN"
 
-_MODULES = (acquisition, capacity, crawler_identity, discovery, document_identity, extraction, http_acquisition,
-            layer_store, ledger, pack, policy, preservation, preservation_target, registry)
+_MODULES = (acquisition, admission, candidate_filter, capacity, crawler_identity, discovery, document_identity,
+            extraction, extraction_eval, http_acquisition, layer_store, ledger, legacy_freeze, pack, policy, preservation,
+            preservation_target, registry, schedule)
 _CPD = re.compile(r"(CPD-\d{4})_.+\.md")
 
 
@@ -53,6 +55,11 @@ def component_versions() -> dict[str, str]:
     return {
         "package": __version__,
         "extractor": extraction.BASELINE.stage_version,
+        "extractor_lifecycle": extraction.BASELINE.lifecycle,
+        "fetch_planner": schedule.PLANNER_VERSION,
+        "candidate_filter": candidate_filter.GENERIC_RULESET,
+        "admission_ruleset": admission.RULESET,
+        "channel_health": channel_health.HEALTH_VERSION,
         "pack_writer": pack.PACK_WRITER_VERSION,
         "fetcher": crawler_identity.FETCHER_VERSION,
         "channel_parser": discovery.PARSER_VERSION,
@@ -63,9 +70,9 @@ def component_versions() -> dict[str, str]:
     }
 
 
-def _hashed(path: Path) -> dict[str, Any]:
+def _hashed_file(path: Path, repository: Path) -> dict[str, Any]:
     digest, size = sha256_file(path)
-    return {"path": path.relative_to(CHECKOUT).as_posix(), "sha256": digest, "size_bytes": size}
+    return {"path": path.relative_to(repository).as_posix(), "sha256": digest, "size_bytes": size}
 
 
 def build_manifest(
@@ -82,6 +89,9 @@ def build_manifest(
     if not re.fullmatch(r"[0-9a-f]{40}", code_commit or ""):
         raise ValueError("code_commit is a full 40-digit commit hash")
     config = repository / "config"
+
+    def _hashed(path: Path) -> dict[str, Any]:
+        return _hashed_file(path, repository)  # paths in a manifest are relative to the repository
     registry_document = registry.load_registry(config / "outlet_registry.json")
     statuses = [outlet["registration_status"] for outlet in registry_document.outlets.values()]
     policy_document = policy.load_policy(config / "acquisition_policy.json")
@@ -96,6 +106,12 @@ def build_manifest(
         blocking.append("O-11: no outlet is registered")
     if policy_document["status"] != policy.STATUS_DECIDED or policy_document["external_acquisition"] != "enabled":
         blocking.append("O-1: the acquisition policy is not decided or external acquisition is disabled")
+    try:
+        schedule_state = schedule.load_schedule_policy(config / "schedule_policy.json").version
+    except schedule.ScheduleNotDecided:
+        schedule_state = "not_decided"
+        blocking.append("O-1: the schedule policy (how often a candidate is asked again) is not decided")
+    candidate_filter.load_rules(config / "candidate_rules.json")
     if identity_state != "configured":
         blocking.append("O-2: no crawler identity is configured")
     if storage_target is None or storage_target.get("status") != preservation_target.READY:
@@ -116,6 +132,8 @@ def build_manifest(
         "policy": {**_hashed(config / "acquisition_policy.json"), "policy_version": policy_document["policy_version"],
                    "status": policy_document["status"], "external_acquisition": policy_document["external_acquisition"]},
         "crawler_identity": {**_hashed(config / "crawler_identity.json"), "state": identity_state, "identity": identity_record},
+        "schedule_policy": {**_hashed(config / "schedule_policy.json"), "version": schedule_state},
+        "candidate_rules": _hashed(config / "candidate_rules.json"),
         "configuration": [_hashed(config / name) for name in ("storage_targets.yml", "legacy_country_codes.json")],
         "decisions": {match.group(1): _hashed(path)["sha256"] for path in sorted((repository / "docs" / "decisions").glob("CPD-*.md"))
                       if (match := _CPD.fullmatch(path.name))},

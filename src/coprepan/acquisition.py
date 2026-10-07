@@ -20,7 +20,7 @@ from typing import Any, Mapping, Sequence
 
 from . import naming
 from .canonical import canonical_json, record_json, require_sha256, sha256_bytes
-from .identity import IdentityError, _require_url_text, fetch_id, format_instant, is_channel_id
+from .identity import IdentityError, _require_url_text, fetch_id, format_instant, is_channel_id, is_fetch_id
 
 RUN_SCHEMA = naming.schema_id("acquisition-run", 1)
 RUN_RESULT_SCHEMA = naming.schema_id("acquisition-run-result", 1)
@@ -244,6 +244,10 @@ class RecordedExchange:
     attempt_number: int = 1
     failure_detail: str | None = None
     redirect_not_followed: str | None = None
+    redirect_statuses: tuple[int, ...] = ()
+    # Set on a 304 answer to a conditional request: the earlier fetch whose body the server
+    # says is still current, as {"fetch_id": …, "body_sha256": …}. No body is invented.
+    revalidates: Mapping[str, str] | None = None
 
 
 def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedExchange) -> dict[str, Any]:
@@ -269,6 +273,16 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
     except IdentityError as error:
         raise AcquisitionError(str(error)) from error
 
+    if len(exchange.redirect_statuses) not in (0, len(exchange.redirect_chain)):
+        raise AcquisitionError("redirect_statuses has one status per URL of the redirect chain, or is empty")
+    revalidates: Any = NOT_APPLICABLE
+    if exchange.revalidates is not None:
+        if exchange.status != 304 or exchange.body != b"" or set(exchange.revalidates) != {"fetch_id", "body_sha256"}:
+            raise AcquisitionError("only an empty 304 answer revalidates, and it names a fetch_id and a body_sha256")
+        if not is_fetch_id(exchange.revalidates["fetch_id"]):
+            raise AcquisitionError("revalidates.fetch_id is not a fetch id")
+        revalidates = {"fetch_id": exchange.revalidates["fetch_id"],
+                       "body_sha256": require_sha256(exchange.revalidates["body_sha256"], "revalidates.body_sha256")}
     fetched = exchange.body is not None
     if fetched:
         if not isinstance(exchange.body, bytes):
@@ -306,6 +320,7 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
             "status": exchange.status if fetched else NOT_APPLICABLE,
             "final_url": (exchange.final_url or exchange.requested_url) if fetched else NOT_APPLICABLE,
             "redirect_chain": list(exchange.redirect_chain),
+            "redirect_statuses": list(exchange.redirect_statuses),
             "redirect_not_followed": exchange.redirect_not_followed or NOT_APPLICABLE,
             "headers": _headers(exchange.response_headers),
             "content_type": _content_type(exchange.response_headers) if fetched else NOT_APPLICABLE,
@@ -315,6 +330,7 @@ def build_fetch_record(run: AcquisitionRun, outlet_id: str, exchange: RecordedEx
         "fetch_finished_at": finished,
         "body_sha256": body_sha256 if fetched else NOT_APPLICABLE,
         "body_size_bytes": len(exchange.body) if fetched else NOT_APPLICABLE,
+        "revalidates": revalidates,
         "discovery": {"channel_id": exchange.channel_id or UNKNOWN},
         "policy": _policy(run, exchange.policy),
     }
@@ -375,6 +391,20 @@ def content_encoding_of(headers: Sequence[tuple[str, str]]) -> str:
         if name.lower() == "content-encoding":
             return ",".join(part.strip().lower() for part in value.split(",") if part.strip()) or "identity"
     return "identity"
+
+
+def validators_of(headers: Sequence[tuple[str, str]]) -> dict[str, str | None]:
+    """The cache validators a response carried (``ETag``, ``Last-Modified``), exactly as sent.
+
+    They are hints for a later conditional request, never an identity: what a body *is* stays its
+    hash.
+    """
+    found: dict[str, str | None] = {"etag": None, "last_modified": None}
+    for name, value in headers:
+        key = {"etag": "etag", "last-modified": "last_modified"}.get(name.lower())
+        if key and found[key] is None and value.strip():
+            found[key] = value.strip()
+    return found
 
 
 def _policy(run: AcquisitionRun, policy: Mapping[str, str]) -> dict[str, str]:

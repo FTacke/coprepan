@@ -50,6 +50,11 @@ RELATION_ITEM = "item"
 RELATION_CHILD_DOCUMENT = "child_document"   # a sitemap named by a sitemap index
 RELATION_NEXT_PAGE = "next_page"             # pagination declared by the document
 
+# Reserved discovery source: sitemaps named by an origin's robots file (CPD-0007 §6). Events from
+# them are recorded under ``{outlet_id}:ch:robots_sitemaps``; the registry refuses to assign this
+# slug to a channel.
+ROBOTS_SITEMAP_SLUG = "robots_sitemaps"
+
 _XML_DECLARATION = re.compile(rb"\s*<\?xml[^>]*\?>", re.IGNORECASE)
 _HTML_START = re.compile(rb"\s*(?:<!--.*?-->\s*)*<(?:!doctype\s+html|html[\s>])", re.IGNORECASE | re.DOTALL)
 _FORBIDDEN_XML = re.compile(rb"<!(?:DOCTYPE|ENTITY)", re.IGNORECASE)
@@ -411,7 +416,10 @@ def discover_channel(
         base_row = {"run_id": run_id, "channel_id": channel_id, "document_url": url, "depth": depth,
                     "parent_fetch_id": parent, "read_at": at, "parser": PARSER_VERSION}
         if isinstance(document, DocumentUnavailable):
-            tables.add_input({**base_row, "input_fetch_id": document.fetch_id or f"unavailable:{sha256_bytes(url.encode('utf-8'))[:16]}",
+            # No fetch record exists for a request the gate refused: the row is keyed by run and URL,
+            # so that the same refusal in a later run is a later observation, not a repeat.
+            unfetched = f"unavailable:{run_id}:{sha256_bytes(url.encode('utf-8'))[:16]}"
+            tables.add_input({**base_row, "input_fetch_id": document.fetch_id or unfetched,
                               "outcome": OUTCOME_UNAVAILABLE, "format": None, "problems": [document.reason],
                               "body_sha256": None, "entries": 0})
             result.notes.append(f"unavailable: {url}: {document.reason}")

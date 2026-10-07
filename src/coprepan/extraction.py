@@ -236,6 +236,20 @@ def declared_charset_of(response_headers: list[list[str]]) -> str:
     return UNKNOWN
 
 
+# Lifecycle of an extractor (CPD-0007 §7). Only an ACTIVE extractor produces corpus text, and
+# nothing becomes ACTIVE without a recorded validation on a gold sample and a decision.
+LIFECYCLE_EXPERIMENTAL = "EXPERIMENTAL"   # exists to exercise a contract; says nothing about quality
+LIFECYCLE_CANDIDATE = "CANDIDATE"         # entered into a preregistered comparison
+LIFECYCLE_VALIDATED = "VALIDATED"         # met its gate on a gold sample, with a run report
+LIFECYCLE_ACTIVE = "ACTIVE"               # adopted for corpus material by a decision
+LIFECYCLE_RETIRED = "RETIRED"             # no longer used for new work; its artefacts stay valid
+LIFECYCLES = (LIFECYCLE_EXPERIMENTAL, LIFECYCLE_CANDIDATE, LIFECYCLE_VALIDATED, LIFECYCLE_ACTIVE, LIFECYCLE_RETIRED)
+
+
+class ExtractorNotActive(RuntimeError):
+    """Corpus text was asked of an extractor that has not been adopted."""
+
+
 @dataclass(frozen=True)
 class Extractor:
     """A named, versioned extractor. The version is part of every fingerprint it answers."""
@@ -243,6 +257,17 @@ class Extractor:
     name: str
     version: str
     function: Any
+    lifecycle: str = LIFECYCLE_EXPERIMENTAL
+
+    def __post_init__(self) -> None:
+        if self.lifecycle not in LIFECYCLES:
+            raise ExtractionError(f"not an extractor lifecycle state: {self.lifecycle!r}")
+
+    def require_active(self) -> None:
+        """The gate in front of corpus extraction. Nothing passes it today."""
+        if self.lifecycle != LIFECYCLE_ACTIVE:
+            raise ExtractorNotActive(f"{self.stage_version} is {self.lifecycle}, not {LIFECYCLE_ACTIVE}: "
+                                     "it may exercise the pipeline, it may not produce corpus text")
 
     @property
     def stage_version(self) -> str:
@@ -257,7 +282,11 @@ class Extractor:
         return result
 
 
-BASELINE = Extractor(EXTRACTOR_NAME, EXTRACTOR_VERSION, extract)
+BASELINE = Extractor(EXTRACTOR_NAME, EXTRACTOR_VERSION, extract, LIFECYCLE_EXPERIMENTAL)
+
+# Every extractor the package knows, with its lifecycle state. The registry of record: an
+# extractor that is not listed here has no state and is treated as EXPERIMENTAL.
+EXTRACTORS = {BASELINE.stage_version: BASELINE}
 
 
 # --- content type and decoding --------------------------------------------------------------------

@@ -245,6 +245,12 @@ class PolicyGate:
                 return decide(DEFER, "robots_not_consulted")
             evidence["robots_state"] = robots_evidence.state
             evidence["robots_txt_sha256"] = robots_evidence.sha256
+            if robots_evidence.rules is not None:
+                # Recorded as written and handed on to scheduling. Whether it binds is the
+                # policy's to say (O-1); nothing here applies it.
+                delays = robots_evidence.rules.crawl_delays
+                evidence["robots_crawl_delay"] = delays.get(self.identity.robots_product_token, delays.get("*"))
+                evidence["robots_sitemaps"] = list(robots_evidence.rules.sitemaps)
             if robots_evidence.state == robots.EVIDENCE_ABSENT:
                 evidence["robots_decision"] = "absent"
                 if policy["robots"]["on_absent"] == "deny":

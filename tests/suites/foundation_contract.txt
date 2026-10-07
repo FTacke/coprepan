@@ -20,3 +20,9 @@ test_fetcher.py              # HTTP transport against a loopback server
 test_warc_interoperability.py  # the pack writer read by an independent WARC reader (warcio)
 test_readiness.py            # preservation-target check, capacity model, baseline manifest, registry review
 test_offline_e2e.py          # the complete offline canary and its failure injection
+# Pre-canary completion (CPD-0007)
+test_legacy_freeze.py        # legacy freeze manifest: builder, verifier, the tracked manifest
+test_schedule.py             # re-fetch lifecycle and plan, candidate qualification, channel health
+test_admission_eval.py       # admission labels, extractor lifecycle, evaluation harness, review package
+test_refetch_e2e.py          # re-fetching end to end: conditional requests, redirects, robots sitemaps
+test_canary.py               # real-canary planner and fail-closed preflight

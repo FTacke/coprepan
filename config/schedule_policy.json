@@ -1,0 +1,19 @@
+{
+  "schema": "coprepan-schedule-policy/v1",
+  "note": "How often a candidate is asked again (src/coprepan/schedule.py). Part of the acquisition policy (master plan O-1): how hard an outlet is revisited is a politeness and retention question, not an engineering default. While status is NOT_DECIDED no fetch can be planned for an external run. To decide: replace every 'not_decided' with a value, give the policy a version, set status to DECIDED, in a reviewed commit.",
+  "version": "undecided",
+  "status": "NOT_DECIDED",
+  "revisit_after_success_seconds": "not_decided",
+  "revisit_backoff_factor": "not_decided",
+  "revisit_max_interval_seconds": "not_decided",
+  "revisit_window_seconds": "not_decided",
+  "retry_after_failure_seconds": "not_decided",
+  "failure_backoff_factor": "not_decided",
+  "failure_max_interval_seconds": "not_decided",
+  "max_consecutive_failures": "not_decided",
+  "failure_cooldown_seconds": "not_decided",
+  "gone_recheck_seconds": "not_decided",
+  "max_gone_rechecks": "not_decided",
+  "denied_recheck_seconds": "not_decided",
+  "use_conditional_requests": "not_decided"
+}
