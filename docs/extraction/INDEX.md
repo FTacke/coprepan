@@ -129,3 +129,7 @@ comparisons and cannot see whether a boundary is editorially right.
 
 **What this is not**: a gold sample, a comparison, a result. The harness has seen synthetic pages
 only, and its own numbers on them say nothing about any extractor on any real page.
+- 2026-10-07 — the extraction record's place in the layer chain and what later layers rely on
+  are fixed in [`PHASE3_SCIENTIFIC_ARCHITECTURE.md`](../architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md)
+  (CPD-0008): blocks become the units of the analysis contract, the role decides the surface,
+  BODY is the primary linguistic surface, the title a separate one. No change to the record.

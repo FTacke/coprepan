@@ -29,6 +29,7 @@ its area.
 | Extraction (record, blocks, metadata, replay) | [`docs/extraction/INDEX.md`](../extraction/INDEX.md) | contract, a baseline extractor (`EXPERIMENTAL`), an evaluation harness and a gold-sample design; no gold; nothing validated or adopted |
 | Admission labels | [`docs/admission/INDEX.md`](../admission/INDEX.md) | the technical label only, offline; no content-level label |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
+| Cross-corpus analysis contract | [`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md) | a technical proposal with a validator, COPREPAN's adapter and synthetic fixtures; not adopted by CO.RA.PAN |
 | Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze manifest built and verified (O-10); no preserved copy |
 
 Normalisation and release have no component index yet: until their first implementation run they are specified in the target
@@ -42,6 +43,7 @@ and adds it here.
 | [`AGENTS.md`](../../AGENTS.md) | agent and developer rules | NORMATIVE | — |
 | [`docs/STATUS.md`](../STATUS.md) | what is planned / implemented / validated / activated; open gates | AUTHORITATIVE for the current state; self-checked by the test suite | — |
 | [`TARGET_ARCHITECTURE.md`](TARGET_ARCHITECTURE.md) | stages, stage contracts, common rules, identity, extraction and release design | NORMATIVE TARGET — not implemented | CPD-0001 |
+| [`PHASE3_SCIENTIFIC_ARCHITECTURE.md`](PHASE3_SCIENTIFIC_ARCHITECTURE.md) | order and boundaries of the text layers from extraction to the contract export; where human gold attaches | NORMATIVE TARGET — partly implemented; nothing validated | CPD-0008 |
 | [`TERMINOLOGY_AND_NAMING.md`](TERMINOLOGY_AND_NAMING.md) | terms, human-facing names, identifiers, vocabularies, legacy naming | NORMATIVE | CPD-0002 |
 | [`docs/methodology/TRANSFORMATION_AND_VALIDATION_PRINCIPLES.md`](../methodology/TRANSFORMATION_AND_VALIDATION_PRINCIPLES.md) | how transformations are developed, evaluated and validated; evidence rules; forward-only evolution | NORMATIVE | CPD-0001 §8 |
 | [`docs/plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md`](../plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md) | goal, scope, phases, gates, open operator and institutional decisions, next run | ACTIVE PLAN | CPD-0001, CPD-0002 |
@@ -59,6 +61,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) | Core pipeline contracts (run, fetch record, pack, identity, extraction, layers) | `ACTIVE_WITH_VALIDATION_DEBT`; amended by CPD-0006 §1 |
 | [CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md) | Discovery, HTTP transport, policy gate, crawler identity, readiness contracts | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) | Legacy freeze manifest; candidate qualification; re-fetch lifecycle and plan; conditional requests; channel health; technical admission labels; extractor lifecycle; evaluation harness; canary preflight | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0008](../decisions/CPD-0008_cross-corpus-analysis-contract-and-phase3-layer-architecture.md) | Cross-corpus analysis contract (technical proposal; binds COPREPAN only) and the Phase-3 layer architecture | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -102,6 +105,7 @@ Machine-checked contracts:
 | Conditional requests, permanent redirects, robots sitemaps, re-fetching end to end | `src/coprepan/fetcher.py`, `src/coprepan/http_acquisition.py` | `tests/test_refetch_e2e.py` |
 | Technical admission labels; extractor lifecycle; evaluation harness and review package | `src/coprepan/admission.py`, `src/coprepan/extraction.py`, `src/coprepan/extraction_eval.py` | `tests/test_admission_eval.py` |
 | Canary planner and fail-closed preflight (`NOT_READY` as committed) | `src/coprepan/canary.py` | `tests/test_canary.py` |
+| Cross-corpus analysis contract: schemas, value states, denominator, manifest, compatibility view; conformance of a press and a radio fixture; invalid bundles refused | `src/coprepan/analysis_contract.py`, `src/coprepan/analysis_export.py` | `tests/test_analysis_contract.py` |
 
 ## 4. Open decisions and gates
 

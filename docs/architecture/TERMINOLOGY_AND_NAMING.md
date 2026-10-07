@@ -386,6 +386,31 @@ ordered `[kind, role, text]` of all blocks. **BODY** is the view over the blocks
 Two words used with two meanings, kept apart by their object: `FAILING` (a candidate; a channel)
 and `DEFERRED` (a qualification; a candidate whose request the policy deferred).
 
+## 12. Additions of 2026-10-07 (CPD-0008)
+
+The open points of §2 (shared namespace) and §4 (shared field) are settled **for this
+repository** by CPD-0008; for CO.RA.PAN they are a proposal (master plan O-6).
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| shared namespace | `crosscorpus-` — the working name, kept | CPD-0008 §2 |
+| contract ids | `crosscorpus-analysis/v1`, `crosscorpus-token-denominator/v1`, `crosscorpus-legacy-studies-view/v1` | [contract](../crosscorpus/ANALYSIS_CONTRACT.md) |
+| `production_mode` | `unscripted`, `scripted`, `prerecorded` (spoken; CO.RA.PAN's `speech_mode` values unchanged), `written_edited` (written). Carried at unit level | contract §4.2 |
+| **value state** (term) | the declared reason a field has or lacks a value: `known`, `unknown`, `not_applicable`, `undecided`, `not_available`. Refines §5.5 for the analysis tables; `unavailable` of §5.5 is `not_available` there | contract §7 |
+| **surface** (term) | which text of a document a unit belongs to: `primary` (BODY; speech), `title`, `auxiliary` | contract §5.4; Phase-3 architecture §5 |
+| **segmentation nature** | `editorial` (the publisher's markup made the boundary) or `technical` (an instrument did). No unit kind is an utterance | contract §5.4 |
+| unit kind (contract) | the block kinds of extraction; `turn`, `contribution_unit` | same |
+| **counted token** (term) | a token that enters the shared denominator: a word on the primary surface of an in-scope unit | contract §6.3 |
+| token kind | `word`, `punctuation` | contract §6.1 |
+| scope status | `in_scope`, `out_of_scope`, `undecided` | contract §5.4 |
+| document relation (contract) | `duplicate_of`, `syndicated_copy_of`, `earlier_version_of` | contract §5.6 |
+| release kind | `release`, `provisional_export`, `fixture` | contract §8 |
+| compatibility aliases | `register_group`, `country_code_alpha3`, `legacy_outlet_slug`, `legacy_article_id`, `legacy_file_id`, `legacy_standard_section`, `legacy_speaker_code` — never a field of a canonical table | contract §9 |
+
+In the contract, `document_id` names the **sampled unit** — for press a document version (§3.1) —
+and `editorial_id` the document it is a state of. Inside COPREPAN's own tables `document_id` and
+`document_version_id` keep the meaning of §5.4.
+
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

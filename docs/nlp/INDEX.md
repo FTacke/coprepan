@@ -161,9 +161,10 @@ See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 | Item | Kind |
 |---|---|
 | Press sentence-boundary policy id and decision | technical/scientific, Phase 4 |
-| Token denominator definition | joint with CO.RA.PAN, cross-corpus contract |
-| Carrying of spoken-only token fields in the shared schema | joint, cross-corpus contract |
-| Token/sentence export table — open in CO.RA.PAN 3.0 too ("the token-attribute export") | joint; design once |
+| Token denominator definition | **proposed 2026-10-07**: `crosscorpus-token-denominator/v1` ([contract](../crosscorpus/ANALYSIS_CONTRACT.md) §6.3); joint adoption open |
+| Carrying of spoken-only token fields in the shared schema | **proposed 2026-10-07**: `production_event_types` on every token (empty for press); `source_token_index` stays internal to CO.RA.PAN; time anchors by value state (contract §6.4) |
+| Token/sentence export table — open in CO.RA.PAN 3.0 too ("the token-attribute export") | **proposed 2026-10-07** as the contract's `sentences` and `tokens` tables; CO.RA.PAN still exports neither (read 2026-10-07) |
+| Annotation equivalence on shared text; bridge of legacy tense labels | designed, not run (contract §11, §12) |
 | Whether COPREPAN locks transitive dependencies (CO.RA.PAN does not) | technical, Phase 4; must not break pin identity |
 | NER use in studies | deferred: no gold in either corpus |
 
@@ -171,3 +172,13 @@ See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 
 - 2026-10-06 — instrument contract and LLM policy recorded (repository bootstrap). Nothing
   implemented.
+- 2026-10-07 — NLP alignment re-read from CO.RA.PAN 3.0 (commit `3a6972ff`): the pins of §2 are
+  unchanged there (`spacy==3.8.15`, `es_dep_news_trf` 3.8.0, `corapan-spacy-annotator/v2`,
+  `corapan3-verbal-complex/v2`). Corrections to §2: the token fields listed there are those of
+  CO.RA.PAN's *parse view*; its *analysis* layer is a second token layer (one-based `idx`,
+  `head_idx` 0 for the root, punctuation and masked tokens excluded), and time anchors sit on a
+  third, lexical layer. No token table is exported. Alignment audit, shared-text equivalence
+  design and tense-bridge design: [analysis contract](../crosscorpus/ANALYSIS_CONTRACT.md) §10–§12.
+  **Correction to §8**: the legacy press labels are `tense-v3`, but the radio 1.0 labels the
+  studies compared them with are `tense-v4-coprepan-compatible` — two rule versions whose
+  equivalence was never tested. Still nothing installed, nothing annotated.

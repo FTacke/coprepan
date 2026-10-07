@@ -177,6 +177,14 @@ on the contract (audit §14.1):
 concept yet. Both are designed **once, jointly** — COPREPAN neither waits for them nor invents them
 alone. Contract design can start in parallel with Phase 3.
 
+*Status 2026-10-07 (Phase-3 and cross-corpus contract run).* The contract is designed and
+prototyped on COPREPAN's side as **`crosscorpus-analysis/v1`** (CPD-0008;
+[`docs/crosscorpus/ANALYSIS_CONTRACT.md`](../crosscorpus/ANALYSIS_CONTRACT.md)): every row of the
+two tables above has a field, a rule or a validator check, and the workaround list has grown from
+ten to twenty-one from a second reading of the studies. It is a **technical proposal**: CO.RA.PAN
+has not been asked and has not adopted it. Confirmed on 2026-10-07 by reading CO.RA.PAN 3.0: it
+still has no release, no token export and no token denominator.
+
 ## 10. Gates
 
 A gate is a named condition with evidence, checked before a transition. The transitions that
@@ -361,6 +369,13 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     `Crawl-delay` binds. No value of it is built in. Engineering that remains is bound to the
     operator's answers and to real material: the Phase-1 gate on the chosen target, the canary
     itself, then Phase 3 on what the canary preserved.
+11. *Added 2026-10-07 (Phase-3 and cross-corpus contract run).* **Done ahead of Phase 7, as the
+    order note of §11 allows:** the cross-corpus analysis contract as a technical proposal with a
+    validator, COPREPAN's adapter and two synthetic fixtures; the Phase-3 layer architecture
+    (`docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`); the designs of the Phase-4 gates
+    (shared-text equivalence, tense bridge). It delivers **no Phase-3, Phase-4 or Phase-7 gate**.
+    What it changes for the sequence: Phase 3 and Phase 4 now build towards fixed tables, and a
+    separate run in CO.RA.PAN can review a concrete proposal instead of a wish list.
 
 ## 13. Open operator and institutional decisions
 
@@ -374,7 +389,7 @@ Core I.
 | **O-3** | **Preservation target.** Own allocation, or shared with CO.RA.PAN. | institutional | legacy freeze (preserved copy); Phase 1 gate on a real target; Phase 2 | audit §8.5, Q-2 |
 | **O-4** | **Storage capacity.** No measured rate exists; the scenario range is about 110–550 GB of raw material per year, and the CO.RA.PAN share cannot carry both. | institutional, then measured by the Phase-2 canary | scheduled crawling | audit §8.5 |
 | **O-5** | **Corpus population.** (a) Which outlet types count as "press" for the default release — digital-native outlets, broadcaster websites, state and official outlets, agencies. (b) Whether both corpora share one country list — Puerto Rico (press only so far), the United States (radio only), Equatorial Guinea (radio target). | scientific | Phase 6; default release view | audit Q-3, Q-4 |
-| **O-6** | **Cross-corpus contract naming and semantics.** Name of the shared namespace (working name `crosscorpus-`); name of the shared register field (working name `production_mode`; CO.RA.PAN calls its dimension `speech_mode`); token denominator; release and freeze semantics. | joint with CO.RA.PAN 3.0 | Phase 7 | audit §14, §16; CO.RA.PAN open items |
+| **O-6** | **Cross-corpus contract naming and semantics.** Name of the shared namespace (working name `crosscorpus-`); name of the shared register field (working name `production_mode`; CO.RA.PAN calls its dimension `speech_mode`); token denominator; release and freeze semantics. **Status 2026-10-07: `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`** — COPREPAN's side decided in CPD-0008 (namespace kept, `production_mode`, `crosscorpus-token-denominator/v1`, manifest-pinned releases); open: adoption by CO.RA.PAN, the form of its `release_id`, its freeze semantics. | joint with CO.RA.PAN 3.0 | Phase 7 | audit §14, §16; CO.RA.PAN open items; `docs/crosscorpus/ANALYSIS_CONTRACT.md` §4, §15 |
 | **O-7** | **Publication branding** of the generation: "COPREPAN 3.0" or "CO.PRE.PAN 3.0". Changes no identifier. | operator style | nothing | naming §1 |
 | **O-8** | **Code relationship to `corapan_playground`.** Consume its storage / change-decision / accounting modules as a pinned dependency after generalisation there, or keep own implementations against the same on-disk contracts. | technical, operator | nothing now; revisit in Phase 1 | audit §18 |
 | **O-9** | **Existing backup of the legacy data.** Whether any copy exists outside the legacy working copy. Changes the urgency of the freeze, not its necessity. | factual, operator knowledge | nothing | audit Q-5 |
