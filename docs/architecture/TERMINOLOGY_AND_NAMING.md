@@ -411,6 +411,17 @@ In the contract, `document_id` names the **sampled unit** — for press a docume
 and `editorial_id` the document it is a state of. Inside COPREPAN's own tables `document_id` and
 `document_version_id` keep the meaning of §5.4.
 
+## 13. Additions of 2026-10-08 (CPD-0009)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **writer lock** (term) | the operating-system lock a process holds while it writes a workspace; it ends with the process. Not a file whose existence means something | CPD-0009 §2 |
+| **torn tail** (term) | the incomplete last record of an append-only file, left by an interrupted write; moved to `<name>.torn-<n>`, never read, never deleted | [storage](../storage/INDEX.md) §17 |
+| **reconciliation** (term) | writing the ledger transition a verified pack proves; the only state the pipeline completes from evidence | CPD-0009 §4 |
+| workspace classification | `CLEAN`, `INCOMPLETE_RESUMABLE`, `NEEDS_REPAIR`, `DAMAGED` | storage §17 |
+| identity result (added) | `revalidation_target_not_preserved` | CPD-0009 §7 |
+| schema ids | `coprepan-ledger-record/v2` (replaces `v1`), `coprepan-workspace-diagnosis/v1` | the indexes above |
+
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.

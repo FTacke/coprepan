@@ -376,6 +376,14 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     (shared-text equivalence, tense bridge). It delivers **no Phase-3, Phase-4 or Phase-7 gate**.
     What it changes for the sequence: Phase 3 and Phase 4 now build towards fixed tables, and a
     separate run in CO.RA.PAN can review a concrete proposal instead of a wish list.
+12. *Added 2026-10-08 (adversarial persistence, crash-recovery and concurrency audit).* The
+    persistence layer was attacked with real process kills and real concurrent processes
+    (CPD-0009). Found and repaired: silent loss of ledger and table records between two writers;
+    two different contents both "promoted" under one identity; conflicting layer answers; four
+    interruption states with no way on; a relation lost to an interruption; a ledger that did not
+    notice a changed record. Now enforced: one writer per workspace. This answers the open point
+    of the Phase-1 gate "process-kill crash tests" **on temporary directories**; the same tests on
+    the real preservation target remain part of that gate (O-3). It changes no gate state.
 
 ## 13. Open operator and institutional decisions
 

@@ -264,7 +264,7 @@ Tested on temporary directories. None of it has run against a real storage root.
 | Root resolution (§5) | `src/coprepan/storage_roots.py` | reads `config/storage_targets.yml`; refusals `StorageRootNotConfigured`, `StorageRootUnusable` (relative, filesystem root, inside the checkout), `StorageRootUnreachable`, `StorageRootReadOnly`; never creates a root; `.env` is read only on request |
 | Promotion (§6) | `src/coprepan/preservation.py` | master `preservation/<area>/<relative path>`; manifest `preservation/manifests/<area>/<object id>.json`, schema `coprepan-preservation-manifest/v1`; staging `<name>.part-<hex>`; landed bytes re-hashed before the atomic rename; outcomes `promoted`, `already_preserved`, `repaired`, `duplicate_recorded`; refusals `HashMismatch`, `IdentityConflict` |
 | Outage spool (§6) | `src/coprepan/outage_spool.py` | bytes `preservation/pending/<area>/<relative path>`; record `state/pending/<object id>.json`, schema `coprepan-preservation-spool/v1`; both bounds of `SpoolPolicy` are mandatory, no built-in size |
-| State machine and ledger (§4) | `src/coprepan/ledger.py` | one JSON object per line, schema `coprepan-ledger-record/v1`, appended and flushed before the state changes; state is the replay of the ledger; a torn last line is quarantined to `<name>.torn-<n>`, never dropped |
+| State machine and ledger (§4) | `src/coprepan/ledger.py` | one JSON object per line, schema `coprepan-ledger-record/v2` *(v1 until 2026-10-08; CPD-0009 §5)*: each record names the SHA-256 of the record before it; appended under an append lock, flushed and read back before the state changes; state is the replay of the ledger; a torn last line is quarantined to `<name>.torn-<n>`, never dropped |
 | Layer store | `src/coprepan/layer_store.py` | `<root>/<stage>/<fp[:2]>/<fingerprint>/<artifact id>/{payload, manifest.json, PROMOTED}`; fingerprint schema `coprepan-layer-fingerprint/v1`; artifact id `ar1-` + 32 hex |
 
 Notes that bind later work:
@@ -362,3 +362,56 @@ any total is a scenario, and the calculator labels it so.
   append-only tables of the runtime workspace, whose durable home is open like that of the
   identity tables.
   Run report: [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).
+- 2026-10-08 — adversarial audit with real process kills and real concurrent processes
+  (CPD-0009; §17). Repaired: lost appends between processes, conflicting promotions under one
+  identity, conflicting layer answers, four unrecoverable interruption states, an unchained
+  ledger. One writer per workspace is now enforced.
+  Run report: [`docs/agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md`](../agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md).
+
+## 17. Interruption, concurrency and integrity (CPD-0009)
+
+**One writer per workspace.** Every operation that writes a workspace holds its writer lock
+(`src/coprepan/exclusive.py`): an operating-system lock on `<workspace>/.writer.lock`, released by
+the system when the process ends. A second process gets `WorkspaceBusy` at once. The file is
+empty and permanent; whether the lock is held is not readable from the file.
+
+**After an interruption** (`src/coprepan/recovery.py`):
+
+| `diagnose` class | Meaning | Way on |
+|---|---|---|
+| `CLEAN` | nothing open | — |
+| `INCOMPLETE_RESUMABLE` | a step did not finish: an unsealed pack, a sealed pack without manifest, a promotion without its last transition, a run without a result, a request planned and never ended | run the step again |
+| `NEEDS_REPAIR` | an append-only file ends in an incomplete record: ledger, a table, an open pack | `repair`, then run the step again |
+| `DAMAGED` | lost evidence, a master or layer that does not verify, contradicting rows, a record that is not the one its id names | a person; nothing is changed automatically |
+
+`repair` moves a torn tail into `<name>.torn-<n>` beside the file. It rewrites, invents and
+deletes nothing.
+
+**What is left behind and never read as data:** `*.part-<hex>` (an interrupted staged write),
+`layers/.staging/<hex>` (an abandoned or withdrawn layer write), `*.torn-<n>` (a torn tail).
+Nothing collects them; `diagnose` counts them.
+
+**What is hashed and what is not** (single changed bits, measured 2026-10-08 on the canary
+workspace, 40 per file; "noticed" = `diagnose` does not say `CLEAN`):
+
+| File | Noticed |
+|---|---|
+| preserved masters; workspace pack; pack index; layer payload; layer manifest; ledger; run record | 40 of 40 in every file |
+| layer marker | 199 of 200 |
+| run result | 30 of 40 |
+| pack manifest (`.pack.json`) | 27 of 40 |
+| preservation manifests | 51 of 80 |
+| identity tables | 88 of 160 |
+
+The unnoticed changes are in fields no digest covers: descriptive fields of manifests, and whole
+rows of tables that are derived (identity) or evidence without a chain (request log, discovery).
+Closing that gap is open (CPD-0009, "Not decided here").
+
+**Cost of the checks** (measured 2026-10-08, one workstation, local disk; diagnostic only):
+ledger append 4.1 ms, rebuild of 5,000 records 0.02 s; a pack of 1,500 fetches / 56.8 MB:
+scan 0.5 s, seal 1.0 s, fixity check 0.5 s; layer store 5 ms per write, 12 ms per verified read;
+`diagnose` of the canary workspace 0.02 s; the legacy freeze manifest over 18.8 GB: 143 s
+(previous run). None of these is a reason to switch a check off.
+
+**Not covered:** power failure (data the system had not written out), directory durability, a
+runtime workspace on a network share, any file system but the one tested.

@@ -89,6 +89,12 @@ never independent of path case.
   Identity policy decided (CPD-0005 §4); identity tables implemented (§7).
 - 2026-10-07 — revalidation observations (CPD-0007 §4): a 304 confirms an existing version and
   creates none.
+- 2026-10-08 — CPD-0009: opening the tables refuses two different rows under one key, one key
+  under two ids, one version id for two texts (the docstring had promised this; the code had
+  taken whichever row came last). Relations are re-derived from the stored rows, so one lost to
+  an interruption is written when the step runs again. A 304 is assigned only when the fetch it
+  names is preserved and verifies with that body hash (`revalidation_target_not_preserved`
+  otherwise).
 
 ## 7. The identity stage (CPD-0005 §4)
 

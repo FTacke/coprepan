@@ -128,6 +128,13 @@ required; clock and sleep injected. Retry and redirect semantics: CPD-0006 §3.
   attempts. Nothing is discarded at acquisition time.
 - Discovery creates no document. A candidate is not an article.
 - A test reaches at most a literal loopback address (`AGENTS.md` §7).
+- *Added 2026-10-08 (CPD-0009).* **A request is at-least-once; its evidence is never doubled.**
+  A process that dies between the intent and the end of a request leaves `PLANNED` without
+  `FINISHED`: the request may or may not have been sent, and a response that came back may be
+  lost with the process. The candidate is asked again; the second answer is a second fetch.
+- *Added 2026-10-08.* One process writes a workspace at a time (`WorkspaceBusy` otherwise). After
+  an interruption: `recovery.diagnose`, `recovery.repair`, then the same call again
+  ([storage](../storage/INDEX.md) §17).
 
 ## 9. Open
 
@@ -154,6 +161,11 @@ required; clock and sleep injected. Retry and redirect semantics: CPD-0006 §3.
   permanent-redirect handling, robots sitemaps and crawl-delay evidence, channel health, canary
   planner and preflight decided (CPD-0007) and built; re-fetching exercised end to end against a
   loopback server. External acquisition not activated.
+
+- 2026-10-08 — operation semantics decided and tested with real process kills (CPD-0009): a
+  request is at-least-once, a response is recorded under one fetch id or not at all, an intent
+  without an end stays on record; a 304 is believed only for a preserved body; a conditional
+  request is sent only for a preserved body; one writer per workspace.
 
 ## 11. Qualification, schedule, conditional requests, redirects, health (CPD-0007)
 

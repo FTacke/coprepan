@@ -4,7 +4,7 @@
 a rule or a plan. If a document sounds as if something were built, and this file says it is not,
 this file is right and the other document has a defect.
 
-**As of 2026-10-07 (Phase-3 and cross-corpus contract run): the acquisition pipeline, including re-fetching,
+**As of 2026-10-08 (adversarial persistence audit): the acquisition pipeline, including re-fetching,
 is built and tested offline, and it is not activated.** Nothing has been requested from any real
 site. No outlet is registered. No storage root is configured. No corpus material has been
 acquired, preserved or extracted by COPREPAN 3.0. Nothing is validated. Nothing is activated.
@@ -17,6 +17,12 @@ agent's (§5).
 **One thing was done on real data: the legacy freeze manifest** (O-10, on operator go-ahead):
 32,235 files, 18,782,593,808 bytes of the legacy tree, hashed read-only and re-verified (measured).
 It is a manifest, not a preserved copy.
+
+**The persistence layer has been attacked with real process kills and real concurrent
+processes** (CPD-0009): six defect groups were found and repaired, one writer per workspace is
+enforced, and an interrupted workspace has a named state and a deterministic way on —
+`PRE_CANARY_ROBUSTNESS = PASS` for the failure, recovery and concurrency tests defined in that run
+(§3), on temporary directories of one workstation. It closes no gate.
 
 **The cross-corpus analysis contract exists as a technical proposal with a validator**
 (`crosscorpus-analysis/v1`, CPD-0008). Two synthetic fixtures conform to it. It is not adopted by
@@ -82,7 +88,7 @@ What `PARTIAL` means for the eight stages, exactly:
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0008 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0009 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -115,7 +121,11 @@ What `PARTIAL` means for the eight stages, exactly:
 | Document identity tables | implemented and tested on recorded exchanges | `src/coprepan/document_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) §7 |
 | Extraction contract and baseline extractor | implemented; behaviour of the contract tested; **quality unknown, extractor not adopted** | `src/coprepan/extraction.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) |
 | Vertical canary (fixture → fetch record → pack → preservation → identity → extraction → version → replay) | passes on four synthetic pages, on temporary directories | `src/coprepan/core_pipeline.py`, `tests/test_core_pipeline.py` |
-| State machine and ledger primitives | implemented and unit-tested | `src/coprepan/ledger.py`, `tests/test_ledger.py` |
+| State machine and ledger primitives | implemented and unit-tested; record format `v2` with a hash chain since 2026-10-08 | `src/coprepan/ledger.py`, `tests/test_ledger.py` |
+| Writer lock (one writer per workspace) | implemented; tested with real processes, including release when the holder is killed | `src/coprepan/exclusive.py`, `tests/test_crash_recovery.py` |
+| Recovery: diagnosis and repair of an interrupted workspace | implemented; 24 pipeline and 4 HTTP crashpoints killed for real, each recovered by an independent process to the state of an uninterrupted run | `src/coprepan/recovery.py`, `tests/test_crash_recovery.py` |
+| Concurrency semantics of ledger, tables, layer store, promotion, workspace | measured before and after repair; asserted with real concurrent processes | `tests/test_concurrency.py`, CPD-0009 §3 |
+| **`PRE_CANARY_ROBUSTNESS`** | **`PASS`** (2026-10-08) — the local pipeline passed the adversarial failure, recovery and concurrency tests defined by the audit. **Not** a gate; not a statement about a real target, a network share, a power failure or a real server | [run report](agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md) |
 | Stage-status self-check | implemented | `tests/test_repository_contract.py` |
 | Test guards (no network, no storage root, suite membership) | implemented | `tests/conftest.py` |
 | Storage-target configuration and root resolution | fail-closed resolver implemented and unit-tested; **no root configured** | `config/storage_targets.yml`, `src/coprepan/storage_roots.py`, `tests/test_storage_roots.py` |
@@ -194,7 +204,7 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | The legacy importer's proposal reviewed | the registry-review gate (§5) |
 | Baseline extractor against real pages; an adopted extractor | Phase 3: gold sample, preregistered comparison |
 | Identity policy on real URLs (per-outlet rules; collision behaviour at scale) | Phase-2 canary |
-| Process-kill crash tests (today: failures injected in-process) | Phase 1 on a real target |
+| Process-kill crash tests | **done 2026-10-08 on temporary directories** (28 crashpoints, real kills; CPD-0009). Still owed: the same on the real preservation target (Phase-1 gate, needs O-3); power failure is not simulated |
 | Re-fetching against real servers: real validators, real 304 behaviour, real permanent redirects, real `Retry-After` | Phase-2 canary and the runs after it; needs a decided schedule (O-1) |
 | The generic candidate rules on real listings (what they reject, what they miss); any outlet rule | Phase-2 canary |
 | Channel-health states on real channels; thresholds | after the canary |
@@ -205,6 +215,9 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | Annotation equivalence of the two instrument paths on shared written text | Phase 4 (design: contract §11) |
 | `tense-v3` (press) against `tense-v4` (radio) on the same text; legacy labels against the verbal-complex layer | bridge sample (design: contract §12) |
 | Every "comparable with caveat" of the comparability matrix | the measurements the matrix names; none exists |
+| Writer lock and append locks on the file system the runtime workspace will really use; exclusive publication on the real preservation target (a share) | Phase-1 gate on the chosen target (O-3) |
+| Integrity protection of tables other than the ledger, and of descriptive manifest fields (single changed bits often unnoticed: storage §17) | a decision (CPD-0009, "Not decided here"); sensibly before the first corpus rows exist |
+| Recovery after a power failure (un-synced data, directory entries) | not testable here; an operational assumption to state with O-3 |
 
 ## 7. Machine-readable assertions
 
@@ -217,7 +230,7 @@ run report that carries the evidence.
 ```json
 {
   "schema": "coprepan-status-assertions/v1",
-  "as_of": "2026-10-07",
+  "as_of": "2026-10-08",
   "production_pipeline_exists": false,
   "external_api_in_production_path": false,
   "git_initialised_by_bootstrap": false,
@@ -305,3 +318,15 @@ run report that carries the evidence.
   validation, no activation. Finding on record: the finished studies compared `tense-v3` press
   labels with `tense-v4` radio labels; their equivalence was never tested.
   Run report: [`docs/agent-runs/2026-10-07_phase3-crosscorpus-analysis-contract.md`](agent-runs/2026-10-07_phase3-crosscorpus-analysis-contract.md).
+- 2026-10-08 — adversarial persistence, crash-recovery and concurrency audit (diagnosis + repair;
+  robustness and reproducibility only). Measured with real processes on the code of the previous
+  run: two writers silently lost ledger and table records (389 of 600; 597 of 900 on disk);
+  different contents were both "promoted" under one identity; conflicting layer answers left every
+  slot unreadable; four interruption states had no way on; one lost a relation for good. Repaired
+  (CPD-0009): an enforced writer lock per workspace, serialised and read-back appends, a chained
+  ledger record (`v2`), exclusive binding on the preservation root, a layer store that keeps one
+  answer, atomic run records, re-derived relations, reconciliation of the ledger from a verified
+  pack, `recovery.diagnose` / `repair`, a 304 believed only for a preserved body. 90 tests added,
+  40 of them with real process kills or real concurrent processes. `PRE_CANARY_ROBUSTNESS = PASS`
+  for that scope. **No gate closed**; no external request; nothing validated scientifically.
+  Run report: [`docs/agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md`](agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md).
