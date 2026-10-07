@@ -34,7 +34,7 @@ from . import naming
 from .canonical import canonical_json, require_sha256, sha256_bytes
 from .extraction import ContentDecodingError, decode_content
 from .identity import IdentityError, OffOriginError, OutletUrlRules, canonical_url_key, format_instant, is_channel_id
-from .jsonl import append_row, read_rows
+from .jsonl import append_row, keyed, read_rows
 
 PARSER_VERSION = "channel-parser/1"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 1)
@@ -292,8 +292,8 @@ class DiscoveryTables:
         self.directory = Path(directory)
         self._inputs, self._events, self._candidates = (self.directory / f"{name}.jsonl" for name in ("inputs", "events", "candidates"))
         self.inputs = read_rows(self._inputs, INPUT_SCHEMA)
-        self.events = {row["event_id"]: row for row in read_rows(self._events, EVENT_SCHEMA)}
-        self.candidates = {row["candidate_id"]: row for row in read_rows(self._candidates, CANDIDATE_SCHEMA)}
+        self.events = keyed(read_rows(self._events, EVENT_SCHEMA), lambda row: row["event_id"], "discovery events")
+        self.candidates = keyed(read_rows(self._candidates, CANDIDATE_SCHEMA), lambda row: row["candidate_id"], "candidates")
         self._seen_inputs = {(row["channel_id"], row["input_fetch_id"]) for row in self.inputs}
 
     def add_input(self, row: Mapping[str, Any]) -> bool:

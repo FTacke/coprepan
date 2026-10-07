@@ -171,7 +171,8 @@ def test_a_revalidation_of_a_fetch_the_tables_do_not_know_assigns_nothing(tmp_pa
                               status=304, response_headers=(), body=b"",
                               revalidates={"fetch_id": "ft1:" + "0" * 64, "body_sha256": "1" * 64})
     canary = Canary(tmp_path, items=[orphan]).all()
-    assert canary.results[0]["identity"] == "revalidation_target_unknown" and canary.results[0]["document_id"] is None
+    # a 304 is believed only for a body the corpus holds: this one names a fetch nobody preserved
+    assert canary.results[0]["identity"] == "revalidation_target_not_preserved" and canary.results[0]["document_id"] is None
     assert IdentityTables(canary.workspace.identity).documents == {}
     labels = admission.label_pack(canary.workspace, preservation_root=canary.root, identifier=canary.pack_id,
                                   results=canary.results, extractor=extraction.BASELINE, labelled_at="2026-10-07T13:00:00.000000Z")

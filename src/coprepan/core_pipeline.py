@@ -29,6 +29,7 @@ from . import __version__, acquisition, extraction, layer_store, pack, preservat
 from .acquisition import AcquisitionRun, RecordedExchange
 from .canonical import sha256_bytes
 from .document_identity import IdentityTables
+from .exclusive import writes_workspace
 from .identity import OffOriginError
 from .ledger import PRESERVATION, Ledger
 from .registry import Registry
@@ -93,6 +94,7 @@ def recorded_replay_run(started_at: datetime, outlet_ids: Sequence[str], configu
 # --- acquisition ----------------------------------------------------------------------------------
 
 
+@writes_workspace("acquire recorded exchanges")
 def acquire_recorded(
     workspace: Workspace,
     registry: Registry,
@@ -152,11 +154,30 @@ def record_exchange(
 # --- preservation ---------------------------------------------------------------------------------
 
 
+def reconcile_ledger_with_pack(ledger: Ledger, identifier: str, entries: Sequence[pack.PackEntry], *, at: datetime) -> list[str]:
+    """Complete the ledger from the evidence of a verified pack.
+
+    A fetch is written to the pack *before* its ``FETCHED`` / ``FETCH_FAILED`` transition. A
+    process that dies in between leaves the fetch in the pack — whole, verified by the scan that
+    produced ``entries`` — and the ledger at ``FETCH_PLANNED``. The pack is the evidence that the
+    fetch ended and how; the missing transition is recorded here, marked as reconciled. Nothing
+    else is ever reconciled: a state the pack does not prove is not written.
+    """
+    reconciled = []
+    for entry in entries:
+        if ledger.state(entry.fetch_id) == "FETCH_PLANNED":
+            ledger.transition(entry.fetch_id, entry.outcome, at=at,
+                              details={"pack_id": identifier, "reconciled_from_pack": True})
+            reconciled.append(entry.fetch_id)
+    return reconciled
+
+
 def pack_relative_path(identifier: str, suffix: str) -> str:
     outlet = pack.pack_outlet(identifier)
     return f"{outlet[:2]}/{outlet}/{identifier}{suffix}"
 
 
+@writes_workspace("seal and preserve a pack")
 def seal_and_preserve(
     workspace: Workspace, identifier: str, *, preservation_root: Path, now: datetime
 ) -> preservation.PromotionResult:
@@ -167,7 +188,9 @@ def seal_and_preserve(
     """
     manifest = pack.seal(workspace.packs, identifier, sealed_at=now)
     ledger = workspace.ledger()
-    entries = [entry for entry in pack.read_index(workspace.packs, identifier) if entry.body_sha256 is not None]
+    index = pack.read_index(workspace.packs, identifier)
+    reconcile_ledger_with_pack(ledger, identifier, index, at=now)
+    entries = [entry for entry in index if entry.body_sha256 is not None]
     for entry in entries:
         if ledger.state(entry.fetch_id) == "FETCHED":
             ledger.transition(entry.fetch_id, "RAW_VERIFIED", at=now,
@@ -186,8 +209,11 @@ def seal_and_preserve(
         object_id=identifier, relative_path=pack_relative_path(identifier, ".index.jsonl"),
         declared_sha256=manifest["index_sha256"], details={"pack_id": identifier}, now=now,
     )
-    if not preservation.verify_master(preservation_root, AREA_PACKS, identifier):
-        raise preservation.PreservationError(f"{identifier}: promoted master does not verify")
+    # RAW_PRESERVED is a claim about bytes on the preservation root: both masters are re-read
+    # and hashed before any fetch is given that state.
+    for area in (AREA_PACKS, AREA_INDEXES):
+        if not preservation.verify_master(preservation_root, area, identifier):
+            raise preservation.PreservationError(f"{identifier}: promoted {area} master does not verify")
     for entry in entries:
         if ledger.state(entry.fetch_id) == "PRESERVATION_PENDING":
             ledger.transition(entry.fetch_id, "RAW_PRESERVED", at=now,
@@ -236,6 +262,7 @@ def open_preserved_pack(preservation_root: Path, identifier: str) -> PreservedPa
 # --- identity and extraction ----------------------------------------------------------------------
 
 
+@writes_workspace("identity and extraction")
 def identify_and_extract(
     workspace: Workspace,
     registry: Registry,
@@ -268,6 +295,13 @@ def identify_and_extract(
         if record.get("revalidates", "not_applicable") != "not_applicable":
             # A 304: the server confirmed an earlier body. No body here, so no key of its own and
             # no extraction: one more observation of the revalidated fetch's document and version.
+            # A 304 is the server's statement about a body. It is believed only for a body this
+            # corpus actually holds: the revalidated fetch must be preserved, with that very hash.
+            target = record["revalidates"]
+            if ledger.state(target["fetch_id"]) != "RAW_PRESERVED" or not _holds_body(ledger, preservation_root, target):
+                results.append({**result, "identity": "revalidation_target_not_preserved", "document_id": None,
+                                "document_version_id": None})
+                continue
             assigned = tables.assign_revalidation(record)
             if assigned is None:
                 results.append({**result, "identity": "revalidation_target_unknown", "document_id": None,
@@ -306,6 +340,19 @@ def identify_and_extract(
     return results
 
 
+def _holds_body(ledger: Ledger, preservation_root: Path, target: Mapping[str, Any]) -> bool:
+    """Whether the preservation root holds the fetch a 304 names, with the body hash it names."""
+    held = next((record.details.get("pack_id") for record in ledger.records()
+                 if record.subject == target["fetch_id"] and record.new_state == "RAW_PRESERVED"), None)
+    if held is None:
+        return False
+    try:
+        entry = open_preserved_pack(preservation_root, held).entries.get(target["fetch_id"])
+    except (NotPreserved, preservation.PreservationError, pack.PackError):
+        return False
+    return entry is not None and entry.body_sha256 == target["body_sha256"]
+
+
 def _extraction_arguments(record: Mapping[str, Any]) -> dict[str, str]:
     return {
         "content_type": record["response"]["content_type"],
@@ -323,8 +370,15 @@ def _extract_stored(store, extractor, record, body, now):
     fingerprint = extraction_fingerprint(extractor, record)
     held = store.get(extraction.STAGE, fingerprint)
     if held is not None:
-        payload = store.read(extraction.STAGE, fingerprint)
-        return extraction.Extraction(json.loads(payload.decode("utf-8"))), fingerprint, held
+        stored_record = json.loads(store.read(extraction.STAGE, fingerprint).decode("utf-8"))
+        # The fingerprint names the extractor version, not the record's schema. A stored answer
+        # is used only as what it says it is: this schema, this extractor, this body.
+        if (stored_record.get("schema"), stored_record.get("extractor"), (stored_record.get("input") or {}).get("body_sha256")) != (
+                extraction.EXTRACTION_SCHEMA, {"name": extractor.name, "version": extractor.version}, record["body_sha256"]):
+            raise layer_store.LayerStoreError(
+                f"extraction {fingerprint[:16]}…: the stored record is not a {extraction.EXTRACTION_SCHEMA} record "
+                f"of {extractor.stage_version} for this body; it is not reinterpreted")
+        return extraction.Extraction(stored_record), fingerprint, held
     extracted = extractor.run(body, body_sha256=record["body_sha256"], **_extraction_arguments(record))
     stored = store.put(
         extraction.STAGE, fingerprint, extracted.payload,
@@ -334,6 +388,7 @@ def _extract_stored(store, extractor, record, body, now):
     return extracted, fingerprint, stored
 
 
+@writes_workspace("replay an extraction")
 def replay_extraction(
     workspace: Workspace,
     *,

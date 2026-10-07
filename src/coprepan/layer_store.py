@@ -173,7 +173,24 @@ class LayerStore:
         try:
             os.rename(staging, final)
         except OSError as error:
+            # Somebody published while this answer was being staged. If it is this very answer,
+            # it is stored — by them; the staged copy stays behind as an abandoned write.
+            held = self.get(stage, fingerprint_value)
+            if held is not None and held.artifact_id == identifier:
+                self.read(stage, fingerprint_value)
+                return StoredArtifact(STATUS_ALREADY_STORED, stage, fingerprint_value, identifier, payload_sha256, held.directory)
             raise LayerStoreError(f"{stage}: could not publish {identifier}; staged copy kept") from error
+        # Two writers can both find the slot empty and both publish different answers. The one
+        # that publishes second always sees the first, so: whoever sees another answer takes its
+        # own back out of the slot (moved, not deleted) and reports the conflict. At most one
+        # answer stays; if both saw each other, none does and both are told.
+        others = sorted(path.name for path in slot.iterdir() if path.name != identifier and (path / MARKER_NAME).is_file())
+        if others:
+            os.rename(final, self.root / ".staging" / f"withdrawn-{uuid.uuid4().hex}")
+            raise FingerprintConflict(
+                f"{stage}: fingerprint {fingerprint_value[:16]}… was answered at the same time by {others[0]}; "
+                f"this different answer {identifier} was withdrawn"
+            )
         return StoredArtifact(STATUS_STORED, stage, fingerprint_value, identifier, payload_sha256, final)
 
     def get(self, stage: str, fingerprint_value: str) -> StoredArtifact | None:
@@ -202,7 +219,10 @@ class LayerStore:
         artifact = self.get(stage, fingerprint_value)
         if artifact is None:
             raise LayerStoreError(f"{stage}: no artifact for fingerprint {fingerprint_value[:16]}…")
-        payload = (artifact.directory / PAYLOAD_NAME).read_bytes()
+        try:
+            payload = (artifact.directory / PAYLOAD_NAME).read_bytes()
+        except OSError as error:
+            raise LayerStoreError(f"{stage}: payload of {artifact.artifact_id} cannot be read: {error}") from error
         if sha256_bytes(payload) != artifact.payload_sha256:
             raise LayerStoreError(f"{stage}: payload of {artifact.artifact_id} does not match its manifest")
         return payload

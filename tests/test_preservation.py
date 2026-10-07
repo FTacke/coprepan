@@ -197,7 +197,7 @@ def test_a_crash_between_master_and_manifest_is_completed_as_a_repair(root, pack
         raise OSError("power lost before the manifest")
 
     with monkeypatch.context() as patched:
-        patched.setattr(P, "write_bytes_atomic", crash)
+        patched.setattr(P, "write_bytes_exclusive", crash)
         with pytest.raises(P.PreservationError):
             promote(pack, root)
     assert tree(root) == [MASTER.as_posix()] and not P.verify_master(root, AREA, "pack-a")

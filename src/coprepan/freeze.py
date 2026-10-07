@@ -25,7 +25,7 @@ from typing import Any, Mapping
 from . import (
     __version__, acquisition, admission, candidate_filter, capacity, channel_health, crawler_identity, discovery,
     document_identity, extraction, extraction_eval, http_acquisition, identity, layer_store, ledger, legacy_freeze,
-    naming, pack, policy, preservation, preservation_target, registry, robots, schedule,
+    naming, pack, policy, preservation, preservation_target, recovery, registry, robots, schedule,
 )
 from .canonical import canonical_json, record_json, sha256_bytes, sha256_file
 from .identity import format_instant
@@ -36,7 +36,7 @@ PRE_FREEZE, READY_TO_FREEZE, FROZEN = "PRE_FREEZE", "READY_TO_FREEZE", "FROZEN"
 
 _MODULES = (acquisition, admission, candidate_filter, capacity, crawler_identity, discovery, document_identity,
             extraction, extraction_eval, http_acquisition, layer_store, ledger, legacy_freeze, pack, policy, preservation,
-            preservation_target, registry, schedule)
+            preservation_target, recovery, registry, schedule)
 _CPD = re.compile(r"(CPD-\d{4})_.+\.md")
 
 

@@ -35,7 +35,7 @@ from pathlib import Path
 from typing import Any, Iterator, Mapping
 
 from . import acquisition, naming
-from .canonical import canonical_json, line_json, record_json, sha256_bytes, sha256_file, write_bytes_atomic
+from .canonical import append_lock, canonical_json, line_json, record_json, sha256_bytes, sha256_file, write_bytes_atomic
 from .identity import format_instant
 
 PACK_MANIFEST_SCHEMA = naming.schema_id("pack", 1)
@@ -385,9 +385,12 @@ class OpenPack:
         if self.paths["manifest"].exists() or self.paths["sealed"].exists():
             raise PackError(f"{identifier} is sealed; a sealed pack is never appended to")
         self.path = self.paths["open"]
-        if self.path.exists():
+        if self.path.exists() and self.path.stat().st_size:
             self._fetch_ids = {entry.fetch_id for entry in scan(self.path, identifier)}
         else:
+            # No file, or an empty one: a pack whose first record never reached the disk (the
+            # process died while creating it, or a torn first record was moved aside). Either
+            # way nothing is held yet, and the pack starts here.
             self.path.parent.mkdir(parents=True, exist_ok=True)
             match = _PACK_ID.fullmatch(identifier)
             info = "\r\n".join(
@@ -400,7 +403,9 @@ class OpenPack:
                     "",
                 ]
             ).encode("utf-8")
-            with open(self.path, "xb") as handle:
+            with open(self.path, "ab" if self.path.exists() else "xb") as handle:
+                if handle.tell():
+                    raise PackError(f"{identifier}: the open pack appeared while it was being created")
                 handle.write(
                     _record("warcinfo", f"urn:coprepan:{identifier}:warcinfo", format_instant(opened_at), info,
                             "application/warc-fields")
@@ -408,6 +413,7 @@ class OpenPack:
                 handle.flush()
                 os.fsync(handle.fileno())
             self._fetch_ids = set()
+        self._size = self.path.stat().st_size
 
     def __contains__(self, fetch_id: str) -> bool:
         return fetch_id in self._fetch_ids
@@ -423,10 +429,19 @@ class OpenPack:
         data = render_fetch(record, body)
         descriptor = os.open(self.path, os.O_WRONLY | os.O_APPEND | getattr(os, "O_BINARY", 0))
         try:
-            os.write(descriptor, data)
-            os.fsync(descriptor)
+            # The pack must end where this object last left it, before and after the write: a
+            # pack that grew behind its back has a second writer, and appending is not atomic
+            # between processes.
+            with append_lock(descriptor):
+                if os.fstat(descriptor).st_size != self._size:
+                    raise PackError(f"{self.pack_id}: the open pack changed since it was read; another writer is active")
+                os.write(descriptor, data)
+                os.fsync(descriptor)
+                if os.fstat(descriptor).st_size != self._size + len(data):
+                    raise PackError(f"{self.pack_id}: the pack does not end where this append ended; another writer is active")
         finally:
             os.close(descriptor)
+        self._size += len(data)
         self._fetch_ids.add(record["fetch_id"])
 
 
@@ -480,6 +495,10 @@ def seal(directory: Path, identifier: str, *, sealed_at: datetime) -> dict[str, 
     index = b"".join(line_json(entry.as_row(identifier)) for entry in entries)
     write_bytes_atomic(paths["index"], index)
     sha256, size = sha256_file(paths["sealed"])
+    # The manifest must name the bytes that were scanned, not bytes that changed in between:
+    # the index is only proven for the stream it was derived from.
+    if scan(paths["sealed"], identifier) != entries or sha256_file(paths["sealed"]) != (sha256, size):
+        raise PackError(f"{identifier}: the pack changed while it was being sealed")
     match = _PACK_ID.fullmatch(identifier)
     manifest = {
         "schema": PACK_MANIFEST_SCHEMA,

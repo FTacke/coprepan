@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from . import naming
-from .canonical import canonical_json, record_json, require_sha256, sha256_bytes
+from .canonical import canonical_json, record_json, require_sha256, sha256_bytes, write_bytes_atomic
 from .identity import IdentityError, _require_url_text, fetch_id, format_instant, is_channel_id, is_fetch_id
 
 RUN_SCHEMA = naming.schema_id("acquisition-run", 1)
@@ -141,6 +141,22 @@ class AcquisitionRun:
         }
 
 
+def verify_run_record(record: Any) -> bool:
+    """Whether a stored run record is the record its ``run_id`` was derived from. The id is a hash
+    over the record's content, so a record that was changed no longer carries its own id.
+    """
+    try:
+        if record["schema"] != RUN_SCHEMA or sha256_bytes(canonical_json(record["configuration"])) != record["configuration_sha256"]:
+            return False
+        preimage = canonical_json({key: record[key] for key in (
+            "schema", "kind", "started_at", "outlet_ids", "discovery_method", "software_version", "component_versions",
+            "configuration_sha256")})
+        stamp = record["started_at"].replace("-", "").replace(":", "").replace(".", "")
+        return record["run_id"] == f"{RUN_ID_PREFIX}-{stamp}-{sha256_bytes(preimage)[:12]}"
+    except (KeyError, TypeError, AttributeError, ValueError):
+        return False
+
+
 def is_run_id(value: object) -> bool:
     return isinstance(value, str) and _RUN_ID.fullmatch(value) is not None
 
@@ -165,9 +181,10 @@ def open_run(workspace: Path, run: AcquisitionRun) -> bool:
         if path.read_bytes() != record:
             raise RunStateError(f"{run.run_id}: the stored run record differs from the one offered")
         return False
-    directory.mkdir(parents=True, exist_ok=True)
-    with open(path, "xb") as handle:
-        handle.write(record)
+    # Written under a staging name and renamed: the record is whole or absent. (Written in
+    # place, a process killed mid-write left half a record, and the run could never be resumed.)
+    # The run id is derived from the record, so two starts of one run write the same bytes.
+    write_bytes_atomic(path, record)
     return True
 
 
@@ -196,11 +213,9 @@ def close_run(
         "pack_ids": list(pack_ids),
         "errors": list(errors),
     }
-    try:
-        with open(directory / "result.json", "xb") as handle:
-            handle.write(record_json(result))
-    except FileExistsError as error:
-        raise RunStateError(f"{run.run_id} already has a result") from error
+    if (directory / "result.json").exists():
+        raise RunStateError(f"{run.run_id} already has a result")
+    write_bytes_atomic(directory / "result.json", record_json(result))  # whole or absent, never half
     return result
 
 
@@ -216,7 +231,15 @@ def unfinished_runs(workspace: Path) -> list[str]:
 
 def read_run_result(workspace: Path, run_id: str) -> dict[str, Any] | None:
     path = run_directory(workspace, run_id) / "result.json"
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+    if not path.exists():
+        return None
+    try:
+        result = json.loads(path.read_text(encoding="utf-8"))
+        if result["schema"] != RUN_RESULT_SCHEMA or result["run_id"] != run_id:
+            raise ValueError("schema or run id")
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise RunStateError(f"{run_id}: the stored result is not a readable {RUN_RESULT_SCHEMA} record: {error}") from error
+    return result
 
 
 # --- fetch record ---------------------------------------------------------------------------------

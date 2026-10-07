@@ -15,8 +15,9 @@ import json
 import os
 import re
 import uuid
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 _SHA256_HEX = re.compile(r"[0-9a-f]{64}")
 _CHUNK = 1024 * 1024
@@ -67,6 +68,36 @@ def require_sha256(value: object, what: str) -> str:
     return value  # type: ignore[return-value]
 
 
+_APPEND_LOCK_OFFSET = 1 << 40  # a byte no file of this project reaches: locking it never blocks a reader
+
+
+@contextmanager
+def append_lock(descriptor: int) -> Iterator[None]:
+    """Serialise appends to one file between processes for the length of one append.
+
+    Appending is not atomic between processes on every platform (on Windows two appenders
+    overwrite each other). Whoever appends holds this lock from before it looks at the end of the
+    file until after it has checked what it wrote. It is an operating-system lock on the open
+    descriptor: it waits a few seconds for another appender, and it ends with the process.
+    """
+    if os.name == "nt":
+        import msvcrt
+        os.lseek(descriptor, _APPEND_LOCK_OFFSET, os.SEEK_SET)
+        msvcrt.locking(descriptor, msvcrt.LK_LOCK, 1)   # retries for about ten seconds, then OSError
+        try:
+            yield
+        finally:
+            os.lseek(descriptor, _APPEND_LOCK_OFFSET, os.SEEK_SET)
+            msvcrt.locking(descriptor, msvcrt.LK_UNLCK, 1)
+    else:
+        import fcntl
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(descriptor, fcntl.LOCK_UN)
+
+
 def staging_path(final: Path) -> Path:
     """A sibling ``<name>.part-<hex>``: never a master, never read as one."""
     return final.with_name(f"{final.name}.part-{uuid.uuid4().hex[:8]}")
@@ -86,6 +117,33 @@ def write_bytes_atomic(final: Path, data: bytes) -> None:
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(staging, final)
+    finally:
+        _discard_staging(staging)
+
+
+def publish_exclusive(staging: Path, final: Path) -> None:
+    """Give a finished staging file its final name **only if that name is free**; raise
+    ``FileExistsError`` otherwise. Atomic: never a half-written file under the final name, and
+    never a replaced one. (``os.replace`` would silently overwrite what another process put there.)
+    """
+    if os.name == "nt":
+        os.rename(staging, final)      # refuses an existing target on this platform
+    else:
+        os.link(staging, final)        # refuses an existing target; the caller drops the staging name
+
+
+def write_bytes_exclusive(final: Path, data: bytes) -> None:
+    """Like :func:`write_bytes_atomic`, for a file that must not exist yet: whole or absent, and
+    ``FileExistsError`` — nothing written — when somebody else's file already has the name.
+    """
+    final.parent.mkdir(parents=True, exist_ok=True)
+    staging = staging_path(final)
+    try:
+        with open(staging, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        publish_exclusive(staging, final)
     finally:
         _discard_staging(staging)
 

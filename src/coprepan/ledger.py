@@ -23,10 +23,13 @@ from pathlib import Path
 from typing import Any, Iterator, Mapping
 
 from . import naming
-from .canonical import line_json
+from .canonical import line_json, sha256_bytes
 from .identity import format_instant
+from .jsonl import ConcurrentAppend, TornTail, append_line
 
-LEDGER_RECORD_SCHEMA = naming.schema_id("ledger-record", 1)
+# v2 (2026-10-08, CPD-0009 §5): every record names the SHA-256 of the record before it. No v1
+# ledger of corpus material exists; a v1 file is refused, not read as v2.
+LEDGER_RECORD_SCHEMA = naming.schema_id("ledger-record", 2)
 
 _STATE_TOKEN = re.compile(r"[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*")
 
@@ -122,6 +125,7 @@ class LedgerRecord:
     new_state: str
     at: str
     details: Mapping[str, Any]
+    previous_record_sha256: str | None = None
 
     def as_row(self, machine_name: str) -> dict[str, Any]:
         return {
@@ -133,6 +137,7 @@ class LedgerRecord:
             "new_state": self.new_state,
             "at": self.at,
             "details": dict(self.details),
+            "previous_record_sha256": self.previous_record_sha256,
         }
 
 
@@ -148,6 +153,8 @@ class Ledger:
         self.machine = state_machine
         self._states: dict[str, str] = {}
         self._next_seq = 0
+        self._size = 0
+        self._chain: str | None = None   # SHA-256 of the last record's line; what the next record must name
         for record in self._read():
             self._apply(record)
 
@@ -155,24 +162,33 @@ class Ledger:
 
     def _read(self) -> Iterator[LedgerRecord]:
         if not self.path.exists():
+            self._size = 0
             return
         data = self.path.read_bytes()
+        self._size = len(data)
         if data and not data.endswith(b"\n"):
             complete = data.rfind(b"\n") + 1
             raise LedgerTornTail(
                 f"{self.path.name}: {len(data) - complete} byte(s) after the last complete record; "
                 "call quarantine_torn_tail() before appending"
             )
+        chain: str | None = None
         for number, line in enumerate(data.split(b"\n")[:-1], 1):
             try:
                 row = json.loads(line.decode("utf-8"))
                 if row["schema"] != LEDGER_RECORD_SCHEMA or row["machine"] != self.machine.name:
                     raise ValueError(f"schema/machine {row['schema']!r}/{row['machine']!r}")
+                # The chain: a record that was changed, removed or moved no longer has the hash
+                # the record after it names. (The last record has no successor to vouch for it.)
+                if row["previous_record_sha256"] != chain:
+                    raise ValueError("it does not follow the record before it: an earlier record was changed, removed or moved")
                 yield LedgerRecord(
-                    row["seq"], row["subject"], row["previous_state"], row["new_state"], row["at"], row["details"]
+                    row["seq"], row["subject"], row["previous_state"], row["new_state"], row["at"], row["details"], chain
                 )
             except (ValueError, KeyError, TypeError) as error:
                 raise LedgerError(f"{self.path.name}: line {number} is not a ledger record: {error}") from error
+            chain = sha256_bytes(line + b"\n")
+            self._chain = chain
 
     def _apply(self, record: LedgerRecord) -> None:
         if record.seq != self._next_seq:
@@ -198,7 +214,11 @@ class Ledger:
         return dict(self._states)
 
     def records(self) -> list[LedgerRecord]:
-        return list(self._read())
+        size, chain = self._size, self._chain
+        try:
+            return list(self._read())
+        finally:
+            self._size, self._chain = size, chain  # reading again does not move where this ledger appends
 
     def __len__(self) -> int:
         return self._next_seq
@@ -225,24 +245,25 @@ class Ledger:
             new_state,
             format_instant(at if at is not None else datetime.now(timezone.utc)),
             dict(details or {}),
+            self._chain,
         )
-        self._append(line_json(record.as_row(self.machine.name)))
+        line = line_json(record.as_row(self.machine.name))
+        self._append(line)
+        self._chain = sha256_bytes(line)
         self._apply(record)
         return record
 
     def _append(self, line: bytes) -> None:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        if self.path.exists() and self.path.stat().st_size:
-            with open(self.path, "rb") as handle:
-                handle.seek(-1, os.SEEK_END)
-                if handle.read(1) != b"\n":
-                    raise LedgerTornTail(f"{self.path.name}: refusing to append after an incomplete line")
-        descriptor = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+        """Append durably. The record must stand exactly where this ledger expects the file to end:
+        a ledger that grew behind this object's back has another writer, and is refused.
+        """
         try:
-            os.write(descriptor, line)
-            os.fsync(descriptor)
-        finally:
-            os.close(descriptor)
+            append_line(self.path, line, expected_size=self._size)
+        except TornTail as error:
+            raise LedgerTornTail(str(error)) from error
+        except ConcurrentAppend as error:
+            raise LedgerError(str(error)) from error
+        self._size += len(line)
 
 
 def quarantine_torn_tail(path: Path) -> Path | None:

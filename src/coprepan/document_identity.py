@@ -37,7 +37,7 @@ from .identity import (
     is_document_id,
     is_fetch_id,
 )
-from .jsonl import append_row, read_rows
+from .jsonl import append_row, keyed, read_rows
 
 DOCUMENT_SCHEMA = naming.schema_id("document-identity", 1)
 OBSERVATION_SCHEMA = naming.schema_id("document-observation", 1)
@@ -119,15 +119,24 @@ class IdentityTables:
         self._observations = self.directory / "observations.jsonl"
         self._versions = self.directory / "versions.jsonl"
         self._relations = self.directory / "relations.jsonl"
-        self.documents: dict[str, dict[str, Any]] = {r["document_id"]: r for r in read_rows(self._documents, DOCUMENT_SCHEMA)}
-        self.observations: dict[str, dict[str, Any]] = {r["fetch_id"]: r for r in read_rows(self._observations, OBSERVATION_SCHEMA)}
+        # Opening replays the tables and refuses what cannot both be true: one id for two keys,
+        # one fetch in two documents, one version id for two texts, one key under two ids.
+        self.documents: dict[str, dict[str, Any]] = keyed(
+            read_rows(self._documents, DOCUMENT_SCHEMA), lambda r: r["document_id"], "documents")
+        self.observations: dict[str, dict[str, Any]] = keyed(
+            read_rows(self._observations, OBSERVATION_SCHEMA), lambda r: r["fetch_id"], "observations")
         self.versions: dict[str, dict[str, Any]] = {}
         self.version_observations: set[tuple[str, str]] = set()
         for row in read_rows(self._versions, VERSION_SCHEMA):
-            self.versions.setdefault(row["document_version_id"], row)
+            first = self.versions.setdefault(row["document_version_id"], row)
+            if (first["document_id"], first["extracted_text_sha256"]) != (row["document_id"], row["extracted_text_sha256"]):
+                raise DocumentIdCollision(f"versions: {row['document_version_id']} stands for two texts or two documents")
             self.version_observations.add((row["document_version_id"], row["fetch_id"]))
         self.relations: list[dict[str, Any]] = read_rows(self._relations, RELATION_SCHEMA)
-        self._by_key = {(row["outlet_id"], row["url_key"]): row["document_id"] for row in self.documents.values()}
+        self._by_key: dict[tuple[str, str], str] = {}
+        for row in self.documents.values():
+            if self._by_key.setdefault((row["outlet_id"], row["url_key"]), row["document_id"]) != row["document_id"]:
+                raise DocumentIdCollision(f"documents: {row['url_key']!r} is filed under two ids")
 
     # -- documents -----------------------------------------------------------------------------
 
@@ -140,6 +149,9 @@ class IdentityTables:
             raise IdentityError(f"{fetch} belongs to {fetch_record['outlet_id']}, rules are for {rules.outlet_id}")
         if fetch in self.observations:
             seen = self.observations[fetch]
+            # The relation is written after the observation. A process that died in between left
+            # the observation without it; saying it again is a no-op when it is there.
+            self._relate_move(rules.outlet_id, seen)
             return Assignment(seen["document_id"], False, seen["url_key"], seen["url_key_basis"])
 
         requested = fetch_record["request"]["requested_url"]
@@ -189,14 +201,21 @@ class IdentityTables:
         )
         self.observations[fetch] = observation
 
-        # The requested URL, keyed on its own, may be the key of another document: the outlet has
-        # moved that article here. Recorded as a relation; neither id changes.
-        if key.basis != "requested_url":
-            requested_key = own_keys["requested_url_key"]
-            other = self._by_key.get((rules.outlet_id, requested_key)) if requested_key else None
-            if other is not None and other != document:
-                self._relate(RELATION_MOVED_TO, other, document, {"fetch_id": fetch, "requested_url_key": requested_key})
+        self._relate_move(rules.outlet_id, observation)
         return Assignment(document, is_new, key.key, key.basis)
+
+    def _relate_move(self, outlet_id: str, observation: Mapping[str, Any]) -> None:
+        """The requested URL, keyed on its own, may be the key of another document: the outlet
+        has moved that article here. Recorded as a relation; neither id changes. Derived from the
+        stored observation alone, so it can be completed after an interruption.
+        """
+        if observation["url_key_basis"] in ("requested_url", "revalidation"):
+            return
+        requested_key = observation.get("requested_url_key")
+        other = self._by_key.get((outlet_id, requested_key)) if requested_key else None
+        if other is not None and other != observation["document_id"]:
+            self._relate(RELATION_MOVED_TO, other, observation["document_id"],
+                         {"fetch_id": observation["fetch_id"], "requested_url_key": requested_key})
 
     def assign_revalidation(self, fetch_record: Mapping[str, Any]) -> tuple[str, list[str]] | None:
         """Record a ``304 Not Modified`` fetch as one more observation of what it revalidates.
@@ -257,9 +276,14 @@ class IdentityTables:
             raise DocumentIdCollision(f"{version} already identifies another extracted text")
         is_new = existing is None
 
+        # Which document already showed this body text — among the versions seen *before* this
+        # one, so that the answer is the same when the call is repeated after an interruption
+        # (the relation is written after the version row).
         duplicate_of = None
-        if is_new and has_body_text:
-            for other in self.versions.values():
+        if has_body_text:
+            for identifier, other in self.versions.items():
+                if identifier == version:
+                    break
                 if other["body_text_sha256"] == body_text_sha256 and other["document_id"] != document:
                     duplicate_of = other["document_id"]
                     break

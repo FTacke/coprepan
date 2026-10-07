@@ -32,6 +32,7 @@ from typing import Any, Callable, Mapping, Sequence
 from . import __version__, acquisition, candidate_filter, crawler_identity, discovery, naming, pack, schedule
 from .acquisition import AcquisitionRun
 from .core_pipeline import COMPONENT_VERSIONS, Workspace, record_exchange
+from .exclusive import writes_workspace
 from .fetcher import FINAL_FETCHED, FetchOutcome, FetchRequest, HttpFetcher, request_id
 from .identity import IdentityError, canonical_url_key, format_instant
 from .jsonl import append_row, read_rows
@@ -94,6 +95,7 @@ def _own_key(rules, url: str | None) -> str | None:
         return None
 
 
+@writes_workspace("HTTP acquisition run")
 def run_http_acquisition(
     workspace: Workspace,
     registry: Registry,
@@ -254,8 +256,14 @@ def run_http_acquisition(
         candidate = tables.candidates[item.candidate_id]
         # A candidate first seen through the robots source has no registered channel to be gated under.
         gate_channel = candidate["first_channel_id"] if candidate["first_channel_id"] in channels else None
+        # A conditional request asks the server to confirm a body. It is only sent for a body
+        # that is preserved: the request log says a response came back, the ledger says whether
+        # its bytes are safe. Otherwise the page is simply asked for again.
+        conditional = dict(item.conditional or {})
+        if conditional and ledger.state(conditional["revalidates_fetch_id"]) != "RAW_PRESERVED":
+            conditional = {}
         fetch(FetchRequest(candidate["fetch_url"], outlet_id, acquisition.FETCH_KIND_ITEM, gate_channel,
-                           candidate["candidate_id"], **(item.conditional or {})))
+                           candidate["candidate_id"], **conditional))
 
     decisions, qualified = qualify_all()  # a permanent redirect may have added a candidate during the run
     _, states = schedule.plan(qualified, request_rows(workspace), schedule_policy, now=clock(),

@@ -29,7 +29,7 @@ from typing import Any, Mapping
 from urllib.parse import urlsplit
 
 from . import naming
-from .jsonl import append_row, read_rows
+from .jsonl import append_row, keyed, read_rows
 from .storage_roots import CHECKOUT
 
 QUALIFICATION_SCHEMA = naming.schema_id("candidate-qualification", 1)
@@ -130,7 +130,7 @@ class QualificationTable:
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
-        self.rows = {(row["candidate_id"], row["ruleset"]): row for row in read_rows(self.path, QUALIFICATION_SCHEMA)}
+        self.rows = keyed(read_rows(self.path, QUALIFICATION_SCHEMA), lambda row: (row["candidate_id"], row["ruleset"]), "qualifications")
 
     def decide(self, candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | None,
                channel_url_keys: frozenset[str], run_id: str, decided_at: str) -> dict[str, Any]:

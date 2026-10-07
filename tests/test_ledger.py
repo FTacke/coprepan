@@ -1,5 +1,6 @@
 """State-machine and ledger primitives: ledger before state, illegal transitions raise."""
 
+import hashlib
 import json
 from datetime import datetime, timezone
 
@@ -88,12 +89,32 @@ def test_transitions_are_recorded_and_replayed(tmp_path):
 
 def test_record_format_is_pinned(tmp_path):
     path = tmp_path / "ledger.jsonl"
-    Ledger(path, PRESERVATION).transition("f1", "DISCOVERED", at=AT, details={"channel": "uy_el_pais:ch:rss_001"})
-    assert path.read_bytes() == (
+    book = Ledger(path, PRESERVATION)
+    book.transition("f1", "DISCOVERED", at=AT, details={"channel": "uy_el_pais:ch:rss_001"})
+    first = (
         b'{"at": "2026-10-07T19:00:00.000000Z", "details": {"channel": "uy_el_pais:ch:rss_001"}, '
-        b'"machine": "preservation", "new_state": "DISCOVERED", "previous_state": null, '
-        b'"schema": "coprepan-ledger-record/v1", "seq": 0, "subject": "f1"}\n'
+        b'"machine": "preservation", "new_state": "DISCOVERED", "previous_record_sha256": null, "previous_state": null, '
+        b'"schema": "coprepan-ledger-record/v2", "seq": 0, "subject": "f1"}\n'
     )
+    assert path.read_bytes() == first
+    book.transition("f1", "FETCH_PLANNED", at=AT)
+    second = json.loads(path.read_bytes().split(b"\n")[1])
+    assert second["previous_record_sha256"] == hashlib.sha256(first).hexdigest()      # each record names the one before it
+
+
+def test_a_changed_record_is_detected_by_the_record_after_it(tmp_path):
+    path = tmp_path / "ledger.jsonl"
+    walk(Ledger(path, PRESERVATION), "f1", HAPPY_PATH[:4])
+    lines = path.read_bytes().split(b"\n")
+    lines[1] = lines[1].replace(b"19:00:00", b"19:00:01")                     # one digit of a timestamp: still a valid record
+    path.write_bytes(b"\n".join(lines))
+    with pytest.raises(LedgerError, match="does not follow the record before it"):
+        Ledger(path, PRESERVATION)
+    old = tmp_path / "v1.jsonl"                                                # a record of the superseded format is not read as v2
+    old.write_bytes(b'{"at": "x", "details": {}, "machine": "preservation", "new_state": "DISCOVERED", "previous_state": null, '
+                    b'"schema": "coprepan-ledger-record/v1", "seq": 0, "subject": "f1"}\n')
+    with pytest.raises(LedgerError, match="coprepan-ledger-record/v1"):
+        Ledger(old, PRESERVATION)
 
 
 def test_same_transitions_give_the_same_bytes(tmp_path):

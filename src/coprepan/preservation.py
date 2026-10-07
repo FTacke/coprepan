@@ -27,11 +27,13 @@ from typing import Any, Mapping
 from . import naming
 from .canonical import (
     _discard_staging,
+    publish_exclusive,
     record_json,
     require_sha256,
     sha256_file,
     staging_path,
     write_bytes_atomic,
+    write_bytes_exclusive,
 )
 from .identity import format_instant
 
@@ -171,8 +173,7 @@ def promote(
             if holder is not None and _holds(root / holder["relative_path"], declared, size):
                 manifest = _manifest(object_id, area, holder["relative_path"], declared, size, details, now)
                 manifest["duplicate_of"] = holder.get("duplicate_of") or holder["object_id"]
-                write_bytes_atomic(manifest_path, record_json(manifest))
-                return _result(manifest, manifest_path, ACTION_DUPLICATE_RECORDED)
+                return _bind(root, area, object_id, manifest_path, manifest, ACTION_DUPLICATE_RECORDED, new=True)
             action = ACTION_PROMOTED
 
         destination = root / target_relative
@@ -182,14 +183,35 @@ def promote(
             elif existing is None:
                 raise IdentityConflict(f"{object_id}: {target_relative} already holds different bytes")
             else:
-                _land(source, destination, declared, size, object_id)
+                # the manifest says these bytes belong here and the master does not hold them:
+                # the one case in which a master is replaced
+                _land(source, destination, declared, size, object_id, replace=True)
         else:
-            _land(source, destination, declared, size, object_id)
+            _land(source, destination, declared, size, object_id, replace=False)
 
         manifest = _manifest(object_id, area, target_relative, declared, size, details, now)
-        write_bytes_atomic(manifest_path, record_json(manifest))
+        return _bind(root, area, object_id, manifest_path, manifest, action, new=existing is None)
     except OSError as error:
         raise PreservationError(f"{object_id}: promotion failed on I/O") from error
+
+
+def _bind(root: Path, area: str, object_id: str, manifest_path: Path, manifest: dict[str, Any], action: str, *, new: bool) -> PromotionResult:
+    """Write the manifest that binds an identity to its bytes. For an identity that had none, the
+    manifest is created exclusively: if another process bound the identity in the meantime, its
+    manifest stands — the same content is the same promotion, other content is a conflict.
+    """
+    if not new:
+        write_bytes_atomic(manifest_path, record_json(manifest))
+        return _result(manifest, manifest_path, action)
+    try:
+        write_bytes_exclusive(manifest_path, record_json(manifest))
+    except FileExistsError:
+        standing = read_manifest(root, area, object_id)
+        if standing is None or standing["sha256"] != manifest["sha256"]:
+            raise IdentityConflict(
+                f"{object_id}: bound to sha256 {standing and standing['sha256']} by another process while this promotion ran"
+            ) from None
+        return _result(standing, manifest_path, ACTION_ALREADY_PRESERVED)
     return _result(manifest, manifest_path, action)
 
 
@@ -211,8 +233,12 @@ def find_by_content(root: Path, area: str, sha256: str) -> dict[str, Any] | None
 # --- internals --------------------------------------------------------------------------------
 
 
-def _land(source: Path, destination: Path, sha256: str, size: int, object_id: str) -> None:
-    """Copy to a ``.part-`` name beside the destination, hash the landed bytes, then rename."""
+def _land(source: Path, destination: Path, sha256: str, size: int, object_id: str, *, replace: bool) -> None:
+    """Copy to a ``.part-`` name beside the destination, hash the landed bytes, then give them
+    the master's name — exclusively, unless a damaged master is being replaced. Two processes that
+    land at once cannot overwrite each other: the second finds the name taken and either sees its
+    own bytes there (the same promotion) or has a conflict.
+    """
     destination.parent.mkdir(parents=True, exist_ok=True)
     staging = staging_path(destination)
     try:
@@ -223,7 +249,14 @@ def _land(source: Path, destination: Path, sha256: str, size: int, object_id: st
         landed, landed_size = sha256_file(staging)
         if landed != sha256 or landed_size != size:
             raise HashMismatch(f"{object_id}: landed bytes hash to {landed}, expected {sha256}")
-        os.replace(staging, destination)
+        if replace:
+            os.replace(staging, destination)
+        else:
+            try:
+                publish_exclusive(staging, destination)
+            except FileExistsError:
+                if not _holds(destination, sha256, size):
+                    raise IdentityConflict(f"{object_id}: {destination.name} was taken by other bytes while this promotion ran") from None
     finally:
         _discard_staging(staging)
 

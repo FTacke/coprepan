@@ -25,7 +25,8 @@ from typing import Any, Mapping
 from . import acquisition, core_pipeline, extraction, naming
 from .canonical import sha256_bytes
 from .document_identity import IdentityTables
-from .jsonl import append_row, read_rows
+from .exclusive import writes_workspace
+from .jsonl import append_row, keyed, read_rows
 
 LABEL_SCHEMA = naming.schema_id("admission-label", 1)
 RULESET = "admission-technical/1"
@@ -150,7 +151,7 @@ class LabelTable:
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
-        self.rows = {(row["fetch_id"], row["ruleset"]): row for row in read_rows(self.path, LABEL_SCHEMA)}
+        self.rows = keyed(read_rows(self.path, LABEL_SCHEMA), lambda row: (row["fetch_id"], row["ruleset"]), "admission labels")
 
     def add(self, label: Mapping[str, Any], labelled_at: str) -> bool:
         key = (label["fetch_id"], label["ruleset"])
@@ -167,6 +168,7 @@ def label_table(workspace: core_pipeline.Workspace) -> LabelTable:
     return LabelTable(workspace.root / "admission" / "labels.jsonl")
 
 
+@writes_workspace("admission labels")
 def label_pack(workspace: core_pipeline.Workspace, *, preservation_root: Path, identifier: str,
                results: list[Mapping[str, Any]], extractor: extraction.Extractor, labelled_at: str) -> list[dict[str, Any]]:
     """Label every fetched item of a preserved pack from the stored records. Idempotent.
