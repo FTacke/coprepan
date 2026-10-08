@@ -2,6 +2,7 @@
 review package. Each of these prepares an operator decision; none of them takes it.
 """
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,6 +15,7 @@ from coprepan import preservation
 from coprepan import preservation_target as PT
 from coprepan import registry as R
 from coprepan import registry_review as RR
+from coprepan.canonical import canonical_json, record_json
 
 REPO = Path(__file__).resolve().parents[1]
 NOW = datetime(2026, 10, 7, 21, 0, 0, tzinfo=timezone.utc)
@@ -233,6 +235,85 @@ def test_the_manifest_command_writes_once_and_never_freezes(tmp_path, capsys):
     assert json.loads(capsys.readouterr().out)["state"] == "PRE_FREEZE"
     with pytest.raises(FileExistsError):
         FZ.main(["--commit", COMMIT, "--operator", "operator", "--tests-passed", "1", "--out", str(out)])
+
+
+# --- a frozen manifest verifies its own digest (defect of 2026-10-08: it never did) -------------------
+
+
+def ready_manifest(tmp_path):
+    """A manifest with nothing blocking, in either state of the tracked acquisition switch. With the switch off
+    the O-1 blocker is taken out by hand and the digest recomputed here, independently of the module."""
+    (tmp_path / "target").mkdir()
+    PT.initialise_target(tmp_path / "target", "target-a", operator="operator", now=NOW)
+    built =manifest(storage_target=PT.check_readiness(tmp_path / "target", required_free_bytes=1, now=NOW), capacity_measured=True)
+    body = {key: value for key, value in built.items() if key != "manifest_sha256"} | {"state": "READY_TO_FREEZE", "blocking": []}
+    return {**body, "manifest_sha256": hashlib.sha256(canonical_json(body)).hexdigest()}
+
+
+def test_build_freeze_write_read_verify_keeps_one_digest(tmp_path):
+    from coprepan import canary_driver
+
+    ready = ready_manifest(tmp_path)
+    digest = ready["manifest_sha256"]
+    assert ready["state"] == "READY_TO_FREEZE" and FZ.verify_manifest(ready) and FZ.manifest_digest(ready) == digest
+    built, out = tmp_path / "baseline.json", tmp_path / "frozen.json"
+    built.write_bytes(record_json(ready))
+    assert canary_driver.main(["freeze", "--manifest", str(built), "--operator", "operator", "--confirm", digest, "--out", str(out)]) == 0
+    frozen = json.loads(out.read_text(encoding="utf-8"))
+    assert frozen["state"] == "FROZEN" and frozen["manifest_sha256"] == digest and frozen["freeze"]["confirms"] == digest
+    assert FZ.verify_manifest(frozen) and FZ.manifest_digest(frozen) == digest
+    with pytest.raises(FZ.FreezeRefused):  # a frozen manifest is not frozen a second time
+        FZ.freeze(frozen, operator="operator", confirmed_at=NOW, confirmation=digest)
+    with pytest.raises(FZ.FreezeRefused):
+        FZ.freeze(ready, operator="operator", confirmed_at=NOW, confirmation="0" * 64)
+
+
+def test_a_change_of_protected_content_of_a_frozen_manifest_is_noticed(tmp_path):
+    ready = ready_manifest(tmp_path)
+    frozen = FZ.freeze(ready, operator="operator", confirmed_at=NOW, confirmation=ready["manifest_sha256"])
+    assert FZ.verify_manifest(frozen)
+    for change in ({"operator": "someone else"}, {"scope": "canary"}, {"created_at": "2026-10-07T21:00:01Z"}, {"blocking": ["O-1: x"]},
+                   {"code": {**frozen["code"], "commit": "b" * 40}}, {"policy": {**frozen["policy"], "sha256": "0" * 64}},
+                   {"components": {**frozen["components"], "fetcher": "other/9"}}, {"manifest_sha256": "0" * 64}, {"added": 1}):
+        assert not FZ.verify_manifest({**frozen, **change}), change
+    assert not FZ.verify_manifest({key: value for key, value in frozen.items() if key != "schemas"})
+    # the state is covered too: frozen and built are the only two states a verifying manifest of this content has
+    assert not FZ.verify_manifest({**frozen, "state": "PRE_FREEZE"}) and not FZ.verify_manifest({**frozen, "state": "READY_TO_FREEZE"})
+
+
+def test_the_freeze_record_must_confirm_the_digest_and_its_attestation_is_not_the_baselines_identity(tmp_path):
+    ready = ready_manifest(tmp_path)
+    digest = ready["manifest_sha256"]
+    frozen = FZ.freeze(ready, operator="operator", confirmed_at=NOW, confirmation=digest)
+    record = frozen["freeze"]
+    for bad in (None, {}, {**record, "confirms": "0" * 64}, {**record, "operator": ""}, {**record, "confirmed_at": ""}):
+        assert not FZ.verify_manifest({**frozen, "freeze": bad}), bad
+    assert not FZ.verify_manifest({key: value for key, value in frozen.items() if key != "freeze"})   # FROZEN with no record
+    assert not FZ.verify_manifest({**ready, "freeze": record})                                      # a record on a manifest that is not frozen
+    # who froze it and when is an attestation beside the baseline: the digest stays the baseline's, and verifies
+    later = {**frozen, "freeze": {**record, "operator": "another person", "confirmed_at": "2026-10-09T00:00:00Z"}}
+    assert FZ.verify_manifest(later) and FZ.manifest_digest(later) == digest
+
+
+def test_the_digest_is_of_the_parsed_content_not_of_the_files_line_endings(tmp_path):
+    ready = ready_manifest(tmp_path)
+    frozen = FZ.freeze(ready, operator="operator", confirmed_at=NOW, confirmation=ready["manifest_sha256"])
+    lf = json.dumps(frozen, indent=2, ensure_ascii=False).encode("utf-8")
+    crlf = lf.replace(b"\n", b"\r\n")
+    assert lf != crlf
+    for raw in (lf, crlf, record_json(frozen)):
+        read = json.loads(raw.decode("utf-8"))
+        assert FZ.verify_manifest(read) and FZ.manifest_digest(read) == ready["manifest_sha256"]
+
+
+def test_the_first_frozen_canary_baseline_was_a_correct_artefact_that_the_old_check_refused():
+    """Historical evidence, kept: its digest was right; the verification hashed the state the freeze had changed."""
+    first = json.loads((REPO / "docs" / "canary" / "BASELINE_FROZEN_2026-10-08.json").read_text(encoding="utf-8"))
+    digest = "f7ae73c3e9f0e7eeac31bbcf07f35e4ae186736327a5a05078994b5d1d75eaaf"
+    assert first["state"] == "FROZEN" and first["manifest_sha256"] == digest == first["freeze"]["confirms"]
+    as_the_old_check_hashed_it = {key: value for key, value in first.items() if key not in ("manifest_sha256", "freeze")}
+    assert hashlib.sha256(canonical_json(as_the_old_check_hashed_it)).hexdigest() != digest
+    assert FZ.verify_manifest(first) and FZ.manifest_digest(first) == digest
 
 
 # --- registry review package ------------------------------------------------------------------------

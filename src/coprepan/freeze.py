@@ -153,14 +153,41 @@ def build_manifest(
     }
     if canary is not None:
         manifest["canary"] = dict(canary)
-    manifest["manifest_sha256"] = sha256_bytes(canonical_json(manifest))
+    manifest["manifest_sha256"] = manifest_digest(manifest)
     return manifest
 
 
-def verify_manifest(manifest: Mapping[str, Any]) -> bool:
-    """Whether a manifest's own digest covers its content."""
+def manifest_digest(manifest: Mapping[str, Any]) -> str:
+    """The digest that identifies a baseline: its content as it was built.
+
+    Covered: every field except ``manifest_sha256`` itself and the ``freeze`` record. A freeze is an act *on* a
+    built manifest — it adds the record and turns ``state`` from ``READY_TO_FREEZE`` to ``FROZEN`` — and must leave
+    the digest it confirms valid. ``FROZEN`` is reached from ``READY_TO_FREEZE`` only (:func:`freeze`), so a frozen
+    manifest is hashed in the state it was confirmed in. Build, freeze and verification all use this function.
+    """
     body = {key: value for key, value in manifest.items() if key not in ("manifest_sha256", "freeze")}
-    return manifest.get("manifest_sha256") == sha256_bytes(canonical_json(body))
+    if body.get("state") == FROZEN:
+        body["state"] = READY_TO_FREEZE
+    return sha256_bytes(canonical_json(body))
+
+
+def verify_manifest(manifest: Mapping[str, Any]) -> bool:
+    """Whether a manifest's own digest covers its content, before and after a freeze.
+
+    A frozen manifest must also carry a freeze record that confirms exactly that digest, and nothing blocking; a
+    manifest that is not frozen carries no freeze record. The record's ``operator`` and ``confirmed_at`` are an
+    attestation beside the baseline, not part of its identity: the digest does not cover them (the committed file
+    does).
+    """
+    record = manifest.get("freeze")
+    if manifest.get("state") == FROZEN:
+        if not isinstance(record, Mapping) or record.get("confirms") != manifest.get("manifest_sha256"):
+            return False
+        if not record.get("operator") or not record.get("confirmed_at") or manifest.get("blocking"):
+            return False
+    elif record is not None:
+        return False
+    return manifest.get("manifest_sha256") == manifest_digest(manifest)
 
 
 def freeze(manifest: Mapping[str, Any], *, operator: str, confirmed_at: datetime, confirmation: str) -> dict[str, Any]:
