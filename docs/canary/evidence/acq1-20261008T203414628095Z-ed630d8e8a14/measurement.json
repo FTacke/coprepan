@@ -1,0 +1,329 @@
+{
+  "annual_conditional": {
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 0.078
+    },
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / LOW": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 0.055
+    },
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / UPPER": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 0.088
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 0.827
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / LOW": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 0.581
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / UPPER": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 0.936
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 1.279
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / LOW": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 0.899
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / UPPER": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 1.447
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.024
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / LOW": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.017
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / UPPER": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.028
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 0.259
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / LOW": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 0.182
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / UPPER": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 0.293
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 0.401
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / LOW": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 0.282
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / UPPER": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 0.454
+    }
+  },
+  "capacity_labels": {
+    "ASSUMED": "assumed",
+    "DERIVED": "estimated",
+    "MEASURED": "measured",
+    "PROJECTED": "assumed"
+  },
+  "comparison": {
+    "canary_footprint_share_of_interim_free": {
+      "label": "DERIVED",
+      "value": 2.6e-07
+    },
+    "interim_target_free_bytes_stated": {
+      "label": "STATED_BY_OPERATOR_OR_READINESS",
+      "value": 3830948007936
+    },
+    "planned_filesystem_bytes_stated": {
+      "label": "STATED_BY_OPERATOR",
+      "value": 2000000000000
+    },
+    "years_to_fill_planned_filesystem": {
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / CENTRAL": 23.3,
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / LOW": 33.1,
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / UPPER": 20.7,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / CENTRAL": 2.2,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / LOW": 3.1,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / UPPER": 1.9,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / CENTRAL": 1.4,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / LOW": 2.0,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / UPPER": 1.3,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / CENTRAL": 75.8,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / LOW": 107.0,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / UPPER": 65.0,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / CENTRAL": 7.0,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / LOW": 10.0,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / UPPER": 6.2,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / CENTRAL": 4.5,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / LOW": 6.5,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / UPPER": 4.0
+    }
+  },
+  "dominant_component_in_the_canary": {
+    "bytes": 1506604,
+    "label": "MEASURED",
+    "name": "workspace records"
+  },
+  "groups": {
+    "channel_document:2xx": {
+      "fetches": 4,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 47902,
+      "received_body_bytes_total": 191606,
+      "stored_metadata_member_bytes_mean": 1446,
+      "stored_response_member_bytes_mean": 48189,
+      "stored_response_member_bytes_total": 192755
+    },
+    "channel_document:other_status": {
+      "fetches": 2,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 10204,
+      "received_body_bytes_total": 20409,
+      "stored_metadata_member_bytes_mean": 1285,
+      "stored_response_member_bytes_mean": 10690,
+      "stored_response_member_bytes_total": 21379
+    },
+    "item:2xx": {
+      "fetches": 13,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 53895,
+      "received_body_bytes_total": 700634,
+      "stored_metadata_member_bytes_mean": 1611,
+      "stored_response_member_bytes_mean": 55048,
+      "stored_response_member_bytes_total": 715627
+    },
+    "robots_txt:2xx": {
+      "fetches": 5,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 149,
+      "received_body_bytes_total": 744,
+      "stored_metadata_member_bytes_mean": 1394,
+      "stored_response_member_bytes_mean": 917,
+      "stored_response_member_bytes_total": 4585
+    }
+  },
+  "items_per_channel": {
+    "do_diario_libre:ch:rss_main": 13
+  },
+  "limits": [
+    "five outlets and a budget decide the fetch counts: this measures sizes, not a crawl rate",
+    "the sizes are those of the pages these outlets served on this day",
+    "technical storage sizing, not corpus representativeness"
+  ],
+  "measured": {
+    "compression_ratio_stored_over_received": {
+      "label": "DERIVED",
+      "value": 1.023
+    },
+    "extraction_layer_bytes_per_extracted_item": {
+      "how": "layer store size over stored extraction payloads",
+      "label": "DERIVED",
+      "value": 44814
+    },
+    "extraction_layer_bytes_total": {
+      "label": "MEASURED",
+      "value": 582580
+    },
+    "fetch_records": {
+      "label": "MEASURED",
+      "value": 24
+    },
+    "index_bytes_per_fetch": {
+      "how": "index file size over fetch records",
+      "label": "DERIVED",
+      "value": 506
+    },
+    "item_share_of_fetches": {
+      "label": "DERIVED",
+      "value": 0.542
+    },
+    "items_extracted": {
+      "label": "MEASURED",
+      "value": 13
+    },
+    "pack_file_bytes_per_fetch": {
+      "how": "pack file size over fetch records (includes the warcinfo record and container overhead)",
+      "label": "DERIVED",
+      "value": 40507
+    },
+    "pack_manifest_bytes_total": {
+      "label": "MEASURED",
+      "value": 2565
+    },
+    "pack_overhead_beyond_members_bytes_per_fetch": {
+      "label": "DERIVED",
+      "value": 65
+    },
+    "preservation_manifest_bytes_total": {
+      "how": "manifest files on the preservation root",
+      "label": "MEASURED",
+      "value": 8386
+    },
+    "preserved_object_bytes_total": {
+      "how": "pack + index masters on the preservation root, from their manifests",
+      "label": "MEASURED",
+      "value": 984326
+    },
+    "stored_bytes_per_fetch_members": {
+      "how": "response + metadata members of every fetch, compressed, over fetch records",
+      "label": "DERIVED",
+      "value": 40442
+    },
+    "workspace_other_bytes_per_fetch": {
+      "how": "ledger, request log, discovery, identity, labels, run records over fetch records",
+      "label": "DERIVED",
+      "value": 62775
+    }
+  },
+  "outlets": {
+    "bo_el_deber": {
+      "fetch_records": 1,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 1,
+      "stored_bytes_per_fetch": 2914
+    },
+    "do_diario_libre": {
+      "fetch_records": 16,
+      "items_fetched": 13,
+      "label": "MEASURED",
+      "real_requests": 17,
+      "stored_bytes_per_fetch": 57312
+    },
+    "hn_proceso_digital": {
+      "fetch_records": 3,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 3,
+      "stored_bytes_per_fetch": 8616
+    },
+    "py_la_nacion": {
+      "fetch_records": 1,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 1,
+      "stored_bytes_per_fetch": 2371
+    },
+    "ve_efecto_cocuyo": {
+      "fetch_records": 3,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 5,
+      "stored_bytes_per_fetch": 7491
+    }
+  },
+  "run_id": "acq1-20261008T203414628095Z-ed630d8e8a14",
+  "scenarios": {
+    "CENTRAL": {
+      "all_layers_bytes_per_fetch": 128012,
+      "basis": "mean over all fetch records",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 11.92,
+      "per_1000_fetches_mib": 122.08,
+      "preserved_bytes_per_fetch": 40948
+    },
+    "LOW": {
+      "all_layers_bytes_per_fetch": 89941,
+      "basis": "smallest outlet mean",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 8.38,
+      "per_1000_fetches_mib": 85.77,
+      "preserved_bytes_per_fetch": 2877
+    },
+    "UPPER": {
+      "all_layers_bytes_per_fetch": 144882,
+      "basis": "largest outlet mean",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 13.49,
+      "per_1000_fetches_mib": 138.17,
+      "preserved_bytes_per_fetch": 57818
+    }
+  },
+  "schema": "coprepan-canary-measurement/v1",
+  "spread": {
+    "label": "DERIVED",
+    "max": 57312,
+    "mean": 15741,
+    "min": 2371,
+    "note": "outlet means; a spread over a handful of outlets, not a distribution of the press",
+    "per_outlet_stored_bytes_per_fetch": {
+      "bo_el_deber": 2914,
+      "do_diario_libre": 57312,
+      "hn_proceso_digital": 8616,
+      "py_la_nacion": 2371,
+      "ve_efecto_cocuyo": 7491
+    }
+  }
+}

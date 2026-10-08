@@ -504,3 +504,12 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | preservation routes | `direct`, `spooled`, `workspace` (`core_pipeline.PackPreservation.route`) | CPD-0015 §3 |
 | spool pending record | `state/pending/<area>--<object_id>.json` | CPD-0015 §4 |
 | **sister** (term) | the other corpus's checkout, `corapan`, beside this one; read by the joint-check command only, never by a test | CPD-0015 §5 |
+
+## 19. Additions of 2026-10-08 (CPD-0018)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| extractor arms (wrappers, `EXPERIMENTAL`, not adopted) | `trafilatura/2.3.1.w1`, `readability_lxml/0.9.w1`, `justext/3.0.2.w1`: tool version, then the wrapper revision | CPD-0018 §1 |
+| record field (added, candidates only) | `candidate`: tool, tool version, wrapper revision, parameters, what the mapping loses | CPD-0018 §4 |
+| schema id minted | `coprepan-extraction-review-package/v1` (the manifest of a review package: files with digests, the key by digest only) | [extraction](../extraction/INDEX.md) §9 |
+| **pilot package** (term) | a review package built on material that does not meet the gold-sample design; it tests the instrument and the codebook and yields no gold | [extraction](../extraction/INDEX.md) §9 |

@@ -1,11 +1,19 @@
 # Canary runbook — from the qualified driver to the O-4 measurement
 
-**Status: PREPARED, NOT EXECUTED.** The driver ([CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md))
-is built and qualified offline. The steps below were not run: twice the permission layer of the
+**Status: EXECUTED ONCE (2026-10-08); THE SWITCH IS OFF AGAIN.** The first canary ran through §1–§6 —
+run `acq1-20261008T203414628095Z-ed630d8e8a14`, 27 requests, `COMPLETE`, verification `PASS`, result `PARTIAL`
+(one outlet of five yielded items; findings F1–F6); its evidence is in [`evidence/`](evidence/), its evaluation in
+[the run report](../agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md). **Do not run §4 again as it
+stands**: a second canary needs the defects repaired first, then a new arming commit, new tests and a newly frozen
+baseline (§1–§3 from the start, with a new file name for the baseline). The paragraphs below are kept as the record
+of how the first one was reached.
+
+*Before the run:* the driver ([CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md))
+was built and qualified offline; twice the permission layer of the
 agent's session refused the arming path (first the edit of the switch, then any command on the armed
-checkout), and it is the one step left to a person
+checkout)
 ([`docs/agent-runs/2026-10-08_real-acquisition-canary-o4.md`](../agent-runs/2026-10-08_real-acquisition-canary-o4.md) §2).
-**State since the evening of 2026-10-08:** the operator armed (`1f59e01`) and froze a first baseline; its
+**State on the evening of 2026-10-08, before the run:** the operator armed (`1f59e01`) and froze a first baseline; its
 verification failed on a defect of the check, which was repaired in `15ec1fdabf1b5e4e2cb3c4a05a978e57dff3bed0` — **that
 is the pinned commit `P` now**, with `N` = 1309 and the frozen baseline
 `docs/canary/BASELINE_FROZEN_2026-10-08b.json` (digest `96c271e3…7863f`; the first file is kept as superseded

@@ -43,3 +43,5 @@ test_release_export.py       # native export object coprepan-export/v1 → relea
 test_evidence_integrity.py   # chained primary evidence; candidates and identity tables checked against / rebuilt from the evidence
 # Joint storage contract crosscorpus-storage/v1 (CPD-0015)
 test_storage_contract.py     # pinned bundle; the shared reference cases; outage, spool, drain, interruption points and a root change on the real code paths
+# Classical extractor candidates of the Phase-3 comparison (CPD-0018)
+test_extractor_candidates.py # pins, refusal without the pinned tool; with the tools (extra phase3): record shape, determinism, content coding, blinding

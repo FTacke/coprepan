@@ -1,7 +1,8 @@
 # Extractor candidates for Phase 3 — a list, not a choice
 
-**Status: SURVEY FROM GENERAL KNOWLEDGE. Nothing here was installed, run, measured or checked
-against a current release.** No package was installed and no network was used (repository
+**Status: §1–§5 A SURVEY FROM GENERAL KNOWLEDGE (2026-10-07); §6 THE SELECTION OF THE FIRST COMPARISON
+(2026-10-08, CPD-0018). Nothing is adopted.** For §1–§5: nothing there was installed, run, measured or checked
+against a current release. No package was installed and no network was used (repository
 rules). Every statement about a tool is **unverified** in the sense of this repository: it is what
 is generally known about it, not something observed here. Versions, licences and maintenance state
 must be confirmed from the primary source before a tool is admitted to a comparison.
@@ -75,3 +76,20 @@ Running legacy code is an operator-ordered task with its own environment (both p
 3. write the wrapper that maps each tool to the extraction record, and test its determinism;
 4. preregister the comparison: sample, metrics, thresholds, adoption criterion;
 5. only then open the reference.
+
+## 6. Selection for the first comparison (added 2026-10-08, CPD-0018)
+
+The survey above stands as written on 2026-10-07. On 2026-10-08 three of its candidates were installed, pinned and
+wrapped ([CPD-0018](../decisions/CPD-0018_classical-extractor-candidates-of-the-first-comparison.md), with the
+criteria and the reasons for leaving the others out):
+
+| Arm | Tool and version (package index, read 2026-10-08) | Licence as the distribution states it |
+|---|---|---|
+| `trafilatura/2.3.1.w1` | trafilatura 2.3.1 | Apache-2.0 |
+| `readability_lxml/0.9.w1` | readability-lxml 0.9 | Apache-2.0 |
+| `justext/3.0.2.w1` | jusText 3.0.2, Spanish stop list | BSD 2-Clause |
+
+Of §5, items 1–3 are done for these three (version and licence from the distribution's own metadata — maintenance
+was not assessed beyond "a current release installs"; pins in `pyproject.toml`, extra `phase3`; wrappers in
+`src/coprepan/extractor_candidates.py`, determinism tested). Items 4 and 5 are **not** done: nothing is preregistered
+and there is no reference.

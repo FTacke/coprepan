@@ -76,6 +76,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0015](../decisions/CPD-0015_joint-storage-contract-and-outage-spool-in-the-acquisition-path.md) | Joint storage-management contract `crosscorpus-storage/v1` in force (pinned copy, own implementation, shared cases); the outage spool wired into the acquisition path | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md) | The staged canary driver, budgets of real requests, the canary-scope baseline, the arming protocol | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0017](../decisions/CPD-0017_scientific-tdm-acquisition-and-robots-policy.md) | Scientific TDM acquisition and robots policy: three layers, the research override, access controls that end a path | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0018](../decisions/CPD-0018_classical-extractor-candidates-of-the-first-comparison.md) | The classical extractor candidates of the first comparison, their pins (extra `phase3`, not a runtime dependency) and wrappers | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -119,6 +120,7 @@ Machine-checked contracts:
 | Channel health as a derived report | `src/coprepan/channel_health.py` | `tests/test_schedule.py` |
 | Conditional requests, permanent redirects, robots sitemaps, re-fetching end to end | `src/coprepan/fetcher.py`, `src/coprepan/http_acquisition.py` | `tests/test_refetch_e2e.py` |
 | Technical admission labels; extractor lifecycle; evaluation harness and review package | `src/coprepan/admission.py`, `src/coprepan/extraction.py`, `src/coprepan/extraction_eval.py` | `tests/test_admission_eval.py` |
+| Wrappers of the classical extractor candidates (CPD-0018): pins equal the extra, refusal without the pinned tool; with the tools: record shape, determinism, blinding | `src/coprepan/extractor_candidates.py`, `scripts/phase3_review_package.py` | `tests/test_extractor_candidates.py` (tool tests skipped outside the `phase3` environment) |
 | Canary planner and fail-closed preflight (`NOT_READY` as committed) | `src/coprepan/canary.py` | `tests/test_canary.py` |
 | One writer per workspace; diagnosis and repair after an interruption | `src/coprepan/exclusive.py`, `src/coprepan/recovery.py` | `tests/test_crash_recovery.py` (real process kills) |
 | Concurrent writers: no lost record, no double binding, no two layer answers | `src/coprepan/jsonl.py`, `ledger.py`, `preservation.py`, `layer_store.py` | `tests/test_concurrency.py` (real processes) |

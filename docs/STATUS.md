@@ -4,17 +4,22 @@
 a rule or a plan. If a document sounds as if something were built, and this file says it is not,
 this file is right and the other document has a defect.
 
-**As of 2026-10-08 (adversarial persistence audit): the acquisition pipeline, including re-fetching,
-is built and tested offline, and it is not activated.** Nothing has been requested from any real
-site. Five outlets are registered for the canary; 77 are proposed. Three storage roots are configured on the workstation (runtime, spool and an interim primary preservation root). No corpus material has been
-acquired, preserved or extracted by COPREPAN 3.0. Nothing is validated. Nothing is activated.
+**As of 2026-10-08 (after the first real canary): the acquisition pipeline is built, has run once
+against five real outlets in a bounded canary, and is not activated.** That run — armed and started
+by the operator, 27 requests, 2026-10-08 — preserved 24 answers and **13 article pages, all of one
+outlet**; its evidence verifies, and it exposed three defects of our own code and a bot challenge our
+classifier did not recognise (§5a). It was `PARTIAL`, not a pass. Five outlets are registered for the canary; 77 are
+proposed. Three storage roots are configured on the workstation (runtime, spool and an interim primary
+preservation root). The thirteen pages are canary evidence, not corpus material: no extractor is
+adopted, nothing is validated, nothing is activated.
 
-**External acquisition is still impossible as committed**, by one tested refusal: the acquisition
-policy — decided for the first canary on 2026-10-08 (CPD-0013), like the schedule policy and the
-registration of five outlets — has `external_acquisition: disabled`; the switch is turned when the
-canary is armed. The crawler identity is configured and its public page is live (O-2, CPD-0014);
-an interim primary preservation root is configured and qualified (O-3 interim, CPD-0014). Arming
-also needs the tests on the commit and the operator's approved baseline.
+**External acquisition is impossible again as committed**, by one tested refusal: the acquisition
+policy — decided for the first canary on 2026-10-08 (CPD-0013, CPD-0017), like the schedule policy and the
+registration of five outlets — has `external_acquisition: disabled`. It was `enabled` between the
+operator's arming commit and the disarming commit of the same evening, for the canary only. The
+crawler identity is configured and its public page is live (O-2, CPD-0014); an interim primary
+preservation root is configured and qualified (O-3 interim, CPD-0014). A next canary needs a new
+arming, the tests on that commit and a newly frozen baseline.
 
 **One thing was done on real data: the legacy freeze manifest** (O-10, on operator go-ahead):
 32,235 files, 18,782,593,808 bytes of the legacy tree, hashed read-only and re-verified (measured).
@@ -50,15 +55,18 @@ holdings, configuration states, separation, what a preservation step may claim, 
 protection from cleanup, backup status and the procedure of a root migration. **The outage spool is
 now in the acquisition path** (`preserve_pack`): an unavailable preservation target leaves a
 verified, resumable pending copy and never a success. Tested on temporary directories with synthetic
-packs; no driver calls the path yet. **No backup exists; the interim primary on `D:` is a sole copy
-and holds its target marker only.** It closes no gate.
+packs; the canary driver calls the path, and the real canary took the direct route for all five packs
+(the spool was not needed). **No backup exists; the interim primary on `D:` is a sole copy** and holds
+its target marker and the five packs of the canary with their indexes and manifests (984,326 bytes,
+measured). It closes no gate.
 
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates
-(schedule, conditional request, moved URL), exercised end to end **against an HTTP server on a
-loopback address serving synthetic documents, on temporary directories** (§3). It has never seen a real outlet, a
-real page, a TLS connection or a real storage root.
+(schedule, conditional request, moved URL), exercised end to end against an HTTP server on a
+loopback address serving synthetic documents, on temporary directories (§3) — **and once, for the first
+visit only, against five real outlets over TLS on the real storage roots** (§5a). The second and later
+visit, the outage path and a crash have never happened on real material.
 
 ---
 
@@ -107,13 +115,20 @@ What `PARTIAL` means for the nine stages, exactly:
 `PARTIAL` for stages 2, 3, 7, 11 and 12 means "code and tests exist, offline". It is not a step towards
 `ACTIVE`: activation needs validation on real material and the operator decisions of §5.
 
+**Since the canary of 2026-10-08 the "does not exist" column above is out of date in four cells, and stays as
+written for the record of what the stages are:** discovery has read real channel documents of three outlets
+(one feed and one sitemap parsed, one feed refused by the parser, one sitemap index read); fetch has made 27
+external requests over TLS; raw preservation has run once against the configured interim target; the baseline
+has extracted thirteen real pages. None of this validates a stage: one bounded run, one outlet with items, open
+defects (§5a).
+
 ## 3. Foundation
 
 | Item | State | Where |
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0013 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0018 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -142,12 +157,13 @@ What `PARTIAL` means for the nine stages, exactly:
 | Joint release contract — CO.PRE.PAN's own checks | implemented independently; every digest and all 52 cases of the bundle's vectors reproduced (measured 2026-10-08). Synthetic fixtures only | `src/coprepan/release_contract.py`, `tests/test_release_contract.py`, [`docs/release/INDEX.md`](release/INDEX.md) |
 | Native export object `coprepan-export/v1`; release, freeze, package, study-population builders | implemented and tested on the synthetic canary through the real pipeline code; **no corpus export can be built** (extractor `EXPERIMENTAL`) | `src/coprepan/release_export.py`, `tests/test_release_export.py`, CPD-0011 |
 | Phase-3 layer architecture | written; decides order and boundaries of the text layers, no tool and no threshold | [`docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`](architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md) |
-| **Canary driver** (stages A–E, real-request budgets, receipt) and the end-of-canary `verify` / `measure` | implemented; qualified against a scripted loopback outlet (38 tests); **no real server has been asked anything**; the acquisition switch is still off | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md), CPD-0016 |
-| Canary planner and preflight | implemented and tested; on the repository as committed: 5 of 82 outlets eligible and selected, preflight `NOT_READY` (measured 2026-10-08) | `src/coprepan/canary.py`, `tests/test_canary.py` |
+| **Canary driver** (stages A–E, real-request budgets, receipt) and the end-of-canary `verify` / `measure` | implemented; qualified against a scripted loopback outlet (38 tests); **run once for real on 2026-10-08** (27 requests, `COMPLETE`; `verify` `PASS`; result `PARTIAL`, §5a); the acquisition switch is off again | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md), [`docs/canary/evidence/`](canary/evidence/), CPD-0016 |
+| Canary planner and preflight | implemented and tested; on the repository as committed: 5 of 82 outlets eligible and selected, preflight `NOT_READY` (the switch is off). It was `READY` once, on the armed commit `15ec1fd` with the frozen baseline `96c271e3…` (2026-10-08) | `src/coprepan/canary.py`, `tests/test_canary.py` |
+| Wrappers of three classical extractor candidates (trafilatura 2.3.1, readability-lxml 0.9, jusText 3.0.2) | implemented and tested; tools in the extra `phase3`, **not** runtime dependencies; all `EXPERIMENTAL`, nothing adopted; a **pilot** review package on the thirteen real pages exists outside the repository, no decision filled | `src/coprepan/extractor_candidates.py`, `scripts/phase3_review_package.py`, `tests/test_extractor_candidates.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) §9, CPD-0018 |
 | Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
 | Preservation-target readiness check | implemented and tested on temporary directories; **no target chosen** | `src/coprepan/preservation_target.py`, storage §15 |
-| Capacity model | calculator implemented; **bytes per real page never measured** | `src/coprepan/capacity.py`, storage §16 |
-| Acquisition baseline manifest | implemented; the repository as committed is `PRE_FREEZE`; blockers after O-2 and the interim O-3: O-1 (the switch) and O-4 — see the run report for the measured list | `src/coprepan/freeze.py` |
+| Capacity model | calculator implemented; **bytes per real page measured once, on thirteen pages of one outlet** (received body mean 53,895 B as served; measured 2026-10-08) — not enough to size anything but a next canary (§5, O-4) | `src/coprepan/capacity.py`, storage §16 |
+| Acquisition baseline manifest | implemented; a frozen manifest now verifies the digest it was frozen with (a defect of the check, repaired 2026-10-08). The repository as committed is `PRE_FREEZE` (the switch is off). **Two frozen canary baselines are kept as evidence**: the first (`f7ae73c3…`, superseded: its commit preceded the repair) and the one the canary ran under (`96c271e3…` on `15ec1fd`) | `src/coprepan/freeze.py`, `docs/canary/BASELINE_FROZEN_2026-10-08.json`, `docs/canary/BASELINE_FROZEN_2026-10-08b.json` |
 | Registry review package | generated, checked against the registry by a test; **a recommendation, nothing registered** | corpus supply §17 |
 | Document identity tables | implemented and tested on recorded exchanges | `src/coprepan/document_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) §7 |
 | Extraction contract and baseline extractor | implemented; behaviour of the contract tested; **quality unknown, extractor not adopted** | `src/coprepan/extraction.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) |
@@ -194,12 +210,35 @@ Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. 
 | O-1 acquisition policy | `TECHNICALLY_READY` — decided **for the first canary** (CPD-0013, amended by CPD-0017): robots always read and recorded, a `Disallow` overridden only as a recorded research override (`SCIENTIFIC_TDM_POLICY_V1`), access controls never worked around, `Crawl-delay` binding, 10 s per origin, a slow schedule; `external_acquisition` still `disabled` | **`PASS` for the canary scope** (`O-1_CANARY`); the switch is turned at arming. **`OPEN`** for scheduled crawling | the normative decision: robots mode, absent / unreachable robots, whether `Crawl-delay` binds, pace per origin, **the schedule policy (how often a page is asked again, when a failing or absent URL is left alone, whether conditional requests are used)**, opt-out handling, retention of raw copies; recorded as a decision and committed as `DECIDED` policy files | operator / institution |
 | O-2 crawler identity | `TECHNICALLY_READY` — configured with the operator's values (CPD-0014) | **`PASS`** (2026-10-08): the contact page is public over HTTPS, the User-Agent is built by the existing contract | four values in `config/crawler_identity.json`: crawler name, organisation, contact URL, contact e-mail — and the public page the URL names | operator / institution |
 | O-3 preservation target | `TECHNICALLY_READY` — readiness check built; **interim primary on `D:` qualified** | **`PASS` for the interim scope** (`O-3_INTERIM`, 2026-10-08): temporary primary for the small canary only — not the long-term institutional target, not a backup, no capacity statement. **`OPEN`** for the long-term target (the new university file system). Inventory: ([run report](agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md) §6) | choosing the target; then `initialise_target`, a `READY` readiness report, and the second half of the Phase-1 gate on it | operator / institution |
-| O-4 storage capacity | `TECHNICALLY_READY` — model built | **`OPEN`** | one measurement that does not exist: stored body bytes per fetch and fetches per outlet-day **on real outlets** (the Phase-2 canary) | measured, then operator |
+| O-4 storage capacity | `TECHNICALLY_READY` — model built; **first real measurement 2026-10-08** (24 fetch records, 13 pages of one outlet): 128,012 B per fetch over all layers (CENTRAL; 89,941–144,882), i.e. 8.4–13.5 GiB per 100,000 fetches (projected) | **`OPEN`** — not a constraint for a second canary on the interim target; no basis for sizing the institutional file system | item sizes from several outlets and a measured number of fetches per outlet-day ([run report](agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md) §8) | measured, then operator |
 | O-10 legacy freeze manifest | built, run on the legacy tree, verified twice (module and an independent script) | **`PASS`** (2026-10-07) | — closed. It closes the go-ahead and the manifest only: the frozen release still needs a preserved copy and a restore check (O-3) | operator |
 | O-11 registry review | `TECHNICALLY_READY` — review package delivered; five routine outlets registered by record | **`PASS` for the canary subset** (`O-11_CANARY_SUBSET`); full review `PARTIAL`: 77 outlets, the id convention as a whole and one attribution case are **`READY_FOR_HUMAN_REVIEW`** | the human decisions of corpus supply §17; registration by reviewed commit | operator, scientific |
-| O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder with a **canary scope** (CPD-0016: does not wait for O-4); state `PRE_FREEZE` while the switch is off | **`OPEN`** (not frozen) | the arming commit, then the baseline built on it and frozen by a person stating its digest — [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md) §1–§3 | operator |
+| O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder with a **canary scope** (CPD-0016: does not wait for O-4); state `PRE_FREEZE` while the switch is off | **`PASS` for the first canary** (`O-12_CANARY`, 2026-10-08): frozen `96c271e373dc…7863f` on `15ec1fd`, and the canary ran under it. **`OPEN`** for every later run: a baseline is frozen per armed commit | for a next canary: a new arming commit, then the baseline built on it and frozen by stating its digest — [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md) §1–§3 | operator |
 | Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | passes on temporary directories **and, 2026-10-08, with the temporary files on the interim `D:` file system** (real process kills, real concurrent processes) | **`PASS` for the interim target** (`PHASE1_INTERIM_TARGET`); **`OPEN`** on the long-term target | the same tests on the real preservation target (needs O-3) | engineering, then operator |
-| Phase-2 canary gate | the offline canary passes; **it is not this gate** — it requests nothing external and measures no real page | **`OPEN`** | about five registered outlets acquired for real under a decided policy; every fetch traceable; restore test; measured bytes per fetch. `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today: the switch and the frozen baseline); the driver and the runbook exist | engineering, after the arming |
+| Phase-2 canary gate | the offline canary passes; **it is not this gate**. The first real canary ran on 2026-10-08: every fetch traceable, read-back and fixity of all 24 bodies, replay of 13 extractions without network, bytes measured — and **items from one outlet of five** | **`OPEN`** — first run `PARTIAL` (§5a) | the defects of §5a repaired with regression tests, then a second bounded canary in which the registered outlets are actually acquired; `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today: the switch and a new frozen baseline) | engineering, then the operator's arming |
+
+### 5a. What the first real canary showed (2026-10-08) — open findings
+
+Run `acq1-20261008T203414628095Z-ed630d8e8a14`, 27 real requests, five outlets, `COMPLETE`; verification `PASS`
+(read-back and fixity of 24 bodies, `RAW_PRESERVED` = verified bytes, 13 extractions replayed without network, the
+receipt re-derived from evidence, nothing pending, budgets respected). Result within its scope: **`PARTIAL`**.
+Evidence: [`docs/canary/evidence/`](canary/evidence/); report:
+[`2026-10-08_real-canary-evaluation-o4-phase3-pilot.md`](agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md).
+**Reproducibility and robustness of one run; nothing generalisable; not an activation.**
+
+| | Finding | State |
+|---|---|---|
+| F1 | a `robots.txt` served gzip-compressed is parsed without being decompressed: two outlets (`bo_el_deber`, `py_la_nacion`) were held with nothing read | **open defect** |
+| F2 | the access-control classifier does not recognise the Sucuri JavaScript challenge (`proceso.hn`, status 307 without `Location`): the origin was not held and **one more request was sent to it**. Nothing was worked around | **open defect of a policy guarantee** |
+| F3 | item planning takes the candidates of the whole workspace: 64 requests for another outlet's pages were planned and all refused by the policy gate (`off_origin`); none was sent | **open defect** |
+| F4 | the robots / channel budget (8 per outlet, a whole fetch of 4 must fit) does not reach the second level of a sitemap index: 92 child sitemaps of `ve_efecto_cocuyo` not read | open, a budget decision |
+| F5 | the channel parser refuses a feed containing `<!DOCTYPE` inside CDATA (`ve_efecto_cocuyo` RSS) | **open defect** |
+| F6 | the registered news sitemap of `hn_proceso_digital` answers 404 | open, registry |
+| — | no robots `Disallow` applied to any request; **the research override (CPD-0017) was not used and is untested on a real server**; no opt-out, no legal hold, no TDM reservation header observed | observation |
+
+Phase 3 on this material: `PHASE3_SAMPLE = INSUFFICIENT_FROM_CANARY` (thirteen pages, one outlet, one cell of the
+design's strata). A **pilot** review package is ready for a human reviewer outside the repository
+([extraction](extraction/INDEX.md) §9); no gold exists.
 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
 (cross-corpus naming and semantics)** — `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`.
@@ -454,3 +493,16 @@ run report that carries the evidence.
   around. The switch is `disabled`, no baseline is frozen, no request was made to any publisher, no O-4
   measurement and no Phase-3 package exist. Run report:
   [`docs/agent-runs/2026-10-08_canary-arming-refused-third-attempt.md`](agent-runs/2026-10-08_canary-arming-refused-third-attempt.md).
+- 2026-10-08 — the operator armed (`1f59e01`) and froze a first baseline; the preflight refused it ("does not match
+  its own digest"). Diagnosis: the digest covered `state`, which a freeze changes — no frozen manifest could ever
+  verify; the artefact was correct. Repaired with regression tests (`15ec1fd`, the new pinned commit), a second
+  baseline frozen on it (`96c271e3…`), preflight `READY`. The driver's `run` command was refused to the agent by the
+  permission layer; no request was made in that run. Run report:
+  [`docs/agent-runs/2026-10-08_baseline-digest-repair-real-canary-o4-phase3.md`](agent-runs/2026-10-08_baseline-digest-repair-real-canary-o4-phase3.md).
+  That entry and the two before it are superseded in one point by the next: the canary has since run.
+- 2026-10-08 — **the first real canary** (started by the operator) evaluated: 27 requests, 24 answers preserved
+  and verified, 13 article pages — all of one outlet; `PARTIAL`. Findings F1–F6 (§5a) reported, not repaired. O-4
+  measured for the first time, still `OPEN`. **`external_acquisition` set back to `disabled`** (`4cb4ea1`). Three
+  classical extractor candidates selected, pinned and wrapped (CPD-0018); a pilot review package built on the thirteen
+  preserved pages; `PHASE3_SAMPLE = INSUFFICIENT_FROM_CANARY`; no gold. No stage state changed. Run report:
+  [`docs/agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md`](agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md).

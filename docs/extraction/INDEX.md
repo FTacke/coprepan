@@ -1,8 +1,10 @@
 # Extraction — component index
 
-**Status: CONTRACT IMPLEMENTED; BASELINE EXTRACTOR ONLY (`EXPERIMENTAL`) — NOT VALIDATED, NOT
-ADOPTED. EVALUATION INSTRUMENT BUILT; NO GOLD, NO RESULT.** No extraction of corpus material has
-taken place. Governing decisions:
+**Status: CONTRACT IMPLEMENTED; BASELINE EXTRACTOR AND THREE WRAPPED CANDIDATES, ALL `EXPERIMENTAL` — NOT
+VALIDATED, NOT ADOPTED. EVALUATION INSTRUMENT BUILT; A PILOT REVIEW PACKAGE ON THIRTEEN REAL PAGES OF ONE OUTLET;
+NO GOLD, NO RESULT.** The baseline has extracted the thirteen item pages of the first canary (2026-10-08) as an
+exercise of the pipeline; that is not corpus text (the extractor is not `ACTIVE`). Governing decisions:
+[CPD-0018](../decisions/CPD-0018_classical-extractor-candidates-of-the-first-comparison.md),
 [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §5–§6,
 [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §9–§10. Current state:
 [`docs/STATUS.md`](../STATUS.md). Method for adopting an extractor:
@@ -24,7 +26,10 @@ storage of extractions and replay. Design background:
 | Extractor lifecycle | `src/coprepan/extraction.py` | `tests/test_admission_eval.py` |
 | Evaluation harness, metrics, review package | `src/coprepan/extraction_eval.py` | `tests/test_admission_eval.py` |
 | Gold-sample design (no sample) | [`GOLD_SAMPLE_DESIGN.md`](GOLD_SAMPLE_DESIGN.md) | — |
-| Extractor candidates for Phase 3 (a list from general knowledge, unverified) | [`EXTRACTOR_CANDIDATES.md`](EXTRACTOR_CANDIDATES.md) | — |
+| Extractor candidates for Phase 3 (a survey, and since 2026-10-08 the selection of the first comparison) | [`EXTRACTOR_CANDIDATES.md`](EXTRACTOR_CANDIDATES.md) | — |
+| Wrappers of the three selected candidates (not adopted, not runtime dependencies; CPD-0018) | `src/coprepan/extractor_candidates.py` | `tests/test_extractor_candidates.py` |
+| Review-package builder from preserved item fetches; the first, **pilot** package (§9) | `scripts/phase3_review_package.py`, `docs/extraction/phase3/` | same (blinding) |
+| Review codebook, version 1 (draft) | [`REVIEW_CODEBOOK_v1.md`](REVIEW_CODEBOOK_v1.md) | — |
 
 ## 2. Record (`coprepan-extraction/v1`)
 
@@ -133,3 +138,35 @@ only, and its own numbers on them say nothing about any extractor on any real pa
   are fixed in [`PHASE3_SCIENTIFIC_ARCHITECTURE.md`](../architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md)
   (CPD-0008): blocks become the units of the analysis contract, the role decides the surface,
   BODY is the primary linguistic surface, the title a separate one. No change to the record.
+
+## 9. Candidates and the pilot review package (2026-10-08, CPD-0018)
+
+**Arms**: `baseline_html/0.1.0` and three wrappers — `trafilatura/2.3.1.w1`, `readability_lxml/0.9.w1`,
+`justext/3.0.2.w1` — all `EXPERIMENTAL`. The tools are in the extra `phase3` and in an environment of their own; a
+wrapper refuses any version but its pin. Every arm gets the same preserved bytes, the same decoding, no address.
+
+**Builder**: `scripts/phase3_review_package.py` reads the preserved packs of one run (masters verified), builds the
+frame from item fetches that are `RAW_PRESERVED`, draws by the design's strata, runs every arm twice per case, and
+writes, **outside the checkout** (a package holds page text):
+
+| Directory | For | Content |
+|---|---|---|
+| `reviewer/` | a reviewer | `index.json`, `index.html`, one blinded case file per case with an empty decision form, the codebook |
+| `operator_only/` | nobody who reviews, until every case is decided | `blinding_key.json`, `evaluation.json` (the automatic diagnostics, by arm), every arm's full output per case, the environment the tools ran in |
+| `package_manifest.json` | the record | every file with its digest; the key by digest; which arm is behind which label is **not** in it |
+
+The run has the network made unavailable throughout, checks that no reviewer file names an arm and that no form is
+filled, and gives the repository the sample manifest and the package manifest only.
+
+**The first package is a pilot, not a gold sample** — `phase3-pilot-canary-2026-10-08`
+([manifests](phase3/phase3-pilot-canary-2026-10-08/)): the thirteen item pages the first canary preserved, all of one
+outlet (`do_diario_libre`), one country, one channel kind (`rss`), one response class, one day — one cell of the
+design's strata, taken whole. It can test the review instrument and the codebook on real pages, and show how four
+arms treat one template. It cannot compare extractors across outlets, and a reference made on it is valid for it and
+for nothing else (design §7). `PHASE3_SAMPLE = INSUFFICIENT_FROM_CANARY`.
+
+Known limit of the blinding: the arms differ in shape (one states metadata bases and keeps non-body blocks, one has
+no title). Names, the key, scores and ranks are not shown.
+
+- 2026-10-08 — candidates selected, pinned and wrapped (CPD-0018); pilot review package built on the preserved
+  pages of the first canary. No decision form filled, no reference, nothing adopted.

@@ -1,0 +1,265 @@
+{
+  "cases": [
+    {
+      "body_sha256": "1a1071a10458e6693c21a45f37f61f1c42122d4b91d412f540aaff3f104b84ef",
+      "case_id": "case-1a1071a10458e669",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:21157fd112c4afec22d080af22a1827ae6ba3212bac2ab6d62caecda4990a6d3",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "2af318e467f99be03f65b879a4e2dcf4f0e20bbaa4d1bb931a2fb4de24627350",
+      "case_id": "case-2af318e467f99be0",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:f6cae00920ee12aecd456754096803a2090b5d10cbe9a7a1c5661e988ac8ac6b",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "2cf48dad90ab04188df1af4c9141dbce50c5367063b416ba07e3497b819d603b",
+      "case_id": "case-2cf48dad90ab0418",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:28565c01e14b3fbf4c56f8d21c7e3a433ccbfc48c7953cb7628223b324936ef8",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "34f8fe9f64e6b463ef6a8e2896fc2b3e689081ec6477e8cc6eea7087dc979748",
+      "case_id": "case-34f8fe9f64e6b463",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:6b515d98135aac30a5fa8a37a2ab946cc0f3025dd4b94f7549e2a7e9c7adfff8",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "5ba84bfd873c7738cc768aea1ce6d6dea55304c6efc59332d9f357d8f9f924a3",
+      "case_id": "case-5ba84bfd873c7738",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:6119380b0be36e209b1e672ef836c3012c5507efba83a50d5b42360bfc0c1214",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "5ed48f1a4ae3b1f0cbfd391191a8d71a40a9c8e5f372c79dc1abbc30ad57978d",
+      "case_id": "case-5ed48f1a4ae3b1f0",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:6bd3e55110c80fe5c56ebab6a709fc1e31c247b96f9b78f23a865f445c6dc3d2",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "6347f78b40311e0a8e4e2ea6d52fbd0d03b89c32155205eb80c2f1dd111a34b3",
+      "case_id": "case-6347f78b40311e0a",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:ba3a84bcd591c6f464a3f4cbb5a39e9e723edcf1b0e0bc8c2d13ceedf8f60acb",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "799fb074f47872d994cbb3783550dc856095249fff25f1ef60c6f0bf4e760a70",
+      "case_id": "case-799fb074f47872d9",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:44a6725fd7a65087aa10093c4da0c57923728ba68f26388ca4cbca4559082644",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "923b962e023bd29bc12e834d6f2548b0a50827347cc9dfcc6e829b5b679a82a7",
+      "case_id": "case-923b962e023bd29b",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:a396f123a1abc778c306637bd898a7e56a326d32b20e18b1bf164c17cfae53f1",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "929ad98281fba56ab1f9e15e04924206d52143518f83e9e14a8f461301d5b662",
+      "case_id": "case-929ad98281fba56a",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:a662156c8c8d9311dfd7307acdc73e9e476147a682730f4ff0712a9fc4699c45",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "9fca0b07b1ed59c402005f26d405cbf561037a692307d7de0339b4b0d4ec2670",
+      "case_id": "case-9fca0b07b1ed59c4",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:d5ecfd7e7aa4c240d246552f9b23695b11bff37ad835eb414252cedeaaa20804",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "af7b39e834810a30a2ad0cf80ce2e42a56bb66a8ea342d6a6d21052f2f40a76b",
+      "case_id": "case-af7b39e834810a30",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:95b0e4ba5961456211cdbfb972f3f0cdd0ef0d95718bd8180e0b74d315b33f50",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    },
+    {
+      "body_sha256": "cdf63a11dbe79a22da040e3a9a7265dafac3723788d2637cbc0338fc97e01252",
+      "case_id": "case-cdf63a11dbe79a22",
+      "content_encoding": "gzip",
+      "declared_charset": "utf-8",
+      "declared_content_type": "text/html",
+      "fetch_id": "ft1:37c6f709be14e680d23183a93fdce9e7ab0fc6317009f6fea0f77eb0066521e7",
+      "outlet_id": "do_diario_libre",
+      "pack_id": "pk1-do_diario_libre-20261008-000",
+      "strata": {
+        "channel_kind": "rss",
+        "country": "do",
+        "outlet": "do_diario_libre",
+        "outlet_type": "unknown",
+        "part": "stratified",
+        "response_class": "2xx_html",
+        "time_slice": "20261008"
+      }
+    }
+  ],
+  "frame_description": "item fetches of run acq1-20261008T203414628095Z-ed630d8e8a14 that are RAW_PRESERVED, read from the preservation root; packs pk1-bo_el_deber-20261008-000, pk1-do_diario_libre-20261008-000, pk1-hn_proceso_digital-20261008-000, pk1-py_la_nacion-20261008-000, pk1-ve_efecto_cocuyo-20261008-000; 13 cases in 1 cell(s) of the strata; baseline 96c271e373dc59dbbb8cccae9301556397e553041de71647f31bbd4dbed7863f",
+  "per_stratum": 16,
+  "sample_id": "phase3-pilot-canary-2026-10-08",
+  "sample_sha256": "4f6ee043eb0159846e08f6f64ddb91b5ecc276da3955d85a307bcd33db65f1de",
+  "schema": "coprepan-extraction-sample/v1",
+  "seed": "coprepan-phase3-pilot-canary-2026-10-08",
+  "strata": [
+    "outlet",
+    "country",
+    "outlet_type",
+    "channel_kind",
+    "response_class",
+    "time_slice"
+  ]
+}

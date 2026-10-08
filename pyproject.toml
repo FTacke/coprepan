@@ -18,6 +18,12 @@ dependencies = []
 # warcio is a test-only dependency: the independent WARC reader the pack writer is checked
 # against (tests/test_warc_interoperability.py). No runtime code imports it.
 dev = ["pytest==9.1.1", "warcio==1.7.5"]
+# The classical extractor candidates of the Phase-3 comparison (CPD-0018). NOT runtime dependencies and
+# not adopted: they are installed in an environment of their own, and only
+# src/coprepan/extractor_candidates.py imports them, inside the wrappers. The pins are those of the
+# wrappers (`extractor_candidates.PINS`; a test compares the two). What they pull in is not pinned
+# here: a comparison records the whole environment it ran in.
+phase3 = ["trafilatura==2.3.1", "readability-lxml==0.9", "justext==3.0.2"]
 
 [tool.coprepan.nlp]
 # PLANNED, not installed and not active: the shared NLP instrument contract with CO.RA.PAN 3.0
