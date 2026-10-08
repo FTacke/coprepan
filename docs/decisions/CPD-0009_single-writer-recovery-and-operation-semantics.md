@@ -9,6 +9,7 @@
 | Scope | who may write a workspace; what an append guarantees; the ledger record format; exclusive binding of an identity on the preservation root; the layer store under competing writers; recovery after a process death; the semantics (at-least-once / exactly-once / idempotent) of every central operation; when a 304 is believed |
 | Builds on / amends / supersedes | builds on CPD-0001 (ledger before state, write-once, no deletion), CPD-0003 (canonical JSON), CPD-0005 (pack, identity, layers), CPD-0006 (request log, transport), CPD-0007 (re-fetching, conditional requests). **Amends the ledger record format** of Foundation Core I: `coprepan-ledger-record/v1` → `v2` (§5), forward-only — no ledger of corpus material exists. Tightens CPD-0007 §4 (§7). |
 | Does not change | any id, the pack format, the fetch record, the preservation manifest schema, the layer-store layout, any policy or gate |
+| Later note | 2026-10-08 — the point "Integrity protection of the other append-only tables" under "Not decided here" is decided in [CPD-0010](CPD-0010_evidence-classes-chained-evidence-and-rebuildable-identity.md). Nothing above is changed. |
 | Run report | [`docs/agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md`](../agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md) |
 | Evidence | measurements with real concurrent processes and real process kills, before and after the repairs (run report §4–§7); `tests/test_crash_recovery.py`, `tests/test_concurrency.py`, `tests/test_integrity_invariants.py` |
 

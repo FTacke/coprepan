@@ -160,3 +160,7 @@ Mapping the two conventions is a matter of the cross-corpus contract (master pla
 For Phase 4: the head of a root token is the token itself in CO.RA.PAN, not a sentinel.
 Regression tests: `test_index_base_is_zero_as_reviewed_for_cpd_0003`,
 `test_fetch_id_keeps_the_full_digest_as_reviewed_for_cpd_0003`.
+- 2026-10-08 — the identity tables are classed `DERIVED_REBUILDABLE` (CPD-0010): rebuilt from
+  preserved packs, the ledger, the outlet URL rules and the extraction, in canonical order (packs
+  by id, fetches in index order), and compared with the existing tables. Statuses `CORRECT`,
+  `REBUILDABLE`, `CONFLICTING`, `SOURCE_EVIDENCE_DAMAGED`. `src/coprepan/identity_rebuild.py`.

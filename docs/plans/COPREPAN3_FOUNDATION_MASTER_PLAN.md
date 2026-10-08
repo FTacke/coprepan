@@ -384,6 +384,12 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     notice a changed record. Now enforced: one writer per workspace. This answers the open point
     of the Phase-1 gate "process-kill crash tests" **on temporary directories**; the same tests on
     the real preservation target remain part of that gate (O-3). It changes no gate state.
+13. *Added 2026-10-08 (evidence-table integrity closure).* The one integrity point that audit
+    recommended settling before the canary is settled (CPD-0010): primary evidence is chained and
+    anchored, derived state is checked and rebuildable. **No locally answerable integrity question
+    that does not need real outlets or a preservation target is known to be open**; what remains
+    is bound to the real target (Phase-1 gate, O-3) or accepted and listed (run report §11). It
+    changes no gate state.
 
 ## 13. Open operator and institutional decisions
 

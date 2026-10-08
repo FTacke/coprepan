@@ -24,6 +24,12 @@ enforced, and an interrupted workspace has a named state and a deterministic way
 `PRE_CANARY_ROBUSTNESS = PASS` for the failure, recovery and concurrency tests defined in that run
 (§3), on temporary directories of one workstation. It closes no gate.
 
+**Evidence tables are protected and derived tables rebuildable** (CPD-0010): the request log, the
+discovery inputs and events, the candidate qualifications and the admission labels are chained like
+the ledger and anchored when a run closes; the discovery candidates are checked against the
+evidence; the identity tables are rebuilt from preserved packs and compared
+(`PRE_CANARY_EVIDENCE_INTEGRITY = PASS`, §3). It closes no gate.
+
 **The cross-corpus analysis contract exists as a technical proposal with a validator**
 (`crosscorpus-analysis/v1`, CPD-0008). Two synthetic fixtures conform to it. It is not adopted by
 CO.RA.PAN, no corpus material has passed through it, and it validates nothing scientific.
@@ -75,7 +81,7 @@ What `PARTIAL` means for the eight stages, exactly:
 | raw preservation | fetch record; WARC pack writer, seal, derived and bound index, fixity check, torn-tail quarantine; state machine and ledger; fail-closed root resolution; promotion; outage spool; a preservation-target readiness check; packs read by an independent WARC reader (warcio 1.7.5, written subset) — on temporary directories | scheduled fixity, reconciliation, backup; a chosen, configured target; a run against one |
 | document identity | id serialisation and canonical URL key (CPD-0003); document and version assignment, append-only identity tables, collision refusal, `duplicate_of` and `moved_to` relations (CPD-0005 §4) — on recorded exchanges | syndication clusters; URL-key aliases after a rule change; a durable home for the tables; any id minted for corpus material |
 | extraction | the extraction record and its digests; storage by fingerprint; replay from the preservation root; a **baseline** extractor (`baseline_html/0.1.0`, lifecycle `EXPERIMENTAL`); an evaluation harness and review-package generator; a gold-sample design | an adopted extractor; a gold sample; any quality measurement; per-outlet rules; date parsing |
-| admission labels | the technical label (`coprepan-admission-label/v1`, rule set `admission-technical/1`): usable / unusable with reasons and evidence, append-only | every content-level label: article / not article, access class, language from content, length, type; any label on corpus material |
+| admission labels | the technical label (`coprepan-admission-label/v2`, chained; rule set `admission-technical/1`): usable / unusable with reasons and evidence, append-only | every content-level label: article / not article, access class, language from content, length, type; any label on corpus material |
 
 | cross-corpus contract | `crosscorpus-analysis/v1` as a proposal: vocabularies, table schemas, a fail-closed validator, manifest sealing, the token denominator, a compatibility view; COPREPAN's adapter from extraction records and a *supplied* annotation; a press and a radio fixture, both synthetic | **adoption by CO.RA.PAN** (O-6 is a joint decision); any export of corpus material; any annotation by an instrument; coverage and selection-policy schemas; columnar storage |
 
@@ -88,7 +94,7 @@ What `PARTIAL` means for the eight stages, exactly:
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0009 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0010 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -122,6 +128,10 @@ What `PARTIAL` means for the eight stages, exactly:
 | Extraction contract and baseline extractor | implemented; behaviour of the contract tested; **quality unknown, extractor not adopted** | `src/coprepan/extraction.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) |
 | Vertical canary (fixture → fetch record → pack → preservation → identity → extraction → version → replay) | passes on four synthetic pages, on temporary directories | `src/coprepan/core_pipeline.py`, `tests/test_core_pipeline.py` |
 | State machine and ledger primitives | implemented and unit-tested; record format `v2` with a hash chain since 2026-10-08 | `src/coprepan/ledger.py`, `tests/test_ledger.py` |
+| Evidence classes; chained primary-evidence tables (`previous_row_sha256`); heads recorded when a run closes | implemented; manipulation of earlier rows detected in every chained table and refused; torn tail told apart from a manipulation; newest row anchored from a clean close on | `src/coprepan/jsonl.py`, `src/coprepan/evidence.py`, `tests/test_evidence_integrity.py`, CPD-0010 §1–§3 |
+| Candidates as derived state | implemented; checked against events and request log; missing rows completed, never judged | `src/coprepan/http_acquisition.py`, `src/coprepan/discovery.py` |
+| Identity tables as rebuildable derived state | implemented; rebuilt from preserved evidence in a temporary directory and compared (`CORRECT` · `REBUILDABLE` · `CONFLICTING` · `SOURCE_EVIDENCE_DAMAGED`); adoption moves the old directory aside, never deletes | `src/coprepan/identity_rebuild.py`, `tests/test_evidence_integrity.py` |
+| **`PRE_CANARY_EVIDENCE_INTEGRITY`** | **`PASS`** (2026-10-08) — the last local evidence-integrity point found before the real canary is closed, for the tests defined in that run. **Not** a gate; says nothing about a real target, a power failure or a real server | [run report](agent-runs/2026-10-08_evidence-table-integrity-closure.md) |
 | Writer lock (one writer per workspace) | implemented; tested with real processes, including release when the holder is killed | `src/coprepan/exclusive.py`, `tests/test_crash_recovery.py` |
 | Recovery: diagnosis and repair of an interrupted workspace | implemented; 24 pipeline and 4 HTTP crashpoints killed for real, each recovered by an independent process to the state of an uninterrupted run | `src/coprepan/recovery.py`, `tests/test_crash_recovery.py` |
 | Concurrency semantics of ledger, tables, layer store, promotion, workspace | measured before and after repair; asserted with real concurrent processes | `tests/test_concurrency.py`, CPD-0009 §3 |
@@ -216,7 +226,7 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | `tense-v3` (press) against `tense-v4` (radio) on the same text; legacy labels against the verbal-complex layer | bridge sample (design: contract §12) |
 | Every "comparable with caveat" of the comparability matrix | the measurements the matrix names; none exists |
 | Writer lock and append locks on the file system the runtime workspace will really use; exclusive publication on the real preservation target (a share) | Phase-1 gate on the chosen target (O-3) |
-| Integrity protection of tables other than the ledger, and of descriptive manifest fields (single changed bits often unnoticed: storage §17) | a decision (CPD-0009, "Not decided here"); sensibly before the first corpus rows exist |
+| Integrity of the *descriptive* fields of pack manifests, preservation manifests and run results (a single changed bit was not noticed in about a third of cases: storage §17), and of rows written after the last closed run (until the next close) | not decided (CPD-0010, "Not decided here"); none is evidence that cannot be recomputed or has no other copy |
 | Recovery after a power failure (un-synced data, directory entries) | not testable here; an operational assumption to state with O-3 |
 
 ## 7. Machine-readable assertions
@@ -330,3 +340,16 @@ run report that carries the evidence.
   40 of them with real process kills or real concurrent processes. `PRE_CANARY_ROBUSTNESS = PASS`
   for that scope. **No gate closed**; no external request; nothing validated scientifically.
   Run report: [`docs/agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md`](agent-runs/2026-10-08_adversarial-persistence-crash-recovery-concurrency.md).
+- 2026-10-08 — evidence-table integrity closure (implementation; robustness and reproducibility
+  only). Decided (CPD-0010): primary evidence is chained, derived state is rebuildable. Measured
+  before: of 40 single-bit changes per file, 39–40 were not noticed in the request log, discovery
+  inputs, events and candidates, qualifications and labels, and 4–22 in the identity tables. Now:
+  chained request log, discovery inputs and events, qualifications and labels (row schemas `v2`);
+  heads of all chained tables and the ledger recorded when a run closes (run result `v2`); the
+  candidate table checked against its evidence and completable; the identity tables rebuilt from
+  preserved packs and compared, with the four statuses of CPD-0010 §5. After: 0 of 40 not noticed
+  in every table except the labels (7 of 40, all in the last row, written after the run closed).
+  A run now refuses to start on a request log or discovery table that does not authenticate.
+  `PRE_CANARY_EVIDENCE_INTEGRITY = PASS`. **No gate closed**; no external request; nothing
+  validated scientifically.
+  Run report: [`docs/agent-runs/2026-10-08_evidence-table-integrity-closure.md`](agent-runs/2026-10-08_evidence-table-integrity-closure.md).

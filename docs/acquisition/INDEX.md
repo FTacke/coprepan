@@ -53,9 +53,9 @@ Workspace layout written by a run:
 | Path | Content |
 |---|---|
 | `runs/<run_id>/run.json`, `result.json` | run record and result, each written once |
-| `requests/requests.jsonl` | `PLANNED` and `FINISHED` rows per request (`coprepan-request-log/v1`) |
+| `requests/requests.jsonl` | `PLANNED` and `FINISHED` rows per request (`coprepan-request-log/v2`, **chained**) |
 | `discovery/inputs.jsonl`, `events.jsonl`, `candidates.jsonl` | discovery evidence |
-| `discovery/qualifications.jsonl` | one decision per candidate and rule set (`coprepan-candidate-qualification/v1`) |
+| `discovery/qualifications.jsonl` | one decision per candidate and rule set (`coprepan-candidate-qualification/v2`, **chained**) |
 | `packs/<pack_id>.warc.gz(.open)`, `.index.jsonl`, `.pack.json` | the pack |
 | `ledgers/preservation.jsonl` | state of every fetch |
 
@@ -90,9 +90,9 @@ CPD-0006 §2.
 
 | Table | Row |
 |---|---|
-| `inputs` (`coprepan-discovery-input/v1`) | run, channel, document URL, input fetch id, depth, parent, format, outcome (`PARSED` · `UNPARSEABLE` · `UNAVAILABLE`), problems, body hash |
-| `events` (`coprepan-discovery-event/v1`) | `event_id`, run, channel, outlet, input fetch id, position, relation (`item` · `child_document` · `next_page`), URL as written and as resolved, hints, problem, `url_key`, `candidate_id`, parser |
-| `candidates` (`coprepan-discovery-candidate/v1`) | `candidate_id`, outlet, `url_key`, `fetch_url`, first event, first channel |
+| `inputs` (`coprepan-discovery-input/v2`, **chained**) | run, channel, document URL, input fetch id, depth, parent, format, outcome (`PARSED` · `UNPARSEABLE` · `UNAVAILABLE`), problems, body hash |
+| `events` (`coprepan-discovery-event/v2`, **chained**) | `event_id`, run, channel, outlet, input fetch id, position, relation (`item` · `child_document` · `next_page`), URL as written and as resolved, hints, problem, `url_key`, `candidate_id`, parser |
+| `candidates` (`coprepan-discovery-candidate/v1`, **derived** from events and request log) | `candidate_id`, outlet, `url_key`, `fetch_url`, first event, first channel |
 
 Budget (`DiscoveryBudget`): `max_depth`, `max_documents`, `max_candidates`, `max_bytes` — all
 required. Problems an entry can carry: `no_link`, `not_http`, `invalid_url`, `off_origin`,
@@ -231,3 +231,7 @@ operator approved; exit code 1 until `READY`. O-4 is not a precondition.
 On the repository as committed (measured 2026-10-07): the plan selects 0 outlets — all 82 are
 ineligible (not registered; placeholder URL rules; no time zone; some without a channel) — and
 the preflight is `NOT_READY` on every check.
+- 2026-10-08 — the request log and the discovery inputs and events are chained and anchored at run
+  close; the candidate table is derived state, checked against them and completable from them
+  (CPD-0010). A run refuses to start on a request log or discovery table that does not
+  authenticate, before the first request.

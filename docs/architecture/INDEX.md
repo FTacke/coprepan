@@ -63,6 +63,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) | Legacy freeze manifest; candidate qualification; re-fetch lifecycle and plan; conditional requests; channel health; technical admission labels; extractor lifecycle; evaluation harness; canary preflight | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0008](../decisions/CPD-0008_cross-corpus-analysis-contract-and-phase3-layer-architecture.md) | Cross-corpus analysis contract (technical proposal; binds COPREPAN only) and the Phase-3 layer architecture | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0009](../decisions/CPD-0009_single-writer-recovery-and-operation-semantics.md) | One writer per workspace; recovery after interruption; operation semantics (at-least-once requests, exactly-once evidence identity); chained ledger records; exclusive binding on the preservation root | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0010](../decisions/CPD-0010_evidence-classes-chained-evidence-and-rebuildable-identity.md) | Evidence classes: chained primary evidence with anchored heads; derived candidates and identity tables checked against and rebuildable from the evidence | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -108,6 +109,7 @@ Machine-checked contracts:
 | Canary planner and fail-closed preflight (`NOT_READY` as committed) | `src/coprepan/canary.py` | `tests/test_canary.py` |
 | One writer per workspace; diagnosis and repair after an interruption | `src/coprepan/exclusive.py`, `src/coprepan/recovery.py` | `tests/test_crash_recovery.py` (real process kills) |
 | Concurrent writers: no lost record, no double binding, no two layer answers | `src/coprepan/jsonl.py`, `ledger.py`, `preservation.py`, `layer_store.py` | `tests/test_concurrency.py` (real processes) |
+| Chained primary evidence (request log, discovery inputs and events, qualifications, labels); heads at run close; candidates and identity tables derived and rebuildable | `src/coprepan/jsonl.py`, `evidence.py`, `identity_rebuild.py`, `recovery.py` | `tests/test_evidence_integrity.py` |
 | No false success: preserved, sealed, promoted, version, 304 and replay refuse when what they claim is broken | `src/coprepan/core_pipeline.py`, `recovery.py` | `tests/test_integrity_invariants.py` |
 | Cross-corpus analysis contract: schemas, value states, denominator, manifest, compatibility view; conformance of a press and a radio fixture; invalid bundles refused | `src/coprepan/analysis_contract.py`, `src/coprepan/analysis_export.py` | `tests/test_analysis_contract.py` |
 

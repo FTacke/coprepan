@@ -425,3 +425,15 @@ and `editorial_id` the document it is a state of. Inside COPREPAN's own tables `
 `src/coprepan/identity.py` implements the serialisation of the ids of §5.3 and §5.4 and the
 canonical URL key (CPD-0003); `tests/test_identity.py` pins them. `src/coprepan/registry.py`
 implements the registry schema and its vocabularies; `tests/test_registry.py` pins them.
+
+## 14. Additions of 2026-10-08 (CPD-0010)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| evidence class | `PRIMARY_EVIDENCE`, `DERIVED_REBUILDABLE`, `CACHE/VIEW` | CPD-0010 §1 |
+| **chained table** (term) | an append-only line file whose rows each name the SHA-256 of the line before them in `previous_row_sha256` | CPD-0010 §2 |
+| **head** (term) | the row count of a chained table and the hash of its last line, recorded when a run closes | CPD-0010 §3 |
+| **rebuild** (term) | deriving derived state again from preserved evidence into a new store, for comparison or adoption; not a repair of the existing store | CPD-0010 §5 |
+| identity verification status | `CORRECT`, `REBUILDABLE`, `CONFLICTING`, `SOURCE_EVIDENCE_DAMAGED` | CPD-0010 §5 |
+| leftover directories | `identity.rebuild-<id>`, `identity.replaced-<n>` — never read as data | [storage](../storage/INDEX.md) §18 |
+| schema ids (supersede the `v1` ids of the lists in §10, §11 and §12) | `coprepan-request-log/v2`, `-discovery-input/v2`, `-discovery-event/v2`, `-candidate-qualification/v2`, `-admission-label/v2`, `-acquisition-run-result/v2`; `-identity-verification/v1` new; `-discovery-candidate/v1` unchanged | the indexes above |

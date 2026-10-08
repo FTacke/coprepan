@@ -15,9 +15,10 @@ Current state: [`docs/STATUS.md`](../STATUS.md). Design background:
 | Label record, closed reason vocabulary, pure labelling function | `src/coprepan/admission.py` | `tests/test_admission_eval.py` |
 | Append-only label table; labelling of a preserved pack | same | same; `tests/test_refetch_e2e.py` |
 
-## 2. Record (`coprepan-admission-label/v1`, rule set `admission-technical/1`)
+## 2. Record (`coprepan-admission-label/v2`, rule set `admission-technical/1`)
 
-One label per fetch of kind `item` and rule set, in `admission/labels.jsonl` of the workspace.
+One label per fetch of kind `item` and rule set, in `admission/labels.jsonl` of the workspace: a
+**chained** table (CPD-0010; `v1` until 2026-10-08, when no label of corpus material existed).
 
 | Field | Content |
 |---|---|

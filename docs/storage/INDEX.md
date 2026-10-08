@@ -405,7 +405,8 @@ workspace, 40 per file; "noticed" = `diagnose` does not say `CLEAN`):
 
 The unnoticed changes are in fields no digest covers: descriptive fields of manifests, and whole
 rows of tables that are derived (identity) or evidence without a chain (request log, discovery).
-Closing that gap is open (CPD-0009, "Not decided here").
+*Closed for the evidence and the derived tables by CPD-0010; see "Evidence classes" below.* What
+remains is the descriptive fields of the manifests and of the run result.
 
 **Cost of the checks** (measured 2026-10-08, one workstation, local disk; diagnostic only):
 ledger append 4.1 ms, rebuild of 5,000 records 0.02 s; a pack of 1,500 fetches / 56.8 MB:
@@ -415,3 +416,48 @@ scan 0.5 s, seal 1.0 s, fixity check 0.5 s; layer store 5 ms per write, 12 ms pe
 
 **Not covered:** power failure (data the system had not written out), directory durability, a
 runtime workspace on a network share, any file system but the one tested.
+- 2026-10-08 — evidence classes, chained primary evidence, rebuildable identity (CPD-0010;
+  §18). Run report: [`docs/agent-runs/2026-10-08_evidence-table-integrity-closure.md`](../agent-runs/2026-10-08_evidence-table-integrity-closure.md).
+
+## 18. Evidence classes (CPD-0010)
+
+| Class | Stores | Protection |
+|---|---|---|
+| `PRIMARY_EVIDENCE` | fetch records and packs, preservation masters and manifests | SHA-256 of the content |
+| | preservation ledger, request log, discovery inputs and events, candidate qualifications, admission labels | **chained**: each row names the SHA-256 of the line before it (`previous_row_sha256`) |
+| `DERIVED_REBUILDABLE` | discovery candidates | checked against events and request log; missing rows completed |
+| | identity: documents, observations, versions, relations | rebuilt from preserved packs, ledger, URL rules, extraction; compared |
+| | extraction layers | write-once, verified on read |
+| `CACHE/VIEW` | pack indexes, channel health, candidate lifecycle, fetch plan | none; computed when read |
+
+**Chain.** A change, removal, insertion, duplication or reordering of an earlier row breaks the
+chain at the row after it: `ChainBroken`, and `recovery.diagnose` says `DAMAGED`; nothing repairs
+it. An incomplete last line is a torn tail (`NEEDS_REPAIR`), not a break.
+
+**Heads.** Closing a run records, for the ledger and each chained table, the row count and the
+hash of the last line (`evidence_heads` in the run result, `coprepan-acquisition-run-result/v2`).
+`diagnose` checks them: this covers the newest row, and rows cut from the end. Rows written after
+the last close are covered at the next one.
+
+**Identity rebuild** (`identity_rebuild.verify`, `adopt`; `diagnose(…, registry=…)`):
+
+| Status | `diagnose` class |
+|---|---|
+| `CORRECT` | `CLEAN` |
+| `REBUILDABLE` (absent, subset, unreadable) | `INCOMPLETE_RESUMABLE` / `NEEDS_REPAIR` |
+| `CONFLICTING` | `DAMAGED`; adoption needs an explicit decision |
+| `SOURCE_EVIDENCE_DAMAGED` | `DAMAGED`; nothing is rebuilt |
+
+`adopt` moves the existing `identity/` aside to `identity.replaced-<n>` and renames the rebuild
+(`identity.rebuild-<id>`) into place. Both leftovers are named by `diagnose` and never read as data.
+
+**Single changed bits** (measured 2026-10-08, 40 per file, `diagnose` afterwards; "not noticed"):
+
+| File | Before CPD-0010 | After |
+|---|---|---|
+| request log, discovery inputs, events, candidates | 40 / 40 / 40 / 40 | 0 / 0 / 0 / 0 |
+| qualifications; admission labels | 39; 40 | 0; 7 (all in the last row, written after the run closed) |
+| identity documents / observations / versions / relations | 15 / 22 / 4–6 / 22 | 0 / 0 / 0 / 0 |
+
+**Cost** (measured, diagnostic): chained append 1–7 ms (lock, sync, read-back); reading and
+authenticating 5,000 rows / 3.1 MB 0.02 s; heads of all tables 0.08 s.
