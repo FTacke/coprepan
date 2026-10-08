@@ -35,19 +35,26 @@ def gate(policy, identity=EXTERNAL, registry=None):
 # --- the tracked configuration fails closed ---------------------------------------------------------
 
 
-def test_the_tracked_policy_is_the_decided_canary_policy_and_still_denies_everything():
-    """O-1 is decided for the canary (CPD-0013). The switch that lets a request out is off until
-    the canary is armed, so the policy as committed denies every external request.
+def test_the_tracked_policy_is_the_decided_canary_policy():
+    """O-1 is decided for the canary (CPD-0013). The switch that lets a request out is on only while
+    the canary is armed (CPD-0016); while it is off, the policy denies every external request. Either
+    state is legal; what is not legal is an armed policy that is not the canary policy.
     """
     policy = P.load_policy()
-    assert policy["status"] == "DECIDED" and policy["external_acquisition"] == "disabled"
+    armed = policy["external_acquisition"] == "enabled"
+    assert policy["status"] == "DECIDED" and policy["external_acquisition"] in ("enabled", "disabled")
     assert policy["policy_version"].startswith("canary/") and policy["schema"] == "coprepan-acquisition-policy/v2"
     assert policy["robots"] == {"mode": "enforce", "on_absent": "allow", "on_unreachable": "defer"}
     assert policy["rate_limit"]["crawl_delay"] == "binding_minimum"
     assert policy["rate_limit"]["min_interval_seconds_per_origin"] >= 10 and policy["rate_limit"]["crawl_delay_max_seconds"] >= 10
     for kind in ("item", "channel_document", "robots_txt"):
         decision = gate(policy).evaluate(intent(kind=kind), ABSENT)
-        assert (decision.decision, decision.reasons) == ("DENY", ("external_acquisition_disabled",))
+        if not armed:
+            assert (decision.decision, decision.reasons) == ("DENY", ("external_acquisition_disabled",))
+        else:  # armed: only the registered canary outlets can be asked, and only inside the policy
+            assert gate(policy).evaluate(intent(kind=kind, url="https://www.unregistered.test/x"), ABSENT).decision == "DENY"
+    if armed:
+        assert [o for o in policy["disabled_outlets"]] == [] and policy["opt_outs"] == []
 
 
 def test_every_disabled_channel_of_the_tracked_policy_is_a_registered_channel():

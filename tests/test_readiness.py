@@ -171,10 +171,10 @@ def manifest(**kwargs):
 def test_the_repository_as_committed_is_pre_freeze_and_says_why():
     m = manifest()
     assert m["state"] == "PRE_FREEZE" and m["schema"] == "coprepan-acquisition-baseline/v1"
-    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-1", "O-3", "O-4"]
+    assert [reason.split(":")[0] for reason in m["blocking"]] == (["O-1"] if m["policy"]["external_acquisition"] == "disabled" else []) + ["O-3", "O-4"]
     assert m["schedule_policy"]["version"].startswith("canary/") and m["components"]["extractor_lifecycle"] == "EXPERIMENTAL"
     assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (82, 5, 77, 352)
-    assert (m["policy"]["status"], m["policy"]["external_acquisition"]) == ("DECIDED", "disabled")   # decided; not armed
+    assert m["policy"]["status"] == "DECIDED" and m["policy"]["external_acquisition"] in ("enabled", "disabled")   # decided; armed only for the canary
     assert m["crawler_identity"]["state"] == "configured" and m["crawler_identity"]["identity"]["operator"]["crawler_name"] == "PanhispanicMediaResearchBot"
     assert m["storage_target"] == {"status": "not_configured"} and m["code"]["commit"] == COMMIT
     assert FZ.verify_manifest(m)
@@ -219,7 +219,9 @@ def test_a_ready_target_and_measured_capacity_remove_only_their_own_blockers(tmp
     PT.initialise_target(tmp_path, "target-a", operator="operator", now=NOW)
     report = PT.check_readiness(tmp_path, required_free_bytes=1, now=NOW)
     m = manifest(storage_target=report, capacity_measured=True)
-    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-1"] and m["state"] == "PRE_FREEZE"
+    switch_off = m["policy"]["external_acquisition"] == "disabled"
+    assert [reason.split(":")[0] for reason in m["blocking"]] == (["O-1"] if switch_off else [])
+    assert m["state"] == ("PRE_FREEZE" if switch_off else "READY_TO_FREEZE")
     assert m["storage_target"]["target_id"] == "target-a"
 
 

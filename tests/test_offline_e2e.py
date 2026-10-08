@@ -505,7 +505,7 @@ def test_under_the_tracked_policy_and_identity_nothing_can_be_requested(tmp_path
     external identity. Nothing can leave: the policy denies, and no packet is sent. Fail closed."""
     from coprepan import crawler_identity as CI
 
-    assert CI.load_identity().scope == CI.SCOPE_EXTERNAL and P.load_policy()["external_acquisition"] == "disabled"
+    assert CI.load_identity().scope == CI.SCOPE_EXTERNAL and P.load_policy()["status"] == "DECIDED"
     run = Pass(tmp_path, site, policy={**P.load_policy()})
     run.acquire()
     assert site.requests == [] and run.fetcher.transport_calls == 0

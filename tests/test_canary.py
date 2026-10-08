@@ -15,6 +15,7 @@ import pytest
 
 from coprepan import canary as CN
 from coprepan import freeze as FZ
+from coprepan import policy as P
 from coprepan import preservation_target as PT
 from coprepan import registry as R
 
@@ -97,14 +98,15 @@ def test_as_committed_the_canary_may_not_run_and_every_gate_says_why():
     report = CN.preflight(outlet_ids=["uy_el_pais"], tests_passed=None, tests_commit=None, code_commit=COMMIT,
                           approved_baseline=None, required_free_bytes=None, now=NOW, environment={})
     assert report["status"] == "NOT_READY" and report["schema"] == "coprepan-canary-preflight/v1"
+    switch_off = P.load_policy()["external_acquisition"] == "disabled"
     assert failed(report) == {
-        "outlet_registered:uy_el_pais": "O-11", "acquisition_policy_decided": "O-1",
+        "outlet_registered:uy_el_pais": "O-11", **({"acquisition_policy_decided": "O-1"} if switch_off else {}),
         "preservation_target_ready": "O-3", "runtime_workspace_configured": "O-3",
         "tests_green_on_this_commit": "engineering", "no_configuration_drift": "canary_approval"}
-    assert report["open_by_gate"] == {"O-1": 1, "O-11": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
-    # the policy is decided; what is still open under O-1 is the switch, turned when the canary is armed
+    assert report["open_by_gate"] == {**({"O-1": 1} if switch_off else {}), "O-11": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
+    # the policy is decided; what is open under O-1 is only the switch, on while the canary is armed
     detail = {check["check"]: check["detail"] for check in report["checks"]}
-    assert "status DECIDED, external acquisition disabled" in detail["acquisition_policy_decided"]
+    assert "status DECIDED, external acquisition " + ("disabled" if switch_off else "enabled") in detail["acquisition_policy_decided"]
     registered = CN.preflight(outlet_ids=["bo_el_deber"], tests_passed=None, tests_commit=None, code_commit=COMMIT,
                               approved_baseline=None, required_free_bytes=None, now=NOW, environment={})
     assert "outlet_registered:bo_el_deber" not in failed(registered) and registered["status"] == "NOT_READY"
