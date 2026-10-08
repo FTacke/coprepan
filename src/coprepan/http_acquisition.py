@@ -6,8 +6,9 @@ registered channel → [policy gate] → fetch channel document → discovery (e
         → fetch record → open pack → ledger
 ```
 
-followed, by the caller, by the stages that already exist: seal and promote
-(:func:`coprepan.core_pipeline.seal_and_preserve`), identity and extraction
+followed, by the caller, by the stages that already exist: seal and preserve
+(:func:`coprepan.core_pipeline.preserve_pack` — the entry that keeps a pack pending, in the outage
+spool where one is usable, when the preservation target cannot be reached; CPD-0015), identity and extraction
 (:func:`coprepan.core_pipeline.identify_and_extract`), admission labels
 (:func:`coprepan.admission.label_pack`).
 

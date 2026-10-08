@@ -73,6 +73,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0008 §7 |
 | [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) | Registration by record and the canary subset (O-11); acquisition and schedule policy of the first real canary (O-1); `Crawl-delay` may bind (policy schema `v2`) | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0014](../decisions/CPD-0014_crawler-identity-and-storage-roles-with-interim-preservation.md) | Crawler identity and its public page (O-2); storage roles shared with CO.RA.PAN, role separation, interim primary preservation root, planned move to the university file system | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0015](../decisions/CPD-0015_joint-storage-contract-and-outage-spool-in-the-acquisition-path.md) | Joint storage-management contract `crosscorpus-storage/v1` in force (pinned copy, own implementation, shared cases); the outage spool wired into the acquisition path | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 

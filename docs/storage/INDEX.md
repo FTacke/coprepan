@@ -122,6 +122,7 @@ Resolution rules:
   enforces it (`tests/test_repository_contract.py`).
 - **Roles are kept apart by code, not by habit** (CPD-0014): `validate_role_separation` refuses two roles on one root or one inside another (the checkout included), and a `BACKUP` on the volume of `PRESERVATION`. A role that is not configured is `None`, not a default (`resolve_configured_roles`).
 - The machine values live in the gitignored `.env`, read for `COPREPAN_*` names only; the process environment wins (`workstation_environment`).
+- **These rules are the joint contract `crosscorpus-storage/v1`** (CPD-0015, §20): the same roles, states and refusals bind CO.RA.PAN, and both repositories check their code against the same reference cases.
 - **Same function = same logical name on every target.** Logical area names are English, lower
   case, ASCII; no historical synonym for a data class that already has a name.
 
@@ -261,6 +262,9 @@ before any capacity figure is trusted. Capacity models distinguish `measured` ra
   coding); pack interoperability checked with an independent reader (§14); preservation-target
   readiness check (§15) and capacity model (§16) built. No target chosen, no capacity measured.
   Run report: [`docs/agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md`](../agent-runs/2026-10-07_discovery-acquisition-readiness-offline-e2e.md).
+- 2026-10-08 — CPD-0015: the joint storage contract `crosscorpus-storage/v1` in force; the outage spool wired into the
+  acquisition path; topology record and migration parameters (§20).
+  Run report: [`docs/agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md`](../agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md).
 
 ## 13. What exists (Foundation Core I)
 
@@ -478,7 +482,7 @@ record of the state, not as configuration.
 |---|---|---|
 | `REPOSITORY` | `C:\dev\panhispanic_media_corpora\coprepan` | the checkout |
 | `RUNTIME` | `C:\dev\panhispanic_media_corpora\coprepan_workspace` | configured; no marker (the architecture has one for the preservation role only) |
-| `SPOOL` | `C:\dev\panhispanic_media_corpora\coprepan_storage` | configured; the module is tested on it; **not wired into acquisition** (a target that is down leaves the sealed pack `PRESERVATION_PENDING` in the workspace) |
+| `SPOOL` | `C:\dev\panhispanic_media_corpora\coprepan_storage` | configured; **in the acquisition path since CPD-0015** (§20.2): a target that is down leaves verified copies of the pack and its index here, `PRESERVATION_PENDING`; 0 pending records on 2026-10-08 |
 | `PRESERVATION` | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | **`INTERIM_PRIMARY_PRESERVATION`**, target id `coprepan-preservation-interim-d`, readiness `READY` (no capacity statement) |
 | `BACKUP`, `DISTRIBUTION`, `EXCHANGE` | — | `NOT_CONFIGURED` |
 
@@ -513,3 +517,74 @@ the real root; the whole persistence, crash, concurrency, integrity and pipeline
 `pytest --basetemp=<a new directory on that file system>` (real process kills and real concurrent
 processes there, not in a system temporary directory); and `scripts/qualify_storage_roots.py
 spool-failover` for the outage spool. The probe artefacts are removed by the harness itself.
+
+## 20. The joint storage contract `crosscorpus-storage/v1` (CPD-0015)
+
+In force in both repositories since 2026-10-08. Normative text:
+[`contracts/crosscorpus-storage-v1/CONTRACT.md`](../../contracts/crosscorpus-storage-v1/CONTRACT.md) — a verbatim
+copy of the bundle whose canonical home is CO.RA.PAN, pinned in `config/crosscorpus/contract_pins.json`
+(`8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3`). This repository's implementation: `src/coprepan/storage_contract.py`; checks:
+`tests/test_storage_contract.py` (suite `foundation_contract`); commands: `python scripts/storage_contract.py check`,
+`status`, `compare-sister`.
+
+### 20.1 Mapping
+
+| Contract | Here |
+|---|---|
+| roles `REPO`, `RUNTIME`, `SPOOL`, `PRESERVATION`, `BACKUP`, `DISTRIBUTION`, `EXCHANGE` | `REPOSITORY`, then the same names (§5) |
+| holdings `PRODUCTION`, `HISTORIC` | `PRODUCTION` only. No `HISTORIC` root is configured or present; the legacy press corpus is the read-only legacy tree bound by the freeze manifest, not a preservation holding |
+| configuration states | the resolver's refusals: `StorageRootNotConfigured` → `NOT_CONFIGURED` (or `NOT_DECLARED`), `StorageRootUnusable` → `UNUSABLE`, `StorageRootUnreachable` → `UNREACHABLE`, `StorageRootReadOnly` → `READ_ONLY`; resolved → `AVAILABLE`. There is no `DEFAULTED` role here: an unset root is a refusal |
+| separation codes | `storage_roots.separation_codes` / `validate_role_separation` |
+| object states `PRESERVED`, `PENDING`, `REFUSED` | ledger `RAW_PRESERVED`; `PRESERVATION_PENDING`; a `ContentRefusal` |
+| protection from cleanup | §7; nothing in the preservation step deletes; a spool copy is released only by a verified drain |
+| backup states | `NOT_CONFIGURED` today |
+
+### 20.2 The preservation step of the acquisition path
+
+`core_pipeline.preserve_pack(workspace, pack_id, preservation_root=<callable>, spool_root=<callable>, spool_policy=…, now=…)`
+seals the pack, marks its fetches `PRESERVATION_PENDING`, and only then asks for the root.
+
+| Situation | Result | Where the bytes are |
+|---|---|---|
+| target available | `RAW_PRESERVED` after both masters were re-read — route `direct` | primary (and still the workspace) |
+| target not configured, unreachable, read-only, or an I/O failure during promotion; spool usable | `PRESERVATION_PENDING` — route `spooled` | verified copies of pack and index in the spool (and the workspace) |
+| the same; no spool, spool unreachable, or spool full | `PRESERVATION_PENDING` — route `workspace` | the sealed pack in the workspace |
+| hash mismatch, identity conflict | raised; never spooled, never pending elsewhere | where they were |
+
+`core_pipeline.drain_spooled_packs(workspace, spool_root=…, preservation_root=<callable>, now=…)` replays the spool:
+promotion, re-read and verification on the target, **then** release of the spool copy; the ledger says `RAW_PRESERVED`
+for a pack only when its pack and its index both verify on the target. Both functions are repeatable at every point
+and delete nothing in the workspace. A pending record is `state/pending/<area>--<object_id>.json`.
+
+Operating notes: a `spooled` or `workspace` result is not an error to clear — it is the state to keep until
+the target is back; then run the drain (or the step again). Never remove a pending pack from the workspace or
+the spool by hand: while it is pending it may be the only copy. `python scripts/storage_contract.py status`
+shows the pending count and the oldest pending record.
+
+### 20.3 Topology record (this workstation, 2026-10-08)
+
+| Holding · role | Root | Existence · configuration | Role today · authority | Copies | Target role | Transition requires |
+|---|---|---|---|---|---|---|
+| PRODUCTION · `REPOSITORY` | `C:\dev\panhispanic_media_corpora\coprepan` | PRESENT · AVAILABLE | checkout · none | not applicable | UNCHANGED | — |
+| PRODUCTION · `RUNTIME` | `C:\dev\panhispanic_media_corpora\coprepan_workspace` | PRESENT · AVAILABLE | RUNTIME · NONE | not applicable; pending objects in it are protected | UNCHANGED | — |
+| PRODUCTION · `SPOOL` | `C:\dev\panhispanic_media_corpora\coprepan_storage` | PRESENT · AVAILABLE | SPOOL · NONE | 0 pending records | UNCHANGED | — |
+| PRODUCTION · `PRESERVATION` | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | PRESENT · AVAILABLE | PRESERVATION · **`INTERIM_PRIMARY`** | **`SOLE_COPY`**; holds its target marker only, no corpus object | retained former primary after the move; never renamed into a backup | the institutional file system exists and is qualified; contract §11 |
+| PRODUCTION · new primary | `<institutional file system>\projects\panhispanic_media_corpora\coprepan` | **PLANNED** · not configured, not created | NONE | — | PRESERVATION · PRIMARY | the root is provided; contract §11.2 steps 1–8 |
+| PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | **PLANNED** · NOT_CONFIGURED, not created | NONE | no copy | BACKUP (secondary of the new primary) | the new primary is in service; a copy produced from it and verified against it |
+| PRODUCTION · `DISTRIBUTION`, `EXCHANGE` | — | NOT_CONFIGURED | NONE | — | — | separate decisions |
+| HISTORIC · any role | — (the contract's namespace: `…\projects\panhispanic_media_corpora\historic\coprepan`) | **NOT PRESENT**, not configured, not planned by CPD-0015 | NONE | — | — | an operator decision that a historic holding exists |
+
+No root of CO.PRE.PAN lies in, contains or equals a root of CO.RA.PAN (joint check, 2026-10-08), and none is
+below CO.RA.PAN's share.
+
+### 20.4 Migration parameters
+
+The procedure is contract §11 (and §19 above). For this repository: the inventory and the verification are
+`python scripts/storage_contract.py migration-inventory --root <root> --out <file>` and
+`migration-verify --inventory <file> --root <new root>` (read-only); the writer to stop or to reconcile after is
+whatever holds the workspace writer lock (CPD-0009) — with the lock held by the migration, no acquisition can
+promote; readiness is `preservation_target.check_readiness` on the new root; qualification is
+`scripts/qualify_storage_roots.py` and `pytest --basetemp=<a directory on that file system>`; the cutover is
+`COPREPAN_PRESERVATION_ROOT`; the replay is `drain_spooled_packs` and a read-back of every preserved pack. The
+copy, the cutover and the later backup are operator-ordered acts in no tool here. **A result from `D:` (local
+NTFS) is not a qualification of a network file system.**

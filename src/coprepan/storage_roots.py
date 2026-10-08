@@ -17,7 +17,7 @@ import shutil
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping
+from typing import Mapping, Sequence
 
 from . import naming
 
@@ -182,25 +182,46 @@ def volume_of(root: Path) -> int:
     return device
 
 
-def validate_role_separation(roots: Mapping[str, Path], *, checkout: Path = CHECKOUT) -> None:
-    """Refuse a set of configured roots that does not keep the roles apart (CPD-0014).
+def separation_codes(roots: Mapping[str, Path], *, checkout: Path = CHECKOUT, foreign_roots: Sequence[Path | str] = ()) -> list[str]:
+    """The separation codes of the joint storage contract (``crosscorpus-storage/v1`` §5.1, S1–S4)
+    for a set of configured roots; empty when the roles are apart.
+
+    The decision is the contract's (:func:`coprepan.storage_contract.role_separation`); this
+    function supplies the facts: the checkout as the ``REPO`` role and, when both ``BACKUP`` and
+    ``PRESERVATION`` are configured, their volumes. A volume that cannot be determined raises — it
+    is never guessed. ``foreign_roots`` are roots of the sister corpus (S4).
+    """
+    from . import storage_contract
+
+    named = {"REPO": Path(checkout), **{storage_contract.CONTRACT_ROLE[role]: Path(root) for role, root in roots.items()}}
+    volumes = {}
+    if "BACKUP" in roots and "PRESERVATION" in roots:
+        volumes = {role: volume_of(Path(roots[role])) for role in ("BACKUP", "PRESERVATION")}
+    return storage_contract.role_separation(named, volumes=volumes, foreign_roots=foreign_roots)
+
+
+def validate_role_separation(roots: Mapping[str, Path], *, checkout: Path = CHECKOUT, foreign_roots: Sequence[Path | str] = ()) -> None:
+    """Refuse a set of configured roots that does not keep the roles apart (CPD-0014, CPD-0015).
 
     * no two roles share a root, and no role lies inside another (the checkout is the
       ``REPOSITORY`` role and takes part);
     * ``BACKUP`` is on another volume than ``PRESERVATION``: a second copy on the same physical
-      volume is not a backup, whatever it is called.
+      volume is not a backup, whatever it is called;
+    * no root equals, contains or lies inside a root of the sister corpus.
 
-    Lexical for the nesting rule (no I/O); the volume rule reads the volumes and fails closed.
+    Lexical for the nesting rules (no I/O); the volume rule reads the volumes and fails closed.
     """
-    named = {"REPOSITORY": Path(checkout), **{role: Path(root) for role, root in roots.items()}}
-    roles = sorted(named)
-    for index, first in enumerate(roles):
-        for second in roles[index + 1:]:
-            if is_inside(named[first], named[second]) or is_inside(named[second], named[first]):
-                raise StorageRootUnusable(f"{first} and {second} overlap: one role per function, never nested or shared")
-    if "BACKUP" in roots and "PRESERVATION" in roots:
-        if volume_of(Path(roots["BACKUP"])) == volume_of(Path(roots["PRESERVATION"])):
-            raise StorageRootUnusable("BACKUP is on the same volume as PRESERVATION: that is not an independent copy")
+    codes = separation_codes(roots, checkout=checkout, foreign_roots=foreign_roots)
+    if not codes:
+        return
+    reasons = {
+        "ROLE_SHARED": "two roles overlap: they share one root (one role per function, never nested or shared)",
+        "ROLE_NESTED": "two roles overlap: one root lies inside another (one role per function, never nested or shared)",
+        "BACKUP_NOT_INDEPENDENT": "BACKUP is on the same volume as PRESERVATION: that is not an independent copy",
+        "VOLUME_UNKNOWN": "the volume of BACKUP or PRESERVATION is unknown: independence is never guessed",
+        "FOREIGN_CORPUS_OVERLAP": "a root overlaps a root of the sister corpus: one corpus is never stored under the other",
+    }
+    raise StorageRootUnusable("; ".join(f"{code}: {reasons[code]}" for code in codes))
 
 
 def resolve_configured_roles(

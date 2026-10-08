@@ -296,7 +296,7 @@ def test_an_outage_spools_a_verified_copy_as_pending_not_preserved(root, pack, s
     outcome = spool_call(pack, unavailable, spool)
     assert (outcome.route, outcome.state) == ("spooled", "PRESERVATION_PENDING")
     assert tree(root) == []
-    assert tree(spool) == ["preservation/pending/raw/uy/uy_el_pais/pack-2026-10-07.warc.gz", "state/pending/pack-a.json"]
+    assert tree(spool) == ["preservation/pending/raw/uy/uy_el_pais/pack-2026-10-07.warc.gz", "state/pending/raw--pack-a.json"]   # one record per (area, object) since CPD-0015
     record = O.pending_records(spool)[0]
     assert record["schema"] == "coprepan-preservation-spool/v1" and record["state"] == "PRESERVATION_PENDING"
     assert record["sha256"] == sha(pack.read_bytes()) and record["target_relative_path"] == MASTER.as_posix()

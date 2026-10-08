@@ -93,6 +93,48 @@ def pending_records(spool_root: Path) -> list[dict[str, Any]]:
     return sorted(records, key=lambda record: (record["spooled_at"], record["object_id"]))
 
 
+def record_name(area: str, object_id: str) -> str:
+    """The file name of a pending record. One record per *(area, object)*: a pack and its index are
+    two objects of two areas under one object id, and both can be pending at once."""
+    return f"{area}--{object_id}.json"
+
+
+def _record_path(spool_root: Path, area: str, object_id: str) -> Path:
+    """Where the pending record of an object lies. A record written before records were named per
+    area (``<object_id>.json``) is still found, if it is the record of this area."""
+    directory = spool_root / "state" / "pending"
+    legacy = directory / f"{object_id}.json"
+    if legacy.is_file():
+        try:
+            if json.loads(legacy.read_text(encoding="utf-8")).get("area") == area:
+                return legacy
+        except (OSError, ValueError):
+            pass
+    return directory / record_name(area, object_id)
+
+
+def spool_object(
+    source: Path,
+    *,
+    spool_root: Path,
+    policy: SpoolPolicy,
+    reason: str,
+    area: str,
+    object_id: str,
+    relative_path: str,
+    declared_sha256: str,
+    details: Mapping[str, Any] | None = None,
+    now: datetime | None = None,
+    free_bytes: Callable[[Path], int | None] | None = None,
+) -> None:
+    """Spool one object whose promotion failed for unavailability: a verified copy and its pending
+    record, within the bounds of ``policy``. Idempotent. The caller has established that the
+    refusal was about availability; a content refusal is never brought here.
+    """
+    _spool(source, spool_root, policy, reason, free_bytes or _free_bytes, area=area, object_id=object_id,
+           relative_path=relative_path, declared_sha256=declared_sha256, details=details, now=now)
+
+
 def preserve_or_spool(
     source: Path,
     *,
@@ -143,8 +185,8 @@ def _free_bytes(root: Path) -> int | None:
 def _spool(source, spool_root, policy, reason, free_bytes, *, area, object_id, relative_path,
            declared_sha256, details, now) -> None:
     target_relative = preservation.master_relative_path(area, relative_path)
-    record_path = spool_root / preservation.manifest_relative_path(area, object_id)
-    record_path = spool_root / "state" / "pending" / record_path.name
+    preservation.manifest_relative_path(area, object_id)   # validates the area and the object id
+    record_path = _record_path(spool_root, area, object_id)
     actual, size = sha256_file(source)
     if actual != declared_sha256:
         raise preservation.HashMismatch(f"{object_id}: source bytes hash to {actual}, declared {declared_sha256}")
@@ -238,4 +280,4 @@ def drain(
 def _release(spool_root: Path, record: Mapping[str, Any]) -> None:
     """Free the spool copy of an object whose master has just been verified on the target."""
     (spool_root / record["spool_relative_path"]).unlink()
-    (spool_root / "state" / "pending" / f"{record['object_id']}.json").unlink()
+    _record_path(spool_root, record["area"], record["object_id"]).unlink()

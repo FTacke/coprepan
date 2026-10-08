@@ -44,6 +44,15 @@ synthetic pages into a fixture release, a package and a study population. **The 
 not frozen** (CO.RA.PAN has recorded no adoption), **no release of the corpus exists, and none can
 be built**: no extractor is adopted. It closes no gate.
 
+**The joint storage-management contract `crosscorpus-storage/v1` is in force in both repositories**
+(CPD-0015; bundle digest `8d17fc21…18fb3`, a verbatim pinned copy of the bundle whose home is CO.RA.PAN): roles,
+holdings, configuration states, separation, what a preservation step may claim, pending objects,
+protection from cleanup, backup status and the procedure of a root migration. **The outage spool is
+now in the acquisition path** (`preserve_pack`): an unavailable preservation target leaves a
+verified, resumable pending copy and never a success. Tested on temporary directories with synthetic
+packs; no driver calls the path yet. **No backup exists; the interim primary on `D:` is a sole copy
+and holds its target marker only.** It closes no gate.
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates
@@ -117,7 +126,7 @@ What `PARTIAL` means for the nine stages, exactly:
 | Policy gate | implemented and tested; policy schema `v2` (`Crawl-delay` may bind). **The tracked policy is the decided canary policy `canary/2026-10-08.1` with `external_acquisition: disabled`: it denies everything until the canary is armed** | `src/coprepan/policy.py`, `config/acquisition_policy.json` |
 | Robots evidence | RFC 9309 parser implemented and tested; no robots file of a real site has been read | `src/coprepan/robots.py` |
 | Crawler identity | contract implemented and tested; **the tracked identity is the decided one** (`PanhispanicMediaResearchBot`, Marburg University; CPD-0014). Its public page is live at `https://coprepan.hispanistica.com/crawler/` (verified 2026-10-08) | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json`, `web/coprepan/`, `web/DEPLOY_RECEIPT_2026-10-08.json` |
-| Storage roles and roots | roles shared with CO.RA.PAN 3.0; separation enforced (no shared or nested roots, a backup never on the primary's volume); runtime and spool roots and an **interim primary preservation root** on `D:` configured; backup, distribution and exchange `NOT_CONFIGURED` | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `tests/test_storage_architecture.py`, [`docs/storage/INDEX.md`](storage/INDEX.md) §19, CPD-0014 |
+| Storage roles and roots | roles shared with CO.RA.PAN 3.0; separation enforced (no shared or nested roots, a backup never on the primary's volume); runtime and spool roots and an **interim primary preservation root** on `D:` configured; backup, distribution and exchange `NOT_CONFIGURED`. **Governed by the joint contract `crosscorpus-storage/v1`** (CPD-0015): pinned copy, own implementation, shared reference cases, joint check with the sister checkout | `src/coprepan/storage_roots.py`, `src/coprepan/storage_contract.py`, `scripts/storage_contract.py`, `config/storage_targets.yml`, `tests/test_storage_architecture.py`, `tests/test_storage_contract.py`, [`docs/storage/INDEX.md`](storage/INDEX.md) §19, CPD-0014 |
 | HTTP fetcher | implemented; tested against a real HTTP server on a loopback address; **no TLS, no external request** | `src/coprepan/fetcher.py`, `tests/test_fetcher.py` |
 | HTTP acquisition run, request log | implemented; tested in the offline canary | `src/coprepan/http_acquisition.py` |
 | Candidate qualification | implemented and tested; generic rules only — **the tracked outlet rules are empty** | `src/coprepan/candidate_filter.py`, `config/candidate_rules.json`, `tests/test_schedule.py` |
@@ -153,7 +162,7 @@ What `PARTIAL` means for the nine stages, exactly:
 | Stage-status self-check | implemented | `tests/test_repository_contract.py` |
 | Test guards (no network, no storage root, suite membership) | implemented | `tests/conftest.py` |
 | Storage-target configuration and root resolution | fail-closed resolver implemented and unit-tested; **no root configured** | `config/storage_targets.yml`, `src/coprepan/storage_roots.py`, `tests/test_storage_roots.py` |
-| Promotion semantics and outage spool | implemented; tested **on temporary directories only** (first half of the Phase-1 gate) | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py`, `tests/test_preservation.py` |
+| Promotion semantics and outage spool | implemented; **the spool is in the acquisition path** (`core_pipeline.preserve_pack`, `drain_spooled_packs`; CPD-0015): outage → verified pending copy (spool, or workspace when no spool is usable) → drain verifies on the target before release; nothing deleted. Tested **on temporary directories only**, also on the interim primary's file system; no driver calls it yet | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py`, `src/coprepan/core_pipeline.py`, `tests/test_preservation.py`, `tests/test_storage_contract.py` |
 | Write-once layer store | implemented and unit-tested; its durable location (role) is undecided | `src/coprepan/layer_store.py`, `tests/test_layer_store.py` |
 | Release gate suite | scaffold; **contains no test**. It gates software changes of a pipeline that does not exist yet; the release-contract conformance tests are in `foundation_contract` (handoff gate PG2) | `tests/suites/release_gate.txt` |
 | Git | initialised 2026-10-07 on operator brief: branch `main`, remote `origin` = `https://github.com/FTacke/coprepan.git`; no history taken over from the legacy repository | [closure run report](agent-runs/2026-10-07_coprepan-repository-migration-closure.md) |
@@ -409,3 +418,12 @@ run report that carries the evidence.
   Decided: CPD-0014. **No external request to any outlet was made; no canary; the enabling switch
   of the acquisition policy is still off.**
   Run report: [`docs/agent-runs/2026-10-08_crawler-site-storage-o2-o3-interim.md`](agent-runs/2026-10-08_crawler-site-storage-o2-o3-interim.md).
+- 2026-10-08 — joint storage-management contract (run from the CO.RA.PAN repository with write scope here; no stage state changed).
+  `crosscorpus-storage/v1` in force in both repositories (bundle `8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3`, pinned copy here,
+  CO.RA.PAN D95). Role separation is decided by the contract's function; **the outage spool is wired into the
+  acquisition path** (`preserve_pack`, `drain_spooled_packs`), spool records are named per area; read-only
+  status, joint-check and migration-inventory tools. The storage roots of this workstation are unchanged:
+  no backup, the interim primary a sole copy holding its marker only, the institutional file system not
+  configured. Decided: CPD-0015. **No external request to any outlet was made; no canary; the enabling switch
+  of the acquisition policy is still off.**
+  Run report: [`docs/agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md`](agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md).

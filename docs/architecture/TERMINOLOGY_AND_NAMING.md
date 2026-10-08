@@ -490,3 +490,17 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | role mapping to CO.RA.PAN | `REPO` = `REPOSITORY`; `DATA_WORKSPACE` and `RUNTIME` = `RUNTIME`; `BACKUP_SECONDARY` = `BACKUP`; `REVIEW` = a logical role bound to `EXCHANGE` | CPD-0014 §2 |
 | names of physical roots | `coprepan`, `coprepan_workspace`, `coprepan_storage` beside `corapan`, `corapan_workspace`, `corapan_storage`; on institutional storage `projects/panhispanic_media_corpora/{corapan,coprepan}` | CPD-0014 §3 |
 | environment variable (added) | `COPREPAN_BACKUP_ROOT` | `.env.example` |
+
+## 18. Additions of 2026-10-08 (CPD-0015)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| contract id | `crosscorpus-storage/v1` (bundle directory `contracts/crosscorpus-storage-v1/`) | CPD-0015 §1 |
+| **holding** (term) | a division of a corpus's storage with its own primary and backup status: `PRODUCTION`, `HISTORIC`. Not a corpus, not an id family | contract §2 |
+| configuration states | `NOT_DECLARED`, `NOT_CONFIGURED`, `DEFAULTED`, `UNUSABLE`, `UNREACHABLE`, `READ_ONLY`, `AVAILABLE` | contract §4 |
+| separation codes | `ROLE_SHARED`, `ROLE_NESTED`, `BACKUP_NOT_INDEPENDENT`, `VOLUME_UNKNOWN`, `FOREIGN_CORPUS_OVERLAP` | contract §5 |
+| object states (contract) | `PRESERVED`, `PENDING`, `REFUSED`; here `RAW_PRESERVED`, `PRESERVATION_PENDING`, a `ContentRefusal` | contract §7 |
+| backup states | `NOT_CONFIGURED`, `CONFIGURED_NO_COPY`, `COPY_UNVERIFIED`, `NOT_INDEPENDENT`, `INDEPENDENCE_UNKNOWN`, `BACKUP_VERIFIED` | contract §9 |
+| preservation routes | `direct`, `spooled`, `workspace` (`core_pipeline.PackPreservation.route`) | CPD-0015 §3 |
+| spool pending record | `state/pending/<area>--<object_id>.json` | CPD-0015 §4 |
+| **sister** (term) | the other corpus's checkout, `corapan`, beside this one; read by the joint-check command only, never by a test | CPD-0015 §5 |

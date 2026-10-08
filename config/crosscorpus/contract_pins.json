@@ -11,6 +11,15 @@
       "files": 49,
       "local_implementation": "src/coprepan/release_contract.py",
       "local_adoption": "CPD-0012"
+    },
+    "crosscorpus-storage/v1": {
+      "status": "IN_FORCE",
+      "canonical_home": "corapan",
+      "path": "contracts/crosscorpus-storage-v1",
+      "bundle_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+      "files": 2,
+      "local_implementation": "src/coprepan/storage_contract.py",
+      "local_decision": "CPD-0015"
     }
   }
 }

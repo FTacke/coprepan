@@ -38,3 +38,5 @@ test_release_contract.py     # pinned bundle, no drift; the bundle's digests and
 test_release_export.py       # native export object coprepan-export/v1 → release member → manifest → freeze → package → study population
 # Evidence-table integrity (CPD-0010)
 test_evidence_integrity.py   # chained primary evidence; candidates and identity tables checked against / rebuilt from the evidence
+# Joint storage contract crosscorpus-storage/v1 (CPD-0015)
+test_storage_contract.py     # pinned bundle; the shared reference cases; outage, spool, drain, interruption points and a root change on the real code paths

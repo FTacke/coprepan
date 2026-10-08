@@ -23,9 +23,9 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Callable, Iterable, Mapping, Sequence
 
-from . import __version__, acquisition, extraction, layer_store, pack, preservation
+from . import __version__, acquisition, extraction, layer_store, outage_spool, pack, preservation, storage_contract
 from .acquisition import AcquisitionRun, RecordedExchange
 from .canonical import sha256_bytes
 from .document_identity import IdentityTables
@@ -33,6 +33,7 @@ from .exclusive import writes_workspace
 from .identity import OffOriginError
 from .ledger import PRESERVATION, Ledger
 from .registry import Registry
+from .storage_roots import StorageRefusal
 
 AREA_PACKS = "raw"
 AREA_INDEXES = "raw_index"
@@ -177,14 +178,191 @@ def pack_relative_path(identifier: str, suffix: str) -> str:
     return f"{outlet[:2]}/{outlet}/{identifier}{suffix}"
 
 
+def _pack_objects(workspace: Workspace, identifier: str, manifest: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """The two objects a sealed pack is preserved as: the pack and its index (same id, two areas)."""
+    return [
+        {"source": workspace.packs / f"{identifier}.warc.gz", "area": AREA_PACKS, "object_id": identifier,
+         "relative_path": pack_relative_path(identifier, ".warc.gz"), "declared_sha256": manifest["pack_sha256"],
+         "details": {"pack": manifest}},
+        {"source": workspace.packs / f"{identifier}.index.jsonl", "area": AREA_INDEXES, "object_id": identifier,
+         "relative_path": pack_relative_path(identifier, ".index.jsonl"), "declared_sha256": manifest["index_sha256"],
+         "details": {"pack_id": identifier}},
+    ]
+
+
+def _seal_and_mark_pending(workspace: Workspace, identifier: str, now: datetime):
+    """Seal the pack and bring its fetches to ``PRESERVATION_PENDING``. Needs no preservation root:
+    whatever happens to the target afterwards, the pack is sealed, verified and honestly pending.
+    """
+    manifest = pack.seal(workspace.packs, identifier, sealed_at=now)
+    ledger = workspace.ledger()
+    index = pack.read_index(workspace.packs, identifier)
+    reconcile_ledger_with_pack(ledger, identifier, index, at=now)
+    entries = [entry for entry in index if entry.body_sha256 is not None]
+    for entry in entries:
+        if ledger.state(entry.fetch_id) == "FETCHED":
+            ledger.transition(entry.fetch_id, "RAW_VERIFIED", at=now,
+                              details={"pack_id": identifier, "pack_sha256": manifest["pack_sha256"]})
+    for entry in entries:
+        if ledger.state(entry.fetch_id) == "RAW_VERIFIED":
+            ledger.transition(entry.fetch_id, "PRESERVATION_PENDING", at=now, details={"pack_id": identifier})
+    return manifest, ledger, [entry.fetch_id for entry in entries]
+
+
+def _confirm_preserved(ledger: Ledger, identifier: str, fetch_ids: Iterable[str], preservation_root: Path, now: datetime) -> str:
+    """``RAW_PRESERVED`` is a claim about bytes on the preservation root: both masters are re-read and
+    hashed before any fetch is given that state. Returns the master's relative path.
+    """
+    for area in (AREA_PACKS, AREA_INDEXES):
+        if not preservation.verify_master(preservation_root, area, identifier):
+            raise preservation.PreservationError(f"{identifier}: promoted {area} master does not verify")
+    master = preservation.read_manifest(preservation_root, AREA_PACKS, identifier)["relative_path"]
+    for fetch_id in fetch_ids:
+        if ledger.state(fetch_id) == "PRESERVATION_PENDING":
+            ledger.transition(fetch_id, "RAW_PRESERVED", at=now, details={"pack_id": identifier, "master": master})
+    return master
+
+
+@dataclass(frozen=True)
+class PackPreservation:
+    """What one preservation step of a pack ended in. ``state`` is this repository's ledger state
+    (``RAW_PRESERVED`` or ``PRESERVATION_PENDING``); ``pending_location`` is the joint storage
+    contract's answer to "where is the complete local copy" (``SPOOL``, ``WORKSPACE`` or ``None``).
+    """
+
+    pack_id: str
+    state: str
+    route: str                      # direct | spooled | workspace
+    pending_location: str | None = None
+    promotion: preservation.PromotionResult | None = None
+    reason: str | None = None
+
+
+ROUTE_DIRECT, ROUTE_SPOOLED, ROUTE_WORKSPACE = "direct", "spooled", "workspace"
+
+
+@writes_workspace("preserve a pack, or keep it pending through an outage")
+def preserve_pack(
+    workspace: Workspace,
+    identifier: str,
+    *,
+    preservation_root: Callable[[], Path],
+    now: datetime,
+    spool_root: Callable[[], Path] | None = None,
+    spool_policy: outage_spool.SpoolPolicy | None = None,
+) -> PackPreservation:
+    """The preservation step of the acquisition path, with the outage path wired in
+    (``crosscorpus-storage/v1`` §7, CPD-0015).
+
+    The pack is sealed and its fetches are ``PRESERVATION_PENDING`` before the target is asked for.
+    ``preservation_root`` resolves the root **at this moment** and raises a ``StorageRefusal`` when
+    the target cannot be used.
+
+    * target available: promotion, re-read of both masters, then ``RAW_PRESERVED`` — ``direct``;
+    * target unavailable (a refusal of the root, or an I/O failure during promotion): nothing is
+      ``RAW_PRESERVED``. With a usable spool, verified copies of the pack and its index are spooled
+      within the spool's bounds — ``spooled``. Without a spool, or when the spool root cannot be
+      used or is full, the sealed pack stays in the workspace — ``workspace``. In both cases the
+      fetches stay ``PRESERVATION_PENDING`` and :func:`drain_spooled_packs` or a later call completes
+      the step. **Nothing is deleted on any of these paths.**
+    * a refusal about content (hash mismatch, identity conflict) is raised, never spooled.
+
+    Repeatable at every point.
+    """
+    manifest, ledger, fetch_ids = _seal_and_mark_pending(workspace, identifier, now)
+    objects = _pack_objects(workspace, identifier, manifest)
+    try:
+        root = preservation_root()
+        result = None
+        for item in objects:
+            promoted = preservation.promote(item["source"], root=root, area=item["area"], object_id=item["object_id"],
+                                            relative_path=item["relative_path"], declared_sha256=item["declared_sha256"],
+                                            details=item["details"], now=now)
+            result = result or promoted
+        _confirm_preserved(ledger, identifier, fetch_ids, root, now)
+        return PackPreservation(identifier, preservation.STATE_PRESERVED, ROUTE_DIRECT, promotion=result)
+    except preservation.ContentRefusal:
+        raise
+    except preservation.PreservationError as error:
+        if not isinstance(error.__cause__, OSError):
+            raise
+        reason, primary = f"io_error: {type(error.__cause__).__name__}", storage_contract.STATE_UNREACHABLE
+    except StorageRefusal as error:
+        reason, primary = f"target_unavailable: {type(error).__name__}", storage_contract.STATE_UNREACHABLE
+
+    spool_state, spooled = storage_contract.STATE_NOT_CONFIGURED, False
+    if spool_root is not None and spool_policy is not None:
+        try:
+            directory = spool_root()
+            spool_state = storage_contract.STATE_AVAILABLE
+            for item in objects:
+                outage_spool.spool_object(item["source"], spool_root=directory, policy=spool_policy, reason=reason, area=item["area"],
+                                          object_id=item["object_id"], relative_path=item["relative_path"],
+                                          declared_sha256=item["declared_sha256"], details=item["details"], now=now)
+            spooled = True
+        except preservation.ContentRefusal:
+            raise
+        except outage_spool.SpoolCapacityExceeded as refusal:
+            reason += f"; spool full: {refusal}"
+        except (StorageRefusal, OSError) as refusal:
+            # A configured spool that cannot be used deletes nothing and marks nothing as done:
+            # the sealed pack stays in the workspace, pending.
+            spool_state = storage_contract.STATE_UNREACHABLE
+            reason += f"; spool unavailable: {type(refusal).__name__}"
+    outcome = storage_contract.preservation_outcome(
+        content_ok=True, primary=primary, primary_copy_verified=False, record_written=False, spool=spool_state,
+        spool_has_capacity=spooled, spool_copy_verified=spooled)
+    assert outcome["state"] == storage_contract.OBJECT_PENDING and outcome["local_copy_protected"]
+    return PackPreservation(identifier, preservation.STATE_PENDING,
+                            ROUTE_SPOOLED if outcome["pending_location"] == storage_contract.PENDING_IN_SPOOL else ROUTE_WORKSPACE,
+                            pending_location=outcome["pending_location"], reason=reason)
+
+
+@writes_workspace("drain spooled packs")
+def drain_spooled_packs(
+    workspace: Workspace, *, spool_root: Path, preservation_root: Callable[[], Path], now: datetime
+) -> dict[str, Any]:
+    """Replay what the spool holds, then complete the ledger for every pack that is now preserved.
+
+    The spool's own drain promotes each object with the same promotion function, re-reads and
+    verifies the master on the target, and only then releases its copy (``outage_spool.drain``).
+    A pack whose pack **and** index both verify on the target gets its fetches ``RAW_PRESERVED``;
+    a pack of which only one object arrived stays pending. Repeatable; stops when the target is
+    still unavailable.
+    """
+    drained = outage_spool.drain(spool_root, preservation_root=preservation_root, now=now)
+    report: dict[str, Any] = {"drained": [{"object_id": row.object_id, "action": row.action, "detail": row.detail} for row in drained],
+                              "packs_preserved": [], "packs_pending": []}
+    ledger = workspace.ledger()
+    pending = sorted({record.details["pack_id"] for record in ledger.records()
+                      if record.new_state == "PRESERVATION_PENDING" and ledger.state(record.subject) == "PRESERVATION_PENDING"})
+    if not pending:
+        return report
+    try:
+        root = preservation_root()
+    except StorageRefusal:
+        report["packs_pending"] = pending
+        return report
+    for identifier in pending:
+        try:
+            preserved = open_preserved_pack(root, identifier)
+        except (NotPreserved, preservation.PreservationError, OSError):
+            report["packs_pending"].append(identifier)
+            continue
+        _confirm_preserved(ledger, identifier, [fetch_id for fetch_id, entry in preserved.entries.items() if entry.body_sha256 is not None], root, now)
+        report["packs_preserved"].append(identifier)
+    return report
+
+
 @writes_workspace("seal and preserve a pack")
 def seal_and_preserve(
     workspace: Workspace, identifier: str, *, preservation_root: Path, now: datetime
 ) -> preservation.PromotionResult:
     """Seal a pack, promote it and its index, and only then mark its fetches ``RAW_PRESERVED``.
 
-    Repeatable at every point: sealing, promotion and each ledger transition recognise their own
-    completed state.
+    The direct path with an already resolved root; :func:`preserve_pack` is the entry that also
+    handles an unavailable target. Repeatable at every point: sealing, promotion and each ledger
+    transition recognise their own completed state.
     """
     manifest = pack.seal(workspace.packs, identifier, sealed_at=now)
     ledger = workspace.ledger()
