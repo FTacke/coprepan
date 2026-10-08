@@ -101,7 +101,7 @@ Roles (adapted from CO.RA.PAN 3.0; one role per function, never mixed):
 | `SPOOL` | bounded local write-ahead buffer for preservation outages. Not a second archive. | `COPREPAN_SPOOL_ROOT` |
 | `DISTRIBUTION` | read-only publication copy of releases. Not a source of truth. | `COPREPAN_DISTRIBUTION_ROOT` |
 | `EXCHANGE` | temporary hand-over zone. Not an archive. | `COPREPAN_EXCHANGE_ROOT` |
-| `BACKUP` | a second physical copy with its own verification states | to be configured |
+| `BACKUP` | a second physical copy with its own verification states; never on the primary's volume | `COPREPAN_BACKUP_ROOT` — NOT_CONFIGURED |
 
 Deliberate difference from CO.RA.PAN 3.0: there the runtime workspace was separated from the
 checkout late (its D85/D87), and an unset workspace variable still means "historical in-checkout
@@ -120,6 +120,8 @@ Resolution rules:
 - **An unreachable target is never reported as empty.** Its usage is unknown, not zero.
 - No drive letter, UNC path or home directory in tracked domain logic or configuration. A test
   enforces it (`tests/test_repository_contract.py`).
+- **Roles are kept apart by code, not by habit** (CPD-0014): `validate_role_separation` refuses two roles on one root or one inside another (the checkout included), and a `BACKUP` on the volume of `PRESERVATION`. A role that is not configured is `None`, not a default (`resolve_configured_roles`).
+- The machine values live in the gitignored `.env`, read for `COPREPAN_*` names only; the process environment wins (`workstation_environment`).
 - **Same function = same logical name on every target.** Logical area names are English, lower
   case, ASCII; no historical synonym for a data class that already has a name.
 
@@ -311,7 +313,7 @@ Two findings, kept as tests:
 
 ## 15. Preservation-target readiness (O-3)
 
-**No target is chosen and none is configured**; O-3 is an institutional decision. What exists is
+**Status 2026-10-08: an interim primary is configured and qualified (§19); the long-term target is not chosen.** Original text: no target was chosen and none configured; O-3 is an institutional decision. What exists is
 the contract a target must meet and the check for it (`src/coprepan/preservation_target.py`,
 CPD-0006 §7).
 
@@ -466,3 +468,48 @@ the last close are covered at the next one.
 
 **Cost** (measured, diagnostic): chained append 1–7 ms (lock, sync, read-back); reading and
 authenticating 5,000 rows / 3.1 MB 0.02 s; heads of all tables 0.08 s.
+
+## 19. This workstation's roots, the interim primary and the planned move (CPD-0014)
+
+State of 2026-10-08. Physical locations are machine configuration (`.env`) and are written here as a
+record of the state, not as configuration.
+
+| Role | Root | State |
+|---|---|---|
+| `REPOSITORY` | `C:\dev\panhispanic_media_corpora\coprepan` | the checkout |
+| `RUNTIME` | `C:\dev\panhispanic_media_corpora\coprepan_workspace` | configured; no marker (the architecture has one for the preservation role only) |
+| `SPOOL` | `C:\dev\panhispanic_media_corpora\coprepan_storage` | configured; the module is tested on it; **not wired into acquisition** (a target that is down leaves the sealed pack `PRESERVATION_PENDING` in the workspace) |
+| `PRESERVATION` | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | **`INTERIM_PRIMARY_PRESERVATION`**, target id `coprepan-preservation-interim-d`, readiness `READY` (no capacity statement) |
+| `BACKUP`, `DISTRIBUTION`, `EXCHANGE` | — | `NOT_CONFIGURED` |
+
+`D:` is a local volume of 3.8 TB that also holds CO.RA.PAN's `projects\panhispanic_media_corpora\corapan`
+(untouched). **While it is the primary, `BACKUP` is not configured: `D:` is not its own backup.**
+
+**The move to the new university file system** (not yet available; nothing here qualifies it):
+
+```text
+current primary  D:\projects\panhispanic_media_corpora\coprepan\preservation_interim
+target           <NEW_FS>\projects\panhispanic_media_corpora\coprepan     (no doubled "projects" if the mount is already that root)
+
+inventory current primary
+  -> verified copy                          every path, size and SHA-256 equal (the contract's tree digest)
+  -> destination verification
+  -> readiness of the new root              (preservation_target.check_readiness)
+  -> crash and concurrency qualification    on that file system (scripts/qualify_storage_roots.py; pytest --basetemp there)
+  -> switch COPREPAN_PRESERVATION_ROOT      one variable
+  -> replay and read-back                   no network
+  -> the new file system is the PRIMARY
+then
+  -> D:\projects\panhispanic_media_corpora\coprepan\backup   made from the new primary, verified independently
+```
+
+Why this is a copy and a switch and nothing else: no id depends on the root (fetch, document and
+version ids come from content and URL keys; no stored record names a root; the target marker moves
+with the data), so no WARC and no evidence is rewritten — `tests/test_storage_architecture.py`
+exercises it on a synthetic pack. `preservation_interim` is never renamed and declared a backup.
+
+**Qualification procedure for a real file system** (what was run on `D:`): the readiness check on
+the real root; the whole persistence, crash, concurrency, integrity and pipeline test set with
+`pytest --basetemp=<a new directory on that file system>` (real process kills and real concurrent
+processes there, not in a system temporary directory); and `scripts/qualify_storage_roots.py
+spool-failover` for the outage spool. The probe artefacts are removed by the harness itself.

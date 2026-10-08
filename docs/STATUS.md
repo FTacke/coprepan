@@ -6,14 +6,15 @@ this file is right and the other document has a defect.
 
 **As of 2026-10-08 (adversarial persistence audit): the acquisition pipeline, including re-fetching,
 is built and tested offline, and it is not activated.** Nothing has been requested from any real
-site. Five outlets are registered for the canary; 77 are proposed. No storage root is configured. No corpus material has been
+site. Five outlets are registered for the canary; 77 are proposed. Three storage roots are configured on the workstation (runtime, spool and an interim primary preservation root). No corpus material has been
 acquired, preserved or extracted by COPREPAN 3.0. Nothing is validated. Nothing is activated.
 
-**External acquisition is impossible as committed**, by tested refusals: the crawler identity is
-`not_configured` (O-2), no preservation target or workspace root is configured (O-3), and the
-acquisition policy — decided for the first canary on 2026-10-08 (CPD-0013), like the schedule
-policy and the registration of five outlets — still has `external_acquisition: disabled`: the
-switch is turned only when the canary is armed. O-2 and O-3 are the operator's (§5).
+**External acquisition is still impossible as committed**, by one tested refusal: the acquisition
+policy — decided for the first canary on 2026-10-08 (CPD-0013), like the schedule policy and the
+registration of five outlets — has `external_acquisition: disabled`; the switch is turned when the
+canary is armed. The crawler identity is configured and its public page is live (O-2, CPD-0014);
+an interim primary preservation root is configured and qualified (O-3 interim, CPD-0014). Arming
+also needs the tests on the commit and the operator's approved baseline.
 
 **One thing was done on real data: the legacy freeze manifest** (O-10, on operator go-ahead):
 32,235 files, 18,782,593,808 bytes of the legacy tree, hashed read-only and re-verified (measured).
@@ -115,7 +116,8 @@ What `PARTIAL` means for the nine stages, exactly:
 | Discovery | implemented; tested on synthetic channel documents | `src/coprepan/discovery.py`, `tests/test_discovery.py` |
 | Policy gate | implemented and tested; policy schema `v2` (`Crawl-delay` may bind). **The tracked policy is the decided canary policy `canary/2026-10-08.1` with `external_acquisition: disabled`: it denies everything until the canary is armed** | `src/coprepan/policy.py`, `config/acquisition_policy.json` |
 | Robots evidence | RFC 9309 parser implemented and tested; no robots file of a real site has been read | `src/coprepan/robots.py` |
-| Crawler identity | contract implemented and tested; **the tracked identity is `not_configured`** | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json` |
+| Crawler identity | contract implemented and tested; **the tracked identity is the decided one** (`PanhispanicMediaResearchBot`, Marburg University; CPD-0014). Its public page is live at `https://coprepan.hispanistica.com/crawler/` (verified 2026-10-08) | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json`, `web/coprepan/`, `web/DEPLOY_RECEIPT_2026-10-08.json` |
+| Storage roles and roots | roles shared with CO.RA.PAN 3.0; separation enforced (no shared or nested roots, a backup never on the primary's volume); runtime and spool roots and an **interim primary preservation root** on `D:` configured; backup, distribution and exchange `NOT_CONFIGURED` | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `tests/test_storage_architecture.py`, [`docs/storage/INDEX.md`](storage/INDEX.md) §19, CPD-0014 |
 | HTTP fetcher | implemented; tested against a real HTTP server on a loopback address; **no TLS, no external request** | `src/coprepan/fetcher.py`, `tests/test_fetcher.py` |
 | HTTP acquisition run, request log | implemented; tested in the offline canary | `src/coprepan/http_acquisition.py` |
 | Candidate qualification | implemented and tested; generic rules only — **the tracked outlet rules are empty** | `src/coprepan/candidate_filter.py`, `config/candidate_rules.json`, `tests/test_schedule.py` |
@@ -134,7 +136,7 @@ What `PARTIAL` means for the nine stages, exactly:
 | Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
 | Preservation-target readiness check | implemented and tested on temporary directories; **no target chosen** | `src/coprepan/preservation_target.py`, storage §15 |
 | Capacity model | calculator implemented; **bytes per real page never measured** | `src/coprepan/capacity.py`, storage §16 |
-| Acquisition baseline manifest | implemented; the repository as committed is `PRE_FREEZE` with four blockers (O-1: the switch; O-2; O-3; O-4) — measured 2026-10-08 | `src/coprepan/freeze.py` |
+| Acquisition baseline manifest | implemented; the repository as committed is `PRE_FREEZE`; blockers after O-2 and the interim O-3: O-1 (the switch) and O-4 — see the run report for the measured list | `src/coprepan/freeze.py` |
 | Registry review package | generated, checked against the registry by a test; **a recommendation, nothing registered** | corpus supply §17 |
 | Document identity tables | implemented and tested on recorded exchanges | `src/coprepan/document_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) §7 |
 | Extraction contract and baseline extractor | implemented; behaviour of the contract tested; **quality unknown, extractor not adopted** | `src/coprepan/extraction.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) |
@@ -179,13 +181,13 @@ Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. 
 | Gate | Technical state | Gate state | What closes it | Owner |
 |---|---|---|---|---|
 | O-1 acquisition policy | `TECHNICALLY_READY` — decided **for the first canary** (CPD-0013): robots enforced, `Crawl-delay` binding, 10 s per origin, a slow schedule; `external_acquisition` still `disabled` | **`PASS` for the canary scope** (`O-1_CANARY`); the switch is turned at arming. **`OPEN`** for scheduled crawling | the normative decision: robots mode, absent / unreachable robots, whether `Crawl-delay` binds, pace per origin, **the schedule policy (how often a page is asked again, when a failing or absent URL is left alone, whether conditional requests are used)**, opt-out handling, retention of raw copies; recorded as a decision and committed as `DECIDED` policy files | operator / institution |
-| O-2 crawler identity | `TECHNICALLY_READY` — contract tested (`TECHNICAL_CONTRACT = PASS`) | **`BLOCKED` on the operator** (2026-10-08): no value suitable as a crawler contact exists in the repository; none was invented | four values in `config/crawler_identity.json`: crawler name, organisation, contact URL, contact e-mail — and the public page the URL names | operator / institution |
-| O-3 preservation target | `TECHNICALLY_READY` — readiness check built | **`OPEN`** — inventory of 2026-10-08: no root configured; three volumes of different institutional kind are reachable, so the choice is the operator's ([run report](agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md) §6) | choosing the target; then `initialise_target`, a `READY` readiness report, and the second half of the Phase-1 gate on it | operator / institution |
+| O-2 crawler identity | `TECHNICALLY_READY` — configured with the operator's values (CPD-0014) | **`PASS`** (2026-10-08): the contact page is public over HTTPS, the User-Agent is built by the existing contract | four values in `config/crawler_identity.json`: crawler name, organisation, contact URL, contact e-mail — and the public page the URL names | operator / institution |
+| O-3 preservation target | `TECHNICALLY_READY` — readiness check built; **interim primary on `D:` qualified** | **`PASS` for the interim scope** (`O-3_INTERIM`, 2026-10-08): temporary primary for the small canary only — not the long-term institutional target, not a backup, no capacity statement. **`OPEN`** for the long-term target (the new university file system). Inventory: ([run report](agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md) §6) | choosing the target; then `initialise_target`, a `READY` readiness report, and the second half of the Phase-1 gate on it | operator / institution |
 | O-4 storage capacity | `TECHNICALLY_READY` — model built | **`OPEN`** | one measurement that does not exist: stored body bytes per fetch and fetches per outlet-day **on real outlets** (the Phase-2 canary) | measured, then operator |
 | O-10 legacy freeze manifest | built, run on the legacy tree, verified twice (module and an independent script) | **`PASS`** (2026-10-07) | — closed. It closes the go-ahead and the manifest only: the frozen release still needs a preserved copy and a restore check (O-3) | operator |
 | O-11 registry review | `TECHNICALLY_READY` — review package delivered; five routine outlets registered by record | **`PASS` for the canary subset** (`O-11_CANARY_SUBSET`); full review `PARTIAL`: 77 outlets, the id convention as a whole and one attribution case are **`READY_FOR_HUMAN_REVIEW`** | the human decisions of corpus supply §17; registration by reviewed commit | operator, scientific |
 | O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder; state `PRE_FREEZE` | **`OPEN`** | O-1, O-2, O-3, O-4, O-11 answered; then the operator's freeze of a `READY_TO_FREEZE` manifest | operator |
-| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | first half passes on temporary directories | **`OPEN`** | the same tests on the real preservation target (needs O-3) | engineering, then operator |
+| Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | passes on temporary directories **and, 2026-10-08, with the temporary files on the interim `D:` file system** (real process kills, real concurrent processes) | **`PASS` for the interim target** (`PHASE1_INTERIM_TARGET`); **`OPEN`** on the long-term target | the same tests on the real preservation target (needs O-3) | engineering, then operator |
 | Phase-2 canary gate | the offline canary passes; **it is not this gate** — it requests nothing external and measures no real page | **`OPEN`** | about five registered outlets acquired for real under a decided policy; every fetch traceable; restore test; measured bytes per fetch. `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today) | engineering, after O-1, O-2, O-3, O-11 |
 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
@@ -230,7 +232,7 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | The legacy importer's proposal reviewed | the registry-review gate (§5) |
 | Baseline extractor against real pages; an adopted extractor | Phase 3: gold sample, preregistered comparison |
 | Identity policy on real URLs (per-outlet rules; collision behaviour at scale) | Phase-2 canary |
-| Process-kill crash tests | **done 2026-10-08 on temporary directories** (28 crashpoints, real kills; CPD-0009). Still owed: the same on the real preservation target (Phase-1 gate, needs O-3); power failure is not simulated |
+| Process-kill crash tests | **done 2026-10-08 on temporary directories and on the interim `D:` file system** (28 crashpoints, real kills; CPD-0009). Still owed: the same on the long-term target (the new university file system); power failure is not simulated |
 | Re-fetching against real servers: real validators, real 304 behaviour, real permanent redirects, real `Retry-After` | Phase-2 canary and the runs after it; needs a decided schedule (O-1) |
 | The generic candidate rules on real listings (what they reject, what they miss); any outlet rule | Phase-2 canary |
 | Channel-health states on real channels; thresholds | after the canary |
@@ -276,7 +278,7 @@ run report that carries the evidence.
     "release":               {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "cross_corpus_contract": {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"}
   },
-  "open_production_gates": ["O-1", "O-2", "O-3", "O-4", "O-11", "O-12", "PHASE_1_CORE", "PHASE_2_CANARY"]
+  "open_production_gates": ["O-1", "O-3", "O-4", "O-11", "O-12", "PHASE_1_CORE", "PHASE_2_CANARY"]
 }
 ```
 <!-- status_assertions:end -->
@@ -394,3 +396,16 @@ run report that carries the evidence.
   (public web search for registry facts only; no page of an outlet was fetched). No canary, no
   capacity measurement, no Phase-3 work.
   Run report: [`docs/agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md`](agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md).
+- 2026-10-08 — crawler identity, public site, storage architecture and the interim preservation
+  target (decision + implementation + one deployment; reproducibility and robustness only).
+  **O-2 `PASS`**: the identity of the operator's decision is configured after its contact page
+  went live at `coprepan.hispanistica.com/crawler/` (static files on the existing nginx virtual
+  host; the vhost, the certificate and every other site unchanged; receipt versioned). Storage
+  roles aligned with CO.RA.PAN 3.0 under this repository's names, separation enforced, runtime
+  and spool roots configured, **interim primary preservation root on `D:` qualified** (readiness
+  `READY`; persistence, crash and concurrency suites with their temporary files on that file
+  system; spool failover on the real roots). `D:` is not a backup and not the long-term target;
+  the move to the new university file system is a verified copy and a switch of one variable.
+  Decided: CPD-0014. **No external request to any outlet was made; no canary; the enabling switch
+  of the acquisition policy is still off.**
+  Run report: [`docs/agent-runs/2026-10-08_crawler-site-storage-o2-o3-interim.md`](agent-runs/2026-10-08_crawler-site-storage-o2-o3-interim.md).

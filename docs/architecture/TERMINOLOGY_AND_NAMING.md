@@ -477,3 +477,16 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | policy refusal (added) | `robots_crawl_delay_exceeds_limit` | [acquisition](../acquisition/INDEX.md) §6 |
 | policy versions | `canary/2026-10-08.1` (acquisition policy and schedule policy of the first canary) | CPD-0013 §3–§4 |
 | schema ids | `coprepan-acquisition-policy/v2` (replaces `v1`; no `v1` policy was ever decided), `coprepan-registry-registration/v1` | the indexes above |
+
+## 17. Additions of 2026-10-08 (CPD-0014)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| crawler name / robots token | `PanhispanicMediaResearchBot` / `panhispanicmediaresearchbot` | CPD-0014 §1 |
+| **interim primary preservation** (term) | a preservation root that is the primary for a bounded scope until a named target replaces it. **Not a backup** and not the long-term target | CPD-0014 §5 |
+| **backup** (term, role `BACKUP`) | a second, independent physical copy of `PRESERVATION`, on another volume, verified separately. A copy on the primary's volume is not one | CPD-0014 §4; [storage](../storage/INDEX.md) §5 |
+| **role separation** (term) | the rule that no two storage roles share a root or nest, the checkout included | CPD-0014 §4 |
+| root identity | the target marker `coprepan_preservation_target.json` (`target_id`), not a drive letter or mount; the id of the interim root is `coprepan-preservation-interim-d` | CPD-0014 §5, §7 |
+| role mapping to CO.RA.PAN | `REPO` = `REPOSITORY`; `DATA_WORKSPACE` and `RUNTIME` = `RUNTIME`; `BACKUP_SECONDARY` = `BACKUP`; `REVIEW` = a logical role bound to `EXCHANGE` | CPD-0014 §2 |
+| names of physical roots | `coprepan`, `coprepan_workspace`, `coprepan_storage` beside `corapan`, `corapan_workspace`, `corapan_storage`; on institutional storage `projects/panhispanic_media_corpora/{corapan,coprepan}` | CPD-0014 §3 |
+| environment variable (added) | `COPREPAN_BACKUP_ROOT` | `.env.example` |

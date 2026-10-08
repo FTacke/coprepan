@@ -72,6 +72,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0011](../decisions/CPD-0011_native-export-object-and-release-layer-mapping.md) | The native export object `coprepan-export/v1` and its mapping into a release | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0008 §7 |
 | [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) | Registration by record and the canary subset (O-11); acquisition and schedule policy of the first real canary (O-1); `Crawl-delay` may bind (policy schema `v2`) | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0014](../decisions/CPD-0014_crawler-identity-and-storage-roles-with-interim-preservation.md) | Crawler identity and its public page (O-2); storage roles shared with CO.RA.PAN, role separation, interim primary preservation root, planned move to the university file system | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -123,6 +124,8 @@ Machine-checked contracts:
 | Cross-corpus analysis contract: schemas, value states, denominator, manifest, compatibility view; conformance of a press and a radio fixture; invalid bundles refused | `src/coprepan/analysis_contract.py`, `src/coprepan/analysis_export.py` | `tests/test_analysis_contract.py` |
 | Joint release contract `crosscorpus-release/v1`: the copy is the pinned bundle; a drifted copy is refused; the bundle's digests and all vector cases reproduced by this repository's own checks | `contracts/crosscorpus-release-v1/`, `config/crosscorpus/contract_pins.json`, `src/coprepan/release_contract.py` | `tests/test_release_contract.py` |
 | Native export object `coprepan-export/v1`; export → release member → manifest → freeze → package → study population; no corpus export without an adopted extractor | `src/coprepan/release_export.py` | `tests/test_release_export.py` |
+| Storage roles stay apart (no shared or nested root, a backup never on the primary's volume), nothing falls back, a preservation root can be switched without a new identity | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `.env.example` | `tests/test_storage_architecture.py`, `tests/test_storage_roots.py` |
+| Crawler identity is the decided one; the public crawler page in the repository says what the identity says | `config/crawler_identity.json`, `web/coprepan/` | `tests/test_policy.py` |
 
 ## 4. Open decisions and gates
 

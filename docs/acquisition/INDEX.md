@@ -3,11 +3,11 @@
 **Status: BUILT AND TESTED OFFLINE; EXTERNALLY NOT ACTIVATED AND NOT ACTIVATABLE AS COMMITTED.**
 Discovery, the HTTP fetcher, the policy gate, crawler identity and the acquisition run exist as
 code and pass an end-to-end canary against a server on a loopback address. **Nothing has been
-requested from any real site, and nothing can be as committed: the tracked crawler identity is
-`not_configured`, no storage root is configured, and the tracked policy — decided for the first
-canary on 2026-10-08 ([CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md)),
-with the schedule policy and five registered outlets — has `external_acquisition: disabled`
-until the canary is armed.**
+requested from any real site, and nothing can be as committed: the tracked policy — decided for
+the first canary on 2026-10-08 ([CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md)),
+with the schedule policy and five registered outlets — has `external_acquisition: disabled` until
+the canary is armed. The crawler identity is configured and its public page is live
+([CPD-0014](../decisions/CPD-0014_crawler-identity-and-storage-roles-with-interim-preservation.md)).**
 Governing decisions: [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §2–§3,
 [CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md),
 [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §2–§7, §11.

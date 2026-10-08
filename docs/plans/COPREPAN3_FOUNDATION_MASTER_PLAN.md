@@ -405,6 +405,14 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     has to give a crawler name, organisation, a public contact URL and a contact address); (c) is
     open — no preservation target is chosen (O-3: three reachable volumes of different
     institutional kind). **The first external request waits for O-2 and O-3, in that order.**
+16. *Added 2026-10-08 (crawler identity, storage, interim target).* O-2 is answered (CPD-0014):
+    the identity is configured and its public page is live. O-3 is answered **for an interim
+    scope**: a local volume (`D:`) as temporary primary preservation for the small canary, qualified on
+    its own file system; the long-term institutional target (a new university file system)
+    remains to be provided and qualified, then `D:` becomes the backup. What stands between this
+    state and the first real request is no longer a decision of anyone but the canary's arming:
+    the policy switch, the tests on the commit and the approved baseline. It changes no gate to
+    `PASS` beyond what STATUS §5 says.
 
 ## 13. Open operator and institutional decisions
 
