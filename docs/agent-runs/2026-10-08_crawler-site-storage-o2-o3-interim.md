@@ -2,7 +2,7 @@
 
 ```text
 run_started_at:      2026-10-08T12:16:50+02:00 (first clock reading, at the start of the state measurement)
-run_ended_at:        see §17 (the last clock reading before the final commit)
+run_ended_at:        2026-10-08T12:45:00+02:00 (approximate: last clock reading 12:42:31+02:00, before this closing commit)
 timezone:            Europe/Berlin
 ```
 
@@ -183,8 +183,29 @@ workspace, `PRESERVATION_PENDING`, which is a safe and resumable state. Recorded
 
 ## 12. Preflight
 
-`python -m coprepan.canary preflight` for the five registered outlets, with the roots from `.env`
-(see §17 for the exact result on the final commit).
+`PYTHONPATH=src python -m coprepan.canary preflight` for the five registered outlets with the roots
+from `.env`, on commit `53484a6c7bd44940cb2c6b8981898eac5fb992c0` after a full test run on exactly
+that commit (1119 passed, 1 skipped):
+
+| Check | Result |
+|---|---|
+| `outlet_registered` ×5 (O-11) | `PASS` |
+| `schedule_policy_decided` (O-1) | `PASS` |
+| `crawler_identity_configured` (O-2) | `PASS` |
+| `preservation_target_ready` (O-3) | `PASS` — `coprepan-preservation-interim-d`: `READY` |
+| `runtime_workspace_configured`, `storage_roles_separate` (O-3) | `PASS` |
+| `tests_green_on_this_commit` | `PASS` |
+| `acquisition_policy_decided` (O-1) | **`FAIL` by design**: status `DECIDED`, `external_acquisition` `disabled` |
+| `no_configuration_drift` (canary approval) | **`FAIL` by design**: no approved baseline was supplied |
+
+Status `NOT_READY` with exactly those two open items and nothing else.
+
+**Arming procedure** (prepared, not performed): (1) turn `external_acquisition` to `enabled` in
+`config/acquisition_policy.json` in a reviewed commit; (2) build the acquisition baseline manifest
+on that commit (`freeze.build_manifest` with the readiness report of the preservation target) — its
+only remaining blocker should be O-4, which the canary itself measures and which the preflight lists
+as not a precondition; (3) the operator's freeze of that manifest (O-12); (4) the preflight again
+with `--approved-baseline`; then the staged canary.
 
 ## 13. Files
 
@@ -229,4 +250,21 @@ untested driver in the same run would have been the wrong order.
 
 ## 17. Tests, preflight and git
 
-(Filled in at the end of the run.)
+| Check | Result |
+|---|---|
+| full suite before any change | 1101 passed, 1 skipped, 1 failed (my own transient file, §1) |
+| full suite on commit `53484a6…` | **1119 passed, 1 skipped** |
+| the persistence, crash, concurrency, integrity, pipeline and end-to-end suites with their temporary files on `D:` (16 modules) | 481 passed, 1 failed — `test_offline_e2e::test_under_the_tracked_policy_and_identity_nothing_can_be_requested` asserted the old unconfigured identity; the test was updated, and the whole module then passed (18) on `D:` as well as in the normal run |
+| `scripts/qualify_storage_roots.py spool-failover` on the real roots | `PASS`, cleaned up |
+| directories left on `D:` and the spool root | only `coprepan_preservation_target.json` in `preservation_interim`; the `_qualification` directories were removed |
+
+Commits on `main`, explicit pathspecs: `77e086c` (crawler identity, site source, deploy tool,
+receipt), `3cf1231` (storage roles, harness, tests), `53484a6` (CPD-0014, documentation, this
+report) and the closing commit of this section. Pushed to `origin/main`.
+
+## 18. Recommended next run
+
+The staged canary driver and its budget accounting (probe, discovery, article fetch, then
+preservation, identity, extraction, admission, under the ≤ 100 item fetches of the brief), tested
+against the loopback server; then the arming procedure of §12; then the canary itself, on the five
+registered outlets, with the preservation root on `D:` as the temporary primary.
