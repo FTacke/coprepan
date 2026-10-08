@@ -98,10 +98,16 @@ def test_as_committed_the_canary_may_not_run_and_every_gate_says_why():
                           approved_baseline=None, required_free_bytes=None, now=NOW, environment={})
     assert report["status"] == "NOT_READY" and report["schema"] == "coprepan-canary-preflight/v1"
     assert failed(report) == {
-        "outlet_registered:uy_el_pais": "O-11", "acquisition_policy_decided": "O-1", "schedule_policy_decided": "O-1",
+        "outlet_registered:uy_el_pais": "O-11", "acquisition_policy_decided": "O-1",
         "crawler_identity_configured": "O-2", "preservation_target_ready": "O-3", "runtime_workspace_configured": "O-3",
         "tests_green_on_this_commit": "engineering", "no_configuration_drift": "canary_approval"}
-    assert report["open_by_gate"] == {"O-1": 2, "O-11": 1, "O-2": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
+    assert report["open_by_gate"] == {"O-1": 1, "O-11": 1, "O-2": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
+    # the policy is decided; what is still open under O-1 is the switch, turned when the canary is armed
+    detail = {check["check"]: check["detail"] for check in report["checks"]}
+    assert "status DECIDED, external acquisition disabled" in detail["acquisition_policy_decided"]
+    registered = CN.preflight(outlet_ids=["bo_el_deber"], tests_passed=None, tests_commit=None, code_commit=COMMIT,
+                              approved_baseline=None, required_free_bytes=None, now=NOW, environment={})
+    assert "outlet_registered:bo_el_deber" not in failed(registered) and registered["status"] == "NOT_READY"
     assert "O-4" in report["not_a_precondition"]                               # the canary is what measures capacity
     assert CN.preflight(outlet_ids=[], tests_passed=1, tests_commit=COMMIT, code_commit=COMMIT, approved_baseline=None,
                         required_free_bytes=1, now=NOW, environment={})["status"] == "NOT_READY"
@@ -127,7 +133,7 @@ def ready(tmp_path):
     policy = json.loads(config.joinpath("acquisition_policy.json").read_text(encoding="utf-8"))
     policy.update(status="DECIDED", external_acquisition="enabled", policy_version="policy/2026.1",
                   robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny"},
-                  rate_limit={"min_interval_seconds_per_origin": 10})
+                  rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": 60})
     config.joinpath("acquisition_policy.json").write_text(json.dumps(policy), encoding="utf-8")
     config.joinpath("crawler_identity.json").write_text(json.dumps({
         "schema": "coprepan-crawler-identity/v1", "crawler_name": "coprepan-research", "organisation": "Universidad Ficticia",

@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import ipaddress
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -30,7 +31,7 @@ from .identity import IdentityError, format_instant, normalise_origin
 from .registry import Registry, UnregisteredOutlet
 from .storage_roots import CHECKOUT
 
-POLICY_SCHEMA = naming.schema_id("acquisition-policy", 1)
+POLICY_SCHEMA = naming.schema_id("acquisition-policy", 2)  # v2: Crawl-delay may bind (CPD-0013); no v1 policy was ever decided
 DEFAULT_POLICY_FILE = CHECKOUT / "config" / "acquisition_policy.json"
 NOT_DECIDED = "not_decided"
 
@@ -41,6 +42,10 @@ STATUS_DECIDED, STATUS_NOT_DECIDED = "DECIDED", "NOT_DECIDED"
 ROBOTS_MODES = ("enforce", "record_only")
 ON_ABSENT = ("allow", "deny")
 ON_UNREACHABLE = ("allow", "deny", "defer")
+# What a `Crawl-delay` line of robots.txt does. It is not part of RFC 9309; whether it binds is the policy's to say.
+CRAWL_DELAY_MODES = ("binding_minimum", "record_only")
+_RATE_KEYS = {"min_interval_seconds_per_origin", "crawl_delay", "crawl_delay_max_seconds"}
+_DELAY = re.compile(r"\d{1,6}(?:\.\d{1,3})?")
 
 _KEYS = {"schema", "note", "policy_version", "status", "scope", "external_acquisition", "robots", "rate_limit",
          "disabled_outlets", "disabled_channels", "opt_outs", "suppressions"}
@@ -103,8 +108,8 @@ def validate_policy(document: Any) -> None:
     robots_block, rate = document["robots"], document["rate_limit"]
     if not isinstance(robots_block, dict) or set(robots_block) != {"mode", "on_absent", "on_unreachable"}:
         raise PolicyError("robots has exactly mode, on_absent, on_unreachable")
-    if not isinstance(rate, dict) or set(rate) != {"min_interval_seconds_per_origin"}:
-        raise PolicyError("rate_limit has exactly min_interval_seconds_per_origin")
+    if not isinstance(rate, dict) or set(rate) != _RATE_KEYS:
+        raise PolicyError(f"rate_limit has exactly {sorted(_RATE_KEYS)}")
     for name in ("disabled_outlets", "disabled_channels", "opt_outs", "suppressions"):
         if not isinstance(document[name], list):
             raise PolicyError(f"{name} is a list")
@@ -130,6 +135,11 @@ def validate_policy(document: Any) -> None:
         interval = rate["min_interval_seconds_per_origin"]
         if isinstance(interval, bool) or not isinstance(interval, (int, float)) or interval < 0:
             problems.append("rate_limit.min_interval_seconds_per_origin is a non-negative number")
+        if rate["crawl_delay"] not in CRAWL_DELAY_MODES:
+            problems.append(f"rate_limit.crawl_delay is one of {CRAWL_DELAY_MODES}")
+        limit = rate["crawl_delay_max_seconds"]
+        if isinstance(limit, bool) or not isinstance(limit, (int, float)) or limit < 0:
+            problems.append("rate_limit.crawl_delay_max_seconds is a non-negative number")
         if document["policy_version"] in ("undecided", NOT_DECIDED):
             problems.append("a decided policy has a version")
         if problems:
@@ -142,7 +152,7 @@ def loopback_test_policy(**overrides: Any) -> dict[str, Any]:
         "schema": POLICY_SCHEMA, "policy_version": "loopback-test/1", "status": STATUS_DECIDED,
         "scope": SCOPE_LOOPBACK_TEST, "external_acquisition": "disabled",
         "robots": {"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny"},
-        "rate_limit": {"min_interval_seconds_per_origin": 0},
+        "rate_limit": {"min_interval_seconds_per_origin": 0, "crawl_delay": "record_only", "crawl_delay_max_seconds": 0},
         "disabled_outlets": [], "disabled_channels": [], "opt_outs": [], "suppressions": [],
     }
     policy.update(overrides)
@@ -176,6 +186,26 @@ class PolicyGate:
     def min_interval_seconds(self) -> float | None:
         value = self.policy["rate_limit"]["min_interval_seconds_per_origin"]
         return None if isinstance(value, (str, bool)) else float(value)
+
+    def crawl_delay_seconds(self, robots_evidence: robots.RobotsEvidence | None) -> float | None:
+        """The pause an origin's robots file asks of this crawler, in seconds — when the policy
+        makes `Crawl-delay` binding and the value is an unambiguous non-negative decimal number.
+        The line for the crawler's own product token wins over the one for ``*``. Anything else
+        (no line, another syntax, a policy that only records) is ``None``: recorded, not applied.
+        """
+        if self.policy["rate_limit"]["crawl_delay"] != "binding_minimum" or robots_evidence is None or robots_evidence.rules is None:
+            return None
+        delays = robots_evidence.rules.crawl_delays
+        written = delays.get(self.identity.robots_product_token, delays.get("*"))
+        if not isinstance(written, str) or _DELAY.fullmatch(written.strip()) is None:
+            return None
+        return float(written.strip())
+
+    def interval_seconds(self, robots_evidence: robots.RobotsEvidence | None) -> float:
+        """The pause between two requests to one origin: the policy's minimum, or the origin's
+        binding `Crawl-delay` when that is longer. Never shorter than the policy's minimum.
+        """
+        return max(self.min_interval_seconds or 0.0, self.crawl_delay_seconds(robots_evidence) or 0.0)
 
     def evaluate(self, intent: FetchIntent, robots_evidence: robots.RobotsEvidence | None = None) -> PolicyDecision:
         """Decide one intent. The first refusal ends the evaluation; nothing is weighed against it."""
@@ -246,11 +276,17 @@ class PolicyGate:
             evidence["robots_state"] = robots_evidence.state
             evidence["robots_txt_sha256"] = robots_evidence.sha256
             if robots_evidence.rules is not None:
-                # Recorded as written and handed on to scheduling. Whether it binds is the
-                # policy's to say (O-1); nothing here applies it.
+                # Recorded as written. Whether it binds is the policy's to say (O-1,
+                # `rate_limit.crawl_delay`); the fetcher's pace applies it when it does.
                 delays = robots_evidence.rules.crawl_delays
                 evidence["robots_crawl_delay"] = delays.get(self.identity.robots_product_token, delays.get("*"))
                 evidence["robots_sitemaps"] = list(robots_evidence.rules.sitemaps)
+                binding = self.crawl_delay_seconds(robots_evidence)
+                evidence["robots_crawl_delay_binding_seconds"] = binding
+                if binding is not None and binding > float(policy["rate_limit"]["crawl_delay_max_seconds"]):
+                    # The origin asks for a slower pace than this policy is willing to keep. It is
+                    # not fetched faster than asked: it is not fetched.
+                    return decide(DENY, "robots_crawl_delay_exceeds_limit")
             if robots_evidence.state == robots.EVIDENCE_ABSENT:
                 evidence["robots_decision"] = "absent"
                 if policy["robots"]["on_absent"] == "deny":

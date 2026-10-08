@@ -294,7 +294,9 @@ class HttpFetcher:
         return [("User-Agent", self.identity.user_agent), ("Accept", "*/*"), ("Accept-Encoding", "gzip"), *extra]
 
     def _pace(self, origin: str) -> None:
-        interval = self.gate.min_interval_seconds or 0.0
+        # The policy's minimum, or the origin's own Crawl-delay where the policy makes it binding.
+        seen = [evidence for (_, known), evidence in self._robots.items() if known == origin]
+        interval = max([self.gate.interval_seconds(evidence) for evidence in seen] or [self.gate.min_interval_seconds or 0.0])
         last = self._last_request.get(origin)
         if last is not None:
             wait = interval - (self.clock() - last).total_seconds()

@@ -51,11 +51,17 @@ def state(rows, policy=POLICY, version="policy/1"):
 # --- the tracked schedule policy fails closed -------------------------------------------------------
 
 
-def test_the_tracked_schedule_policy_is_undecided():
-    with pytest.raises(S.ScheduleNotDecided):
-        S.load_schedule_policy()
+def test_the_tracked_schedule_policy_is_the_decided_canary_policy():
+    """Decided for the canary (CPD-0013): slow on purpose. Nothing is asked twice within a day, a
+    failing candidate is left alone after three failures, an absent one is retired after one recheck.
+    """
+    policy = S.load_schedule_policy()
+    assert policy.version.startswith("canary/") and policy.use_conditional_requests is True
+    assert policy.revisit_after_success_seconds >= 86400 and policy.retry_after_failure_seconds >= 3600
+    assert policy.max_consecutive_failures <= 3 and policy.max_gone_rechecks <= 1
+    assert policy.failure_cooldown_seconds >= 86400 and policy.denied_recheck_seconds >= 86400
     document = json.loads((REPO / "config" / "schedule_policy.json").read_text(encoding="utf-8"))
-    assert document["status"] == "NOT_DECIDED" and document["revisit_after_success_seconds"] == "not_decided"
+    assert "not_decided" not in document.values()
 
 
 def test_a_schedule_policy_has_no_default_and_refuses_half_decided_values(tmp_path):

@@ -1,20 +1,25 @@
 {
-  "schema": "coprepan-acquisition-policy/v1",
-  "note": "The acquisition policy (master plan O-1). It is an open institutional decision: every field that carries a normative choice is 'not_decided', and while 'status' is NOT_DECIDED the policy gate denies every external request. Nothing here is a default to be relied on. To decide: set each 'not_decided' value, give the policy a version, set status to DECIDED and external_acquisition to 'enabled', in a reviewed commit with a decision record.",
-  "policy_version": "undecided",
-  "status": "NOT_DECIDED",
+  "schema": "coprepan-acquisition-policy/v2",
+  "note": "The acquisition policy (master plan O-1), decided for the first real canary only (CPD-0013): a conservative policy for a bounded run on about five registered outlets, not a policy for scheduled crawling and not a legal statement about robots.txt. Only public, unauthenticated, ordinary HTTP(S) is requested; no access control, paywall, bot challenge, CAPTCHA or rate limit is ever worked around: a refusal is recorded and that path stops. robots.txt: an explicit Disallow denies, an explicit opt-out denies, an absent file allows, an unreachable one defers; a Crawl-delay that is an unambiguous number binds as the minimum pause for that origin, and an origin that asks for more than crawl_delay_max_seconds is not fetched at all. One process, one request at a time, at most one request per origin in min_interval_seconds_per_origin. Raw bodies are preserved for research and project access only and are never part of a distribution package. 'external_acquisition' stays 'disabled' until the canary is armed: the switch is turned in the commit that pins the pre-canary baseline, after the crawler identity (O-2) and the preservation target (O-3) are in place.",
+  "policy_version": "canary/2026-10-08.1",
+  "status": "DECIDED",
   "scope": "external",
   "external_acquisition": "disabled",
   "robots": {
-    "mode": "not_decided",
-    "on_absent": "not_decided",
-    "on_unreachable": "not_decided"
+    "mode": "enforce",
+    "on_absent": "allow",
+    "on_unreachable": "defer"
   },
   "rate_limit": {
-    "min_interval_seconds_per_origin": "not_decided"
+    "min_interval_seconds_per_origin": 10,
+    "crawl_delay": "binding_minimum",
+    "crawl_delay_max_seconds": 60
   },
   "disabled_outlets": [],
-  "disabled_channels": [],
+  "disabled_channels": [
+    "hn_proceso_digital:ch:rss_comments_feed",
+    "ve_efecto_cocuyo:ch:rss_comments_feed"
+  ],
   "opt_outs": [],
   "suppressions": []
 }

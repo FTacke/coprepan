@@ -35,13 +35,71 @@ def gate(policy, identity=EXTERNAL, registry=None):
 # --- the tracked configuration fails closed ---------------------------------------------------------
 
 
-def test_the_tracked_policy_is_undecided_and_denies_everything():
+def test_the_tracked_policy_is_the_decided_canary_policy_and_still_denies_everything():
+    """O-1 is decided for the canary (CPD-0013). The switch that lets a request out is off until
+    the canary is armed, so the policy as committed denies every external request.
+    """
     policy = P.load_policy()
-    assert policy["status"] == "NOT_DECIDED" and policy["external_acquisition"] == "disabled"
-    assert policy["robots"] == {"mode": "not_decided", "on_absent": "not_decided", "on_unreachable": "not_decided"}
+    assert policy["status"] == "DECIDED" and policy["external_acquisition"] == "disabled"
+    assert policy["policy_version"].startswith("canary/") and policy["schema"] == "coprepan-acquisition-policy/v2"
+    assert policy["robots"] == {"mode": "enforce", "on_absent": "allow", "on_unreachable": "defer"}
+    assert policy["rate_limit"]["crawl_delay"] == "binding_minimum"
+    assert policy["rate_limit"]["min_interval_seconds_per_origin"] >= 10 and policy["rate_limit"]["crawl_delay_max_seconds"] >= 10
     for kind in ("item", "channel_document", "robots_txt"):
         decision = gate(policy).evaluate(intent(kind=kind), ABSENT)
-        assert (decision.decision, decision.reasons) == ("DENY", ("policy_not_decided",))
+        assert (decision.decision, decision.reasons) == ("DENY", ("external_acquisition_disabled",))
+
+
+def test_every_disabled_channel_of_the_tracked_policy_is_a_registered_channel():
+    from coprepan import registry as R
+    known = {c["channel_id"] for o in R.load_registry(REPO / "config" / "outlet_registry.json").outlets.values() for c in o["channels"]}
+    assert set(P.load_policy()["disabled_channels"]) <= known
+
+
+# --- Crawl-delay as a binding minimum pause (policy v2) ----------------------------------------------
+
+
+def binding(maximum=60, minimum=10):
+    return decided(rate_limit={"min_interval_seconds_per_origin": minimum, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": maximum})
+
+
+def robots_with(lines: str) -> RB.RobotsEvidence:
+    return RB.evidence_from_response(200, lines.encode("utf-8"))
+
+
+@pytest.mark.parametrize("written, seconds", [("5", 5.0), ("2.5", 2.5), ("0", 0.0), ("30", 30.0)])
+def test_an_unambiguous_crawl_delay_binds_as_the_minimum_pause(written, seconds):
+    evidence = robots_with(f"User-agent: *\nCrawl-delay: {written}\n")
+    assert gate(binding()).crawl_delay_seconds(evidence) == seconds
+    assert gate(binding()).interval_seconds(evidence) == max(10.0, seconds)       # never faster than the policy's own pace
+    decision = gate(binding()).evaluate(intent(), evidence)
+    assert decision.decision == "ALLOW" and decision.evidence["robots_crawl_delay_binding_seconds"] == seconds
+    assert decision.evidence["robots_crawl_delay"] == written                       # still recorded as written
+
+
+@pytest.mark.parametrize("written", ["soon", "-1", "1e3", "5 seconds", "", "1,5", "0x10"])
+def test_a_crawl_delay_that_is_not_a_plain_number_is_recorded_and_not_applied(written):
+    evidence = robots_with(f"User-agent: *\nCrawl-delay: {written}\n")
+    assert gate(binding()).crawl_delay_seconds(evidence) is None
+    assert gate(binding()).interval_seconds(evidence) == 10.0
+    assert gate(binding()).evaluate(intent(), evidence).decision == "ALLOW"
+
+
+def test_the_line_for_the_crawler_itself_wins_and_a_recording_policy_applies_nothing():
+    evidence = robots_with("User-agent: *\nCrawl-delay: 5\n\nUser-agent: coprepan-research\nCrawl-delay: 40\n")
+    assert gate(binding()).crawl_delay_seconds(evidence) == 40.0 and gate(binding()).interval_seconds(evidence) == 40.0
+    recording = decided(rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "record_only", "crawl_delay_max_seconds": 0})
+    assert gate(recording).crawl_delay_seconds(evidence) is None and gate(recording).interval_seconds(evidence) == 10.0
+    assert gate(binding()).interval_seconds(None) == 10.0 and gate(binding()).interval_seconds(ABSENT) == 10.0
+
+
+def test_an_origin_that_asks_for_more_patience_than_the_policy_has_is_not_fetched():
+    """It is not fetched faster than it asked: it is not fetched, and the reason is on record."""
+    evidence = robots_with("User-agent: *\nCrawl-delay: 600\n")
+    decision = gate(binding(maximum=60)).evaluate(intent(), evidence)
+    assert (decision.decision, decision.reasons) == ("DENY", ("robots_crawl_delay_exceeds_limit",))
+    assert decision.evidence["robots_crawl_delay_binding_seconds"] == 600.0
+    assert gate(binding(maximum=600)).evaluate(intent(), evidence).decision == "ALLOW"
 
 
 def test_the_tracked_crawler_identity_is_not_configured():
@@ -78,8 +136,11 @@ def test_no_robots_evidence_defers_and_never_allows():
 def test_a_decided_policy_has_decided_everything():
     for overrides in ({"robots": {"mode": "not_decided", "on_absent": "allow", "on_unreachable": "deny"}},
                       {"robots": {"mode": "enforce", "on_absent": "maybe", "on_unreachable": "deny"}},
-                      {"rate_limit": {"min_interval_seconds_per_origin": "not_decided"}},
-                      {"rate_limit": {"min_interval_seconds_per_origin": -1}},
+                      {"rate_limit": {"min_interval_seconds_per_origin": "not_decided", "crawl_delay": "record_only", "crawl_delay_max_seconds": 0}},
+                      {"rate_limit": {"min_interval_seconds_per_origin": 1, "crawl_delay": "sometimes", "crawl_delay_max_seconds": 0}},
+                      {"rate_limit": {"min_interval_seconds_per_origin": 1, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": "not_decided"}},
+                      {"rate_limit": {"min_interval_seconds_per_origin": 1}},
+                      {"rate_limit": {"min_interval_seconds_per_origin": -1, "crawl_delay": "record_only", "crawl_delay_max_seconds": 0}},
                       {"policy_version": "undecided"}):
         with pytest.raises(P.PolicyError):
             gate(decided(**overrides))
@@ -87,7 +148,7 @@ def test_a_decided_policy_has_decided_everything():
 
 @pytest.mark.parametrize(
     "broken",
-    [{"schema": "coprepan-acquisition-policy/v2"}, {"status": "MAYBE"}, {"scope": "everywhere"}, {"allow_all": True},
+    [{"schema": "coprepan-acquisition-policy/v1"}, {"status": "MAYBE"}, {"scope": "everywhere"}, {"allow_all": True},
      {"external_acquisition": "yes"}, {"opt_outs": [{"reason": "x"}]}, {"suppressions": [{"outlet_id": OUTLET, "reason": "x", "until": "soon"}]},
      {"disabled_outlets": "all"}, {"robots": {"mode": "enforce"}}],
 )

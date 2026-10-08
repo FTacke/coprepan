@@ -365,11 +365,31 @@ def test_a_channel_document_may_live_on_a_registered_channel_host_but_an_item_ma
 
 def test_requests_to_one_origin_are_paced(site):
     site.routes["/a"] = Response(200, HTML, PAGE)
-    policy = P.loopback_test_policy(rate_limit={"min_interval_seconds_per_origin": 10})
+    policy = P.loopback_test_policy(rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "record_only", "crawl_delay_max_seconds": 0})
     fetcher, clock = make_fetcher(site, policy=policy)
     for _ in range(3):
         assert get(fetcher, "/a").final == "FETCHED"
     assert len(clock.slept) >= 2 and all(0 < wait <= 10 for wait in clock.slept)
+
+
+def test_a_binding_crawl_delay_slows_the_pace_of_its_origin(site):
+    """Where the policy makes `Crawl-delay` binding, the origin's own number is the pause between
+    two requests to it — when it is longer than the policy's minimum, and only then.
+    """
+    site.routes["/a"] = Response(200, HTML, PAGE)
+    site.routes["/robots.txt"] = Response(200, [("Content-Type", "text/plain")], b"User-agent: *\nCrawl-delay: 30\n")
+    policy = P.loopback_test_policy(rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": 60})
+    fetcher, clock = make_fetcher(site, policy=policy)
+    for _ in range(3):
+        outcome = get(fetcher, "/a")
+        assert outcome.final == "FETCHED" and outcome.decision.evidence["robots_crawl_delay_binding_seconds"] == 30.0
+    assert len(clock.slept) >= 3 and max(clock.slept) > 10 and all(0 < wait <= 30 for wait in clock.slept)
+    slower = P.loopback_test_policy(rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": 20})
+    refused, _ = make_fetcher(site, policy=slower)
+    before = len(site.requests)
+    outcome = get(refused, "/a")
+    assert (outcome.final, outcome.decision.reasons) == ("DENIED", ("robots_crawl_delay_exceeds_limit",))
+    assert [request for request in site.paths()[before:]] == ["/robots.txt"]      # the page itself was never asked for
 
 
 def test_a_loopback_policy_cannot_be_pointed_at_the_outside(site):
