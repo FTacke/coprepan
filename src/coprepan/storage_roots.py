@@ -155,6 +155,77 @@ def read_env_file(path: Path) -> dict[str, str]:
     return values
 
 
+def workstation_environment(checkout: Path = CHECKOUT, process_env: Mapping[str, str] | None = None) -> dict[str, str]:
+    """The process environment over the workstation ``.env`` of the checkout (the process wins).
+
+    Only ``COPREPAN_*`` names are taken from the file, so that a workstation file cannot reconfigure
+    anything else. A missing ``.env`` is legal and means that nothing is configured from it.
+    """
+    values: dict[str, str] = {}
+    path = Path(checkout) / ".env"
+    if path.is_file():
+        values = {name: value for name, value in read_env_file(path).items() if name.startswith("COPREPAN_")}
+    values.update(os.environ if process_env is None else process_env)
+    return values
+
+
+def volume_of(root: Path) -> int:
+    """An identifier of the physical or logical volume holding ``root`` (the device number). Refuses
+    when it cannot be determined: whether two roots share a volume is never guessed.
+    """
+    try:
+        device = os.stat(root).st_dev
+    except OSError as error:
+        raise StorageRootUnreachable(f"{root.name}: the volume cannot be determined: {type(error).__name__}") from error
+    if not device:
+        raise StorageRootUnusable(f"{root.name}: this platform reports no volume identity")
+    return device
+
+
+def validate_role_separation(roots: Mapping[str, Path], *, checkout: Path = CHECKOUT) -> None:
+    """Refuse a set of configured roots that does not keep the roles apart (CPD-0014).
+
+    * no two roles share a root, and no role lies inside another (the checkout is the
+      ``REPOSITORY`` role and takes part);
+    * ``BACKUP`` is on another volume than ``PRESERVATION``: a second copy on the same physical
+      volume is not a backup, whatever it is called.
+
+    Lexical for the nesting rule (no I/O); the volume rule reads the volumes and fails closed.
+    """
+    named = {"REPOSITORY": Path(checkout), **{role: Path(root) for role, root in roots.items()}}
+    roles = sorted(named)
+    for index, first in enumerate(roles):
+        for second in roles[index + 1:]:
+            if is_inside(named[first], named[second]) or is_inside(named[second], named[first]):
+                raise StorageRootUnusable(f"{first} and {second} overlap: one role per function, never nested or shared")
+    if "BACKUP" in roots and "PRESERVATION" in roots:
+        if volume_of(Path(roots["BACKUP"])) == volume_of(Path(roots["PRESERVATION"])):
+            raise StorageRootUnusable("BACKUP is on the same volume as PRESERVATION: that is not an independent copy")
+
+
+def resolve_configured_roles(
+    *,
+    env: Mapping[str, str] | None = None,
+    targets: Mapping[str, StorageTarget] | None = None,
+) -> dict[str, Path | None]:
+    """Every declared role: its resolved root, or ``None`` when it is not configured.
+
+    ``None`` is a statement, never a default: a caller that needs the role calls
+    :func:`resolve_root`, which refuses. A role that is configured but unusable raises. The
+    configured roles are checked against each other (:func:`validate_role_separation`).
+    """
+    targets = load_storage_targets() if targets is None else targets
+    env = workstation_environment() if env is None else env
+    resolved: dict[str, Path | None] = {}
+    for role, target in sorted(targets.items()):
+        if not env.get(target.variable, "").strip():
+            resolved[role] = None
+        else:
+            resolved[role] = resolve_root(role, env=env, targets=targets)
+    validate_role_separation({role: root for role, root in resolved.items() if root is not None})
+    return resolved
+
+
 def probe(root: Path) -> RootProbe:
     """Reachability and free space. Never raises; an unreachable root reports unknown, not zero."""
     try:

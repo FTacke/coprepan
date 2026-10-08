@@ -199,6 +199,12 @@ def preflight(
         check("runtime_workspace_configured", "O-3", True, "COPREPAN_WORKSPACE_ROOT resolves and is writable")
     except storage_roots.StorageRefusal as refusal:
         check("runtime_workspace_configured", "O-3", False, str(refusal))
+    try:
+        roles = storage_roots.resolve_configured_roles(env=os.environ if environment is None else environment)
+        check("storage_roles_separate", "O-3", True, "configured: " + (", ".join(role for role, root in roles.items() if root is not None) or "none")
+              + "; no role shares or contains another; a backup, if any, is on another volume")
+    except storage_roots.StorageRefusal as refusal:
+        check("storage_roles_separate", "O-3", False, str(refusal))
 
     # Tests — the full suite passed on exactly this commit.
     check("tests_green_on_this_commit", "engineering",
@@ -250,7 +256,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(plan_canary(document, outlets_wanted=arguments.outlets, seed=arguments.seed), indent=2, ensure_ascii=False))
         return 0
     baseline = json.loads(arguments.approved_baseline.read_text(encoding="utf-8")) if arguments.approved_baseline else None
-    report = preflight(outlet_ids=arguments.outlet, tests_passed=arguments.tests_passed, tests_commit=arguments.tests_commit,
+    report = preflight(environment=storage_roots.workstation_environment(), outlet_ids=arguments.outlet, tests_passed=arguments.tests_passed, tests_commit=arguments.tests_commit,
                        code_commit=arguments.commit, approved_baseline=baseline,
                        required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
     print(json.dumps(report, indent=2, ensure_ascii=False))

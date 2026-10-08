@@ -15,6 +15,7 @@ ROLE_VARIABLES = {
     "SPOOL": "COPREPAN_SPOOL_ROOT",
     "DISTRIBUTION": "COPREPAN_DISTRIBUTION_ROOT",
     "EXCHANGE": "COPREPAN_EXCHANGE_ROOT",
+    "BACKUP": "COPREPAN_BACKUP_ROOT",
 }
 
 
@@ -35,7 +36,7 @@ def test_tracked_targets_declare_the_roles_and_their_variables():
 
 
 def test_repository_and_backup_have_no_root_to_resolve():
-    for role in ("REPOSITORY", "BACKUP"):
+    for role in ("REPOSITORY", "BACKUP"):  # BACKUP is declared and, unset, is NOT_CONFIGURED
         with pytest.raises(S.StorageRootNotConfigured):
             S.resolve_root(role, env={})
 

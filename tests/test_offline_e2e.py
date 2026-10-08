@@ -501,11 +501,11 @@ def test_an_identity_conflict_and_an_extraction_failure_stop_loudly(tmp_path, si
 
 
 def test_under_the_tracked_policy_and_identity_nothing_can_be_requested(tmp_path, site):
-    """The configuration as committed: undecided policy, unconfigured identity. Fail closed."""
+    """The configuration as committed: the decided canary policy, switched off, and the configured
+    external identity. Nothing can leave: the policy denies, and no packet is sent. Fail closed."""
     from coprepan import crawler_identity as CI
 
-    with pytest.raises(CI.CrawlerIdentityNotConfigured):
-        CI.load_identity()
+    assert CI.load_identity().scope == CI.SCOPE_EXTERNAL and P.load_policy()["external_acquisition"] == "disabled"
     run = Pass(tmp_path, site, policy={**P.load_policy()})
     run.acquire()
     assert site.requests == [] and run.fetcher.transport_calls == 0

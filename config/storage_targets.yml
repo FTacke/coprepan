@@ -34,6 +34,10 @@ targets:
     root: ${COPREPAN_EXCHANGE_ROOT}
     purpose: temporary hand-over zone; not an archive
     authoritative: false
+  BACKUP:
+    root: ${COPREPAN_BACKUP_ROOT}
+    purpose: second independent physical copy of PRESERVATION, verified separately; never the primary, and never on its volume
+    authoritative: false
 
 # The checkout itself is the REPOSITORY role: code, configuration, documentation, small fixtures
 # and compact hash-bound evidence records. It is never a storage root for corpus data or runtime
