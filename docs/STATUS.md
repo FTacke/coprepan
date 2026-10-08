@@ -449,3 +449,8 @@ run report that carries the evidence.
   no Phase-3 package exist.** Reports:
   [`docs/agent-runs/2026-10-08_real-acquisition-canary-o4.md`](agent-runs/2026-10-08_real-acquisition-canary-o4.md),
   [`docs/agent-runs/2026-10-08_phase3-real-extraction-review-package.md`](agent-runs/2026-10-08_phase3-real-extraction-review-package.md).
+- 2026-10-08 — authorised canary, third attempt (no state changed). On the operator's explicit authorisation
+  the arming edit was attempted again and **refused by the permission layer at the edit itself**; not worked
+  around. The switch is `disabled`, no baseline is frozen, no request was made to any publisher, no O-4
+  measurement and no Phase-3 package exist. Run report:
+  [`docs/agent-runs/2026-10-08_canary-arming-refused-third-attempt.md`](agent-runs/2026-10-08_canary-arming-refused-third-attempt.md).
