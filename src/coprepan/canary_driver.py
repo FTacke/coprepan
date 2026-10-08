@@ -508,6 +508,36 @@ def verify_checkout(pinned_commit: str, allowed_prefixes: Sequence[str] = ("docs
             raise CanaryStopped(f"HEAD differs from the pinned commit beyond evidence files: {changed}")
 
 
+def _after_the_run(arguments, environment, registered) -> int:
+    """`verify` and `measure`: read-only, on the evidence of a finished run."""
+    import shutil
+    from types import SimpleNamespace
+
+    from . import canary_evidence
+
+    stored = json.loads(arguments.receipt.read_text(encoding="utf-8"))
+    roles = storage_roots.resolve_configured_roles(env=environment)
+    workspace = core_pipeline.Workspace(roles["RUNTIME"])
+    if arguments.command == "measure":
+        result = canary_evidence.measure(
+            workspace, run_id=stored["run_id"], preservation_root=roles["PRESERVATION"],
+            target_free_bytes=shutil.disk_usage(roles["PRESERVATION"]).free, new_filesystem_bytes=arguments.new_filesystem_bytes,
+            legacy_sourced={"per_outlet_day_median": 115, "per_outlet_day_max": 367, "outlet_counts": [5, 53, 82]})
+    else:
+        identity = crawler_identity.load_identity()
+        run = SimpleNamespace(run_id=stored["run_id"])
+        rebuilt = build_receipt(
+            workspace, run=run, commit=stored["commit"], baseline_id=stored["baseline_id"], policy_record=policy.load_policy(),
+            schedule_policy=schedule.load_schedule_policy(), identity=identity, storage_contract_sha256=stored["storage_contract_sha256"],
+            outlet_ids=stored["outlets"], channels=stored["channels"], preservation_root=roles["PRESERVATION"], spool_root=roles["SPOOL"],
+            started_at=stored["started_at"], finished_at=stored["finished_at"])
+        result = canary_evidence.verify(workspace, registered, run=run, preservation_root=roles["PRESERVATION"], spool_root=roles["SPOOL"],
+                                        stored_receipt=stored, rebuilt_receipt=rebuilt)
+    write_bytes_exclusive(arguments.out, record_json(result))
+    print(json.dumps({"status": result.get("status", "MEASURED"), "out": arguments.out.name}, indent=2))
+    return 0 if result.get("status", "PASS") == "PASS" else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="The staged driver of the first real canary. `run` makes real requests.")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -525,6 +555,13 @@ def main(argv: list[str] | None = None) -> int:
     frozen.add_argument("--operator", required=True)
     frozen.add_argument("--confirm", required=True, help="the manifest's digest")
     frozen.add_argument("--out", type=Path, required=True)
+    ver = commands.add_parser("verify", help="after a canary: read-back, fixity, replay without network, receipt re-derivation (no request)")
+    ver.add_argument("--receipt", type=Path, required=True)
+    ver.add_argument("--out", type=Path, required=True)
+    mea = commands.add_parser("measure", help="after a canary: the O-4 measurement and its projections (no request)")
+    mea.add_argument("--receipt", type=Path, required=True)
+    mea.add_argument("--new-filesystem-bytes", type=int, default=None, help="nominal size of the planned file system, as stated by the operator")
+    mea.add_argument("--out", type=Path, required=True)
     run_ = commands.add_parser("run", help="preflight, then the canary")
     run_.add_argument("--outlet", action="append", required=True)
     run_.add_argument("--pinned-commit", required=True)
@@ -542,6 +579,8 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(driver_pin(budget, registered, arguments.outlet, acquisition_policy["disabled_channels"]), indent=2, sort_keys=True))
         return 0
 
+    if arguments.command in ("verify", "measure"):
+        return _after_the_run(arguments, environment, registered)
     if arguments.command == "baseline":
         root = storage_roots.resolve_root("PRESERVATION", env=environment)
         readiness = preservation_target.check_readiness(root, required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
@@ -581,8 +620,25 @@ def main(argv: list[str] | None = None) -> int:
     workspace = core_pipeline.Workspace(roles["RUNTIME"])
     clock = lambda: datetime.now(timezone.utc)  # noqa: E731
     started = clock()
+    # The checkpoint immediately before the first real request: written once, before anything is asked.
+    pending_at_start = outage_spool.pending_records(roles["SPOOL"]) if roles["SPOOL"].is_dir() else []
+    start_state = {
+        "schema": naming.schema_id("canary-start-state", 1), "driver": DRIVER_VERSION, "at": format_instant(started),
+        "head": _git("rev-parse", "HEAD"), "origin_main_as_last_fetched": _git("rev-parse", "origin/main"),
+        "pinned_commit": arguments.pinned_commit, "working_tree_clean": True, "approved_baseline_sha256": baseline["manifest_sha256"],
+        "outlets": sorted(arguments.outlet), "policy_version": acquisition_policy["policy_version"],
+        "policy_file_sha256": sha256_bytes((CHECKOUT / "config" / "acquisition_policy.json").read_bytes()),
+        "crawler_identity": identity.as_record(), "preservation_target": baseline["canary"]["storage_target"],
+        "spool_pending_records": len(pending_at_start), "tests_passed": arguments.tests_passed, "preflight": report["status"],
+    }
+    if start_state["head"] != start_state["origin_main_as_last_fetched"]:
+        raise CanaryStopped("HEAD is not origin/main as last fetched: push (or fetch) first")
+    if pending_at_start:
+        raise CanaryStopped("the spool holds pending objects: they are drained before a new canary starts")
+    arguments.receipt_dir.mkdir(parents=True, exist_ok=True)
     run = http_acquisition.http_fetch_run(started, arguments.outlet, {"driver": DRIVER_VERSION, "baseline_id": baseline["manifest_sha256"],
                                                                       "budget": budget.as_record(), "pinned_commit": arguments.pinned_commit}, identity)
+    write_bytes_exclusive(arguments.receipt_dir / f"canary-start-state-{run.run_id}.json", record_json({**start_state, "run_id": run.run_id}))
     gate = policy.PolicyGate(acquisition_policy, registered, identity)
     used = tally_from_evidence(workspace, run.run_id)
     fetcher = BudgetedFetcher(budget=budget, used=used, identity=identity, gate=gate, limits=CANARY_LIMITS, clock=clock, sleep=time.sleep)
