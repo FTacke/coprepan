@@ -99,9 +99,9 @@ def test_as_committed_the_canary_may_not_run_and_every_gate_says_why():
     assert report["status"] == "NOT_READY" and report["schema"] == "coprepan-canary-preflight/v1"
     assert failed(report) == {
         "outlet_registered:uy_el_pais": "O-11", "acquisition_policy_decided": "O-1",
-        "crawler_identity_configured": "O-2", "preservation_target_ready": "O-3", "runtime_workspace_configured": "O-3",
+        "preservation_target_ready": "O-3", "runtime_workspace_configured": "O-3",
         "tests_green_on_this_commit": "engineering", "no_configuration_drift": "canary_approval"}
-    assert report["open_by_gate"] == {"O-1": 1, "O-11": 1, "O-2": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
+    assert report["open_by_gate"] == {"O-1": 1, "O-11": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
     # the policy is decided; what is still open under O-1 is the switch, turned when the canary is armed
     detail = {check["check"]: check["detail"] for check in report["checks"]}
     assert "status DECIDED, external acquisition disabled" in detail["acquisition_policy_decided"]

@@ -102,12 +102,35 @@ def test_an_origin_that_asks_for_more_patience_than_the_policy_has_is_not_fetche
     assert gate(binding(maximum=600)).evaluate(intent(), evidence).decision == "ALLOW"
 
 
-def test_the_tracked_crawler_identity_is_not_configured():
-    with pytest.raises(CI.CrawlerIdentityNotConfigured) as refusal:
-        CI.load_identity()
-    assert "crawler_name is not configured" in str(refusal.value) and "contact_email is not configured" in str(refusal.value)
+def test_the_tracked_crawler_identity_is_the_decided_one_and_is_not_a_placeholder():
+    """O-2 (CPD-0014): the operator's values, an https page on a real domain, a real address."""
+    identity = CI.load_identity()
     document = json.loads((REPO / "config" / "crawler_identity.json").read_text(encoding="utf-8"))
-    assert {document[name] for name in ("crawler_name", "organisation", "contact_url", "contact_email")} == {"not_configured"}
+    assert identity.scope == CI.SCOPE_EXTERNAL
+    assert (document["crawler_name"], document["organisation"]) == ("PanhispanicMediaResearchBot", "Marburg University")
+    assert document["contact_url"] == "https://coprepan.hispanistica.com/crawler/" and document["contact_email"] == "felix.tacke@uni-marburg.de"
+    assert CI.validate_operator(identity.operator) == []
+    assert identity.user_agent == ("PanhispanicMediaResearchBot/" + CI.SoftwareIdentity().version
+                                   + " (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)")
+    assert identity.robots_product_token == "panhispanicmediaresearchbot"
+    assert "not_configured" not in json.dumps(document["crawler_name"]) + document["organisation"] + document["contact_url"] + document["contact_email"]
+
+
+def test_the_public_crawler_page_in_the_repository_says_what_the_identity_says():
+    """The page a publisher finds behind contact_url (web/coprepan/crawler/) is versioned with the identity.
+    That it is also reachable is a deployment check (`scripts/deploy_public_site.py verify`), not a test:
+    tests never touch the network.
+    """
+    identity = CI.load_identity()
+    page = (REPO / "web" / "coprepan" / "crawler" / "index.html").read_text(encoding="utf-8")
+    assert identity.operator.contact_email in page and identity.operator.crawler_name in page and identity.operator.contact_url in page
+    for statement in ("robots.txt", "Retry-After", "opt-out", "CAPTCHA", "paywalls", "conditional requests", "Marburg University"):
+        assert statement in page, statement
+    home = (REPO / "web" / "coprepan" / "index.html").read_text(encoding="utf-8")
+    assert "/crawler/" in home and "under development" in home
+    for text in (page, home):
+        assert "http://" not in text.replace("http://www.w3.org", "")        # no mixed content
+        assert "Pronunciation" not in text and "Coming soon" not in text
 
 
 def test_external_acquisition_needs_every_precondition_at_once():

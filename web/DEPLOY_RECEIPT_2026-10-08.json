@@ -1,0 +1,36 @@
+{
+  "schema": "coprepan-site-deploy-receipt/v1",
+  "note": "Receipt of the first deployment of web/coprepan/ (O-2, CPD-0014). Files only: the nginx virtual host, the certificate and every other site were not changed. No credential appears here. The tool is scripts/deploy_public_site.py.",
+  "site_url": "https://coprepan.hispanistica.com/",
+  "deployed_at_utc": "2026-10-08T10:20:00Z",
+  "served_by": "nginx/1.18.0 as a static document root on the operator's university-hosted VM",
+  "before": {
+    "docroot_files": [{"path": "index.html", "sha256": "6dc20fdaa47a9ac19efc9ab995b1c500eac71e72f8c9a30d3678b53113e65cdc", "size": 87, "was": "a placeholder page, 'COPREPAN Coming soon.' with a leftover 'Pronunciation Matters' line"}],
+    "vhost_sha256": "e090080fcece67872d81ee06e9b39a7843fb9ee781984c1716b20f01cec01777",
+    "certificate_not_after": "2026-11-12T00:53:41Z",
+    "backup": "taken to a directory outside the repository before the change (public content only)"
+  },
+  "after": {
+    "files": [
+      {"path": "crawler/index.html", "sha256": "55c8f311be02022ac5be7f180747f9ab5b04183f4feac453b3bcacd775264664", "size": 3949},
+      {"path": "index.html", "sha256": "35ee84241d718fe88aeb2e0022983e541a7ff8b8816a81747982f7e6388636c7", "size": 1321},
+      {"path": "style.css", "sha256": "22b4fb36df36e7d170204d4f5bb9c5ec12a6aa46b2c6931ffc492111d3db6478", "size": 1291}
+    ],
+    "modes": "directories 755, files 644, owner root:root (as before)",
+    "vhost_sha256": "e090080fcece67872d81ee06e9b39a7843fb9ee781984c1716b20f01cec01777",
+    "vhost_unchanged": true,
+    "nginx_t": "configuration test successful; nginx was not reloaded: static files are read from disk"
+  },
+  "public_check_utc": "2026-10-08T10:20:12Z",
+  "public_check": {
+    "tls_certificate_verified": true,
+    "pages": [
+      {"url": "https://coprepan.hispanistica.com/", "status": 200, "content_equals_source": true},
+      {"url": "https://coprepan.hispanistica.com/crawler/", "status": 200, "content_equals_source": true},
+      {"url": "https://coprepan.hispanistica.com/style.css", "status": 200, "content_equals_source": true}
+    ],
+    "http_to_https": "301",
+    "placeholder_text_gone": true,
+    "other_sites_still_answering": "corapan, games, notes: 200"
+  }
+}

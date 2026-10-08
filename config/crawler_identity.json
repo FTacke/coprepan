@@ -1,8 +1,8 @@
 {
   "schema": "coprepan-crawler-identity/v1",
-  "note": "The public identity of the crawler (master plan O-2). Operator decision: until every field below holds a real value, no external request can be made. The values are public by nature (they are sent in every request and published in the crawler statement), so they are versioned here rather than kept in a workstation file.",
-  "crawler_name": "not_configured",
-  "organisation": "not_configured",
-  "contact_url": "not_configured",
-  "contact_email": "not_configured"
+  "note": "The public identity of the crawler (master plan O-2), decided by the operator on 2026-10-08 (CPD-0014). The values are public by nature (they are sent in every request and published in the crawler statement), so they are versioned here rather than kept in a workstation file. contact_url is the permanent public information page for website operators; its source is web/coprepan/crawler/index.html and it was verified reachable over HTTPS on deployment (docs/agent-runs/2026-10-08_crawler-site-storage-o2-o3-interim.md). The User-Agent is built by src/coprepan/crawler_identity.py: <crawler_name>/<package version> (+<contact_url>; <contact_email>).",
+  "crawler_name": "PanhispanicMediaResearchBot",
+  "organisation": "Marburg University",
+  "contact_url": "https://coprepan.hispanistica.com/crawler/",
+  "contact_email": "felix.tacke@uni-marburg.de"
 }
