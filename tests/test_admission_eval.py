@@ -56,7 +56,7 @@ def test_every_fetched_item_gets_a_label_and_nothing_is_removed(canary):
 
 def test_a_label_carries_status_reasons_evidence_rule_run_and_version(canary):
     label = labels_of(canary)[0]
-    assert label["schema"] == "coprepan-admission-label/v1" and label["ruleset"] == "admission-technical/1"
+    assert label["schema"] == "coprepan-admission-label/v2" and label["previous_row_sha256"] is None and label["ruleset"] == "admission-technical/1"
     assert {"fetch_id", "run_id", "outlet_id", "document_id", "document_version_id", "technical_status", "blocking_reasons",
             "reasons", "measurements", "extraction_fingerprint", "extraction_payload_sha256", "labelled_at"} <= set(label)
     assert label["run_id"] == canary.run.run_id and label["labelled_at"] == LABELLED_AT

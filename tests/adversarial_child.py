@@ -161,11 +161,13 @@ def install(crash: Crash) -> None:
     preservation.shutil = _Shutil
     # identity, extraction, layers
     before(C, "_extract_stored", "after_identity_before_extraction")
+    before(document_identity.IdentityTables, "assign_version", "adopt_mid_derive",
+           lambda self, *a, **k: ".rebuild-" in str(self._versions))   # only inside the store an adoption is building
     before(document_identity.IdentityTables, "assign_version", "after_extraction_before_version")
     before(document_identity.IdentityTables, "_relate", "after_rows_before_relation")
     # modules import append_row by name, so the wrapper goes where it is called
     half_os_write(document_identity, "append_row", "table_row_torn", lambda path, schema, row: str(path).endswith("versions.jsonl"))
-    half_os_write(http_acquisition, "append_row", "request_row_torn", lambda path, schema, row: row.get("event") == "FINISHED")
+    half_os_write(http_acquisition, "append_chained", "request_row_torn", lambda path, schema, row: row.get("event") == "FINISHED")
     half_open(layer_store, "layer_payload_partial", lambda path: path.endswith("payload"))
     half_open(layer_store, "layer_before_metadata", lambda path: path.endswith("manifest.json"))
     real_rename = os.rename
@@ -173,7 +175,10 @@ def install(crash: Crash) -> None:
     def rename(source, target, *args, **kwargs):
         if ".staging" in str(source):
             crash.at("layer_before_publish")
-        return real_rename(source, target, *args, **kwargs)
+        result = real_rename(source, target, *args, **kwargs)
+        if ".replaced-" in str(target):
+            crash.at("adopt_after_move_aside")   # the old identity directory is aside, the rebuilt one not yet in place
+        return result
     os.rename = rename
     # http
     before(fetcher.HttpFetcher, "fetch", "after_intent_before_request",
@@ -306,6 +311,9 @@ def race(kind: str, base: Path, number: int, gate: Path) -> dict:
         book = ledger.Ledger(base / "ledger.jsonl", ledger.PRESERVATION)
         for i in range(150):
             attempt(lambda: book.transition(f"w{number}-s{i}", "DISCOVERED", at=T0))
+    elif kind == "chained":
+        for i in range(120):
+            attempt(lambda: jsonl.append_chained(base / "t.jsonl", "coprepan-x/v2", {"w": number, "i": i, "pad": "x" * 300}))
     elif kind == "table":
         for i in range(150):
             attempt(lambda: jsonl.append_row(base / "t.jsonl", "coprepan-x/v1", {"w": number, "i": i, "pad": "x" * 300}))
@@ -355,6 +363,18 @@ def main(argv: list[str]) -> int:
         root = base / "preservation_root"
         result = (recovery.diagnose(base / "workspace", root if root.is_dir() else None) if command == "diagnose"
                   else recovery.repair(base / "workspace"))
+    elif command in ("diagnose_full", "verify", "adopt"):
+        # with the registry and the root: the identity tables are held against the preserved evidence
+        from coprepan import identity_rebuild, recovery
+        one = canary(base)
+        if command == "diagnose_full":
+            result = recovery.diagnose(base / "workspace", base / "preservation_root", registry=one.registry)
+        elif command == "verify":
+            result = identity_rebuild.verify(one.workspace, one.registry, preservation_root=one.root)
+        else:
+            install(Crash(base, argv[3] if len(argv) > 3 else None))
+            result = identity_rebuild.adopt(one.workspace, one.registry, preservation_root=one.root,
+                                            replace_conflicting=len(argv) > 4 and argv[4] == "replace")
     elif command == "recover":
         # One independent process after a kill: say what is there, repair torn tails, run the
         # interrupted pipeline to its end, run it once more, and report every step.

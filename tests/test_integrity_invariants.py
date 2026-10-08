@@ -428,7 +428,7 @@ def test_a_table_with_a_valid_prefix_and_garbage_is_refused_and_only_a_torn_tail
         jsonl.read_rows(path, "coprepan-x/v1")
     assert recovery.repair(tmp_path / "workspace")["moved_aside"] == []    # repair does not judge content
     found = recovery.diagnose(tmp_path / "workspace")
-    assert found["classification"] == "DAMAGED" and "identity/documents.jsonl" in " ".join(found["damaged"]) + " ".join(found["unreadable"])
+    assert found["classification"] == "DAMAGED" and "documents.jsonl" in " ".join(found["damaged"])
 
 
 def test_a_short_write_or_a_full_disk_is_never_reported_as_an_appended_record(tmp_path, monkeypatch):
@@ -504,7 +504,7 @@ def test_a_run_record_is_whole_or_absent_and_a_half_written_result_is_not_a_resu
     (directory / "run.json.part-deadbeef").write_bytes(b'{"half": ')          # what a kill during the write leaves
     assert acquisition.open_run(canary.workspace.root, canary.run) is True      # the run starts; the staging file is not a record
     assert acquisition.open_run(canary.workspace.root, canary.run) is False     # and resumes
-    (directory / "result.json").write_bytes(b'{"schema": "coprepan-acquisition-run-result/v1", "run_')
+    (directory / "result.json").write_bytes(b'{"schema": "coprepan-acquisition-run-result/v2", "run_')
     with pytest.raises(acquisition.RunStateError, match="not a readable"):
         acquisition.read_run_result(canary.workspace.root, canary.run.run_id)
 
@@ -581,7 +581,9 @@ def test_artefacts_of_an_unknown_schema_version_are_explicitly_unsupported(done,
     with pytest.raises(acquisition.AcquisitionError):
         acquisition.validate_fetch_record({**fetch_record, "schema": "coprepan-fetch-record/v2"})
     result = acquisition.run_directory(done.workspace.root, done.run.run_id) / "result.json"
-    bumped(result)
+    superseded = json.loads(result.read_text(encoding="utf-8"))   # a result of the superseded v1 (no heads) is refused, not read as v2
+    superseded["schema"] = "coprepan-acquisition-run-result/v1"
+    result.write_bytes(canonical.record_json(superseded))
     with pytest.raises(acquisition.RunStateError):
         acquisition.read_run_result(done.workspace.root, done.run.run_id)
     with pytest.raises(RegistryError):

@@ -22,10 +22,10 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from . import acquisition, document_identity, extraction, identity, layer_store, ledger as ledger_module, naming, pack, preservation
+from . import acquisition, document_identity, evidence, extraction, identity, layer_store, ledger as ledger_module, naming, pack, preservation
 from .core_pipeline import AREA_INDEXES, AREA_PACKS, Workspace
 from .exclusive import exclusive
-from .jsonl import JsonlError, TornTail
+from .jsonl import JsonlError, TornTail, read_chained
 
 DIAGNOSIS_SCHEMA = naming.schema_id("workspace-diagnosis", 1)
 CLEAN, RESUMABLE, NEEDS_REPAIR, DAMAGED = "CLEAN", "INCOMPLETE_RESUMABLE", "NEEDS_REPAIR", "DAMAGED"
@@ -35,7 +35,8 @@ _HELD = ("FETCHED", "RAW_VERIFIED", "PRESERVATION_PENDING", "RAW_PRESERVED")
 def _tables(root: Path) -> list[Path]:
     """Every append-only line file of a workspace (pack indexes are written whole, not appended)."""
     return sorted(path for path in root.rglob("*.jsonl")
-                  if not {"packs", "layers"} & set(path.relative_to(root).parts) and ".torn-" not in path.name)
+                  if not {"packs", "layers"} & set(path.relative_to(root).parts) and ".torn-" not in path.name
+                  and not any(".rebuild-" in part or ".replaced-" in part for part in path.relative_to(root).parts))
 
 
 def _torn(path: Path) -> bool:
@@ -49,8 +50,14 @@ def _pack_ids(directory: Path) -> list[str]:
     return sorted({path.name.split(".")[0] for path in directory.iterdir() if pack.is_pack_id(path.name.split(".")[0])})
 
 
-def diagnose(workspace_root: Path, preservation_root: Path | None = None) -> dict[str, Any]:
-    """What an interrupted (or healthy) workspace holds. Read-only; takes no lock."""
+def diagnose(workspace_root: Path, preservation_root: Path | None = None, registry: Any = None,
+             extractor: extraction.Extractor = extraction.BASELINE) -> dict[str, Any]:
+    """What an interrupted (or healthy) workspace holds. Read-only; takes no lock.
+
+    With ``registry`` and ``preservation_root`` the identity tables are also held against a rebuild
+    from the preserved evidence (:mod:`coprepan.identity_rebuild`); without them they are checked
+    for self-consistency only.
+    """
     workspace = Workspace(Path(workspace_root))
     root = workspace.root
     needs_repair: list[str] = []      # repair() handles these
@@ -156,16 +163,22 @@ def diagnose(workspace_root: Path, preservation_root: Path | None = None) -> dic
             resumable.append("runs without a result: interrupted or still running")
         if out["runs_without_record"]:
             resumable.append("a run directory without a run record: the start itself was interrupted; start the run again")
-        altered = []
+        altered, head_problems = [], []
         for directory in sorted(p for p in runs.iterdir() if (p / "run.json").exists()) if runs.is_dir() else []:
             try:
                 record = json.loads((directory / "run.json").read_text(encoding="utf-8"))
                 if record.get("run_id") != directory.name or not acquisition.verify_run_record(record):
                     altered.append(directory.name)
-                acquisition.read_run_result(root, directory.name)
+                result = acquisition.read_run_result(root, directory.name)
+                if result is not None:   # the heads recorded when the run closed anchor the newest rows of the chains
+                    for problem in evidence.mismatches(root, result.get("evidence_heads", {})):
+                        head_problems.append(f"{directory.name}: {problem}")
             except (OSError, ValueError, AttributeError, acquisition.AcquisitionError, acquisition.RunStateError):
                 altered.append(directory.name)
         out["run_records_that_do_not_verify"] = sorted(set(altered))
+        out["evidence_heads_that_do_not_hold"] = head_problems
+        if head_problems:
+            damaged.append("evidence tables no longer hold what was recorded when a run closed")
         if altered:
             damaged.append("run records or results that are not the records their run id names")
     except OSError as error:
@@ -187,8 +200,25 @@ def diagnose(workspace_root: Path, preservation_root: Path | None = None) -> dic
             out["interrupted_requests_repeated_later"] = len(unfinished_requests(workspace)) - len(pending)
             if pending:
                 resumable.append("requests were planned and have no end on record: the request may or may not have been sent")
-        except JsonlError as error:
-            unreadable["requests/requests.jsonl"] = str(error)
+        except (JsonlError, KeyError, TypeError, ValueError) as error:
+            if not isinstance(error, JsonlError):   # a chain break is reported below; rows of another shape are not rows
+                unreadable["requests/requests.jsonl"] = f"{type(error).__name__}: {error}"
+                damaged.append(f"requests/requests.jsonl: its rows are not request-log rows: {error}")
+
+    # --- identity tables: derived state, held against the evidence when it is given ---
+    rebuilt = None
+    if registry is not None and preservation_root is not None:
+        from . import identity_rebuild
+        rebuilt = identity_rebuild.verify(workspace, registry, preservation_root=preservation_root, extractor=extractor)
+        out["identity_rebuild"] = rebuilt
+        unreadable_tables = (rebuilt["detail"] or "").startswith("existing tables unreadable")
+        if rebuilt["status"] == identity_rebuild.SOURCE_EVIDENCE_DAMAGED:
+            damaged.append(f"identity tables cannot be verified or rebuilt, the preserved evidence is damaged: {rebuilt['detail']}")
+        elif rebuilt["status"] == identity_rebuild.CONFLICTING:
+            damaged.append("identity tables conflict with the preserved evidence")
+        elif rebuilt["status"] == identity_rebuild.REBUILDABLE:
+            (needs_repair if unreadable_tables else resumable).append(
+                "identity tables are " + ("unreadable" if unreadable_tables else "incomplete") + " and rebuildable from the preserved evidence")
 
     # --- identity tables and the layers they point at ---
     identity_torn = any(name.startswith("identity/") for name in torn)
@@ -228,12 +258,43 @@ def diagnose(workspace_root: Path, preservation_root: Path | None = None) -> dic
                 damaged.append("identity rows whose ids do not fit their content, or that name documents the tables do not hold")
         except (JsonlError, ValueError, TypeError, KeyError) as error:
             unreadable["identity"] = str(error)
-            damaged.append(f"identity tables contradict themselves: {error}")
+            if rebuilt is None:   # with the evidence at hand, the rebuild above decides what this means
+                damaged.append(f"identity tables contradict themselves: {error}")
+
+    # --- chained primary-evidence tables: every row must authenticate the rows before it ---
+    chained = evidence.chained_tables()
+    chain_breaks = []
+    for name, schema in chained.items():
+        path = root / name
+        if name in torn or not path.exists():
+            continue
+        try:
+            read_chained(path, schema)
+        except JsonlError as error:
+            unreadable[name] = str(error)
+            chain_breaks.append(name)
+            damaged.append(f"{name}: {error}")
+    out["chain_broken_or_unreadable"] = chain_breaks
+
+    # --- derived tables: the candidates must be what the evidence gives ---
+    candidates = root / "discovery" / "candidates.jsonl"
+    if candidates.exists() and not {"discovery/candidates.jsonl", "discovery/inputs.jsonl", "discovery/events.jsonl", "requests/requests.jsonl"} & (set(torn) | set(chain_breaks)):
+        try:
+            from .http_acquisition import candidate_consistency
+            consistency = candidate_consistency(workspace)
+            out["candidates"] = {key: len(value) for key, value in consistency.items()}
+            if consistency["unsupported"] or consistency["different"]:
+                damaged.append("candidate rows the discovery evidence does not support or contradicts")
+            elif consistency["missing"]:
+                resumable.append("candidates the evidence gives are missing from the table: complete_candidates")
+        except (JsonlError, KeyError, TypeError, ValueError) as error:
+            unreadable["discovery/candidates.jsonl"] = f"{type(error).__name__}: {error}"
+            damaged.append(f"discovery/candidates.jsonl: {error}")
 
     # --- every other table must at least be readable as lines ---
     for path in _tables(root):
         name = path.relative_to(root).as_posix()
-        if name in torn or name in unreadable:
+        if name in torn or name in unreadable or name in chained or name.startswith("identity/"):
             continue
         try:
             for number, line in enumerate(path.read_bytes().split(b"\n")[:-1], 1):
@@ -269,6 +330,7 @@ def diagnose(workspace_root: Path, preservation_root: Path | None = None) -> dic
     # --- leftovers that are never read as data ---
     bases = [root] + ([Path(preservation_root)] if preservation_root is not None else [])
     out["leftovers"] = {"staging_files": sum(len(list(base.rglob("*.part-*"))) for base in bases),
+                        "identity_rebuilds": sorted(path.name for path in root.glob("identity.*") if path.is_dir()),
                         "torn_sidecars": sorted(path.name for base in bases for path in base.rglob("*.torn-*"))}
 
     out["needs_repair"], out["resumable"], out["damaged"] = needs_repair, resumable, damaged

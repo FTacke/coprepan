@@ -271,21 +271,33 @@ def identify_and_extract(
     identifier: str,
     extractor: extraction.Extractor = extraction.BASELINE,
     now: datetime | None = None,
+    identity_directory: Path | None = None,
+    read_only_layers: bool = False,
+    skip_unpreserved: bool = False,
 ) -> list[dict[str, Any]]:
     """Assign documents and versions for every fetched entry of a preserved pack.
 
     Reads bodies from the preservation root only, and only for fetches the ledger records as
     ``RAW_PRESERVED``. Idempotent: a second call finds every extraction in the layer store and
     every assignment in the identity tables.
+
+    ``identity_directory`` / ``read_only_layers``: the rebuild of the identity tables from preserved
+    evidence (CPD-0010) writes them to another, new directory and **writes no layer**: a stored
+    extraction that verifies is used, any other is derived in memory and not stored.
+    ``skip_unpreserved``: a fetch the ledger does not (yet) record as ``RAW_PRESERVED`` is left out
+    instead of refused — the rebuild covers what is preserved and says nothing about the rest.
     """
     preserved = open_preserved_pack(preservation_root, identifier)
-    ledger, tables, store = workspace.ledger(), IdentityTables(workspace.identity), workspace.layer_store()
+    ledger, tables = workspace.ledger(), IdentityTables(identity_directory or workspace.identity)
+    store = (workspace.layer_store() if workspace.layers.is_dir() else None) if read_only_layers else workspace.layer_store()
     rules = registry.url_rules(pack.pack_outlet(identifier))
     results = []
     for fetch_id, entry in preserved.entries.items():
         if entry.body_sha256 is None:
             continue
         if ledger.state(fetch_id) != "RAW_PRESERVED":
+            if skip_unpreserved:
+                continue
             raise NotPreserved(f"{fetch_id} is {ledger.state(fetch_id)}, not RAW_PRESERVED")
         record = preserved.fetch_record(fetch_id)
         if record["fetch_kind"] != acquisition.FETCH_KIND_ITEM:
@@ -319,7 +331,7 @@ def identify_and_extract(
         except OffOriginError:
             results.append({**result, "identity": "off_origin", "document_id": None, "document_version_id": None})
             continue
-        extracted, fingerprint, stored = _extract_stored(store, extractor, record, body, now)
+        extracted, fingerprint, stored = _extract_stored(store, extractor, record, body, now, read_only=read_only_layers)
         result.update(
             identity="assigned", document_id=assignment.document_id, is_new_document=assignment.is_new_document,
             url_key=assignment.url_key, url_key_basis=assignment.url_key_basis,
@@ -366,9 +378,31 @@ def extraction_fingerprint(extractor: extraction.Extractor, record: Mapping[str,
     return layer_store.fingerprint(extraction.STAGE, extractor.stage_version, inputs, parameters)
 
 
-def _extract_stored(store, extractor, record, body, now):
+class _Derived:
+    """An extraction derived in memory and stored nowhere (the read-only rebuild)."""
+
+    status = "DERIVED_NOT_STORED"
+
+    def __init__(self, artifact_id: str) -> None:
+        self.artifact_id = artifact_id
+
+
+def _extract_stored(store, extractor, record, body, now, *, read_only=False):
     fingerprint = extraction_fingerprint(extractor, record)
-    held = store.get(extraction.STAGE, fingerprint)
+    if read_only:
+        # A layer is derived state. The rebuild uses a stored answer that verifies; a missing or
+        # unverifiable one is derived again from the preserved bytes — and stored nowhere.
+        try:
+            held = store.get(extraction.STAGE, fingerprint) if store is not None else None
+            if held is not None:
+                store.read(extraction.STAGE, fingerprint)
+        except layer_store.LayerStoreError:
+            held = None
+        if held is None:
+            extracted = extractor.run(body, body_sha256=record["body_sha256"], **_extraction_arguments(record))
+            return extracted, fingerprint, _Derived(layer_store.artifact_id(fingerprint, sha256_bytes(extracted.payload)))
+    else:
+        held = store.get(extraction.STAGE, fingerprint)
     if held is not None:
         stored_record = json.loads(store.read(extraction.STAGE, fingerprint).decode("utf-8"))
         # The fingerprint names the extractor version, not the record's schema. A stored answer

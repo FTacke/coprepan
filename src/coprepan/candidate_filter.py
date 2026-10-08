@@ -29,10 +29,10 @@ from typing import Any, Mapping
 from urllib.parse import urlsplit
 
 from . import naming
-from .jsonl import append_row, keyed, read_rows
+from .jsonl import append_chained, keyed, read_chained
 from .storage_roots import CHECKOUT
 
-QUALIFICATION_SCHEMA = naming.schema_id("candidate-qualification", 1)
+QUALIFICATION_SCHEMA = naming.schema_id("candidate-qualification", 2)  # v2: chained rows (CPD-0010)
 RULES_SCHEMA = naming.schema_id("candidate-rules", 1)
 GENERIC_RULESET = "candidate-filter-generic/1"
 DEFAULT_RULES_FILE = CHECKOUT / "config" / "candidate_rules.json"
@@ -130,7 +130,7 @@ class QualificationTable:
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
-        self.rows = keyed(read_rows(self.path, QUALIFICATION_SCHEMA), lambda row: (row["candidate_id"], row["ruleset"]), "qualifications")
+        self.rows = keyed(read_chained(self.path, QUALIFICATION_SCHEMA), lambda row: (row["candidate_id"], row["ruleset"]), "qualifications")
 
     def decide(self, candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | None,
                channel_url_keys: frozenset[str], run_id: str, decided_at: str) -> dict[str, Any]:
@@ -138,7 +138,7 @@ class QualificationTable:
         key = (candidate["candidate_id"], ruleset_id(outlet_rules))
         if key not in self.rows:
             row = qualify(candidate, outlet_rules=outlet_rules, channel_url_keys=channel_url_keys)
-            self.rows[key] = append_row(self.path, QUALIFICATION_SCHEMA, {**row, "run_id": run_id, "decided_at": decided_at})
+            self.rows[key] = append_chained(self.path, QUALIFICATION_SCHEMA, {**row, "run_id": run_id, "decided_at": decided_at})
         return self.rows[key]
 
     def history(self, candidate_id: str) -> list[dict[str, Any]]:

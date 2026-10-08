@@ -19,7 +19,7 @@ import os
 from pathlib import Path
 from typing import Any, Callable, Hashable, Iterable, Mapping
 
-from .canonical import append_lock, line_json
+from .canonical import append_lock, line_json, sha256_bytes
 
 
 class JsonlError(RuntimeError):
@@ -45,9 +45,31 @@ def append_line(path: Path, line: bytes, *, expected_size: int | None = None) ->
     Raises :class:`TornTail` when the file ends in an incomplete line (nothing is written), and
     :class:`ConcurrentAppend` when the file is not as expected before, or not as written after.
     """
-    if not line.endswith(b"\n") or line.count(b"\n") != 1:
-        raise JsonlError("an appended line is exactly one line")
-    path = Path(path)
+    _append(Path(path), lambda previous: line, expected_size)
+
+
+def _last_line(descriptor: int, size: int) -> bytes:
+    """The last complete line of a file of ``size`` bytes that ends in a newline, with its newline."""
+    end, window = size, 4096
+    while True:
+        start = max(0, end - window)
+        os.lseek(descriptor, start, os.SEEK_SET)
+        block = os.read(descriptor, end - start)
+        cut = block.rfind(b"\n", 0, len(block) - 1 if end == size else len(block))
+        if cut >= 0:
+            os.lseek(descriptor, start + cut + 1, os.SEEK_SET)
+            return os.read(descriptor, size - (start + cut + 1))
+        if start == 0:
+            os.lseek(descriptor, 0, os.SEEK_SET)
+            return os.read(descriptor, size)
+        window *= 2
+
+
+def _append(path: Path, build: Callable[[bytes | None], bytes], expected_size: int | None) -> bytes:
+    """Append what ``build(last_line)`` returns — ``last_line`` being the line the file ends in
+    (``None`` for an empty file), read under the append lock, so that two appenders can never
+    both build on the same predecessor.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor = os.open(path, os.O_RDWR | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
     try:
@@ -61,13 +83,70 @@ def append_line(path: Path, line: bytes, *, expected_size: int | None = None) ->
                 os.lseek(descriptor, before - 1, os.SEEK_SET)
                 if os.read(descriptor, 1) != b"\n":
                     raise TornTail(f"{path.name}: refusing to append after an incomplete line")
+            line = build(_last_line(descriptor, before) if before else None)
+            if not line.endswith(b"\n") or line.count(b"\n") != 1:
+                raise JsonlError("an appended line is exactly one line")
             os.write(descriptor, line)
             os.fsync(descriptor)
             os.lseek(descriptor, before, os.SEEK_SET)
             if os.fstat(descriptor).st_size != before + len(line) or os.read(descriptor, len(line)) != line:
                 raise ConcurrentAppend(f"{path.name}: the appended line is not what the file holds; another writer is active")
+            return line
     finally:
         os.close(descriptor)
+
+
+# --- chained tables ---------------------------------------------------------------------------------
+#
+# Primary evidence that nothing else can re-derive is chained like the ledger (CPD-0009 §5, CPD-0010):
+# every row carries ``previous_row_sha256``, the SHA-256 of the line before it (``null`` for the
+# first). A changed, removed, inserted, duplicated or moved row breaks the chain at the row after
+# it. A torn tail is not a break: it is an incomplete line, reported as such, and the complete rows
+# before it still authenticate each other. The last complete row has no successor to vouch for it.
+
+CHAIN_FIELD = "previous_row_sha256"
+
+
+class ChainBroken(JsonlError):
+    """A row does not name the row before it: earlier evidence was changed, removed, inserted or moved."""
+
+
+def read_chained(path: Path, schema: str) -> list[dict[str, Any]]:
+    """Every row of a chained table, each checked against the line before it."""
+    path = Path(path)
+    if not path.exists():
+        return []
+    data = path.read_bytes()
+    if data and not data.endswith(b"\n"):
+        raise TornTail(f"{path.name}: ends in an incomplete line")
+    rows, previous = [], None
+    for number, line in enumerate(data.split(b"\n")[:-1], 1):
+        try:
+            row = json.loads(line.decode("utf-8"))
+            if row["schema"] != schema:
+                raise ValueError(f"schema {row['schema']!r}")
+            claimed = row[CHAIN_FIELD]
+        except (ValueError, KeyError, TypeError) as error:
+            raise JsonlError(f"{path.name}: line {number} is not a {schema} row: {error}") from error
+        if claimed != previous:
+            raise ChainBroken(f"{path.name}: line {number} does not follow the row before it: "
+                              "an earlier row was changed, removed, inserted or moved")
+        rows.append(row)
+        previous = sha256_bytes(line + b"\n")
+    return rows
+
+
+def append_chained(path: Path, schema: str, row: Mapping[str, Any]) -> dict[str, Any]:
+    """Append one row that names the row before it, and return it as written."""
+    if CHAIN_FIELD in row:
+        raise JsonlError(f"{CHAIN_FIELD} is set by the table, not by the caller")
+    written: dict[str, Any] = {}
+
+    def build(last: bytes | None) -> bytes:
+        written.update(row, schema=schema, **{CHAIN_FIELD: sha256_bytes(last) if last is not None else None})
+        return line_json(written)
+    _append(Path(path), build, None)
+    return written
 
 
 def read_rows(path: Path, schema: str) -> list[dict[str, Any]]:

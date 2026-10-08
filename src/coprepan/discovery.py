@@ -34,11 +34,11 @@ from . import naming
 from .canonical import canonical_json, require_sha256, sha256_bytes
 from .extraction import ContentDecodingError, decode_content
 from .identity import IdentityError, OffOriginError, OutletUrlRules, canonical_url_key, format_instant, is_channel_id
-from .jsonl import append_row, keyed, read_rows
+from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 
 PARSER_VERSION = "channel-parser/1"
-INPUT_SCHEMA = naming.schema_id("discovery-input", 1)
-EVENT_SCHEMA = naming.schema_id("discovery-event", 1)
+INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
+EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
 EVENT_ID_PREFIX = "de1"
 
@@ -291,30 +291,49 @@ class DiscoveryTables:
     def __init__(self, directory: Path) -> None:
         self.directory = Path(directory)
         self._inputs, self._events, self._candidates = (self.directory / f"{name}.jsonl" for name in ("inputs", "events", "candidates"))
-        self.inputs = read_rows(self._inputs, INPUT_SCHEMA)
-        self.events = keyed(read_rows(self._events, EVENT_SCHEMA), lambda row: row["event_id"], "discovery events")
+        self.inputs = read_chained(self._inputs, INPUT_SCHEMA)
+        self.events = keyed(read_chained(self._events, EVENT_SCHEMA), lambda row: row["event_id"], "discovery events")
         self.candidates = keyed(read_rows(self._candidates, CANDIDATE_SCHEMA), lambda row: row["candidate_id"], "candidates")
         self._seen_inputs = {(row["channel_id"], row["input_fetch_id"]) for row in self.inputs}
+        self._first_event: dict[str, dict[str, Any]] = {}
+        for row in self.events.values():
+            if row["candidate_id"] is not None:
+                self._first_event.setdefault(row["candidate_id"], row)
 
     def add_input(self, row: Mapping[str, Any]) -> bool:
         key = (row["channel_id"], row["input_fetch_id"])
         if key in self._seen_inputs:
             return False
-        self.inputs.append(append_row(self._inputs, INPUT_SCHEMA, row))
+        self.inputs.append(append_chained(self._inputs, INPUT_SCHEMA, row))
         self._seen_inputs.add(key)
         return True
 
     def add_event(self, row: Mapping[str, Any]) -> bool:
         if row["event_id"] in self.events:
             return False
-        self.events[row["event_id"]] = append_row(self._events, EVENT_SCHEMA, row)
+        self.events[row["event_id"]] = append_chained(self._events, EVENT_SCHEMA, row)
+        if row["candidate_id"] is not None:
+            self._first_event.setdefault(row["candidate_id"], self.events[row["event_id"]])
         return True
+
+    def first_event_of(self, candidate: str) -> dict[str, Any] | None:
+        """The first event (in file order) that listed this candidate."""
+        return self._first_event.get(candidate)
 
     def add_candidate(self, row: Mapping[str, Any]) -> bool:
         if row["candidate_id"] in self.candidates:
             return False
         self.candidates[row["candidate_id"]] = append_row(self._candidates, CANDIDATE_SCHEMA, row)
         return True
+
+
+def candidate_from_event(event: Mapping[str, Any]) -> dict[str, Any]:
+    """The candidate row an event gives rise to. A candidate is *derived* state: this function is
+    the whole derivation, used when a candidate is created and when a store is checked.
+    """
+    return {"candidate_id": event["candidate_id"], "outlet_id": event["outlet_id"], "url_key": event["url_key"],
+            "fetch_url": event["resolved_url"], "first_event_id": event["event_id"],
+            "first_channel_id": event["channel_id"], "first_listed_at": event["discovered_at"]}
 
 
 # --- a discovery pass over one channel --------------------------------------------------------------
@@ -472,10 +491,9 @@ def discover_channel(
                 result.events_seen += 1
             if row["candidate_id"] is not None:
                 if is_new_candidate:
-                    tables.add_candidate({"candidate_id": row["candidate_id"], "outlet_id": rules.outlet_id,
-                                          "url_key": row["url_key"], "fetch_url": entry.url,
-                                          "first_event_id": identifier, "first_channel_id": channel_id,
-                                          "first_listed_at": at})
+                    # From the first event that ever listed it — not necessarily this one: an
+                    # earlier pass may have been interrupted between its event and its candidate.
+                    tables.add_candidate(candidate_from_event(tables.first_event_of(row["candidate_id"])))
                     result.candidates_new.append(row["candidate_id"])
                 if row["candidate_id"] not in result.candidates_listed:
                     result.candidates_listed.append(row["candidate_id"])

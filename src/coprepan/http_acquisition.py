@@ -35,10 +35,10 @@ from .core_pipeline import COMPONENT_VERSIONS, Workspace, record_exchange
 from .exclusive import writes_workspace
 from .fetcher import FINAL_FETCHED, FetchOutcome, FetchRequest, HttpFetcher, request_id
 from .identity import IdentityError, canonical_url_key, format_instant
-from .jsonl import append_row, read_rows
+from .jsonl import append_chained, read_chained
 from .registry import Registry
 
-REQUEST_LOG_SCHEMA = naming.schema_id("request-log", 1)
+REQUEST_LOG_SCHEMA = naming.schema_id("request-log", 2)  # v2: chained rows (CPD-0010)
 EVENT_PLANNED, EVENT_FINISHED = "PLANNED", "FINISHED"
 PERMANENT_REDIRECTS = (301, 308)
 
@@ -64,7 +64,7 @@ def request_log_path(workspace: Workspace) -> Path:
 
 
 def request_rows(workspace: Workspace) -> list[dict[str, Any]]:
-    return read_rows(request_log_path(workspace), REQUEST_LOG_SCHEMA)
+    return read_chained(request_log_path(workspace), REQUEST_LOG_SCHEMA)
 
 
 def discovery_tables(workspace: Workspace) -> discovery.DiscoveryTables:
@@ -86,6 +86,54 @@ def unfinished_requests(workspace: Workspace) -> list[dict[str, Any]]:
     rows = request_rows(workspace)
     finished = {row["request_id"] for row in rows if row["event"] == EVENT_FINISHED}
     return [row for row in rows if row["event"] == EVENT_PLANNED and row["request_id"] not in finished]
+
+
+def derived_candidates(workspace: Workspace) -> dict[str, list[dict[str, Any]]]:
+    """Every candidate row the evidence supports, by candidate id (CPD-0010).
+
+    A candidate is derived state: either its first discovery event gave rise to it, or a request
+    that was permanently redirected did (the request log row carries the target and its key).
+    Both can name one candidate, in which case whichever came first made it and either row is
+    consistent.
+    """
+    tables = discovery_tables(workspace)
+    out: dict[str, list[dict[str, Any]]] = {
+        identifier: [discovery.candidate_from_event(event)] for identifier, event in tables._first_event.items()}
+    rows = request_rows(workspace)
+    channel_of = {row["request_id"]: row["channel_id"] for row in rows if row["event"] == EVENT_PLANNED}
+    for row in rows:
+        result = row.get("result") or {}
+        if row["event"] == EVENT_FINISHED and result.get("moved_permanently_to") and row.get("attributed_from") is None:
+            out.setdefault(result["moved_permanently_to"], []).append({
+                "candidate_id": result["moved_permanently_to"], "outlet_id": row["candidate_id"].split(":cand:")[0], "url_key": result["final_url_key"], "fetch_url": result["final_url"],
+                "first_event_id": None, "first_channel_id": channel_of.get(row["request_id"]), "first_listed_at": row["finished_at"],
+                "discovered_via": "permanent_redirect", "redirected_from": row["candidate_id"]})
+    return out
+
+
+def candidate_consistency(workspace: Workspace) -> dict[str, list[str]]:
+    """The stored candidate table against what the evidence supports. Reads only."""
+    derived, stored = derived_candidates(workspace), discovery_tables(workspace).candidates
+    return {
+        "missing": sorted(set(derived) - set(stored)),
+        "unsupported": sorted(set(stored) - set(derived)),
+        "different": sorted(identifier for identifier in set(stored) & set(derived)
+                            if {k: v for k, v in stored[identifier].items() if k != "schema"} not in derived[identifier]),
+    }
+
+
+@writes_workspace("complete the candidate table")
+def complete_candidates(workspace: Workspace) -> list[str]:
+    """Append the candidates the evidence supports and the table lacks. Never changes or removes
+    a row: a stored candidate that the evidence does not support is reported by
+    :func:`candidate_consistency` and left for a person.
+    """
+    derived, tables = derived_candidates(workspace), discovery_tables(workspace)
+    added = []
+    for identifier in sorted(set(derived) - set(tables.candidates)):
+        tables.add_candidate(derived[identifier][0])
+        added.append(identifier)
+    return added
 
 
 def _own_key(rules, url: str | None) -> str | None:
@@ -128,6 +176,9 @@ def run_http_acquisition(
         raise acquisition.AcquisitionError(f"not channels of {outlet_id}: {unknown}")
     if run.kind != acquisition.RUN_KIND_HTTP_FETCH:
         raise acquisition.AcquisitionError(f"an HTTP acquisition needs a run of kind http_fetch, not {run.kind}")
+    # The evidence this run adds to must authenticate before the first request is made.
+    request_rows(workspace)
+    discovery_tables(workspace)
     acquisition.open_run(workspace.root, run)
     ledger = workspace.ledger()
     packs: dict[str, pack.OpenPack] = {}
@@ -164,7 +215,7 @@ def run_http_acquisition(
     def fetch(request: FetchRequest) -> tuple[FetchOutcome, list[str]]:
         planned_at = clock()
         identifier = request_id(request, planned_at)
-        append_row(log, REQUEST_LOG_SCHEMA, {
+        append_chained(log, REQUEST_LOG_SCHEMA, {
             "event": EVENT_PLANNED, "request_id": identifier, "run_id": run.run_id, "url": request.url,
             "outlet_id": request.outlet_id, "fetch_kind": request.fetch_kind, "channel_id": request.channel_id,
             "candidate_id": request.candidate_id, "conditional": bool(request.conditional_headers),
@@ -184,7 +235,7 @@ def run_http_acquisition(
             "attempts": [{"number": a.number, "retry": a.retry, "delay_seconds": a.delay_seconds,
                           "retry_after": a.retry_after} for a in outcome.attempts],
             "finished_at": format_instant(clock())}
-        append_row(log, REQUEST_LOG_SCHEMA, finished)
+        append_chained(log, REQUEST_LOG_SCHEMA, finished)
         if result.get("moved_permanently_to"):
             # The answer belongs to another URL of the outlet for good. That URL becomes a
             # candidate of its own, already answered by this very request; the old candidate is
@@ -194,7 +245,7 @@ def run_http_acquisition(
                                   "fetch_url": result["final_url"], "first_event_id": None,
                                   "first_channel_id": request.channel_id, "first_listed_at": finished["finished_at"],
                                   "discovered_via": "permanent_redirect", "redirected_from": request.candidate_id})
-            append_row(log, REQUEST_LOG_SCHEMA, {**finished, "candidate_id": target, "attributed_from": request.candidate_id,
+            append_chained(log, REQUEST_LOG_SCHEMA, {**finished, "candidate_id": target, "attributed_from": request.candidate_id,
                                                  "result": {**result, "moved_permanently_to": None}})
         finals[f"{request.fetch_kind}:{outcome.final}"] += 1
         return outcome, fetch_ids

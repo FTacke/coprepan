@@ -26,9 +26,9 @@ from . import acquisition, core_pipeline, extraction, naming
 from .canonical import sha256_bytes
 from .document_identity import IdentityTables
 from .exclusive import writes_workspace
-from .jsonl import append_row, keyed, read_rows
+from .jsonl import append_chained, keyed, read_chained
 
-LABEL_SCHEMA = naming.schema_id("admission-label", 1)
+LABEL_SCHEMA = naming.schema_id("admission-label", 2)  # v2: chained rows (CPD-0010)
 RULESET = "admission-technical/1"
 
 # Technical status: does a usable extracted text of an item exist?
@@ -151,13 +151,13 @@ class LabelTable:
 
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
-        self.rows = keyed(read_rows(self.path, LABEL_SCHEMA), lambda row: (row["fetch_id"], row["ruleset"]), "admission labels")
+        self.rows = keyed(read_chained(self.path, LABEL_SCHEMA), lambda row: (row["fetch_id"], row["ruleset"]), "admission labels")
 
     def add(self, label: Mapping[str, Any], labelled_at: str) -> bool:
         key = (label["fetch_id"], label["ruleset"])
         if key in self.rows:
             return False
-        self.rows[key] = append_row(self.path, LABEL_SCHEMA, {**label, "labelled_at": labelled_at})
+        self.rows[key] = append_chained(self.path, LABEL_SCHEMA, {**label, "labelled_at": labelled_at})
         return True
 
     def of(self, fetch_id: str, ruleset: str | None = None) -> dict[str, Any] | None:

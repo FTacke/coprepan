@@ -184,7 +184,7 @@ def test_the_manifest_references_everything_an_acquisition_start_rests_on():
     assert set(m["decisions"]) >= {"CPD-0001", "CPD-0002", "CPD-0003", "CPD-0004", "CPD-0005"}
     assert all(len(value) == 64 for value in m["decisions"].values())
     for schema in ("coprepan-fetch-record/v1", "coprepan-pack/v1", "coprepan-extraction/v1", "coprepan-outlet-registry/v1",
-                   "coprepan-acquisition-policy/v1", "coprepan-discovery-event/v1", "coprepan-url-key/v1", "coprepan-fetch-id/v1"):
+                   "coprepan-acquisition-policy/v1", "coprepan-discovery-event/v2", "coprepan-url-key/v1", "coprepan-fetch-id/v1"):
         assert schema in m["schemas"], schema
     assert m["components"]["extractor"] == "baseline_html/0.1.0" and m["components"]["pack_writer"] == "pack-writer/1"
     assert {entry["path"] for entry in m["test_baseline"]["fixtures"]} == {

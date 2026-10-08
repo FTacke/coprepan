@@ -18,12 +18,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from . import naming
+from . import evidence, naming
 from .canonical import canonical_json, record_json, require_sha256, sha256_bytes, write_bytes_atomic
 from .identity import IdentityError, _require_url_text, fetch_id, format_instant, is_channel_id, is_fetch_id
 
 RUN_SCHEMA = naming.schema_id("acquisition-run", 1)
-RUN_RESULT_SCHEMA = naming.schema_id("acquisition-run-result", 1)
+RUN_RESULT_SCHEMA = naming.schema_id("acquisition-run-result", 2)  # v2: carries the heads of the chained tables (CPD-0010)
 FETCH_RECORD_SCHEMA = naming.schema_id("fetch-record", 1)
 RUN_ID_PREFIX = "acq1"
 
@@ -212,6 +212,8 @@ def close_run(
         "counts": dict(counts),
         "pack_ids": list(pack_ids),
         "errors": list(errors),
+        # how long every chained table is, and its last line, at the moment this run closes
+        "evidence_heads": evidence.heads(Path(workspace)),
     }
     if (directory / "result.json").exists():
         raise RunStateError(f"{run.run_id} already has a result")
