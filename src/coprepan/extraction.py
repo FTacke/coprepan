@@ -84,6 +84,9 @@ _META_SOURCES = {
     "section": (("json_ld", "articleSection"), ("open_graph", "article:section")),
     "language": (("html_lang", "lang"),),
 }
+# The bases a publication date can rest on, as this module writes them (a release's `date_basis`
+# vocabulary).
+DATE_BASES = tuple(basis for basis, _ in _META_SOURCES["publication_date"])
 
 
 class ExtractionError(ValueError):

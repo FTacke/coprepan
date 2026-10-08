@@ -32,5 +32,8 @@ test_analysis_contract.py    # crosscorpus-analysis/v1: conformance of a press a
 test_crash_recovery.py       # real process kills at 28 crashpoints; recovery by an independent process
 test_concurrency.py          # real concurrent processes: ledger, tables, layers, promotion, workspace lock
 test_integrity_invariants.py # no false success: corruption, filesystem faults, unknown schemas, generated sequences
+# Joint release contract crosscorpus-release/v1 (CPD-0011, CPD-0012)
+test_release_contract.py     # pinned bundle, no drift; the bundle's digests and all vector cases, by this repository's own implementation
+test_release_export.py       # native export object coprepan-export/v1 → release member → manifest → freeze → package → study population
 # Evidence-table integrity (CPD-0010)
 test_evidence_integrity.py   # chained primary evidence; candidates and identity tables checked against / rebuilt from the evidence
