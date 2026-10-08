@@ -3,9 +3,11 @@
 **Status: BUILT AND TESTED OFFLINE; EXTERNALLY NOT ACTIVATED AND NOT ACTIVATABLE AS COMMITTED.**
 Discovery, the HTTP fetcher, the policy gate, crawler identity and the acquisition run exist as
 code and pass an end-to-end canary against a server on a loopback address. **Nothing has been
-requested from any real site, and nothing can be: the tracked policy is `NOT_DECIDED`, the tracked
-schedule policy is `NOT_DECIDED`, the tracked crawler identity is `not_configured`, and no outlet
-is registered** — four independent refusals.
+requested from any real site, and nothing can be as committed: the tracked crawler identity is
+`not_configured`, no storage root is configured, and the tracked policy — decided for the first
+canary on 2026-10-08 ([CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md)),
+with the schedule policy and five registered outlets — has `external_acquisition: disabled`
+until the canary is armed.**
 Governing decisions: [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §2–§3,
 [CPD-0006](../decisions/CPD-0006_discovery-transport-policy-gate-and-readiness.md),
 [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §2–§7, §11.
@@ -105,7 +107,15 @@ required. Problems an entry can carry: `no_link`, `not_http`, `invalid_url`, `of
   `identity_scope_does_not_match_policy_scope`, `outlet_not_registered`, `off_origin`,
   `channel_not_registered`, `outlet_disabled`, `channel_disabled`, `explicit_opt_out`,
   `temporarily_suppressed` (defer), `rate_limit_not_configured`, `robots_not_consulted` (defer),
-  `robots_absent`, `robots_unreachable`, `robots_disallow`.
+  `robots_absent`, `robots_unreachable`, `robots_disallow`, `robots_crawl_delay_exceeds_limit`.
+- **`Crawl-delay`** (policy schema `v2`, CPD-0013 §5): always recorded as written. Under
+  `rate_limit.crawl_delay: binding_minimum` an unambiguous non-negative decimal number is the
+  minimum pause for its origin (the crawler's own line wins over `*`; never shorter than the
+  policy's own minimum), and an origin that asks for more than `crawl_delay_max_seconds` is not
+  fetched. Under `record_only` nothing is applied.
+- **The tracked policy** is the canary policy `canary/2026-10-08.1`: robots enforced, absent
+  allows, unreachable defers, `Crawl-delay` binding up to 60 s, 10 s per origin, two comment feeds
+  disabled. It is for one bounded canary and not for scheduled crawling.
 - **Robots** is evidence: `fetched` / `absent` (4xx) / `unreachable` (5xx, failure) /
   `not_consulted`. The policy says what each means.
 - **Identity** (CPD-0006 §4): software, operator, `User-Agent` and run are separate. No default.
@@ -194,7 +204,8 @@ candidate stays in the tables; a new rule version adds a decision beside the old
 | `MOVED` | permanently redirected to another URL of the outlet | never; the target is its own candidate |
 
 Every interval and *n* is a field of the schedule policy (`coprepan-schedule-policy/v1`); the
-tracked file is `NOT_DECIDED` and `load_schedule_policy` refuses it. The plan is a pure function
+tracked file is the canary policy `canary/2026-10-08.1` (CPD-0013 §4): a day before any revisit,
+an hour after a transient failure, three failures and a week's rest, one recheck of an absent URL. The plan is a pure function
 of history, policy and instant: `fetch-planner/1`.
 
 **Request log** — a `FINISHED` row also carries `result` (status, final URL, redirect statuses,

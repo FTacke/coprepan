@@ -398,6 +398,13 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     bundle's digest. **Nothing in the release or distribution layer is a precondition of O-11,
     O-1, O-2, O-3 or of the Phase-2 canary**; the order of item 8 (a)–(d) stands. It
     changes no gate state.
+15. *Added 2026-10-08 (gate closure towards the real canary).* Of item 8: (a) is done for the
+    canary — five routine outlets registered by record (O-11, canary subset `PASS`; the full
+    review stays open); (b) is done as far as an agent can — the acquisition and schedule policy
+    are decided for the canary (O-1, CPD-0013), **the crawler identity is not** (O-2: the operator
+    has to give a crawler name, organisation, a public contact URL and a contact address); (c) is
+    open — no preservation target is chosen (O-3: three reachable volumes of different
+    institutional kind). **The first external request waits for O-2 and O-3, in that order.**
 
 ## 13. Open operator and institutional decisions
 

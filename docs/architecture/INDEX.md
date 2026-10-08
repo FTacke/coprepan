@@ -71,6 +71,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0010](../decisions/CPD-0010_evidence-classes-chained-evidence-and-rebuildable-identity.md) | Evidence classes: chained primary evidence with anchored heads; derived candidates and identity tables checked against and rebuildable from the evidence | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0011](../decisions/CPD-0011_native-export-object-and-release-layer-mapping.md) | The native export object `coprepan-export/v1` and its mapping into a release | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0008 §7 |
+| [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) | Registration by record and the canary subset (O-11); acquisition and schedule policy of the first real canary (O-1); `Crawl-delay` may bind (policy schema `v2`) | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -98,7 +99,8 @@ Machine-checked contracts:
 | Stage order and gates of the core section; replay | `src/coprepan/core_pipeline.py` | `tests/test_core_pipeline.py` |
 | No deletion call outside the six named places, over every module | — | `tests/test_preservation.py` |
 | Discovery: parsers, events, candidates, budgets (CPD-0006 §2) | `src/coprepan/discovery.py` | `tests/test_discovery.py` |
-| Policy gate: nothing allowed by default; tracked policy denies everything | `src/coprepan/policy.py`, `config/acquisition_policy.json` | `tests/test_policy.py` |
+| Policy gate: nothing allowed by default; the tracked canary policy is decided and denies everything until armed; a binding `Crawl-delay` | `src/coprepan/policy.py`, `config/acquisition_policy.json` | `tests/test_policy.py`, `tests/test_fetcher.py` |
+| Every registered outlet has a registration record and agrees with it | `config/outlet_registry.json`, `config/registry_review/*_registration_*.json` | `tests/test_registry.py` |
 | Robots evidence (RFC 9309 parser) | `src/coprepan/robots.py` | `tests/test_policy.py` |
 | Crawler identity: no default, placeholders refused | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json` | `tests/test_policy.py` |
 | HTTP transport: limits, redirects, retries, policy before transport | `src/coprepan/fetcher.py` | `tests/test_fetcher.py` |

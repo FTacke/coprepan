@@ -465,3 +465,15 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | schema ids minted here | `coprepan-export/v1`, `coprepan-export-document/v1`, `coprepan-crosscorpus-contract-pins/v1` | [release](../release/INDEX.md) |
 | component version (added) | `release-export/1` | same |
 | release id (shared form) | begins with `<corpus_id>-`; the form after the prefix is each corpus's own. CO.PRE.PAN's own form (§5.4) is unchanged; CO.RA.PAN plans `corapan-YYYY-MM` | contract §5.4 |
+
+## 16. Additions of 2026-10-08 (CPD-0013)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **registration record** (term) | the dated record beside the registry by which an outlet becomes `registered`: authority, selection rule, every attribute set with its source, what was left unknown | CPD-0013 §1; [corpus supply](../corpus_supply/INDEX.md) §18 |
+| **routine case** (term) | a registry-review case with the action `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES`, no warning that needs a judgement and an unchanged id | CPD-0013 §1 |
+| **canary subset** (term) | the outlets registered for the first real canary; a technical subset, never a sample | CPD-0013 §2 |
+| crawl-delay mode | `binding_minimum`, `record_only` | CPD-0013 §5 |
+| policy refusal (added) | `robots_crawl_delay_exceeds_limit` | [acquisition](../acquisition/INDEX.md) §6 |
+| policy versions | `canary/2026-10-08.1` (acquisition policy and schedule policy of the first canary) | CPD-0013 §3–§4 |
+| schema ids | `coprepan-acquisition-policy/v2` (replaces `v1`; no `v1` policy was ever decided), `coprepan-registry-registration/v1` | the indexes above |

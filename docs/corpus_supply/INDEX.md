@@ -2,8 +2,8 @@
 
 **Status: NORMATIVE TARGET — REGISTRY SCHEMA AND AN UNREVIEWED PROPOSAL.** The registry schema,
 its validator and the legacy importer exist (§15). The legacy import has been run (§16): the
-registry holds **82 proposed outlets with 352 proposed channels and no registered outlet**. No
-outlet attribute beyond what the legacy database held is filled. No supply snapshot and no
+registry holds **82 outlets with 352 channels: five registered for the canary on 2026-10-08
+(§18), 77 proposed**. For the 77 no attribute beyond what the legacy database held is filled. No supply snapshot and no
 acquired material exist. Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §5.
 Current state: [`docs/STATUS.md`](../STATUS.md).
@@ -207,6 +207,9 @@ the legacy slugs as ids. See [`docs/legacy/INDEX.md`](../legacy/INDEX.md).
 - 2026-10-07 — channel health as a derived report; candidate qualification; a canary planner that
   proposes registered outlets for diversity (it selects none today: none is registered). Run report:
   [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).
+- 2026-10-08 — five routine outlets registered for the canary, each by a registration record
+  (§18; CPD-0013). The planner now selects exactly these five. Run report:
+  [`docs/agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md`](../agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md).
 
 ## 15. Registry schema `coprepan-outlet-registry/v1`
 
@@ -336,3 +339,35 @@ What the package found (measured on the proposal, 2026-10-07):
 
 Nothing in this list can be filled from the legacy database, and none of it was looked up
 elsewhere.
+
+## 18. Registration by record; the canary subset (2026-10-08)
+
+Decision: [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) §1–§2.
+Record: [`config/registry_review/canary_subset_registration_2026-10-08.json`](../../config/registry_review/canary_subset_registration_2026-10-08.json).
+
+**How an outlet is registered.** `registered` is set together with a dated registration record
+(`coprepan-registry-registration/v1`) that names the authority, the rule of selection, every
+attribute set with its source, the URL-rule version with its basis, the channel ids and what was
+left unknown. `tests/test_registry.py` fails when a registered outlet has no record or differs
+from it. A run may register a **routine case** under an operator brief that authorises it; any
+case that needs a judgement is deferred to the operator.
+
+| Outlet | Country | Time zone | Set from a named source | Channels (kinds) |
+|---|---|---|---|---|
+| `bo_el_deber` | bo | `America/La_Paz` | seat Santa Cruz de la Sierra; `print_and_web` | 5 sitemap, 1 rss |
+| `do_diario_libre` | do | `America/Santo_Domingo` | `print_and_web` | 8 rss, 1 sitemap, 1 sitemap index |
+| `hn_proceso_digital` | hn | `America/Tegucigalpa` | — (a third-party directory only) | 4 rss, 1 sitemap, 1 sitemap index |
+| `py_la_nacion` | py | `America/Asuncion` | `print_and_web` | 1 sitemap |
+| `ve_efecto_cocuyo` | ve | `America/Caracas` | `digital_native`, `web_only` | 4 rss, 2 sitemap index |
+
+- Time zone: the single zone the IANA database (2026c) lists for the country.
+- Sources were found by public web search on 2026-10-08 and are listed per outlet in the record.
+  **No page of any outlet was fetched**: this was registry review, not acquisition.
+- URL rules `v1` are the generic rules and were not derived from the outlets' URLs; the canary's
+  collision diagnostic confirms or replaces them, by a new version.
+- Whether a channel is alive is not known. Two comment feeds are registered channels and are
+  disabled by the canary policy.
+- Deferred: `cr_diario_extra` (its current official site was not confirmed).
+- **A technical subset for a canary; not a sample of any country's press.**
+
+Open of §17: items 1 to 5 for the 77 proposed outlets, unchanged.
