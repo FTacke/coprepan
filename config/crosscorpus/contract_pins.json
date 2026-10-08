@@ -9,7 +9,8 @@
       "bundle_sha256": "4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0",
       "taken_from_commit": "0a5f41dec2399369488c29f7cef37b053de28bcd",
       "files": 49,
-      "local_implementation": "src/coprepan/release_contract.py"
+      "local_implementation": "src/coprepan/release_contract.py",
+      "local_adoption": "CPD-0012"
     }
   }
 }

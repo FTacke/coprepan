@@ -390,6 +390,14 @@ Order note: the contract design of Phase 7 can start in parallel with Phase 3.
     that does not need real outlets or a preservation target is known to be open**; what remains
     is bound to the real target (Phase-1 gate, O-3) or accepted and listed (run report §11). It
     changes no gate state.
+14. *Added 2026-10-08 (second implementation of the joint release contract).* Part of Phase 7 was
+    brought forward as far as it needs no corpus material: the joint release contract
+    `crosscorpus-release/v1` is pinned, implemented independently and adopted for CO.PRE.PAN
+    (CPD-0012), and the native export object is decided (CPD-0011). The study template of Phase 7
+    pins the release by id and release manifest digest and, where it reads analysis tables, that
+    bundle's digest. **Nothing in the release or distribution layer is a precondition of O-11,
+    O-1, O-2, O-3 or of the Phase-2 canary**; the order of item 8 (a)–(d) stands. It
+    changes no gate state.
 
 ## 13. Open operator and institutional decisions
 
@@ -403,7 +411,7 @@ Core I.
 | **O-3** | **Preservation target.** Own allocation, or shared with CO.RA.PAN. | institutional | legacy freeze (preserved copy); Phase 1 gate on a real target; Phase 2 | audit §8.5, Q-2 |
 | **O-4** | **Storage capacity.** No measured rate exists; the scenario range is about 110–550 GB of raw material per year, and the CO.RA.PAN share cannot carry both. | institutional, then measured by the Phase-2 canary | scheduled crawling | audit §8.5 |
 | **O-5** | **Corpus population.** (a) Which outlet types count as "press" for the default release — digital-native outlets, broadcaster websites, state and official outlets, agencies. (b) Whether both corpora share one country list — Puerto Rico (press only so far), the United States (radio only), Equatorial Guinea (radio target). | scientific | Phase 6; default release view | audit Q-3, Q-4 |
-| **O-6** | **Cross-corpus contract naming and semantics.** Name of the shared namespace (working name `crosscorpus-`); name of the shared register field (working name `production_mode`; CO.RA.PAN calls its dimension `speech_mode`); token denominator; release and freeze semantics. **Status 2026-10-07: `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`** — COPREPAN's side decided in CPD-0008 (namespace kept, `production_mode`, `crosscorpus-token-denominator/v1`, manifest-pinned releases); open: adoption by CO.RA.PAN, the form of its `release_id`, its freeze semantics. | joint with CO.RA.PAN 3.0 | Phase 7 | audit §14, §16; CO.RA.PAN open items; `docs/crosscorpus/ANALYSIS_CONTRACT.md` §4, §15 |
+| **O-6** | **Cross-corpus contract naming and semantics.** Name of the shared namespace (working name `crosscorpus-`); name of the shared register field (working name `production_mode`; CO.RA.PAN calls its dimension `speech_mode`); token denominator; release and freeze semantics. **Status 2026-10-07: `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`** — COPREPAN's side decided in CPD-0008 (namespace kept, `production_mode`, `crosscorpus-token-denominator/v1`, manifest-pinned releases); open: adoption by CO.RA.PAN, the form of its `release_id`, its freeze semantics. **Status 2026-10-08:** release and freeze semantics have a joint draft, `crosscorpus-release/v1` (canonical home CO.RA.PAN), implemented independently on both sides and adopted by CO.PRE.PAN (CPD-0012, bundle digest `4fb72acf…dbbe0`); the form of a `release_id` is settled there as "only the corpus prefix is shared". Still open: CO.RA.PAN's adoption of both contracts, the joint freeze, and the joint points of the release contract §16 (Q1 with a CO.PRE.PAN recommendation). O-6 stays `JOINT_DECISION_OPEN`. | joint with CO.RA.PAN 3.0 | Phase 7 | audit §14, §16; CO.RA.PAN open items; `docs/crosscorpus/ANALYSIS_CONTRACT.md` §4, §15 |
 | **O-7** | **Publication branding** of the generation: "COPREPAN 3.0" or "CO.PRE.PAN 3.0". Changes no identifier. | operator style | nothing | naming §1 |
 | **O-8** | **Code relationship to `corapan_playground`.** Consume its storage / change-decision / accounting modules as a pinned dependency after generalisation there, or keep own implementations against the same on-disk contracts. | technical, operator | nothing now; revisit in Phase 1 | audit §18 |
 | **O-9** | **Existing backup of the legacy data.** Whether any copy exists outside the legacy working copy. Changes the urgency of the freeze, not its necessity. | factual, operator knowledge | nothing | audit Q-5 |

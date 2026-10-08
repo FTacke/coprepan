@@ -437,3 +437,31 @@ implements the registry schema and its vocabularies; `tests/test_registry.py` pi
 | identity verification status | `CORRECT`, `REBUILDABLE`, `CONFLICTING`, `SOURCE_EVIDENCE_DAMAGED` | CPD-0010 §5 |
 | leftover directories | `identity.rebuild-<id>`, `identity.replaced-<n>` — never read as data | [storage](../storage/INDEX.md) §18 |
 | schema ids (supersede the `v1` ids of the lists in §10, §11 and §12) | `coprepan-request-log/v2`, `-discovery-input/v2`, `-discovery-event/v2`, `-candidate-qualification/v2`, `-admission-label/v2`, `-acquisition-run-result/v2`; `-identity-verification/v1` new; `-discovery-candidate/v1` unchanged | the indexes above |
+
+## 15. Additions of 2026-10-08 (CPD-0011, CPD-0012)
+
+The terms of the joint release contract `crosscorpus-release/v1`
+([bundle](../../contracts/crosscorpus-release-v1/CONTRACT.md) §3) as this repository uses them.
+They refine "release" of §3.1; nothing of §5.4 changes.
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **export** (term) | one immutable, content-addressed tree of one outlet's document versions with their extraction records and provenance; the thing a release names as a member. Not a release, not a pack, not "an export of a dataset" in the loose sense of §3.4 | CPD-0011 §1; [release](../release/INDEX.md) §3 |
+| `export_id` | `cpx1-` + 32 hex digits of SHA-256 over the canonical JSON of the export manifest; permanent, never reused | CPD-0011 §3 |
+| export kind | `corpus`, `fixture` | CPD-0011 §7 |
+| export layer | `extraction` | CPD-0011 §5 |
+| **release freeze** (term) | the record `RELEASE_FREEZE.json` that names a release manifest by its digest; the act that makes a manifest a release. **Not** the acquisition baseline freeze (§10, O-12) and **not** a freeze manifest of a tree (§11) | contract §9; CPD-0012 §4 |
+| **release manifest digest** (term) | the document digest of a release manifest (`release_manifest_sha256`), recorded only by what refers to the manifest. Not the `manifest_sha256` of an analysis bundle, which is that bundle's own seal | contract §4.3; CPD-0012 §2 |
+| **document digest**, **record-set digest**, **tree digest** (terms) | SHA-256 over the canonical JSON of a document; over the sorted canonical lines of a set of records; the record-set digest of a tree's `{path, sha256, size}` listing | contract §4.2, §4.5 |
+| **contract path** (term) | a relative path with `/` separators that may enter a digest; never an address | contract §4.4 |
+| **bundle digest** (term) | the tree digest of a contract bundle; what a repository pins | contract §14.1 |
+| **projection** (term) | a deterministic derivative of a release, e.g. the analysis bundle; never a second source of truth | contract §3 |
+| **package** (term) | a distribution or archive copy of one frozen release; may be rebuilt | contract §11 |
+| package kind | `distribution`, `archive` | contract §11.1 |
+| **study population** (term) | the frozen ids one analysis read, with their selection provenance; a "sample" in the sense of §3.4 with its own id | contract §10 |
+| selection kind | `declarative_filter`, `external_tool`, `enumerated` | contract §10.3 |
+| member, document, coverage (release record sets) | `MEMBERS.jsonl`, `DOCUMENTS.jsonl`, `COVERAGE.jsonl`. In a release document record `document_id` is the document version id, as in the analysis tables (§12) | contract §6, §7 |
+| contract and schema ids (shared namespace) | `crosscorpus-release/v1`; `crosscorpus-release-manifest/v1`, `-release-member/v1`, `-release-document/v1`, `-release-coverage/v1`, `-release-freeze/v1`, `-release-pointer/v1`, `-study-population/v1`, `-study-selection-record/v1`, `-package-manifest/v1`, `-package-file/v1`; `crosscorpus-date-semantics/v1`, `crosscorpus-document-filter/v1` | the bundle |
+| schema ids minted here | `coprepan-export/v1`, `coprepan-export-document/v1`, `coprepan-crosscorpus-contract-pins/v1` | [release](../release/INDEX.md) |
+| component version (added) | `release-export/1` | same |
+| release id (shared form) | begins with `<corpus_id>-`; the form after the prefix is each corpus's own. CO.PRE.PAN's own form (§5.4) is unchanged; CO.RA.PAN plans `corapan-YYYY-MM` | contract §5.4 |

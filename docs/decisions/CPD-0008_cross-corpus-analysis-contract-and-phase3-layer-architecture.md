@@ -12,6 +12,12 @@
 | Run report | [`docs/agent-runs/2026-10-07_phase3-crosscorpus-analysis-contract.md`](../agent-runs/2026-10-07_phase3-crosscorpus-analysis-contract.md) |
 | Evidence | read-only archaeology of CO.RA.PAN 3.0 (commit `3a6972ff`) and of the studies repository (commit `679e14c1`), recorded in [`docs/crosscorpus/ANALYSIS_CONTRACT.md`](../crosscorpus/ANALYSIS_CONTRACT.md) §2–§3; `tests/test_analysis_contract.py` |
 
+**Amended 2026-10-08 by
+[CPD-0012](CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) §2:** the
+sentence of §7 "A study pins `release_id` and `manifest_sha256`" is replaced there. A study pins
+the release by id and release manifest digest and, where it reads analysis tables, that bundle's
+`manifest_sha256`. Everything else in this record stands.
+
 Validation debt: the contract has met two synthetic fixtures. No corpus material of either
 corpus, no real export, no annotation by an instrument, no adoption by CO.RA.PAN. Listed in
 `docs/STATUS.md` §6.

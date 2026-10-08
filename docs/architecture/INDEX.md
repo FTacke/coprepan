@@ -30,11 +30,16 @@ its area.
 | Admission labels | [`docs/admission/INDEX.md`](../admission/INDEX.md) | the technical label only, offline; no content-level label |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
 | Cross-corpus analysis contract | [`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md) | a technical proposal with a validator, COPREPAN's adapter and synthetic fixtures; not adopted by CO.RA.PAN |
+| Release (native export object, release manifest and freeze, package, study population) | [`docs/release/INDEX.md`](../release/INDEX.md) | export object and release mechanics built and tested offline on synthetic pages; no corpus export can be built (no adopted extractor); no release exists |
 | Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze manifest built and verified (O-10); no preserved copy |
 
-Normalisation and release have no component index yet: until their first implementation run they are specified in the target
-architecture (§1). The run that starts implementing one of them creates its `docs/<component>/INDEX.md`
+Normalisation has no component index yet: until its first implementation run it is specified in the target
+architecture (§1). The run that starts implementing it creates its `docs/<component>/INDEX.md`
 and adds it here.
+
+**A contract this repository does not own:** [`contracts/crosscorpus-release-v1/`](../../contracts/crosscorpus-release-v1/CONTRACT.md)
+is a verbatim, digest-pinned copy of the joint release contract, whose canonical home is the
+CO.RA.PAN repository. It is normative here by CPD-0012 and is never edited here.
 
 ## 1. Core — authoritative
 
@@ -64,6 +69,8 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0008](../decisions/CPD-0008_cross-corpus-analysis-contract-and-phase3-layer-architecture.md) | Cross-corpus analysis contract (technical proposal; binds COPREPAN only) and the Phase-3 layer architecture | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0009](../decisions/CPD-0009_single-writer-recovery-and-operation-semantics.md) | One writer per workspace; recovery after interruption; operation semantics (at-least-once requests, exactly-once evidence identity); chained ledger records; exclusive binding on the preservation root | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0010](../decisions/CPD-0010_evidence-classes-chained-evidence-and-rebuildable-identity.md) | Evidence classes: chained primary evidence with anchored heads; derived candidates and identity tables checked against and rebuildable from the evidence | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0011](../decisions/CPD-0011_native-export-object-and-release-layer-mapping.md) | The native export object `coprepan-export/v1` and its mapping into a release | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0008 §7 |
 
 ## 3. Component specifications — active
 
@@ -112,6 +119,8 @@ Machine-checked contracts:
 | Chained primary evidence (request log, discovery inputs and events, qualifications, labels); heads at run close; candidates and identity tables derived and rebuildable | `src/coprepan/jsonl.py`, `evidence.py`, `identity_rebuild.py`, `recovery.py` | `tests/test_evidence_integrity.py` |
 | No false success: preserved, sealed, promoted, version, 304 and replay refuse when what they claim is broken | `src/coprepan/core_pipeline.py`, `recovery.py` | `tests/test_integrity_invariants.py` |
 | Cross-corpus analysis contract: schemas, value states, denominator, manifest, compatibility view; conformance of a press and a radio fixture; invalid bundles refused | `src/coprepan/analysis_contract.py`, `src/coprepan/analysis_export.py` | `tests/test_analysis_contract.py` |
+| Joint release contract `crosscorpus-release/v1`: the copy is the pinned bundle; a drifted copy is refused; the bundle's digests and all vector cases reproduced by this repository's own checks | `contracts/crosscorpus-release-v1/`, `config/crosscorpus/contract_pins.json`, `src/coprepan/release_contract.py` | `tests/test_release_contract.py` |
+| Native export object `coprepan-export/v1`; export → release member → manifest → freeze → package → study population; no corpus export without an adopted extractor | `src/coprepan/release_export.py` | `tests/test_release_export.py` |
 
 ## 4. Open decisions and gates
 

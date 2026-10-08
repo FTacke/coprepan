@@ -34,6 +34,14 @@ evidence; the identity tables are rebuilt from preserved packs and compared
 (`crosscorpus-analysis/v1`, CPD-0008). Two synthetic fixtures conform to it. It is not adopted by
 CO.RA.PAN, no corpus material has passed through it, and it validates nothing scientific.
 
+**The joint release contract `crosscorpus-release/v1` is implemented a second time, independently,
+and adopted by CO.PRE.PAN** (CPD-0012; bundle digest `4fb72acf…dbbe0`, a verbatim pinned copy of
+CO.RA.PAN's draft): this repository's own checks reproduce every digest and all 52 cases of the
+shared vectors. A native export object exists (`coprepan-export/v1`, CPD-0011) and has carried
+synthetic pages into a fixture release, a package and a study population. **The joint contract is
+not frozen** (CO.RA.PAN has recorded no adoption), **no release of the corpus exists, and none can
+be built**: no extractor is adopted. It closes no gate.
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates
@@ -68,10 +76,10 @@ real page, a TLS connection or a real storage root.
 | 8 | normalisation | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 9 | NLP | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 10 | validated enrichment | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
-| 11 | release | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
+| 11 | release | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 12 | cross-corpus contract | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 
-What `PARTIAL` means for the eight stages, exactly:
+What `PARTIAL` means for the nine stages, exactly:
 
 | Stage | Exists | Does not exist |
 |---|---|---|
@@ -82,10 +90,10 @@ What `PARTIAL` means for the eight stages, exactly:
 | document identity | id serialisation and canonical URL key (CPD-0003); document and version assignment, append-only identity tables, collision refusal, `duplicate_of` and `moved_to` relations (CPD-0005 §4) — on recorded exchanges | syndication clusters; URL-key aliases after a rule change; a durable home for the tables; any id minted for corpus material |
 | extraction | the extraction record and its digests; storage by fingerprint; replay from the preservation root; a **baseline** extractor (`baseline_html/0.1.0`, lifecycle `EXPERIMENTAL`); an evaluation harness and review-package generator; a gold-sample design | an adopted extractor; a gold sample; any quality measurement; per-outlet rules; date parsing |
 | admission labels | the technical label (`coprepan-admission-label/v2`, chained; rule set `admission-technical/1`): usable / unusable with reasons and evidence, append-only | every content-level label: article / not article, access class, language from content, length, type; any label on corpus material |
+| release | the native export object `coprepan-export/v1` (builder, verifier); release manifest builder and explicit freeze; package and study-population builders; CO.PRE.PAN's own checks of `crosscorpus-release/v1` — on synthetic pages, on temporary directories | **any corpus export** (refused while no extractor is `ACTIVE`); a selection policy; an annotation layer and token counts; a date parser; an exports root on a real target; any release, distribution copy or deposit |
+| cross-corpus contract | `crosscorpus-analysis/v1` as a proposal: vocabularies, table schemas, a fail-closed validator, manifest sealing, the token denominator, a compatibility view; COPREPAN's adapter from extraction records and a *supplied* annotation; a press and a radio fixture, both synthetic | **adoption by CO.RA.PAN** (O-6 is a joint decision); any export of corpus material; any annotation by an instrument; the selection-policy content; columnar storage; **the joint freeze of `crosscorpus-release/v1`** (adopted here by CPD-0012, not by CO.RA.PAN) |
 
-| cross-corpus contract | `crosscorpus-analysis/v1` as a proposal: vocabularies, table schemas, a fail-closed validator, manifest sealing, the token denominator, a compatibility view; COPREPAN's adapter from extraction records and a *supplied* annotation; a press and a radio fixture, both synthetic | **adoption by CO.RA.PAN** (O-6 is a joint decision); any export of corpus material; any annotation by an instrument; coverage and selection-policy schemas; columnar storage |
-
-`PARTIAL` for stages 2, 3, 7 and 12 means "code and tests exist, offline". It is not a step towards
+`PARTIAL` for stages 2, 3, 7, 11 and 12 means "code and tests exist, offline". It is not a step towards
 `ACTIVE`: activation needs validation on real material and the operator decisions of §5.
 
 ## 3. Foundation
@@ -94,7 +102,7 @@ What `PARTIAL` means for the eight stages, exactly:
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0010 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0012 `ACTIVE_WITH_VALIDATION_DEBT` (§6) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -117,6 +125,9 @@ What `PARTIAL` means for the eight stages, exactly:
 | Extraction evaluation harness, review package | implemented and tested on synthetic pages; **no gold, no real page, no result** | `src/coprepan/extraction_eval.py`, [`GOLD_SAMPLE_DESIGN.md`](extraction/GOLD_SAMPLE_DESIGN.md) |
 | Cross-corpus analysis contract `crosscorpus-analysis/v1` | **technical proposal**; validator, sealing, denominator rule, compatibility view implemented and tested on two synthetic fixtures; **not adopted by CO.RA.PAN** | `src/coprepan/analysis_contract.py`, `tests/test_analysis_contract.py`, [`docs/crosscorpus/INDEX.md`](crosscorpus/INDEX.md) |
 | COPREPAN contract adapter | implemented and tested; takes its annotation as an argument — **COPREPAN has no annotator** | `src/coprepan/analysis_export.py` |
+| Joint release contract `crosscorpus-release/v1` — pinned bundle | verbatim copy of CO.RA.PAN's draft (49 files), pinned by bundle digest; a drifted copy is refused by the loader and fails the suite. Status `DRAFT`; **adopted by CO.PRE.PAN only** (CPD-0012) | `contracts/crosscorpus-release-v1/`, `config/crosscorpus/contract_pins.json` |
+| Joint release contract — CO.PRE.PAN's own checks | implemented independently; every digest and all 52 cases of the bundle's vectors reproduced (measured 2026-10-08). Synthetic fixtures only | `src/coprepan/release_contract.py`, `tests/test_release_contract.py`, [`docs/release/INDEX.md`](release/INDEX.md) |
+| Native export object `coprepan-export/v1`; release, freeze, package, study-population builders | implemented and tested on the synthetic canary through the real pipeline code; **no corpus export can be built** (extractor `EXPERIMENTAL`) | `src/coprepan/release_export.py`, `tests/test_release_export.py`, CPD-0011 |
 | Phase-3 layer architecture | written; decides order and boundaries of the text layers, no tool and no threshold | [`docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`](architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md) |
 | Canary planner and preflight | implemented and tested; on the repository as committed: 0 of 82 outlets eligible, preflight `NOT_READY` (measured) | `src/coprepan/canary.py`, `tests/test_canary.py` |
 | Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
@@ -141,7 +152,7 @@ What `PARTIAL` means for the eight stages, exactly:
 | Storage-target configuration and root resolution | fail-closed resolver implemented and unit-tested; **no root configured** | `config/storage_targets.yml`, `src/coprepan/storage_roots.py`, `tests/test_storage_roots.py` |
 | Promotion semantics and outage spool | implemented; tested **on temporary directories only** (first half of the Phase-1 gate) | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py`, `tests/test_preservation.py` |
 | Write-once layer store | implemented and unit-tested; its durable location (role) is undecided | `src/coprepan/layer_store.py`, `tests/test_layer_store.py` |
-| Release gate suite | scaffold; **contains no test** | `tests/suites/release_gate.txt` |
+| Release gate suite | scaffold; **contains no test**. It gates software changes of a pipeline that does not exist yet; the release-contract conformance tests are in `foundation_contract` (handoff gate PG2) | `tests/suites/release_gate.txt` |
 | Git | initialised 2026-10-07 on operator brief: branch `main`, remote `origin` = `https://github.com/FTacke/coprepan.git`; no history taken over from the legacy repository | [closure run report](agent-runs/2026-10-07_coprepan-repository-migration-closure.md) |
 | Legacy freeze `coprepan-legacy-2026-06` | **manifest built and verified 2026-10-07** (`MANIFEST_ONLY`): 32,235 files, 18,782,593,808 bytes; release scope 3,256 files, 17,370,148,925 bytes (measured). **No preserved copy, no restore check** (need O-3) | `docs/legacy/freeze/coprepan-legacy-2026-06/`, `src/coprepan/legacy_freeze.py`, `docs/legacy/INDEX.md` §5 |
 
@@ -179,7 +190,10 @@ Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
 (cross-corpus naming and semantics)** — `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`.
 COPREPAN's side is decided (CPD-0008); the contract is in force between the corpora only when
-CO.RA.PAN adopts it.
+CO.RA.PAN adopts it. Its release and freeze semantics now have a joint draft,
+`crosscorpus-release/v1`, implemented on both sides and adopted here (CPD-0012); the joint freeze
+needs CO.RA.PAN's adoption record. One joint point has a recommendation from this side and no
+decision: whether a release may be frozen with token counts `not_available` (contract §16 Q1).
 
 Full list: [master plan](plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md) §13.
 
@@ -225,6 +239,8 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | Annotation equivalence of the two instrument paths on shared written text | Phase 4 (design: contract §11) |
 | `tense-v3` (press) against `tense-v4` (radio) on the same text; legacy labels against the verbal-complex layer | bridge sample (design: contract §12) |
 | Every "comparable with caveat" of the comparability matrix | the measurements the matrix names; none exists |
+| The release contract on real material: a release of real CO.PRE.PAN exports verified with exports present (handoff gate PG4); the export object with an adopted extractor, an annotation layer, parsed dates | after Phase 3 / 4; needs O-3 for a durable exports root |
+| The points where the two implementations of `crosscorpus-release/v1` read the text differently beyond the vectors (four found by reading) | a change of the bundle in its canonical home, with new vector cases; then both pins move |
 | Writer lock and append locks on the file system the runtime workspace will really use; exclusive publication on the real preservation target (a share) | Phase-1 gate on the chosen target (O-3) |
 | Integrity of the *descriptive* fields of pack manifests, preservation manifests and run results (a single changed bit was not noticed in about a third of cases: storage §17), and of rows written after the last closed run (until the next close) | not decided (CPD-0010, "Not decided here"); none is evidence that cannot be recomputed or has no other copy |
 | Recovery after a power failure (un-synced data, directory entries) | not testable here; an operational assumption to state with O-3 |
@@ -255,7 +271,7 @@ run report that carries the evidence.
     "normalisation":         {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "nlp":                   {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "enrichment":            {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "release":               {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "release":               {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "cross_corpus_contract": {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"}
   },
   "open_production_gates": ["O-1", "O-2", "O-3", "O-4", "O-11", "O-12", "PHASE_1_CORE", "PHASE_2_CANARY"]
@@ -353,3 +369,14 @@ run report that carries the evidence.
   `PRE_CANARY_EVIDENCE_INTEGRITY = PASS`. **No gate closed**; no external request; nothing
   validated scientifically.
   Run report: [`docs/agent-runs/2026-10-08_evidence-table-integrity-closure.md`](agent-runs/2026-10-08_evidence-table-integrity-closure.md).
+- 2026-10-08 — second, independent implementation of the joint release contract
+  `crosscorpus-release/v1` (implementation + decision; reproducibility, robustness and independent
+  technical conformance only). CO.RA.PAN read read-only; its bundle taken verbatim and pinned
+  (digest `4fb72acf…dbbe0`, unchanged since its commit `0a5f41dec`). CO.PRE.PAN's own checks
+  reproduce every digest and all 52 vector cases; no contradiction found in the bundle; four
+  readings that differ beyond the vectors recorded as proposals. Decided: the native export object
+  `coprepan-export/v1` (CPD-0011); local adoption, study pin semantics amending CPD-0008 §7, and a
+  recommendation on Q1 that is not a joint decision (CPD-0012). Stage 11 moves to `PARTIAL`.
+  **The joint contract is not frozen; no release was built; nothing changed in CO.RA.PAN.** No gate
+  closed; no external request; nothing validated scientifically.
+  Run report: [`docs/agent-runs/2026-10-08_crosscorpus-release-v1-coprepan-second-implementation.md`](agent-runs/2026-10-08_crosscorpus-release-v1-coprepan-second-implementation.md).

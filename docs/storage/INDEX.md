@@ -175,6 +175,11 @@ Retention rules:
   *may* become delete-eligible through an explicit gate mechanism, with a **tombstone written while
   the bytes are still present** (identity, hash, size, reason from a closed vocabulary, decided by,
   decided at, policy version). This is the only controlled way to drop redundant raw material.
+- **Named by a frozen release is a hold** (added 2026-10-08, CPD-0011; joint release contract
+  §6.3). An export that any frozen release names is never deleted, overwritten or rewritten for as
+  long as that release exists; neither is a pack holding a fetch such an export names as a source.
+  The delete-eligibility of the rule above therefore applies only to packs that no export of a
+  frozen release refers to. No retention code exists; this rule binds whatever is built.
 - Derived layers are regenerable and may be pruned by version under a recorded decision.
 - How long raw third-party copies may be retained at all is part of the open acquisition policy
   (master plan §13, O-1).

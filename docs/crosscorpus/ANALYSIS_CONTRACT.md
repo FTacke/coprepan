@@ -289,6 +289,18 @@ internal `unknown` strings map to the state `unknown`.
 Not decided: where releases are stored and published, their cadence, and CO.RA.PAN's freeze
 semantics — which are open in CO.RA.PAN and are not COPREPAN's to set.
 
+**Amendment of 2026-10-08
+([CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) §2).**
+Since the joint release contract `crosscorpus-release/v1`
+([bundle](../../contracts/crosscorpus-release-v1/CONTRACT.md)) the bundle described here is a
+**projection** of a release, and the row "pinned inputs" above is replaced: a study pins, per
+corpus, the release — `release_id` and `release_manifest_sha256`, the document digest of the
+release manifest — and, where it reads these tables, the `manifest_sha256` of this bundle
+(`inputs[].analysis_layer` of a study-population manifest, §10.1 there). The two digests are
+different things: `manifest_sha256` stays the bundle's own seal over its `release` record and is
+unchanged; the release manifest carries no digest of itself. Release identity, freeze, correction,
+coverage and the place of the selection policy are defined by the release contract.
+
 ## 9. Compatibility view `crosscorpus-legacy-studies-view/v1`
 
 A separate table of aliases — `(target_level, target_id, alias, value)` — for reproducing old
@@ -461,6 +473,6 @@ and builds an adapter against the validator here.
 | press sentence-boundary policy id | scientific, Phase 4 |
 | lexical-diversity design; named-entity use | scientific |
 | columnar storage of the tables (the prototype writes JSON lines) | technical |
-| a `coverage` table schema; the selection-policy schema | joint, with the first release |
+| a `coverage` table schema; the selection-policy schema | joint, with the first release. *2026-10-08:* coverage at document level is specified by `crosscorpus-release/v1` §7.3; of the selection policy only the pin is specified, its content stays open |
 | whether a "fluent" second denominator is defined by the contract or left to studies | scientific |
 | equivalence run (§11) and bridge sample (§12) | Phase 4; need real material and an installed instrument |
