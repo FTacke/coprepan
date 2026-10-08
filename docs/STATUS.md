@@ -141,6 +141,7 @@ What `PARTIAL` means for the nine stages, exactly:
 | Joint release contract — CO.PRE.PAN's own checks | implemented independently; every digest and all 52 cases of the bundle's vectors reproduced (measured 2026-10-08). Synthetic fixtures only | `src/coprepan/release_contract.py`, `tests/test_release_contract.py`, [`docs/release/INDEX.md`](release/INDEX.md) |
 | Native export object `coprepan-export/v1`; release, freeze, package, study-population builders | implemented and tested on the synthetic canary through the real pipeline code; **no corpus export can be built** (extractor `EXPERIMENTAL`) | `src/coprepan/release_export.py`, `tests/test_release_export.py`, CPD-0011 |
 | Phase-3 layer architecture | written; decides order and boundaries of the text layers, no tool and no threshold | [`docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`](architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md) |
+| **Canary driver** (stages A–E, real-request budgets, receipt) and the end-of-canary `verify` / `measure` | implemented; qualified against a scripted loopback outlet (38 tests); **no real server has been asked anything**; the acquisition switch is still off | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md), CPD-0016 |
 | Canary planner and preflight | implemented and tested; on the repository as committed: 5 of 82 outlets eligible and selected, preflight `NOT_READY` (measured 2026-10-08) | `src/coprepan/canary.py`, `tests/test_canary.py` |
 | Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
 | Preservation-target readiness check | implemented and tested on temporary directories; **no target chosen** | `src/coprepan/preservation_target.py`, storage §15 |
@@ -195,9 +196,9 @@ Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. 
 | O-4 storage capacity | `TECHNICALLY_READY` — model built | **`OPEN`** | one measurement that does not exist: stored body bytes per fetch and fetches per outlet-day **on real outlets** (the Phase-2 canary) | measured, then operator |
 | O-10 legacy freeze manifest | built, run on the legacy tree, verified twice (module and an independent script) | **`PASS`** (2026-10-07) | — closed. It closes the go-ahead and the manifest only: the frozen release still needs a preserved copy and a restore check (O-3) | operator |
 | O-11 registry review | `TECHNICALLY_READY` — review package delivered; five routine outlets registered by record | **`PASS` for the canary subset** (`O-11_CANARY_SUBSET`); full review `PARTIAL`: 77 outlets, the id convention as a whole and one attribution case are **`READY_FOR_HUMAN_REVIEW`** | the human decisions of corpus supply §17; registration by reviewed commit | operator, scientific |
-| O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder; state `PRE_FREEZE` | **`OPEN`** | O-1, O-2, O-3, O-4, O-11 answered; then the operator's freeze of a `READY_TO_FREEZE` manifest | operator |
+| O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder with a **canary scope** (CPD-0016: does not wait for O-4); state `PRE_FREEZE` while the switch is off | **`OPEN`** (not frozen) | the arming commit, then the baseline built on it and frozen by a person stating its digest — [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md) §1–§3 | operator |
 | Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | passes on temporary directories **and, 2026-10-08, with the temporary files on the interim `D:` file system** (real process kills, real concurrent processes) | **`PASS` for the interim target** (`PHASE1_INTERIM_TARGET`); **`OPEN`** on the long-term target | the same tests on the real preservation target (needs O-3) | engineering, then operator |
-| Phase-2 canary gate | the offline canary passes; **it is not this gate** — it requests nothing external and measures no real page | **`OPEN`** | about five registered outlets acquired for real under a decided policy; every fetch traceable; restore test; measured bytes per fetch. `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today) | engineering, after O-1, O-2, O-3, O-11 |
+| Phase-2 canary gate | the offline canary passes; **it is not this gate** — it requests nothing external and measures no real page | **`OPEN`** | about five registered outlets acquired for real under a decided policy; every fetch traceable; restore test; measured bytes per fetch. `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today: the switch and the frozen baseline); the driver and the runbook exist | engineering, after the arming |
 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
 (cross-corpus naming and semantics)** — `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`.
@@ -427,3 +428,10 @@ run report that carries the evidence.
   configured. Decided: CPD-0015. **No external request to any outlet was made; no canary; the enabling switch
   of the acquisition policy is still off.**
   Run report: [`docs/agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md`](agent-runs/2026-10-08_joint-storage-contract-and-spool-wiring.md).
+- 2026-10-08 — canary driver, verification and measurement tools, runbook (implementation + decision;
+  reproducibility and robustness only). The staged driver is built and qualified offline against a
+  scripted outlet (CPD-0016); the baseline manifest has a canary scope; the end-of-canary `verify`
+  (read-back, fixity, replay without network, receipt re-derived from evidence) and the O-4 `measure`
+  exist; a review codebook for the Phase-3 gold is drafted. **The arming step was refused by the
+  permission layer of the session and is left to a person; no baseline is frozen, no request was made,
+  the switch is off, no O-4 measurement exists.** Run report: [`docs/agent-runs/2026-10-08_canary-driver-and-arming-prepared.md`](agent-runs/2026-10-08_canary-driver-and-arming-prepared.md).

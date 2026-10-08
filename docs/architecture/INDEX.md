@@ -74,6 +74,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) | Registration by record and the canary subset (O-11); acquisition and schedule policy of the first real canary (O-1); `Crawl-delay` may bind (policy schema `v2`) | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0014](../decisions/CPD-0014_crawler-identity-and-storage-roles-with-interim-preservation.md) | Crawler identity and its public page (O-2); storage roles shared with CO.RA.PAN, role separation, interim primary preservation root, planned move to the university file system | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0015](../decisions/CPD-0015_joint-storage-contract-and-outage-spool-in-the-acquisition-path.md) | Joint storage-management contract `crosscorpus-storage/v1` in force (pinned copy, own implementation, shared cases); the outage spool wired into the acquisition path | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md) | The staged canary driver, budgets of real requests, the canary-scope baseline, the arming protocol | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -127,6 +128,7 @@ Machine-checked contracts:
 | Native export object `coprepan-export/v1`; export → release member → manifest → freeze → package → study population; no corpus export without an adopted extractor | `src/coprepan/release_export.py` | `tests/test_release_export.py` |
 | Storage roles stay apart (no shared or nested root, a backup never on the primary's volume), nothing falls back, a preservation root can be switched without a new identity | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `.env.example` | `tests/test_storage_architecture.py`, `tests/test_storage_roots.py` |
 | Crawler identity is the decided one; the public crawler page in the repository says what the identity says | `config/crawler_identity.json`, `web/coprepan/` | `tests/test_policy.py` |
+| The canary driver: stages, real-request budgets, refusals, outage and interruption, receipt; end-of-canary verification and O-4 measurement | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](../canary/RUNBOOK.md) | `tests/test_canary_driver.py`, `tests/test_canary_evidence.py` |
 
 ## 4. Open decisions and gates
 
