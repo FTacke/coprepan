@@ -5,6 +5,14 @@ is built and qualified offline. The steps below were not run: twice the permissi
 agent's session refused the arming path (first the edit of the switch, then any command on the armed
 checkout), and it is the one step left to a person
 ([`docs/agent-runs/2026-10-08_real-acquisition-canary-o4.md`](../agent-runs/2026-10-08_real-acquisition-canary-o4.md) §2).
+**State since the evening of 2026-10-08:** the operator armed (`1f59e01`) and froze a first baseline; its
+verification failed on a defect of the check, which was repaired in `15ec1fdabf1b5e4e2cb3c4a05a978e57dff3bed0` — **that
+is the pinned commit `P` now**, with `N` = 1309 and the frozen baseline
+`docs/canary/BASELINE_FROZEN_2026-10-08b.json` (digest `96c271e3…7863f`; the first file is kept as superseded
+evidence). §1–§3 are done; the preflight of §4 is `READY`; **the `run` command of §4 is the next step and was refused
+to the agent** ([report](../agent-runs/2026-10-08_baseline-digest-repair-real-canary-o4-phase3.md) §5, with the
+command written out). Use the `…08b.json` file wherever a command below names the baseline.
+
 Everything else is a command. Run from the checkout; on Windows use `set PYTHONPATH=src` (or
 `$env:PYTHONPATH="src"`) instead of the `PYTHONPATH=src` prefix.
 

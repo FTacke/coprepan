@@ -6,7 +6,12 @@ run_ended_at:        see the closing commit of the run
 timezone:            Europe/Berlin
 ```
 
-**Status: IN PROGRESS** — this report is written while the run goes on; the status line is set at the end.
+**Status: BLOCKED** (at the canary's `run` command, by the session's permission layer; §5). Done before it: the
+digest defect diagnosed and repaired, the baseline frozen on the repaired commit, the preflight `READY`.
+
+**What the status does not claim.** No request was made to any publisher. There is no canary result, no O-4
+measurement, no Phase-3 sample or package. The repair is reproducibility evidence about a verification function,
+nothing else. **`external_acquisition` is still `enabled`** (§6).
 
 **Kind of run:** diagnosis and repair of a defect (verification of a frozen baseline), then the activation of the
 bounded canary the operator armed, its verification and measurement, then the preparation of a human review.
@@ -88,4 +93,67 @@ Regression tests (`tests/test_readiness.py`, five):
 | frozen | `docs/canary/BASELINE_FROZEN_2026-10-08b.json`, same digest. The freeze command was executed by the agent of this run on the operator's brief; the freeze record says so. **`O-12_CANARY_BASELINE = FROZEN`** |
 | preflight with it (`--commit P2 --tests-passed 1309`) | **`READY`**; `no_configuration_drift = PASS` ("unchanged since approval"); nothing open |
 
-Sections on the canary, the verification, O-4, the disarming and Phase 3 follow below as the run proceeds.
+## 5. The canary: not started — the `run` command was refused by the permission layer
+
+After the baseline commit (`HEAD` = `origin/main` = `e3a32c9143dacdb1749187fa70feb3240a194979`, tree clean, spool 0
+pending, preflight `READY`) the driver's `run` command was issued once. **The session's permission layer denied it**
+(reason given: `[Security Weaken]`). The denied command, exactly:
+
+```text
+PYTHONPATH=src python -m coprepan.canary_driver run --outlet bo_el_deber --outlet do_diario_libre --outlet hn_proceso_digital --outlet py_la_nacion --outlet ve_efecto_cocuyo --pinned-commit 15ec1fdabf1b5e4e2cb3c4a05a978e57dff3bed0 --approved-baseline docs/canary/BASELINE_FROZEN_2026-10-08b.json --tests-passed 1309 --required-free-bytes 21474836480 --receipt-dir <RUNTIME root>/canary
+```
+
+It was not retried in another form (no script wrapper, no other shell). Everything before it was allowed on the armed
+checkout: diagnosis, tests, `baseline`, `freeze`, `preflight`, commits and pushes.
+
+**No request was made to any publisher.** No start-state record, no receipt, no robots or research-TDM outcome, no
+access-control observation, no preserved object exist. `EXTERNAL_API_USAGE = NONE`.
+
+## 6. What therefore did not happen
+
+| Step | State |
+|---|---|
+| canary, `verify`, `measure` | not run; Phase-2 canary `OPEN`; O-4 `OPEN`, `NOT_YET_MEASURABLE` |
+| disarming | **not done, on purpose**: the canary the operator armed for has not run, and a disarming commit would change `config/` — the frozen baseline would no longer describe the checkout and the arming would have to be repeated with a third baseline. **`external_acquisition` is `enabled`** in `HEAD`, as the operator set it. Nothing in the repository makes a request by itself; a request needs the `run` command |
+| Phase 3 | `PHASE3_GOLD_PACKAGE = NOT_BUILT` — there is no real material. Candidate wrappers were not written now either: code committed after `P2` would move `HEAD` beyond evidence files and the driver would refuse to start |
+| `docs/STATUS.md` | **not updated in this run, on purpose**: between `P2` and `HEAD` only `docs/canary/` and `docs/agent-runs/` may differ (`verify_checkout`). STATUS still says that no baseline is frozen and that the switch is off; both are out of date until the run after the canary updates it. This report and the runbook carry the current state |
+
+## 7. The one manual step
+
+Run the command of §5 yourself (PowerShell: `$env:PYTHONPATH="src"` first), with `<RUNTIME root>` as configured on
+the workstation. It repeats the preflight, writes the start-state record, and takes roughly 20–40 minutes. Then, as
+in [`docs/canary/RUNBOOK.md`](../canary/RUNBOOK.md) §5–§6: `verify`, `measure`, and the disarming commit. Do not
+commit anything outside `docs/canary/` and `docs/agent-runs/` before the run. If the canary is not going to be run
+soon, disarm instead (set the switch to `disabled`, tests, commit, push) and arm again later with a new baseline.
+
+Alternatively a permission rule that allows the agent that one command; verification, measurement, disarming and
+Phase 3 can then be done by an agent run on the evidence.
+
+## 8. Checks
+
+| Check | Result |
+|---|---|
+| reproduction of the defect on the committed artefact | `verify_manifest` false; digests of §2 |
+| `tests/test_readiness.py` | 33 passed (5 new) |
+| full suite on `P2` | 1309 passed, 1 skipped |
+| preflight, first baseline, repaired code, commit `1f59e01` (diagnostic only; not used) | all checks `PASS` — confirms the digest was the only failure |
+| preflight, second baseline, commit `P2` | `READY` |
+| storage status before the attempted start | `PRESERVATION`, `RUNTIME`, `SPOOL` `AVAILABLE`; 0 pending; `crosscorpus-storage/v1` `IN_FORCE` |
+
+## 9. Files and git
+
+Changed: `src/coprepan/freeze.py`, `tests/test_readiness.py` (commit `15ec1fd`). Created:
+`docs/canary/BASELINE_FROZEN_2026-10-08b.json`, this report (`e3a32c9` and the closing commit). Changed in the closing
+commit: `docs/canary/RUNBOOK.md` (status, the commit and the baseline to use). Nothing moved, deleted or overwritten;
+`config/acquisition_policy.json` not touched; the first frozen baseline not touched. Reference repositories and
+CO.RA.PAN untouched; no cross-corpus contract touched.
+
+## 10. Gates
+
+| Gate | State |
+|---|---|
+| O-12 (canary scope) | **`FROZEN`** — `96c271e3…7863f` on `15ec1fd` (evidence: §4) |
+| preflight | `READY` |
+| Phase-2 canary | `OPEN` — not run |
+| O-4 | `OPEN` |
+| `external_acquisition` | `enabled` (operator's arming, awaiting the run) |
