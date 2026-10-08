@@ -27,6 +27,7 @@ test_schedule.py             # re-fetch lifecycle and plan, candidate qualificat
 test_admission_eval.py       # admission labels, extractor lifecycle, evaluation harness, review package
 test_refetch_e2e.py          # re-fetching end to end: conditional requests, redirects, robots sitemaps
 test_canary.py               # real-canary planner and fail-closed preflight
+test_canary_driver.py        # the staged canary driver qualified offline: stages, budgets of real requests, refusals, outage, interruption, receipt (CPD-0016)
 # Cross-corpus analysis contract (CPD-0008)
 test_analysis_contract.py    # crosscorpus-analysis/v1: conformance of a press and a radio fixture, invalid bundles
 # Adversarial persistence, crash recovery and concurrency (CPD-0009)

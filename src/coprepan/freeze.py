@@ -33,6 +33,9 @@ from .storage_roots import CHECKOUT
 
 BASELINE_SCHEMA = naming.schema_id("acquisition-baseline", 1)
 PRE_FREEZE, READY_TO_FREEZE, FROZEN = "PRE_FREEZE", "READY_TO_FREEZE", "FROZEN"
+# What a baseline is for. A baseline of the *canary* does not wait for O-4: the canary is the run that measures it
+# (CPD-0016). Every other precondition is the same.
+SCOPE_ACQUISITION, SCOPE_CANARY = "acquisition", "canary"
 
 _MODULES = (acquisition, admission, candidate_filter, capacity, crawler_identity, discovery, document_identity,
             extraction, extraction_eval, http_acquisition, layer_store, ledger, legacy_freeze, pack, policy, preservation,
@@ -84,6 +87,8 @@ def build_manifest(
     storage_target: Mapping[str, Any] | None = None,
     capacity_measured: bool = False,
     repository: Path = CHECKOUT,
+    scope: str = SCOPE_ACQUISITION,
+    canary: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The baseline manifest of the repository as it is on disk. Reads; changes nothing."""
     if not re.fullmatch(r"[0-9a-f]{40}", code_commit or ""):
@@ -116,12 +121,15 @@ def build_manifest(
         blocking.append("O-2: no crawler identity is configured")
     if storage_target is None or storage_target.get("status") != preservation_target.READY:
         blocking.append("O-3: no preservation target has passed the readiness check")
-    if not capacity_measured:
+    if scope not in (SCOPE_ACQUISITION, SCOPE_CANARY):
+        raise ValueError(f"not a baseline scope: {scope!r}")
+    if not capacity_measured and scope == SCOPE_ACQUISITION:
         blocking.append("O-4: bytes per fetch have not been measured on real material")
 
     manifest: dict[str, Any] = {
         "schema": BASELINE_SCHEMA,
         "state": PRE_FREEZE if blocking else READY_TO_FREEZE,
+        "scope": scope,
         "blocking": blocking,
         "created_at": format_instant(created_at),
         "operator": operator,
@@ -143,6 +151,8 @@ def build_manifest(
         "test_baseline": {**dict(test_baseline),
                           "fixtures": [_hashed(path) for path in sorted((repository / "tests" / "fixtures").glob("*/MANIFEST.json"))]},
     }
+    if canary is not None:
+        manifest["canary"] = dict(canary)
     manifest["manifest_sha256"] = sha256_bytes(canonical_json(manifest))
     return manifest
 
