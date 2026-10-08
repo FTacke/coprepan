@@ -60,21 +60,54 @@ def document(*outlets):
 # --- the tracked registry --------------------------------------------------------------------------
 
 
-def test_the_tracked_registry_is_valid_and_registers_nothing_yet():
-    # Registration is a human review step. No run may set `registered` on its own.
+def registration_records():
+    return [json.loads(path.read_text(encoding="utf-8"))
+            for path in sorted((REPO / "config" / "registry_review").glob("*_registration_*.json"))]
+
+
+def test_the_tracked_registry_is_valid_and_every_registration_has_a_record():
+    """Registration is a review step. An outlet is `registered` only by a dated record beside the
+    registry that names the authority, the rule of selection and the evidence of every value set.
+    """
     registry = R.load_registry(REPO / "config" / "outlet_registry.json")
-    assert [o for o in registry.outlets.values() if o["registration_status"] == "registered"] == []
+    registered = {o["outlet_id"]: o for o in registry.outlets.values() if o["registration_status"] == "registered"}
+    recorded = {}
+    for record in registration_records():
+        assert record["schema"] == "coprepan-registry-registration/v1" and record["gate"] == "O-11" and record["authority"]
+        for entry in record["registered"]:
+            assert entry["outlet_id"] not in recorded and entry["evidence"]
+            assert all(item["source"] and item["how"] for item in entry["evidence"])
+            recorded[entry["outlet_id"]] = entry
+    assert set(registered) == set(recorded)
+    for outlet_id, outlet in registered.items():
+        entry = recorded[outlet_id]
+        assert all(outlet[field] == value for field, value in entry["attributes_set"].items())
+        assert outlet["timezone"] != "unknown" and outlet["url_rules"]["version"] == entry["url_rules"]["version"] != "proposed"
+        assert {channel["channel_id"] for channel in outlet["channels"]} == set(entry["channel_ids"].values())
+        assert outlet["web_origins"] == entry["web_origins"] and outlet["review_notes"] == []
+        # what was not evidenced stays unknown
+        assert all(outlet[field] == "unknown" for field in entry["attributes_left_unknown"])
+
+
+def test_the_canary_subset_is_small_and_spread_over_countries():
+    registry = R.load_registry(REPO / "config" / "outlet_registry.json")
+    registered = [o for o in registry.outlets.values() if o["registration_status"] == "registered"]
+    assert len(registered) >= 5 and len({o["country_id"] for o in registered}) == len(registered)
+    kinds = {channel["kind"] for o in registered for channel in o["channels"]}
+    assert {"rss", "sitemap"} <= kinds
 
 
 def test_the_tracked_proposal_matches_its_review_report():
-    """The registry holds the proposal of the legacy import of 2026-10-07 and nothing else; the
-    review report beside it is the report of that very proposal. Neither is a registration.
+    """The registry holds the outlets the legacy import of 2026-10-07 proposed and no other; the
+    review report beside it is the report of that proposal. Neither is a registration: what is
+    registered is what a registration record covers, and no id changed by being registered.
     """
     registry = R.load_registry(REPO / "config" / "outlet_registry.json")
     report = json.loads((REPO / "config" / "registry_review" / "legacy_registry_import_2026-10-07.json").read_text(encoding="utf-8"))
     assert report["schema"] == "coprepan-legacy-registry-import/v1"
     proposed = {o["outlet_id"] for o in registry.outlets.values() if o["registration_status"] == "proposed"}
-    assert proposed == set(registry.outlets) == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]}
+    assert set(registry.outlets) == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]}
+    assert set(registry.outlets) - proposed == {e["outlet_id"] for record in registration_records() for e in record["registered"]}
     assert report["counts"]["proposed_outlets"] == len(registry.outlets)
     assert report["counts"]["proposed_channels"] == sum(len(o["channels"]) for o in registry.outlets.values())
     for row in report["legacy_name_to_outlet_id"]:

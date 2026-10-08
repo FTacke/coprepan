@@ -909,7 +909,7 @@
       },
       "channels": [
         {
-          "channel_id": "bo_el_deber:ch:sitemap_001",
+          "channel_id": "bo_el_deber:ch:sitemap_main",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 13,
@@ -921,7 +921,7 @@
           "url": "https://eldeber.com.bo/sitemap.xml"
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_002",
+          "channel_id": "bo_el_deber:ch:sitemap_lite",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 14,
@@ -933,7 +933,7 @@
           "url": "https://eldeber.com.bo/sitemap_lite.xml"
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_003",
+          "channel_id": "bo_el_deber:ch:sitemap_news",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 15,
@@ -945,7 +945,7 @@
           "url": "https://eldeber.com.bo/sitemap-news.xml"
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_004",
+          "channel_id": "bo_el_deber:ch:sitemap_organico",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 16,
@@ -957,7 +957,7 @@
           "url": "https://eldeber.com.bo/sitemap-organico.xml"
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_005",
+          "channel_id": "bo_el_deber:ch:sitemap_secciones",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 17,
@@ -969,7 +969,7 @@
           "url": "https://eldeber.com.bo/sitemap-secciones.xml"
         },
         {
-          "channel_id": "bo_el_deber:ch:rss_001",
+          "channel_id": "bo_el_deber:ch:rss_main",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 18,
@@ -1002,15 +1002,11 @@
       "unknown_fields": [
         "outlet_type",
         "outlet_group",
-        "city",
         "region",
         "scope",
-        "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "access_model"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [],
       "web_origins": [
         "https://eldeber.com.bo"
@@ -3077,7 +3073,7 @@
       },
       "channels": [
         {
-          "channel_id": "do_diario_libre:ch:sitemap_index_001",
+          "channel_id": "do_diario_libre:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 60,
@@ -3089,7 +3085,7 @@
           "url": "https://www.diariolibre.com/sitemap.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:sitemap_001",
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 61,
@@ -3101,7 +3097,7 @@
           "url": "https://www.diariolibre.com/sitemapnews"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_001",
+          "channel_id": "do_diario_libre:ch:rss_main",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 62,
@@ -3113,7 +3109,7 @@
           "url": "https://www.diariolibre.com/feed"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_002",
+          "channel_id": "do_diario_libre:ch:rss_portada",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 63,
@@ -3125,7 +3121,7 @@
           "url": "https://www.diariolibre.com/rss/portada.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_003",
+          "channel_id": "do_diario_libre:ch:rss_actualidad",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 64,
@@ -3137,7 +3133,7 @@
           "url": "https://www.diariolibre.com/rss/actualidad.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_004",
+          "channel_id": "do_diario_libre:ch:rss_economia",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 65,
@@ -3149,7 +3145,7 @@
           "url": "https://www.diariolibre.com/rss/economia.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_005",
+          "channel_id": "do_diario_libre:ch:rss_deportes",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 66,
@@ -3161,7 +3157,7 @@
           "url": "https://www.diariolibre.com/rss/deportes.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_006",
+          "channel_id": "do_diario_libre:ch:rss_revista",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 67,
@@ -3173,7 +3169,7 @@
           "url": "https://www.diariolibre.com/rss/revista.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_007",
+          "channel_id": "do_diario_libre:ch:rss_opinion",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 68,
@@ -3185,7 +3181,7 @@
           "url": "https://www.diariolibre.com/rss/opinion.xml"
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_008",
+          "channel_id": "do_diario_libre:ch:rss_videos",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 69,
@@ -3221,12 +3217,9 @@
         "city",
         "region",
         "scope",
-        "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "access_model"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [],
       "web_origins": [
         "https://www.diariolibre.com"
@@ -4729,7 +4722,7 @@
       },
       "channels": [
         {
-          "channel_id": "hn_proceso_digital:ch:sitemap_index_001",
+          "channel_id": "hn_proceso_digital:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 222,
@@ -4741,7 +4734,7 @@
           "url": "https://proceso.hn/sitemap.xml"
         },
         {
-          "channel_id": "hn_proceso_digital:ch:sitemap_001",
+          "channel_id": "hn_proceso_digital:ch:sitemap_news",
           "kind": "sitemap",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 223,
@@ -4753,7 +4746,7 @@
           "url": "https://proceso.hn/sitemap-news.xml"
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_001",
+          "channel_id": "hn_proceso_digital:ch:rss_main",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 224,
@@ -4765,7 +4758,7 @@
           "url": "https://proceso.hn/rss"
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_002",
+          "channel_id": "hn_proceso_digital:ch:rss_main_2",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 225,
@@ -4777,7 +4770,7 @@
           "url": "https://proceso.hn/feed"
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_003",
+          "channel_id": "hn_proceso_digital:ch:rss_main_3",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 226,
@@ -4789,7 +4782,7 @@
           "url": "https://proceso.hn/feed/"
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_004",
+          "channel_id": "hn_proceso_digital:ch:rss_comments_feed",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 227,
@@ -4826,11 +4819,9 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [],
       "web_origins": [
         "https://proceso.hn"
@@ -7458,7 +7449,7 @@
       },
       "channels": [
         {
-          "channel_id": "py_la_nacion:ch:sitemap_001",
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
           "legacy_feed_id": 342,
@@ -7494,12 +7485,9 @@
         "city",
         "region",
         "scope",
-        "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "access_model"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "display_name_shared_across_countries"
       ],
@@ -8149,7 +8137,7 @@
       },
       "channels": [
         {
-          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_001",
+          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 177,
@@ -8161,7 +8149,7 @@
           "url": "https://efectococuyo.com/sitemap.xml"
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_002",
+          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_root",
           "kind": "sitemap_index",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 178,
@@ -8173,7 +8161,7 @@
           "url": "https://efectococuyo.com/sitemap_index.xml"
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_001",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 179,
@@ -8185,7 +8173,7 @@
           "url": "https://efectococuyo.com/rss"
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_002",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main_2",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
           "legacy_feed_id": 180,
@@ -8197,7 +8185,7 @@
           "url": "https://efectococuyo.com/feed"
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_003",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main_3",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 181,
@@ -8209,7 +8197,7 @@
           "url": "https://efectococuyo.com/feed/"
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_004",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_comments_feed",
           "kind": "rss",
           "legacy_discovered_by": "html_head",
           "legacy_feed_id": 182,
@@ -8240,17 +8228,13 @@
       "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
       "recommended_outlet_id": "ve_efecto_cocuyo",
       "unknown_fields": [
-        "outlet_type",
         "outlet_group",
         "city",
         "region",
         "scope",
-        "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "access_model"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [],
       "web_origins": [
         "https://efectococuyo.com"
@@ -8853,7 +8837,7 @@
       ]
     }
   ],
-  "registry_sha256": "51d8e5a701fefec221e80ed6ffd2fe71eee575009c6e03da52808fd43746f54e",
+  "registry_sha256": "39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02",
   "review_cases": [
     {
       "case": "channels_on_the_origin_of_another_outlet",

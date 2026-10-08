@@ -643,7 +643,7 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "bo_el_deber:ch:sitemap_001",
+          "channel_id": "bo_el_deber:ch:sitemap_main",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -676,7 +676,7 @@
           ]
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_002",
+          "channel_id": "bo_el_deber:ch:sitemap_lite",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 1,
@@ -709,7 +709,7 @@
           ]
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_003",
+          "channel_id": "bo_el_deber:ch:sitemap_news",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 1,
@@ -742,7 +742,7 @@
           ]
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_004",
+          "channel_id": "bo_el_deber:ch:sitemap_organico",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -775,7 +775,7 @@
           ]
         },
         {
-          "channel_id": "bo_el_deber:ch:sitemap_005",
+          "channel_id": "bo_el_deber:ch:sitemap_secciones",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -808,7 +808,7 @@
           ]
         },
         {
-          "channel_id": "bo_el_deber:ch:rss_001",
+          "channel_id": "bo_el_deber:ch:rss_main",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -841,7 +841,7 @@
           ]
         }
       ],
-      "city": "unknown",
+      "city": "Santa Cruz de la Sierra",
       "country_id": "bo",
       "display_names": [
         {
@@ -876,21 +876,21 @@
           }
         ]
       },
-      "medium": "unknown",
+      "medium": "print_and_web",
       "outlet_group": "unknown",
       "outlet_id": "bo_el_deber",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/La_Paz",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "bo_el_deber-url-rules/v1"
       },
       "web_origins": [
         "https://eldeber.com.bo"
@@ -4914,7 +4914,7 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "do_diario_libre:ch:sitemap_index_001",
+          "channel_id": "do_diario_libre:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -4947,7 +4947,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:sitemap_001",
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -4980,7 +4980,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_001",
+          "channel_id": "do_diario_libre:ch:rss_main",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5013,7 +5013,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_002",
+          "channel_id": "do_diario_libre:ch:rss_portada",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5046,7 +5046,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_003",
+          "channel_id": "do_diario_libre:ch:rss_actualidad",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5079,7 +5079,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_004",
+          "channel_id": "do_diario_libre:ch:rss_economia",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5112,7 +5112,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_005",
+          "channel_id": "do_diario_libre:ch:rss_deportes",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5145,7 +5145,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_006",
+          "channel_id": "do_diario_libre:ch:rss_revista",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5178,7 +5178,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_007",
+          "channel_id": "do_diario_libre:ch:rss_opinion",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5211,7 +5211,7 @@
           ]
         },
         {
-          "channel_id": "do_diario_libre:ch:rss_008",
+          "channel_id": "do_diario_libre:ch:rss_videos",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -5279,21 +5279,21 @@
           }
         ]
       },
-      "medium": "unknown",
+      "medium": "print_and_web",
       "outlet_group": "unknown",
       "outlet_id": "do_diario_libre",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Santo_Domingo",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "do_diario_libre-url-rules/v1"
       },
       "web_origins": [
         "https://www.diariolibre.com"
@@ -8000,7 +8000,7 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "hn_proceso_digital:ch:sitemap_index_001",
+          "channel_id": "hn_proceso_digital:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -8033,7 +8033,7 @@
           ]
         },
         {
-          "channel_id": "hn_proceso_digital:ch:sitemap_001",
+          "channel_id": "hn_proceso_digital:ch:sitemap_news",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -8066,7 +8066,7 @@
           ]
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_001",
+          "channel_id": "hn_proceso_digital:ch:rss_main",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 1,
@@ -8099,7 +8099,7 @@
           ]
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_002",
+          "channel_id": "hn_proceso_digital:ch:rss_main_2",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 1,
@@ -8132,7 +8132,7 @@
           ]
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_003",
+          "channel_id": "hn_proceso_digital:ch:rss_main_3",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -8165,7 +8165,7 @@
           ]
         },
         {
-          "channel_id": "hn_proceso_digital:ch:rss_004",
+          "channel_id": "hn_proceso_digital:ch:rss_comments_feed",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -8238,16 +8238,16 @@
       "outlet_id": "hn_proceso_digital",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Tegucigalpa",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "hn_proceso_digital-url-rules/v1"
       },
       "web_origins": [
         "https://proceso.hn"
@@ -13632,7 +13632,7 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "py_la_nacion:ch:sitemap_001",
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
           "kind": "sitemap",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -13700,21 +13700,21 @@
           }
         ]
       },
-      "medium": "unknown",
+      "medium": "print_and_web",
       "outlet_group": "unknown",
       "outlet_id": "py_la_nacion",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Asuncion",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "py_la_nacion-url-rules/v1"
       },
       "web_origins": [
         "https://www.lanacion.com.py"
@@ -14853,7 +14853,7 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_001",
+          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
           "kind": "sitemap_index",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -14886,7 +14886,7 @@
           ]
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_002",
+          "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_root",
           "kind": "sitemap_index",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -14919,7 +14919,7 @@
           ]
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_001",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -14952,7 +14952,7 @@
           ]
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_002",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main_2",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -14985,7 +14985,7 @@
           ]
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_003",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main_3",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -15018,7 +15018,7 @@
           ]
         },
         {
-          "channel_id": "ve_efecto_cocuyo:ch:rss_004",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_comments_feed",
           "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
@@ -15086,21 +15086,21 @@
           }
         ]
       },
-      "medium": "unknown",
+      "medium": "web_only",
       "outlet_group": "unknown",
       "outlet_id": "ve_efecto_cocuyo",
-      "outlet_type": "unknown",
+      "outlet_type": "digital_native",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Caracas",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "ve_efecto_cocuyo-url-rules/v1"
       },
       "web_origins": [
         "https://efectococuyo.com"

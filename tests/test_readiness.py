@@ -171,9 +171,9 @@ def manifest(**kwargs):
 def test_the_repository_as_committed_is_pre_freeze_and_says_why():
     m = manifest()
     assert m["state"] == "PRE_FREEZE" and m["schema"] == "coprepan-acquisition-baseline/v1"
-    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-11", "O-1", "O-1", "O-2", "O-3", "O-4"]
+    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-1", "O-1", "O-2", "O-3", "O-4"]
     assert m["schedule_policy"]["version"] == "not_decided" and m["components"]["extractor_lifecycle"] == "EXPERIMENTAL"
-    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (82, 0, 82, 352)
+    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (82, 5, 77, 352)
     assert m["policy"]["status"] == "NOT_DECIDED" and m["crawler_identity"]["state"] == "not_configured"
     assert m["storage_target"] == {"status": "not_configured"} and m["code"]["commit"] == COMMIT
     assert FZ.verify_manifest(m)
@@ -218,7 +218,7 @@ def test_a_ready_target_and_measured_capacity_remove_only_their_own_blockers(tmp
     PT.initialise_target(tmp_path, "target-a", operator="operator", now=NOW)
     report = PT.check_readiness(tmp_path, required_free_bytes=1, now=NOW)
     m = manifest(storage_target=report, capacity_measured=True)
-    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-11", "O-1", "O-1", "O-2"] and m["state"] == "PRE_FREEZE"
+    assert [reason.split(":")[0] for reason in m["blocking"]] == ["O-1", "O-1", "O-2"] and m["state"] == "PRE_FREEZE"
     assert m["storage_target"]["target_id"] == "target-a"
 
 
@@ -250,18 +250,22 @@ def test_the_package_recommends_and_registers_nothing():
     review = RR.build_review(json.loads(before.decode("utf-8")))
     assert REGISTRY.read_bytes() == before and review["status"].startswith("RECOMMENDATION_ONLY")
     registry = R.load_registry(REGISTRY)
-    assert {o["registration_status"] for o in registry.outlets.values()} == {"proposed"}
+    assert sum(o["registration_status"] == "registered" for o in registry.outlets.values()) == 5   # by a registration record, not by the package
     assert (review["summary"]["outlets"], review["summary"]["channels"]) == (82, 352)
 
 
 def test_every_outlet_has_the_fields_a_reviewer_needs():
     review = json.loads(PACKAGE.read_text(encoding="utf-8"))
+    statuses = {o["outlet_id"]: o["registration_status"] for o in R.load_registry(REGISTRY).outlets.values()}
     needed = {"outlet_id", "recommended_outlet_id", "display_name", "country_id", "legacy", "web_origins", "publisher",
               "channel_count", "channel_kinds", "channels", "unknown_fields", "warnings", "recommended_action"}
     for entry in review["outlets"]:
         assert needed <= set(entry), entry["outlet_id"]
         assert entry["publisher"] == "unknown"                       # not evidenced by the legacy database: not invented
-        assert set(entry["unknown_fields"]) == set(RR.UNKNOWN_FIELDS)  # nothing was filled in
+        if statuses[entry["outlet_id"]] == "proposed":
+            assert set(entry["unknown_fields"]) == set(RR.UNKNOWN_FIELDS)  # nothing was filled in
+        else:
+            assert set(entry["unknown_fields"]) < set(RR.UNKNOWN_FIELDS) and "timezone" not in entry["unknown_fields"]
         assert entry["legacy"] and entry["legacy"][0]["newspaper_code"]
         assert len(entry["channels"]) == entry["channel_count"]
 

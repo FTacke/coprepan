@@ -1,0 +1,221 @@
+{
+  "authority": "operator brief of 2026-10-08: routine cases may be registered by the run; a borderline case is deferred",
+  "deferred": {
+    "cr_diario_extra": "considered as a reserve; DEFER: a closure and change of owner in 2023 was found (web search, 2026-10-08) and the current official site was not confirmed"
+  },
+  "gate": "O-11",
+  "not_a_claim": "a technical canary subset; not a sample of the press of any country; whether a channel is alive is not known",
+  "registered": [
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "city": "Santa Cruz de la Sierra",
+        "medium": "print_and_web",
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/La_Paz"
+      },
+      "channel_ids": {
+        "bo_el_deber:ch:rss_001": "bo_el_deber:ch:rss_main",
+        "bo_el_deber:ch:sitemap_001": "bo_el_deber:ch:sitemap_main",
+        "bo_el_deber:ch:sitemap_002": "bo_el_deber:ch:sitemap_lite",
+        "bo_el_deber:ch:sitemap_003": "bo_el_deber:ch:sitemap_news",
+        "bo_el_deber:ch:sitemap_004": "bo_el_deber:ch:sitemap_organico",
+        "bo_el_deber:ch:sitemap_005": "bo_el_deber:ch:sitemap_secciones"
+      },
+      "display_name": "El Deber",
+      "evidence": [
+        {
+          "claim": "official domain eldeber.com.bo; a daily newspaper seated in Santa Cruz de la Sierra",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched",
+          "source": "https://en.wikipedia.org/wiki/El_Deber"
+        }
+      ],
+      "outlet_id": "bo_el_deber",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "bo_el_deber-url-rules/v1"
+      },
+      "web_origins": [
+        "https://eldeber.com.bo"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "medium": "print_and_web",
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Santo_Domingo"
+      },
+      "channel_ids": {
+        "do_diario_libre:ch:rss_001": "do_diario_libre:ch:rss_main",
+        "do_diario_libre:ch:rss_002": "do_diario_libre:ch:rss_portada",
+        "do_diario_libre:ch:rss_003": "do_diario_libre:ch:rss_actualidad",
+        "do_diario_libre:ch:rss_004": "do_diario_libre:ch:rss_economia",
+        "do_diario_libre:ch:rss_005": "do_diario_libre:ch:rss_deportes",
+        "do_diario_libre:ch:rss_006": "do_diario_libre:ch:rss_revista",
+        "do_diario_libre:ch:rss_007": "do_diario_libre:ch:rss_opinion",
+        "do_diario_libre:ch:rss_008": "do_diario_libre:ch:rss_videos",
+        "do_diario_libre:ch:sitemap_001": "do_diario_libre:ch:sitemap_sitemapnews",
+        "do_diario_libre:ch:sitemap_index_001": "do_diario_libre:ch:sitemap_index_main"
+      },
+      "display_name": "Diario Libre",
+      "evidence": [
+        {
+          "claim": "official domain diariolibre.com; a printed daily with a web edition",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched (the search result's summary of the page)",
+          "source": "https://diariolibre.com/sobre-diario-libre"
+        }
+      ],
+      "outlet_id": "do_diario_libre",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "do_diario_libre-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.diariolibre.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Tegucigalpa"
+      },
+      "channel_ids": {
+        "hn_proceso_digital:ch:rss_001": "hn_proceso_digital:ch:rss_main",
+        "hn_proceso_digital:ch:rss_002": "hn_proceso_digital:ch:rss_main_2",
+        "hn_proceso_digital:ch:rss_003": "hn_proceso_digital:ch:rss_main_3",
+        "hn_proceso_digital:ch:rss_004": "hn_proceso_digital:ch:rss_comments_feed",
+        "hn_proceso_digital:ch:sitemap_001": "hn_proceso_digital:ch:sitemap_news",
+        "hn_proceso_digital:ch:sitemap_index_001": "hn_proceso_digital:ch:sitemap_index_main"
+      },
+      "display_name": "Proceso Digital",
+      "evidence": [
+        {
+          "claim": "proceso.hn is the site of Proceso Digital, an online news outlet of Honduras",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched; a third-party directory only, so outlet_type and medium stay unknown",
+          "source": "https://www.bamwor.com/en/countries/honduras/newspapers"
+        }
+      ],
+      "outlet_id": "hn_proceso_digital",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "hn_proceso_digital-url-rules/v1"
+      },
+      "web_origins": [
+        "https://proceso.hn"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "medium": "print_and_web",
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Asuncion"
+      },
+      "channel_ids": {
+        "py_la_nacion:ch:sitemap_001": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"
+      },
+      "display_name": "La Nación",
+      "evidence": [
+        {
+          "claim": "official domain www.lanacion.com.py; a printed daily founded 1995",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched (the search result's summary of the outlet's own articles)",
+          "source": "https://www.lanacion.com.py/pais/2025/05/25/30-anos-de-la-nacion-memorias-homenajes-y-un-legado-vivo/"
+        }
+      ],
+      "outlet_id": "py_la_nacion",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "py_la_nacion-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.lanacion.com.py"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "outlet_group",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "medium": "web_only",
+        "outlet_type": "digital_native",
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Caracas"
+      },
+      "channel_ids": {
+        "ve_efecto_cocuyo:ch:rss_001": "ve_efecto_cocuyo:ch:rss_main",
+        "ve_efecto_cocuyo:ch:rss_002": "ve_efecto_cocuyo:ch:rss_main_2",
+        "ve_efecto_cocuyo:ch:rss_003": "ve_efecto_cocuyo:ch:rss_main_3",
+        "ve_efecto_cocuyo:ch:rss_004": "ve_efecto_cocuyo:ch:rss_comments_feed",
+        "ve_efecto_cocuyo:ch:sitemap_index_001": "ve_efecto_cocuyo:ch:sitemap_index_main",
+        "ve_efecto_cocuyo:ch:sitemap_index_002": "ve_efecto_cocuyo:ch:sitemap_index_root"
+      },
+      "display_name": "Efecto Cocuyo",
+      "evidence": [
+        {
+          "claim": "an independent digital news outlet of Venezuela, founded 2015, at efectococuyo.com",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched",
+          "source": "https://reutersinstitute.politics.ox.ac.uk/es/news/asi-desafian-la-censura-en-venezuela-los-medios-independientes-en-internet"
+        },
+        {
+          "claim": "the same",
+          "how": "public web search, retrieved 2026-10-08; no page of the outlet was fetched",
+          "source": "https://cpj.org/es/2015/06/en-venezuela-los-medios-digitales-ayudan-a-los-per/amp/"
+        }
+      ],
+      "outlet_id": "ve_efecto_cocuyo",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ve_efecto_cocuyo-url-rules/v1"
+      },
+      "web_origins": [
+        "https://efectococuyo.com"
+      ]
+    }
+  ],
+  "registry_sha256_after": "39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02",
+  "registry_sha256_before": "51d8e5a701fefec221e80ed6ffd2fe71eee575009c6e03da52808fd43746f54e",
+  "reviewed_on": "2026-10-08",
+  "schema": "coprepan-registry-registration/v1",
+  "scope": "canary subset",
+  "selection_rule": "review-package action CONFIRM_ID_AND_COMPLETE_ATTRIBUTES; no warning other than a display name shared across countries; recommended id equal to the imported id; at least one channel that was active in the legacy system; a country with exactly one time zone; five different countries; rss and sitemap channels both represented",
+  "timezone_basis": "IANA tz database 2026c (python package tzdata 2026.3), zone1970.tab: the country has exactly one zone"
+}

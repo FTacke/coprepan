@@ -50,9 +50,14 @@ POOL = [outlet("ar_uno", "rss"), outlet("ar_dos", "sitemap", "regional"), outlet
 # --- planner ----------------------------------------------------------------------------------------
 
 
-def test_the_tracked_registry_yields_no_canary_because_nothing_is_registered():
-    plan = CN.plan_canary(R.load_registry(REPO / "config" / "outlet_registry.json"), outlets_wanted=5, seed="canary-1")
-    assert plan["selection"] == [] and plan["sufficient"] is False and len(plan["not_eligible"]) == 82
+def test_the_tracked_registry_yields_exactly_the_registered_canary_subset():
+    tracked = R.load_registry(REPO / "config" / "outlet_registry.json")
+    registered = sorted(o["outlet_id"] for o in tracked.outlets.values() if o["registration_status"] == "registered")
+    plan = CN.plan_canary(tracked, outlets_wanted=5, seed="canary-1")
+    assert plan["sufficient"] is True and len(plan["selection"]) == 5
+    assert {o["outlet_id"] for o in plan["selection"]} <= set(registered)
+    assert len({o["country_id"] for o in plan["selection"]}) == 5
+    assert len(plan["not_eligible"]) == len(tracked.outlets) - len(registered)
     assert all("not registered" in problems for problems in plan["not_eligible"].values())
 
 
@@ -106,7 +111,7 @@ def test_the_command_exits_non_zero_until_everything_passes(capsys):
     assert CN.main(["preflight", "--outlet", "uy_el_pais", "--commit", COMMIT]) == 1
     assert json.loads(capsys.readouterr().out)["status"] == "NOT_READY"
     assert CN.main(["plan", "--outlets", "5", "--seed", "canary-1"]) == 0
-    assert json.loads(capsys.readouterr().out)["outlets_selected"] == 0
+    assert json.loads(capsys.readouterr().out)["outlets_selected"] == 5     # planning selects; it starts nothing
 
 
 @pytest.fixture

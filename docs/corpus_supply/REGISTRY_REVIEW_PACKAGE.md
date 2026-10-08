@@ -2,7 +2,7 @@
 
 **Status: GENERATED — a recommendation for human review. It registers nothing.** Produced by
 `python -m coprepan.registry_review` from `config/outlet_registry.json`
-(SHA-256 `51d8e5a701fefec221e80ed6ffd2fe71eee575009c6e03da52808fd43746f54e`); a test fails if this page and the registry drift apart.
+(SHA-256 `39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02`); a test fails if this page and the registry drift apart.
 What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per outlet and channel:
 [`config/registry_review/outlet_review_package.json`](../../config/registry_review/outlet_review_package.json).
 
