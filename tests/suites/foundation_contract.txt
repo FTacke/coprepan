@@ -32,3 +32,5 @@ test_analysis_contract.py    # crosscorpus-analysis/v1: conformance of a press a
 test_crash_recovery.py       # real process kills at 28 crashpoints; recovery by an independent process
 test_concurrency.py          # real concurrent processes: ledger, tables, layers, promotion, workspace lock
 test_integrity_invariants.py # no false success: corruption, filesystem faults, unknown schemas, generated sequences
+# Evidence-table integrity (CPD-0010)
+test_evidence_integrity.py   # chained primary evidence; candidates and identity tables checked against / rebuilt from the evidence
