@@ -443,3 +443,9 @@ run report that carries the evidence.
   and legal hold stop a source for a person. The primary sources read and the limits of that reading are in
   the decision. The public crawler page says so and was redeployed. **Not legal advice, not reviewed by a
   legal office, no claim of RFC 9309 conformance.** Run report: [`docs/agent-runs/2026-10-08_research-tdm-acquisition-policy.md`](agent-runs/2026-10-08_research-tdm-acquisition-policy.md).
+  In the same run the arming was attempted under the operator's explicit authorisation: the edit of the
+  switch was accepted, the test run on the armed tree was **refused by the permission layer**; the edit
+  was taken back. **No baseline is frozen, no request was made to any publisher, no O-4 measurement and
+  no Phase-3 package exist.** Reports:
+  [`docs/agent-runs/2026-10-08_real-acquisition-canary-o4.md`](agent-runs/2026-10-08_real-acquisition-canary-o4.md),
+  [`docs/agent-runs/2026-10-08_phase3-real-extraction-review-package.md`](agent-runs/2026-10-08_phase3-real-extraction-review-package.md).

@@ -1,10 +1,10 @@
 # Canary runbook — from the qualified driver to the O-4 measurement
 
 **Status: PREPARED, NOT EXECUTED.** The driver ([CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md))
-is built and qualified offline. The steps below were not run, because step 1 — turning the
-acquisition switch on — was refused by the permission layer of the session that prepared them, and
-is the one step this repository's rules leave to a person
-([`docs/agent-runs/2026-10-08_canary-driver-and-arming-prepared.md`](../agent-runs/2026-10-08_canary-driver-and-arming-prepared.md) §3).
+is built and qualified offline. The steps below were not run: twice the permission layer of the
+agent's session refused the arming path (first the edit of the switch, then any command on the armed
+checkout), and it is the one step left to a person
+([`docs/agent-runs/2026-10-08_real-acquisition-canary-o4.md`](../agent-runs/2026-10-08_real-acquisition-canary-o4.md) §2).
 Everything else is a command. Run from the checkout; on Windows use `set PYTHONPATH=src` (or
 `$env:PYTHONPATH="src"`) instead of the `PYTHONPATH=src` prefix.
 
