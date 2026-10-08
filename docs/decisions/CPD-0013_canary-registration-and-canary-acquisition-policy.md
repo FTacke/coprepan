@@ -12,6 +12,9 @@
 | Run report | [`docs/agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md`](../agent-runs/2026-10-08_registry-policy-storage-real-acquisition-canary.md) |
 | Evidence | `config/registry_review/canary_subset_registration_2026-10-08.json`; `config/acquisition_policy.json`; `config/schedule_policy.json`; `tests/test_registry.py`, `tests/test_policy.py`, `tests/test_schedule.py`, `tests/test_fetcher.py` |
 
+**Amended by [CPD-0017](CPD-0017_scientific-tdm-acquisition-and-robots-policy.md) (2026-10-08):** an explicit `Disallow` no longer denies by itself; see there for
+the three layers and the research override. The rest of this decision stands.
+
 Validation debt: nothing here has met a real server. The policy is validated by the canary it is
 written for, or not at all. Listed in `docs/STATUS.md` §6.
 

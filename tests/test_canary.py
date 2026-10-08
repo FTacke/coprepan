@@ -134,7 +134,7 @@ def ready(tmp_path):
         outlet("uy_uno", "rss")]}), encoding="utf-8")
     policy = json.loads(config.joinpath("acquisition_policy.json").read_text(encoding="utf-8"))
     policy.update(status="DECIDED", external_acquisition="enabled", policy_version="policy/2026.1",
-                  robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny"},
+                  robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny", "on_parse_error": "defer"},
                   rate_limit={"min_interval_seconds_per_origin": 10, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": 60})
     config.joinpath("acquisition_policy.json").write_text(json.dumps(policy), encoding="utf-8")
     config.joinpath("crawler_identity.json").write_text(json.dumps({

@@ -4,6 +4,15 @@
 fetch intent → evaluate → ALLOW | DENY | DEFER, with reasons and evidence
 ```
 
+**Three layers, never one** (decision CPD-0017). What a robots file says is *evidence*
+(``robots_evidence``); whether the project's research text-and-data-mining policy covers the request
+is a second, separate statement (``research_tdm``); the *acquisition decision* is the third
+(``ALLOW`` · ``ALLOW_RESEARCH_OVERRIDE`` · ``REFUSE`` · ``HOLD``). A ``Disallow`` is recorded as
+observed. Under the mode ``research_tdm_override`` it is overridden only when every condition of the
+research policy holds, and then openly: the decision says so, names its basis and the rule. A
+technical access control is never weighed against anything — it is observed by the fetcher and ends
+the path.
+
 **Nothing is allowed by default.** The tracked policy ships ``NOT_DECIDED``; under it every
 external request is denied. The gate does not contain the policy — which robots signals bind,
 what an opt-out is, how fast an origin may be asked are institutional decisions recorded in
@@ -27,11 +36,14 @@ from urllib.parse import urlsplit
 
 from . import acquisition, naming, robots
 from .crawler_identity import SCOPE_EXTERNAL, SCOPE_LOOPBACK_TEST, CrawlerIdentity
+from .canonical import canonical_json, sha256_bytes
 from .identity import IdentityError, format_instant, normalise_origin
 from .registry import Registry, UnregisteredOutlet
 from .storage_roots import CHECKOUT
 
-POLICY_SCHEMA = naming.schema_id("acquisition-policy", 2)  # v2: Crawl-delay may bind (CPD-0013); no v1 policy was ever decided
+# v2: Crawl-delay may bind (CPD-0013). v3: the research-TDM layer and `on_parse_error` (CPD-0017).
+# No request was ever made under v1 or v2.
+POLICY_SCHEMA = naming.schema_id("acquisition-policy", 3)
 DEFAULT_POLICY_FILE = CHECKOUT / "config" / "acquisition_policy.json"
 NOT_DECIDED = "not_decided"
 
@@ -39,15 +51,46 @@ ALLOW, DENY, DEFER = "ALLOW", "DENY", "DEFER"
 DECISIONS = (ALLOW, DENY, DEFER)
 STATUS_DECIDED, STATUS_NOT_DECIDED = "DECIDED", "NOT_DECIDED"
 
-ROBOTS_MODES = ("enforce", "record_only")
+# `enforce`: an applicable Disallow refuses. `research_tdm_override`: it refuses unless the research
+# layer is eligible, and then the override is on record. `record_only` exists for tests on loopback
+# only: a policy loaded from configuration may not use it — an override is never silent.
+ROBOTS_MODES = ("enforce", "research_tdm_override", "record_only")
 ON_ABSENT = ("allow", "deny")
 ON_UNREACHABLE = ("allow", "deny", "defer")
+ON_PARSE_ERROR = ("allow", "deny", "defer")
+
+# Layer 1 — what the robots protocol evidence is.
+ROBOTS_ALLOW, ROBOTS_DISALLOW_OBSERVED = "ROBOTS_ALLOW", "ROBOTS_DISALLOW_OBSERVED"
+ROBOTS_UNAVAILABLE, ROBOTS_UNREACHABLE = "ROBOTS_UNAVAILABLE", "ROBOTS_UNREACHABLE"   # RFC 9309 §2.3.1.3 and §2.3.1.4
+ROBOTS_PARSE_ERROR, ROBOTS_NOT_EVALUATED = "ROBOTS_PARSE_ERROR", "ROBOTS_NOT_EVALUATED"
+# Layer 2 — whether the research-TDM policy covers the request.
+RESEARCH_TDM_ELIGIBLE, RESEARCH_TDM_NOT_APPLICABLE, RESEARCH_TDM_REVIEW = (
+    "RESEARCH_TDM_ELIGIBLE", "RESEARCH_TDM_NOT_APPLICABLE", "RESEARCH_TDM_REVIEW")
+# Layer 3 — the acquisition decision. `decision` (ALLOW · DENY · DEFER) stays what the transport and
+# the schedule act on; this says what kind of allowance or refusal it is.
+ALLOW_RESEARCH_OVERRIDE, REFUSE, HOLD = "ALLOW_RESEARCH_OVERRIDE", "REFUSE", "HOLD"
+ACQUISITION_DECISIONS = ("ALLOW", ALLOW_RESEARCH_OVERRIDE, REFUSE, HOLD)
+# Evidence classes of what stops a request for a person to look at, not for good.
+ACCESS_CONTROL_OBSERVED, DIRECT_OPT_OUT, LEGAL_REVIEW_HOLD = "ACCESS_CONTROL_OBSERVED", "DIRECT_OPT_OUT", "LEGAL_REVIEW_HOLD"
+_HOLD_REASONS = {"access_control_observed": ACCESS_CONTROL_OBSERVED, "explicit_opt_out": DIRECT_OPT_OUT,
+                 "legal_review_hold": LEGAL_REVIEW_HOLD}
+
+ROBOTS_DECISION_SEMANTICS = "robots-decision/2"   # /1: Disallow denies. /2: the three layers of CPD-0017
+TDM_BASIS_NONE = "not_applicable"
+TDM_BASES = ("SCIENTIFIC_TDM_POLICY_V1",)
+# Every one must be stated `true` by the decided policy for a research override to exist. They are
+# the operator's statements about the project (CPD-0017 §3), not things the gate can observe; what
+# the gate and the fetcher can observe — the scheme, an access control — is checked where it occurs.
+TDM_CONDITIONS = ("scientific_research_purpose", "research_organisation_operator", "non_commercial",
+                  "public_unauthenticated_http_only", "no_access_control_circumvention", "conservative_rate_limits",
+                  "protected_research_storage", "no_public_redistribution_of_raw_material")
+_TDM_KEYS = {"basis", "decision", "conditions", "legal_review_holds"}
 # What a `Crawl-delay` line of robots.txt does. It is not part of RFC 9309; whether it binds is the policy's to say.
 CRAWL_DELAY_MODES = ("binding_minimum", "record_only")
 _RATE_KEYS = {"min_interval_seconds_per_origin", "crawl_delay", "crawl_delay_max_seconds"}
 _DELAY = re.compile(r"\d{1,6}(?:\.\d{1,3})?")
 
-_KEYS = {"schema", "note", "policy_version", "status", "scope", "external_acquisition", "robots", "rate_limit",
+_KEYS = {"schema", "note", "policy_version", "status", "scope", "external_acquisition", "robots", "research_tdm", "rate_limit",
          "disabled_outlets", "disabled_channels", "opt_outs", "suppressions"}
 
 
@@ -79,6 +122,11 @@ class PolicyDecision:
     def allowed(self) -> bool:
         return self.decision == ALLOW
 
+    @property
+    def acquisition_decision(self) -> str:
+        """Layer 3: ``ALLOW``, ``ALLOW_RESEARCH_OVERRIDE``, ``REFUSE`` or ``HOLD``."""
+        return self.evidence.get("acquisition_decision") or {ALLOW: ALLOW, DENY: REFUSE, DEFER: HOLD}[self.decision]
+
 
 def load_policy(path: Path | None = None) -> dict[str, Any]:
     """Read the tracked policy. A loopback test policy is built in a test, never loaded."""
@@ -89,7 +137,22 @@ def load_policy(path: Path | None = None) -> dict[str, Any]:
     validate_policy(document)
     if document["scope"] != SCOPE_EXTERNAL:
         raise PolicyError("a policy loaded from configuration has scope 'external'")
+    if document["robots"]["mode"] == "record_only":
+        raise PolicyError("a policy loaded from configuration does not ignore robots.txt silently: "
+                          "robots.mode is 'enforce' or 'research_tdm_override'")
     return document
+
+
+def research_tdm_pin(document: Mapping[str, Any]) -> dict[str, Any]:
+    """What a baseline pins about the research-TDM layer: its basis, the decision semantics and one
+    digest over everything that decides how robots evidence, the research layer and the pace act.
+    """
+    block = document["research_tdm"]
+    decisive = {"semantics": ROBOTS_DECISION_SEMANTICS, "robots": document["robots"], "rate_limit": document["rate_limit"],
+                "basis": block["basis"], "decision": block["decision"], "conditions": block["conditions"]}
+    return {"research_tdm_policy_version": block["basis"], "decided_in": block["decision"],
+            "robots_decision_semantics": ROBOTS_DECISION_SEMANTICS, "robots_mode": document["robots"]["mode"],
+            "research_tdm_policy_sha256": sha256_bytes(canonical_json(decisive))}
 
 
 def validate_policy(document: Any) -> None:
@@ -106,8 +169,20 @@ def validate_policy(document: Any) -> None:
     if not isinstance(document["policy_version"], str) or not document["policy_version"]:
         raise PolicyError("policy_version is a non-empty string")
     robots_block, rate = document["robots"], document["rate_limit"]
-    if not isinstance(robots_block, dict) or set(robots_block) != {"mode", "on_absent", "on_unreachable"}:
-        raise PolicyError("robots has exactly mode, on_absent, on_unreachable")
+    if not isinstance(robots_block, dict) or set(robots_block) != {"mode", "on_absent", "on_unreachable", "on_parse_error"}:
+        raise PolicyError("robots has exactly mode, on_absent, on_unreachable, on_parse_error")
+    tdm = document["research_tdm"]
+    if not isinstance(tdm, dict) or set(tdm) != _TDM_KEYS or not isinstance(tdm["conditions"], dict) \
+            or not isinstance(tdm["legal_review_holds"], list) or not isinstance(tdm["decision"], str):
+        raise PolicyError(f"research_tdm has exactly {sorted(_TDM_KEYS)}")
+    if tdm["basis"] not in (TDM_BASIS_NONE, *TDM_BASES):
+        raise PolicyError(f"research_tdm.basis is one of {(TDM_BASIS_NONE, *TDM_BASES)}")
+    if tdm["basis"] != TDM_BASIS_NONE and (set(tdm["conditions"]) != set(TDM_CONDITIONS)
+                                           or any(not isinstance(v, bool) for v in tdm["conditions"].values())):
+        raise PolicyError(f"research_tdm.conditions states each of {TDM_CONDITIONS} as true or false")
+    for entry in tdm["legal_review_holds"]:
+        if not isinstance(entry, dict) or not ({"reason", "recorded_at"} <= set(entry)) or not (set(entry) & {"outlet_id", "origin"}):
+            raise PolicyError("a legal review hold names an outlet_id or an origin, a reason and recorded_at")
     if not isinstance(rate, dict) or set(rate) != _RATE_KEYS:
         raise PolicyError(f"rate_limit has exactly {sorted(_RATE_KEYS)}")
     for name in ("disabled_outlets", "disabled_channels", "opt_outs", "suppressions"):
@@ -132,6 +207,10 @@ def validate_policy(document: Any) -> None:
             problems.append(f"robots.on_absent is one of {ON_ABSENT}")
         if robots_block["on_unreachable"] not in ON_UNREACHABLE:
             problems.append(f"robots.on_unreachable is one of {ON_UNREACHABLE}")
+        if robots_block["on_parse_error"] not in ON_PARSE_ERROR:
+            problems.append(f"robots.on_parse_error is one of {ON_PARSE_ERROR}")
+        if robots_block["mode"] == "research_tdm_override" and tdm["basis"] == TDM_BASIS_NONE:
+            problems.append("robots.mode 'research_tdm_override' needs a research_tdm.basis")
         interval = rate["min_interval_seconds_per_origin"]
         if isinstance(interval, bool) or not isinstance(interval, (int, float)) or interval < 0:
             problems.append("rate_limit.min_interval_seconds_per_origin is a non-negative number")
@@ -151,7 +230,8 @@ def loopback_test_policy(**overrides: Any) -> dict[str, Any]:
     policy = {
         "schema": POLICY_SCHEMA, "policy_version": "loopback-test/1", "status": STATUS_DECIDED,
         "scope": SCOPE_LOOPBACK_TEST, "external_acquisition": "disabled",
-        "robots": {"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny"},
+        "robots": {"mode": "enforce", "on_absent": "allow", "on_unreachable": "deny", "on_parse_error": "defer"},
+        "research_tdm": {"basis": TDM_BASIS_NONE, "decision": TDM_BASIS_NONE, "conditions": {}, "legal_review_holds": []},
         "rate_limit": {"min_interval_seconds_per_origin": 0, "crawl_delay": "record_only", "crawl_delay_max_seconds": 0},
         "disabled_outlets": [], "disabled_channels": [], "opt_outs": [], "suppressions": [],
     }
@@ -207,13 +287,38 @@ class PolicyGate:
         """
         return max(self.min_interval_seconds or 0.0, self.crawl_delay_seconds(robots_evidence) or 0.0)
 
-    def evaluate(self, intent: FetchIntent, robots_evidence: robots.RobotsEvidence | None = None) -> PolicyDecision:
-        """Decide one intent. The first refusal ends the evaluation; nothing is weighed against it."""
+    def research_tdm(self, intent: FetchIntent) -> tuple[str, list[str]]:
+        """Layer 2 for one intent: the status and, when it is not eligible, what is missing.
+
+        Eligible means: the policy names a basis, states every condition as true, and the request is
+        a plain ``http``/``https`` one. A legal review hold or an opt-out for the source never
+        reaches this point — it has ended the evaluation before.
+        """
+        block = self.policy["research_tdm"]
+        if block["basis"] == TDM_BASIS_NONE:
+            return RESEARCH_TDM_NOT_APPLICABLE, []
+        unmet = [name for name in TDM_CONDITIONS if block["conditions"].get(name) is not True]
+        if urlsplit(intent.url).scheme not in ("http", "https") or urlsplit(intent.url).username is not None:
+            unmet.append("plain_http_request_without_credentials")
+        return (RESEARCH_TDM_REVIEW, unmet) if unmet else (RESEARCH_TDM_ELIGIBLE, [])
+
+    def evaluate(self, intent: FetchIntent, robots_evidence: robots.RobotsEvidence | None = None, *,
+                 access_observed: str | None = None) -> PolicyDecision:
+        """Decide one intent. The first refusal ends the evaluation; nothing is weighed against it.
+
+        ``access_observed`` is the technical access control the fetcher has seen at this origin in
+        this run, if any: it refuses whatever a robots file or the research layer would say.
+        """
         policy = self.policy
         evidence: dict[str, Any] = {"policy_scope": policy["scope"], "identity_scope": self.identity.scope,
-                                    "robots_decision": "not_evaluated", "robots_txt_sha256": "not_applicable"}
+                                    "robots_decision": "not_evaluated", "robots_txt_sha256": "not_applicable",
+                                    "robots_evidence": ROBOTS_NOT_EVALUATED, "robots_decision_semantics": ROBOTS_DECISION_SEMANTICS}
 
         def decide(decision: str, reason: str, retry_at: str | None = None) -> PolicyDecision:
+            evidence.setdefault("acquisition_decision", ALLOW if decision == ALLOW else
+                                HOLD if decision == DEFER or reason in _HOLD_REASONS else REFUSE)
+            if reason in _HOLD_REASONS:
+                evidence["hold_class"] = _HOLD_REASONS[reason]
             return PolicyDecision(decision, (reason,), policy["policy_version"], evidence, retry_at)
 
         if intent.fetch_kind not in acquisition.FETCH_KINDS:
@@ -255,8 +360,18 @@ class PolicyGate:
             return decide(DENY, "channel_disabled")
         for entry in policy["opt_outs"]:
             if entry.get("outlet_id") == intent.outlet_id or entry.get("origin") == origin:
+                # A publisher's direct request: nothing more is asked, and a person decides what
+                # follows. Nothing already preserved is deleted by this.
                 evidence["opt_out"] = dict(entry)
                 return decide(DENY, "explicit_opt_out")
+        for entry in policy["research_tdm"]["legal_review_holds"]:
+            if entry.get("outlet_id") == intent.outlet_id or entry.get("origin") == origin:
+                evidence["legal_review_hold"] = dict(entry)
+                return decide(DENY, "legal_review_hold")
+        if access_observed is not None:
+            # A fact of the server, seen in this run. Not a robots matter and never overridden.
+            evidence["access_class_observed"] = access_observed
+            return decide(DENY, "access_control_observed")
         now = format_instant(intent.at)
         for entry in policy["suppressions"]:
             if (entry.get("outlet_id") == intent.outlet_id or entry.get("origin") == origin) and now < entry["until"]:
@@ -288,19 +403,43 @@ class PolicyGate:
                     # not fetched faster than asked: it is not fetched.
                     return decide(DENY, "robots_crawl_delay_exceeds_limit")
             if robots_evidence.state == robots.EVIDENCE_ABSENT:
-                evidence["robots_decision"] = "absent"
+                evidence["robots_decision"], evidence["robots_evidence"] = "absent", ROBOTS_UNAVAILABLE
                 if policy["robots"]["on_absent"] == "deny":
                     return decide(DENY, "robots_absent")
             elif robots_evidence.state == robots.EVIDENCE_UNREACHABLE:
-                evidence["robots_decision"] = "unreachable"
+                evidence["robots_decision"], evidence["robots_evidence"] = "unreachable", ROBOTS_UNREACHABLE
                 action = policy["robots"]["on_unreachable"]
                 if action != "allow":
                     return decide(DENY if action == "deny" else DEFER, "robots_unreachable")
+            elif robots_evidence.rules.parse_error:
+                # Something answered at /robots.txt and none of it is a robots line. It is neither
+                # read as a permission nor as a prohibition: the policy says what happens.
+                evidence["robots_decision"], evidence["robots_evidence"] = "parse_error", ROBOTS_PARSE_ERROR
+                action = policy["robots"]["on_parse_error"]
+                if action != "allow":
+                    return decide(DENY if action == "deny" else DEFER, "robots_parse_error")
             else:
                 parts = urlsplit(intent.url)
                 path = (parts.path or "/") + (f"?{parts.query}" if parts.query else "")
                 verdict, rule = robots_evidence.rules.evaluate(self.identity.robots_product_token, path)
                 evidence["robots_decision"], evidence["robots_rule"] = verdict, rule
-                if verdict == robots.DISALLOWED and mode == "enforce":
-                    return decide(DENY, "robots_disallow")
+                evidence["robots_evidence"] = ROBOTS_DISALLOW_OBSERVED if verdict == robots.DISALLOWED else ROBOTS_ALLOW
+                if verdict == robots.DISALLOWED and mode != "record_only":
+                    # Layer 1 says Disallow. Layer 2 is asked only now, and only under the mode that
+                    # names it; layer 3 is the answer. There is no path from here to ALLOW that is
+                    # not written into the decision.
+                    status, unmet = self.research_tdm(intent)
+                    evidence["research_tdm"] = status
+                    if mode != "research_tdm_override" or status != RESEARCH_TDM_ELIGIBLE:
+                        if unmet:
+                            evidence["research_tdm_unmet"] = unmet
+                        return decide(DENY, "robots_disallow")
+                    evidence["acquisition_decision"] = ALLOW_RESEARCH_OVERRIDE
+                    evidence["override"] = {
+                        "basis": policy["research_tdm"]["basis"], "decided_in": policy["research_tdm"]["decision"],
+                        "robots_rule": rule, "robots_txt_sha256": robots_evidence.sha256,
+                        "product_token": self.identity.robots_product_token, "conditions": list(TDM_CONDITIONS),
+                        "url": intent.url, "at": format_instant(intent.at)}
+                    return decide(ALLOW, "research_tdm_override")
+        evidence["research_tdm"] = self.research_tdm(intent)[0]
         return decide(ALLOW, "allowed_by_policy")

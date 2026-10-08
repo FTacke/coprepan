@@ -13,6 +13,10 @@ content and extracts nothing.
   here and recorded per attempt. Time and waiting are injected, so tests run without sleeping.
 * **Standard library only** (``http.client``): no hidden retry, redirect or decoding behaviour.
 * **One request at a time.** The pace per origin is the policy's minimum interval.
+* **An access control ends the path** (CPD-0017 §4). What an answer shows — an authentication
+  demand, a 403, a 429, a CAPTCHA, a bot challenge — is recorded with the exchange and is not
+  retried; for the rest of this fetcher's life nothing more is asked of that origin. A redirect to
+  a login or a paywall is not followed. Nothing here changes what the client says about itself.
 
 ``connect_override`` maps an origin to another address to connect to (as ``curl --connect-to``
 does). Tests use it to serve an outlet's URLs from a loopback server; the policy gate is told the
@@ -30,7 +34,7 @@ from email.utils import parsedate_to_datetime
 from typing import Callable, Mapping, Sequence
 from urllib.parse import urljoin, urlsplit
 
-from . import acquisition, robots
+from . import access_control, acquisition, robots
 from .acquisition import RecordedExchange
 from .canonical import canonical_json, sha256_bytes
 from .crawler_identity import CrawlerIdentity
@@ -160,6 +164,7 @@ class HttpFetcher:
         clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
         sleep: Callable[[float], None] = time.sleep,
         connect_override: Mapping[str, tuple[str, int]] | None = None,
+        access_holds: Mapping[str, str] | None = None,
     ) -> None:
         self.identity, self.gate, self.limits = identity, gate, limits
         self.clock, self.sleep = clock, sleep
@@ -168,6 +173,8 @@ class HttpFetcher:
         self._last_request: dict[str, datetime] = {}
         self.robots_exchanges: list[tuple[str, RecordedExchange]] = []  # (outlet_id, exchange): evidence to preserve
         self.transport_calls = 0
+        # origin -> the access control seen there. Given at construction when a run is resumed.
+        self.access_holds: dict[str, str] = dict(access_holds or {})
 
     # -- public ----------------------------------------------------------------------------------
 
@@ -183,6 +190,15 @@ class HttpFetcher:
             exchange = self._attempt(request, identifier, number, decision)
             retryable = (exchange.body is None and exchange.failure_reason in RETRYABLE_FAILURES) or (
                 exchange.body is not None and exchange.status in RETRYABLE_STATUSES)
+            refused = exchange.policy["access_class_observed"] in access_control.ACCESS_CONTROLS
+            if refused and retryable:
+                # A rate limit or a challenge is the server's refusal of this client. It is not asked
+                # again in this call; when it named a time, that time is on record for the schedule.
+                asked = parse_retry_after(dict((k.lower(), v) for k, v in exchange.response_headers).get("retry-after"),
+                                          exchange.fetch_finished_at)
+                retry_after = format_instant(exchange.fetch_finished_at + timedelta(seconds=asked)) if asked is not None else None
+                outcome.attempts.append(Attempt(number, exchange, RETRY_GAVE_UP, asked, retry_after))
+                break
             if not retryable:
                 outcome.attempts.append(Attempt(number, exchange, RETRY_NONE))
                 break
@@ -232,15 +248,16 @@ class HttpFetcher:
     def _decide(self, request: FetchRequest, url: str) -> PolicyDecision:
         _, host, _ = self._transport_target(url)
         intent = FetchIntent(url, request.outlet_id, request.fetch_kind, self.clock(), host, request.channel_id)
+        origin = _origin(url)
         if request.fetch_kind == acquisition.FETCH_KIND_ROBOTS:
-            return self.gate.evaluate(intent)
+            return self.gate.evaluate(intent, access_observed=self.access_holds.get(origin))
         # Ask the gate first without robots evidence: a request that is refused for another
         # reason must not cause a robots request either.
-        first = self.gate.evaluate(intent)
+        first = self.gate.evaluate(intent, access_observed=self.access_holds.get(origin))
         if first.decision != DEFER or first.reasons != ("robots_not_consulted",):
             return first
-        origin = _origin(url)
-        return self.gate.evaluate(intent, self.robots_evidence(request.outlet_id, origin))
+        evidence = self.robots_evidence(request.outlet_id, origin)  # may itself meet an access control
+        return self.gate.evaluate(intent, evidence, access_observed=self.access_holds.get(origin))
 
     # -- transport -------------------------------------------------------------------------------
 
@@ -249,7 +266,7 @@ class HttpFetcher:
         url, chain, statuses, not_followed = request.url, [], [], None
         extra = request.conditional_headers
         policy = {
-            "policy_decision": ALLOW, "policy_version": decision.policy_version,
+            "policy_decision": decision.acquisition_decision, "policy_version": decision.policy_version,
             "robots_decision": str(decision.evidence.get("robots_decision", "not_evaluated")),
             "robots_txt_sha256": str(decision.evidence.get("robots_txt_sha256", "not_applicable")),
             "access_class_observed": "unknown", "crawler_version": self.identity.crawler_version,
@@ -273,18 +290,31 @@ class HttpFetcher:
                                             failure_detail=f"more than {self.limits.max_redirects} redirects",
                                             redirect_chain=tuple(chain), redirect_statuses=tuple(statuses), **common)
                 hop = self._decide(request, target)
-                if hop.allowed:
+                leads_to = access_control.classify_redirect(target) if hop.allowed else None
+                if leads_to:
+                    # A login or a paywall is where this path ends. The target is not requested.
+                    policy["access_class_observed"] = leads_to
+                    not_followed = f"ACCESS_CONTROL_OBSERVED: {leads_to}"
+                elif hop.allowed:
+                    if hop.acquisition_decision != ALLOW:  # a hop allowed by the research override: the record says so
+                        policy["policy_decision"] = hop.acquisition_decision
+                        policy["robots_decision"] = str(hop.evidence.get("robots_decision", policy["robots_decision"]))
                     chain.append(url)
                     statuses.append(status)
                     url = target
                     extra = []  # validators belong to the URL they came from, not to where it redirects
                     continue
-                not_followed = f"{hop.decision}: {hop.reasons[0]}"  # the redirect answer itself is the response
+                else:
+                    not_followed = f"{hop.decision}: {hop.reasons[0]}"  # the redirect answer itself is the response
             revalidates = None
             if status == 304 and extra and body == b"":
                 # The server says the body it sent before is still current. No body is stored for
                 # this fetch; it points at the fetch that holds one.
                 revalidates = {"fetch_id": request.revalidates_fetch_id, "body_sha256": request.revalidates_body_sha256}
+            if policy["access_class_observed"] == access_control.UNKNOWN:
+                policy["access_class_observed"] = access_control.classify_response(status, headers, body)
+            if policy["access_class_observed"] in access_control.ORIGIN_HOLD:
+                self.access_holds.setdefault(_origin(url) or url, policy["access_class_observed"])
             return RecordedExchange(fetch_finished_at=self.clock(), status=status, response_headers=tuple(headers),
                                     body=body, final_url=url, redirect_chain=tuple(chain),
                                     redirect_statuses=tuple(statuses), redirect_not_followed=not_followed,

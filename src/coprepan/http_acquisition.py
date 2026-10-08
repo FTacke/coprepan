@@ -232,6 +232,10 @@ def run_http_acquisition(
             "policy_decision": outcome.decision.decision, "policy_reasons": list(outcome.decision.reasons),
             "policy_version": outcome.decision.policy_version, "retry_at": outcome.decision.retry_at,
             "policy_hints": {"robots_crawl_delay": outcome.decision.evidence.get("robots_crawl_delay")},
+            # The three layers of CPD-0017, as the gate stated them for this request.
+            "policy_layers": {name: outcome.decision.evidence.get(name) for name in (
+                "robots_evidence", "robots_rule", "robots_txt_sha256", "research_tdm", "acquisition_decision", "hold_class",
+                "access_class_observed", "override")},
             "fetch_ids": fetch_ids, "result": result,
             "attempts": [{"number": a.number, "retry": a.retry, "delay_seconds": a.delay_seconds,
                           "retry_after": a.retry_after} for a in outcome.attempts],

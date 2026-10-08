@@ -38,14 +38,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
-from . import (acquisition, admission, canary, core_pipeline, crawler_identity, discovery, extraction, fetcher as F,
+from . import (access_control, acquisition, admission, canary, core_pipeline, crawler_identity, discovery, extraction, fetcher as F,
                freeze, http_acquisition, naming, outage_spool, pack, policy, preservation, preservation_target, recovery, registry,
                schedule, storage_contract, storage_roots)
 from .canonical import canonical_json, record_json, sha256_bytes, write_bytes_exclusive
 from .identity import format_instant
 from .storage_roots import CHECKOUT
 
-DRIVER_VERSION = "canary-driver/1"
+DRIVER_VERSION = "canary-driver/2"  # /2: the policy layers of CPD-0017 in pin, start state and receipt
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
 KIND_ORDER = ("rss", "atom", "sitemap", "sitemap_index")
@@ -148,11 +148,31 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
     }
 
 
+def crawler_page_pin(repository: Path = CHECKOUT) -> dict[str, Any]:
+    """The public crawler page as deployed: the latest deployment receipt, and that the page it
+    names is byte for byte the page of this checkout. A crawler that says one thing in its
+    User-Agent's URL and does another is not started.
+    """
+    receipts = sorted((repository / "web").glob("DEPLOY_RECEIPT_*.json"))
+    if not receipts:
+        raise CanaryStopped("no deployment receipt of the public crawler page")
+    receipt = json.loads(receipts[-1].read_text(encoding="utf-8"))
+    deployed = {entry["path"]: entry["sha256"] for entry in receipt["after"]["files"]}
+    page = sha256_bytes((repository / "web" / "coprepan" / "crawler" / "index.html").read_bytes())
+    if deployed.get("crawler/index.html") != page:
+        raise CanaryStopped("the crawler page of this checkout is not the page the latest deployment receipt records")
+    if not all(entry.get("content_equals_source") for entry in receipt["public_check"]["pages"]):
+        raise CanaryStopped("the latest deployment receipt does not record a public check that matched")
+    return {"receipt": receipts[-1].name, "receipt_sha256": sha256_bytes(receipts[-1].read_bytes()),
+            "crawler_page_sha256": page, "site_url": receipt["site_url"], "public_check_utc": receipt["public_check_utc"]}
+
+
 def canary_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: Sequence[str], disabled: Sequence[str],
-               preservation_root: Path) -> dict[str, Any]:
+               preservation_root: Path, acquisition_policy: Mapping[str, Any], repository: Path = CHECKOUT) -> dict[str, Any]:
     """The ``canary`` block of the acquisition baseline: the driver, the five outlets as registered
-    (digest of each record, URL rules), the storage contract and the identity of the preservation
-    target. **No location of any disk enters it**: a root is a machine's configuration, the target's
+    (digest of each record, URL rules), the storage contract, the identity of the preservation
+    target, the research-TDM layer of the policy (CPD-0017) and the public crawler page as deployed.
+    **No location of any disk enters it**: a root is a machine's configuration, the target's
     identity is its marker.
     """
     marker = preservation_target.read_target(preservation_root)
@@ -160,6 +180,10 @@ def canary_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
         raise CanaryStopped("the preservation target has no identity")
     return {
         "driver": driver_pin(budget, registry_, outlet_ids, disabled),
+        "research_tdm": policy.research_tdm_pin(acquisition_policy),
+        "access_control_classifier": access_control.CLASSIFIER_VERSION,
+        "robots_parser": F.robots.PARSER_VERSION,
+        "crawler_page": crawler_page_pin(repository),
         "outlets": {outlet_id: {"record_sha256": sha256_bytes(canonical_json(registry_.resolve(outlet_id))),
                                 "url_rules": registry_.resolve(outlet_id)["url_rules"]} for outlet_id in sorted(outlet_ids)},
         "storage_contract_sha256": storage_contract.read_pin()["bundle_sha256"],
@@ -268,6 +292,76 @@ def fetch_records(workspace: core_pipeline.Workspace) -> list[dict[str, Any]]:
 def transport_calls(record: Mapping[str, Any]) -> int:
     """The real requests behind one fetch record: the first request plus one per redirect followed."""
     return 1 + len(record["response"]["redirect_chain"])
+
+
+def access_holds_from_evidence(workspace: core_pipeline.Workspace, run_id: str | None = None) -> dict[str, str]:
+    """``{origin: access control}`` seen in the workspace's fetch records (all runs, or one): a run
+    that is resumed or started again asks nothing more of an origin that has refused this crawler,
+    until a person has looked at it.
+    """
+    holds: dict[str, str] = {}
+    for record in fetch_records(workspace):
+        observed = record["policy"]["access_class_observed"]
+        if (run_id is None or record["run_id"] == run_id) and observed in access_control.ORIGIN_HOLD:
+            origin = policy._origin(record["response"]["final_url"])
+            if origin:
+                holds.setdefault(origin, observed)
+    return holds
+
+
+def policy_layer_statistics(records: Sequence[Mapping[str, Any]], rows: Sequence[Mapping[str, Any]],
+                            outlet_ids: Sequence[str]) -> dict[str, Any]:
+    """What the three layers of CPD-0017 did in a run, from fetch records and the request log only."""
+    def layers(row):
+        return row.get("policy_layers") or {}
+
+    def answered(record):
+        return record["outcome"] == acquisition.OUTCOME_FETCHED and 200 <= record["response"]["status"] < 300
+
+    def reserved(record):
+        headers = record["response"]["headers"] if record["outcome"] == acquisition.OUTCOME_FETCHED else []
+        return access_control.tdm_reservation([(h[0], h[1]) for h in headers]) is not None
+
+    per_outlet: dict[str, Any] = {}
+    for outlet_id in sorted(outlet_ids):
+        own = [r for r in records if r["outlet_id"] == outlet_id]
+        own_rows = [row for row in rows if _row_outlet(row, records) == outlet_id]
+        robots_files = [r for r in own if r["fetch_kind"] == acquisition.FETCH_KIND_ROBOTS]
+        overridden = [r for r in own if r["policy"]["policy_decision"] == policy.ALLOW_RESEARCH_OVERRIDE]
+        per_outlet[outlet_id] = {
+            "robots_files": [{"outcome": r["outcome"], "status": r["response"]["status"], "body_sha256": r["body_sha256"],
+                              "access_class_observed": r["policy"]["access_class_observed"]} for r in robots_files],
+            "robots_evidence": dict(sorted(Counter(str(layers(row).get("robots_evidence")) for row in own_rows).items())),
+            "requests_allowed_by_robots": sum(1 for r in own if r["policy"]["robots_decision"] == "allowed"),
+            "requests_under_research_override": len(overridden),
+            "answered_2xx_under_research_override": sum(1 for r in overridden if answered(r)),
+            "access_classes_observed": dict(sorted(Counter(r["policy"]["access_class_observed"] for r in own).items())),
+            # A general machine-readable reservation, as a response header. Recorded; it does not
+            # decide anything for scientific research (CPD-0017 §5).
+            "general_tdm_reservation_observed": sum(1 for r in own if reserved(r)),
+        }
+    decisions = Counter(str(layers(row).get("acquisition_decision")) for row in rows)
+    holds = Counter(str(layers(row).get("hold_class")) for row in rows if layers(row).get("hold_class"))
+    return {
+        "semantics": policy.ROBOTS_DECISION_SEMANTICS,
+        "acquisition_decisions": dict(sorted(decisions.items())),
+        "holds": dict(sorted(holds.items())),
+        "outlets_with_applicable_disallow": sorted(o for o, s in per_outlet.items() if s["robots_evidence"].get(policy.ROBOTS_DISALLOW_OBSERVED)),
+        "outlets_with_access_control": sorted(o for o, s in per_outlet.items()
+                                              if set(s["access_classes_observed"]) & set(access_control.ACCESS_CONTROLS)),
+        "requests_under_research_override": sum(s["requests_under_research_override"] for s in per_outlet.values()),
+        "answered_2xx_under_research_override": sum(s["answered_2xx_under_research_override"] for s in per_outlet.values()),
+        "requests_stopped_by_access_control": holds.get(policy.ACCESS_CONTROL_OBSERVED, 0),
+        "direct_opt_outs": holds.get(policy.DIRECT_OPT_OUT, 0), "legal_review_holds": holds.get(policy.LEGAL_REVIEW_HOLD, 0),
+        "by_outlet": per_outlet,
+    }
+
+
+def _row_outlet(row: Mapping[str, Any], records: Sequence[Mapping[str, Any]]) -> str | None:
+    """The outlet of a FINISHED row: that of its PLANNED twin, else that of its fetch records."""
+    if row.get("_outlet_id"):
+        return row["_outlet_id"]
+    return next((record["outlet_id"] for record in records if record["fetch_id"] in (row.get("fetch_ids") or ())), None)
 
 
 def tally_from_evidence(workspace: core_pipeline.Workspace, run_id: str | None = None) -> Counter[tuple[str, str]]:
@@ -441,7 +535,9 @@ def build_receipt(
     request log, the ledger, the preservation manifests and the spool. No in-memory counter is read.
     """
     records = [r for r in fetch_records(workspace) if r["run_id"] == run.run_id]
-    rows = [row for row in http_acquisition.request_rows(workspace) if row["run_id"] == run.run_id and row["event"] == http_acquisition.EVENT_FINISHED]
+    all_rows = [row for row in http_acquisition.request_rows(workspace) if row["run_id"] == run.run_id]
+    planned = {row["request_id"]: row["outlet_id"] for row in all_rows if row["event"] == http_acquisition.EVENT_PLANNED}
+    rows = [{**row, "_outlet_id": planned.get(row["request_id"])} for row in all_rows if row["event"] == http_acquisition.EVENT_FINISHED]
     ledger = workspace.ledger()
     requests_by_outlet: dict[str, dict[str, int]] = {o: {ITEM: 0, OTHER: 0} for o in outlet_ids}
     statuses: Counter[str] = Counter()
@@ -476,6 +572,8 @@ def build_receipt(
                      "by_outlet": requests_by_outlet},
         "response_classes": dict(sorted(statuses.items())),
         "refused": dict(sorted(refused.items())),
+        "research_tdm": policy.research_tdm_pin(policy_record),
+        "policy_layers": policy_layer_statistics(records, rows, outlet_ids),
         "counts": {"discovery_documents_fetched": discoveries, "candidates": candidates, "fetch_records": len(records),
                    "items_fetched": sum(1 for r in items if r["outcome"] == acquisition.OUTCOME_FETCHED),
                    "failed": sum(1 for r in records if r["outcome"] == acquisition.OUTCOME_FETCH_FAILED),
@@ -503,7 +601,10 @@ def verify_checkout(pinned_commit: str, allowed_prefixes: Sequence[str] = ("docs
         raise CanaryStopped("the working tree is not clean")
     head = _git("rev-parse", "HEAD")
     if head != pinned_commit:
-        changed = _git("diff", "--name-only", pinned_commit, head).splitlines()
+        try:
+            changed = _git("diff", "--name-only", pinned_commit, head).splitlines()
+        except subprocess.CalledProcessError as error:
+            raise CanaryStopped("the pinned commit is not a commit of this repository") from error
         if any(not name.startswith(tuple(allowed_prefixes)) for name in changed):
             raise CanaryStopped(f"HEAD differs from the pinned commit beyond evidence files: {changed}")
 
@@ -587,7 +688,7 @@ def main(argv: list[str] | None = None) -> int:
         manifest = freeze.build_manifest(
             code_commit=arguments.commit, created_at=datetime.now(timezone.utc), operator=arguments.operator,
             test_baseline={"suite": "python -m pytest", "passed": arguments.tests_passed}, storage_target=readiness,
-            scope=freeze.SCOPE_CANARY, canary=canary_pin(budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], root))
+            scope=freeze.SCOPE_CANARY, canary=canary_pin(budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], root, acquisition_policy))
         write_bytes_exclusive(arguments.out, record_json(manifest))
         print(json.dumps({"state": manifest["state"], "blocking": manifest["blocking"], "manifest_sha256": manifest["manifest_sha256"]}, indent=2))
         return 0 if manifest["state"] == freeze.READY_TO_FREEZE else 1
@@ -611,8 +712,9 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, indent=2))
         raise CanaryStopped("the preflight is not READY: no request is made")
     if baseline.get("scope") != freeze.SCOPE_CANARY or baseline.get("canary") != canary_pin(
-            budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], roles_now["PRESERVATION"]):
-        raise CanaryStopped("the driver, its budgets, the outlets or the storage identity differ from what the baseline pins")
+            budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], roles_now["PRESERVATION"], acquisition_policy):
+        raise CanaryStopped("the driver, its budgets, the outlets, the storage identity, the research-TDM policy or the "
+                            "deployed crawler page differ from what the baseline pins")
 
     identity = crawler_identity.load_identity()
     schedule_policy = schedule.load_schedule_policy()
@@ -629,6 +731,8 @@ def main(argv: list[str] | None = None) -> int:
         "outlets": sorted(arguments.outlet), "policy_version": acquisition_policy["policy_version"],
         "policy_file_sha256": sha256_bytes((CHECKOUT / "config" / "acquisition_policy.json").read_bytes()),
         "crawler_identity": identity.as_record(), "preservation_target": baseline["canary"]["storage_target"],
+        "research_tdm": baseline["canary"]["research_tdm"], "crawler_page": baseline["canary"]["crawler_page"],
+        "budget": budget.as_record(), "hard_item_request_ceiling": HARD_ITEM_REQUESTS,
         "spool_pending_records": len(pending_at_start), "tests_passed": arguments.tests_passed, "preflight": report["status"],
     }
     if start_state["head"] != start_state["origin_main_as_last_fetched"]:
@@ -640,8 +744,11 @@ def main(argv: list[str] | None = None) -> int:
                                                                       "budget": budget.as_record(), "pinned_commit": arguments.pinned_commit}, identity)
     write_bytes_exclusive(arguments.receipt_dir / f"canary-start-state-{run.run_id}.json", record_json({**start_state, "run_id": run.run_id}))
     gate = policy.PolicyGate(acquisition_policy, registered, identity)
-    used = tally_from_evidence(workspace, run.run_id)
-    fetcher = BudgetedFetcher(budget=budget, used=used, identity=identity, gate=gate, limits=CANARY_LIMITS, clock=clock, sleep=time.sleep)
+    # The budget and the holds are those of the workspace's evidence, whatever run made it: a canary
+    # that is started a second time does not get a second budget, and does not ask a refusing origin again.
+    used = tally_from_evidence(workspace)
+    fetcher = BudgetedFetcher(budget=budget, used=used, identity=identity, gate=gate, limits=CANARY_LIMITS, clock=clock, sleep=time.sleep,
+                              access_holds=access_holds_from_evidence(workspace))
     resolve = lambda role: (lambda: storage_roots.resolve_root(role, env=environment))  # noqa: E731
     outcome = run_canary(workspace, registered, run, outlet_ids=arguments.outlet, fetcher=fetcher, schedule_policy=schedule_policy, clock=clock,
                          preservation_root=resolve("PRESERVATION"), spool_root=resolve("SPOOL"), spool_policy=CANARY_SPOOL,

@@ -1,0 +1,40 @@
+{
+  "schema": "coprepan-site-deploy-receipt/v1",
+  "note": "Receipt of the second deployment of web/coprepan/ on 2026-10-08: the crawler page now states the scientific text-and-data-mining policy of CPD-0017 (a Disallow is recorded and is not treated as an absolute exclusion; technical access controls are never bypassed; a direct opt-out is honoured). Only crawler/index.html changed. Files only: the nginx virtual host, the certificate and every other site were not changed. No credential appears here. The tool is scripts/deploy_public_site.py.",
+  "site_url": "https://coprepan.hispanistica.com/",
+  "deployed_at_utc": "2026-10-08T14:12:38Z",
+  "served_by": "nginx/1.18.0 as a static document root on the operator's university-hosted VM",
+  "before": {
+    "docroot_files": [
+      {"path": "crawler/index.html", "sha256": "55c8f311be02022ac5be7f180747f9ab5b04183f4feac453b3bcacd775264664", "size": 3949},
+      {"path": "index.html", "sha256": "35ee84241d718fe88aeb2e0022983e541a7ff8b8816a81747982f7e6388636c7", "size": 1321},
+      {"path": "style.css", "sha256": "22b4fb36df36e7d170204d4f5bb9c5ec12a6aa46b2c6931ffc492111d3db6478", "size": 1291}
+    ],
+    "equals_previous_receipt": "web/DEPLOY_RECEIPT_2026-10-08.json: yes, all three files",
+    "vhost_sha256": "e090080fcece67872d81ee06e9b39a7843fb9ee781984c1716b20f01cec01777",
+    "backup": "taken at 2026-10-08T14:12:16Z to a directory outside the repository before the change (public content only)"
+  },
+  "after": {
+    "files": [
+      {"path": "crawler/index.html", "sha256": "391d83160862efa92b492a4792ac76878333fe455ff56ad25fbc1e9554571dc7", "size": 5499},
+      {"path": "index.html", "sha256": "35ee84241d718fe88aeb2e0022983e541a7ff8b8816a81747982f7e6388636c7", "size": 1321},
+      {"path": "style.css", "sha256": "22b4fb36df36e7d170204d4f5bb9c5ec12a6aa46b2c6931ffc492111d3db6478", "size": 1291}
+    ],
+    "modes": "directories 755, files 644, owner root:root (as before)",
+    "vhost_sha256": "e090080fcece67872d81ee06e9b39a7843fb9ee781984c1716b20f01cec01777",
+    "vhost_unchanged": true,
+    "nginx_t": "configuration test successful; nginx was not reloaded: static files are read from disk",
+    "staging_directory_removed": true
+  },
+  "public_check_utc": "2026-10-08T14:12:42Z",
+  "public_check": {
+    "tls_certificate_verified": true,
+    "pages": [
+      {"url": "https://coprepan.hispanistica.com/", "status": 200, "content_equals_source": true},
+      {"url": "https://coprepan.hispanistica.com/crawler/", "status": 200, "content_equals_source": true},
+      {"url": "https://coprepan.hispanistica.com/style.css", "status": 200, "content_equals_source": true}
+    ],
+    "http_to_https": "301",
+    "other_sites_still_answering": "corapan, games, notes: 200"
+  }
+}

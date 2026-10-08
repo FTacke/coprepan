@@ -29,19 +29,27 @@ CO.PRE.PAN research project</p>
 
 <h2>Purpose</h2>
 <p>Scholarly collection of publicly accessible Spanish-language press material for
-corpus-linguistic research.</p>
+corpus-linguistic research: non-commercial scientific text and data mining by a university.</p>
 <p class="note">The crawler is under development. In an initial test phase it visits only a small
 number of selected websites.</p>
 
 <h2>Behaviour</h2>
 <ul>
 <li>It requests public, unauthenticated HTTP(S) resources only.</li>
-<li>It respects <code>robots.txt</code>. A <code>Disallow</code> rule that applies to it is
-followed.</li>
-<li>It respects explicit opt-out signals.</li>
-<li>It does not bypass authentication, paywalls, CAPTCHAs, bot challenges or other technical
-access controls. If access is refused, the refusal is recorded and that path is not pursued
-further.</li>
+<li>It reads <code>robots.txt</code> before anything else on a site, and what the file says for
+this crawler is recorded with every request.</li>
+<li>For non-commercial scientific text and data mining of publicly accessible pages, the project
+does not treat every <code>Disallow</code> line as an absolute exclusion. Where a page that is
+openly reachable without any login is requested although a <code>Disallow</code> rule applies to
+it, that fact, the rule and the reason are recorded with the request. This is the policy of a
+research project, stated here so that you know it; we do not claim that it follows the Robots
+Exclusion Protocol in this point.</li>
+<li>It does not bypass authentication, paywalls, CAPTCHAs, bot challenges, IP or rate-limit
+blocks or any other technical access control, and it never disguises itself. If a server refuses
+access (for example with status 401, 403 or 429), the refusal is recorded and the crawler stops
+requesting that site.</li>
+<li>A direct opt-out is honoured: if you write to us, requests to your site stop and a person
+answers you.</li>
 <li>It makes one request at a time to a website and keeps a conservative pace, at present at
 least ten seconds between two requests to the same site. A <code>Crawl-delay</code> in your
 <code>robots.txt</code> is honoured as a minimum pause where it is given as a plain number. A
@@ -58,7 +66,8 @@ redistributed publicly.</li>
 Marburg University<br>
 <a href="mailto:felix.tacke@uni-marburg.de">felix.tacke@uni-marburg.de</a></p>
 <p>Website operators may contact us at this address regarding crawler behaviour, exclusion or
-opt-out requests.</p>
+opt-out requests. The most reliable ways to keep this crawler away are a message to this address
+or an ordinary access restriction on your server; both are always respected.</p>
 
 <h2 lang="es">Información en español</h2>
 <div lang="es">
@@ -68,9 +77,16 @@ investigación CO.PRE.PAN (Corpus de Prensa Panhispánica) de la Universidad de 
 accesible públicamente para la investigación lingüística de corpus.</p>
 <ul>
 <li>Solo solicita recursos HTTP(S) públicos y sin autenticación.</li>
-<li>Respeta <code>robots.txt</code> y las señales explícitas de exclusión.</li>
-<li>No elude la autenticación, los muros de pago, los CAPTCHA, los desafíos anti-bot ni otros
-controles técnicos de acceso.</li>
+<li>Lee <code>robots.txt</code> antes que nada y registra lo que el archivo indica para este
+robot. Para la minería de textos y datos con fines de investigación científica no comercial sobre
+páginas de acceso público, el proyecto no considera cada línea <code>Disallow</code> como una
+exclusión absoluta; cuando se solicita una página a la que se aplica una regla
+<code>Disallow</code>, ese hecho y su motivo quedan registrados.</li>
+<li>No elude la autenticación, los muros de pago, los CAPTCHA, los desafíos anti-bot, los bloqueos
+ni otros controles técnicos de acceso, y nunca oculta su identidad. Si un servidor deniega el
+acceso, el robot deja de solicitar ese sitio.</li>
+<li>Una solicitud directa de exclusión se respeta: las solicitudes a su sitio se detienen y una
+persona le responde.</li>
 <li>Realiza una sola solicitud a la vez por sitio web y mantiene un ritmo prudente; respeta
 <code>Retry-After</code> y, cuando es un número simple, <code>Crawl-delay</code>.</li>
 <li>El material conservado es evidencia de investigación y no se redistribuye públicamente de

@@ -200,12 +200,16 @@ def test_retries_are_exhausted_and_the_outcome_says_so(site):
     assert outcome.attempts[-1].retry_after is not None
 
 
-def test_429_honours_retry_after_over_the_backoff(site):
+def test_429_is_a_refusal_of_this_client_and_its_retry_after_is_recorded_not_waited_out(site):
+    """CPD-0017 §4: an enforced rate limit is an access control. It is not asked again in this call
+    (nor is the origin, in this run); the time the server named is on record for the schedule.
+    """
     site.routes["/lento"] = [Response(429, HTML + [("Retry-After", "30")], b"<html>despacio</html>"), Response(200, HTML, PAGE)]
     fetcher, clock = make_fetcher(site)
     outcome = get(fetcher, "/lento")
-    assert [(a.exchange.status, a.retry, a.delay_seconds) for a in outcome.attempts] == [(429, "retry", 30.0), (200, "none", None)]
-    assert clock.slept == [30.0]
+    assert [(a.exchange.status, a.retry, a.delay_seconds) for a in outcome.attempts] == [(429, "gave_up", 30.0)]
+    assert clock.slept == [] and outcome.attempts[0].retry_after is not None
+    assert outcome.last.policy["access_class_observed"] == "rate_limited" and site.paths().count("/lento") == 1
 
 
 def test_a_retry_after_longer_than_a_run_can_wait_ends_the_attempts(site):
@@ -214,6 +218,14 @@ def test_a_retry_after_longer_than_a_run_can_wait_ends_the_attempts(site):
     outcome = get(fetcher, "/muy-lento")
     assert len(outcome.attempts) == 1 and outcome.attempts[0].retry == "gave_up" and clock.slept == []
     assert outcome.attempts[0].delay_seconds == 86400.0 and outcome.attempts[0].retry_after is not None
+
+
+def test_a_503_that_asks_for_more_patience_than_a_run_has_ends_the_attempts(site):
+    site.routes["/mantenimiento"] = Response(503, HTML + [("Retry-After", "86400")], b"<html>mantenimiento</html>")
+    fetcher, clock = make_fetcher(site)
+    outcome = get(fetcher, "/mantenimiento")
+    assert len(outcome.attempts) == 1 and outcome.attempts[0].retry == "gave_up" and clock.slept == []
+    assert outcome.last.policy["access_class_observed"] == "none_observed"
 
 
 def test_retry_after_forms():
@@ -267,7 +279,7 @@ def test_a_refused_connection_is_a_failed_fetch(site):
     assert (refused.final, refused.decision.reasons, refused.attempts) == ("DENIED", ("robots_unreachable",), [])
     assert fetcher.robots_exchanges[0][1].failure_reason in no_answer  # the failed robots request is evidence
 
-    lenient = P.loopback_test_policy(robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": "allow"})
+    lenient = P.loopback_test_policy(robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": "allow", "on_parse_error": "defer"})
     fetcher, _ = make_fetcher(site, policy=lenient, limits=limits)
     fetcher.connect_override[WWW] = ("127.0.0.1", 1)
     outcome = get(fetcher, "/nota")
@@ -339,7 +351,7 @@ def test_robots_is_fetched_once_per_origin_through_the_gate_and_enforced(site):
 def test_record_only_mode_records_the_robots_answer_without_enforcing_it(site):
     site.routes["/robots.txt"] = Response(200, [("Content-Type", "text/plain")], b"User-agent: *\nDisallow: /\n")
     site.routes["/nota"] = Response(200, HTML, PAGE)
-    policy = P.loopback_test_policy(robots={"mode": "record_only", "on_absent": "allow", "on_unreachable": "deny"})
+    policy = P.loopback_test_policy(robots={"mode": "record_only", "on_absent": "allow", "on_unreachable": "deny", "on_parse_error": "defer"})
     fetcher, _ = make_fetcher(site, policy=policy)
     outcome = get(fetcher, "/nota")
     assert outcome.final == "FETCHED" and outcome.last.policy["robots_decision"] == "disallowed"

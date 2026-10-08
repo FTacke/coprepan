@@ -67,6 +67,19 @@ def site():
         yield server
 
 
+def site_checkout(base, *, deployed=b"<html>crawler</html>", local=b"<html>crawler</html>", matched=True):
+    """A directory that looks like a checkout as far as the crawler page and its deployment receipt go."""
+    import hashlib
+    checkout = base / "checkout"
+    (checkout / "web" / "coprepan" / "crawler").mkdir(parents=True, exist_ok=True)
+    (checkout / "web" / "coprepan" / "crawler" / "index.html").write_bytes(local)
+    receipt = {"site_url": "https://sitio.test/", "public_check_utc": "2026-10-08T00:00:00Z",
+               "after": {"files": [{"path": "crawler/index.html", "sha256": hashlib.sha256(deployed).hexdigest(), "size": len(deployed)}]},
+               "public_check": {"pages": [{"url": "https://sitio.test/crawler/", "status": 200, "content_equals_source": matched}]}}
+    (checkout / "web" / "DEPLOY_RECEIPT_2026-10-08.json").write_text(json.dumps(receipt), encoding="utf-8")
+    return checkout
+
+
 class Timed(D.BudgetedFetcher):
     """Records the instant each request is really sent, after the pause."""
 
@@ -369,6 +382,7 @@ def test_a_repeated_run_makes_no_request_and_changes_nothing(drive):
 
 
 def test_a_late_second_pass_revalidates_instead_of_fetching_again(tmp_path, site):
+    scripted(site, paths=("/ok", "/gone404", "/redir"))      # no refusing answer: an origin that refused stays on hold (CPD-0017)
     site.routes["/ok"] = Response(200, HTML + [("ETag", '"v1"')], page(1).body, etag='"v1"')
     run = Drive(tmp_path / "late", site)
     run.go()
@@ -402,9 +416,9 @@ def test_the_driver_pin_is_deterministic_and_names_no_location(drive):
 def test_the_canary_pin_needs_a_target_identity_and_has_no_disk_in_it(tmp_path, drive):
     from coprepan import preservation_target as PT
     with pytest.raises(D.CanaryStopped):
-        D.canary_pin(SMALL, drive.registry, [OUTLET], [], tmp_path)
+        D.canary_pin(SMALL, drive.registry, [OUTLET], [], tmp_path, P.loopback_test_policy())
     PT.initialise_target(drive.root, "coprepan-preservation-test", operator="test", now=T0)
-    pin = D.canary_pin(SMALL, drive.registry, [OUTLET], [], drive.root)
+    pin = D.canary_pin(SMALL, drive.registry, [OUTLET], [], drive.root, P.loopback_test_policy(), repository=site_checkout(tmp_path))
     assert pin["storage_target"]["target_id"] == "coprepan-preservation-test" and str(drive.root) not in json.dumps(pin)
     assert pin["storage_contract_sha256"] == "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3"
     assert set(pin["outlets"][OUTLET]) == {"record_sha256", "url_rules"}

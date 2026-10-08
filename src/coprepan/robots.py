@@ -15,7 +15,7 @@ from typing import Mapping
 
 from .canonical import sha256_bytes
 
-PARSER_VERSION = "robots-parser/1"
+PARSER_VERSION = "robots-parser/2"  # /2: a byte-order mark is not part of the first line; `parse_error`
 ALLOWED, DISALLOWED = "allowed", "disallowed"
 
 EVIDENCE_FETCHED = "fetched"            # a robots file was retrieved and parsed
@@ -34,6 +34,7 @@ class RobotsRules:
     groups: Mapping[str, tuple[tuple[bool, str], ...]]
     sitemaps: tuple[str, ...] = ()
     crawl_delays: Mapping[str, str] = field(default_factory=dict)  # not part of RFC 9309; recorded, not interpreted
+    parse_error: bool = False  # the file has content and not one line this parser understands (an HTML page, say)
 
     def evaluate(self, product_token: str, path: str) -> tuple[str, str | None]:
         """``(allowed | disallowed, the rule that decided)`` for a path with its query.
@@ -82,9 +83,12 @@ def parse_robots(body: bytes) -> RobotsRules:
     delays: dict[str, str] = {}
     current: list[str] = []
     in_rules = False
-    for raw in body[:MAX_ROBOTS_BYTES].decode("utf-8", errors="replace").splitlines():
+    content = understood = 0
+    for raw in body[:MAX_ROBOTS_BYTES].decode("utf-8", errors="replace").lstrip("\ufeff").splitlines():
         line = raw.split("#", 1)[0].strip()
         key, colon, value = line.partition(":")
+        content += bool(line)
+        understood += bool(colon) and key.strip().lower() in ("user-agent", "allow", "disallow", "sitemap", "crawl-delay")
         if not colon:
             continue
         key, value = key.strip().lower(), value.strip()
@@ -105,7 +109,8 @@ def parse_robots(body: bytes) -> RobotsRules:
             in_rules = True
             for token in current:
                 delays[token] = value
-    return RobotsRules({token: tuple(rules) for token, rules in groups.items()}, tuple(sitemaps), delays)
+    return RobotsRules({token: tuple(rules) for token, rules in groups.items()}, tuple(sitemaps), delays,
+                       parse_error=content > 0 and understood == 0)
 
 
 def evidence_from_response(status: int | None, body: bytes | None) -> RobotsEvidence:

@@ -8,6 +8,10 @@ is the one step this repository's rules leave to a person
 Everything else is a command. Run from the checkout; on Windows use `set PYTHONPATH=src` (or
 `$env:PYTHONPATH="src"`) instead of the `PYTHONPATH=src` prefix.
 
+The policy the canary runs under is `canary/2026-10-08.2` ([CPD-0017](../decisions/CPD-0017_scientific-tdm-acquisition-and-robots-policy.md)): a robots file is
+always read first; a `Disallow` is recorded and overridden only as `ALLOW_RESEARCH_OVERRIDE`; an access
+control ends the path and holds the origin. The baseline pins that layer and the deployed crawler page.
+
 The five outlets: `bo_el_deber` `do_diario_libre` `hn_proceso_digital` `py_la_nacion` `ve_efecto_cocuyo`
 (`--outlet` once for each). Budget, per `python -m coprepan.canary_driver pin …`: at most 80 item
 requests in all (ceiling 100), 16 per outlet, 8 robots / channel-document requests per outlet, two

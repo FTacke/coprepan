@@ -445,6 +445,6 @@ def _policy(run: AcquisitionRun, policy: Mapping[str, str]) -> dict[str, str]:
     missing = [name for name in POLICY_FIELDS if not policy.get(name)]
     if missing:
         raise AcquisitionError(f"an HTTP fetch records its policy context; missing: {missing}")
-    if policy["policy_decision"] != "ALLOW":
+    if policy["policy_decision"] not in ("ALLOW", "ALLOW_RESEARCH_OVERRIDE"):  # the latter: CPD-0017, never silent
         raise AcquisitionError("a fetch record exists only for a request the policy allowed")
     return {name: policy[name] for name in POLICY_FIELDS}

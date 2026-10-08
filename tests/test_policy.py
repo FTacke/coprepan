@@ -43,8 +43,10 @@ def test_the_tracked_policy_is_the_decided_canary_policy():
     policy = P.load_policy()
     armed = policy["external_acquisition"] == "enabled"
     assert policy["status"] == "DECIDED" and policy["external_acquisition"] in ("enabled", "disabled")
-    assert policy["policy_version"].startswith("canary/") and policy["schema"] == "coprepan-acquisition-policy/v2"
-    assert policy["robots"] == {"mode": "enforce", "on_absent": "allow", "on_unreachable": "defer"}
+    assert policy["policy_version"].startswith("canary/") and policy["schema"] == "coprepan-acquisition-policy/v3"
+    assert policy["robots"] == {"mode": "research_tdm_override", "on_absent": "allow", "on_unreachable": "defer", "on_parse_error": "defer"}
+    assert policy["research_tdm"]["basis"] == "SCIENTIFIC_TDM_POLICY_V1" and policy["research_tdm"]["decision"] == "CPD-0017"
+    assert set(policy["research_tdm"]["conditions"].values()) == {True} and policy["research_tdm"]["legal_review_holds"] == []
     assert policy["rate_limit"]["crawl_delay"] == "binding_minimum"
     assert policy["rate_limit"]["min_interval_seconds_per_origin"] >= 10 and policy["rate_limit"]["crawl_delay_max_seconds"] >= 10
     for kind in ("item", "channel_document", "robots_txt"):
@@ -164,8 +166,8 @@ def test_no_robots_evidence_defers_and_never_allows():
 
 
 def test_a_decided_policy_has_decided_everything():
-    for overrides in ({"robots": {"mode": "not_decided", "on_absent": "allow", "on_unreachable": "deny"}},
-                      {"robots": {"mode": "enforce", "on_absent": "maybe", "on_unreachable": "deny"}},
+    for overrides in ({"robots": {"mode": "not_decided", "on_absent": "allow", "on_unreachable": "deny", "on_parse_error": "defer"}},
+                      {"robots": {"mode": "enforce", "on_absent": "maybe", "on_unreachable": "deny", "on_parse_error": "defer"}},
                       {"rate_limit": {"min_interval_seconds_per_origin": "not_decided", "crawl_delay": "record_only", "crawl_delay_max_seconds": 0}},
                       {"rate_limit": {"min_interval_seconds_per_origin": 1, "crawl_delay": "sometimes", "crawl_delay_max_seconds": 0}},
                       {"rate_limit": {"min_interval_seconds_per_origin": 1, "crawl_delay": "binding_minimum", "crawl_delay_max_seconds": "not_decided"}},
@@ -217,15 +219,15 @@ def test_origins_channels_opt_outs_and_suppressions():
 def test_robots_evidence_is_weighed_as_the_policy_says():
     fetched = RB.evidence_from_response(200, b"User-agent: *\nDisallow: /privado/\n")
     assert gate(decided()).evaluate(intent(url=f"{WWW}/privado/x"), fetched).reasons == ("robots_disallow",)
-    record_only = decided(robots={"mode": "record_only", "on_absent": "allow", "on_unreachable": "deny"})
+    record_only = decided(robots={"mode": "record_only", "on_absent": "allow", "on_unreachable": "deny", "on_parse_error": "defer"})
     decision = gate(record_only).evaluate(intent(url=f"{WWW}/privado/x"), fetched)
     assert decision.decision == "ALLOW" and decision.evidence["robots_decision"] == "disallowed"
     assert decision.evidence["robots_txt_sha256"] == fetched.sha256
     unreachable = RB.evidence_from_response(503, b"")
     for action, expected in (("deny", "DENY"), ("defer", "DEFER"), ("allow", "ALLOW")):
-        policy = decided(robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": action})
+        policy = decided(robots={"mode": "enforce", "on_absent": "allow", "on_unreachable": action, "on_parse_error": "defer"})
         assert gate(policy).evaluate(intent(), unreachable).decision == expected
-    strict = decided(robots={"mode": "enforce", "on_absent": "deny", "on_unreachable": "deny"})
+    strict = decided(robots={"mode": "enforce", "on_absent": "deny", "on_unreachable": "deny", "on_parse_error": "defer"})
     assert gate(strict).evaluate(intent(), ABSENT).reasons == ("robots_absent",)
 
 
