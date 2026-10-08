@@ -1,0 +1,3 @@
+{"audio_ms":null,"audio_ms_state":"not_applicable","cohort":"2026-Q3","cohort_state":"known","country_id":"uy","date_basis":"json_ld","date_basis_state":"known","documents":1,"outlet_id":"uy_diario_ejemplo","tokens_counted":14,"tokens_counted_state":"known"}
+{"audio_ms":null,"audio_ms_state":"not_applicable","cohort":"2026-Q3","cohort_state":"known","country_id":"uy","date_basis":"open_graph","date_basis_state":"known","documents":1,"outlet_id":"uy_diario_ejemplo","tokens_counted":4,"tokens_counted_state":"known"}
+{"audio_ms":null,"audio_ms_state":"not_applicable","cohort":null,"cohort_state":"unknown","country_id":"es","date_basis":null,"date_basis_state":"unknown","documents":1,"outlet_id":"es_otro_diario","tokens_counted":3,"tokens_counted_state":"known"}

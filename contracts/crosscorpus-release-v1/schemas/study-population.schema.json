@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crosscorpus-study-population/v1",
+  "title": "Study population manifest (STUDY_POPULATION.json)",
+  "description": "The exact population of one analysis: the pinned releases, how the population was chosen, the frozen ids and the exclusions. The frozen ids are the identity; the selection is their provenance (CONTRACT section 10).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "contract", "study_id", "population_id", "created_at", "inputs", "selection",
+    "selected", "excluded", "exclusion_reasons", "totals", "analysis_code"
+  ],
+  "properties": {
+    "schema": {"const": "crosscorpus-study-population/v1"},
+    "contract": {"const": "crosscorpus-release/v1"},
+    "study_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "population_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "created_at": {"$ref": "#/$defs/instant"},
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["corpus_id", "release_id", "release_manifest_sha256", "analysis_layer"],
+        "properties": {
+          "corpus_id": {"enum": ["corapan", "coprepan"]},
+          "release_id": {"type": "string", "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$"},
+          "release_manifest_sha256": {"$ref": "#/$defs/sha256"},
+          "analysis_layer": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "contract", "manifest_sha256"],
+            "properties": {
+              "state": {"$ref": "#/$defs/state"},
+              "contract": {"type": ["string", "null"]},
+              "manifest_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "tool", "filter_language", "filters", "description"],
+      "properties": {
+        "kind": {"enum": ["declarative_filter", "external_tool", "enumerated"]},
+        "tool": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version"],
+          "properties": {"id": {"$ref": "#/$defs/text"}, "version": {"$ref": "#/$defs/text"}}
+        },
+        "filter_language": {"type": ["string", "null"]},
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["corpus_id", "all"],
+            "properties": {
+              "corpus_id": {"enum": ["corapan", "coprepan"]},
+              "all": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["field"],
+                  "properties": {
+                    "field": {"$ref": "#/$defs/text"},
+                    "in": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+                    "from": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+                    "to": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+                    "min": {"type": "integer", "minimum": 0},
+                    "max": {"type": "integer", "minimum": 0}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": {"$ref": "#/$defs/text"}
+      }
+    },
+    "selected": {"$ref": "#/$defs/record_set"},
+    "excluded": {"$ref": "#/$defs/record_set"},
+    "exclusion_reasons": {"type": "array", "items": {"$ref": "#/$defs/text"}},
+    "totals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["corpus_id", "selected_records", "documents", "tokens_counted", "tokens_counted_state", "audio_ms", "audio_ms_state"],
+        "properties": {
+          "corpus_id": {"enum": ["corapan", "coprepan"]},
+          "selected_records": {"type": "integer", "minimum": 0},
+          "documents": {"type": "integer", "minimum": 0},
+          "tokens_counted": {"type": ["integer", "null"], "minimum": 0},
+          "tokens_counted_state": {"$ref": "#/$defs/state"},
+          "audio_ms": {"type": ["integer", "null"], "minimum": 0},
+          "audio_ms_state": {"$ref": "#/$defs/state"}
+        }
+      }
+    },
+    "analysis_code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "repository_state", "commit", "commit_state"],
+      "properties": {
+        "repository": {"type": ["string", "null"]},
+        "repository_state": {"$ref": "#/$defs/state"},
+        "commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+        "commit_state": {"$ref": "#/$defs/state"}
+      }
+    }
+  },
+  "$defs": {
+    "text": {"type": "string", "pattern": "^\\S(?:[\\s\\S]*\\S)?$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "instant": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"},
+    "state": {"enum": ["known", "unknown", "not_applicable", "undecided", "not_available"]},
+    "record_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "records", "sha256"],
+      "properties": {
+        "schema": {"type": "string", "pattern": "^[a-z]+-[a-z0-9]+(-[a-z0-9]+)*/v[1-9][0-9]*$"},
+        "records": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

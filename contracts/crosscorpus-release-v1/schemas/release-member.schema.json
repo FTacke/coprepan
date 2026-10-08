@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crosscorpus-release-member/v1",
+  "title": "Release member (one line of MEMBERS.jsonl)",
+  "description": "One immutable export object of the corpus's own kind, named by its native id and bound by the tree digest of all of its files (CONTRACT section 6).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["export_id", "export_schema", "tree_sha256", "files", "bytes", "documents"],
+  "properties": {
+    "export_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "export_schema": {"type": "string", "pattern": "^[a-z]+-[a-z0-9]+(-[a-z0-9]+)*/v[1-9][0-9]*$"},
+    "tree_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "files": {"type": "integer", "minimum": 1},
+    "bytes": {"type": "integer", "minimum": 0},
+    "documents": {"type": "integer", "minimum": 0}
+  }
+}

@@ -1,0 +1,3 @@
+{"corpus_id":"coprepan","document_id":"uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f","id":"uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f:UNIT:1","id_kind":"paragraph","level":"unit","reason":null,"release_id":"coprepan-0000.1"}
+{"corpus_id":"corapan","document_id":"UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d","id":"UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d:d59v1:T:0b6310019be21dcd","id_kind":"turn","level":"unit","reason":null,"release_id":"corapan-0000-01"}
+{"corpus_id":"corapan","document_id":"UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d","id":"uy_radio_ejemplo:occ:0b6310019be2","id_kind":"speaker_occurrence","level":"producer","reason":null,"release_id":"corapan-0000-01"}

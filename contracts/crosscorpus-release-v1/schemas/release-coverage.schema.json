@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crosscorpus-release-coverage/v1",
+  "title": "Release coverage (one line of COVERAGE.jsonl)",
+  "description": "What the release contains per cell country x outlet x cohort x date basis. Fully determined by the document index; a study never recomputes coverage from file names (CONTRACT section 7.3).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "country_id", "outlet_id", "cohort", "cohort_state", "date_basis", "date_basis_state",
+    "documents", "tokens_counted", "tokens_counted_state", "audio_ms", "audio_ms_state"
+  ],
+  "properties": {
+    "country_id": {"type": "string", "pattern": "^[a-z]{2}$"},
+    "outlet_id": {"type": "string", "pattern": "^[a-z]{2}_[a-z0-9]+(_[a-z0-9]+)*$"},
+    "cohort": {"type": ["string", "null"], "pattern": "^[0-9]{4}-Q[1-4]$"},
+    "cohort_state": {"$ref": "#/$defs/state"},
+    "date_basis": {"type": ["string", "null"]},
+    "date_basis_state": {"$ref": "#/$defs/state"},
+    "documents": {"type": "integer", "minimum": 1},
+    "tokens_counted": {"type": ["integer", "null"], "minimum": 0},
+    "tokens_counted_state": {"$ref": "#/$defs/state"},
+    "audio_ms": {"type": ["integer", "null"], "minimum": 0},
+    "audio_ms_state": {"$ref": "#/$defs/state"}
+  },
+  "$defs": {
+    "state": {"enum": ["known", "unknown", "not_applicable", "undecided", "not_available"]}
+  }
+}

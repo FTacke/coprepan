@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crosscorpus-package-manifest/v1",
+  "title": "Package manifest (PACKAGE_MANIFEST.json)",
+  "description": "A distribution or archive package of one frozen release, without source media. The bibliographic metadata live here, not in the release manifest: a repository's metadata rules may change without changing a corpus state (CONTRACT section 11).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "contract", "package_kind", "package_id", "created_at", "release", "exports", "contains_source_media", "files", "metadata"],
+  "properties": {
+    "schema": {"const": "crosscorpus-package-manifest/v1"},
+    "contract": {"const": "crosscorpus-release/v1"},
+    "package_kind": {"enum": ["distribution", "archive"]},
+    "package_id": {"type": "string", "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$"},
+    "created_at": {"$ref": "#/$defs/instant"},
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["corpus_id", "release_id", "release_manifest_sha256"],
+      "properties": {
+        "corpus_id": {"enum": ["corapan", "coprepan"]},
+        "release_id": {"type": "string", "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$"},
+        "release_manifest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "exports": {"enum": ["included", "by_reference"]},
+    "contains_source_media": {"const": false},
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "records", "sha256"],
+      "properties": {
+        "schema": {"const": "crosscorpus-package-file/v1"},
+        "records": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title", "description", "resource_type", "version", "languages", "creators",
+        "publisher", "publisher_state", "publication_year", "publication_year_state",
+        "identifier", "rights", "access", "related_identifiers", "funding", "source_media_statement"
+      ],
+      "properties": {
+        "title": {"$ref": "#/$defs/text"},
+        "description": {"$ref": "#/$defs/text"},
+        "resource_type": {"const": "Dataset"},
+        "version": {"$ref": "#/$defs/text"},
+        "languages": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z]{2,3}$"}},
+        "creators": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "orcid", "orcid_state", "affiliation", "affiliation_state"],
+            "properties": {
+              "name": {"$ref": "#/$defs/text"},
+              "orcid": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"},
+              "orcid_state": {"$ref": "#/$defs/state"},
+              "affiliation": {"type": ["string", "null"]},
+              "affiliation_state": {"$ref": "#/$defs/state"}
+            }
+          }
+        },
+        "publisher": {"type": ["string", "null"]},
+        "publisher_state": {"$ref": "#/$defs/state"},
+        "publication_year": {"type": ["integer", "null"], "minimum": 2000},
+        "publication_year_state": {"$ref": "#/$defs/state"},
+        "identifier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scheme", "value", "value_state"],
+          "properties": {
+            "scheme": {"enum": ["doi", "handle", "urn"]},
+            "value": {"type": ["string", "null"]},
+            "value_state": {"$ref": "#/$defs/state"}
+          }
+        },
+        "rights": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["licence", "licence_state"],
+          "properties": {"licence": {"type": ["string", "null"]}, "licence_state": {"$ref": "#/$defs/state"}}
+        },
+        "access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["level", "level_state"],
+          "properties": {
+            "level": {"type": ["string", "null"], "enum": ["open", "registered", "restricted", "embargoed", null]},
+            "level_state": {"$ref": "#/$defs/state"}
+          }
+        },
+        "related_identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["relation", "scheme", "value"],
+            "properties": {
+              "relation": {"enum": ["IsNewVersionOf", "IsPreviousVersionOf", "IsVersionOf", "IsDerivedFrom", "IsSupplementTo", "IsDocumentedBy", "References"]},
+              "scheme": {"$ref": "#/$defs/text"},
+              "value": {"$ref": "#/$defs/text"}
+            }
+          }
+        },
+        "funding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["funder", "award", "award_state"],
+            "properties": {
+              "funder": {"$ref": "#/$defs/text"},
+              "award": {"type": ["string", "null"]},
+              "award_state": {"$ref": "#/$defs/state"}
+            }
+          }
+        },
+        "source_media_statement": {"$ref": "#/$defs/text"}
+      }
+    }
+  },
+  "$defs": {
+    "text": {"type": "string", "pattern": "^\\S(?:[\\s\\S]*\\S)?$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "instant": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"},
+    "state": {"enum": ["known", "unknown", "not_applicable", "undecided", "not_available"]}
+  }
+}

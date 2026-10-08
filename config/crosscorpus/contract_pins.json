@@ -1,0 +1,15 @@
+{
+  "schema": "coprepan-crosscorpus-contract-pins/v1",
+  "note": "Which cross-corpus contract bundles this repository works against. A bundle is a verbatim copy of its canonical home; bundle_sha256 is the tree digest of the copy (contract section 14) and equals the digest the other repository pins. The copy is never edited here. Checked by tests/test_release_contract.py; read by coprepan.release_contract.load_contract, which refuses a copy that is not the pinned one.",
+  "contracts": {
+    "crosscorpus-release/v1": {
+      "status": "DRAFT",
+      "canonical_home": "corapan",
+      "path": "contracts/crosscorpus-release-v1",
+      "bundle_sha256": "4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0",
+      "taken_from_commit": "0a5f41dec2399369488c29f7cef37b053de28bcd",
+      "files": 49,
+      "local_implementation": "src/coprepan/release_contract.py"
+    }
+  }
+}

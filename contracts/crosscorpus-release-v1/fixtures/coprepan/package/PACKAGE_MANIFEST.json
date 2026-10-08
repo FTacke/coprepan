@@ -1,0 +1,57 @@
+{
+  "contains_source_media": false,
+  "contract": "crosscorpus-release/v1",
+  "created_at": "2026-10-08T00:00:00Z",
+  "exports": "included",
+  "files": {
+    "records": 11,
+    "schema": "crosscorpus-package-file/v1",
+    "sha256": "a563d8b38ec6bf5f5269a1649169816cbd9268061c30d6f735b882958530cd87"
+  },
+  "metadata": {
+    "access": {
+      "level": null,
+      "level_state": "undecided"
+    },
+    "creators": [
+      {
+        "affiliation": null,
+        "affiliation_state": "not_available",
+        "name": "Fixture, Person",
+        "orcid": null,
+        "orcid_state": "not_available"
+      }
+    ],
+    "description": "Synthetic reference fixture. Not a corpus, not a deposit.",
+    "funding": [],
+    "identifier": {
+      "scheme": "doi",
+      "value": null,
+      "value_state": "not_available"
+    },
+    "languages": [
+      "es"
+    ],
+    "publication_year": null,
+    "publication_year_state": "not_available",
+    "publisher": null,
+    "publisher_state": "undecided",
+    "related_identifiers": [],
+    "resource_type": "Dataset",
+    "rights": {
+      "licence": null,
+      "licence_state": "undecided"
+    },
+    "source_media_statement": "The release derives from preserved web pages. No fetched page is part of this package.",
+    "title": "CO.PRE.PAN fixture release 0000.1 (synthetic; not corpus data)",
+    "version": "coprepan-0000.1"
+  },
+  "package_id": "coprepan-0000.1-archive-fixture",
+  "package_kind": "archive",
+  "release": {
+    "corpus_id": "coprepan",
+    "release_id": "coprepan-0000.1",
+    "release_manifest_sha256": "b595003c05ca40e61cc01bc5969328ba03d6485677da641552a9228ec990677d"
+  },
+  "schema": "crosscorpus-package-manifest/v1"
+}

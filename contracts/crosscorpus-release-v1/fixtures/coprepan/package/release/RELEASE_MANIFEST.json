@@ -1,0 +1,117 @@
+{
+  "analysis_layer": {
+    "contract": null,
+    "manifest_sha256": null,
+    "state": "not_available"
+  },
+  "anchors": {
+    "document_kind": "document_version",
+    "offset_reference": "code-point offsets, half-open, into the normalised text of the token's unit",
+    "offset_reference_state": "known",
+    "producer_kinds": [],
+    "source_included": false,
+    "source_kind": "extracted_text",
+    "time_reference": null,
+    "time_reference_state": "not_applicable",
+    "unit_kinds": [
+      "title",
+      "heading",
+      "paragraph",
+      "list_item",
+      "quote_block",
+      "caption",
+      "unstructured_text"
+    ]
+  },
+  "changes": {
+    "added": [
+      "cpx-fixture-0001",
+      "cpx-fixture-0002"
+    ],
+    "removed": [],
+    "replaced": []
+  },
+  "contract": "crosscorpus-release/v1",
+  "corpus_id": "coprepan",
+  "coverage": {
+    "records": 3,
+    "schema": "crosscorpus-release-coverage/v1",
+    "sha256": "6940f01d3a8009f47e474164431c565cc195259734005f35a050d68083884d11"
+  },
+  "created_at": "2026-10-08T00:00:00Z",
+  "date_semantics": "crosscorpus-date-semantics/v1",
+  "documents": {
+    "records": 3,
+    "schema": "crosscorpus-release-document/v1",
+    "sha256": "f616b9ff9daed9088e033e4945820693e973a54a351cdf683acfadb78c3fa9f3"
+  },
+  "fixture": true,
+  "members": {
+    "records": 2,
+    "schema": "crosscorpus-release-member/v1",
+    "sha256": "f1acc92fd5ad9bba09a25cab6bd3af4048e0c00f9fce6ac6ace9f00a5ab1bbdd"
+  },
+  "modality": "written",
+  "previous_release": {
+    "release_id": null,
+    "release_manifest_sha256": null,
+    "state": "not_applicable"
+  },
+  "provenance": {
+    "builder": {
+      "commit": "0000000000000000000000000000000000000001",
+      "repository": "coprepan",
+      "tool": "fixture-builder",
+      "tool_version": "0"
+    },
+    "configuration": [
+      {
+        "id": "fixture-config",
+        "sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc"
+      }
+    ],
+    "member_code_commits": [
+      "0000000000000000000000000000000000000001"
+    ],
+    "models": [],
+    "pipeline": {
+      "id": "coprepan-pipeline",
+      "versions": [
+        "fixture-pipeline/0"
+      ]
+    },
+    "stack": {
+      "id": null,
+      "sha256": null,
+      "state": "not_available"
+    }
+  },
+  "release_id": "coprepan-0000.1",
+  "release_kind": "fixture",
+  "schema": "crosscorpus-release-manifest/v1",
+  "selection_policy": {
+    "id": null,
+    "sha256": null,
+    "state": "not_available"
+  },
+  "token_denominator": "crosscorpus-token-denominator/v1",
+  "token_denominator_state": "known",
+  "totals": {
+    "audio_ms": null,
+    "audio_ms_state": "not_applicable",
+    "documents": 3,
+    "exports": 2,
+    "tokens_counted": 21,
+    "tokens_counted_state": "known"
+  },
+  "vocabularies": {
+    "date_basis": [
+      "json_ld",
+      "open_graph",
+      "html_meta"
+    ],
+    "export_schema": [
+      "coprepan-fixture-export/v1"
+    ]
+  }
+}

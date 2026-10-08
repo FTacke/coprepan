@@ -1,0 +1,70 @@
+{
+  "analysis_code": {
+    "commit": null,
+    "commit_state": "not_available",
+    "repository": null,
+    "repository_state": "not_available"
+  },
+  "contract": "crosscorpus-release/v1",
+  "created_at": "2026-10-08T00:00:00Z",
+  "excluded": {
+    "records": 1,
+    "schema": "crosscorpus-study-selection-record/v1",
+    "sha256": "0eda6cc0cf354e999618628d9851c00c910355f2c5c2f79bf8a1788f32f22b42"
+  },
+  "exclusion_reasons": [
+    "syndicated_copy"
+  ],
+  "inputs": [
+    {
+      "analysis_layer": {
+        "contract": null,
+        "manifest_sha256": null,
+        "state": "not_available"
+      },
+      "corpus_id": "coprepan",
+      "release_id": "coprepan-0000.1",
+      "release_manifest_sha256": "b595003c05ca40e61cc01bc5969328ba03d6485677da641552a9228ec990677d"
+    }
+  ],
+  "population_id": "main",
+  "schema": "crosscorpus-study-population/v1",
+  "selected": {
+    "records": 1,
+    "schema": "crosscorpus-study-selection-record/v1",
+    "sha256": "c28d0ef5fec301afad7317e3aa140ac9636560417ebce3901563e87f321a69db"
+  },
+  "selection": {
+    "description": "fixture: one filter, one stated exclusion",
+    "filter_language": "crosscorpus-document-filter/v1",
+    "filters": [
+      {
+        "all": [
+          {
+            "field": "date",
+            "from": "2026-07-01",
+            "to": "2026-09-30"
+          }
+        ],
+        "corpus_id": "coprepan"
+      }
+    ],
+    "kind": "declarative_filter",
+    "tool": {
+      "id": "fixture-builder",
+      "version": "0"
+    }
+  },
+  "study_id": "fixture_study_coprepan",
+  "totals": [
+    {
+      "audio_ms": null,
+      "audio_ms_state": "not_applicable",
+      "corpus_id": "coprepan",
+      "documents": 1,
+      "selected_records": 1,
+      "tokens_counted": 14,
+      "tokens_counted_state": "known"
+    }
+  ]
+}

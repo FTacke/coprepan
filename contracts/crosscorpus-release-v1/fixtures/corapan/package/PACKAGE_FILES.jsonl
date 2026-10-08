@@ -1,0 +1,13 @@
+{"path":"README.md","role":"documentation","sha256":"3469f8886a25f2d1987548d2ae89dfd08d3d1010eb8711d19e4a2c827437d291","size":235}
+{"path":"exports/expr1-000000000000000000000000000000a1/EXPORT_READY_MANIFEST.json","role":"export_payload","sha256":"41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e","size":84}
+{"path":"exports/expr1-000000000000000000000000000000a1/PROMOTED","role":"export_payload","sha256":"e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f","size":8}
+{"path":"exports/expr1-000000000000000000000000000000a1/recordings.jsonl","role":"export_payload","sha256":"fc771ff5dde351a60e2847d597a7a6b90bfd3e25b7f08f07c28c2185ad155504","size":151}
+{"path":"exports/expr1-000000000000000000000000000000a1/speaker_turns.jsonl","role":"export_payload","sha256":"29e9048257cbb8ec992bda3b5f5f1cd08aa2b01026cd77d450ab04876738f5f6","size":127}
+{"path":"exports/expr1-000000000000000000000000000000b2/EXPORT_READY_MANIFEST.json","role":"export_payload","sha256":"41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e","size":84}
+{"path":"exports/expr1-000000000000000000000000000000b2/PROMOTED","role":"export_payload","sha256":"e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f","size":8}
+{"path":"exports/expr1-000000000000000000000000000000b2/recordings.jsonl","role":"export_payload","sha256":"22ff736101ff59dfc69e21928989686a191eb029173dd1caa678458177a692d9","size":62}
+{"path":"release/COVERAGE.jsonl","role":"release_coverage","sha256":"fc719c5bee97f09a7d403be1809bca65f53600a4d36ee69eb6af5b012ad9ee4f","size":763}
+{"path":"release/DOCUMENTS.jsonl","role":"release_documents","sha256":"e3bfe77df9a7f6cc57803dc7f39fafa8de752a7282c9d777c1db66127e804d6a","size":1537}
+{"path":"release/MEMBERS.jsonl","role":"release_members","sha256":"a67ce53b382179f2cc02db3bc76756b4d1718b6cd46705799668973af23686fa","size":428}
+{"path":"release/RELEASE_FREEZE.json","role":"release_freeze","sha256":"58775881b0d67e55ac130c0a02b8ccbb573fcadd5b6ce1c43679e6380505f160","size":332}
+{"path":"release/RELEASE_MANIFEST.json","role":"release_manifest","sha256":"fd58337c17febcf24373a8a6a9336ed10ef0d3794f69e7137ddc58dcea5d7135","size":3108}

@@ -1,0 +1,11 @@
+{"path":"README.md","role":"documentation","sha256":"12e11ca5dc2369d5828782ec145ff3747e7d3a48d788a8e3d776bf87393d9c60","size":235}
+{"path":"exports/cpx-fixture-0001/documents/es_otro_diario/2a3b4c5d6e7f8091.json","role":"export_payload","sha256":"f3a474a471d07a0044ee46d5eea68969998a8529afd9d3a6c5e8af0ac60d361f","size":34}
+{"path":"exports/cpx-fixture-0001/documents/uy_diario_ejemplo/1f0e9d8c7b6a5f4e.json","role":"export_payload","sha256":"4b669dd35882f9f8a4794aba9a1d97beb933fc5ed8db2f924af675ed9f29cd78","size":80}
+{"path":"exports/cpx-fixture-0001/export.json","role":"export_payload","sha256":"3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf","size":102}
+{"path":"exports/cpx-fixture-0002/documents/uy_diario_ejemplo/3b4c5d6e7f809102.json","role":"export_payload","sha256":"416612c9da2ddde9e26850f6af164784473945eb061ddff7ac6378c5dc087a39","size":41}
+{"path":"exports/cpx-fixture-0002/export.json","role":"export_payload","sha256":"3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf","size":102}
+{"path":"release/COVERAGE.jsonl","role":"release_coverage","sha256":"6940f01d3a8009f47e474164431c565cc195259734005f35a050d68083884d11","size":769}
+{"path":"release/DOCUMENTS.jsonl","role":"release_documents","sha256":"f616b9ff9daed9088e033e4945820693e973a54a351cdf683acfadb78c3fa9f3","size":1483}
+{"path":"release/MEMBERS.jsonl","role":"release_members","sha256":"f1acc92fd5ad9bba09a25cab6bd3af4048e0c00f9fce6ac6ace9f00a5ab1bbdd","size":390}
+{"path":"release/RELEASE_FREEZE.json","role":"release_freeze","sha256":"bc2dd2c87dae8904666f0cef710119214cf31d7dfb9bc53ad0a1a563e21dbfc0","size":333}
+{"path":"release/RELEASE_MANIFEST.json","role":"release_manifest","sha256":"4432231804fe4662410d0b2784ba670e459a894c34472eb3350215d764ccfb10","size":2925}

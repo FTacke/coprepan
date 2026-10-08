@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crosscorpus-package-file/v1",
+  "title": "Package file (one line of PACKAGE_FILES.jsonl)",
+  "description": "One file of a package, by its contract path, digest, size and role. The two files that describe the package itself are not listed (CONTRACT section 11.2).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["path", "sha256", "size", "role"],
+  "properties": {
+    "path": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "size": {"type": "integer", "minimum": 0},
+    "role": {
+      "enum": [
+        "release_manifest", "release_freeze", "release_members", "release_documents", "release_coverage",
+        "export_payload", "projection", "documentation", "schema", "licence"
+      ]
+    }
+  }
+}
