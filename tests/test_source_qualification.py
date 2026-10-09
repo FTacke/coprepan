@@ -12,9 +12,10 @@ import json
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-INVENTORY = REPO / "config" / "source_discovery" / "source_inventory_2026-10-09.1.json"
-READINESS = REPO / "config" / "intake" / "intake_readiness_2026-10-09.1.json"
-PAGE = REPO / "docs" / "corpus_supply" / "SOURCE_QUALIFICATION_2026-10-09.1.md"
+INVENTORY = REPO / "config" / "source_discovery" / "source_inventory_2026-10-10.1.json"            # the version in force
+INVENTORY_OF_THE_REVIEW = REPO / "config" / "source_discovery" / "source_inventory_2026-10-09.1.json"   # the snapshot the access review was written against
+READINESS = REPO / "config" / "intake" / "intake_readiness_2026-10-10.1.json"
+PAGE = REPO / "docs" / "corpus_supply" / "SOURCE_QUALIFICATION_2026-10-10.1.md"
 REVIEW = REPO / "config" / "source_discovery" / "access_restriction_review_2026-10-09.json"
 
 
@@ -37,7 +38,7 @@ def test_the_tracked_files_are_what_the_builder_gives_from_the_tracked_evidence(
         import pytest
         pytest.skip("the registry or the policy has changed since this inventory version was built: a version is rebuilt only from its own inputs")
     out = [tmp_path / "inventory.json", tmp_path / "readiness.json", tmp_path / "page.md"]
-    assert builder().main(["--version", "2026-10-09.1", "--out-inventory", str(out[0]), "--out-readiness", str(out[1]), "--out-md", str(out[2])]) == 0
+    assert builder().main(["--version", "2026-10-10.1", "--out-inventory", str(out[0]), "--out-readiness", str(out[1]), "--out-md", str(out[2])]) == 0
     assert [path.read_bytes() for path in out] == [INVENTORY.read_bytes(), READINESS.read_bytes(), PAGE.read_bytes()]
 
 
@@ -80,7 +81,7 @@ def test_the_readiness_configuration_starts_nothing_and_holds_no_held_origin():
 
 
 def test_the_access_restriction_review_covers_every_held_outlet_and_lifts_no_hold():
-    review, inventory = load(REVIEW), load(INVENTORY)
+    review, inventory = load(REVIEW), load(INVENTORY_OF_THE_REVIEW)
     held = {o["outlet_id"] for o in inventory["outlets"] if o["restriction"] == "HELD_ACCESS_CONTROL"}
     rows = {row["outlet_id"]: row for row in review["outlets"]}
     assert set(rows) == held and review["totals"]["held"] == len(held)
@@ -94,3 +95,19 @@ def test_the_access_restriction_review_covers_every_held_outlet_and_lifts_no_hol
     assert rows["es_el_pais"]["legacy"]["ok_articles"] == 1142 and rows["es_el_pais"]["legacy"]["last_ok_fetch_day"] == "2026-02-21"
     assert rows["es_el_pais"]["group"] == "POTENTIALLY_RECOVERABLE" and rows["es_el_pais"]["further_access_decision_needed"]
     assert "no hold is lifted" in review["what_this_is"]
+
+
+def test_no_outlet_of_the_readiness_file_has_a_held_origin_and_a_released_hold_is_not_a_verified_outlet():
+    """CPD-0027: a hold has a scope. An outlet with a held origin is in no intake, however many pages it yielded before the
+    control was met (es_el_pais: five articles, then a CAPTCHA); an outlet with one held route and a working one is."""
+    holds = load(REPO / "config" / "source_discovery" / "access_holds_2026-10-10.json")
+    readiness, inventory = load(READINESS), {o["outlet_id"]: o for o in load(INVENTORY)["outlets"]}
+    assert readiness["held_origins"] == holds["held_origins"] and readiness["held_urls"] == holds["held_urls"]
+    for entry in readiness["outlets"]:
+        assert not set(entry["web_origins"]) & set(holds["held_origins"]), entry["outlet_id"]
+        assert not {channel["url"] for channel in entry["channels"]} & set(holds["held_urls"]), entry["outlet_id"]
+    ready = {entry["outlet_id"] for entry in readiness["outlets"]}
+    assert inventory["es_el_pais"]["stage"] == "ACQUISITION_VERIFIED" and inventory["es_el_pais"]["restriction"] == "HELD_ACCESS_CONTROL" and "es_el_pais" not in ready
+    assert "ve_efecto_cocuyo" in ready and inventory["ve_efecto_cocuyo"]["holds_in_force"]["urls"] == ["https://efectococuyo.com/sitemap.xml"]
+    assert "mx_la_jornada" not in ready and inventory["mx_la_jornada"]["stage"] != "ACQUISITION_VERIFIED"     # released by the policy, refused by the server
+    assert holds["classifier"] == "access-control/4" and holds["hold_scope"] == "access-hold-scope/1"

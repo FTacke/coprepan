@@ -44,6 +44,7 @@ INVENTORY_SCHEMA = "coprepan-source-inventory/v2"
 READINESS_SCHEMA = "coprepan-intake-readiness/v1"
 LISTING_KINDS = ("section_page", "archive")
 HOLD_REASONS = ("access_control_observed",)
+CONTROL_CLASSES = {"auth_required", "forbidden", "unavailable_for_legal_reasons", "rate_limited", "captcha", "bot_challenge", "blocked"}
 
 
 def load(path: Path) -> Any:
@@ -119,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
     dispositions_path = sorted((CONFIG / "source_discovery").glob("qualification_dispositions_*.json"))[-1]
     dispositions = {row["outlet_id"]: row for row in load(dispositions_path)["dispositions"]}
     new_ids = {entry["outlet_id"] for path in sorted((CONFIG / "registry_review").glob("*_registration_*.json")) for entry in load(path)["registered"] if entry.get("new_outlet")}
+    holds_path = sorted((CONFIG / "source_discovery").glob("access_holds_*.json"))[-1]
+    holds = load(holds_path)
     all_runs = runs()
     by_outlet: dict[str, list[tuple[dict[str, Any], dict[str, Any]]]] = defaultdict(list)
     for run in all_runs:
@@ -137,8 +140,17 @@ def main(argv: list[str] | None = None) -> int:
         disposition = dispositions[outlet_id]
         row = registered_rows.get(outlet_id)
         history = by_outlet.get(outlet_id, [])
-        held = any(reason.split(":", 1)[1] in HOLD_REASONS for _, e in history if e for reason in e["refused"]) or any(
-            "bot_challenge" in (run["receipt"]["policy_layers"]["by_outlet"].get(outlet_id, {}).get("access_classes_observed") or {}) for run, _ in history)
+        # Held: what the holds in force say (the snapshot of `scripts/derive_access_holds.py`, CPD-0027) — an origin of the
+        # outlet is held, or every channel of it that was ever read is held as a URL or was refused; and, for an outlet whose
+        # latest run still met a control, that run. A control an earlier run met and a later run did not is history.
+        latest_run, latest = history[-1] if history else (None, None)
+        origins_held = [origin for origin in (row["web_origins"] if row else []) if origin in holds["held_origins"]]
+        channel_urls = {c["url_history"][-1]["url"] for c in (row["channels"] if row else [])}
+        feed_hosts_held = [url for url in channel_urls if any(url.startswith(origin + "/") for origin in holds["held_origins"])]
+        urls_held = sorted(url for url in holds["held_urls"] if url in channel_urls or any(url.startswith(origin + "/") or url == origin + "/" for origin in (row["web_origins"] if row else [])))
+        met_in_latest = bool(latest) and (any(reason.split(":", 1)[1] in HOLD_REASONS for reason in latest["refused"]) or bool(
+            set(latest_run["receipt"]["policy_layers"]["by_outlet"].get(outlet_id, {}).get("access_classes_observed") or {}) & CONTROL_CLASSES))
+        held = bool(origins_held) or (met_in_latest and (latest["items_2xx"] == 0))
         verified_runs = []
         best = 0
         for run, evaluation in history:
@@ -210,6 +222,7 @@ def main(argv: list[str] | None = None) -> int:
             "preservation": ("PASS" if all(run["verification"] == "PASS" for run, _ in history) else "FAIL") if history else "not_tested",
             "replay": ("PASS" if all(run["verification"] == "PASS" for run, _ in history) else "FAIL") if history else "not_tested",
             "channels": channels, "candidate_rule": rules[outlet_id]["version"] if outlet_id in rules else None,
+            "holds_in_force": {"origins": origins_held, "urls": urls_held, "feed_urls_on_a_held_host": sorted(feed_hosts_held)},
             "extraction_last_run": extraction, "robots_crawl_delay_seconds": max([e.get("robots_crawl_delay_seconds") or 0 for _, e in history if e] or [0]) or None})
 
     stage_counts = Counter(o["stage"] for o in outlets)
@@ -237,6 +250,7 @@ def main(argv: list[str] | None = None) -> int:
               "dispositions": {"file": dispositions_path.name, "sha256": sha256_bytes(dispositions_path.read_bytes())},
               "candidate_rules": {"file": "candidate_rules.json", "sha256": sha256_bytes((CONFIG / "candidate_rules.json").read_bytes())},
               "policy_version": policy["policy_version"],
+              "access_holds": {"file": holds_path.name, "sha256": sha256_bytes(holds_path.read_bytes()), "classifier": holds["classifier"], "hold_scope": holds["hold_scope"]},
               "runs": [{"run_id": run["run_id"], "wave": run["wave"], "operator_mode": run["operator_mode"], "baseline": run["baseline_file"],
                         "verification": run["verification"], "verification_file": run["verification_file"],
                         "verification_as_first_run": run["verification_as_first_run"], "requests": run["receipt"]["requests"]["total"],
@@ -264,6 +278,7 @@ def main(argv: list[str] | None = None) -> int:
                 "channels": [{"channel_id": c["channel_id"], "kind": c["kind"], "url": c["url"], "formats": c["formats"], "entries_last": c["entries_last"],
                               "candidates_last": c["candidates_last"], "item_pages_2xx": c["item_pages_2xx"]} for c in usable],
                 "channels_not_usable": {c["channel_id"]: c["class"] for c in o["channels"] if c["class"] not in ("WORKS", "LISTING_WITH_RULE", "NOT_READ")},
+                "held_urls_of_this_outlet": o["holds_in_force"]["urls"],
                 "possible_redundancy": len(usable) > 1, "candidate_rule": o["candidate_rule"],
                 "last_successful_acquisition": max((r["run_id"] for r in o["runs"] if r["items_2xx"]), default=None),
                 "fixity_and_replay": o["replay"], "item_pages_2xx_all_runs": o["item_pages_2xx_all_runs"],
@@ -284,6 +299,7 @@ def main(argv: list[str] | None = None) -> int:
         "tiers": {"A": "ACQUISITION_VERIFIED and not held: use", "B": "item pages preserved, fewer than the stage asks: use, and expect less"},
         "outlets": [intake_entry(o, "A") for o in sorted(ready, key=priority)] + [intake_entry(o, "B") for o in sorted(partial, key=priority)],
         "holds": sorted(o["outlet_id"] for o in outlets if o["restriction"] == "HELD_ACCESS_CONTROL"),
+        "held_origins": holds["held_origins"], "held_urls": holds["held_urls"],
         "excluded": {o["outlet_id"]: o["restriction"] for o in outlets if o["stage"] == "NOT_REGISTERED"},
         "not_ready": {o["outlet_id"]: o["restriction"] for o in outlets if o["stage"] in ("REGISTERED", "TECHNICALLY_QUALIFIED") and o not in partial and o["restriction"] != "HELD_ACCESS_CONTROL"},
         "global_limits": {"min_interval_seconds_per_origin": policy["rate_limit"]["min_interval_seconds_per_origin"], "crawl_delay": policy["rate_limit"]["crawl_delay"],

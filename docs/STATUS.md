@@ -20,7 +20,9 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
-**State after the qualification run of 2026-10-09 (§5e; this paragraph is the current one, the others are history):** the whole known stock of 145 outlet hypotheses is registered and tested or deferred with its reason: 114 outlets are registered, **83 have verified acquisition, in all 20 countries; none is operationally stable**; 18 origins are held behind an access control. An intake-readiness configuration exists and starts nothing. Nothing is activated and the switch is `disabled`.
+**State after the access-policy run of 2026-10-10 (§5f; this paragraph is the current one, the others are history):** an observed access control now holds what was asked — an origin, or one URL of a channel — and a plain 401/403 for a robots address is a robots file that is not available (CPD-0027, policy `canary/2026-10-10.1`). 114 outlets are registered; **86 have verified acquisition, 85 of them usable, in all 20 countries; none is operationally stable**; ten origins and nine single URLs are held. An intake-readiness file of 87 outlets exists and starts nothing. Nothing is activated and the switch is `disabled`.
+
+**State after the qualification run of 2026-10-09 (§5e; history):** the whole known stock of 145 outlet hypotheses is registered and tested or deferred with its reason: 114 outlets are registered, **83 have verified acquisition, in all 20 countries; none is operationally stable**; 18 origins are held behind an access control. An intake-readiness configuration exists and starts nothing. Nothing is activated and the switch is `disabled`.
 
 **State at the end of the acquisition run of 2026-10-09 (§5d; history):** four canaries ran with
 real requests — the operator's second canary and three waves armed and frozen by a commissioned agent under versioned
@@ -370,6 +372,28 @@ Real requests, five qualification waves under `DOA-2026-10-09-4`. Report: [`2026
   **It starts nothing**; a 12- or 24-hour intake is a separate, separately authorised run and needs a driver of its own.
 - **Not shown:** stability (one run per outlet, one day), that each preserved item page is an article (not read one by one), extraction quality.
 
+
+### 5f. After the access-policy run of 2026-10-10 (CPD-0027)
+
+Report: [`2026-10-10`](agent-runs/2026-10-10_access-policy-liberalisation-and-source-recovery.md). §5e is history where this section says otherwise.
+
+- **The rule** (`access-hold-scope/1`, `robots-decision/3`, `access-control/4`): a control on an item page holds the origin; on a channel
+  document that URL; on a robots address the origin only for a challenge, CAPTCHA, block page or legal block. A plain 401/403 for a robots
+  address is "robots unavailable" (RFC 9309 §2.3.1.3); a 429 or 5xx there is "unreachable". Preserved answers are re-read under the classifier
+  in force in both directions. An explicit `Disallow`, the research-TDM layer and "no control is worked around" are unchanged.
+- **Holds** (`config/source_discovery/access_holds_2026-10-10.json`): 17 origins before the change; **10 origins and 9 URLs** now. 17 outlets
+  have nothing usable because of a control.
+- **Recovery wave** (`DOA-2026-10-10-1`, eight outlets, 53 requests of 150 allowed, verification `PASS`, disarmed): `ve_efecto_cocuyo` 10
+  articles and `hn_radio_progreso` 10 — verified and usable; **`es_el_pais` 5 full articles, then a CAPTCHA on the sixth request: verified and
+  held**; `mx_la_jornada` a challenge on its first article: held, now for a real control; `gt_nuestrodiario` refused (403) on its only route;
+  `mx_animal_politico`, `cu_5_de_septiembre`, `cu_periodico26` not reached.
+- **Stages** (`config/source_discovery/source_inventory_2026-10-10.1.json`): `ACQUISITION_VERIFIED` **86** (85 usable), `TECHNICALLY_QUALIFIED`
+  6, `REGISTERED` and nothing more 22, not registered 31; `OPERATIONALLY_STABLE` 0. Usable verified outlets per country as in §5e, with hn 6 and ve 7.
+- **Intake readiness:** `config/intake/intake_readiness_2026-10-10.1.json` — 87 outlets (85 tier A, 2 tier B), 121 channels, 20 countries; it
+  names held origins and URLs and lists no held route. It starts nothing.
+- **Open, not technical:** El País (the publisher's CAPTCHA; a page that declares itself not free was served in full; the publisher's stance on
+  automated collection) — the operator's and the institution's.
+
 ## 6. Validation debt
 
 Everything scientific. No extraction, annotation, enrichment or release has been validated. The
@@ -676,3 +700,9 @@ run report that carries the evidence.
   F8–F12 and F14 confirmed on real servers. An identity rebuild after a URL-rule amendment was adopted by the agent as a change decision and
   awaits the operator's confirmation. An intake-readiness configuration of 85 outlets exists and starts nothing. The switch is `disabled`.
   Run report: [`docs/agent-runs/2026-10-09_comprehensive-source-qualification-and-intake-readiness.md`](agent-runs/2026-10-09_comprehensive-source-qualification-and-intake-readiness.md).
+
+- 2026-10-10 — **access policy: holds with a scope; a refused robots address is not a refused origin** (CPD-0027). Of eighteen holds, four
+  rested on the project's own rule and are gone; fourteen were real. One bounded recovery wave (eight outlets, 53 requests): Efecto Cocuyo and
+  Radio Progreso yield articles; El País yields five full articles and then answers with a CAPTCHA and is held; La Jornada's articles are behind
+  a challenge. Verified outlets 83 → 86 (85 usable); intake-readiness file of 87 outlets. The switch is `disabled`.
+  Run report: [`docs/agent-runs/2026-10-10_access-policy-liberalisation-and-source-recovery.md`](agent-runs/2026-10-10_access-policy-liberalisation-and-source-recovery.md).

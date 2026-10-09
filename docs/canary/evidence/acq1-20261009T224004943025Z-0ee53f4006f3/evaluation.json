@@ -1,0 +1,815 @@
+{
+  "outlets": {
+    "cu_5_de_septiembre": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "cu_5_de_septiembre:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_parse_error",
+              "url": "https://www.5septiembre.cu/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_parse_error"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_parse_error": 1
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_PARSE_ERROR": 1
+      }
+    },
+    "cu_periodico26": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "cu_periodico26:ch:atom_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_unreachable",
+              "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=atom"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_unreachable"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cu_periodico26:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_unreachable",
+              "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_unreachable"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_unreachable": 2
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNREACHABLE": 2
+      }
+    },
+    "es_el_pais": {
+      "access_classes_observed": {
+        "captcha": 4
+      },
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 150
+      },
+      "channels": {
+        "es_el_pais:ch:rss_001": {
+          "candidates_listed": 150,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada"
+            }
+          ],
+          "entries": 153,
+          "entry_problems": {
+            "off_origin": 3
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 153,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 5,
+          "items_requested": 6
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 24521,
+        "body_characters_median": 7085,
+        "body_characters_min": 2998,
+        "floor": 500,
+        "labelled": 5,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 5,
+        "403": 1
+      },
+      "items": [
+        {
+          "body_characters": 4666,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/cultura/2026-10-09/vendaval-de-roca-rey-y-detalles-de-morante-en-el-dia-de-la-comunitat-valenciana.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elpais.com/cultura/2026-10-09/vendaval-de-roca-rey-y-detalles-de-morante-en-el-dia-de-la-comunitat-valenciana.html"
+        },
+        {
+          "body_characters": 24521,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/economia/negocios/2026-10-03/combatir-la-agenda-neoliberal-desde-la-izquierda-asi-son-las-recetas-de-los-mejores-economistas-progresistas-del-mundo.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elpais.com/economia/negocios/2026-10-03/combatir-la-agenda-neoliberal-desde-la-izquierda-asi-son-las-recetas-de-los-mejores-economistas-progresistas-del-mundo.html"
+        },
+        {
+          "body_characters": 2998,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/us/2026-10-09/la-comentarista-katie-zacharia-nueva-portavoz-de-trump.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elpais.com/us/2026-10-09/la-comentarista-katie-zacharia-nueva-portavoz-de-trump.html"
+        },
+        {
+          "body_characters": 7085,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/espana/2026-10-08/la-jueza-biedma-narra-una-situacion-de-angustia-provocada-por-las-supuestas-maniobras-del-caso-leire-diez.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elpais.com/espana/2026-10-08/la-jueza-biedma-narra-una-situacion-de-angustia-provocada-por-las-supuestas-maniobras-del-caso-leire-diez.html"
+        },
+        {
+          "body_characters": 9379,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/economia/2026-10-09/la-ue-alcanza-un-entendimiento-con-china-para-reducir-la-importacion-de-coches-hibridos-a-la-mitad.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elpais.com/economia/2026-10-09/la-ue-alcanza-un-entendimiento-con-china-para-reducir-la-importacion-de-coches-hibridos-a-la-mitad.html"
+        },
+        {
+          "body_characters": 43,
+          "channel_id": "es_el_pais:ch:rss_001",
+          "final_url": "https://elpais.com/elviajero/lonely-planet/2026-10-08/cachemira-jardines-mogoles-lagos-y-una-calma-inesperada.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 403,
+          "url": "https://elpais.com/elviajero/lonely-planet/2026-10-08/cachemira-jardines-mogoles-lagos-y-una-calma-inesperada.html"
+        }
+      ],
+      "items_2xx": 5,
+      "items_requested": 6,
+      "redirect_hops": 0,
+      "refused": {
+        "item:access_control_observed": 4
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 5,
+        "item:403": 1
+      },
+      "requests_per_2xx_item": 1.4,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6,
+        "ROBOTS_NOT_EVALUATED": 4,
+        "ROBOTS_UNAVAILABLE": 1
+      }
+    },
+    "gt_nuestrodiario": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "gt_nuestrodiario:ch:section_page_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.nuestrodiario.com/tu-comunidad",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://www.nuestrodiario.com/tu-comunidad"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNAVAILABLE": 1
+      }
+    },
+    "hn_radio_progreso": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "hn_radio_progreso:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.radioprogresohn.net/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://radioprogresohn.net/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 13623,
+        "body_characters_median": 3277,
+        "body_characters_min": 898,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 3381,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/np/el-cambio-se-mide-en-la-olla-no-en-los-discursos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/np/el-cambio-se-mide-en-la-olla-no-en-los-discursos/"
+        },
+        {
+          "body_characters": 6493,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/blogueros-categoria/el-silencio-tambien-comunica/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/blogueros-categoria/el-silencio-tambien-comunica/"
+        },
+        {
+          "body_characters": 2135,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/np/los-porcentajes-del-latinobarometro-que-deberia-alertarnos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/np/los-porcentajes-del-latinobarometro-que-deberia-alertarnos/"
+        },
+        {
+          "body_characters": 3616,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/np/entre-borrascas-y-amaneceres/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/np/entre-borrascas-y-amaneceres/"
+        },
+        {
+          "body_characters": 3173,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/np/aqui-venimos-y-no-por-un-rato/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/np/aqui-venimos-y-no-por-un-rato/"
+        },
+        {
+          "body_characters": 3044,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/instante/la-seguridad-desde-nuestra-fe-cristiana/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/instante/la-seguridad-desde-nuestra-fe-cristiana/"
+        },
+        {
+          "body_characters": 3006,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/np/dos-realidades-en-paralelo/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/np/dos-realidades-en-paralelo/"
+        },
+        {
+          "body_characters": 6517,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/noticias-nacionales/por-presuntas-irregularidades-piden-auditoria-forense-en-alcaldia-de-amapala/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/noticias-nacionales/por-presuntas-irregularidades-piden-auditoria-forense-en-alcaldia-de-amapala/"
+        },
+        {
+          "body_characters": 13623,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/columnistas-categoria/enterrar-millones-para-salvar-san-pedro-sula-de-inundarse/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/columnistas-categoria/enterrar-millones-para-salvar-san-pedro-sula-de-inundarse/"
+        },
+        {
+          "body_characters": 898,
+          "channel_id": "hn_radio_progreso:ch:rss_r001",
+          "final_url": "https://www.radioprogresohn.net/bienestar-integral/el-impacto-de-las-noticias-en-nuestra-salud-mental/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.radioprogresohn.net/bienestar-integral/el-impacto-de-las-noticias-en-nuestra-salud-mental/"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.1,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 11
+      }
+    },
+    "mx_animal_politico": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "mx_animal_politico:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "http://www.animalpolitico.com/feed/",
+              "redirect_hops": 0,
+              "status": 301,
+              "url": "http://www.animalpolitico.com/feed/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_301"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:301": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    },
+    "mx_la_jornada": {
+      "access_classes_observed": {
+        "bot_challenge": 9
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "mx_la_jornada:ch:atom_r002": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.jornada.com.mx/feeds/mundo.atom.xml",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://www.jornada.com.mx/feeds/mundo.atom.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "mx_la_jornada:ch:rss_r001": {
+          "candidates_listed": 105,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.jornada.com.mx/rss/edicion.xml?v=1",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.jornada.com.mx/rss/edicion.xml?v=1"
+            }
+          ],
+          "entries": 106,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 106,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 1
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "403": 1
+      },
+      "items": [
+        {
+          "body_characters": 0,
+          "channel_id": "mx_la_jornada:ch:rss_r001",
+          "final_url": "https://www.jornada.com.mx/2026/10/09/politica/010n1pol?partner=rss",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 403,
+          "url": "https://www.jornada.com.mx/2026/10/09/politica/010n1pol?partner=rss"
+        }
+      ],
+      "items_2xx": 0,
+      "items_requested": 1,
+      "redirect_hops": 0,
+      "refused": {
+        "item:access_control_observed": 9
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "channel_document:403": 1,
+        "item:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 3,
+        "ROBOTS_NOT_EVALUATED": 9
+      }
+    },
+    "ve_efecto_cocuyo": {
+      "access_classes_observed": {
+        "bot_challenge": 1
+      },
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 20
+      },
+      "channels": {
+        "ve_efecto_cocuyo:ch:rss_main": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://efectococuyo.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://efectococuyo.com/rss"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        },
+        "ve_efecto_cocuyo:ch:sitemap_index_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://efectococuyo.com/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 10935,
+        "body_characters_median": 3394,
+        "body_characters_min": 2670,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 3117,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/politica/delcy-rodriguez-niega-la-dolarizacion/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/politica/delcy-rodriguez-niega-la-dolarizacion/"
+        },
+        {
+          "body_characters": 3355,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/la-humanidad/ops-dona-insumos-para-la-atencion-de-afectados-por-crisis-hidrica-en-el-estado-sucre/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/la-humanidad/ops-dona-insumos-para-la-atencion-de-afectados-por-crisis-hidrica-en-el-estado-sucre/"
+        },
+        {
+          "body_characters": 3017,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/internacionales/rubio-se-reunira-este-viernes-con-dinorah-figuera-en-washington/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/internacionales/rubio-se-reunira-este-viernes-con-dinorah-figuera-en-washington/"
+        },
+        {
+          "body_characters": 3761,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/politica/maria-corina-machado-pide-elecciones-en-venezuela-en-julio-de-2027-segun-financial-times/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/politica/maria-corina-machado-pide-elecciones-en-venezuela-en-julio-de-2027-segun-financial-times/"
+        },
+        {
+          "body_characters": 2830,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/internacionales/venezolano-es-condenado-a-mas-de-12-anos-de-prision-en-florida-por-trafico-de-drogas-y-armas/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/internacionales/venezolano-es-condenado-a-mas-de-12-anos-de-prision-en-florida-por-trafico-de-drogas-y-armas/"
+        },
+        {
+          "body_characters": 2670,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/internacionales/netanyahu-felicita-a-flavio-bolsonaro-por-su-victoria-en-la-1-a-vuelta-y-lo-invita-a-israel/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/internacionales/netanyahu-felicita-a-flavio-bolsonaro-por-su-victoria-en-la-1-a-vuelta-y-lo-invita-a-israel/"
+        },
+        {
+          "body_characters": 3641,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/la-humanidad/absuelven-al-periodista-carlos-julio-rojas-y-le-otorgan-libertad-plena-tras-mas-de-2-anos-de-proceso/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/la-humanidad/absuelven-al-periodista-carlos-julio-rojas-y-le-otorgan-libertad-plena-tras-mas-de-2-anos-de-proceso/"
+        },
+        {
+          "body_characters": 10935,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/politica/cilia-flores-10-claves-sobre-el-fallo-judicial/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/politica/cilia-flores-10-claves-sobre-el-fallo-judicial/"
+        },
+        {
+          "body_characters": 3434,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/internacionales/rubio-eeuu-jamas-violaria-la-soberania-de-ningun-pais/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/internacionales/rubio-eeuu-jamas-violaria-la-soberania-de-ningun-pais/"
+        },
+        {
+          "body_characters": 4787,
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "final_url": "https://efectococuyo.com/internacionales/navanethem-navi-pillay-premio-nobel/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://efectococuyo.com/internacionales/navanethem-navi-pillay-premio-nobel/"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.1,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 11,
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    }
+  },
+  "run_id": "acq1-20261009T224004943025Z-0ee53f4006f3",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 25,
+    "items_requested": 27,
+    "outlets": 8,
+    "outlets_with_2xx_items": 3
+  }
+}
