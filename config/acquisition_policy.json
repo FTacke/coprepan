@@ -4,7 +4,7 @@
   "policy_version": "canary/2026-10-09.1",
   "status": "DECIDED",
   "scope": "external",
-  "external_acquisition": "enabled",
+  "external_acquisition": "disabled",
   "robots": {
     "mode": "research_tdm_override",
     "on_absent": "allow",
