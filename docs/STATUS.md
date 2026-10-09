@@ -20,6 +20,11 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
+**State at the end of 2026-10-09 (§5d; this paragraph is the current one, the two around it are history):** four canaries ran with
+real requests — the operator's second canary and three waves armed and frozen by a commissioned agent under versioned
+authorisation records (CPD-0023). 22 outlets are registered; **14 have verified acquisition, in 11 countries; none is
+operationally stable**; four origins are held behind browser challenges. Nothing is activated and the switch is `disabled`.
+
 **Later on 2026-10-09** (CPD-0020): the operator's external research (19 entries) was consolidated with every earlier file into one
 qualification overview; discovery now reads paginated and dated HTML listings and gives a pass's candidate budget to the newest entries;
 a third wave of nine outlets that were never in the legacy system exists as a proposal; the canary procedure is one operator command.
@@ -145,7 +150,7 @@ defects (§5a).
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
-| Outlet registry | schema, validator, lookup implemented and unit-tested; holds **82 outlets: 5 registered for the canary (each by a registration record), 77 proposed** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
+| Outlet registry | schema, validator, lookup implemented and unit-tested; holds **91 outlets: 22 registered (each by a registration record: 5 for the first canary, 8 of wave B and 9 of wave C on 2026-10-09 under a delegated operator authorisation), 69 proposed** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
 | Legacy outlet import | executed 2026-10-07 on a copy of the legacy database; deterministic on repetition; real schema equal to the assumed one; legacy-name → `outlet_id` table produced as `hypothesis`. **Not reviewed by a human** | `src/coprepan/legacy_registry_import.py`, `config/registry_review/`, corpus supply §16 |
 | Legacy archaeology and component dispositions | recorded | [`docs/legacy/ARCHAEOLOGY.md`](legacy/ARCHAEOLOGY.md), CPD-0004 |
 | Acquisition run and fetch record | implemented and unit-tested; run kinds `recorded_replay` and `http_fetch` | `src/coprepan/acquisition.py`, [`docs/acquisition/INDEX.md`](acquisition/INDEX.md) |
@@ -171,7 +176,7 @@ defects (§5a).
 | Native export object `coprepan-export/v1`; release, freeze, package, study-population builders | implemented and tested on the synthetic canary through the real pipeline code; **no corpus export can be built** (extractor `EXPERIMENTAL`) | `src/coprepan/release_export.py`, `tests/test_release_export.py`, CPD-0011 |
 | Phase-3 layer architecture | written; decides order and boundaries of the text layers, no tool and no threshold | [`docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`](architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md) |
 | **Canary driver** (stages A–E, real-request budgets, receipt) and the end-of-canary `verify` / `measure` | implemented; qualified against a scripted loopback outlet (38 tests); **run once for real on 2026-10-08** (27 requests, `COMPLETE`; `verify` `PASS`; result `PARTIAL`, §5a); the acquisition switch is off again | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md), [`docs/canary/evidence/`](canary/evidence/), CPD-0016 |
-| Canary planner and preflight | implemented and tested; on the repository as committed: 5 of 82 outlets eligible and selected, preflight `NOT_READY` (the switch is off). It was `READY` once, on the armed commit `15ec1fd` with the frozen baseline `96c271e3…` (2026-10-08) | `src/coprepan/canary.py`, `tests/test_canary.py` |
+| Canary planner and preflight | implemented and tested; on the repository as committed: preflight `NOT_READY` (the switch is off). It was `READY` on each armed commit of a canary: once on 2026-10-08 (`15ec1fd`, baseline `96c271e3…`) and for the four canaries of 2026-10-09 (§5d) | `src/coprepan/canary.py`, `tests/test_canary.py` |
 | Wrappers of three classical extractor candidates (trafilatura 2.3.1, readability-lxml 0.9, jusText 3.0.2) | implemented and tested; tools in the extra `phase3`, **not** runtime dependencies; all `EXPERIMENTAL`, nothing adopted; a **pilot** review package on the thirteen real pages exists outside the repository, no decision filled | `src/coprepan/extractor_candidates.py`, `scripts/phase3_review_package.py`, `tests/test_extractor_candidates.py`, [`docs/extraction/INDEX.md`](extraction/INDEX.md) §9, CPD-0018 |
 | Offline end-to-end canary with failure injection | passes: two independent passes are byte-identical; a later run adds and never rewrites | `tests/test_offline_e2e.py` |
 | Preservation-target readiness check | implemented and tested on temporary directories; **no target chosen** | `src/coprepan/preservation_target.py`, storage §15 |
@@ -276,6 +281,8 @@ first canary read again by the repaired code (`config/source_discovery/canary_re
 | second (the five registered outlets) | **prepared**; preflight `NOT_READY` only for the switch and a new frozen baseline | the operator's arming, [runbook](canary/RUNBOOK.md) §8 |
 | extended (twelve outlets, ten countries) | **proposal** — nothing registered | O-11: the operator's review and `scripts/apply_registration_proposal.py --write`; then the arming |
 
+**Superseded as a state on 2026-10-09 by §5d**: the second canary ran, and eight of the twelve outlets were registered and asked.
+
 ### 5c. After the source-expansion run of 2026-10-09 (CPD-0020)
 
 Offline evidence only (`tests/test_source_structures.py`, `tests/test_source_expansion.py`; one preserved listing replayed). Report:
@@ -305,6 +312,36 @@ needs CO.RA.PAN's adoption record. One joint point has a recommendation from thi
 decision: whether a release may be frozen with token counts `not_available` (contract §16 Q1).
 
 Full list: [master plan](plans/COPREPAN3_FOUNDATION_MASTER_PLAN.md) §13.
+
+
+### 5d. After the acquisition run of 2026-10-09 (CPD-0023, CPD-0024)
+
+Real requests, four completed canaries. Report: [`2026-10-09`](agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md). **The three waves of §5c ran**; the table there is history.
+
+| Canary | Armed and frozen by | Outlets | Item pages (200), preserved, verified, replayed | Verification |
+|---|---|---|---|---|
+| second (A) | the operator in person | 5 | 31 from 2 outlets | `PASS` |
+| wave B | the delegate under `DOA-2026-10-09-1` | 8 | 72 from 6 outlets (5 of them section pages, F9) | `PASS` |
+| wave C1 | the delegate under `DOA-2026-10-09-1` | 9 | 40 from 6 outlets | `PASS` |
+| wave C2 (repeat) | the delegate under `DOA-2026-10-09-3` | 2 | 20 from 2 outlets, all first listed by an HTML listing | `FAIL` on one check when it ran (an earlier interrupted run had no result); `PASS` after that run was closed as `FAILED` |
+
+- **Outlets with verified acquisition (five or more item pages in one bounded run): 14**, in 11 countries — `do_diario_libre`, `bo_el_deber`,
+  `ec_primicias` (by a route since closed), `es_el_mundo`, `ni_confidencial`, `pe_diariocorreo`, `pe_la_republica`, `sv_el_diario_de_hoy`,
+  `ar_el_tribuno`, `bo_opinion`, `cu_14ymedio`, `hn_criterio`, `ni_nicaragua_investiga`, `pr_noticel`. **None is operationally stable**: one
+  outlet has two runs on two days, the others one.
+- **Held** (a browser challenge; nothing further asked, nothing worked around): `hn_proceso_digital`, `ve_efecto_cocuyo`, `cu_cubanet`,
+  `ni_articulo66`.
+- **Registered and without acquisition:** `py_la_nacion` (F8, repaired, not asked again), `gt_lahora` (F10, repaired, not asked again),
+  `ec_el_universo` (F11: its feed names the apex host, the registry holds `www`; open), `uy_montevideo_portal` (F12: article links are a nameless
+  query, 60 entries are one candidate; open).
+- **Delegated operator mode** (CPD-0023): in force and used for real; the interactive mode is unchanged. A wave's limits cap the budget (CPD-0024).
+- **Repaired in this run, each with a regression test:** F8 `http` entries of an `https` origin; F9 an HTML answer of a feed channel is a
+  listing; F10 white space before the XML declaration; F14 a second run on a day whose pack is sealed. **Not yet seen on a real server after
+  the repair:** F8, F9, F10. F14's repair ran for real in the C2 repeat.
+- **An evidence gap, recorded:** the first C2 start made two requests to `criterio.hn` whose answers were not recorded (F14). Its run record
+  says `FAILED` and says so.
+- **Candidate rules:** two outlets (`hn_criterio`, `pr_noticel`), written from preserved listing pages. Every other outlet has generic rules only.
+- **Nothing is activated.** The switch is `disabled`; every production gate that was open is open.
 
 ## 6. Validation debt
 
@@ -598,3 +635,10 @@ run report that carries the evidence.
   heredocs mechanically (AGENTS §5). **Delegated operator authorisation was decided by the operator as a direction (CPD-0022) and not built**:
   the permission layer of the agent's session refused it, and it was not worked around. Still one outlet with verified acquisition; no
   request since 2026-10-08. Run report: [`docs/agent-runs/2026-10-09_delegation-blocked-and-manual-canary-diagnosed.md`](agent-runs/2026-10-09_delegation-blocked-and-manual-canary-diagnosed.md).
+
+- 2026-10-09 (sixth run of the day) — **real acquisition in four canaries; the delegated operator mode built and used** (CPD-0023, CPD-0024).
+  The operator's interactive second canary completed; waves B, C1 and C2 were armed and frozen by the commissioned agent under versioned
+  authorisation records, with no typed confirmation. 163 item pages preserved, verified and replayed; outlets with verified acquisition
+  1 → 14, countries 1 → 11; 17 outlets registered (22 in all). Four defects of this project found on real servers and repaired (F8, F9, F10,
+  F14), two recorded and open (F11, F12); four origins held. One interrupted start left two unrecorded requests. The switch is `disabled`.
+  Run report: [`docs/agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md`](agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md).

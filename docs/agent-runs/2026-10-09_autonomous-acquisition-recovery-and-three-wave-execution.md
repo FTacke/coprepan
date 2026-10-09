@@ -6,11 +6,28 @@ run_ended_at:        see the closing commit of the run
 timezone:            Europe/Berlin
 ```
 
-**This report is written in stages.** A section exists only for what has happened; a later commit of the same run adds the
-later phases. The status line below is that of the commit it is in.
+This report was written in stages, one commit after each phase; this is its final state.
 
-**Status at this commit: Phase 0 `PASS` · Phase A `PARTIAL` (run by the operator, evaluated here) · Phase 1 `PASS` offline,
-not yet used for a real canary · Phases B, C1, C2 not yet run.**
+**Status: `PARTIAL`** — every phase ran and ended disarmed; none delivered everything it was aimed at.
+
+| Phase | Status | In one line |
+|---|---|---|
+| 0 — the canary under way | `PASS` | it completed on its own; nothing was touched while its process lived; the disarmed state was read independently |
+| 1 — delegated operator mode | `PASS` | built, tested, and used for four real armings without a typed confirmation and without a refusal by the environment |
+| A — second canary (the operator's, in person) | `PARTIAL` | 31 article pages from 2 of 5 outlets; one new outlet; two held; one lost to a defect of this project (F8, repaired) |
+| B — eight outlets | `PARTIAL` | 72 pages from 6 of 8 outlets, five countries new; two outlets lost to a defect (F10, repaired) and a registration gap (F11, open); one outlet reached by a route that should not have been taken (F9, repaired) |
+| C1 — nine new outlets | `PARTIAL` | 40 article pages from 6 of 9 outlets (5 with five or more), three countries new; two held; one lost to URL identity (F12, open); listings preserved |
+| C2 — articles from HTML listings | `PASS` with a recorded incident | 20 article pages from the two qualified listing outlets, one country new; before that, two starts that stopped at a gate — the second after two requests whose answers were not recorded (F14, repaired) |
+
+**What the status does not claim.** No outlet is `OPERATIONALLY_STABLE` (three runs on three days within fourteen days; the
+most any outlet has is two). No production activation: every gate of `docs/STATUS.md` that was open is open. The extractor is
+experimental; body-text figures measure it, not the pages. Nothing here is a statement about the corpus's representativeness.
+No human confirmation was simulated, and none is recorded for anything the delegate did.
+
+**In numbers** (all from receipts, verifications and the request log): four canaries completed today, 250 real requests in
+them plus the two unrecorded ones of the interrupted start; **163 item pages answered 200 and are preserved, verified and
+replayed** — 157 of them articles (five section pages of `ec_primicias`, one advertisement in `cu_14ymedio`'s feed). Outlets
+with verified acquisition: **14** (1 before today); countries: **11** (1 before today): do, bo, ec, es, ni, pe, sv, ar, cu, hn, pr.
 
 `EXTERNAL_API_USAGE = NONE`.
 
@@ -236,7 +253,7 @@ had no verified outlet before (bo and ni did, from waves A and B). Three listing
 |---|---|---|
 | F12 | `uy_montevideo_portal`'s feeds link articles as `auc.aspx?<number>`: a query without a parameter name. The URL key drops it, so 60 entries are **one candidate** | not repaired: it needs a URL rule that can keep a nameless query, i.e. a new URL-key rule version for that outlet, with its own tests. Recorded for the next run |
 | F13 | feed links with `utm_` parameters cost two requests per article where the site redirects them | by design (a hop is a request); a candidate could be requested by its key instead — a change to weigh, not made |
-| — | two more origins answer `robots.txt` with a browser challenge (403): the classifier of F2 recognised a third product | held; four challenged origins in all now |
+| — | two more origins answer `robots.txt` with a browser challenge (403, a "Just a moment..." page): a third kind of challenge page, recognised by the classifier of F2 | held; four challenged origins in all now |
 | — | `canary-driver/5` (F9) and `channel-parser/5` (F10) were live: no feed of this wave answered with HTML or leading white space, so neither was exercised on a real server | open |
 
 ## Preparing C2 — the allow rules, written from the preserved pages
@@ -265,3 +282,176 @@ preserved pages named, and the scope is its own record: `config/operator_authori
 A canary of two outlets under ten requests each needed one rule: a wave's limits cap the budget
 ([CPD-0024](../decisions/CPD-0024_wave-limits-cap-the-canary-budget.md)); for waves B and C1 the capped budget equals the one
 they ran under.
+
+## Phase C2 — articles from HTML listings: two starts that stopped, and the run
+
+### First start: stopped at the tests (no request)
+
+`fec8088` armed under `DOA-2026-10-09-2`; the suite on the arming commit: **1 failed**, 1504 passed. `tests/test_schedule.py`
+asserted that `config/candidate_rules.json` has no entry, and I had committed the two rules after running only the test files
+I thought concerned — not the whole suite. The tool stopped and disarmed (`2676d6b`; read back). No baseline, no request; the
+wave was not used. Repair: the test holds the file to the two reviewed entries (`9bd6422`; full suite 1505 passed).
+
+### Second start: frozen, then stopped at its first answer — two requests without a record (F14)
+
+`fd943e0` armed (tests on it 1505 passed), baseline frozen (`ab2a85f`, digest
+`ac6d68aefd66b154a2a794c3385d522306180e9d85fc627644d453def6e0237f`), preflight `READY`. The run
+`acq1-20261009T160824878550Z-12eea03e3f04` then failed while recording its first answer: wave C1 had sealed
+`pk1-hn_criterio-20261009-000` earlier the same UTC day, and `record_exchange` always chose rollover number `000` — "a sealed
+pack is never appended to". Disarmed (`2d753c6`; read back).
+
+**What went out and was lost.** By the code path the fetch had completed before the record failed: **two requests to
+`criterio.hn`, its `robots.txt` and its feed. Their answers were received and are not recorded** — no fetch record, no preserved
+bytes; the request log holds the planned row of the feed and no end. That is a gap in this project's first rule (what is asked
+is kept), caused by this project. No item was requested. It is not papered over: the run's record now carries a result
+`FAILED` that states the two requests and that it was written afterwards by this agent run, with the project's own `close_run`.
+
+Why no test had met it: a second run for one outlet on one UTC day in one workspace had never happened — the first canaries
+were a day apart. Repair (`1305eae`): `record_exchange` writes to the first pack of that outlet and day that is not sealed
+(`pack.first_unsealed_id`). Regression test: two runs in one workspace on one day; the second records into `-001`, every sealed
+file is byte-identical afterwards; it fails without the repair. Full suite 1506 passed.
+
+The frozen baseline of that start used up `wave-c2` (a wave is one canary), and a repair changes the commit a baseline pins. The
+brief allows, after a repaired defect of our own, one further live attempt "innerhalb einer gültigen Autorisierung und der
+verbleibenden Budgets" and names "begrenzte erneute Validierung" among the agent's own decisions. That attempt is its own
+write-once record, `DOA-2026-10-09-3` (`wave-c2-repeat`): the same two outlets, the same item limits (none had been used),
+**other requests lowered from eight to six per outlet** for the two already made, and no further repetition under it. Whether
+that reading of the brief is the operator's is for the operator to say; it is recorded as the agent's reading.
+
+### The run
+
+| | |
+|---|---|
+| Authorisation | `DOA-2026-10-09-3`, wave `wave-c2-repeat`, mode `DELEGATED_OPERATOR_AUTHORIZATION`; record SHA-256 `6f285fc40624ab8ae45f8a3cbb148a03cb228179cce09ebd7f47e62e9e28b4b9` |
+| Arming commit | `69bd5fea1f471bc0b8971d83275b70276c16b236` — tests on it: **1506 passed** |
+| Baseline | `docs/canary/BASELINE_FROZEN_2026-10-09_wave-c2-repeat.json`, digest `462604a3f6856ca07ad736467b5429e073780af357ba2b7660fc2e683b8b9f7e`, commit `0e6d667`; it pins the candidate rules |
+| Run | `acq1-20261009T162552356454Z-75371bad809b`, 18:25:52–18:30:17 local; receipt `COMPLETE` |
+| Evidence | commit `63022d9`, `docs/canary/evidence/acq1-20261009T162552356454Z-75371bad809b/` |
+| Disarming | commit `8310c030af7ea3986251188bf4897655ebb3d336`; read independently: `disabled` in the file, in `HEAD`, on `origin/main`; tree clean; tests on the disarmed tree 1506 passed |
+
+**Requests:** 29 — 20 item, 9 other (limits: 20 item, 10 per outlet; 6 other per outlet: `hn_criterio` 5, `pr_noticel` 4);
+every answer a 200; nothing refused; one request under the research override (`hn_criterio`'s feed, as in C1). 944 819 bytes
+preserved, in the packs `-001` of the day; the sealed packs `-000` are unchanged.
+
+| Outlet | Listing pages read | Candidates decided under the rule | Item requests | Article pages (200), preserved and replayed |
+|---|---|---|---|---|
+| `pr_noticel` | 3 (the category page and two numbered pages) | 17 qualified, 97 rejected (categories 60, authors 29, the English tree 3, login 1, others) | 10 | **10**, all articles of `/ultima-hora/2026100[89]/…` — **`ACQUISITION_VERIFIED`, a new outlet and a new country (pr)** |
+| `hn_criterio` | 3, and its feed (5 entries, all fetched in C1) | 29 qualified, 25 rejected | 10 | **10**, all articles, none of them in the feed: articles reached only through the listing |
+
+All twenty pages were read from the packs: each is an article page (42 to 70 paragraph elements; titles of articles). No
+navigation page was requested. Under the baseline extractor `pr_noticel`'s body text has a median of 6 213 characters and
+`hn_criterio`'s 349 — the extractor's result on that site, as in C1.
+
+**Verification.** As the tool ran it: **`FAIL` — seven checks `PASS`, `recovery_diagnosis` `FAIL`** (`INCOMPLETE_RESUMABLE`: the
+interrupted run above had no result). That file is the evidence of record and is unchanged. After the interrupted run was
+closed as `FAILED`, the same verification was run again into a second file beside it,
+`verification_after_closing_the_interrupted_run.json`: **`PASS`** on all eight (260 bodies read back and verified; 29
+`RAW_PRESERVED` = 29 verified = 29 expected; 20 extractions replayed, 0 differ; receipt re-derived; 29 = 29 transport calls;
+nothing pending; budget respected; workspace `CLEAN`).
+
+**What C2 shows and does not.** A reviewed allow rule turns a preserved listing into article requests without one navigation
+page, on two sites with different address schemes, and numbered pagination is followed within the reserved budget. It does
+not show that the rules hold beyond the three pages each was written from, nor that a listing is a complete route (thirty
+entries of one category are not an outlet's production).
+
+## The defects of this run, in one place
+
+| | Where it showed | Whose | State |
+|---|---|---|---|
+| F8 | A: `py_la_nacion`, 100 entries stated with `http` | ours | repaired (`channel-parser/4`), replayed offline; not seen live since |
+| F9 | B: `ec_primicias`, a feed URL that answers with the home page | ours | repaired (`canary-driver/5`), replayed offline; not seen live since |
+| F10 | B: `gt_lahora`, white space before the XML declaration | ours | repaired (`channel-parser/5`), replayed offline; not seen live since |
+| F11 | B: `ec_el_universo`, feed on the apex host | registration | open: a second origin is for the operator |
+| F12 | C1: `uy_montevideo_portal`, a nameless query identifies the article | URL rules | open: needs a URL-key rule version |
+| F13 | C1: `ni_nicaragua_investiga`, `utm_` redirects cost a request each | by design | noted |
+| F14 | C2: a sealed pack of the same day | ours | repaired, regression-tested, **and exercised live** in the repeat |
+| — | C2: a test that pinned the rules file empty; a commit without the whole suite | mine | repaired; the arming gate caught it before any request |
+
+Validation classes, as the brief asks: the preservation, fixity and replay checks of each run are **reproducibility** (the same
+bytes, the same extraction, without network). F1 on two more servers, the challenge classifier on two more products, and
+pagination on two sites are **robustness** of single mechanisms. Thirteen new outlets with feeds, sitemaps and
+listings of different makes are a first, small step of **generalisability** of the acquisition path — and the four defects
+found only on real servers are the measure of how far offline replay had carried. **Replicability** (the same result on
+another day, by another run) is not shown for any outlet but `do_diario_libre`, and there only twice.
+
+## Phase-3 review readiness
+
+There are now 157 article pages of 14 outlets in 11 countries, preserved with their raw bytes — more varied material than the
+thirteen pages of one outlet the extractor comparison was prepared on. The baseline extractor's body text ranges from a median
+of 314 characters (`hn_criterio`) to 8 234 (`pe_la_republica`) on pages that are all full articles: that spread is the case
+for the comparison, and the material for it. Ready: the pages, their replay, the candidates' wrappers (CPD-0018). Not done and
+not claimed: any comparison on these pages, any human gold — a scientific step of its own.
+
+## Tests
+
+| When | Result |
+|---|---|
+| on the arming commit of the second canary (the operator's tool) | passed (the tool does not arm otherwise; the count is in its baseline) |
+| on the arming commits of waves B / C1 / C2-repeat, and again on each disarmed tree | **1496 / 1500 / 1506 passed**, twice each |
+| on the arming commit of the first C2 start | 1 failed, 1504 passed → stopped, disarmed |
+| on the arming commit of the second C2 start | 1505 passed |
+| full suite on the final tree, switch off | **1506 passed, 14 skipped** |
+
+Skipped throughout: 7 tests that need the extractor tools of the extra `phase3`, 1 symbolic-link test this account cannot
+run, and 6 that hold a proposal or an inventory version against a registry that has since been registered into (each says so).
+New in this run: `tests/test_delegated_operator.py` (69 tests) and ten tests in `tests/test_canary_findings.py` (F8, F9,
+F10, F14, the two listing rules).
+
+## Files and git
+
+Created: `src/coprepan/delegation.py`; `config/operator_authorizations/` (three records); `tests/test_delegated_operator.py`;
+`docs/decisions/CPD-0023_…`, `CPD-0024_…`; `config/registry_review/extended_canary_registration_2026-10-09.json`,
+`wave_c_registration_2026-10-09.json`; three frozen baselines and four evidence directories under `docs/canary/` (written by
+the operator tool; one further verification file added beside the last); this report.
+Changed: `scripts/canary_operator.py`, `src/coprepan/canary_driver.py`, `canary_evidence.py`, `discovery.py`,
+`http_acquisition.py`, `core_pipeline.py`, `pack.py`; `config/outlet_registry.json`, `config/candidate_rules.json`,
+`config/registry_review/outlet_review_package.json`; tests of readiness, source discovery, source expansion, schedule, canary
+findings, the operator tool; the suite manifest; `docs/STATUS.md`, the runbook (§11), the decision registry, the architecture
+index, the terminology table, forward links in CPD-0016, CPD-0019 to CPD-0022.
+Not changed: any frozen baseline or receipt of the past; the acquisition policy other than the switch, which is `disabled`;
+the inventory and overview of 2026-10-09; CO.RA.PAN and the legacy repositories (not opened in this run).
+Outside the repository: the runtime workspace and the preservation root (written by the canaries; one run result written by
+this run, as stated); read-only copies of packs in the session scratchpad.
+
+Commits of this run on `main`, all pushed: the delegated mode (`a5f0977`), the registrations (`1000bee`, `94a8ccc`), the
+evaluations and repairs (`febb3d7`, `22f4503`, `9bd6422`, `1305eae`), the tool's own arming, baseline, evidence and disarming
+commits of each canary, and the closing commit.
+
+## Open gates
+
+- `OPERATIONALLY_STABLE` for any outlet: two more runs on two more days for thirteen outlets, one more for `do_diario_libre`.
+- The four held origins: nothing is to be tried; whether to write to the publishers is the operator's.
+- F11 and F12; a live confirmation of F8, F9 and F10 (the next canary that includes `py_la_nacion`, `gt_lahora`, `ec_primicias`).
+- Whether `cu_14ymedio` is to be narrowed to sections by an allow rule; whether sponsored feed entries are to be told apart.
+- The operator's review of CPD-0023 and CPD-0024, of the three authorisation records as transcriptions of the brief — in
+  particular of `DOA-2026-10-09-3` — and of the seventeen registrations made under them.
+- Every production gate of `docs/STATUS.md` §5, unchanged.
+
+## Operator report
+
+1. **Ergebnis.** 13 neue Zeitungen liefern tatsächlich Artikel (14 mit der schon verifizierten), in 10 neuen Ländern (11
+   insgesamt: do, bo, ec, es, ni, pe, sv, ar, cu, hn, pr). 163 Seiten sind konserviert, verifiziert und ohne Netz replayt, 157
+   davon Artikel. Ecuador und Nicaragua, im Legacy-Korpus ohne einen akzeptierten Artikel, haben je mindestens eine Zeitung mit
+   Artikeln (Nicaragua zwei).
+2. **Status.** Gesamt `PARTIAL`. Phase 0 `PASS`; Delegation `PASS`; A `PARTIAL` (2 von 5); B `PARTIAL` (6 von 8); C1 `PARTIAL`
+   (5 von 9 mit mindestens fünf Artikeln); C2 `PASS` (2 von 2, 20 Artikel aus HTML-Listings) – nach zwei gestoppten Starts,
+   von denen einer zwei Requests an `criterio.hn` ohne konservierte Antwort hinterlassen hat. Das ist dokumentiert, nicht
+   geheilt.
+3. **Autonomie.** Ja: Der delegierte Operator-Modus ist implementiert (CPD-0023) und viermal real end-to-end gelaufen –
+   armieren, Tests auf dem Arming-Commit, Baseline, Freeze, Lauf, Verifikation, Disarming mit Rücklesen – ohne `ARM`, ohne
+   Digest-Eingabe, ohne simulierte Bestätigung. Die Berechtigungsschicht von Claude Code hat mit Ihren Regeln nichts verweigert.
+   Zwei Starts wurden real gestoppt (Testfehler auf dem Arming-Commit; Abbruch bei der ersten Antwort) und jedes Mal sauber
+   disarmt.
+4. **Technik.** Auf echten Websites funktionieren jetzt: RSS (WordPress, Arc, eigene Systeme, auch auf fremdem Feed-Host),
+   News-Sitemaps, ein Yoast-Sitemap-Index mit Expansion, gzip-codierte `robots.txt`, HTML-Listings mit nummerierter Pagination
+   und geprüften Allow-Regeln, Challenge-Erkennung bei drei verschiedenen Challenge-Seiten mit sofortigem Hold. Vier eigene Fehler
+   wurden erst an echten Servern sichtbar und sind repariert (F8, F9, F10, F14); zwei sind offen (F11 El Universo, F12
+   Montevideo Portal).
+5. **Wissenschaft.** Nachgewiesen ist technische Erreichbarkeit einer breiteren Quellenbasis: von einer Zeitung in einem Land
+   auf vierzehn in elf, darunter vier, die im Legacy-System nie produktiv waren oder keinen Kanal hatten (`ec_primicias`,
+   `ni_confidencial`, `es_el_mundo`, `pe_la_republica`), und sechs, die es dort gar nicht gab. Nicht nachgewiesen: Stabilität (ein Lauf je Zeitung),
+   Vollständigkeit einer Quelle, Repräsentativität. Vier unabhängige Medien (Efecto Cocuyo, CubaNet, Artículo 66, Proceso
+   Digital) bleiben hinter Bot-Challenges – eine neue, benennbare Selektionsverzerrung zulasten genau solcher Medien.
+6. **Nächster Schritt.** An zwei weiteren Tagen dieselben 22 Outlets erneut laufen lassen (das Drei-Läufe-Kriterium; dabei
+   werden F8, F9 und F10 erstmals live geprüft). Von Ihnen brauche ich dafür nur: die Durchsicht der drei
+   Autorisierungsdatensätze und der beiden CPDs, und die Entscheidung zu F11 (Apex-Origin für El Universo).
