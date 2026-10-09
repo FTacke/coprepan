@@ -1,0 +1,415 @@
+{
+  "blocking": [],
+  "canary": {
+    "access_control_classifier": "access-control/2",
+    "crawler_page": {
+      "crawler_page_sha256": "391d83160862efa92b492a4792ac76878333fe455ff56ad25fbc1e9554571dc7",
+      "public_check_utc": "2026-10-08T14:12:42Z",
+      "receipt": "DEPLOY_RECEIPT_2026-10-08b.json",
+      "receipt_sha256": "408e22626baeca3847628aa51de7b08fc63aff8d54a6268d0c979ccc267a8385",
+      "site_url": "https://coprepan.hispanistica.com/"
+    },
+    "driver": {
+      "admission_ruleset": "admission-technical/1",
+      "budget": {
+        "channels_per_outlet": 2,
+        "discovery_max_bytes": 4194304,
+        "discovery_max_candidates": 200,
+        "discovery_max_depth": 2,
+        "discovery_max_documents": 4,
+        "expansion_requests_reserved_per_outlet": 3,
+        "item_requests_per_outlet": 16,
+        "item_requests_total": 80,
+        "other_requests_per_outlet": 8,
+        "outlets": 5
+      },
+      "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of the frozen baseline",
+      "candidate_budget_order": "candidate-budget-order/1",
+      "channel_selection": "one channel of each kind in the order rss, atom, sitemap, sitemap_index, archive, section_page, then more of those kinds; registry order; never a disabled channel; what a listing channel (archive, section_page) lists is requested only under an outlet allow rule",
+      "driver": "canary-driver/4",
+      "expansion_order": "expansion-order/2",
+      "extractor": "baseline_html/0.1.0",
+      "extractor_lifecycle": "EXPERIMENTAL",
+      "fetch_limits": {
+        "backoff_base_seconds": 60,
+        "backoff_max_seconds": 3600,
+        "max_attempts": 1,
+        "max_body_bytes": 8388608,
+        "max_redirects": 3,
+        "timeout_seconds": 30
+      },
+      "hard_item_request_ceiling": 100,
+      "numbered_pagination": "numbered-pagination/1",
+      "outlets": {
+        "bo_el_deber": [
+          "bo_el_deber:ch:rss_main",
+          "bo_el_deber:ch:sitemap_main"
+        ],
+        "do_diario_libre": [
+          "do_diario_libre:ch:rss_main",
+          "do_diario_libre:ch:sitemap_sitemapnews"
+        ],
+        "hn_proceso_digital": [
+          "hn_proceso_digital:ch:rss_main",
+          "hn_proceso_digital:ch:sitemap_index_main"
+        ],
+        "py_la_nacion": [
+          "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"
+        ],
+        "ve_efecto_cocuyo": [
+          "ve_efecto_cocuyo:ch:rss_main",
+          "ve_efecto_cocuyo:ch:sitemap_index_main"
+        ]
+      },
+      "spool_policy": {
+        "max_spool_bytes": 10737418240,
+        "min_free_bytes": 21474836480
+      },
+      "stages": [
+        "A_probe",
+        "B_discovery",
+        "C_item_fetch",
+        "D_preserve",
+        "E_derive"
+      ]
+    },
+    "outlets": {
+      "bo_el_deber": {
+        "record_sha256": "4e0a49651c15f1b1d9861524e8025123c95afbe4b655eebba08138d4342ffa60",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "bo_el_deber-url-rules/v1"
+        }
+      },
+      "do_diario_libre": {
+        "record_sha256": "e9c92076adb33ea6d165c047389b1a86e6b8d9448b1f9782af1df7da91dff6a4",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "do_diario_libre-url-rules/v1"
+        }
+      },
+      "hn_proceso_digital": {
+        "record_sha256": "74cc5a82342a871b859bc01d7767f94d272a6430f8503b2c3ea1623c0c0f0b44",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "hn_proceso_digital-url-rules/v1"
+        }
+      },
+      "py_la_nacion": {
+        "record_sha256": "7c0a0993709ca1cc3baa45a00eb4c687664fd41853c6b10d428cedb39302e28d",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "py_la_nacion-url-rules/v1"
+        }
+      },
+      "ve_efecto_cocuyo": {
+        "record_sha256": "eca156ff28e107ea651457e456343777a2f5ac7aa21e2b14c1301bcc7c240db6",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ve_efecto_cocuyo-url-rules/v1"
+        }
+      }
+    },
+    "research_tdm": {
+      "decided_in": "CPD-0017",
+      "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+      "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+      "robots_decision_semantics": "robots-decision/2",
+      "robots_mode": "research_tdm_override"
+    },
+    "robots_parser": "robots-parser/3",
+    "schemas": [
+      "coprepan-acquisition-policy/v3",
+      "coprepan-acquisition-run-result/v2",
+      "coprepan-acquisition-run/v1",
+      "coprepan-admission-label/v2",
+      "coprepan-candidate-qualification/v2",
+      "coprepan-candidate-rules/v1",
+      "coprepan-capacity-model/v1",
+      "coprepan-crawler-identity/v1",
+      "coprepan-discovery-candidate/v1",
+      "coprepan-discovery-event/v2",
+      "coprepan-discovery-input/v2",
+      "coprepan-document-identity/v1",
+      "coprepan-document-observation/v1",
+      "coprepan-document-relation/v1",
+      "coprepan-document-version/v1",
+      "coprepan-extraction-evaluation/v1",
+      "coprepan-extraction-reference/v1",
+      "coprepan-extraction-review-case/v1",
+      "coprepan-extraction-sample/v1",
+      "coprepan-extraction/v1",
+      "coprepan-fetch-id/v1",
+      "coprepan-fetch-record/v1",
+      "coprepan-layer-fingerprint/v1",
+      "coprepan-layer-manifest/v1",
+      "coprepan-ledger-record/v2",
+      "coprepan-legacy-freeze-listing/v1",
+      "coprepan-legacy-freeze-manifest/v1",
+      "coprepan-outlet-registry/v1",
+      "coprepan-pack-index/v1",
+      "coprepan-pack/v1",
+      "coprepan-preservation-manifest/v1",
+      "coprepan-preservation-readiness/v1",
+      "coprepan-preservation-target/v1",
+      "coprepan-request-log/v2",
+      "coprepan-schedule-policy/v1",
+      "coprepan-url-key/v1",
+      "coprepan-workspace-diagnosis/v1"
+    ],
+    "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+    "storage_target": {
+      "marker_sha256": "e4714c8c004f3f83c095c40e9851a9446eee92ece84378a46f2ef729200ad8d7",
+      "target_id": "coprepan-preservation-interim-d"
+    }
+  },
+  "candidate_rules": {
+    "path": "config/candidate_rules.json",
+    "sha256": "3050d321b43bef9786c619739acd16c210a70b99b104cd27d0bfd1481fbeb74a",
+    "size_bytes": 529
+  },
+  "code": {
+    "commit": "7ec0fa3598b22cf57de6e400acdcb40a9bdc1e81",
+    "package_version": "0.3.0"
+  },
+  "components": {
+    "admission_ruleset": "admission-technical/1",
+    "candidate_filter": "candidate-filter-generic/2",
+    "channel_health": "channel-health/1",
+    "channel_parser": "channel-parser/3",
+    "extractor": "baseline_html/0.1.0",
+    "extractor_lifecycle": "EXPERIMENTAL",
+    "fetch_planner": "fetch-planner/1",
+    "fetcher": "http-fetcher/1",
+    "head_scan": "head-scan/1",
+    "pack_writer": "pack-writer/1",
+    "package": "0.3.0",
+    "preservation_policy": "preservation/v1",
+    "robots_parser": "robots-parser/3",
+    "url_key_ruleset": "coprepan-url-key/v1"
+  },
+  "configuration": [
+    {
+      "path": "config/storage_targets.yml",
+      "sha256": "27107e52c99252f582bdd25674301643736dd2fb42443e39f197cc65775c9a07",
+      "size_bytes": 2052
+    },
+    {
+      "path": "config/legacy_country_codes.json",
+      "sha256": "f763eedc84b1101b48f71e7e2853a4839666429cfbaf114ff353584931ae20b9",
+      "size_bytes": 911
+    }
+  ],
+  "crawler_identity": {
+    "identity": {
+      "operator": {
+        "contact_email": "felix.tacke@uni-marburg.de",
+        "contact_url": "https://coprepan.hispanistica.com/crawler/",
+        "crawler_name": "PanhispanicMediaResearchBot",
+        "organisation": "Marburg University"
+      },
+      "schema": "coprepan-crawler-identity/v1",
+      "scope": "external",
+      "software": {
+        "fetcher": "http-fetcher/1",
+        "name": "coprepan",
+        "version": "0.3.0"
+      },
+      "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+    },
+    "path": "config/crawler_identity.json",
+    "sha256": "eac100f9f93795757dee0edada607e9bdde6db3702196a1d0b1df365bb869528",
+    "size_bytes": 911,
+    "state": "configured"
+  },
+  "created_at": "2026-10-09T13:42:12.063952Z",
+  "decisions": {
+    "CPD-0001": "7cab83211fbd56249310b8fcc37f7b2c6de28ee7b876a3198f97d32f605f5bdb",
+    "CPD-0002": "22b148c51d4af0f8db8864d28ea7e74625673c7b2a4cff8a987a2f5ea22cf0a6",
+    "CPD-0003": "5862496b8df5d7f0fcc3d3b42950ba6d94ebdce19c60209debdfacc267f33743",
+    "CPD-0004": "44f0159b1cf06902ab7a67cb230e05f737f95c611419a4709e2a26ac4de8cf5f",
+    "CPD-0005": "7ca5ef029af08e9017663a22f8522800ba5e82d0a86011df636d618d7a756f40",
+    "CPD-0006": "4ea61efc906db5c78a418003d2d7d98ef77ef4d442e5b34cb691cb7b75702b7c",
+    "CPD-0007": "54f52fa332c9136c11decac83aa323a665e433902f0b90d4fed0b1dd5aa2be2f",
+    "CPD-0008": "6452afd14489fdead1887b9e2d9e1e7c2624eb20bcd29129014bd4ec27dd6b54",
+    "CPD-0009": "dcbbc216f076253090fea51c5601e39f1bf1704d4a23e9bb2e8dcb1566c37278",
+    "CPD-0010": "d534085aa62f82bd7817c66e53a3b5da1e0dfd333feb4c31c257f2444d64dc52",
+    "CPD-0011": "98810b4b26ef27ac34e4a841a4023648f12cabadad78a6d874201b9ae623fa03",
+    "CPD-0012": "c4026d844aa6a9bcb98c8550614946494206f11c3ed238a509786925f8e4d3d1",
+    "CPD-0013": "683e4a72ee34bc0d5b2a6ca53c595c65d3acde91d7faf2344e487eaf3f7d84c2",
+    "CPD-0014": "4be0a45d85b96b998dab626c1380437bc9cb77f5bb39abbb4290cc2af18882c9",
+    "CPD-0015": "64a5c5ef6c9f26946b8d62ed928802edd4064bcee0e85283dd59c724264bb725",
+    "CPD-0016": "2ffa0f3ac7999aa985b1a891248bb553574ad47252c726393fd2df8a914a14c2",
+    "CPD-0017": "2a742561c58a20938e9b10177023a546eb2d79c78604a99405b3ca4d55382d57",
+    "CPD-0018": "72933cc4af1bcf4c5b8f7b03cd6b9928b90a7d0cb17bcf6fdd94ae369f616d96",
+    "CPD-0019": "dfa8dddb4d4b8bcdffb5d038c3a07de3e54f1b38f4fd9107f867d6e994a397e3",
+    "CPD-0020": "2e3109af4eab786d2d8584e73354bee258ca461fe6d75e01ecdbe1ee6c1eaf63",
+    "CPD-0021": "c83c774451ae687673967c1a03969f1a470bb9d11be5706b67fd380441764570",
+    "CPD-0022": "d7e7f2479a15a97ffdb6d93a322a4f3536dcab3c6b003744e64209b465a70881"
+  },
+  "freeze": {
+    "confirmed_at": "2026-10-09T13:46:31.920800Z",
+    "confirms": "9bd2da67d435a439c5ae1b52f7d3561c19c5907e18717f792381757bd8173977",
+    "operator": "Felix Tacke"
+  },
+  "manifest_sha256": "9bd2da67d435a439c5ae1b52f7d3561c19c5907e18717f792381757bd8173977",
+  "operator": "Felix Tacke",
+  "policy": {
+    "external_acquisition": "enabled",
+    "path": "config/acquisition_policy.json",
+    "policy_version": "canary/2026-10-09.1",
+    "sha256": "c64e13ef2073319dd6649830ce761a3084a9cfa094d1a669738ee332a0e8a289",
+    "size_bytes": 3061,
+    "status": "DECIDED"
+  },
+  "registry": {
+    "channels": 352,
+    "outlets": 82,
+    "path": "config/outlet_registry.json",
+    "proposed": 77,
+    "registered": 5,
+    "schema": "coprepan-outlet-registry/v1",
+    "sha256": "39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02",
+    "size_bytes": 564665
+  },
+  "schedule_policy": {
+    "path": "config/schedule_policy.json",
+    "sha256": "179a2a9181bf965daac1ed1a2f88b088316c02c65f0be6dd8288078fe7623764",
+    "size_bytes": 1494,
+    "version": "canary/2026-10-08.1"
+  },
+  "schema": "coprepan-acquisition-baseline/v1",
+  "schemas": [
+    "coprepan-acquisition-policy/v3",
+    "coprepan-acquisition-run-result/v2",
+    "coprepan-acquisition-run/v1",
+    "coprepan-admission-label/v2",
+    "coprepan-candidate-qualification/v2",
+    "coprepan-candidate-rules/v1",
+    "coprepan-capacity-model/v1",
+    "coprepan-crawler-identity/v1",
+    "coprepan-discovery-candidate/v1",
+    "coprepan-discovery-event/v2",
+    "coprepan-discovery-input/v2",
+    "coprepan-document-identity/v1",
+    "coprepan-document-observation/v1",
+    "coprepan-document-relation/v1",
+    "coprepan-document-version/v1",
+    "coprepan-extraction-evaluation/v1",
+    "coprepan-extraction-reference/v1",
+    "coprepan-extraction-review-case/v1",
+    "coprepan-extraction-sample/v1",
+    "coprepan-extraction/v1",
+    "coprepan-fetch-id/v1",
+    "coprepan-fetch-record/v1",
+    "coprepan-layer-fingerprint/v1",
+    "coprepan-layer-manifest/v1",
+    "coprepan-ledger-record/v2",
+    "coprepan-legacy-freeze-listing/v1",
+    "coprepan-legacy-freeze-manifest/v1",
+    "coprepan-outlet-registry/v1",
+    "coprepan-pack-index/v1",
+    "coprepan-pack/v1",
+    "coprepan-preservation-manifest/v1",
+    "coprepan-preservation-readiness/v1",
+    "coprepan-preservation-target/v1",
+    "coprepan-request-log/v2",
+    "coprepan-schedule-policy/v1",
+    "coprepan-url-key/v1",
+    "coprepan-workspace-diagnosis/v1"
+  ],
+  "scope": "canary",
+  "state": "FROZEN",
+  "storage_target": {
+    "checked_at": "2026-10-09T13:42:11.952686Z",
+    "checks": [
+      {
+        "check": "usable_root",
+        "detail": "absolute, not a filesystem root, not inside the checkout",
+        "status": "PASS"
+      },
+      {
+        "check": "reachable",
+        "detail": "is a directory",
+        "status": "PASS"
+      },
+      {
+        "check": "target_identity",
+        "detail": "coprepan-preservation-interim-d",
+        "status": "PASS"
+      },
+      {
+        "check": "free_space",
+        "detail": "3840873398272 bytes free, 21474836480 required",
+        "status": "PASS"
+      },
+      {
+        "check": "writable",
+        "detail": "a file was created and flushed",
+        "status": "PASS"
+      },
+      {
+        "check": "atomic_promotion",
+        "detail": "staged, hashed, renamed and re-read with the same digest",
+        "status": "PASS"
+      },
+      {
+        "check": "no_silent_overwrite",
+        "detail": "an exclusive create refuses an existing name",
+        "status": "PASS"
+      },
+      {
+        "check": "case_sensitivity",
+        "detail": "case-insensitive names",
+        "status": "INFO"
+      },
+      {
+        "check": "long_names",
+        "detail": "a 190-character file name can be created",
+        "status": "PASS"
+      },
+      {
+        "check": "fixity",
+        "detail": "10 object(s) verified",
+        "status": "PASS"
+      }
+    ],
+    "free_bytes": 3840873398272,
+    "required_free_bytes": 21474836480,
+    "schema": "coprepan-preservation-readiness/v1",
+    "status": "READY",
+    "target_id": "coprepan-preservation-interim-d",
+    "total_bytes": 4096788525056
+  },
+  "test_baseline": {
+    "fixtures": [
+      {
+        "path": "tests/fixtures/canary/MANIFEST.json",
+        "sha256": "c210c3623e0b5bb274ec2ecc19a38c3311d58a9e77b7912ed88074143bab9b12",
+        "size_bytes": 629
+      },
+      {
+        "path": "tests/fixtures/discovery/MANIFEST.json",
+        "sha256": "98641f572e93ffb2a7e244013f831b53175743ed9f3df6475fdf2e2fa1cea0af",
+        "size_bytes": 1180
+      },
+      {
+        "path": "tests/fixtures/qualification/MANIFEST.json",
+        "sha256": "1e7e39e5fb49cdff06a3df17962e9c1441c0a055c6176bb9869c0eb1b146e5ab",
+        "size_bytes": 317
+      }
+    ],
+    "passed": 1431,
+    "suite": "python -m pytest"
+  }
+}
