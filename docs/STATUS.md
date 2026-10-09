@@ -13,6 +13,13 @@ proposed. Three storage roots are configured on the workstation (runtime, spool 
 preservation root). The thirteen pages are canary evidence, not corpus material: no extractor is
 adopted, nothing is validated, nothing is activated.
 
+**Since 2026-10-09 the defects that canary exposed are repaired and tested offline** (CPD-0019): on synthetic fixtures, a
+loopback server and the preserved answers of 2026-10-08 read again — not on any real server. A second canary of the same five
+outlets is prepared and waits for the operator's arming; an extended canary of twelve outlets exists as a registration
+**proposal** and waits for the operator's review (§5b). A source-discovery inventory joins, for all 82 outlets, the legacy
+system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
+operationally stable. **No request was made to any publisher on 2026-10-09.**
+
 **External acquisition is impossible again as committed**, by one tested refusal: the acquisition
 policy — decided for the first canary on 2026-10-08 (CPD-0013, CPD-0017), like the schedule policy and the
 registration of five outlets — has `external_acquisition: disabled`. It was `enabled` between the
@@ -128,7 +135,7 @@ defects (§5a).
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0018 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0019 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -138,9 +145,9 @@ defects (§5a).
 | Acquisition run and fetch record | implemented and unit-tested; run kinds `recorded_replay` and `http_fetch` | `src/coprepan/acquisition.py`, [`docs/acquisition/INDEX.md`](acquisition/INDEX.md) |
 | Sealed WARC pack | implemented and unit-tested (own writer, standard library); read by warcio 1.7.5 for the record subset it writes — **not a general conformance claim** | `src/coprepan/pack.py`, `tests/test_warc_interoperability.py`, storage §14 |
 | Discovery | implemented; tested on synthetic channel documents | `src/coprepan/discovery.py`, `tests/test_discovery.py` |
-| Policy gate | implemented and tested; policy schema `v2` (`Crawl-delay` may bind). **The tracked policy is the decided canary policy `canary/2026-10-08.1` with `external_acquisition: disabled`: it denies everything until the canary is armed** | `src/coprepan/policy.py`, `config/acquisition_policy.json` |
-| Robots evidence | parser after RFC 9309 implemented and tested (`robots-parser/2`: a byte-order mark, a file that is no robots file). What the evidence means is the policy's: three layers, CPD-0017 — the project does **not** claim RFC 9309 conformance | `src/coprepan/robots.py`, `src/coprepan/policy.py` |
-| Access controls as observed evidence | implemented; tested against the loopback server: 401, 403, 429, 451, CAPTCHA and challenge pages, login and paywall redirects are classified, recorded, not retried, and hold the origin | `src/coprepan/access_control.py`, `tests/test_research_tdm_policy.py` |
+| Policy gate | implemented and tested; policy schema `v2` (`Crawl-delay` may bind). **The tracked policy is the decided canary policy `canary/2026-10-09.1` (the policy of CPD-0013 / CPD-0017 with one more disabled channel, CPD-0019 §6) with `external_acquisition: disabled`: it denies everything until a canary is armed** | `src/coprepan/policy.py`, `config/acquisition_policy.json` |
+| Robots evidence | parser after RFC 9309 implemented and tested (`robots-parser/3`: a byte-order mark, a file that is no robots file, a content-coded file decoded for reading and preserved as received). What the evidence means is the policy's: three layers, CPD-0017 — the project does **not** claim RFC 9309 conformance | `src/coprepan/robots.py`, `src/coprepan/policy.py` |
+| Access controls as observed evidence | implemented (`access-control/2`); tested against the loopback server: 401, 403, 429, 451, CAPTCHA and challenge pages — the Sucuri challenge of 2026-10-08 among them, whatever its status —, login and paywall redirects are classified, recorded, not retried, and hold the origin; a canary re-derives holds from stored answers | `src/coprepan/access_control.py`, `tests/test_research_tdm_policy.py` |
 | Crawler identity | contract implemented and tested; **the tracked identity is the decided one** (`PanhispanicMediaResearchBot`, Marburg University; CPD-0014). Its public page is live at `https://coprepan.hispanistica.com/crawler/` (verified 2026-10-08) | `src/coprepan/crawler_identity.py`, `config/crawler_identity.json`, `web/coprepan/`, `web/DEPLOY_RECEIPT_2026-10-08b.json` (the page as redeployed for CPD-0017) |
 | Storage roles and roots | roles shared with CO.RA.PAN 3.0; separation enforced (no shared or nested roots, a backup never on the primary's volume); runtime and spool roots and an **interim primary preservation root** on `D:` configured; backup, distribution and exchange `NOT_CONFIGURED`. **Governed by the joint contract `crosscorpus-storage/v1`** (CPD-0015): pinned copy, own implementation, shared reference cases, joint check with the sister checkout | `src/coprepan/storage_roots.py`, `src/coprepan/storage_contract.py`, `scripts/storage_contract.py`, `config/storage_targets.yml`, `tests/test_storage_architecture.py`, `tests/test_storage_contract.py`, [`docs/storage/INDEX.md`](storage/INDEX.md) §19, CPD-0014 |
 | HTTP fetcher | implemented; tested against a real HTTP server on a loopback address; **no TLS, no external request** | `src/coprepan/fetcher.py`, `tests/test_fetcher.py` |
@@ -191,7 +198,7 @@ defects (§5a).
 None. No model, provider, crawler, extractor or annotator is active. The NLP pins in
 `pyproject.toml` `[tool.coprepan.nlp]` are marked `PLANNED`: they are not installed and not used.
 The package has no runtime dependency. `baseline_html/0.1.0`, `pack-writer/1`, `http-fetcher/1`,
-`channel-parser/1`, `robots-parser/2`, `fetch-planner/1`, `candidate-filter-generic/1`,
+`channel-parser/2`, `robots-parser/3`, `access-control/2`, `canary-driver/3`, `expansion-order/1`, `fetch-planner/1`, `candidate-filter-generic/1`,
 `admission-technical/1`, `channel-health/1`, `extraction-eval/1` and `legacy-freeze/1` are component versions recorded in artefacts; none is an
 adopted production component. `warcio==1.7.5` is a test-only dependency (the independent WARC
 reader); no runtime code imports it.
@@ -215,9 +222,11 @@ Technical state: `TECHNICALLY_READY` (built and tested offline) · `NOT_BUILT`. 
 | O-11 registry review | `TECHNICALLY_READY` — review package delivered; five routine outlets registered by record | **`PASS` for the canary subset** (`O-11_CANARY_SUBSET`); full review `PARTIAL`: 77 outlets, the id convention as a whole and one attribution case are **`READY_FOR_HUMAN_REVIEW`** | the human decisions of corpus supply §17; registration by reviewed commit | operator, scientific |
 | O-12 acquisition baseline freeze | `TECHNICALLY_READY` — manifest builder with a **canary scope** (CPD-0016: does not wait for O-4); state `PRE_FREEZE` while the switch is off | **`PASS` for the first canary** (`O-12_CANARY`, 2026-10-08): frozen `96c271e373dc…7863f` on `15ec1fd`, and the canary ran under it. **`OPEN`** for every later run: a baseline is frozen per armed commit | for a next canary: a new arming commit, then the baseline built on it and frozen by stating its digest — [`docs/canary/RUNBOOK.md`](canary/RUNBOOK.md) §1–§3 | operator |
 | Phase-1 core gate (promotion, idempotence, conflict, crash recovery) | passes on temporary directories **and, 2026-10-08, with the temporary files on the interim `D:` file system** (real process kills, real concurrent processes) | **`PASS` for the interim target** (`PHASE1_INTERIM_TARGET`); **`OPEN`** on the long-term target | the same tests on the real preservation target (needs O-3) | engineering, then operator |
-| Phase-2 canary gate | the offline canary passes; **it is not this gate**. The first real canary ran on 2026-10-08: every fetch traceable, read-back and fixity of all 24 bodies, replay of 13 extractions without network, bytes measured — and **items from one outlet of five** | **`OPEN`** — first run `PARTIAL` (§5a) | the defects of §5a repaired with regression tests, then a second bounded canary in which the registered outlets are actually acquired; `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today: the switch and a new frozen baseline) | engineering, then the operator's arming |
+| Phase-2 canary gate | the offline canary passes; **it is not this gate**. The first real canary ran on 2026-10-08: every fetch traceable, read-back and fixity of all 24 bodies, replay of 13 extractions without network, bytes measured — and **items from one outlet of five** | **`OPEN`** — first run `PARTIAL` (§5a) | **the defects of §5a are repaired with regression tests (2026-10-09, §5b)**; what is left: a second bounded canary in which the registered outlets are actually acquired; `python -m coprepan.canary preflight` says whether it may start (`NOT_READY` today: the switch and a new frozen baseline) | engineering, then the operator's arming |
 
-### 5a. What the first real canary showed (2026-10-08) — open findings
+### 5a. What the first real canary showed (2026-10-08) — the findings as they stood that evening
+
+*The "State" column is the state of 2026-10-08 and is kept as written. What each finding is now: §5b.*
 
 Run `acq1-20261008T203414628095Z-ed630d8e8a14`, 27 real requests, five outlets, `COMPLETE`; verification `PASS`
 (read-back and fixity of 24 bodies, `RAW_PRESERVED` = verified bytes, 13 extractions replayed without network, the
@@ -239,6 +248,27 @@ Evidence: [`docs/canary/evidence/`](canary/evidence/); report:
 Phase 3 on this material: `PHASE3_SAMPLE = INSUFFICIENT_FROM_CANARY` (thirteen pages, one outlet, one cell of the
 design's strata). A **pilot** review package is ready for a human reviewer outside the repository
 ([extraction](extraction/INDEX.md) §9); no gold exists.
+
+### 5b. After the repair run of 2026-10-09 (CPD-0019)
+
+Offline evidence only: `tests/test_canary_findings.py`, `tests/test_source_discovery.py`, and the preserved answers of the
+first canary read again by the repaired code (`config/source_discovery/canary_replay_2026-10-09.json`). Report:
+[`2026-10-09`](agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).
+
+| | Now | Shown on the preserved answers of 2026-10-08 |
+|---|---|---|
+| F1 | repaired: a robots file is decoded for reading, preserved as received | both gzip-coded files parse; neither disallows a channel of the canary |
+| F2 | repaired: the challenge is `bot_challenge`; holds are re-derived from stored answers | the 307 of `proceso.hn` is classified; that origin is **held for every later canary on this workspace** |
+| F3 | repaired: a run sees its own candidates | — (64 candidates carry a `DENIED` row from that evening; due again under the new policy version) |
+| F4 | repaired: hop-wise budgets, 3 of 8 non-item requests reserved for index expansion, a stated read order | the index of `ve_efecto_cocuyo` (92 children) would be read to its three newest post sitemaps |
+| F5 | repaired: the declaration guard reads markup only | the refused feed parses: 10 items |
+| F6 | the 404 channel is disabled; nothing replaces it | — |
+| F7 | measured, limit unchanged: 303 of 534 entries of one news sitemap turned away, 44 of them newer than the oldest kept | — |
+
+| Canary | State | Gate |
+|---|---|---|
+| second (the five registered outlets) | **prepared**; preflight `NOT_READY` only for the switch and a new frozen baseline | the operator's arming, [runbook](canary/RUNBOOK.md) §8 |
+| extended (twelve outlets, ten countries) | **proposal** — nothing registered | O-11: the operator's review and `scripts/apply_registration_proposal.py --write`; then the arming |
 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
 (cross-corpus naming and semantics)** — `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`.
@@ -310,7 +340,7 @@ run report that carries the evidence.
 ```json
 {
   "schema": "coprepan-status-assertions/v1",
-  "as_of": "2026-10-08",
+  "as_of": "2026-10-09",
   "production_pipeline_exists": false,
   "external_api_in_production_path": false,
   "git_initialised_by_bootstrap": false,
@@ -506,3 +536,13 @@ run report that carries the evidence.
   classical extractor candidates selected, pinned and wrapped (CPD-0018); a pilot review package built on the thirteen
   preserved pages; `PHASE3_SAMPLE = INSUFFICIENT_FROM_CANARY`; no gold. No stage state changed. Run report:
   [`docs/agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md`](agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md).
+
+- 2026-10-09 — integrated discovery, source-recovery and acquisition-qualification run (diagnosis + implementation; reproducibility
+  and robustness only; **no request to any publisher**). The legacy import was audited against a copy of the legacy database: complete,
+  no discrepancy; legacy classes per channel and outlet with their rules. Passive prediscovery for all 82 outlets; a versioned
+  source-discovery inventory with six analytic flags (1 `ACQUISITION_VERIFIED`, 2 `QUALIFIED`, 5 `REGISTERED`, 0 stable). The findings
+  F1–F7 of the first canary repaired with regression tests and replayed on the preserved answers (CPD-0019): `robots-parser/3`,
+  `access-control/2`, `channel-parser/2`, `canary-driver/3`. Policy `canary/2026-10-09.1` (one more disabled channel; the switch
+  `disabled`). A second canary prepared; an extended canary of twelve outlets as a registration proposal. The permission refusals of
+  2026-10-08 were diagnosed: all were the arming chain, none a file or configuration fault. No stage state changed; no gate closed.
+  Run report: [`docs/agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md`](agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).

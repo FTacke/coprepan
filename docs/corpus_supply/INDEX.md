@@ -371,3 +371,55 @@ case that needs a judgement is deferred to the operator.
 - **A technical subset for a canary; not a sample of any country's press.**
 
 Open of §17: items 1 to 5 for the 77 proposed outlets, unchanged.
+
+## 19. Legacy comparison base, source-discovery inventory, priorities (2026-10-09, CPD-0019)
+
+**The legacy audit** (`scripts/legacy_discovery_audit.py`, on a copy of the legacy database; output
+`config/source_discovery/legacy_discovery_audit_2026-10-09.json`): the import of 2026-10-07 is complete — 82 sources,
+352 feeds, every column equal, no loss, no fold, no duplicate (measured). What the legacy records can and cannot show:
+
+- Per feed the database keeps one overwritten success stamp and no link from an article to the feed that listed it:
+  **repetition is never provable per channel**. Channels: 6 `PRODUCTIVE_REPEATED` (by exclusion), 110
+  `PRODUCTIVE_ONCE_OR_SPORADIC`, 148 `NEVER_SUCCESSFUL`, 88 `NO_EVIDENCE` (82 of them sitemap indexes the legacy
+  system never expanded). The rules are in the file.
+- Outlets, by rows the legacy extractor accepted (`ok`: at least 100 words): 33 `LEGACY_PRODUCTIVE_REPEATED`, 9
+  `LEGACY_PRODUCTIVE_SPORADIC`, 17 `LEGACY_NEVER_PRODUCTIVE`, 23 `LEGACY_NO_CHANNEL`. The thresholds are the audit's,
+  declared in the file. Of the 33, 21 had their last accepted fetch on or before 2026-02-21: repeated is not lasting.
+- **"51 without an active feed" and "39 directories with `json_raw` material" are two different counts** and not
+  complements: 51 counts sources without a feed row flagged active at the snapshot (8 of them are
+  `LEGACY_PRODUCTIVE_REPEATED`); 39 counts directories holding at least one file (38 outlets and one unmapped
+  directory). Eleven outlets have no active feed and do have files; four have an active feed and none.
+- 14 of the 23 outlets without a channel have none because the legacy discovery stopped on its own TDM heuristic
+  (any `robots.txt` naming an AI crawler or `noai`); that is a legacy rule, not a finding about the outlets. Under
+  CPD-0017 such a line is recorded and does not by itself decide a research request.
+- Ecuador and Nicaragua had no outlet with repeated accepted output.
+
+**The inventory** (`config/source_discovery/source_discovery_inventory_2026-10-09.1.json`,
+[page](SOURCE_DISCOVERY_INVENTORY.md)) joins registry, audit, prediscovery research and the first canary per outlet
+(CPD-0019 §8). Research of 2026-10-09 is passive — search results and third-party pages, **no request to any
+publisher** — and every address in it is a hypothesis with its evidence level. As of version `2026-10-09.1`: 82
+`IMPORTED`, 79 `DISCOVERED`, 2 `QUALIFIED`, 5 `REGISTERED`, 1 `ACQUISITION_VERIFIED`, 0 `OPERATIONALLY_STABLE`. Route
+classes: 67 standard channel candidate, 3 index expansion, 6 listing only, 1 held by an access control
+(`hn_proceso_digital`), 2 closed (`bo_pagina_siete` 2023-06-29, `gt_elperiodico` 2023-05-15, both by research), 3
+without a known route. Two outlets appear to have moved (`bo_la_razon`, `ni_la_prensa`): an origin change is a
+review decision and none was made.
+
+**Registry facts the audit and the research put on the table** (none acted on): `pr_primera_hora` carries three
+channels of another outlet's domain; `uy_larepublica`'s registered origin may not be the outlet's; `ni_confidencial`
+is read by third parties on the apex host; `cl_el_mercurio` is the group's free portal `emol.com`.
+
+**Priority for expansion** (§11 made concrete; a stated scenario rule, not a measurement): country need × feasibility ×
+coverage gain, in the inventory per outlet with its factors. It puts first the outlets of countries without a
+productive legacy outlet for which a standard channel has evidence of today — `ec_el_comercio`, `ec_el_universo`,
+`ec_primicias`, `ni_confidencial` — then outlets the legacy system never read in countries it read thinly.
+
+**New outlets** are proposals only: 60 in the inventory (three per country), with the same evidence levels. Each
+needs the ordinary registry steps. No token balancing is implied by any of this: preserve first, balance later (§7).
+
+**Expansion in steps.** (1) Second canary, the five registered outlets. (2) Extended canary, twelve outlets of ten
+countries — [`extended_canary_proposal_2026-10-09.json`](../../config/registry_review/extended_canary_proposal_2026-10-09.json),
+to be reviewed and applied by the operator. (3) By country need, in sets of about twelve, each set a registration
+proposal and a canary of its own; an outlet becomes `OPERATIONALLY_STABLE` only by repeated runs. Scheduled crawling
+stays behind O-1.
+
+Run report: [`2026-10-09`](../agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).

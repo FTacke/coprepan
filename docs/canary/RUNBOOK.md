@@ -108,3 +108,52 @@ of scheduled crawling.
 
 Phase 3 on the preserved pages: `docs/extraction/GOLD_SAMPLE_DESIGN.md`, the review codebook
 [`REVIEW_CODEBOOK_v1.md`](../extraction/REVIEW_CODEBOOK_v1.md); stop at the blinded review package.
+
+## 8. The second canary and the extended canary (2026-10-09, CPD-0019)
+
+**§0–§7 are the procedure of every canary; this section says what differs for the next two.** The policy is now
+`canary/2026-10-09.1`, the driver `canary-driver/3`. A canary has the budget of its frozen baseline: a new arming and a new
+freeze start a new budget, a restart under the same baseline does not. The baselines of 2026-10-08 are evidence of the first
+canary and authorise nothing further.
+
+### 8.1 Second canary — the five registered outlets
+
+No preparation is open. In order: arm (§1) → tests on `P` (§2) → baseline with a new file name (§3) → preflight and run (§4)
+→ verify and measure (§5) → disarm (§6).
+
+```text
+--outlet bo_el_deber --outlet do_diario_libre --outlet hn_proceso_digital --outlet py_la_nacion --outlet ve_efecto_cocuyo
+baseline file: docs/canary/BASELINE_READY_<date>.json, frozen: docs/canary/BASELINE_FROZEN_<date>.json
+```
+
+What to expect, so that it is not mistaken for a fault:
+
+- **`hn_proceso_digital` is asked nothing.** Its origin answered the first canary with a bot challenge; the driver reads that
+  stored answer again and holds the origin. Its requests appear in the receipt as `DENIED:access_control_observed`. Lifting a
+  hold is a person's decision and has no mechanism yet.
+- `do_diario_libre` holds 232 candidates from the first canary; the 16 items of this run are taken from those not yet fetched.
+- Per outlet at most 8 non-item requests, of which 3 are reserved for the sitemaps an index names; redirects are counted one by
+  one, and a redirect that no longer fits is not followed (`redirect_not_followed: DENY: canary_budget_exhausted`).
+
+What the run is held against: whether `bo_el_deber`, `py_la_nacion` and `ve_efecto_cocuyo` now yield items (F1, F4, F5), whether
+nothing is planned off-origin (F3), and `verify` `PASS`. `ACQUISITION_VERIFIED` for an outlet: at least five item pages answered
+2xx, preserved, verified and replayed.
+
+### 8.2 Extended canary — twelve outlets, after the operator's review (gate O-11)
+
+The set is a **proposal**: `config/registry_review/extended_canary_proposal_2026-10-09.json` (twelve outlets of ten countries; eight
+channels and one origin come from research and are hypotheses; one candidate rule; two disabled channels). Read it — each
+outlet carries `judgements_for_the_reviewer` — then:
+
+```text
+python scripts/apply_registration_proposal.py --proposal config/registry_review/extended_canary_proposal_2026-10-09.json --approved-by "<name>"            (dry run)
+python scripts/apply_registration_proposal.py --proposal … --approved-by "<name>" [--only <outlet_id> …] --write
+python -m pytest        → commit registry, candidate rules, policy, the registration record and the regenerated review package
+```
+
+`--only` registers a part; what is struck stays `proposed`. A canary is five outlets or six to fifteen: with twelve, each gets 8
+item requests (96 in all, ceiling 100). Then §1–§6 with the twelve `--outlet` arguments. It is a separate canary with its own
+arming, baseline and budget; do not run it in the same arming as the second canary.
+
+A proposal that has been applied cannot be applied again (it is written for the registry it names by digest); a later set is a new
+proposal.

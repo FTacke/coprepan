@@ -77,6 +77,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md) | The staged canary driver, budgets of real requests, the canary-scope baseline, the arming protocol | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0017](../decisions/CPD-0017_scientific-tdm-acquisition-and-robots-policy.md) | Scientific TDM acquisition and robots policy: three layers, the research override, access controls that end a path | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0018](../decisions/CPD-0018_classical-extractor-candidates-of-the-first-comparison.md) | The classical extractor candidates of the first comparison, their pins (extra `phase3`, not a runtime dependency) and wrappers | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0019](../decisions/CPD-0019_canary-findings-repair-budget-reservation-and-source-discovery-inventory.md) | Repair of the first canary's findings F1–F7; hop-wise budgets with a part reserved for index expansion; the source-discovery inventory and its analytic flags; second and extended canary | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0016 §1–§2 |
 
 ## 3. Component specifications — active
 
@@ -132,6 +133,8 @@ Machine-checked contracts:
 | Storage roles stay apart (no shared or nested root, a backup never on the primary's volume), nothing falls back, a preservation root can be switched without a new identity | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `.env.example` | `tests/test_storage_architecture.py`, `tests/test_storage_roots.py` |
 | Crawler identity is the decided one; the public crawler page in the repository says what the identity says | `config/crawler_identity.json`, `web/coprepan/` | `tests/test_policy.py` |
 | The canary driver: stages, real-request budgets, refusals, outage and interruption, receipt; end-of-canary verification and O-4 measurement | `src/coprepan/canary_driver.py`, `src/coprepan/canary_evidence.py`, [`docs/canary/RUNBOOK.md`](../canary/RUNBOOK.md) | `tests/test_canary_driver.py`, `tests/test_canary_evidence.py` |
+| The findings of the first canary, each as a regression: coded robots file, the Sucuri challenge and the hold, foreign candidates, hop-wise budgets and index expansion, DOCTYPE in CDATA, the disabled 404 channel, candidate-budget coverage (CPD-0019) | `src/coprepan/robots.py`, `access_control.py`, `discovery.py`, `discovery_coverage.py`, `http_acquisition.py`, `canary_driver.py` | `tests/test_canary_findings.py` |
+| The source-discovery inventory is the join of its evidence files; the registration proposal of the extended canary applies to a copy and gives a canary the driver can pin | `config/source_discovery/`, `config/registry_review/extended_canary_proposal_2026-10-09.json`, `scripts/build_source_discovery_inventory.py`, `scripts/apply_registration_proposal.py` | `tests/test_source_discovery.py` |
 | The research-TDM layer of the policy gate; access controls as observed evidence | `src/coprepan/policy.py`, `src/coprepan/access_control.py`, `src/coprepan/fetcher.py` | `tests/test_research_tdm_policy.py` |
 
 ## 4. Open decisions and gates
@@ -153,6 +156,7 @@ Nothing in these registers is a defect. They are the honest boundary of what is 
 | [`docs/agent-runs/`](../agent-runs/README.md) | one report per run | historical records; never specifications |
 | [`docs/legacy/ARCHAEOLOGY.md`](../legacy/ARCHAEOLOGY.md) | reconstruction of the legacy system and its failure mechanisms, 2026-10-07 | historical evidence; the evidence base of CPD-0004 and CPD-0005 |
 | [`config/registry_review/`](../../config/registry_review/) | review report of the legacy registry import; the generated review package | evidence of one import run and a recommendation for review; neither is a registration |
+| [`config/source_discovery/`](../../config/source_discovery/), [`docs/corpus_supply/SOURCE_DISCOVERY_INVENTORY.md`](../corpus_supply/SOURCE_DISCOVERY_INVENTORY.md) | the legacy discovery audit, prediscovery research files, the replay of the first canary's answers, and the inventory that joins them (2026-10-09) | evidence and a reading aid; research entries are hypotheses; nothing in them is a registration |
 | [`docs/corpus_supply/REGISTRY_REVIEW_PACKAGE.md`](../corpus_supply/REGISTRY_REVIEW_PACKAGE.md) | the review package as a page | generated; a recommendation, not normative |
 | Documentation inside the legacy repository | legacy design and run notes | historical; partly describes layouts the legacy code no longer writes |
 | Documents of `corapan_playground` (storage targets, retention policy, evolution policy, corpus supply, NLP index, methodology) | the CO.RA.PAN 3.0 sources that principles here were adapted from | authoritative *for CO.RA.PAN 3.0*. Here: reference. A rule binds this repository only where a document of §1–§3 states it. |

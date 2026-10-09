@@ -513,3 +513,21 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | record field (added, candidates only) | `candidate`: tool, tool version, wrapper revision, parameters, what the mapping loses | CPD-0018 §4 |
 | schema id minted | `coprepan-extraction-review-package/v1` (the manifest of a review package: files with digests, the key by digest only) | [extraction](../extraction/INDEX.md) §9 |
 | **pilot package** (term) | a review package built on material that does not meet the gold-sample design; it tests the instrument and the codebook and yields no gold | [extraction](../extraction/INDEX.md) §9 |
+
+## 20. Additions of 2026-10-09 (CPD-0019)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| component versions | `robots-parser/3`, `access-control/2`, `channel-parser/2`, `canary-driver/3`, `expansion-order/1` | CPD-0019 §1–§5 |
+| budget groups of a canary | `item`, `other` (robots files and registered channel documents), `expansion` (documents a channel names) | CPD-0019 §4 |
+| request-log field (added to `PLANNED` rows) | `expansion_depth`: 0 for a registered channel document, 1 and more below it | CPD-0019 §4 |
+| receipt field (added) | `expansion_requests`: `total`, `by_outlet` | CPD-0019 §4 |
+| policy version | `canary/2026-10-09.1` (the canary policy with one more disabled channel) | CPD-0019 §6 |
+| **analytic flags of source discovery** (a reading aid, not a state machine) | `IMPORTED`, `DISCOVERED`, `QUALIFIED`, `REGISTERED`, `ACQUISITION_VERIFIED`, `OPERATIONALLY_STABLE` | CPD-0019 §8 |
+| route classes of the inventory | `STANDARD_CHANNEL_CANDIDATE`, `INDEX_EXPANSION_CANDIDATE`, `LISTING_ONLY`, `ACCESS_CONTROL_HOLD`, `CLOSED`, `NO_ROUTE_KNOWN` | [corpus supply](../corpus_supply/INDEX.md) §19 |
+| evidence levels of a researched channel | `search_evidence`, `legacy_evidence`, `cms_pattern_inference`, `unknown` | [corpus supply](../corpus_supply/INDEX.md) §19 |
+| legacy classes (audit of 2026-10-09) | outlets: `LEGACY_PRODUCTIVE_REPEATED`, `LEGACY_PRODUCTIVE_SPORADIC`, `LEGACY_NEVER_PRODUCTIVE`, `LEGACY_NO_CHANNEL`; channels: `PRODUCTIVE_REPEATED`, `PRODUCTIVE_ONCE_OR_SPORADIC`, `NEVER_SUCCESSFUL`, `NO_EVIDENCE` | `scripts/legacy_discovery_audit.py` (`rules`) |
+| **prediscovery** (term) | passive research about an outlet's discovery routes on a stated day: search results and third-party pages; never a request to a publisher; its entries are hypotheses | CPD-0019 §8 |
+| **registration proposal** (term) | a file that names outlets, attributes, channels and evidence for a registration and registers nothing; applied by the operator | CPD-0019 §9 |
+| channel slugs from research | `<kind>_r<nnn>` (`rss_r001`): a channel that comes from prediscovery, not from the legacy import; its `legacy_observed` is empty | the proposal of 2026-10-09 |
+| schema ids minted | `coprepan-discovery-coverage/v1`, `coprepan-canary-findings-replay/v1`, `coprepan-legacy-discovery-audit/v1`, `coprepan-source-discovery-inventory/v1`, `coprepan-registry-registration-proposal/v1` | the modules and scripts named in CPD-0019 |

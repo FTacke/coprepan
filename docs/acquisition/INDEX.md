@@ -246,3 +246,23 @@ the preflight is `NOT_READY` on every check.
   close; the candidate table is derived state, checked against them and completable from them
   (CPD-0010). A run refuses to start on a request log or discovery table that does not
   authenticate, before the first request.
+
+## 13. The findings of the first canary, repaired (CPD-0019, 2026-10-09)
+
+What §1–§12 say stands, with these changes. Each is tested in `tests/test_canary_findings.py`; none has met a real server yet.
+
+| Finding | Now |
+|---|---|
+| F1 robots file served gzip-coded | the content coding is undone for parsing; the preserved bytes and the digest are the bytes as received; an undecodable body is a parse error, on which the policy holds (`robots-parser/3`) |
+| F2 Sucuri challenge (307 without `Location`) | recognised as `bot_challenge`; a small body is inspected whatever its status; the origin is held; a canary re-derives holds from the stored answers under the current classifier (`access-control/2`) |
+| F3 foreign candidates | a run qualifies, schedules and requests only the candidates of its own outlet |
+| F4 budget and sitemap index | requests are counted hop by hop; three of an outlet's eight non-item requests are reserved for the documents a channel names; children of an index are read by `expansion-order/1` (news first, newest `lastmod` first, taxonomies last); `max_documents` bounds the documents asked for; a canary has the budget of its baseline |
+| F5 `<!DOCTYPE` in CDATA | the declaration guard reads markup only; a real declaration is refused as before (`channel-parser/2`) |
+| F6 404 channel | disabled in the policy (`canary/2026-10-09.1`); no other address of that origin was added |
+| F7 candidate budget | measured by `discovery_coverage` (what a pass listed, kept, turned away; the frontier of an index); the limit is unchanged |
+
+- **Discovery budget semantics.** `documents_asked` counts every document the provider was asked for; `not_read` lists what a pass named and did not ask for, with the limit that was the reason.
+- **Listing channels.** A channel of kind `archive` or `section_page` is read by a canary only for an outlet whose reviewed candidate rules carry an allow pattern; the driver now passes the outlet rules of `config/candidate_rules.json` to qualification.
+- **Three levels, in this order of preference** (the brief of 2026-10-09): generic parsers (RSS, Atom, sitemap, sitemap index, HTML listing); configurable source rules (origins, channels, candidate rules, disabled channels — registry and policy); a source-specific adapter only where a proven structure defeats both. **No adapter exists**: nothing observed so far needs one. An adapter, when one is needed, is a discovery provider — it turns preserved bytes into channel entries, makes no request of its own and extracts no text.
+- **Replay.** `scripts/replay_canary_findings.py` reads the preserved answers of a workspace again under the current code and writes what the parsers and the classifier make of them (`config/source_discovery/canary_replay_2026-10-09.json`): reproducibility of a repair, no new observation.
+- Run report: [`2026-10-09`](../agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).
