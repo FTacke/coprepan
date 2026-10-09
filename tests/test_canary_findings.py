@@ -418,7 +418,7 @@ def test_a_feed_that_carries_html_documents_in_cdata_is_read():
     parsed = discovery.parse_channel_document(fixture("rss_cdata_doctype.xml"), document_url=f"{WWW}/feed/", declared_content_type="application/rss+xml")
     assert (parsed.outcome, parsed.format, parsed.problems) == ("PARSED", "rss", ())
     assert [e.url for e in parsed.entries] == [f"{WWW}/economia/puerto-amplia-terminal/", f"{WWW}/regionales/lluvias-en-el-norte/"]
-    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/4"
+    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/5"
 
 
 LAUGHS = (b'<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;&lol;&lol;">]>'
@@ -482,7 +482,54 @@ def test_an_http_entry_of_a_host_registered_under_https_is_read_as_https_and_not
     assert events[0]["observed_url"].startswith("http://") and events[0]["resolved_url"].startswith("https://www.diario.example/")
     assert events[0]["hints"]["scheme_read_as"] == "https" and "scheme_read_as" not in events[1]["hints"]
     assert all(tables.candidates[c]["fetch_url"].startswith("https://www.diario.example/") for c in result.candidates_new)
-    assert discovery.PARSER_VERSION == "channel-parser/4"
+    assert discovery.PARSER_VERSION == "channel-parser/5"
+
+
+# --- F9, F10 (wave B, 2026-10-09) --------------------------------------------------------------------------
+
+
+def test_a_feed_that_redirects_to_an_html_page_is_a_listing_and_what_it_links_waits_for_a_rule(tmp_path, site):
+    """``ec_primicias``' registered feed URL answered 301 to the home page: 361 links, sections among the articles, and
+    twelve of them were requested without an allow rule because the channel is registered as ``rss`` (F9)."""
+    scripted(site, paths=("/ok",))
+    home = b'<html><body><a href="/deportes/futbol/">Futbol</a><a href="/ok">Una nota</a><a href="/opinion/autor/">Autor</a></body></html>'
+    site.routes["/rss.xml"] = Response(301, [("Location", f"{WWW}/")], b"")
+    site.routes["/"] = Response(200, HTML, home)
+    run = Drive(tmp_path / "redirected", site)
+    run.go()
+    assert "/" in site.paths() and not {"/ok", "/deportes/futbol/", "/opinion/autor/"} & set(site.paths())       # read and preserved; nothing it links was asked
+    table = H.qualification_table(run.workspace)
+    decisions = {row["url_key"][len(WWW):]: (row["decision"], row["reasons"]) for row in table.rows.values()}
+    assert [r for r in D.fetch_records(run.workspace) if r["fetch_kind"] == "item"] == [] and run.receipt()["counts"]["items_fetched"] == 0
+    assert decisions["/ok"] == ("DEFERRED", [candidate_filter.LISTING_NEEDS_RULE]) and len(decisions) == 3, decisions
+    assert {decision for decision, _ in decisions.values()} == {"DEFERRED"}
+    assert D.DRIVER_VERSION == "canary-driver/5"
+
+
+def test_a_feed_served_as_xml_still_yields_its_items_after_an_html_answer_of_another_channel(tmp_path, site):
+    """The rule is about the document that listed a candidate: a real feed beside it is not held back."""
+    scripted(site, paths=("/ok",))
+    run = Drive(tmp_path / "feed", site)
+    run.go()
+    assert "/ok" in site.paths() and run.receipt()["counts"]["items_fetched"] >= 1
+
+
+@pytest.mark.parametrize("front", [b"\n\n\n", b"\r\n \t\n", b""])
+def test_white_space_before_the_xml_declaration_does_not_make_a_feed_or_an_index_unparseable(front):
+    """``gt_lahora`` served its feed and its Yoast index with three empty lines in front: both were ``UNPARSEABLE`` (F10)."""
+    rss = front + b'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>x</title><item><link>' + f"{WWW}/a".encode() + b"</link></item></channel></rss>"
+    parsed = discovery.parse_channel_document(rss, document_url=f"{WWW}/feed/", declared_content_type="application/rss+xml")
+    assert (parsed.outcome, parsed.format, len(parsed.entries)) == ("PARSED", "rss", 1)
+    index = (front + b'<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//x/main-sitemap.xsl"?>'
+             b'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>' + f"{WWW}/post-sitemap.xml".encode()
+             + b"</loc><lastmod>2026-10-09T13:42:43+00:00</lastmod></sitemap></sitemapindex>")
+    parsed = discovery.parse_channel_document(index, document_url=f"{WWW}/sitemap_index.xml", declared_content_type="text/xml")
+    assert (parsed.outcome, parsed.format, parsed.entries[0].relation) == ("PARSED", "sitemap_index", "child_document")
+    # white space alone is still an empty document, and a DTD is still refused wherever the document starts
+    assert discovery.parse_channel_document(b"\n\n \n", document_url=f"{WWW}/feed/").problems == ("empty_document",)
+    assert discovery.parse_channel_document(front + b'<?xml version="1.0"?><!DOCTYPE rss [<!ENTITY x "y">]><rss/>', document_url=f"{WWW}/feed/").problems == (
+        "dtd_or_entity_declaration_refused",)
+    assert discovery.PARSER_VERSION == "channel-parser/5"
 
 
 # --- F6: a channel that answers 404 is disabled, not replaced ---------------------------------------------

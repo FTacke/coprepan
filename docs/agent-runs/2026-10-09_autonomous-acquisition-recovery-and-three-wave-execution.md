@@ -119,3 +119,64 @@ El Mundo's `uecdn.es` host carries the feed and no item; Confidencial has the ap
 
 The inventory (`…2026-10-09.1`) and the overview (`…2026-10-09.2`) are dated snapshots of the registry before the waves; their
 tests now hold them against that registry instead of the live one, and neither file was rewritten.
+
+## Phase B — eight outlets, the first canary armed and frozen by the delegate
+
+| | |
+|---|---|
+| Authorisation | `DOA-2026-10-09-1`, wave `wave-b`, mode `DELEGATED_OPERATOR_AUTHORIZATION`; record SHA-256 `5bff88088e75ba27f337900ab18fbd030206ce87f10cc560c9c33ba56f6a8d38`. **No `ARM`, no digest was typed, asked for or simulated** |
+| Arming commit | `eb8cd4c621eeb58521c3fba9fe41d4d5f9418ae5` — tests on it: **1496 passed** |
+| Baseline | `docs/canary/BASELINE_FROZEN_2026-10-09_wave-b.json`, digest `cf78a8ecb9a2172abd0f32629a98608fd1c79e5e5e1df081ab6460772456d45b`, commit `583a241`; the freeze names the delegate under the record |
+| Run | `acq1-20261009T142840328590Z-ba05d926eee9`, 16:28:40–16:43:23 local; receipt `COMPLETE` |
+| Evidence | commit `c90fda4`, `docs/canary/evidence/acq1-20261009T142840328590Z-ba05d926eee9/` |
+| Disarming | commit `ff4cd7f77bcd0250fe09351a4c038e57668f80eb`; read independently afterwards: `disabled` in the file, in `HEAD`, on `origin/main`; tree clean; tests on the disarmed tree **1496 passed** |
+
+The environment's permission layer refused nothing: the arming, the freeze and the run went through as the operator's rules allow.
+
+**Requests:** 103 real requests — 72 item, 31 other (8 robots files, the channel documents, 3 expansion requests, redirect
+hops); every answer a 200; limits: 96 item requests (12 per outlet), 8 other per outlet. No hold, no challenge, no refusal.
+One request ran under the research-TDM override of CPD-0017 (below). **Verification `PASS`** on all eight checks: 165 bodies
+read back and verified, 98 `RAW_PRESERVED` = 98 verified = 98 expected, 72 extractions replayed without network with 0
+differing, receipt re-derived, 103 transport calls = 103 derived, nothing pending, budget respected. 5 442 768 bytes preserved.
+
+| Outlet | Channel documents | Entries → candidates | Item requests (all 200) | Body text, median characters (min–max) | Result |
+|---|---|---|---|---|---|
+| `es_el_mundo` | feed on `e00-elmundo.uecdn.es` 200 (28) | 28 → 28 | 12 | 5 140 (2 821–12 835) | **`ACQUISITION_VERIFIED`**; no item from the feed host, no paywall redirect met |
+| `ni_confidencial` | feed on the apex host 200 (60); sitemap 200 (13) | 73 → 60 | 12 | 777 (436–973) | **`ACQUISITION_VERIFIED`**; short bodies — two are cartoons; whether the rest is a teaser or the extractor is for Phase 3 |
+| `pe_diariocorreo` | feed 200 (100); sitemap 200 (100) | 200 → 156 | 12 | 2 649 (1 467–5 106) | **`ACQUISITION_VERIFIED`** |
+| `pe_la_republica` | economy feed 200 (13) | 13 → 13 | 12 | 8 234 (3 821–9 966) | **`ACQUISITION_VERIFIED`** (one section only) |
+| `sv_el_diario_de_hoy` | feed 200 (50); Yoast index 200 (92 children), **3 children read** (1 + 1 000 + 1 000 entries) | 2 143 → 250 (1 759 over the candidate budget) | 12 | 5 651 (568–8 088) | **`ACQUISITION_VERIFIED`**; F4 exercised on a real index |
+| `ec_primicias` | the registered feed URL answered **301 to the home page** (HTML, 361 links); news sitemap 200 (173) | 534 → 284 | 12, **all from the home page**: 7 articles, 5 section or author pages | 3 230 (1 822–6 724) | 7 article pages preserved and replayed — verified by the letter of the criterion, **by a route that should not have been taken (finding F9)** |
+| `ec_el_universo` | Arc feed 200 (100), read under `ALLOW_RESEARCH_OVERRIDE` (`robots.txt`: `Disallow: /arc/outboundfeeds/rss/*` for every agent) | 100 → **0**: every entry is on `https://eluniverso.com`, the registry holds `https://www.eluniverso.com` | 0 | — | no acquisition: **a registration gap (F11)**, not a refusal. No login or paywall was met because no article was asked for |
+| `gt_lahora` | feed 200 and Yoast index 200, both **unparseable**: three empty lines before the XML declaration | 0 | 0 | — | no acquisition: **a defect of this project (F10)** |
+
+**New in this wave:** 6 outlets with article pages preserved, verified and replayed (5 cleanly, `ec_primicias` with the caveat
+above), in **five countries that had no verified outlet before: ec, es, ni, pe, sv** (verified before: do, bo). Of the six, four were never productive or had no channel in the legacy system (`ec_primicias`,
+`ni_confidencial`, `es_el_mundo`, `pe_la_republica`); two were productive there (`pe_diariocorreo`, `sv_el_diario_de_hoy`).
+Ecuador and Nicaragua, which had no accepted article in the legacy corpus, each have one outlet with preserved articles.
+
+### Findings of wave B and their repair (offline; none was asked again)
+
+| | Finding | Repair | Shown by |
+|---|---|---|---|
+| F9 | a channel registered as `rss` answered with an HTML page (a redirect to the home page); the page was read as a listing and what it linked was requested without an allow rule, because the rule looked at the channel's registered kind only | `canary-driver/5`: a candidate first listed by an **HTML document** waits for an allow rule, whatever kind its channel is registered as | regression test (fails without the repair); replay of the preserved answer: 361 links, 336 on the outlet's host — all would wait |
+| F10 | white space before the XML declaration made a feed and a sitemap index unparseable | `channel-parser/5`: leading white space is dropped for reading; the preserved bytes are the received ones; a DTD is still refused, white space alone is still an empty document | regression test; replay of the two preserved answers: feed `PARSED`, 10 items; index `PARSED`, 350 children |
+| F11 | `ec_el_universo`'s own feed names the apex host for every article; the registry holds the `www` host only | **not applied**: adding an origin is a registration, and no further canary of this wave is authorised to use it. Proposed to the operator: register `https://eluniverso.com` beside `www`, as was decided for Confidencial | the preserved feed (100 of 100 entries on the apex host) |
+
+The five section pages requested from `ec_primicias` are preserved like every answer and are not deleted; they are not
+articles and no label says they are. A wave is one canary: neither `gt_lahora` nor the two Ecuadorian outlets were asked a
+second time.
+
+The scheme repair of F8 was live in this wave and changed nothing here: no entry of these eight outlets used `http`.
+
+## Registration of wave C (under `DOA-2026-10-09-1`)
+
+Checked before applying, against the registry as it stood: each of the nine ids is free, no host of theirs is an origin of a
+registered or proposed outlet, every id carries the prefix of its `country_id`, every channel lies on its outlet's own origin,
+no similar id exists. The countries are those reported on (`cu_cubanet`, the Nicaraguan outlets: exile seats are notes, not the
+country). The discovery evidence is the operator's research supplement of 2026-10-09 — passive, no request by this project.
+
+Applied from `config/registry_review/wave_c_proposal_2026-10-09.json` (digest pinned by the record): 91 outlets, **22
+registered**, 69 proposed, 373 channels; record `config/registry_review/wave_c_registration_2026-10-09.json`; the policy is
+unchanged. The review package's naming convention would spell two of the new ids differently (`hn_criterio_hn`,
+`ni_articulo_66`); they are registered under the ids of the proposal, and the package only recommends.

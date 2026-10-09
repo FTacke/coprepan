@@ -306,8 +306,17 @@ def run_http_acquisition(
 
     def qualify_all() -> tuple[dict[str, Any], dict[str, Any]]:
         decided_at = format_instant(clock())
+        # What decides that a candidate was listed by a listing is the **document**, not only the kind the channel is
+        # registered as (wave B, finding F9: a registered feed URL redirected to the home page, the page was read as an
+        # HTML listing, and what it linked — sections among the articles — was requested without an allow rule).
+        html_inputs = {row["input_fetch_id"] for row in tables.inputs if row.get("format") == "html_listing"}
+
+        def listings_for(row: dict[str, Any]) -> frozenset[str]:
+            first = tables.events.get(row["first_event_id"])
+            return listing_ids | {row["first_channel_id"]} if first is not None and first["input_fetch_id"] in html_inputs else listing_ids
+
         decided = {identifier: qualifications.decide(row, outlet_rules=outlet_rules, channel_url_keys=channel_keys,
-                                                     run_id=run.run_id, decided_at=decided_at, listing_channel_ids=listing_ids)
+                                                     run_id=run.run_id, decided_at=decided_at, listing_channel_ids=listings_for(row))
                    for identifier, row in own_candidates().items()}
         return decided, {identifier: tables.candidates[identifier] for identifier, row in decided.items()
                          if row["decision"] == candidate_filter.QUALIFIED}

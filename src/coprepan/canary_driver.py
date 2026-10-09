@@ -52,7 +52,9 @@ from .storage_roots import CHECKOUT
 #     workspace; outlet candidate rules are applied; listing channels need an allow rule; holds are
 #     re-derived from preserved answers under the current classifier.
 #     /4 (CPD-0020): listing channels are read without an allow rule and their candidates wait for one.
-DRIVER_VERSION = "canary-driver/4"
+#     /5 (wave B, F9): a candidate first listed by an HTML document waits for an allow rule whatever kind its channel
+#     is registered as; baselines pin a delegated operator authorisation where there is one (CPD-0023).
+DRIVER_VERSION = "canary-driver/5"
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
 KIND_ORDER = ("rss", "atom", "sitemap", "sitemap_index", "archive", "section_page")

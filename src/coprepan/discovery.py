@@ -47,7 +47,9 @@ from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 # /4 (second canary, 2026-10-09, finding F8): an entry stated as http://host/... whose host is registered under
 # https only is read as the https URL (https_for_registered_host); it was an off-origin entry before, and
 # a whole Arc sitemap that states its own pages that way yielded no candidate.
-PARSER_VERSION = "channel-parser/4"
+# /5 (wave B, 2026-10-09, finding F10): white space before the XML declaration is not part of the document that is
+# parsed (a WordPress feed and its sitemap index arrived with three empty lines in front and were unparseable).
+PARSER_VERSION = "channel-parser/5"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
 EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
@@ -154,6 +156,8 @@ def parse_channel_document(body: bytes, *, document_url: str, declared_content_t
     # The bytes decide, not the header: feeds are often served as text/html and listings as
     # text/xml. The declared type only breaks the tie for something that is not XML at all.
     declared_html = declared_content_type in ("text/html", "application/xhtml+xml")
+    # White space in front of the document is dropped for reading (F10). The preserved bytes are the received ones.
+    body = body.lstrip(b" \t\r\n")
     if _HTML_START.match(_XML_DECLARATION.sub(b"", body[:4096], count=1)):
         return _parse_html(body, document_url)
     if _FORBIDDEN_XML.search(_XML_TEXT_ONLY.sub(b"", body)):
