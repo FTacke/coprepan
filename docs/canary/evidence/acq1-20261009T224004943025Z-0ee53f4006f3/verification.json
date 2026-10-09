@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "check": "recovery_diagnosis",
+      "detail": "CLEAN; identity CORRECT",
+      "status": "PASS"
+    },
+    {
+      "check": "preservation_readback_and_fixity",
+      "detail": "847 bodies read back from the preservation root; all verify",
+      "status": "PASS"
+    },
+    {
+      "check": "raw_preserved_matches_verified_bytes",
+      "detail": "44 RAW_PRESERVED, 44 with verified preserved bytes, 44 expected",
+      "status": "PASS"
+    },
+    {
+      "check": "replay_without_network",
+      "detail": "27 extractions replayed from preserved bytes with the network unavailable; 0 differ",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt_rederived_from_evidence",
+      "detail": "every count of the stored receipt equals the count derived from the packs, the log, the ledger and the manifests",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt_request_count_equals_the_runs_own_counter",
+      "detail": "53 transport calls counted by the fetcher, 53 derived from fetch records",
+      "status": "PASS"
+    },
+    {
+      "check": "no_pending_objects",
+      "detail": "0 spooled records",
+      "status": "PASS"
+    },
+    {
+      "check": "budget_respected",
+      "detail": "27 item requests (ceiling 100), 53 in all",
+      "status": "PASS"
+    }
+  ],
+  "run_id": "acq1-20261009T224004943025Z-0ee53f4006f3",
+  "schema": "coprepan-canary-verification/v1",
+  "status": "PASS"
+}

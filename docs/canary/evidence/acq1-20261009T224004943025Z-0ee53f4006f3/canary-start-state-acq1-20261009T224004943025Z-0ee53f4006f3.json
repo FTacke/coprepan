@@ -1,0 +1,82 @@
+{
+  "approved_baseline_sha256": "b4117d8b22e5d47dcfe42b72f7c4d8241de753dfe5519e4e4efb45c6e5457e37",
+  "at": "2026-10-09T22:40:04.943025Z",
+  "budget": {
+    "channels_per_outlet": 2,
+    "discovery_max_bytes": 4194304,
+    "discovery_max_candidates": 200,
+    "discovery_max_depth": 2,
+    "discovery_max_documents": 4,
+    "expansion_requests_reserved_per_outlet": 3,
+    "item_requests_per_outlet": 10,
+    "item_requests_total": 80,
+    "other_requests_per_outlet": 8,
+    "outlets": 8
+  },
+  "crawler_identity": {
+    "operator": {
+      "contact_email": "felix.tacke@uni-marburg.de",
+      "contact_url": "https://coprepan.hispanistica.com/crawler/",
+      "crawler_name": "PanhispanicMediaResearchBot",
+      "organisation": "Marburg University"
+    },
+    "schema": "coprepan-crawler-identity/v1",
+    "scope": "external",
+    "software": {
+      "fetcher": "http-fetcher/1",
+      "name": "coprepan",
+      "version": "0.3.0"
+    },
+    "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+  },
+  "crawler_page": {
+    "crawler_page_sha256": "391d83160862efa92b492a4792ac76878333fe455ff56ad25fbc1e9554571dc7",
+    "public_check_utc": "2026-10-08T14:12:42Z",
+    "receipt": "DEPLOY_RECEIPT_2026-10-08b.json",
+    "receipt_sha256": "408e22626baeca3847628aa51de7b08fc63aff8d54a6268d0c979ccc267a8385",
+    "site_url": "https://coprepan.hispanistica.com/"
+  },
+  "driver": "canary-driver/5",
+  "hard_item_request_ceiling": 100,
+  "head": "68e182823c47491e290668f507cee23c290262fd",
+  "operator_authorization": {
+    "authorization_id": "DOA-2026-10-10-1",
+    "authorization_sha256": "82d96f41ab28328a1c78d895cd1aa0f93f6f68ee34d2a1418ff6f3f5938f1dfb",
+    "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+    "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09/10 in this repository",
+    "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+    "record": "config/operator_authorizations/2026-10-10_recovery.json",
+    "wave": "recovery"
+  },
+  "origin_main_as_last_fetched": "68e182823c47491e290668f507cee23c290262fd",
+  "outlets": [
+    "cu_5_de_septiembre",
+    "cu_periodico26",
+    "es_el_pais",
+    "gt_nuestrodiario",
+    "hn_radio_progreso",
+    "mx_animal_politico",
+    "mx_la_jornada",
+    "ve_efecto_cocuyo"
+  ],
+  "pinned_commit": "e9575b2778d2be2db3cb38cf029344537c87ac81",
+  "policy_file_sha256": "dbf2555bbefbaf22cc2a5b6f8465f8a7e5cb05b992e5d691fba739f995a2ae76",
+  "policy_version": "canary/2026-10-10.1",
+  "preflight": "READY",
+  "preservation_target": {
+    "marker_sha256": "e4714c8c004f3f83c095c40e9851a9446eee92ece84378a46f2ef729200ad8d7",
+    "target_id": "coprepan-preservation-interim-d"
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "df3d48c3a1587c4909835c818733275396389fe7fbc97c36d4775e6ecc7c63ae",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/3",
+    "robots_mode": "research_tdm_override"
+  },
+  "run_id": "acq1-20261009T224004943025Z-0ee53f4006f3",
+  "schema": "coprepan-canary-start-state/v1",
+  "spool_pending_records": 0,
+  "tests_passed": 1527,
+  "working_tree_clean": true
+}
