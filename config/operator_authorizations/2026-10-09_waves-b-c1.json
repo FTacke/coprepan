@@ -1,0 +1,144 @@
+{
+  "schema": "coprepan-operator-authorization/v1",
+  "authorization_id": "DOA-2026-10-09-1",
+  "kind": "DELEGATED_OPERATOR_AUTHORIZATION",
+  "issued_on": "2026-10-09",
+  "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+  "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+  "source": {
+    "form": "Written brief given by the operator in the agent session on 2026-10-09, titled 'CO.PRE.PAN 3.0 - Autonomous Acquisition: Safe Recovery, Delegated Operator & Three-Wave Execution', together with two autoMode.allow rules the operator added to his own Claude Code user settings for this repository. The brief is quoted, not paraphrased; the record adds nothing to it. This record is written by the commissioned agent from that brief: it is the agent's transcription of the operator's commission, not a document signed by the operator.",
+    "authorising_clauses": [
+      "Dieser Auftrag autorisiert ausdrücklich die eigenständige Durchführung der nachfolgend definierten Arbeiten und begrenzten Akquisitionswellen A, B, C1 und C2.",
+      "Innerhalb dieses Scopes darfst du: [...] die vorgesehenen Zeitungen kontrolliert registrieren; `external_acquisition` vorübergehend für die begrenzten Canarys aktivieren; Commit-gebundene Tests, Baselines und Freeze-Verfahren durchführen; zulässige Publisher-Requests ausführen; [...]",
+      "Keine zusätzlichen projektspezifischen manuellen Eingaben von `ARM`, Hashes oder Digests verlangen. Stattdessen ist die Genehmigungsgrundlage als `DELEGATED_OPERATOR_AUTHORIZATION` oder äquivalent ausdrücklich zu dokumentieren.",
+      "Phase B: Folgende Registrierung und begrenzte Akquisition sind mit diesem Auftrag ausdrücklich delegiert: ec_el_universo, ec_primicias, es_el_mundo, gt_lahora, ni_confidencial, pe_diariocorreo, pe_la_republica, sv_el_diario_de_hoy. [...] Das bestehende Budget von zwölf Item-Requests pro Outlet und maximal 100 insgesamt bleibt maßgeblich, sofern der aktuell autoritative Stand nichts Strengeres vorgibt.",
+      "Phase C1: Die Registrierung und erste begrenzte Discovery-/Akquisitionsstufe für folgende Outlets sind ausdrücklich delegiert: ar_el_tribuno, bo_opinion, cu_14ymedio, cu_cubanet, hn_criterio, ni_articulo66, ni_nicaragua_investiga, pr_noticel, uy_montevideo_portal. [...] Die bisherigen Budgets von zehn Item-Requests je Outlet beziehungsweise maximal 90 insgesamt nicht überschreiten.",
+      "Der Operator genehmigt den Scope; der Agent führt die darin autorisierten Arbeiten selbstständig aus.",
+      "Claude Code user settings, autoMode.allow: 'CO.PRE.PAN only [...]: Temporarily setting external_acquisition to enabled is authorized for the explicitly requested and bounded second, wave-B and wave-C acquisition canaries. This is research validation, not production deployment. Enforce approved outlets, request budgets, robots and access-control policies, preservation, verification and automatic disarming.'",
+      "Claude Code user settings, autoMode.allow: 'CO.PRE.PAN only [...]: Creating or modifying a delegated-operator module and running it without interactive ARM or digest entry is authorized for those three specifically approved canary waves. The module must verify delegated authorization, preserve commit-specific tests and immutable baseline hashes, enforce scope limits, record provenance, execute the bounded canaries and verify disarming. Do not simulate human approval, bypass access restrictions or enable general production acquisition.'"
+    ]
+  },
+  "valid_until": "2026-10-10",
+  "policy_versions": [
+    "canary/2026-10-09.1"
+  ],
+  "actions_authorized": [
+    "apply the registration a wave names, from the proposal with the digest it names, for exactly the outlets it names",
+    "turn external_acquisition on for exactly one canary per wave and off again",
+    "run the tests on the arming commit, build the canary baseline of that commit and freeze it by its digest under this record",
+    "make the requests the canary driver makes for the wave's outlets within the wave's limits: robots files, the registered channel documents and what they name, item pages",
+    "preserve, verify, replay, measure, commit and push the evidence"
+  ],
+  "not_authorized": [
+    "any outlet, origin or channel outside a wave's outlets as registered; no extension to co_el_tiempo",
+    "any request to an origin under a hold; no way around a bot challenge, a paywall, a registration wall or a robots decision",
+    "any request beyond a wave's limits; a second canary of a wave",
+    "articles listed only by an HTML listing channel: without a reviewed allow rule only the listing answers are preserved (wave C2 is not part of this record; the brief asks for its own versioned scope once C1 has shown which outlets it concerns)",
+    "wave A (the second canary): it was armed and frozen by the operator in person on 2026-10-09 and needs no record",
+    "general production activation, a scheduled or repeated acquisition, a change of the acquisition policy other than the switch",
+    "any change to a frozen baseline, a receipt or a decision record of the past; any claim of a human confirmation"
+  ],
+  "holds_in_force": [
+    "hn_proceso_digital: access control observed on 2026-10-08 (bot challenge); not contacted",
+    "ve_efecto_cocuyo: bot challenge observed on 2026-10-09 in the second canary; not contacted",
+    "a hold the driver derives from a preserved answer of any run applies at once and is not lifted by this record"
+  ],
+  "technical_gates": [
+    "clean working tree and HEAD equal to origin/main before arming",
+    "this record tracked, touched by exactly one commit, unmodified and pushed",
+    "the wave's registration proposal unchanged (digest) and every outlet of the wave registered",
+    "the full test suite passes on the arming commit",
+    "the baseline is READY_TO_FREEZE with nothing blocking, pins this record's id and digest and the wave, and is frozen once per wave",
+    "preflight READY; the driver's own refusals (drift, pushed HEAD, empty spool, budgets, robots, holds) unchanged",
+    "verification after the run: read-back, fixity, replay without network, receipt re-derived from evidence, budget respected",
+    "disarming read back in the file, in HEAD and on origin/main"
+  ],
+  "stop_conditions": [
+    "any technical gate not met",
+    "the canary is not exactly the wave's outlets, or a limit of its budget exceeds the wave's",
+    "the policy version is not one this record names, or the record is out of date",
+    "the wave already has a frozen baseline",
+    "a refusal by the agent environment's own permission layer: recorded, not worked around"
+  ],
+  "disarming": "After a wave's canary, whatever its outcome, external_acquisition is set to disabled, committed and pushed, and the state is read back from the file, HEAD and origin/main. A run that cannot show this ends as not disarmed, never as done.",
+  "decisions": [
+    "es_el_mundo: the host uecdn.es is a feed (channel) origin only, never an item origin",
+    "ni_confidencial: the apex origin is registered beside the www origin; reference timezone America/Managua; the newsroom's seat in exile is documented apart and decides nothing technical",
+    "pe_la_republica: the economy section only, for now",
+    "ec_el_universo: access model unknown; a redirect to a login, a registration or a paywall ends that path and is not worked around"
+  ],
+  "waves": [
+    {
+      "label": "wave-b",
+      "outlets": [
+        "ec_el_universo",
+        "ec_primicias",
+        "es_el_mundo",
+        "gt_lahora",
+        "ni_confidencial",
+        "pe_diariocorreo",
+        "pe_la_republica",
+        "sv_el_diario_de_hoy"
+      ],
+      "registration": {
+        "proposal": "config/registry_review/extended_canary_proposal_2026-10-09.json",
+        "proposal_sha256": "b3da8def97951cb76cb807d58f4c4613ab37e276e8811ae78f75a967364ae2f2",
+        "only": [
+          "ec_el_universo",
+          "ec_primicias",
+          "es_el_mundo",
+          "gt_lahora",
+          "ni_confidencial",
+          "pe_diariocorreo",
+          "pe_la_republica",
+          "sv_el_diario_de_hoy"
+        ]
+      },
+      "limits": {
+        "item_requests_total": 100,
+        "item_requests_per_outlet": 12,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 164
+      },
+      "canaries": 1,
+      "note": "The origins are those the proposal registers for these outlets (pinned by the proposal's digest); the brief names twelve item requests per outlet and at most 100 in all. other_requests_per_outlet is the canary budget in force (CPD-0016, CPD-0019), which the brief keeps; total_requests_ceiling is 100 + 8 x 8."
+    },
+    {
+      "label": "wave-c1",
+      "outlets": [
+        "ar_el_tribuno",
+        "bo_opinion",
+        "cu_14ymedio",
+        "cu_cubanet",
+        "hn_criterio",
+        "ni_articulo66",
+        "ni_nicaragua_investiga",
+        "pr_noticel",
+        "uy_montevideo_portal"
+      ],
+      "registration": {
+        "proposal": "config/registry_review/wave_c_proposal_2026-10-09.json",
+        "proposal_sha256": "f7ccc255c9c9d9d5cfada68bee4183a64d860e709de45d5fe0df0a51684816e4",
+        "only": [
+          "ar_el_tribuno",
+          "bo_opinion",
+          "cu_14ymedio",
+          "cu_cubanet",
+          "hn_criterio",
+          "ni_articulo66",
+          "ni_nicaragua_investiga",
+          "pr_noticel",
+          "uy_montevideo_portal"
+        ]
+      },
+      "limits": {
+        "item_requests_total": 90,
+        "item_requests_per_outlet": 10,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 162
+      },
+      "canaries": 1,
+      "note": "First stage only: discovery and the articles of feeds and sitemaps. The origins are those the proposal registers (pinned by its digest). The brief names ten item requests per outlet and at most 90 in all; other_requests_per_outlet is the canary budget in force; total_requests_ceiling is 90 + 9 x 8."
+    }
+  ]
+}

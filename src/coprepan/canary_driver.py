@@ -38,7 +38,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
-from . import (access_control, acquisition, admission, canary, candidate_filter, core_pipeline, crawler_identity, discovery, extraction, fetcher as F,
+from . import (access_control, acquisition, admission, canary, candidate_filter, core_pipeline, crawler_identity, delegation, discovery, extraction, fetcher as F,
                freeze, http_acquisition, naming, outage_spool, pack, policy, preservation, preservation_target, recovery, registry,
                schedule, storage_contract, storage_roots)
 from .canonical import canonical_json, record_json, sha256_bytes, write_bytes_exclusive
@@ -210,17 +210,23 @@ def crawler_page_pin(repository: Path = CHECKOUT) -> dict[str, Any]:
 
 def canary_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: Sequence[str], disabled: Sequence[str],
                preservation_root: Path, acquisition_policy: Mapping[str, Any], repository: Path = CHECKOUT,
-               candidate_rules: Mapping[str, Mapping[str, Any]] | None = None) -> dict[str, Any]:
+               candidate_rules: Mapping[str, Mapping[str, Any]] | None = None,
+               authorization: Mapping[str, Any] | None = None) -> dict[str, Any]:
     """The ``canary`` block of the acquisition baseline: the driver, the five outlets as registered
     (digest of each record, URL rules), the storage contract, the identity of the preservation
     target, the research-TDM layer of the policy (CPD-0017) and the public crawler page as deployed.
     **No location of any disk enters it**: a root is a machine's configuration, the target's
     identity is its marker.
+
+    ``authorization`` is the block of a delegated operator authorisation (CPD-0023): present only in
+    a baseline that was built under one, and then pinned like everything else — the record's id, its
+    digest, the wave. A baseline without it is an interactive operator's.
     """
     marker = preservation_target.read_target(preservation_root)
     if marker is None:
         raise CanaryStopped("the preservation target has no identity")
     return {
+        **({"authorization": dict(authorization)} if authorization is not None else {}),
         "driver": driver_pin(budget, registry_, outlet_ids, disabled, candidate_rules),
         "research_tdm": policy.research_tdm_pin(acquisition_policy),
         "access_control_classifier": access_control.CLASSIFIER_VERSION,
@@ -778,6 +784,27 @@ def _after_the_run(arguments, environment, registered) -> int:
     return 0 if result.get("status", "PASS") == "PASS" else 1
 
 
+def _authorization(path: Path, wave: str, budget: CanaryBudget, outlet_ids: Sequence[str], acquisition_policy: Mapping[str, Any], *,
+                   except_manifest: str | None = None) -> dict[str, Any]:
+    """The pinned block of a delegated operator authorisation, or a stop: the record must cover exactly this canary."""
+    try:
+        return delegation.block_for(path, wave, repository=CHECKOUT, outlets=outlet_ids, budget=budget.as_record(),
+                                    total_requests_ceiling=budget.total_requests_ceiling, policy_version=acquisition_policy["policy_version"],
+                                    today=datetime.now(timezone.utc).date(), except_manifest=except_manifest)
+    except delegation.AuthorizationError as refusal:
+        raise CanaryStopped(f"the operator authorisation does not cover this canary: {refusal}") from refusal
+
+
+def _operator_authorization(baseline: Mapping[str, Any]) -> dict[str, Any]:
+    """Who armed and froze, as the start state and the receipt state it: the delegated record the baseline pins,
+    or the interactive operator the freeze names. Never a guess — it is read from the frozen baseline.
+    """
+    pinned = (baseline.get("canary") or {}).get("authorization")
+    if pinned is not None:
+        return dict(pinned)
+    return {"mode": delegation.MODE_INTERACTIVE, "operator": (baseline.get("freeze") or {}).get("operator")}
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="The staged driver of the first real canary. `run` makes real requests.")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -790,6 +817,8 @@ def main(argv: list[str] | None = None) -> int:
     base.add_argument("--tests-passed", type=int, required=True)
     base.add_argument("--required-free-bytes", type=int, required=True)
     base.add_argument("--out", type=Path, required=True)
+    base.add_argument("--authorization", type=Path, default=None, help="a delegated operator authorisation record (CPD-0023); with --wave")
+    base.add_argument("--wave", default=None, help="the wave of that record this canary is")
     frozen = commands.add_parser("freeze", help="the operator's act: freeze a baseline by stating its digest (no request)")
     frozen.add_argument("--manifest", type=Path, required=True)
     frozen.add_argument("--operator", required=True)
@@ -824,13 +853,17 @@ def main(argv: list[str] | None = None) -> int:
         return _after_the_run(arguments, environment, registered)
     budget = canary_budget(len(set(arguments.outlet))) if arguments.command in ("baseline", "run") else None
     if arguments.command == "baseline":
+        if (arguments.authorization is None) != (arguments.wave is None):
+            raise CanaryStopped("--authorization and --wave are given together or not at all")
+        authorization = None if arguments.authorization is None else _authorization(
+            arguments.authorization, arguments.wave, budget, arguments.outlet, acquisition_policy)
         root = storage_roots.resolve_root("PRESERVATION", env=environment)
         readiness = preservation_target.check_readiness(root, required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
         manifest = freeze.build_manifest(
             code_commit=arguments.commit, created_at=datetime.now(timezone.utc), operator=arguments.operator,
             test_baseline={"suite": "python -m pytest", "passed": arguments.tests_passed}, storage_target=readiness,
             scope=freeze.SCOPE_CANARY, canary=canary_pin(budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], root, acquisition_policy,
-                                                             candidate_rules=candidate_rules))
+                                                             candidate_rules=candidate_rules, authorization=authorization))
         write_bytes_exclusive(arguments.out, record_json(manifest))
         print(json.dumps({"state": manifest["state"], "blocking": manifest["blocking"], "manifest_sha256": manifest["manifest_sha256"]}, indent=2))
         return 0 if manifest["state"] == freeze.READY_TO_FREEZE else 1
@@ -853,11 +886,17 @@ def main(argv: list[str] | None = None) -> int:
     if report["status"] != canary.READY:
         print(json.dumps(report, indent=2))
         raise CanaryStopped("the preflight is not READY: no request is made")
+    # A baseline built under a delegated authorisation (CPD-0023) is run only while the record still says what the
+    # baseline pinned: the record is read again, checked again, and its block enters the comparison like every pin.
+    pinned_authorization = (baseline.get("canary") or {}).get("authorization")
+    authorization = None if pinned_authorization is None else _authorization(
+        CHECKOUT / str(pinned_authorization.get("record")), str(pinned_authorization.get("wave")), budget, arguments.outlet, acquisition_policy,
+        except_manifest=baseline["manifest_sha256"])
     if baseline.get("scope") != freeze.SCOPE_CANARY or baseline.get("canary") != canary_pin(
             budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], roles_now["PRESERVATION"], acquisition_policy,
-            candidate_rules=candidate_rules):
-        raise CanaryStopped("the driver, its budgets, the outlets, the storage identity, the research-TDM policy or the "
-                            "deployed crawler page differ from what the baseline pins")
+            candidate_rules=candidate_rules, authorization=authorization):
+        raise CanaryStopped("the driver, its budgets, the outlets, the storage identity, the research-TDM policy, the "
+                            "deployed crawler page or the operator authorisation differ from what the baseline pins")
 
     identity = crawler_identity.load_identity()
     schedule_policy = schedule.load_schedule_policy()
@@ -877,6 +916,7 @@ def main(argv: list[str] | None = None) -> int:
         "research_tdm": baseline["canary"]["research_tdm"], "crawler_page": baseline["canary"]["crawler_page"],
         "budget": budget.as_record(), "hard_item_request_ceiling": HARD_ITEM_REQUESTS,
         "spool_pending_records": len(pending_at_start), "tests_passed": arguments.tests_passed, "preflight": report["status"],
+        "operator_authorization": _operator_authorization(baseline),
     }
     if start_state["head"] != start_state["origin_main_as_last_fetched"]:
         raise CanaryStopped("HEAD is not origin/main as last fetched: push (or fetch) first")
@@ -903,6 +943,7 @@ def main(argv: list[str] | None = None) -> int:
         outlet_ids=arguments.outlet, channels={o: r["channels"] for o, r in outcome["outlets"].items()},
         preservation_root=roles["PRESERVATION"], spool_root=roles["SPOOL"], started_at=format_instant(started), finished_at=format_instant(clock()))
     receipt["fetcher_transport_calls"] = fetcher.transport_calls
+    receipt["operator_authorization"] = _operator_authorization(baseline)
     receipt["checkpoints"] = outcome["checkpoints"]
     complete = receipt["counts"]["pending"] == 0 and receipt["counts"]["spooled_objects_pending"] == 0
     if complete:

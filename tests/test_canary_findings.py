@@ -418,7 +418,7 @@ def test_a_feed_that_carries_html_documents_in_cdata_is_read():
     parsed = discovery.parse_channel_document(fixture("rss_cdata_doctype.xml"), document_url=f"{WWW}/feed/", declared_content_type="application/rss+xml")
     assert (parsed.outcome, parsed.format, parsed.problems) == ("PARSED", "rss", ())
     assert [e.url for e in parsed.entries] == [f"{WWW}/economia/puerto-amplia-terminal/", f"{WWW}/regionales/lluvias-en-el-norte/"]
-    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/3"
+    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/4"
 
 
 LAUGHS = (b'<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;&lol;&lol;">]>'
@@ -448,6 +448,41 @@ def test_the_feed_of_2026_10_08_yields_candidates_through_discovery(tmp_path):
     result = discovery.discover_channel(tables, RULES, channel_id=CHANNEL, start_url=f"{WWW}/feed/", provider=provider, budget=BUDGET,
                                         run_id=RUN_ID, discovered_at=T0)
     assert len(result.candidates_new) == 2 and tables.inputs[0]["outcome"] == "PARSED" and tables.inputs[0]["parser"] == discovery.PARSER_VERSION
+
+
+# --- F8 (second canary, 2026-10-09): a publisher's own sitemap states its pages with http ------------------
+
+
+def test_an_http_entry_of_a_host_registered_under_https_is_read_as_https_and_nothing_else_is_widened(tmp_path):
+    """The Arc sitemap of ``py_la_nacion`` listed 100 pages as ``http://www…`` on 2026-10-09: all were off-origin, no candidate."""
+    origins = ("https://www.diario.example", "https://diario.example")
+    read = discovery.https_for_registered_host
+    assert read("http://www.diario.example/politica/2026/10/09/a/", origins) == "https://www.diario.example/politica/2026/10/09/a/"
+    assert read("http://WWW.diario.example/a?id=1#x", origins) == "https://WWW.diario.example/a?id=1#x"
+    for untouched in ("https://www.diario.example/a", "http://otro.example/a", "http://m.diario.example/a", "http://www.diario.example:8080/a",
+                      "http://user@www.diario.example/a", "ftp://www.diario.example/a", "/a", ""):
+        assert read(untouched, origins) is None
+    assert read("http://www.diario.example/a", (*origins, "http://www.diario.example")) is None      # an outlet that registers http is left alone
+
+    rules = discovery.OutletUrlRules(OUTLET, origins, f"{OUTLET}-url-rules/v1")
+    body = (b'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            b"<url><loc>http://www.diario.example/politica/2026/10/09/uno/</loc><lastmod>2026-10-09T13:44:15.782Z</lastmod></url>"
+            b"<url><loc>https://www.diario.example/politica/2026/10/09/dos/</loc></url>"
+            b"<url><loc>http://otro.example/tres/</loc></url></urlset>")
+
+    def provider(url, depth):
+        return discovery.ChannelDocument(url, url, fid(url), body, "application/xml", "identity")
+
+    tables = discovery.DiscoveryTables(tmp_path / "discovery")
+    result = discovery.discover_channel(tables, rules, channel_id=f"{OUTLET}:ch:sitemap_001", start_url="https://www.diario.example/sitemap.xml",
+                                        provider=provider, budget=BUDGET, run_id=RUN_ID, discovered_at=T0)
+    events = sorted(tables.events.values(), key=lambda row: row["position"])
+    assert len(result.candidates_new) == 2 and [event["problem"] for event in events] == [None, None, "off_origin"]
+    # what the publisher stated is kept; what was read is said; the candidate is fetched from the registered origin
+    assert events[0]["observed_url"].startswith("http://") and events[0]["resolved_url"].startswith("https://www.diario.example/")
+    assert events[0]["hints"]["scheme_read_as"] == "https" and "scheme_read_as" not in events[1]["hints"]
+    assert all(tables.candidates[c]["fetch_url"].startswith("https://www.diario.example/") for c in result.candidates_new)
+    assert discovery.PARSER_VERSION == "channel-parser/4"
 
 
 # --- F6: a channel that answers 404 is disabled, not replaced ---------------------------------------------

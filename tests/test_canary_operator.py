@@ -84,7 +84,7 @@ def states(world) -> dict:
                                                capture_output=True, check=True).stdout)}
 
 
-def fake_runner(world, fail=(), interrupt=None, tests_output="1400 passed, 8 skipped in 1.0s", incomplete_receipt=False):
+def fake_runner(world, fail=(), interrupt=None, tests_output="1400 passed, 8 skipped in 1.0s", incomplete_receipt=False, pins=None):
     """Real git in the temporary repository; the driver, the preflight and pytest are recorders."""
     real = tool.make_runner(world.work)
     pushes = [0]
@@ -111,12 +111,28 @@ def fake_runner(world, fail=(), interrupt=None, tests_output="1400 passed, 8 ski
         if step == "tests":
             return tests_output
         if step == "baseline":
+            # Under a delegated authorisation the real driver pins the record's block; the recorder does the same with
+            # the real check, so that the wrapper is tested against what the driver would write (or against `pins`).
+            pinned = {}
+            if "--authorization" in command:
+                from coprepan import canary_driver, delegation
+                named = [command[i + 1] for i, word in enumerate(command) if word == "--outlet"]
+                budget = canary_driver.canary_budget(len(named))
+                pinned = {"authorization": delegation.block_for(
+                    Path(option("--authorization")), option("--wave"), repository=world.work, outlets=named, budget=budget.as_record(),
+                    total_requests_ceiling=budget.total_requests_ceiling, policy_version=json.loads(
+                        (world.work / "config" / "acquisition_policy.json").read_text(encoding="utf-8"))["policy_version"], today=TODAY)}
+            if pins is not None:
+                pinned = pins
             Path(option("--out")).write_text(json.dumps({
                 "state": "READY_TO_FREEZE", "blocking": [], "manifest_sha256": DIGEST, "code": {"commit": option("--commit")},
-                "policy": {"sha256": "p" * 64}, "registry": {"sha256": "r" * 64},
-                "canary": {"driver": {"driver": "canary-driver/4", "budget": {}, "outlets": {}}, "storage_target": {"target_id": "interim"}}}), encoding="utf-8")
+                "operator": option("--operator"), "policy": {"sha256": "p" * 64}, "registry": {"sha256": "r" * 64},
+                "canary": {**pinned, "driver": {"driver": "canary-driver/4", "budget": {}, "outlets": {}},
+                           "storage_target": {"target_id": "interim"}}}), encoding="utf-8")
         elif step == "freeze":
-            Path(option("--out")).write_text(json.dumps({"state": "FROZEN", "manifest_sha256": DIGEST}) + "\n", encoding="utf-8")
+            manifest = json.loads(Path(option("--manifest")).read_text(encoding="utf-8"))
+            Path(option("--out")).write_text(json.dumps({"state": "FROZEN", "manifest_sha256": DIGEST, "canary": manifest["canary"],
+                                                         "freeze": {"operator": option("--operator")}}) + "\n", encoding="utf-8")
         elif step == "run":
             directory = Path(option("--receipt-dir"))
             (directory / f"canary-start-state-{RUN_ID}.json").write_text("{}\n", encoding="utf-8")

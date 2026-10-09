@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0023](CPD-0023_delegated-operator-authorisation-in-force.md): beside the interactive mode described here, a commissioned agent may arm and freeze under a versioned authorisation record (delegated mode). This record is otherwise unchanged |
 | Decided by | the operator, in the brief of the integrated source-expansion run of 2026-10-09, which ordered F7 worked on with the smallest fitting solution, generic improvements for HTML archives and listings where they stand in the way of new sources, the new research consolidated without a second registry, a further canary wave prepared, and the gate procedure made easier to operate without replacing the operator's confirmation; technical choices were delegated to the run and are recorded here. Subject to the operator's review |
 | Kind | architecture · procedure |
 | Scope | discovery (allotment of the candidate budget, HTML listings, index expansion across passes), candidate qualification, canary channel selection, how an outlet outside the legacy import enters the registry, the consolidated qualification overview, the operator's workflow tool |

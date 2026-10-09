@@ -217,4 +217,25 @@ The failures were the agent's own: tests added on 2026-10-09 copied `config/acqu
 its switch was `disabled`. On an arming commit it is `enabled`. They are repaired, and the suite was run on an export of the arming commit to
 show it (the report has the numbers). **The same command can be run again.**
 
-Delegated arming by an agent (CPD-0022) is a direction, not a procedure: §1 and the freeze stay a person's two typed confirmations.
+Delegated arming by an agent (CPD-0022) was, at that point, a direction and not a procedure. It has been built since: §11.
+
+## 11. The delegated mode (2026-10-09, CPD-0023)
+
+Beside the interactive command of §9 there is a second way to run the same workflow: an agent the operator has commissioned runs it under
+a versioned **authorisation record** instead of the two typed confirmations.
+
+```text
+python scripts/canary_operator.py --authorization config/operator_authorizations/<record>.json --wave <label>
+```
+
+- The record (`coprepan-operator-authorization/v1`) names the commission, quotes its authorising clauses, and lists the waves: exact outlets,
+  registration (proposal and digest), limits, one canary each. It is written once: one commit, unmodified, pushed.
+- The tool takes the outlets, the label (the wave) and the operator from the record and accepts nothing else on the command line. It asks
+  nothing. It refuses a canary that is not exactly the wave, exceeds a limit, runs under a policy the record does not name, is out of date,
+  or whose wave already has a frozen baseline.
+- Steps §0 to §6 are the same commands in the same order. The baseline pins the record (id, SHA-256, path, wave); the freeze names the
+  delegate *under* the record; start state and receipt carry `operator_authorization`; the commit messages name the record.
+- Before a wave with a registration: `python scripts/apply_registration_proposal.py --proposal <the wave's> --approved-by "<issued_to> under
+  <authorization_id> (DELEGATED_OPERATOR_AUTHORIZATION; issued by <issued_by>)" --only … --write`, tests, commit, push.
+- After a killed run: `python scripts/canary_operator.py --disarm-only`, as in §9.
+- A person can still run §9 at any time; an interactive baseline never pins a record.

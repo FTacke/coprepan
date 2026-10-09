@@ -28,8 +28,8 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Any, Callable, Mapping
-from urllib.parse import parse_qsl, urldefrag, urlencode, urljoin, urlsplit
+from typing import Any, Callable, Mapping, Sequence
+from urllib.parse import parse_qsl, urldefrag, urlencode, urljoin, urlsplit, urlunsplit
 
 from . import naming
 from .canonical import canonical_json, require_sha256, sha256_bytes
@@ -44,7 +44,10 @@ from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 # (`candidate-budget-order/1`); an HTML listing yields its next page from `rel=next` on an anchor and
 # from numbered pagination, and the date of a teaser from the `<time>` of its `<article>`; a child of
 # an index that was read before and is stated unchanged is not asked for again (`expansion-order/2`).
-PARSER_VERSION = "channel-parser/3"
+# /4 (second canary, 2026-10-09, finding F8): an entry stated as http://host/... whose host is registered under
+# https only is read as the https URL (https_for_registered_host); it was an off-origin entry before, and
+# a whole Arc sitemap that states its own pages that way yielded no candidate.
+PARSER_VERSION = "channel-parser/4"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
 EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
@@ -390,6 +393,22 @@ class DiscoveryTables:
         return True
 
 
+def https_for_registered_host(url: str, web_origins: Sequence[str]) -> str | None:
+    """The https form of an http URL whose host the outlet has registered under https and not under
+    http — or None, which is every other case. A publisher's own sitemap or feed sometimes states its pages
+    with the old scheme (canary finding F8); the page is the registered origin's. Nothing is widened: the host must
+    be registered, no port may be stated, and an outlet that registers the http origin itself is left alone.
+    """
+    parts = urlsplit(url)
+    if parts.scheme != "http" or not parts.hostname or parts.port is not None or parts.username is not None:
+        return None
+    host = parts.netloc.lower()
+    origins = {origin.lower().rstrip("/") for origin in web_origins}
+    if f"https://{host}" not in origins or f"http://{host}" in origins:
+        return None
+    return urlunsplit(("https", parts.netloc, parts.path, parts.query, parts.fragment))
+
+
 def candidate_from_event(event: Mapping[str, Any]) -> dict[str, Any]:
     """The candidate row an event gives rise to. A candidate is *derived* state: this function is
     the whole derivation, used when a candidate is created and when a store is checked.
@@ -618,8 +637,11 @@ def discover_channel(
                    "problem": entry.problem, "url_key": None, "candidate_id": None, "discovered_at": at,
                    "parser": PARSER_VERSION}
             if entry.url is not None and entry.relation == RELATION_ITEM:
+                secure = https_for_registered_host(entry.url, rules.web_origins)
+                if secure is not None:                       # the observed URL stays as it was stated; the hint says what was done
+                    row["resolved_url"], row["hints"] = secure, {**row["hints"], "scheme_read_as": "https"}
                 try:
-                    row["url_key"] = canonical_url_key(rules, requested_url=entry.url).key
+                    row["url_key"] = canonical_url_key(rules, requested_url=row["resolved_url"]).key
                     row["candidate_id"] = candidate_id(rules.outlet_id, row["url_key"])
                 except OffOriginError:
                     row["problem"] = "off_origin"

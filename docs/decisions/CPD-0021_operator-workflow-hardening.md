@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0023](CPD-0023_delegated-operator-authorisation-in-force.md): beside the interactive mode described here, a commissioned agent may arm and freeze under a versioned authorisation record (delegated mode). This record is otherwise unchanged |
 | Decided by | the operator, in the brief of the three-wave qualification run of 2026-10-09, which ordered the wrapper of CPD-0020 §7 examined on all its error paths before any real use, small repairs and regression tests, and no change of the gate protocol; the repairs are the run's technical choices. Subject to the operator's review |
 | Kind | procedure · tooling |
 | Scope | `scripts/canary_operator.py` only |

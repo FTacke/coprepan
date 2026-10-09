@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-08 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0023](CPD-0023_delegated-operator-authorisation-in-force.md): beside the interactive mode described here, a commissioned agent may arm and freeze under a versioned authorisation record (delegated mode). This record is otherwise unchanged |
 | Decided by | the operator, in the brief of the canary run of 2026-10-08, which ordered a single integrated driver with hard budgets, a baseline frozen on the exact commit, an acquisition switch armed only afterwards and only for the canary, and disarmed after it. Recorded by that run; subject to the operator's review |
 | Kind | policy · architecture |
 | Scope | how the first real acquisition canary is orchestrated, bounded, pinned, started and verified |

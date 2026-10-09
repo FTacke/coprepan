@@ -80,7 +80,8 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0019](../decisions/CPD-0019_canary-findings-repair-budget-reservation-and-source-discovery-inventory.md) | Repair of the first canary's findings F1–F7; hop-wise budgets with a part reserved for index expansion; the source-discovery inventory and its analytic flags; second and extended canary | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0016 §1–§2 |
 | [CPD-0020](../decisions/CPD-0020_candidate-budget-order-listings-new-outlets-and-operator-workflow.md) | Candidate budget newest-first; HTML listings (pagination, dates, waiting candidates); an index read incrementally; outlets new to the registry; the consolidated qualification overview; the operator's canary workflow | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0019 §7, §9 |
 | [CPD-0021](../decisions/CPD-0021_operator-workflow-hardening.md) | The operator's canary workflow after its review: scope shown before `ARM`, disarming read back from file, HEAD and remote, `--disarm-only`, an incomplete run keeps its evidence | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0020 §7 |
-| [CPD-0022](../decisions/CPD-0022_delegated-operator-authorisation.md) | Delegated operator authorisation: a direction with a design; nothing built, nothing amended | `DIRECTION_NOT_STARTED` |
+| [CPD-0022](../decisions/CPD-0022_delegated-operator-authorisation.md) | Delegated operator authorisation: a direction with a design; the history of the refusal | `SUPERSEDED` by CPD-0023 |
+| [CPD-0023](../decisions/CPD-0023_delegated-operator-authorisation-in-force.md) | Delegated operator authorisation in force: the authorisation record (`config/operator_authorizations/`), `src/coprepan/delegation.py`, the delegated mode of `scripts/canary_operator.py`; the interactive mode unchanged | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 

@@ -271,7 +271,8 @@ def verify(
     check("replay_without_network", replayed > 0 and not differing, f"{replayed} extractions replayed from preserved bytes with the network unavailable; {len(differing)} differ")
 
     # 5. the receipt, re-derived from evidence, equals the one the run wrote (volatile fields excluded)
-    volatile = {"started_at", "finished_at", "fetcher_transport_calls", "checkpoints", "status"}
+    # `operator_authorization` is copied from the frozen baseline by the run, not derived from the evidence.
+    volatile = {"started_at", "finished_at", "fetcher_transport_calls", "checkpoints", "status", "operator_authorization"}
     # Every field the stored receipt states must be re-derived exactly. A field a later driver adds to
     # a receipt is not held against a receipt that was written before it existed.
     same = {k: v for k, v in stored_receipt.items() if k not in volatile} == {

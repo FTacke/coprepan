@@ -3,7 +3,8 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-09 |
-| Status | `DIRECTION_NOT_STARTED` |
+| Status | `SUPERSEDED` |
+| Superseded by (2026-10-09) | [CPD-0023](CPD-0023_delegated-operator-authorisation-in-force.md): the operator added the permission rules, the direction was built and is in force. This record stays as the history of the refusal and of the design |
 | Decided by | the operator, in the brief "Autonomous Operator Delegation, Three-Wave Acquisition & End-to-End Qualification" of 2026-10-09: an agent the operator commissions for a clearly bounded task may arm, freeze and run a canary itself, under a versioned authorisation record, without typed confirmations. Recorded by the run that received the brief |
 | Kind | governance · procedure |
 | Scope | who may perform the arming and the freeze of a canary (CPD-0016 §4), and how that is evidenced |
