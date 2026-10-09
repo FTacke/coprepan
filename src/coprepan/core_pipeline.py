@@ -133,7 +133,10 @@ def record_exchange(
     """
     record = acquisition.build_fetch_record(run, outlet_id, exchange)
     fetch_id = record["fetch_id"]
-    identifier = pack.pack_id(outlet_id, pack.utc_day_of(record["fetch_started_at"]))
+    # The pack of this outlet and day that this call already writes to; else the first of that day that is not sealed.
+    day = pack.utc_day_of(record["fetch_started_at"])
+    stem = pack.pack_id(outlet_id, day)[:-3]
+    identifier = next((known for known in sorted(packs) if known.startswith(stem)), None) or pack.first_unsealed_id(workspace.packs, outlet_id, day)
     target = record["outcome"]
     state = ledger.state(fetch_id)
     if state not in (None, "DISCOVERED", "FETCH_PLANNED"):

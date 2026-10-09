@@ -532,6 +532,38 @@ def test_white_space_before_the_xml_declaration_does_not_make_a_feed_or_an_index
     assert discovery.PARSER_VERSION == "channel-parser/5"
 
 
+# --- F14 (wave C2, 2026-10-09): a second run for an outlet on a day whose pack is sealed ---------------------
+
+
+def test_a_second_run_on_the_same_day_writes_to_the_next_pack_and_the_sealed_one_is_untouched(tmp_path, site):
+    """Wave C2 asked ``hn_criterio`` again on the day wave C1 had sealed its pack: the first answer could not be recorded."""
+    from datetime import timedelta
+
+    scripted(site, paths=("/ok",))
+    first = Drive(tmp_path / "day", site)
+    first.go()
+    sealed = sorted(path for path in first.workspace.packs.glob("*.warc.gz"))
+    assert [path.name for path in sealed] == [f"pk1-{OUTLET}-20261008-000.warc.gz"]
+    before = {path.name: path.read_bytes() for path in first.workspace.packs.iterdir() if path.is_file()}
+
+    site.routes["/rss.xml"] = Response(200, [("Content-Type", "application/rss+xml")], feed(("/ok", "/nueva")))
+    site.routes["/nueva"] = page(2)
+    second = Drive(tmp_path / "day", site, start=first.clock.now + timedelta(hours=2))        # the same workspace, the same UTC day
+    assert second.run.run_id != first.run.run_id
+    second.go()
+    assert "/nueva" in site.paths()
+    names = sorted(path.name for path in second.workspace.packs.glob("*.warc.gz"))
+    assert names == [f"pk1-{OUTLET}-20261008-000.warc.gz", f"pk1-{OUTLET}-20261008-001.warc.gz"]
+    assert all(second.workspace.packs.joinpath(name).read_bytes() == content for name, content in before.items())   # nothing sealed was changed
+    records = {r["fetch_id"]: r for r in D.fetch_records(second.workspace)}
+    assert any(r["response"]["final_url"].endswith("/nueva") for r in records.values())
+    assert all(state == "RAW_PRESERVED" for fetch_id, state in second.states().items() if fetch_id in records)
+
+    from coprepan import pack as P_
+    assert P_.first_unsealed_id(second.workspace.packs, OUTLET, "20261008") == f"pk1-{OUTLET}-20261008-002"
+    assert P_.first_unsealed_id(second.workspace.packs, OUTLET, "20261009") == f"pk1-{OUTLET}-20261009-000"
+
+
 # --- the allow rules written from the listing pages preserved in wave C1 -----------------------------------
 
 

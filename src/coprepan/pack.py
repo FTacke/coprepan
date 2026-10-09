@@ -103,6 +103,20 @@ def pack_id(outlet_id: str, utc_day: str, sequence: int = 0) -> str:
     return value
 
 
+def first_unsealed_id(directory: Path, outlet_id: str, utc_day: str) -> str:
+    """The pack of an outlet and UTC day that can still be appended to: the lowest rollover number
+    whose pack is not sealed. A sealed pack is never appended to, so a second run for the same outlet
+    on the same day continues in the next one (wave C2 of 2026-10-09 met this: the day's pack had
+    been sealed by wave C1, and the first answer of the new run could not be recorded).
+    """
+    for sequence in range(1000):
+        identifier = pack_id(outlet_id, utc_day, sequence)
+        paths = _paths(directory, identifier)
+        if not paths["manifest"].exists() and not paths["sealed"].exists():
+            return identifier
+    raise PackError(f"{outlet_id} has a thousand sealed packs for {utc_day}")
+
+
 def is_pack_id(value: object) -> bool:
     return isinstance(value, str) and _PACK_ID.fullmatch(value) is not None
 
