@@ -79,8 +79,10 @@ def test_the_legacy_audit_found_the_import_complete(inventory):
 
 def test_a_flag_follows_from_evidence_of_this_project_and_never_from_research(inventory):
     by_id = {o["outlet_id"]: o for o in inventory["outlets"]}
-    registered = {o["outlet_id"] for o in load(REPO / "config" / "outlet_registry.json")["outlets"] if o["registration_status"] == "registered"}
-    assert {i for i, o in by_id.items() if "REGISTERED" in o["flags"]} == registered
+    # The inventory is a dated snapshot: its flags are those of the registry it was built from (the five outlets of the
+    # first canary), not of the registry as it is after later registrations. Its inputs name that registry by digest.
+    assert {i for i, o in by_id.items() if "REGISTERED" in o["flags"]} == set(FIRST_CANARY)
+    assert len(inventory["inputs"]["registry"]["sha256"]) == 64
     measurement = load(REPO / "docs" / "canary" / "evidence" / "acq1-20261008T203414628095Z-ed630d8e8a14" / "measurement.json")
     verified = {i for i, row in measurement["outlets"].items() if row["items_fetched"] >= 5}
     assert {i for i, o in by_id.items() if "ACQUISITION_VERIFIED" in o["flags"]} == verified == {"do_diario_libre"}
@@ -105,6 +107,8 @@ def test_the_inventory_page_is_the_page_of_the_inventory(inventory):
 
 
 def test_an_inventory_version_is_written_once(tmp_path):
+    if load(INVENTORY)["inputs"]["registry"]["sha256"] != hashlib.sha256((REPO / "config" / "outlet_registry.json").read_bytes()).hexdigest():
+        pytest.skip("the registry has changed since this inventory version was built: a version is rebuilt only from its own inputs")
     builder = script("build_source_discovery_inventory")
     evidence = REPO / "docs" / "canary" / "evidence" / "acq1-20261008T203414628095Z-ed630d8e8a14"
     arguments = ["--registry", str(REPO / "config" / "outlet_registry.json"), "--legacy-audit", str(DISCOVERY / "legacy_discovery_audit_2026-10-09.json"),

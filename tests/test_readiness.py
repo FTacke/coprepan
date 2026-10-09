@@ -175,7 +175,7 @@ def test_the_repository_as_committed_is_pre_freeze_and_says_why():
     assert m["state"] == "PRE_FREEZE" and m["schema"] == "coprepan-acquisition-baseline/v1"
     assert [reason.split(":")[0] for reason in m["blocking"]] == (["O-1"] if m["policy"]["external_acquisition"] == "disabled" else []) + ["O-3", "O-4"]
     assert m["schedule_policy"]["version"].startswith("canary/") and m["components"]["extractor_lifecycle"] == "EXPERIMENTAL"
-    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (82, 5, 77, 352)
+    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (82, 13, 69, 357)
     assert m["policy"]["status"] == "DECIDED" and m["policy"]["external_acquisition"] in ("enabled", "disabled")   # decided; armed only for the canary
     assert m["crawler_identity"]["state"] == "configured" and m["crawler_identity"]["identity"]["operator"]["crawler_name"] == "PanhispanicMediaResearchBot"
     assert m["storage_target"] == {"status": "not_configured"} and m["code"]["commit"] == COMMIT
@@ -334,8 +334,8 @@ def test_the_package_recommends_and_registers_nothing():
     review = RR.build_review(json.loads(before.decode("utf-8")))
     assert REGISTRY.read_bytes() == before and review["status"].startswith("RECOMMENDATION_ONLY")
     registry = R.load_registry(REGISTRY)
-    assert sum(o["registration_status"] == "registered" for o in registry.outlets.values()) == 5   # by a registration record, not by the package
-    assert (review["summary"]["outlets"], review["summary"]["channels"]) == (82, 352)
+    assert sum(o["registration_status"] == "registered" for o in registry.outlets.values()) == 13   # by a registration record, not by the package
+    assert (review["summary"]["outlets"], review["summary"]["channels"]) == (82, 357)
 
 
 def test_every_outlet_has_the_fields_a_reviewer_needs():
@@ -375,7 +375,7 @@ def test_channel_ids_are_unique_and_well_formed():
 
     review = json.loads(PACKAGE.read_text(encoding="utf-8"))
     ids = [channel["recommended_channel_id"] for entry in review["outlets"] for channel in entry["channels"]]
-    assert len(ids) == len(set(ids)) == 352 and all(is_channel_id(value) for value in ids)
+    assert len(ids) == len(set(ids)) == 357 and all(is_channel_id(value) for value in ids)
     assert all(len(value.split(":ch:")[1]) <= 60 for value in ids)
 
 
@@ -390,7 +390,7 @@ def test_review_cases_are_flagged_and_never_merged():
     assert by_id["cr_crhoy"]["additional_origin_candidates"] == ["https://crhoy.com"]
     assert by_id["co_el_tiempo"]["recommended_action"] == "FIND_CHANNELS_OR_LEAVE_UNREGISTERED"
     assert review["summary"]["by_recommended_action"] == {
-        "CHECK_CHANNEL_ATTRIBUTION": 5, "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 54, "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 23}
+        "CHECK_CHANNEL_ATTRIBUTION": 6, "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 56, "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 20}
 
 
 def test_same_outlet_candidates_are_a_review_case_not_a_merge():

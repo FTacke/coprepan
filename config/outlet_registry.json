@@ -5675,7 +5675,19 @@
     },
     {
       "access_model": "unknown",
-      "channels": [],
+      "channels": [
+        {
+          "channel_id": "ec_el_universo:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
       "city": "unknown",
       "country_id": "ec",
       "display_names": [
@@ -5716,16 +5728,16 @@
       "outlet_id": "ec_el_universo",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Guayaquil",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "ec_el_universo-url-rules/v1"
       },
       "web_origins": [
         "https://www.eluniverso.com"
@@ -5735,34 +5747,12 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "ec_primicias:ch:sitemap_index_001",
-          "kind": "sitemap_index",
-          "legacy_observed": {
-            "consecutive_empty_runs": 0,
-            "consecutive_fail_runs": 0,
-            "created_at": "2025-12-18 21:49:00.971392",
-            "discovered_by": "robots",
-            "error_message": null,
-            "feed_score": 39,
-            "id": 76,
-            "is_active": 0,
-            "last_attempt_at": null,
-            "last_crawled_at": "2026-01-03 23:34:41.873518",
-            "last_discovery_at": "2026-06-13 17:59:54.459620",
-            "last_error_at": null,
-            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
-            "last_status": "ok",
-            "last_success_at": null,
-            "priority": 5,
-            "source_id": 24,
-            "status": "inactive",
-            "type": "sitemap_index",
-            "updated_at": "2026-06-13 17:59:54.459620",
-            "url": "https://www.primicias.ec/sitemap-index.xml"
-          },
+          "channel_id": "ec_primicias:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
           "url_history": [
             {
-              "url": "https://www.primicias.ec/sitemap-index.xml",
+              "url": "https://www.primicias.ec/feed/",
               "valid_from": "unknown"
             }
           ]
@@ -5796,6 +5786,39 @@
           "url_history": [
             {
               "url": "https://www.primicias.ec/sitemap-google-news.xml",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "ec_primicias:ch:sitemap_index_001",
+          "kind": "sitemap_index",
+          "legacy_observed": {
+            "consecutive_empty_runs": 0,
+            "consecutive_fail_runs": 0,
+            "created_at": "2025-12-18 21:49:00.971392",
+            "discovered_by": "robots",
+            "error_message": null,
+            "feed_score": 39,
+            "id": 76,
+            "is_active": 0,
+            "last_attempt_at": null,
+            "last_crawled_at": "2026-01-03 23:34:41.873518",
+            "last_discovery_at": "2026-06-13 17:59:54.459620",
+            "last_error_at": null,
+            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+            "last_status": "ok",
+            "last_success_at": null,
+            "priority": 5,
+            "source_id": 24,
+            "status": "inactive",
+            "type": "sitemap_index",
+            "updated_at": "2026-06-13 17:59:54.459620",
+            "url": "https://www.primicias.ec/sitemap-index.xml"
+          },
+          "url_history": [
+            {
+              "url": "https://www.primicias.ec/sitemap-index.xml",
               "valid_from": "unknown"
             }
           ]
@@ -5841,16 +5864,16 @@
       "outlet_id": "ec_primicias",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Guayaquil",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "ec_primicias-url-rules/v1"
       },
       "web_origins": [
         "https://www.primicias.ec"
@@ -5858,7 +5881,19 @@
     },
     {
       "access_model": "unknown",
-      "channels": [],
+      "channels": [
+        {
+          "channel_id": "es_el_mundo:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
       "city": "unknown",
       "country_id": "es",
       "display_names": [
@@ -5899,16 +5934,16 @@
       "outlet_id": "es_el_mundo",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "Europe/Madrid",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "es_el_mundo-url-rules/v1"
       },
       "web_origins": [
         "https://www.elmundo.es"
@@ -6449,6 +6484,39 @@
       "access_model": "unknown",
       "channels": [
         {
+          "channel_id": "gt_lahora:ch:rss_003",
+          "kind": "rss",
+          "legacy_observed": {
+            "consecutive_empty_runs": 0,
+            "consecutive_fail_runs": 0,
+            "created_at": "2026-01-26 07:39:57.898654",
+            "discovered_by": "html_head",
+            "error_message": null,
+            "feed_score": 15,
+            "id": 232,
+            "is_active": 0,
+            "last_attempt_at": null,
+            "last_crawled_at": null,
+            "last_discovery_at": "2026-06-13 18:00:43.803879",
+            "last_error_at": null,
+            "last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
+            "last_status": null,
+            "last_success_at": null,
+            "priority": 10,
+            "source_id": 63,
+            "status": "technically_empty",
+            "type": "rss",
+            "updated_at": "2026-06-13 18:00:43.803879",
+            "url": "https://lahora.gt/feed/"
+          },
+          "url_history": [
+            {
+              "url": "https://lahora.gt/feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
           "channel_id": "gt_lahora:ch:sitemap_index_001",
           "kind": "sitemap_index",
           "legacy_observed": {
@@ -6579,39 +6647,6 @@
               "valid_from": "unknown"
             }
           ]
-        },
-        {
-          "channel_id": "gt_lahora:ch:rss_003",
-          "kind": "rss",
-          "legacy_observed": {
-            "consecutive_empty_runs": 0,
-            "consecutive_fail_runs": 0,
-            "created_at": "2026-01-26 07:39:57.898654",
-            "discovered_by": "html_head",
-            "error_message": null,
-            "feed_score": 15,
-            "id": 232,
-            "is_active": 0,
-            "last_attempt_at": null,
-            "last_crawled_at": null,
-            "last_discovery_at": "2026-06-13 18:00:43.803879",
-            "last_error_at": null,
-            "last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
-            "last_status": null,
-            "last_success_at": null,
-            "priority": 10,
-            "source_id": 63,
-            "status": "technically_empty",
-            "type": "rss",
-            "updated_at": "2026-06-13 18:00:43.803879",
-            "url": "https://lahora.gt/feed/"
-          },
-          "url_history": [
-            {
-              "url": "https://lahora.gt/feed/",
-              "valid_from": "unknown"
-            }
-          ]
         }
       ],
       "city": "unknown",
@@ -6654,16 +6689,16 @@
       "outlet_id": "gt_lahora",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Guatemala",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "gt_lahora-url-rules/v1"
       },
       "web_origins": [
         "https://lahora.gt"
@@ -9125,6 +9160,50 @@
       "access_model": "unknown",
       "channels": [
         {
+          "channel_id": "ni_confidencial:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://confidencial.digital/feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "ni_confidencial:ch:sitemap_001",
+          "kind": "sitemap",
+          "legacy_observed": {
+            "consecutive_empty_runs": 0,
+            "consecutive_fail_runs": 0,
+            "created_at": "2026-06-12 12:14:08.690344",
+            "discovered_by": "heuristic",
+            "error_message": null,
+            "feed_score": 39,
+            "id": 317,
+            "is_active": 0,
+            "last_attempt_at": null,
+            "last_crawled_at": null,
+            "last_discovery_at": "2026-06-13 18:04:29.774934",
+            "last_error_at": null,
+            "last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
+            "last_status": null,
+            "last_success_at": null,
+            "priority": 10,
+            "source_id": 38,
+            "status": "technically_empty",
+            "type": "sitemap",
+            "updated_at": "2026-06-13 18:04:29.774934",
+            "url": "https://www.confidencial.digital/news-sitemap.xml"
+          },
+          "url_history": [
+            {
+              "url": "https://www.confidencial.digital/news-sitemap.xml",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
           "channel_id": "ni_confidencial:ch:unknown_001",
           "kind": "unknown",
           "legacy_observed": {
@@ -9186,39 +9265,6 @@
           "url_history": [
             {
               "url": "https://www.confidencial.digital/sitemap_index.xml",
-              "valid_from": "unknown"
-            }
-          ]
-        },
-        {
-          "channel_id": "ni_confidencial:ch:sitemap_001",
-          "kind": "sitemap",
-          "legacy_observed": {
-            "consecutive_empty_runs": 0,
-            "consecutive_fail_runs": 0,
-            "created_at": "2026-06-12 12:14:08.690344",
-            "discovered_by": "heuristic",
-            "error_message": null,
-            "feed_score": 39,
-            "id": 317,
-            "is_active": 0,
-            "last_attempt_at": null,
-            "last_crawled_at": null,
-            "last_discovery_at": "2026-06-13 18:04:29.774934",
-            "last_error_at": null,
-            "last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
-            "last_status": null,
-            "last_success_at": null,
-            "priority": 10,
-            "source_id": 38,
-            "status": "technically_empty",
-            "type": "sitemap",
-            "updated_at": "2026-06-13 18:04:29.774934",
-            "url": "https://www.confidencial.digital/news-sitemap.xml"
-          },
-          "url_history": [
-            {
-              "url": "https://www.confidencial.digital/news-sitemap.xml",
               "valid_from": "unknown"
             }
           ]
@@ -9330,19 +9376,20 @@
       "outlet_id": "ni_confidencial",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Managua",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "ni_confidencial-url-rules/v1"
       },
       "web_origins": [
-        "https://www.confidencial.digital"
+        "https://www.confidencial.digital",
+        "https://confidencial.digital"
       ]
     },
     {
@@ -10538,39 +10585,6 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "pe_diariocorreo:ch:sitemap_index_001",
-          "kind": "sitemap_index",
-          "legacy_observed": {
-            "consecutive_empty_runs": 0,
-            "consecutive_fail_runs": 0,
-            "created_at": "2025-12-18 22:03:18.877325",
-            "discovered_by": "robots",
-            "error_message": null,
-            "feed_score": 39,
-            "id": 195,
-            "is_active": 0,
-            "last_attempt_at": null,
-            "last_crawled_at": "2026-01-11 21:23:48.462187",
-            "last_discovery_at": "2026-06-13 18:09:00.333139",
-            "last_error_at": null,
-            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
-            "last_status": "ok",
-            "last_success_at": null,
-            "priority": 5,
-            "source_id": 61,
-            "status": "inactive",
-            "type": "sitemap_index",
-            "updated_at": "2026-06-13 18:09:00.333139",
-            "url": "https://diariocorreo.pe/sitemap/?outputType=xml"
-          },
-          "url_history": [
-            {
-              "url": "https://diariocorreo.pe/sitemap/?outputType=xml",
-              "valid_from": "unknown"
-            }
-          ]
-        },
-        {
           "channel_id": "pe_diariocorreo:ch:rss_001",
           "kind": "rss",
           "legacy_observed": {
@@ -10599,6 +10613,72 @@
           "url_history": [
             {
               "url": "https://diariocorreo.pe/arcio/google-news-feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "pe_diariocorreo:ch:sitemap_003",
+          "kind": "sitemap",
+          "legacy_observed": {
+            "consecutive_empty_runs": 0,
+            "consecutive_fail_runs": 0,
+            "created_at": "2025-12-18 22:03:18.877325",
+            "discovered_by": "robots",
+            "error_message": null,
+            "feed_score": 85,
+            "id": 207,
+            "is_active": 1,
+            "last_attempt_at": "2026-06-15 12:12:47.779560",
+            "last_crawled_at": "2026-06-15 12:12:47.779560",
+            "last_discovery_at": "2026-06-13 18:09:21.720744",
+            "last_error_at": null,
+            "last_fail_reason": null,
+            "last_status": "ok",
+            "last_success_at": "2026-06-15 12:15:37.784000",
+            "priority": 5,
+            "source_id": 61,
+            "status": "active",
+            "type": "sitemap",
+            "updated_at": "2026-06-15 12:15:37.786525",
+            "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml"
+          },
+          "url_history": [
+            {
+              "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "pe_diariocorreo:ch:sitemap_index_001",
+          "kind": "sitemap_index",
+          "legacy_observed": {
+            "consecutive_empty_runs": 0,
+            "consecutive_fail_runs": 0,
+            "created_at": "2025-12-18 22:03:18.877325",
+            "discovered_by": "robots",
+            "error_message": null,
+            "feed_score": 39,
+            "id": 195,
+            "is_active": 0,
+            "last_attempt_at": null,
+            "last_crawled_at": "2026-01-11 21:23:48.462187",
+            "last_discovery_at": "2026-06-13 18:09:00.333139",
+            "last_error_at": null,
+            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+            "last_status": "ok",
+            "last_success_at": null,
+            "priority": 5,
+            "source_id": 61,
+            "status": "inactive",
+            "type": "sitemap_index",
+            "updated_at": "2026-06-13 18:09:00.333139",
+            "url": "https://diariocorreo.pe/sitemap/?outputType=xml"
+          },
+          "url_history": [
+            {
+              "url": "https://diariocorreo.pe/sitemap/?outputType=xml",
               "valid_from": "unknown"
             }
           ]
@@ -10934,39 +11014,6 @@
           ]
         },
         {
-          "channel_id": "pe_diariocorreo:ch:sitemap_003",
-          "kind": "sitemap",
-          "legacy_observed": {
-            "consecutive_empty_runs": 0,
-            "consecutive_fail_runs": 0,
-            "created_at": "2025-12-18 22:03:18.877325",
-            "discovered_by": "robots",
-            "error_message": null,
-            "feed_score": 85,
-            "id": 207,
-            "is_active": 1,
-            "last_attempt_at": "2026-06-15 12:12:47.779560",
-            "last_crawled_at": "2026-06-15 12:12:47.779560",
-            "last_discovery_at": "2026-06-13 18:09:21.720744",
-            "last_error_at": null,
-            "last_fail_reason": null,
-            "last_status": "ok",
-            "last_success_at": "2026-06-15 12:15:37.784000",
-            "priority": 5,
-            "source_id": 61,
-            "status": "active",
-            "type": "sitemap",
-            "updated_at": "2026-06-15 12:15:37.786525",
-            "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml"
-          },
-          "url_history": [
-            {
-              "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml",
-              "valid_from": "unknown"
-            }
-          ]
-        },
-        {
           "channel_id": "pe_diariocorreo:ch:sitemap_004",
           "kind": "sitemap",
           "legacy_observed": {
@@ -11238,16 +11285,16 @@
       "outlet_id": "pe_diariocorreo",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Lima",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "pe_diariocorreo-url-rules/v1"
       },
       "web_origins": [
         "https://diariocorreo.pe"
@@ -12189,7 +12236,19 @@
     },
     {
       "access_model": "unknown",
-      "channels": [],
+      "channels": [
+        {
+          "channel_id": "pe_la_republica:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://larepublica.pe/rss/economia",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
       "city": "unknown",
       "country_id": "pe",
       "display_names": [
@@ -12230,16 +12289,16 @@
       "outlet_id": "pe_la_republica",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/Lima",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "pe_la_republica-url-rules/v1"
       },
       "web_origins": [
         "https://larepublica.pe"
@@ -13907,34 +13966,34 @@
       "access_model": "unknown",
       "channels": [
         {
-          "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_001",
-          "kind": "sitemap_index",
+          "channel_id": "sv_el_diario_de_hoy:ch:rss_001",
+          "kind": "rss",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
             "consecutive_fail_runs": 0,
             "created_at": "2025-12-18 21:57:17.354927",
             "discovered_by": "heuristic",
             "error_message": null,
-            "feed_score": 39,
-            "id": 164,
-            "is_active": 0,
-            "last_attempt_at": null,
-            "last_crawled_at": "2026-01-11 21:36:27.024093",
-            "last_discovery_at": "2026-06-13 18:17:10.455395",
+            "feed_score": 120,
+            "id": 166,
+            "is_active": 1,
+            "last_attempt_at": "2026-06-15 12:15:47.140067",
+            "last_crawled_at": "2026-06-15 12:15:47.140067",
+            "last_discovery_at": "2026-06-13 18:17:14.689547",
             "last_error_at": null,
-            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+            "last_fail_reason": null,
             "last_status": "ok",
-            "last_success_at": null,
+            "last_success_at": "2026-06-15 12:16:40.947252",
             "priority": 10,
             "source_id": 26,
-            "status": "inactive",
-            "type": "sitemap_index",
-            "updated_at": "2026-06-13 18:17:10.455395",
-            "url": "https://www.elsalvador.com/sitemap.xml"
+            "status": "active",
+            "type": "rss",
+            "updated_at": "2026-06-15 12:16:40.948252",
+            "url": "https://www.elsalvador.com/rss.xml"
           },
           "url_history": [
             {
-              "url": "https://www.elsalvador.com/sitemap.xml",
+              "url": "https://www.elsalvador.com/rss.xml",
               "valid_from": "unknown"
             }
           ]
@@ -13973,34 +14032,34 @@
           ]
         },
         {
-          "channel_id": "sv_el_diario_de_hoy:ch:rss_001",
-          "kind": "rss",
+          "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_001",
+          "kind": "sitemap_index",
           "legacy_observed": {
             "consecutive_empty_runs": 0,
             "consecutive_fail_runs": 0,
             "created_at": "2025-12-18 21:57:17.354927",
             "discovered_by": "heuristic",
             "error_message": null,
-            "feed_score": 120,
-            "id": 166,
-            "is_active": 1,
-            "last_attempt_at": "2026-06-15 12:15:47.140067",
-            "last_crawled_at": "2026-06-15 12:15:47.140067",
-            "last_discovery_at": "2026-06-13 18:17:14.689547",
+            "feed_score": 39,
+            "id": 164,
+            "is_active": 0,
+            "last_attempt_at": null,
+            "last_crawled_at": "2026-01-11 21:36:27.024093",
+            "last_discovery_at": "2026-06-13 18:17:10.455395",
             "last_error_at": null,
-            "last_fail_reason": null,
+            "last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
             "last_status": "ok",
-            "last_success_at": "2026-06-15 12:16:40.947252",
+            "last_success_at": null,
             "priority": 10,
             "source_id": 26,
-            "status": "active",
-            "type": "rss",
-            "updated_at": "2026-06-15 12:16:40.948252",
-            "url": "https://www.elsalvador.com/rss.xml"
+            "status": "inactive",
+            "type": "sitemap_index",
+            "updated_at": "2026-06-13 18:17:10.455395",
+            "url": "https://www.elsalvador.com/sitemap.xml"
           },
           "url_history": [
             {
-              "url": "https://www.elsalvador.com/rss.xml",
+              "url": "https://www.elsalvador.com/sitemap.xml",
               "valid_from": "unknown"
             }
           ]
@@ -14112,16 +14171,16 @@
       "outlet_id": "sv_el_diario_de_hoy",
       "outlet_type": "unknown",
       "region": "unknown",
-      "registration_status": "proposed",
+      "registration_status": "registered",
       "review_notes": [],
-      "same_outlet_basis": "unknown",
+      "same_outlet_basis": "not_applicable",
       "scope": "unknown",
-      "timezone": "unknown",
+      "timezone": "America/El_Salvador",
       "url_rules": {
         "significant_query_params": [],
         "strip_path_prefixes": [],
         "strip_path_suffixes": [],
-        "version": "proposed"
+        "version": "sv_el_diario_de_hoy-url-rules/v1"
       },
       "web_origins": [
         "https://www.elsalvador.com"

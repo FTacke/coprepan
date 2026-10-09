@@ -3441,10 +3441,27 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 0,
-      "channel_kinds": {},
-      "channel_legacy_statuses": {},
-      "channels": [],
+      "channel_count": 1,
+      "channel_kinds": {
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 1
+      },
+      "channels": [
+        {
+          "channel_id": "ec_el_universo:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ec_el_universo:ch:rss_arc_outboundfeeds_rss_outputtype_xml",
+          "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml"
+        }
+      ],
       "country_id": "ec",
       "display_name": "El Universo",
       "hosts_not_of_the_outlet": [],
@@ -3461,7 +3478,7 @@
       "outlet_id": "ec_el_universo",
       "publisher": "unknown",
       "publisher_evidence": [],
-      "recommended_action": "FIND_CHANNELS_OR_LEAVE_UNREGISTERED",
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
       "recommended_outlet_id": "ec_el_universo",
       "unknown_fields": [
         "outlet_type",
@@ -3470,13 +3487,11 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
-        "no_channel"
+        "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
         "https://www.eluniverso.com"
@@ -3484,27 +3499,29 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 2,
+      "channel_count": 3,
       "channel_kinds": {
+        "rss": 1,
         "sitemap": 1,
         "sitemap_index": 1
       },
       "channel_legacy_statuses": {
+        "None": 1,
         "inactive": 1,
         "technically_empty": 1
       },
       "channels": [
         {
-          "channel_id": "ec_primicias:ch:sitemap_index_001",
-          "kind": "sitemap_index",
-          "legacy_discovered_by": "robots",
-          "legacy_feed_id": 76,
-          "legacy_is_active": 0,
-          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
-          "legacy_status": "inactive",
+          "channel_id": "ec_primicias:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
           "notes": [],
-          "recommended_channel_id": "ec_primicias:ch:sitemap_index_root",
-          "url": "https://www.primicias.ec/sitemap-index.xml"
+          "recommended_channel_id": "ec_primicias:ch:rss_main",
+          "url": "https://www.primicias.ec/feed/"
         },
         {
           "channel_id": "ec_primicias:ch:sitemap_001",
@@ -3517,6 +3534,18 @@
           "notes": [],
           "recommended_channel_id": "ec_primicias:ch:sitemap_google_news",
           "url": "https://www.primicias.ec/sitemap-google-news.xml"
+        },
+        {
+          "channel_id": "ec_primicias:ch:sitemap_index_001",
+          "kind": "sitemap_index",
+          "legacy_discovered_by": "robots",
+          "legacy_feed_id": 76,
+          "legacy_is_active": 0,
+          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+          "legacy_status": "inactive",
+          "notes": [],
+          "recommended_channel_id": "ec_primicias:ch:sitemap_index_root",
+          "url": "https://www.primicias.ec/sitemap-index.xml"
         }
       ],
       "country_id": "ec",
@@ -3544,11 +3573,9 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "no_channel_was_active_in_legacy"
       ],
@@ -3558,13 +3585,34 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 0,
-      "channel_kinds": {},
-      "channel_legacy_statuses": {},
-      "channels": [],
+      "channel_count": 1,
+      "channel_kinds": {
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 1
+      },
+      "channels": [
+        {
+          "channel_id": "es_el_mundo:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [
+            "host_is_not_an_origin_of_the_outlet"
+          ],
+          "recommended_channel_id": "es_el_mundo:ch:rss_e00_elmundo_uecdn_es_elmundo_rss_portada",
+          "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml"
+        }
+      ],
       "country_id": "es",
       "display_name": "El Mundo",
-      "hosts_not_of_the_outlet": [],
+      "hosts_not_of_the_outlet": [
+        "e00-elmundo.uecdn.es"
+      ],
       "legacy": [
         {
           "base_url": "https://www.elmundo.es",
@@ -3578,7 +3626,7 @@
       "outlet_id": "es_el_mundo",
       "publisher": "unknown",
       "publisher_evidence": [],
-      "recommended_action": "FIND_CHANNELS_OR_LEAVE_UNREGISTERED",
+      "recommended_action": "CHECK_CHANNEL_ATTRIBUTION",
       "recommended_outlet_id": "es_el_mundo",
       "unknown_fields": [
         "outlet_type",
@@ -3587,13 +3635,12 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
-        "no_channel"
+        "no_channel_was_active_in_legacy",
+        "channels_on_hosts_that_are_not_the_outlet"
       ],
       "web_origins": [
         "https://www.elmundo.es"
@@ -3915,6 +3962,18 @@
       },
       "channels": [
         {
+          "channel_id": "gt_lahora:ch:rss_003",
+          "kind": "rss",
+          "legacy_discovered_by": "html_head",
+          "legacy_feed_id": 232,
+          "legacy_is_active": 0,
+          "legacy_last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
+          "legacy_status": "technically_empty",
+          "notes": [],
+          "recommended_channel_id": "gt_la_hora:ch:rss_main",
+          "url": "https://lahora.gt/feed/"
+        },
+        {
           "channel_id": "gt_lahora:ch:sitemap_index_001",
           "kind": "sitemap_index",
           "legacy_discovered_by": "robots",
@@ -3947,7 +4006,7 @@
           "legacy_last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
           "legacy_status": "technically_empty",
           "notes": [],
-          "recommended_channel_id": "gt_la_hora:ch:rss_main",
+          "recommended_channel_id": "gt_la_hora:ch:rss_main_2",
           "url": "https://lahora.gt/rss"
         },
         {
@@ -3959,20 +4018,8 @@
           "legacy_last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
           "legacy_status": "technically_empty",
           "notes": [],
-          "recommended_channel_id": "gt_la_hora:ch:rss_main_2",
-          "url": "https://lahora.gt/feed"
-        },
-        {
-          "channel_id": "gt_lahora:ch:rss_003",
-          "kind": "rss",
-          "legacy_discovered_by": "html_head",
-          "legacy_feed_id": 232,
-          "legacy_is_active": 0,
-          "legacy_last_fail_reason": "HTTP 200 OK; Valid XML Content-Type",
-          "legacy_status": "technically_empty",
-          "notes": [],
           "recommended_channel_id": "gt_la_hora:ch:rss_main_3",
-          "url": "https://lahora.gt/feed/"
+          "url": "https://lahora.gt/feed"
         }
       ],
       "country_id": "gt",
@@ -4000,11 +4047,9 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "id_spelling_differs_from_the_convention",
         "no_channel_was_active_in_legacy"
@@ -5217,21 +5262,44 @@
       ]
     },
     {
-      "additional_origin_candidates": [
-        "https://confidencial.digital"
-      ],
-      "channel_count": 5,
+      "additional_origin_candidates": [],
+      "channel_count": 6,
       "channel_kinds": {
-        "rss": 2,
+        "rss": 3,
         "sitemap": 1,
         "sitemap_index": 1,
         "unknown": 1
       },
       "channel_legacy_statuses": {
+        "None": 1,
         "inactive": 2,
         "technically_empty": 3
       },
       "channels": [
+        {
+          "channel_id": "ni_confidencial:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ni_confidencial:ch:rss_main",
+          "url": "https://confidencial.digital/feed/"
+        },
+        {
+          "channel_id": "ni_confidencial:ch:sitemap_001",
+          "kind": "sitemap",
+          "legacy_discovered_by": "heuristic",
+          "legacy_feed_id": 317,
+          "legacy_is_active": 0,
+          "legacy_last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
+          "legacy_status": "technically_empty",
+          "notes": [],
+          "recommended_channel_id": "ni_confidencial:ch:sitemap_news_sitemap",
+          "url": "https://www.confidencial.digital/news-sitemap.xml"
+        },
         {
           "channel_id": "ni_confidencial:ch:unknown_001",
           "kind": "unknown",
@@ -5241,7 +5309,6 @@
           "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
           "legacy_status": "inactive",
           "notes": [
-            "host_is_a_variant_of_the_outlet_origin",
             "legacy_type_unknown"
           ],
           "recommended_channel_id": "ni_confidencial:ch:unknown_root",
@@ -5260,18 +5327,6 @@
           "url": "https://www.confidencial.digital/sitemap_index.xml"
         },
         {
-          "channel_id": "ni_confidencial:ch:sitemap_001",
-          "kind": "sitemap",
-          "legacy_discovered_by": "heuristic",
-          "legacy_feed_id": 317,
-          "legacy_is_active": 0,
-          "legacy_last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
-          "legacy_status": "technically_empty",
-          "notes": [],
-          "recommended_channel_id": "ni_confidencial:ch:sitemap_news_sitemap",
-          "url": "https://www.confidencial.digital/news-sitemap.xml"
-        },
-        {
           "channel_id": "ni_confidencial:ch:rss_001",
           "kind": "rss",
           "legacy_discovered_by": "heuristic",
@@ -5280,7 +5335,7 @@
           "legacy_last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
           "legacy_status": "technically_empty",
           "notes": [],
-          "recommended_channel_id": "ni_confidencial:ch:rss_main",
+          "recommended_channel_id": "ni_confidencial:ch:rss_main_2",
           "url": "https://www.confidencial.digital/rss"
         },
         {
@@ -5292,7 +5347,7 @@
           "legacy_last_fail_reason": "INACTIVE (no usable output, score=39); HTTP 200 OK",
           "legacy_status": "technically_empty",
           "notes": [],
-          "recommended_channel_id": "ni_confidencial:ch:rss_main_2",
+          "recommended_channel_id": "ni_confidencial:ch:rss_main_3",
           "url": "https://www.confidencial.digital/feed"
         }
       ],
@@ -5321,17 +5376,16 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "no_channel_was_active_in_legacy",
         "channels_of_unknown_type"
       ],
       "web_origins": [
-        "https://www.confidencial.digital"
+        "https://www.confidencial.digital",
+        "https://confidencial.digital"
       ]
     },
     {
@@ -6032,18 +6086,6 @@
       },
       "channels": [
         {
-          "channel_id": "pe_diariocorreo:ch:sitemap_index_001",
-          "kind": "sitemap_index",
-          "legacy_discovered_by": "robots",
-          "legacy_feed_id": 195,
-          "legacy_is_active": 0,
-          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
-          "legacy_status": "inactive",
-          "notes": [],
-          "recommended_channel_id": "pe_diario_correo:ch:sitemap_index_outputtype_xml",
-          "url": "https://diariocorreo.pe/sitemap/?outputType=xml"
-        },
-        {
           "channel_id": "pe_diariocorreo:ch:rss_001",
           "kind": "rss",
           "legacy_discovered_by": "robots",
@@ -6054,6 +6096,30 @@
           "notes": [],
           "recommended_channel_id": "pe_diario_correo:ch:rss_arcio_google_news_feed",
           "url": "https://diariocorreo.pe/arcio/google-news-feed/"
+        },
+        {
+          "channel_id": "pe_diariocorreo:ch:sitemap_003",
+          "kind": "sitemap",
+          "legacy_discovered_by": "robots",
+          "legacy_feed_id": 207,
+          "legacy_is_active": 1,
+          "legacy_last_fail_reason": null,
+          "legacy_status": "active",
+          "notes": [],
+          "recommended_channel_id": "pe_diario_correo:ch:sitemap_web_edicion_outputtype_xml",
+          "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml"
+        },
+        {
+          "channel_id": "pe_diariocorreo:ch:sitemap_index_001",
+          "kind": "sitemap_index",
+          "legacy_discovered_by": "robots",
+          "legacy_feed_id": 195,
+          "legacy_is_active": 0,
+          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+          "legacy_status": "inactive",
+          "notes": [],
+          "recommended_channel_id": "pe_diario_correo:ch:sitemap_index_outputtype_xml",
+          "url": "https://diariocorreo.pe/sitemap/?outputType=xml"
         },
         {
           "channel_id": "pe_diariocorreo:ch:rss_002",
@@ -6178,18 +6244,6 @@
           "url": "https://diariocorreo.pe/sitemap/news/deportes/?outputType=xml"
         },
         {
-          "channel_id": "pe_diariocorreo:ch:sitemap_003",
-          "kind": "sitemap",
-          "legacy_discovered_by": "robots",
-          "legacy_feed_id": 207,
-          "legacy_is_active": 1,
-          "legacy_last_fail_reason": null,
-          "legacy_status": "active",
-          "notes": [],
-          "recommended_channel_id": "pe_diario_correo:ch:sitemap_web_edicion_outputtype_xml",
-          "url": "https://diariocorreo.pe/sitemap/web/edicion/?outputType=xml"
-        },
-        {
           "channel_id": "pe_diariocorreo:ch:sitemap_004",
           "kind": "sitemap",
           "legacy_discovered_by": "robots",
@@ -6299,11 +6353,9 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "id_spelling_differs_from_the_convention",
         "channels_of_unknown_type"
@@ -6727,10 +6779,27 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 0,
-      "channel_kinds": {},
-      "channel_legacy_statuses": {},
-      "channels": [],
+      "channel_count": 1,
+      "channel_kinds": {
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 1
+      },
+      "channels": [
+        {
+          "channel_id": "pe_la_republica:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "pe_la_republica:ch:rss_economia",
+          "url": "https://larepublica.pe/rss/economia"
+        }
+      ],
       "country_id": "pe",
       "display_name": "La República",
       "hosts_not_of_the_outlet": [],
@@ -6747,7 +6816,7 @@
       "outlet_id": "pe_la_republica",
       "publisher": "unknown",
       "publisher_evidence": [],
-      "recommended_action": "FIND_CHANNELS_OR_LEAVE_UNREGISTERED",
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
       "recommended_outlet_id": "pe_la_republica",
       "unknown_fields": [
         "outlet_type",
@@ -6756,14 +6825,12 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [
         "display_name_shared_across_countries",
-        "no_channel"
+        "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
         "https://larepublica.pe"
@@ -7624,16 +7691,16 @@
       },
       "channels": [
         {
-          "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_001",
-          "kind": "sitemap_index",
+          "channel_id": "sv_el_diario_de_hoy:ch:rss_001",
+          "kind": "rss",
           "legacy_discovered_by": "heuristic",
-          "legacy_feed_id": 164,
-          "legacy_is_active": 0,
-          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
-          "legacy_status": "inactive",
+          "legacy_feed_id": 166,
+          "legacy_is_active": 1,
+          "legacy_last_fail_reason": null,
+          "legacy_status": "active",
           "notes": [],
-          "recommended_channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_main",
-          "url": "https://www.elsalvador.com/sitemap.xml"
+          "recommended_channel_id": "sv_el_diario_de_hoy:ch:rss_main",
+          "url": "https://www.elsalvador.com/rss.xml"
         },
         {
           "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_002",
@@ -7648,16 +7715,16 @@
           "url": "https://www.elsalvador.com/sitemap_index.xml"
         },
         {
-          "channel_id": "sv_el_diario_de_hoy:ch:rss_001",
-          "kind": "rss",
+          "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_001",
+          "kind": "sitemap_index",
           "legacy_discovered_by": "heuristic",
-          "legacy_feed_id": 166,
-          "legacy_is_active": 1,
-          "legacy_last_fail_reason": null,
-          "legacy_status": "active",
+          "legacy_feed_id": 164,
+          "legacy_is_active": 0,
+          "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
+          "legacy_status": "inactive",
           "notes": [],
-          "recommended_channel_id": "sv_el_diario_de_hoy:ch:rss_main",
-          "url": "https://www.elsalvador.com/rss.xml"
+          "recommended_channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_main",
+          "url": "https://www.elsalvador.com/sitemap.xml"
         },
         {
           "channel_id": "sv_el_diario_de_hoy:ch:rss_002",
@@ -7709,11 +7776,9 @@
         "region",
         "scope",
         "access_model",
-        "medium",
-        "timezone",
-        "same_outlet_basis"
+        "medium"
       ],
-      "url_rules_are_placeholder": true,
+      "url_rules_are_placeholder": false,
       "warnings": [],
       "web_origins": [
         "https://www.elsalvador.com"
@@ -8837,7 +8902,7 @@
       ]
     }
   ],
-  "registry_sha256": "39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02",
+  "registry_sha256": "10cb59ef8c73839140ac94fecac1e8e6c91fb79df56d2812e98d7e9f8fa4ec5a",
   "review_cases": [
     {
       "case": "channels_on_the_origin_of_another_outlet",
@@ -8852,22 +8917,22 @@
   "status": "RECOMMENDATION_ONLY — nothing in this package registers an outlet",
   "summary": {
     "by_recommended_action": {
-      "CHECK_CHANNEL_ATTRIBUTION": 5,
-      "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 54,
-      "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 23
+      "CHECK_CHANNEL_ATTRIBUTION": 6,
+      "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 56,
+      "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 20
     },
     "by_warning": {
       "channels_of_unknown_type": 5,
-      "channels_on_hosts_that_are_not_the_outlet": 4,
+      "channels_on_hosts_that_are_not_the_outlet": 5,
       "channels_on_the_origin_of_another_outlet": 1,
       "display_name_shared_across_countries": 19,
       "id_spelling_differs_from_the_convention": 21,
       "legacy_code_is_not_ascii": 6,
-      "no_channel": 23,
-      "no_channel_was_active_in_legacy": 29,
+      "no_channel": 20,
+      "no_channel_was_active_in_legacy": 32,
       "origin_is_plain_http": 1
     },
-    "channels": 352,
+    "channels": 357,
     "ids_changed_by_the_convention": 21,
     "outlets": 82,
     "review_cases": 1

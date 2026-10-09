@@ -2,7 +2,7 @@
 
 **Status: GENERATED — a recommendation for human review. It registers nothing.** Produced by
 `python -m coprepan.registry_review` from `config/outlet_registry.json`
-(SHA-256 `39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02`); a test fails if this page and the registry drift apart.
+(SHA-256 `10cb59ef8c73839140ac94fecac1e8e6c91fb79df56d2812e98d7e9f8fa4ec5a`); a test fails if this page and the registry drift apart.
 What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per outlet and channel:
 [`config/registry_review/outlet_review_package.json`](../../config/registry_review/outlet_review_package.json).
 
@@ -10,12 +10,12 @@ What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per out
 
 | Quantity | Value |
 |---|---|
-| outlets / channels | 82 / 352 |
+| outlets / channels | 82 / 357 |
 | ids that change under the proposed convention | 21 |
 | cases that need a judgement | 1 |
-| action `CHECK_CHANNEL_ATTRIBUTION` | 5 |
-| action `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | 54 |
-| action `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | 23 |
+| action `CHECK_CHANNEL_ATTRIBUTION` | 6 |
+| action `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | 56 |
+| action `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | 20 |
 
 Id convention proposed: `{country_id}_{ASCII slug of the display name, words separated by '_'}`.
 
@@ -24,13 +24,13 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | Warning | Outlets |
 |---|---|
 | `channels_of_unknown_type` | 5 |
-| `channels_on_hosts_that_are_not_the_outlet` | 4 |
+| `channels_on_hosts_that_are_not_the_outlet` | 5 |
 | `channels_on_the_origin_of_another_outlet` | 1 |
 | `display_name_shared_across_countries` | 19 |
 | `id_spelling_differs_from_the_convention` | 21 |
 | `legacy_code_is_not_ascii` | 6 |
-| `no_channel` | 23 |
-| `no_channel_was_active_in_legacy` | 29 |
+| `no_channel` | 20 |
+| `no_channel_was_active_in_legacy` | 32 |
 | `origin_is_plain_http` | 1 |
 
 ## Cases that need a judgement
@@ -158,9 +158,9 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `do_el_caribe` | El Caribe | https://www.elcaribe.com.do | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `do_listin_diario` | Listín Diario | https://listindiario.com | 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `ec_el_comercio` | El Comercio | https://www.elcomercio.com | 2 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
-| `ec_el_universo` | El Universo | https://www.eluniverso.com | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
-| `ec_primicias` | Primicias | https://www.primicias.ec | 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `es_el_mundo` | El Mundo | https://www.elmundo.es | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
+| `ec_el_universo` | El Universo | https://www.eluniverso.com | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `ec_primicias` | Primicias | https://www.primicias.ec | 1 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `es_el_mundo` | El Mundo | https://www.elmundo.es<br>? e00-elmundo.uecdn.es | 1 rss | `CHECK_CHANNEL_ATTRIBUTION` | `no_channel_was_active_in_legacy`<br>`channels_on_hosts_that_are_not_the_outlet` |
 | `es_el_pais` | El País | https://elpais.com<br>? feeds.elpais.com | 1 rss | `CHECK_CHANNEL_ATTRIBUTION` | `channels_on_hosts_that_are_not_the_outlet` |
 | `es_la_vanguardia` | La Vanguardia | https://www.lavanguardia.com | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `gt_elperiodico` | elPeriódico | https://elperiodico.com.gt | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
@@ -178,7 +178,7 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `mx_el_universal` | El Universal | https://www.eluniversal.com.mx | 5 rss, 15 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `mx_la_jornada` | La Jornada | https://www.jornada.com.mx | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `mx_milenio` | Milenio | https://www.milenio.com | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
-| `ni_confidencial` | Confidencial | https://www.confidencial.digital<br>+ https://confidencial.digital | 2 rss, 1 sitemap, 1 sitemap_index, 1 unknown | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy`<br>`channels_of_unknown_type` |
+| `ni_confidencial` | Confidencial | https://www.confidencial.digital<br>https://confidencial.digital | 3 rss, 1 sitemap, 1 sitemap_index, 1 unknown | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy`<br>`channels_of_unknown_type` |
 | `ni_el_19_digital` | El 19 Digital | https://www.el19digital.com | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `ni_la_prensa` | La Prensa | https://www.laprensa.com.ni | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `pa_critica` | CRÍTICA | https://www.critica.com.pa | 1 rss, 2 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `legacy_code_is_not_ascii` |
@@ -192,7 +192,7 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `pe_el_comercio` | El Comercio | https://elcomercio.pe | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `pe_el_peruano` | El Peruano | https://elperuano.pe | 23 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `pe_expreso` | Expreso | https://www.expreso.com.pe | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
-| `pe_la_republica` | La República | https://larepublica.pe | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
+| `pe_la_republica` | La República | https://larepublica.pe | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `pe_peru21` | Perú21 | https://peru21.pe | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `pr_el_nuevo_dia` | El Nuevo Día | https://www.elnuevodia.com | 3 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `pr_metro_puerto_rico` | Metro Puerto Rico | https://www.metro.pr | 4 rss, 1 sitemap, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
