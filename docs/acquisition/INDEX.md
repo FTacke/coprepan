@@ -266,3 +266,23 @@ What §1–§12 say stands, with these changes. Each is tested in `tests/test_ca
 - **Three levels, in this order of preference** (the brief of 2026-10-09): generic parsers (RSS, Atom, sitemap, sitemap index, HTML listing); configurable source rules (origins, channels, candidate rules, disabled channels — registry and policy); a source-specific adapter only where a proven structure defeats both. **No adapter exists**: nothing observed so far needs one. An adapter, when one is needed, is a discovery provider — it turns preserved bytes into channel entries, makes no request of its own and extracts no text.
 - **Replay.** `scripts/replay_canary_findings.py` reads the preserved answers of a workspace again under the current code and writes what the parsers and the classifier make of them (`config/source_discovery/canary_replay_2026-10-09.json`): reproducibility of a repair, no new observation.
 - Run report: [`2026-10-09`](../agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).
+
+## 14. Listings, the candidate budget and incremental reading (CPD-0020, 2026-10-09)
+
+Tested on synthetic documents (`tests/test_source_structures.py`); no real listing has been read.
+
+- **The candidate budget of a pass** goes to the newest dated entries first, then to the undated in document order
+  (`candidate-budget-order/1`); events stay in document order. On the one real listing over budget it changes nothing: that listing is
+  newest-first and lost its old end only (§13's "44 newer" was a measuring error, corrected in CPD-0020 §1).
+- **HTML listings.** Next page: `<link rel="next">`, an anchor with `rel="next"`, or numbered pagination — the one link that is the same
+  listing one page further (`/page/N`, `/pagina/N`, `?page=`, `?pagina=`, `?paged=`, `?pg=`). One page per step, within depth, document and
+  request budgets. The first `<time datetime>` of an `<article>` is the date hint of its links.
+- **What a listing lists waits** (`candidate-filter-generic/2`): a candidate first listed by an `archive` or `section_page` channel is
+  `DEFERRED` until the outlet has a reviewed allow pattern. A listing is therefore read and preserved without a rule, and no navigation link
+  is ever requested on a guess. The rule is written from the preserved pages.
+- **Incremental index reading** (`expansion-order/2`): a child read completely before and stated with the same `lastmod` is not asked again,
+  so later passes reach older children without a higher limit.
+- **Adapters: none.** RSS 1.0, Atom, Arc-style and WordPress-style feeds, a feed on a foreign host and a feed address that is a query string
+  are read by the generic parsers. A publisher's RSS hub page is evidence for feeds, not a channel.
+- Still not built: date extraction from listings without `<time>`; pagination by "load more" scripts (a page that needs JavaScript is not read).
+- Run report: [`2026-10-09`](../agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md).

@@ -167,3 +167,37 @@ each, 96 in all); the file carries the exact `--only` command. The wave needs no
 
 A proposal that has been applied cannot be applied again (it is written for the registry it names by digest); a later set is a new
 proposal.
+
+## 9. One command for the operator (2026-10-09, CPD-0020)
+
+`scripts/canary_operator.py` runs §0–§6 in order for the person who arms. It replaces no step and no check; it types the commands.
+
+```text
+python scripts/canary_operator.py --operator "Felix Tacke" --label second --outlet bo_el_deber --outlet do_diario_libre --outlet hn_proceso_digital --outlet py_la_nacion --outlet ve_efecto_cocuyo
+```
+
+What it does, and where it waits for you:
+
+1. checks: clean tree, `HEAD` = `origin/main`, switch `disabled`;
+2. **asks you to type `ARM`**, turns the switch on, commits (the pinned commit `P`);
+3. runs the full tests on `P` (about six minutes);
+4. builds the baseline, prints its summary and **its digest, and asks you to type the digest** — that is the freeze of CPD-0016 §4;
+5. freezes, commits the baseline to `docs/canary/BASELINE_FROZEN_<date>_<label>.json`, pushes;
+6. preflight (must be `READY`), then the canary (20–40 minutes; the pace is real);
+7. `verify`, `measure`, copies receipt, start state, verification and measurement to `docs/canary/evidence/<run id>/`, commits;
+8. **disarms, commits, pushes** — also when anything after step 2 failed or was interrupted. If it cannot, it says so in capitals and exits 2.
+
+It must be started in a terminal by a person: both confirmations are read from the terminal and refused from a pipe, a file or an argument, so
+an agent's shell cannot give them. After it has run, ask an agent run for the evaluation (it starts from the evidence directory and runs the
+tests on the disarmed tree, which §6 asks for).
+
+The waves, each its own arming, baseline and budget, never two in one:
+
+| Wave | Before the command | `--label` | `--outlet` |
+|---|---|---|---|
+| second canary | nothing | `second` | the five registered outlets (above) |
+| first extended wave | review and apply: the `--only` command in `config/registry_review/extended_canary_review_2026-10-09.json`, `python -m pytest`, commit, push | `wave-b` | the eight outlets of that review |
+| wave C | review and apply `config/registry_review/wave_c_proposal_2026-10-09.json` (nine outlets new to the registry; `--only` for a part), tests, commit, push | `wave-c` | the outlets applied |
+
+In wave C five channels are HTML listings without an allow rule: they are read and preserved, and **nothing they list is requested**. `pr_noticel`
+has no other channel and will show no item; that is the design, not a failure. The allow rules are written afterwards from the preserved pages.

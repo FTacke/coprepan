@@ -12,6 +12,10 @@
 | Run report | [`docs/agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md`](../agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md) |
 | Evidence | `tests/test_canary_findings.py` (32), `tests/test_source_discovery.py` (10); `config/source_discovery/canary_replay_2026-10-09.json` (the preserved answers of 2026-10-08 read again by the repaired code); the run report |
 
+**Corrected and amended by [CPD-0020](CPD-0020_candidate-budget-order-listings-new-outlets-and-operator-workflow.md) (2026-10-09):** §7's reading "the listing is not strictly newest-first" was wrong —
+the 44 entries were newer than candidates a *feed* had made, not than anything that pass kept (0 of 303); §9's last bullet is
+replaced (a listing channel is read without an allow rule, its candidates wait). The rest of this decision stands.
+
 Validation debt: every repair is validated offline — on synthetic fixtures, a loopback server and the
 preserved answers of one evening. None has met a real server. That is what the second canary is for.
 

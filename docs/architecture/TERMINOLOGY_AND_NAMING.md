@@ -531,3 +531,19 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | **registration proposal** (term) | a file that names outlets, attributes, channels and evidence for a registration and registers nothing; applied by the operator | CPD-0019 §9 |
 | channel slugs from research | `<kind>_r<nnn>` (`rss_r001`): a channel that comes from prediscovery, not from the legacy import; its `legacy_observed` is empty | the proposal of 2026-10-09 |
 | schema ids minted | `coprepan-discovery-coverage/v1`, `coprepan-canary-findings-replay/v1`, `coprepan-legacy-discovery-audit/v1`, `coprepan-source-discovery-inventory/v1`, `coprepan-registry-registration-proposal/v1` | the modules and scripts named in CPD-0019 |
+
+## 21. Additions of 2026-10-09 (CPD-0020)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| component versions | `channel-parser/3`, `candidate-filter-generic/2`, `canary-driver/4`, `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1` | CPD-0020 §1–§3 |
+| qualification reason (added) | `generic: listed_by_a_listing_channel_and_no_outlet_allow_rule` (decision `DEFERRED`) | CPD-0020 §2 |
+| **listing channel** (term) | a registry channel of kind `archive` or `section_page`: an HTML page that lists articles beside navigation | CPD-0020 §2 |
+| **analytic stages** (a reading aid; the flags of CPD-0019 §8 under the brief's names) | `RESEARCHED`, `CANDIDATE`, `TECHNICALLY_QUALIFIED`, `REGISTERED`, `ACQUISITION_VERIFIED`, `OPERATIONALLY_STABLE` | CPD-0020 §5 |
+| classification of a research entry | `KNOWN_IDENTICAL`, `KNOWN_ADDITIONAL_EVIDENCE`, `NEW_CHANNEL_FOR_EXISTING_OUTLET`, `OUTLET_ALREADY_PROPOSED`, `NEW_OUTLET_CANDIDATE` | `scripts/consolidate_source_discovery.py` |
+| disposition of a research entry | `WAVE_C`, `LATER_WAVE`, `EVIDENCE_FOR_REVIEWED_WAVE`, `EVIDENCE_ONLY`, `NEEDS_CURRENT_EVIDENCE`, `DIFFERENT_CADENCE`, `HOLD_LEGAL_REVIEW` | the same |
+| review labels of a proposal (recommendations, not states) | `READY_FOR_REGISTRATION_REVIEW`, `NEEDS_VERIFICATION`, `DEFER` | `config/registry_review/extended_canary_review_2026-10-09.json` |
+| **outlet candidate** (term) | an outlet named by research that is not in the registry; it has a *proposed* id only | CPD-0020 §5 |
+| **new outlet** (term, registry) | an outlet that was never in the legacy system: registered only by an applied proposal; no legacy alias, no legacy row | CPD-0020 §6 |
+| coverage field (added) | `turned_away_newer_than_oldest_newly_kept` (replaces, as the measure of an ordering loss, `…_oldest_kept`) | CPD-0020 §1 |
+| schema ids minted | `coprepan-discovery-coverage/v2`, `coprepan-candidate-budget-replay/v1`, `coprepan-source-qualification-overview/v1`, `coprepan-registry-registration-review/v1`; received: `coprepan-prediscovery-external-research/v1` (the operator's supplement) | the modules, scripts and files named in CPD-0020 |

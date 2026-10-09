@@ -423,3 +423,37 @@ proposal and a canary of its own; an outlet becomes `OPERATIONALLY_STABLE` only 
 stays behind O-1.
 
 Run report: [`2026-10-09`](../agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).
+
+## 20. Consolidated qualification overview, the research supplement, wave C (2026-10-09, CPD-0020)
+
+**One overview over every finding:** `config/source_discovery/source_qualification_overview_2026-10-09.2.json`
+([coverage report](SOURCE_COVERAGE_REPORT.md)) — per registry outlet and per outlet candidate outside the registry the analytic stages
+(`RESEARCHED` → `CANDIDATE` → `TECHNICALLY_QUALIFIED` → `REGISTERED` → `ACQUISITION_VERIFIED` → `OPERATIONALLY_STABLE`), waves, review
+recommendations and coverage per country. It is a reading aid over the evidence files, **not a registry**.
+
+**The operator's research supplement** (`config/source_discovery/coprepan_prediscovery_ergaenzung_2026-10-09.json`,
+[page](coprepan_prediscovery_ergaenzung_2026-10-09.md); kept as delivered; `RESEARCH_ONLY`): 19 entries, classified against the registry,
+the 301 channel hypotheses and the 60 proposals — 1 identical registry channel (`ec_el_comercio`), 4 additional evidence
+(`ec_el_universo`, `pr_el_nuevo_dia`, `py_abc_color` as a variant, `co_el_tiempo`), 1 new channel for an existing outlet
+(`uy_el_observador`), 10 outlets already among the 60 proposals, 3 outlets no earlier file names (Diario de Cuba, El Tribuno, Expansión).
+Outlet candidates outside the registry: 63.
+
+**Not released by any of this:** `co_el_tiempo` — the publisher's RSS page restricts use (personal, non-commercial; AI): an operator decision
+on licence and TDM comes before any registration. `mx_el_siglo_de_torreon` and `mx_expansion` have no current address. `sv_el_faro` publishes
+in monthly editions.
+
+**Wave C** (`config/registry_review/wave_c_proposal_2026-10-09.json`, a proposal): nine outlets that were never in the legacy system —
+`ar_el_tribuno`, `bo_opinion`, `cu_14ymedio`, `cu_cubanet`, `hn_criterio`, `ni_articulo66`, `ni_nicaragua_investiga`, `pr_noticel`,
+`uy_montevideo_portal` — seven countries, chosen for what the earlier waves lack: Nicaragua and Cuba, regional dailies, publisher-documented
+RSS catalogues, and five HTML listings (one outlet has nothing else). Such an outlet enters the registry only by an applied proposal
+(CPD-0020 §6). `country_id` is the country reported on; several of these newsrooms work from abroad, which the proposal states per outlet.
+
+**Identity cases** (facts in the overview; none decided): `pr_primera_hora` has only channels on `elnuevodia.com`; `cl_el_mercurio`'s origin
+is Emol; `ni_confidencial` is read on the apex host from exile; `bo_la_razon` and `ni_la_prensa` appear to have moved; `bo_pagina_siete` and
+`gt_elperiodico` are closed. No historical article is relabelled by any of them.
+
+**Coverage is not representativeness.** The overview counts outlets per country; owner groups, outlet types, regions and time are attributes
+the registry mostly holds as `unknown`. The second canary, the recommended first wave and wave C together name 22 outlets in 15 countries
+(measured from the files); Chile, Colombia, Costa Rica, Mexico and Panama are in none of them. Naming is not acquiring.
+
+Run report: [`2026-10-09`](../agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md).

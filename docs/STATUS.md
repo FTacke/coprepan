@@ -20,6 +20,12 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
+**Later on 2026-10-09** (CPD-0020): the operator's external research (19 entries) was consolidated with every earlier file into one
+qualification overview; discovery now reads paginated and dated HTML listings and gives a pass's candidate budget to the newest entries;
+a third wave of nine outlets that were never in the legacy system exists as a proposal; the canary procedure is one operator command.
+All of it offline, on synthetic documents and one preserved listing. **Still one outlet with verified acquisition; still no request since
+2026-10-08; no canary has run.**
+
 **External acquisition is impossible again as committed**, by one tested refusal: the acquisition
 policy — decided for the first canary on 2026-10-08 (CPD-0013, CPD-0017), like the schedule policy and the
 registration of five outlets — has `external_acquisition: disabled`. It was `enabled` between the
@@ -135,7 +141,7 @@ defects (§5a).
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0019 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0020 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -198,7 +204,7 @@ defects (§5a).
 None. No model, provider, crawler, extractor or annotator is active. The NLP pins in
 `pyproject.toml` `[tool.coprepan.nlp]` are marked `PLANNED`: they are not installed and not used.
 The package has no runtime dependency. `baseline_html/0.1.0`, `pack-writer/1`, `http-fetcher/1`,
-`channel-parser/2`, `robots-parser/3`, `access-control/2`, `canary-driver/3`, `expansion-order/1`, `fetch-planner/1`, `candidate-filter-generic/1`,
+`channel-parser/3`, `robots-parser/3`, `access-control/2`, `canary-driver/4`, `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1`, `fetch-planner/1`, `candidate-filter-generic/2`,
 `admission-technical/1`, `channel-health/1`, `extraction-eval/1` and `legacy-freeze/1` are component versions recorded in artefacts; none is an
 adopted production component. `warcio==1.7.5` is a test-only dependency (the independent WARC
 reader); no runtime code imports it.
@@ -269,6 +275,26 @@ first canary read again by the repaired code (`config/source_discovery/canary_re
 |---|---|---|
 | second (the five registered outlets) | **prepared**; preflight `NOT_READY` only for the switch and a new frozen baseline | the operator's arming, [runbook](canary/RUNBOOK.md) §8 |
 | extended (twelve outlets, ten countries) | **proposal** — nothing registered | O-11: the operator's review and `scripts/apply_registration_proposal.py --write`; then the arming |
+
+### 5c. After the source-expansion run of 2026-10-09 (CPD-0020)
+
+Offline evidence only (`tests/test_source_structures.py`, `tests/test_source_expansion.py`; one preserved listing replayed). Report:
+[`2026-10-09`](agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md).
+
+- **F7 corrected.** The first canary's budget lost no newer entry: 0 of the 303 entries turned away are newer than anything that pass kept
+  (the "44" of §5b counted candidates a feed had made). The budget now goes to the newest dated entries all the same; the limit is unchanged.
+- **Listings.** `rel=next` on anchors, numbered pagination, dates from `<time>`; what a listing lists waits for a reviewed allow rule, so a
+  listing can be read and preserved before any rule exists. No real listing has been read.
+- **Three waves, none run:**
+
+| Wave | Outlets | State | Gate |
+|---|---|---|---|
+| second canary | the five registered | prepared | the operator: `python scripts/canary_operator.py --operator "…" --label second --outlet …` ([runbook](canary/RUNBOOK.md) §9) |
+| first extended wave | 8 of the 12 proposed (review of 2026-10-09) | proposal, reviewed, nothing registered | O-11 (`apply_registration_proposal.py --only … --write`), then the same command |
+| wave C | 9 outlets that were never in the legacy system, 7 countries | proposal, nothing registered | O-11, then the same command |
+
+- **Overview** `config/source_discovery/source_qualification_overview_2026-10-09.2.json`: 82 registry outlets (79 `CANDIDATE`, 2
+  `TECHNICALLY_QUALIFIED`, 5 `REGISTERED`, 1 `ACQUISITION_VERIFIED`, 0 stable) and 63 outlet candidates outside the registry.
 
 Not a production gate, but open and recorded here because a stage depends on it: **O-6
 (cross-corpus naming and semantics)** — `TECHNICAL_PROPOSAL_READY` · `JOINT_DECISION_OPEN`.
@@ -552,3 +578,11 @@ run report that carries the evidence.
   extended canary was reviewed: 8 of 12 outlets `READY_FOR_REGISTRATION_REVIEW` (recommended first wave of six countries), 3
   `NEEDS_VERIFICATION`, 1 `DEFER` (`config/registry_review/extended_canary_review_2026-10-09.json`; a recommendation, nothing
   registered). No stage state changed. Run report: [`docs/agent-runs/2026-10-09_second-real-canary-and-extended-readiness.md`](agent-runs/2026-10-09_second-real-canary-and-extended-readiness.md).
+
+- 2026-10-09 (third run of the day) — integrated source expansion (consolidation + implementation; reproducibility and robustness only;
+  **no request to any publisher, no canary**: the arming is the operator's). The operator's research supplement of 19 entries classified against
+  the registry, the 301 channel hypotheses and the 60 proposals (1 identical, 4 additional evidence, 1 new channel, 10 already proposed, 3 new
+  outlets). CPD-0020: candidate budget newest-first (and the F7 reading of CPD-0019 corrected), paginated and dated HTML listings whose
+  candidates wait for a rule, incremental index reading, outlets new to the registry, the operator's one-command workflow. A third wave of nine
+  new outlets proposed. `channel-parser/3`, `candidate-filter-generic/2`, `canary-driver/4`. No stage state changed; no gate closed.
+  Run report: [`docs/agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md`](agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md).
