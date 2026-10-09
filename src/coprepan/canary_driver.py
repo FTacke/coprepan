@@ -812,7 +812,7 @@ def _authorization(path: Path, wave: str, budget: CanaryBudget, outlet_ids: Sequ
     try:
         return delegation.block_for(path, wave, repository=CHECKOUT, outlets=outlet_ids, budget=budget.as_record(),
                                     total_requests_ceiling=budget.total_requests_ceiling, policy_version=acquisition_policy["policy_version"],
-                                    today=datetime.now(timezone.utc).date(), except_manifest=except_manifest)
+                                    today=datetime.now().astimezone().date(), except_manifest=except_manifest)   # the local day, as the operator tool and the baseline file name read it
     except delegation.AuthorizationError as refusal:
         raise CanaryStopped(f"the operator authorisation does not cover this canary: {refusal}") from refusal
 

@@ -179,6 +179,26 @@ def test_the_driver_stops_when_the_record_does_not_cover_the_canary(tmp_path, mo
     assert canary_driver._authorization(home / "r.json", "wave-t", FIVE, OUTLETS, policy) != before
 
 
+def test_the_driver_reads_a_records_validity_on_the_local_day_like_the_tool(tmp_path, monkeypatch):
+    """2026-10-10, 00:16 local and 22:16 UTC of the day before: the tool armed under a record issued on the 10th and the
+    driver, reading the day in UTC, refused it as not yet valid. One clock: the local day, as the baseline file is named."""
+    import datetime as real
+
+    home = tmp_path / delegation.RECORDS
+    home.mkdir(parents=True)
+    (home / "r.json").write_text(json.dumps(a_record(issued_on="2026-10-10", valid_until="2026-10-11")), encoding="utf-8")
+    monkeypatch.setattr(canary_driver, "CHECKOUT", tmp_path)
+
+    class JustAfterMidnight:
+        @staticmethod
+        def now(tz=None):
+            utc = real.datetime(2026, 10, 9, 22, 16, tzinfo=real.timezone.utc)
+            return utc if tz is not None else utc.astimezone(real.timezone(real.timedelta(hours=2))).replace(tzinfo=real.timezone(real.timedelta(hours=2)))
+
+    monkeypatch.setattr(canary_driver, "datetime", JustAfterMidnight)
+    assert canary_driver._authorization(home / "r.json", "wave-t", FIVE, OUTLETS, {"policy_version": POLICY})["wave"] == "wave-t"
+
+
 # --- a wave's limits cap the budget (CPD-0024) ------------------------------------------------------------------
 
 
