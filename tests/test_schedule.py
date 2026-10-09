@@ -233,7 +233,9 @@ def test_outlet_rules_reject_allow_and_conflict():
 
 
 def test_an_outlet_without_rules_gets_generic_rules_and_the_tracked_file_guesses_none():
-    assert CF.load_rules() == {}                                              # no legacy evidence, no invented rule
+    # No legacy evidence, no invented rule: the only entries are the two written on 2026-10-09 from listing pages that
+    # wave C1 preserved (reviewed in the run report; held against those pages in tests/test_canary_findings.py).
+    assert sorted(CF.load_rules()) == ["hn_criterio", "pr_noticel"]
     assert CF.qualify(cand("/x", outlet="zz_desconocido"), outlet_rules=None)["decision"] == "QUALIFIED"
 
 
