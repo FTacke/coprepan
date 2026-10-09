@@ -1,0 +1,93 @@
+{
+  "schema": "coprepan-operator-authorization/v1",
+  "authorization_id": "DOA-2026-10-10-1",
+  "kind": "DELEGATED_OPERATOR_AUTHORIZATION",
+  "issued_on": "2026-10-10",
+  "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+  "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09/10 in this repository",
+  "source": {
+    "form": "Written brief given by the operator in the agent session, titled 'CO.PRE.PAN 3.0 - Evidence-Based Access Policy Liberalisation & Source Recovery'. The brief is quoted, not paraphrased. This record is written by the commissioned agent from that brief: it is the agent's transcription of the operator's commission, not a document signed by the operator, and it grants nothing the brief does not. The eight outlets are those that the policy of CPD-0027 and the preserved evidence make regularly reachable again: three whose hold was a robots 403 or a misread answer or a challenge on one route beside a working feed, one whose robots address answered a bare 403, and four whose robots address redirected to the other form of their own host (origins amended, CPD-0026).",
+    "authorising_clauses": [
+      "Dieser Auftrag autorisiert ausdrücklich eine eng begrenzte Fresh Validation derjenigen Quellen, die nach der neuen Policy und der vorhandenen Evidenz tatsächlich wieder regulär zugänglich sein können. Nutze den vorhandenen delegierten Operator-Modus.",
+      "Zusätzliche Obergrenzen: höchstens zehn Artikel-Requests pro wiederqualifizierter Zeitung; höchstens acht zusätzliche Discovery-/Robots-Requests pro Zeitung; insgesamt maximal 150 HTTP-Transportrequests für diesen Run; Redirects zählen als Requests; maximal eine parallele Anfrage pro Origin; mindestens zehn Sekunden Abstand je Origin, sofern der Publisher nichts Strengeres verlangt; sofortiger Stop beziehungsweise Backoff bei Rate-Limits, echten Challenges oder sonstigen belastbaren Sperrsignalen.",
+      "Keine Requests an weiterhin ausdrücklich gesperrte Pfade. Eine geänderte Policy benötigt vor realen Requests einen eigenen Commit, eine passende delegierte Autorisierung, vollständige Tests und eine eingefrorene Baseline.",
+      "Anforderungen: keine pauschale Entsperrung aller 18 Origins; keine Verwechslung von Parserfehler und Zugriffssperre; keine automatischen Wiederholungen tatsächlich geschützter Requests; keine Proxy-Rotation; keine CAPTCHA- oder JavaScript-Challenge-Umgehung; keine Identitätsverschleierung; kein Umgehen von Login- oder Paywall-Schranken.",
+      "Keine allgemeine Production Activation und noch keinen 24-Stunden-Intake starten."
+    ]
+  },
+  "valid_until": "2026-10-11",
+  "policy_versions": [
+    "canary/2026-10-10.1"
+  ],
+  "actions_authorized": [
+    "turn external_acquisition on for exactly one canary of the wave and off again",
+    "run the tests on the arming commit, build the canary baseline of that commit and freeze it by its digest under this record",
+    "make the requests the canary driver makes for the wave's eight outlets within the wave's limits: robots files, the registered channel documents and what they name, at most ten item pages per outlet",
+    "preserve, verify, replay, measure, commit and push the evidence"
+  ],
+  "not_authorized": [
+    "any outlet outside the wave; in particular none of the origins that stay held (cu_cubanet, do_el_caribe, mx_el_siglo_de_torreon, mx_milenio, ni_articulo66, pe_expreso, pe_peru21, ve_el_impulso) and none of the outlets whose every known channel is held or challenged (cr_diario_extra, hn_diariotiempo, hn_proceso_digital, ni_el_19_digital, py_adn_digital, uy_el_pais)",
+    "any request to a URL or origin that is held: the sitemap of ve_efecto_cocuyo that answered with a browser check is not asked again",
+    "any way around a challenge, a CAPTCHA, a block page, a login, a paywall, a rate limit or a robots decision; no other client identity, network or address form",
+    "any request beyond the wave's limits; a second canary of the wave; more than 150 transport requests (the wave allows 144)",
+    "a 12- or 24-hour intake, a scheduler, a repeated acquisition, general production activation, a change of the acquisition policy other than the switch",
+    "any change to a frozen baseline, a receipt, an earlier authorisation record or a decision record of the past; any claim of a human confirmation"
+  ],
+  "holds_in_force": [
+    "derived from every preserved answer under the classifier and the scope table in force (CPD-0027): eight origins and seven URLs at the time of writing",
+    "a control met in this wave holds what the table says at once: on an item page the origin, on a channel document that URL, a rate limit the origin",
+    "the research-TDM override of CPD-0017 applies as it is in the policy in force; this record does not widen it"
+  ],
+  "technical_gates": [
+    "clean working tree and HEAD equal to origin/main before arming",
+    "this record tracked, touched by exactly one commit, unmodified and pushed",
+    "every outlet of the wave registered",
+    "the full test suite passes on the arming commit",
+    "the baseline is READY_TO_FREEZE with nothing blocking, pins this record's id and digest and the wave, the policy version, the classifier and the robots-decision semantics, and is frozen once",
+    "the canary's budget is capped by the wave's limits (CPD-0024)",
+    "the policy's pace: at least ten seconds between requests to one origin, a stated crawl delay as the binding minimum, one attempt per request",
+    "preflight READY; the driver's own refusals (drift, pushed HEAD, empty spool, budgets, robots, holds) unchanged",
+    "verification after the run: read-back, fixity, replay without network, receipt re-derived from evidence, budget respected",
+    "disarming read back in the file, in HEAD and on origin/main"
+  ],
+  "stop_conditions": [
+    "any technical gate not met",
+    "the canary is not exactly the wave's outlets, or a limit of its budget exceeds the wave's",
+    "the policy version is not the one this record names, or the record is out of date",
+    "the wave already has a frozen baseline",
+    "a refusal by the agent environment's own permission layer: recorded, not worked around"
+  ],
+  "disarming": "After the canary, whatever its outcome, external_acquisition is set to disabled, committed and pushed, and the state is read back from the file, HEAD and origin/main. A run that cannot show this ends as not disarmed, never as done.",
+  "decisions": [
+    "es_el_pais: its feed host answered 403 for its robots address; under CPD-0027 that is a robots file that is not available. The feed and the article host elpais.com answer for themselves; a paywall or login redirect ends that path",
+    "ve_efecto_cocuyo: the sitemap that answered with a browser check stays held as that URL; the feed is read",
+    "mx_la_jornada: the 410 of its retired Atom feed is no control under access-control/3; that channel is disabled in the policy",
+    "gt_nuestrodiario: a bare 403 of a load balancer for the robots address; its only channel is a listing, so its page is preserved and no article is requested without a rule",
+    "cu_5_de_septiembre, cu_periodico26, hn_radio_progreso, mx_animal_politico: origins amended from the redirect of their own robots address (CPD-0026)",
+    "the wave is not repeated under this record whatever it shows"
+  ],
+  "waves": [
+    {
+      "label": "recovery",
+      "outlets": [
+        "cu_5_de_septiembre",
+        "cu_periodico26",
+        "es_el_pais",
+        "gt_nuestrodiario",
+        "hn_radio_progreso",
+        "mx_animal_politico",
+        "mx_la_jornada",
+        "ve_efecto_cocuyo"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 80,
+        "item_requests_per_outlet": 10,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 144
+      },
+      "canaries": 1,
+      "note": "eight outlets, ten item requests and eight other requests each, as the brief states: at most 144 requests, under the brief's 150"
+    }
+  ]
+}
