@@ -1,0 +1,858 @@
+{
+  "baseline_id": "c82a72700107b84a0ace0e1809fb02c6bad31c4db35053056081ce609d746560",
+  "bytes": {
+    "preserved_objects": 4478463,
+    "received_bodies": 4150592
+  },
+  "channels": {
+    "pr_metro_puerto_rico": [
+      "pr_metro_puerto_rico:ch:rss_001",
+      "pr_metro_puerto_rico:ch:sitemap_001"
+    ],
+    "py_abc_color": [
+      "py_abc_color:ch:rss_001",
+      "py_abc_color:ch:sitemap_002"
+    ],
+    "py_adn_digital": [
+      "py_adn_digital:ch:rss_r001"
+    ],
+    "py_la_nacion": [
+      "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"
+    ],
+    "py_noticias_cde": [
+      "py_noticias_cde:ch:rss_r001"
+    ],
+    "py_ultima_hora": [
+      "py_ultima_hora:ch:sitemap_index_001",
+      "py_ultima_hora:ch:section_page_r001"
+    ],
+    "sv_diario_co_latino": [
+      "sv_diario_co_latino:ch:rss_r001"
+    ],
+    "sv_diario_el_mundo": [
+      "sv_diario_el_mundo:ch:section_page_r001"
+    ],
+    "uy_el_observador": [
+      "uy_el_observador:ch:sitemap_001",
+      "uy_el_observador:ch:sitemap_index_001"
+    ],
+    "uy_el_pais": [
+      "uy_el_pais:ch:rss_001",
+      "uy_el_pais:ch:sitemap_index_001"
+    ],
+    "uy_ladiaria": [
+      "uy_ladiaria:ch:rss_001",
+      "uy_ladiaria:ch:sitemap_index_001"
+    ],
+    "uy_montevideo_portal": [
+      "uy_montevideo_portal:ch:rss_r001",
+      "uy_montevideo_portal:ch:rss_r002"
+    ],
+    "ve_analitica": [
+      "ve_analitica:ch:rss_r001"
+    ],
+    "ve_correo_del_caroni": [
+      "ve_correo_del_caroni:ch:rss_r001"
+    ],
+    "ve_el_impulso": [
+      "ve_el_impulso:ch:rss_r001"
+    ],
+    "ve_el_nacional": [
+      "ve_el_nacional:ch:rss_003",
+      "ve_el_nacional:ch:sitemap_002"
+    ],
+    "ve_eldiario": [
+      "ve_eldiario:ch:rss_003",
+      "ve_eldiario:ch:sitemap_001"
+    ],
+    "ve_eluniversal": [
+      "ve_eluniversal:ch:sitemap_001"
+    ],
+    "ve_ultimas_noticias": [
+      "ve_ultimas_noticias:ch:rss_003",
+      "ve_ultimas_noticias:ch:sitemap_index_001"
+    ]
+  },
+  "checkpoints": [
+    {
+      "after": "A_probe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "B_discovery",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pr_metro_puerto_rico",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pr_metro_puerto_rico",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_abc_color",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_abc_color",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_adn_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_adn_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_noticias_cde",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_noticias_cde",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_ultima_hora",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_ultima_hora",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:sv_diario_co_latino",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:sv_diario_co_latino",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:sv_diario_el_mundo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:sv_diario_el_mundo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:uy_el_observador",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:uy_el_observador",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:uy_el_pais",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:uy_el_pais",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:uy_ladiaria",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:uy_ladiaria",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:uy_montevideo_portal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:uy_montevideo_portal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_analitica",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_analitica",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_correo_del_caroni",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_correo_del_caroni",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_el_impulso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_el_impulso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_el_nacional",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_el_nacional",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_eldiario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_eldiario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_eluniversal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_eluniversal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_ultimas_noticias",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_ultimas_noticias",
+      "classification": "INCOMPLETE_RESUMABLE"
+    }
+  ],
+  "commit": "f1041794de87c59d1d82a1696725edbe56bebdbd",
+  "counts": {
+    "candidates": 1444,
+    "discovery_documents_fetched": 41,
+    "failed": 0,
+    "fetch_records": 119,
+    "items_fetched": 58,
+    "pending": 0,
+    "preserved": 119,
+    "refused": 4,
+    "spooled_objects_pending": 0
+  },
+  "crawler_identity_sha256": "aa719a1e27f0fa3e3b04ed5826598a9b1b931a91391c77a98998a3651953bc4b",
+  "driver": "canary-driver/5",
+  "expansion_requests": {
+    "by_outlet": {
+      "pr_metro_puerto_rico": 0,
+      "py_abc_color": 0,
+      "py_adn_digital": 0,
+      "py_la_nacion": 0,
+      "py_noticias_cde": 0,
+      "py_ultima_hora": 3,
+      "sv_diario_co_latino": 0,
+      "sv_diario_el_mundo": 2,
+      "uy_el_observador": 3,
+      "uy_el_pais": 0,
+      "uy_ladiaria": 3,
+      "uy_montevideo_portal": 0,
+      "ve_analitica": 0,
+      "ve_correo_del_caroni": 0,
+      "ve_el_impulso": 0,
+      "ve_el_nacional": 0,
+      "ve_eldiario": 0,
+      "ve_eluniversal": 0,
+      "ve_ultimas_noticias": 3
+    },
+    "total": 14
+  },
+  "fetcher_transport_calls": 126,
+  "finished_at": "2026-10-09T20:37:12.486341Z",
+  "operator_authorization": {
+    "authorization_id": "DOA-2026-10-09-4",
+    "authorization_sha256": "1b062edddefcf71b05bd868f974666dc5ac5ee1eba8a4079ab873d0db2f97018",
+    "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+    "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+    "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+    "record": "config/operator_authorizations/2026-10-09_qualification.json",
+    "wave": "qual-5"
+  },
+  "outlets": [
+    "pr_metro_puerto_rico",
+    "py_abc_color",
+    "py_adn_digital",
+    "py_la_nacion",
+    "py_noticias_cde",
+    "py_ultima_hora",
+    "sv_diario_co_latino",
+    "sv_diario_el_mundo",
+    "uy_el_observador",
+    "uy_el_pais",
+    "uy_ladiaria",
+    "uy_montevideo_portal",
+    "ve_analitica",
+    "ve_correo_del_caroni",
+    "ve_el_impulso",
+    "ve_el_nacional",
+    "ve_eldiario",
+    "ve_eluniversal",
+    "ve_ultimas_noticias"
+  ],
+  "packs": [
+    "pk1-pr_metro_puerto_rico-20261009-000",
+    "pk1-py_abc_color-20261009-000",
+    "pk1-py_adn_digital-20261009-000",
+    "pk1-py_la_nacion-20261009-001",
+    "pk1-py_noticias_cde-20261009-000",
+    "pk1-py_ultima_hora-20261009-000",
+    "pk1-sv_diario_co_latino-20261009-000",
+    "pk1-sv_diario_el_mundo-20261009-000",
+    "pk1-uy_el_observador-20261009-000",
+    "pk1-uy_el_pais-20261009-000",
+    "pk1-uy_ladiaria-20261009-000",
+    "pk1-uy_montevideo_portal-20261009-001",
+    "pk1-ve_analitica-20261009-000",
+    "pk1-ve_correo_del_caroni-20261009-000",
+    "pk1-ve_el_impulso-20261009-000",
+    "pk1-ve_el_nacional-20261009-000",
+    "pk1-ve_eldiario-20261009-000",
+    "pk1-ve_eluniversal-20261009-000",
+    "pk1-ve_ultimas_noticias-20261009-000"
+  ],
+  "policy_layers": {
+    "acquisition_decisions": {
+      "ALLOW": 92,
+      "ALLOW_RESEARCH_OVERRIDE": 7,
+      "HOLD": 2,
+      "None": 2
+    },
+    "answered_2xx_under_research_override": 7,
+    "by_outlet": {
+      "pr_metro_puerto_rico": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "564569584f4e23c74d2810eef1d51f3f18893c2f835196123c1c61db18c66a54",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "py_abc_color": {
+        "access_classes_observed": {
+          "none_observed": 8
+        },
+        "answered_2xx_under_research_override": 1,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 1,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5,
+          "ROBOTS_DISALLOW_OBSERVED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "71648cbb3fbc33b6c760e35dcffc03dad21a398b8a611fbe95363d0d8448515e",
+            "outcome": "FETCHED",
+            "status": 200
+          },
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "py_adn_digital": {
+        "access_classes_observed": {
+          "bot_challenge": 1,
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 1,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "bbcfcff9e76e2c6999568683291af188b3f40bb668f5ea4c280a5f48bda304a3",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "py_la_nacion": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "3ce58c99a05492a23f23ac0deb012e9a707c96b7b4bf9046e4126ed0f55c599c",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "py_noticias_cde": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "476c649f03e22aa939461b27aaced736a6fe9c2f9614a17b4dce66664d405d52",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "py_ultima_hora": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "06cb7e8c7fbb0ea72ff0e692933d6c0cee80d65a89c11cc57252db4a5df3f5fa",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "sv_diario_co_latino": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "d35c1ec07e4e20649da2dcb9d61310a10bc670b9e412d767db2c7d6d2896ed2b",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "sv_diario_el_mundo": {
+        "access_classes_observed": {
+          "none_observed": 4
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 3,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 3
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "d3290714cd80f44c374fe23a47488b50ce3dec0c55733d3a500ffb28e0ecd1dc",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "uy_el_observador": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "e43d827a84bd9496d2b96318e882e3f21d89aaaf24bd2a5d571dfef18bc0274e",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "uy_el_pais": {
+        "access_classes_observed": {
+          "bot_challenge": 1,
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 1,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 1,
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "fc1545397ebd1b8f2ef66355517c0ae5fc60e6a0a3013e698dcd70444cbe6b1f",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "uy_ladiaria": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "31910cf4f8718ca55a793a708292b3305ef13f7836d7ec2e8b8a844c768bdc18",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "uy_montevideo_portal": {
+        "access_classes_observed": {
+          "none_observed": 5
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 4,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "None": 2,
+          "ROBOTS_ALLOW": 4
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2a2609ba38c6cc2d6908d77fafe23b3668d391dafce11b430c24cb2506a157ba",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_analitica": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "da715e64dd083f2d75deef781f6762f389d1ab9f2b4184d77f31c1448258897d",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_correo_del_caroni": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2d507dbc48475965e008c39d525f90d03a8d5369f2246b59ab9ebb08a4f13348",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_el_impulso": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "76af91f8f19654414e96cd7f4747418b5b1152253f7dba3db7f9aea8270e93ec",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "ve_el_nacional": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "ec74bdc685fe1ad6bf161bfa6b3992af8d0e444baf80f1494e7e6c6ce41f1ef6",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_eldiario": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 1,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 1,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5,
+          "ROBOTS_DISALLOW_OBSERVED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "8864ae74df824e8d781d6a35ddae14722548e0f185800a2de1edb87b640b1a9a",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_eluniversal": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 5,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 5,
+        "robots_evidence": {
+          "ROBOTS_DISALLOW_OBSERVED": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "04f8b9b316da38fcdd1ddbe9dd1dafa0077c8f5c42e1cdb22aabb71e54407e2a",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_ultimas_noticias": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "001b3a30d25e60c0f3ed2eaa71224f92c6c8a083a7a61a48418bfe37a36e5424",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "direct_opt_outs": 0,
+    "holds": {
+      "ACCESS_CONTROL_OBSERVED": 2
+    },
+    "legal_review_holds": 0,
+    "outlets_with_access_control": [
+      "py_adn_digital",
+      "uy_el_pais",
+      "ve_el_impulso"
+    ],
+    "outlets_with_applicable_disallow": [
+      "py_abc_color",
+      "ve_eldiario",
+      "ve_eluniversal"
+    ],
+    "requests_stopped_by_access_control": 2,
+    "requests_under_research_override": 7,
+    "semantics": "robots-decision/2"
+  },
+  "policy_version": "canary/2026-10-09.1",
+  "refused": {
+    "DENIED:access_control_observed": 2,
+    "DENIED:canary_budget_exhausted": 2
+  },
+  "requests": {
+    "by_outlet": {
+      "pr_metro_puerto_rico": {
+        "item": 4,
+        "other": 3
+      },
+      "py_abc_color": {
+        "item": 4,
+        "other": 4
+      },
+      "py_adn_digital": {
+        "item": 0,
+        "other": 2
+      },
+      "py_la_nacion": {
+        "item": 4,
+        "other": 2
+      },
+      "py_noticias_cde": {
+        "item": 4,
+        "other": 3
+      },
+      "py_ultima_hora": {
+        "item": 4,
+        "other": 6
+      },
+      "sv_diario_co_latino": {
+        "item": 4,
+        "other": 3
+      },
+      "sv_diario_el_mundo": {
+        "item": 0,
+        "other": 4
+      },
+      "uy_el_observador": {
+        "item": 4,
+        "other": 6
+      },
+      "uy_el_pais": {
+        "item": 0,
+        "other": 2
+      },
+      "uy_ladiaria": {
+        "item": 4,
+        "other": 6
+      },
+      "uy_montevideo_portal": {
+        "item": 4,
+        "other": 3
+      },
+      "ve_analitica": {
+        "item": 4,
+        "other": 3
+      },
+      "ve_correo_del_caroni": {
+        "item": 4,
+        "other": 3
+      },
+      "ve_el_impulso": {
+        "item": 0,
+        "other": 1
+      },
+      "ve_el_nacional": {
+        "item": 4,
+        "other": 4
+      },
+      "ve_eldiario": {
+        "item": 4,
+        "other": 3
+      },
+      "ve_eluniversal": {
+        "item": 4,
+        "other": 2
+      },
+      "ve_ultimas_noticias": {
+        "item": 4,
+        "other": 6
+      }
+    },
+    "item": 60,
+    "other": 66,
+    "total": 126
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "response_classes": {
+    "200": 112,
+    "403": 3,
+    "404": 1,
+    "500": 3
+  },
+  "run_id": "acq1-20261009T201329607195Z-fcfbaa887e80",
+  "schedule_policy_version": "canary/2026-10-08.1",
+  "schema": "coprepan-canary-receipt/v1",
+  "started_at": "2026-10-09T20:13:29.607195Z",
+  "status": "COMPLETE",
+  "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+}

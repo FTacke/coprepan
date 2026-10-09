@@ -1,0 +1,464 @@
+{
+  "annual_conditional": {
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 1.166
+    },
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / LOW": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 1.145
+    },
+    "legacy maximum fetches per outlet-day x 5 outlets x 365 days / UPPER": {
+      "fetches_per_year": 669775,
+      "label": "ASSUMED",
+      "tib_per_year": 1.19
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 12.358
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / LOW": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 12.135
+    },
+    "legacy maximum fetches per outlet-day x 53 outlets x 365 days / UPPER": {
+      "fetches_per_year": 7099615,
+      "label": "ASSUMED",
+      "tib_per_year": 12.61
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 19.119
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / LOW": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 18.775
+    },
+    "legacy maximum fetches per outlet-day x 82 outlets x 365 days / UPPER": {
+      "fetches_per_year": 10984310,
+      "label": "ASSUMED",
+      "tib_per_year": 19.51
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.365
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / LOW": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.359
+    },
+    "legacy median fetches per outlet-day x 5 outlets x 365 days / UPPER": {
+      "fetches_per_year": 209875,
+      "label": "ASSUMED",
+      "tib_per_year": 0.373
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 3.872
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / LOW": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 3.803
+    },
+    "legacy median fetches per outlet-day x 53 outlets x 365 days / UPPER": {
+      "fetches_per_year": 2224675,
+      "label": "ASSUMED",
+      "tib_per_year": 3.951
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / CENTRAL": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 5.991
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / LOW": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 5.883
+    },
+    "legacy median fetches per outlet-day x 82 outlets x 365 days / UPPER": {
+      "fetches_per_year": 3441950,
+      "label": "ASSUMED",
+      "tib_per_year": 6.113
+    }
+  },
+  "capacity_labels": {
+    "ASSUMED": "assumed",
+    "DERIVED": "estimated",
+    "MEASURED": "measured",
+    "PROJECTED": "assumed"
+  },
+  "comparison": {
+    "canary_footprint_share_of_interim_free": {
+      "label": "DERIVED",
+      "value": 1.038e-05
+    },
+    "interim_target_free_bytes_stated": {
+      "label": "STATED_BY_OPERATOR_OR_READINESS",
+      "value": 3840833466368
+    },
+    "planned_filesystem_bytes_stated": {
+      "label": "STATED_BY_OPERATOR",
+      "value": 2000000000000
+    },
+    "years_to_fill_planned_filesystem": {
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / CENTRAL": 1.6,
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / LOW": 1.6,
+      "legacy maximum fetches per outlet-day x 5 outlets x 365 days / UPPER": 1.5,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / CENTRAL": 0.1,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / LOW": 0.1,
+      "legacy maximum fetches per outlet-day x 53 outlets x 365 days / UPPER": 0.1,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / CENTRAL": 0.1,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / LOW": 0.1,
+      "legacy maximum fetches per outlet-day x 82 outlets x 365 days / UPPER": 0.1,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / CENTRAL": 5.0,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / LOW": 5.1,
+      "legacy median fetches per outlet-day x 5 outlets x 365 days / UPPER": 4.9,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / CENTRAL": 0.5,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / LOW": 0.5,
+      "legacy median fetches per outlet-day x 53 outlets x 365 days / UPPER": 0.5,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / CENTRAL": 0.3,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / LOW": 0.3,
+      "legacy median fetches per outlet-day x 82 outlets x 365 days / UPPER": 0.3
+    }
+  },
+  "dominant_component_in_the_canary": {
+    "bytes": 221207937,
+    "label": "MEASURED",
+    "name": "workspace records"
+  },
+  "groups": {
+    "channel_document:2xx": {
+      "fetches": 35,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 48342,
+      "received_body_bytes_total": 1691963,
+      "stored_metadata_member_bytes_mean": 1684,
+      "stored_response_member_bytes_mean": 47484,
+      "stored_response_member_bytes_total": 1661949
+    },
+    "channel_document:other_status": {
+      "fetches": 6,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 10840,
+      "received_body_bytes_total": 65038,
+      "stored_metadata_member_bytes_mean": 1484,
+      "stored_response_member_bytes_mean": 11696,
+      "stored_response_member_bytes_total": 70178
+    },
+    "item:2xx": {
+      "fetches": 58,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 41101,
+      "received_body_bytes_total": 2383877,
+      "stored_metadata_member_bytes_mean": 1701,
+      "stored_response_member_bytes_mean": 42347,
+      "stored_response_member_bytes_total": 2456139
+    },
+    "robots_txt:2xx": {
+      "fetches": 19,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 336,
+      "received_body_bytes_total": 6375,
+      "stored_metadata_member_bytes_mean": 1473,
+      "stored_response_member_bytes_mean": 1290,
+      "stored_response_member_bytes_total": 24514
+    },
+    "robots_txt:other_status": {
+      "fetches": 1,
+      "label": "MEASURED",
+      "received_body_bytes_mean": 3339,
+      "received_body_bytes_total": 3339,
+      "stored_metadata_member_bytes_mean": 1686,
+      "stored_response_member_bytes_mean": 4689,
+      "stored_response_member_bytes_total": 4689
+    }
+  },
+  "items_per_channel": {
+    "pr_metro_puerto_rico:ch:rss_001": 4,
+    "py_abc_color:ch:rss_001": 4,
+    "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml": 4,
+    "py_noticias_cde:ch:rss_r001": 4,
+    "py_ultima_hora:ch:sitemap_index_001": 4,
+    "sv_diario_co_latino:ch:rss_r001": 4,
+    "uy_el_observador:ch:sitemap_001": 4,
+    "uy_ladiaria:ch:rss_001": 4,
+    "uy_montevideo_portal:ch:rss_r001": 2,
+    "ve_analitica:ch:rss_r001": 4,
+    "ve_correo_del_caroni:ch:rss_r001": 4,
+    "ve_el_nacional:ch:rss_003": 4,
+    "ve_eldiario:ch:rss_003": 4,
+    "ve_eluniversal:ch:sitemap_001": 4,
+    "ve_ultimas_noticias:ch:rss_003": 4
+  },
+  "limits": [
+    "five outlets and a budget decide the fetch counts: this measures sizes, not a crawl rate",
+    "the sizes are those of the pages these outlets served on this day",
+    "technical storage sizing, not corpus representativeness"
+  ],
+  "measured": {
+    "compression_ratio_stored_over_received": {
+      "label": "DERIVED",
+      "value": 1.016
+    },
+    "extraction_layer_bytes_per_extracted_item": {
+      "how": "layer store size over stored extraction payloads",
+      "label": "DERIVED",
+      "value": 29599
+    },
+    "extraction_layer_bytes_total": {
+      "label": "MEASURED",
+      "value": 13645010
+    },
+    "fetch_records": {
+      "label": "MEASURED",
+      "value": 119
+    },
+    "index_bytes_per_fetch": {
+      "how": "index file size over fetch records",
+      "label": "DERIVED",
+      "value": 3427
+    },
+    "item_share_of_fetches": {
+      "label": "DERIVED",
+      "value": 0.487
+    },
+    "items_extracted": {
+      "label": "MEASURED",
+      "value": 461
+    },
+    "pack_file_bytes_per_fetch": {
+      "how": "pack file size over fetch records (includes the warcinfo record and container overhead)",
+      "label": "DERIVED",
+      "value": 331659
+    },
+    "pack_manifest_bytes_total": {
+      "label": "MEASURED",
+      "value": 64051
+    },
+    "pack_overhead_beyond_members_bytes_per_fetch": {
+      "label": "DERIVED",
+      "value": 294570
+    },
+    "preservation_manifest_bytes_total": {
+      "how": "manifest files on the preservation root",
+      "label": "MEASURED",
+      "value": 209104
+    },
+    "preserved_object_bytes_total": {
+      "how": "pack + index masters on the preservation root, from their manifests",
+      "label": "MEASURED",
+      "value": 39875284
+    },
+    "stored_bytes_per_fetch_members": {
+      "how": "response + metadata members of every fetch, compressed, over fetch records",
+      "label": "DERIVED",
+      "value": 37089
+    },
+    "workspace_other_bytes_per_fetch": {
+      "how": "ledger, request log, discovery, identity, labels, run records over fetch records",
+      "label": "DERIVED",
+      "value": 1858890
+    }
+  },
+  "outlets": {
+    "pr_metro_puerto_rico": {
+      "fetch_records": 7,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 31002
+    },
+    "py_abc_color": {
+      "fetch_records": 8,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 8,
+      "stored_bytes_per_fetch": 68192
+    },
+    "py_adn_digital": {
+      "fetch_records": 2,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 2,
+      "stored_bytes_per_fetch": 2657
+    },
+    "py_la_nacion": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 6,
+      "stored_bytes_per_fetch": 21609
+    },
+    "py_noticias_cde": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 29656
+    },
+    "py_ultima_hora": {
+      "fetch_records": 10,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 10,
+      "stored_bytes_per_fetch": 51059
+    },
+    "sv_diario_co_latino": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 29601
+    },
+    "sv_diario_el_mundo": {
+      "fetch_records": 4,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 4,
+      "stored_bytes_per_fetch": 19120
+    },
+    "uy_el_observador": {
+      "fetch_records": 10,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 10,
+      "stored_bytes_per_fetch": 76183
+    },
+    "uy_el_pais": {
+      "fetch_records": 2,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 2,
+      "stored_bytes_per_fetch": 4966
+    },
+    "uy_ladiaria": {
+      "fetch_records": 10,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 10,
+      "stored_bytes_per_fetch": 36335
+    },
+    "uy_montevideo_portal": {
+      "fetch_records": 5,
+      "items_fetched": 2,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 12816
+    },
+    "ve_analitica": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 31020
+    },
+    "ve_correo_del_caroni": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 29850
+    },
+    "ve_el_impulso": {
+      "fetch_records": 1,
+      "items_fetched": 0,
+      "label": "MEASURED",
+      "real_requests": 1,
+      "stored_bytes_per_fetch": 6375
+    },
+    "ve_el_nacional": {
+      "fetch_records": 7,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 8,
+      "stored_bytes_per_fetch": 31328
+    },
+    "ve_eldiario": {
+      "fetch_records": 7,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 7,
+      "stored_bytes_per_fetch": 54109
+    },
+    "ve_eluniversal": {
+      "fetch_records": 6,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 6,
+      "stored_bytes_per_fetch": 3543
+    },
+    "ve_ultimas_noticias": {
+      "fetch_records": 10,
+      "items_fetched": 4,
+      "label": "MEASURED",
+      "real_requests": 10,
+      "stored_bytes_per_fetch": 38339
+    }
+  },
+  "run_id": "acq1-20261009T201329607195Z-fcfbaa887e80",
+  "scenarios": {
+    "CENTRAL": {
+      "all_layers_bytes_per_fetch": 1913821,
+      "basis": "mean over all fetch records",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 178.24,
+      "per_1000_fetches_mib": 1825.16,
+      "preserved_bytes_per_fetch": 40516
+    },
+    "LOW": {
+      "all_layers_bytes_per_fetch": 1879389,
+      "basis": "smallest outlet mean",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 175.03,
+      "per_1000_fetches_mib": 1792.32,
+      "preserved_bytes_per_fetch": 6084
+    },
+    "UPPER": {
+      "all_layers_bytes_per_fetch": 1952915,
+      "basis": "largest outlet mean",
+      "label": "PROJECTED",
+      "per_100000_fetches_gib": 181.88,
+      "per_1000_fetches_mib": 1862.44,
+      "preserved_bytes_per_fetch": 79610
+    }
+  },
+  "schema": "coprepan-canary-measurement/v1",
+  "spread": {
+    "label": "DERIVED",
+    "max": 76183,
+    "mean": 30408,
+    "min": 2657,
+    "note": "outlet means; a spread over a handful of outlets, not a distribution of the press",
+    "per_outlet_stored_bytes_per_fetch": {
+      "pr_metro_puerto_rico": 31002,
+      "py_abc_color": 68192,
+      "py_adn_digital": 2657,
+      "py_la_nacion": 21609,
+      "py_noticias_cde": 29656,
+      "py_ultima_hora": 51059,
+      "sv_diario_co_latino": 29601,
+      "sv_diario_el_mundo": 19120,
+      "uy_el_observador": 76183,
+      "uy_el_pais": 4966,
+      "uy_ladiaria": 36335,
+      "uy_montevideo_portal": 12816,
+      "ve_analitica": 31020,
+      "ve_correo_del_caroni": 29850,
+      "ve_el_impulso": 6375,
+      "ve_el_nacional": 31328,
+      "ve_eldiario": 54109,
+      "ve_eluniversal": 3543,
+      "ve_ultimas_noticias": 38339
+    }
+  }
+}
