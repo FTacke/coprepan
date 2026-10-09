@@ -1,0 +1,611 @@
+{
+  "blocking": [],
+  "canary": {
+    "access_control_classifier": "access-control/2",
+    "authorization": {
+      "authorization_id": "DOA-2026-10-09-4",
+      "authorization_sha256": "1b062edddefcf71b05bd868f974666dc5ac5ee1eba8a4079ab873d0db2f97018",
+      "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+      "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+      "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+      "record": "config/operator_authorizations/2026-10-09_qualification.json",
+      "wave": "qual-2"
+    },
+    "crawler_page": {
+      "crawler_page_sha256": "391d83160862efa92b492a4792ac76878333fe455ff56ad25fbc1e9554571dc7",
+      "public_check_utc": "2026-10-08T14:12:42Z",
+      "receipt": "DEPLOY_RECEIPT_2026-10-08b.json",
+      "receipt_sha256": "408e22626baeca3847628aa51de7b08fc63aff8d54a6268d0c979ccc267a8385",
+      "site_url": "https://coprepan.hispanistica.com/"
+    },
+    "driver": {
+      "admission_ruleset": "admission-technical/1",
+      "budget": {
+        "channels_per_outlet": 2,
+        "discovery_max_bytes": 4194304,
+        "discovery_max_candidates": 200,
+        "discovery_max_depth": 2,
+        "discovery_max_documents": 4,
+        "expansion_requests_reserved_per_outlet": 3,
+        "item_requests_per_outlet": 4,
+        "item_requests_total": 80,
+        "other_requests_per_outlet": 8,
+        "outlets": 20
+      },
+      "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of the frozen baseline",
+      "candidate_budget_order": "candidate-budget-order/1",
+      "channel_selection": "one channel of each kind in the order rss, atom, sitemap, sitemap_index, archive, section_page, then more of those kinds; registry order; never a disabled channel; what a listing channel (archive, section_page) lists is requested only under an outlet allow rule",
+      "driver": "canary-driver/5",
+      "expansion_order": "expansion-order/2",
+      "extractor": "baseline_html/0.1.0",
+      "extractor_lifecycle": "EXPERIMENTAL",
+      "fetch_limits": {
+        "backoff_base_seconds": 60,
+        "backoff_max_seconds": 3600,
+        "max_attempts": 1,
+        "max_body_bytes": 8388608,
+        "max_redirects": 3,
+        "timeout_seconds": 30
+      },
+      "hard_item_request_ceiling": 100,
+      "numbered_pagination": "numbered-pagination/1",
+      "outlets": {
+        "cr_diario_extra": [
+          "cr_diario_extra:ch:rss_001",
+          "cr_diario_extra:ch:sitemap_001"
+        ],
+        "cr_la_nacion": [
+          "cr_la_nacion:ch:rss_001",
+          "cr_la_nacion:ch:sitemap_001"
+        ],
+        "cu_5_de_septiembre": [
+          "cu_5_de_septiembre:ch:rss_r001"
+        ],
+        "cu_havanatimes": [
+          "cu_havanatimes:ch:rss_003",
+          "cu_havanatimes:ch:sitemap_index_001"
+        ],
+        "cu_juventud_rebelde": [
+          "cu_juventud_rebelde:ch:sitemap_index_001"
+        ],
+        "cu_periodico26": [
+          "cu_periodico26:ch:rss_001",
+          "cu_periodico26:ch:atom_001"
+        ],
+        "cu_trabajadores": [
+          "cu_trabajadores:ch:rss_003",
+          "cu_trabajadores:ch:sitemap_index_001"
+        ],
+        "do_el_caribe": [
+          "do_el_caribe:ch:section_page_r001"
+        ],
+        "do_el_nacional": [
+          "do_el_nacional:ch:rss_r001"
+        ],
+        "do_hoy": [
+          "do_hoy:ch:rss_r001"
+        ],
+        "do_listin_diario": [
+          "do_listin_diario:ch:rss_r001",
+          "do_listin_diario:ch:sitemap_001"
+        ],
+        "ec_el_comercio": [
+          "ec_el_comercio:ch:rss_r001",
+          "ec_el_comercio:ch:sitemap_001"
+        ],
+        "ec_el_mercurio": [
+          "ec_el_mercurio:ch:rss_r001"
+        ],
+        "ec_el_universo": [
+          "ec_el_universo:ch:rss_r001"
+        ],
+        "ec_expreso": [
+          "ec_expreso:ch:rss_r001"
+        ],
+        "ec_la_republica_ec": [
+          "ec_la_republica_ec:ch:rss_r001"
+        ],
+        "ec_primicias": [
+          "ec_primicias:ch:rss_r001",
+          "ec_primicias:ch:sitemap_001"
+        ],
+        "es_abc": [
+          "es_abc:ch:rss_r001"
+        ],
+        "es_el_correo": [
+          "es_el_correo:ch:rss_r001"
+        ],
+        "es_el_pais": [
+          "es_el_pais:ch:rss_001"
+        ]
+      },
+      "spool_policy": {
+        "max_spool_bytes": 10737418240,
+        "min_free_bytes": 21474836480
+      },
+      "stages": [
+        "A_probe",
+        "B_discovery",
+        "C_item_fetch",
+        "D_preserve",
+        "E_derive"
+      ]
+    },
+    "outlets": {
+      "cr_diario_extra": {
+        "record_sha256": "13deaff9d1ae47c0ca1d4437b5cdb3d9540a25794fc35ac5f9c2159561449539",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cr_diario_extra-url-rules/v1"
+        }
+      },
+      "cr_la_nacion": {
+        "record_sha256": "d951a04466a37f4e9b0cb251d24f1f55238db86cea5f22fa998460ea18c632b5",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cr_la_nacion-url-rules/v1"
+        }
+      },
+      "cu_5_de_septiembre": {
+        "record_sha256": "efb88bfb235b78f050131ab8307868515ff7c26f596a1d68911b2fba3dda2722",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cu_5_de_septiembre-url-rules/v1"
+        }
+      },
+      "cu_havanatimes": {
+        "record_sha256": "e1ae1ce599ea7a52151e6538c77293a1ec8503f286cc052687e1342109019e69",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cu_havanatimes-url-rules/v1"
+        }
+      },
+      "cu_juventud_rebelde": {
+        "record_sha256": "91564da5de007d39a7bd10bdcde0acf969596ec9e2f43b2368a930a09775a97c",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cu_juventud_rebelde-url-rules/v1"
+        }
+      },
+      "cu_periodico26": {
+        "record_sha256": "29c5c79e128427fbb20d8372c8a558947917aad095afdea01c65ea145fe45454",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cu_periodico26-url-rules/v1"
+        }
+      },
+      "cu_trabajadores": {
+        "record_sha256": "3b0ff0a54e5b12ef870a563df21547b945897477c751ae53d6db843d8d4c02ad",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "cu_trabajadores-url-rules/v1"
+        }
+      },
+      "do_el_caribe": {
+        "record_sha256": "1d0845bec82381f0fc238cfd67c80a4c4694631a96ccc9e4aa3767107b1ec752",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "do_el_caribe-url-rules/v1"
+        }
+      },
+      "do_el_nacional": {
+        "record_sha256": "7c6dce06009446d49391e4a610794f0989c4fc0361fe1561246e6437c7a153d7",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "do_el_nacional-url-rules/v1"
+        }
+      },
+      "do_hoy": {
+        "record_sha256": "9f4660f2dd6dd9939124034ce6cc17aa075d0a103a5799128cb9dd7b9a16a96d",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "do_hoy-url-rules/v1"
+        }
+      },
+      "do_listin_diario": {
+        "record_sha256": "cc5cb6858dece0b2ae007e20ba39e057cc32fb630390687747eb628cc641969d",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "do_listin_diario-url-rules/v1"
+        }
+      },
+      "ec_el_comercio": {
+        "record_sha256": "6b78d201fe9c63fc0fe70ec8076eeb26bbd42be67b37653ac40308cc5757c329",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_el_comercio-url-rules/v1"
+        }
+      },
+      "ec_el_mercurio": {
+        "record_sha256": "dc22962c11030510a2cd250adac1eeacfa8b4e660575872c2773afb4623055c5",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_el_mercurio-url-rules/v1"
+        }
+      },
+      "ec_el_universo": {
+        "record_sha256": "40f95af9641eb9db039fc15d7727bab21b2f5b5b1333229afc3f9220237d1c57",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_el_universo-url-rules/v1"
+        }
+      },
+      "ec_expreso": {
+        "record_sha256": "9b43f0bc457780ca058b06a2f6453b82ff043ec22d013ac895c3f10bcaa27c6a",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_expreso-url-rules/v1"
+        }
+      },
+      "ec_la_republica_ec": {
+        "record_sha256": "07c589b928dc04983eae5768b4f92124584a033197c8f7ef58d82f3c48c9bb25",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_la_republica_ec-url-rules/v1"
+        }
+      },
+      "ec_primicias": {
+        "record_sha256": "ff37bcef17d5eca22ab3d5da8f7b0d96d9224a0db00d9c14cf2a13cbb894c4a6",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "ec_primicias-url-rules/v1"
+        }
+      },
+      "es_abc": {
+        "record_sha256": "ad99bc081a6b290f8d854cb4221e6f37ad8fb2ba722e2af8a13df3b68a807d82",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "es_abc-url-rules/v1"
+        }
+      },
+      "es_el_correo": {
+        "record_sha256": "f74dda054266bf90e9594016aa5276cf9f8e4e984c676bb22bce5c701dfdd9c4",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "es_el_correo-url-rules/v1"
+        }
+      },
+      "es_el_pais": {
+        "record_sha256": "4280e916b86bd24cdf2c964a148feb4e8d6451269746bdce1a5a2de8ebd29117",
+        "url_rules": {
+          "significant_query_params": [],
+          "strip_path_prefixes": [],
+          "strip_path_suffixes": [],
+          "version": "es_el_pais-url-rules/v1"
+        }
+      }
+    },
+    "research_tdm": {
+      "decided_in": "CPD-0017",
+      "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+      "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+      "robots_decision_semantics": "robots-decision/2",
+      "robots_mode": "research_tdm_override"
+    },
+    "robots_parser": "robots-parser/3",
+    "schemas": [
+      "coprepan-acquisition-policy/v3",
+      "coprepan-acquisition-run-result/v2",
+      "coprepan-acquisition-run/v1",
+      "coprepan-admission-label/v2",
+      "coprepan-candidate-qualification/v2",
+      "coprepan-candidate-rules/v1",
+      "coprepan-capacity-model/v1",
+      "coprepan-crawler-identity/v1",
+      "coprepan-discovery-candidate/v1",
+      "coprepan-discovery-event/v2",
+      "coprepan-discovery-input/v2",
+      "coprepan-document-identity/v1",
+      "coprepan-document-observation/v1",
+      "coprepan-document-relation/v1",
+      "coprepan-document-version/v1",
+      "coprepan-extraction-evaluation/v1",
+      "coprepan-extraction-reference/v1",
+      "coprepan-extraction-review-case/v1",
+      "coprepan-extraction-sample/v1",
+      "coprepan-extraction/v1",
+      "coprepan-fetch-id/v1",
+      "coprepan-fetch-record/v1",
+      "coprepan-layer-fingerprint/v1",
+      "coprepan-layer-manifest/v1",
+      "coprepan-ledger-record/v2",
+      "coprepan-legacy-freeze-listing/v1",
+      "coprepan-legacy-freeze-manifest/v1",
+      "coprepan-outlet-registry/v1",
+      "coprepan-pack-index/v1",
+      "coprepan-pack/v1",
+      "coprepan-preservation-manifest/v1",
+      "coprepan-preservation-readiness/v1",
+      "coprepan-preservation-target/v1",
+      "coprepan-request-log/v2",
+      "coprepan-schedule-policy/v1",
+      "coprepan-url-key/v1",
+      "coprepan-workspace-diagnosis/v1"
+    ],
+    "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+    "storage_target": {
+      "marker_sha256": "e4714c8c004f3f83c095c40e9851a9446eee92ece84378a46f2ef729200ad8d7",
+      "target_id": "coprepan-preservation-interim-d"
+    }
+  },
+  "candidate_rules": {
+    "path": "config/candidate_rules.json",
+    "sha256": "81b6b58b985315d6711b8147adcdd4977e1185b34b4d8449a7324a6d95dc1663",
+    "size_bytes": 1417
+  },
+  "code": {
+    "commit": "16bd3529d86c29dd41b885495d7ce057919e86a2",
+    "package_version": "0.3.0"
+  },
+  "components": {
+    "admission_ruleset": "admission-technical/1",
+    "candidate_filter": "candidate-filter-generic/3",
+    "channel_health": "channel-health/1",
+    "channel_parser": "channel-parser/6",
+    "extractor": "baseline_html/0.1.0",
+    "extractor_lifecycle": "EXPERIMENTAL",
+    "fetch_planner": "fetch-planner/1",
+    "fetcher": "http-fetcher/1",
+    "head_scan": "head-scan/1",
+    "pack_writer": "pack-writer/1",
+    "package": "0.3.0",
+    "preservation_policy": "preservation/v1",
+    "robots_parser": "robots-parser/3",
+    "url_key_ruleset": "coprepan-url-key/v1"
+  },
+  "configuration": [
+    {
+      "path": "config/storage_targets.yml",
+      "sha256": "27107e52c99252f582bdd25674301643736dd2fb42443e39f197cc65775c9a07",
+      "size_bytes": 2052
+    },
+    {
+      "path": "config/legacy_country_codes.json",
+      "sha256": "f763eedc84b1101b48f71e7e2853a4839666429cfbaf114ff353584931ae20b9",
+      "size_bytes": 911
+    }
+  ],
+  "crawler_identity": {
+    "identity": {
+      "operator": {
+        "contact_email": "felix.tacke@uni-marburg.de",
+        "contact_url": "https://coprepan.hispanistica.com/crawler/",
+        "crawler_name": "PanhispanicMediaResearchBot",
+        "organisation": "Marburg University"
+      },
+      "schema": "coprepan-crawler-identity/v1",
+      "scope": "external",
+      "software": {
+        "fetcher": "http-fetcher/1",
+        "name": "coprepan",
+        "version": "0.3.0"
+      },
+      "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+    },
+    "path": "config/crawler_identity.json",
+    "sha256": "eac100f9f93795757dee0edada607e9bdde6db3702196a1d0b1df365bb869528",
+    "size_bytes": 911,
+    "state": "configured"
+  },
+  "created_at": "2026-10-09T18:17:52.958268Z",
+  "decisions": {
+    "CPD-0001": "7cab83211fbd56249310b8fcc37f7b2c6de28ee7b876a3198f97d32f605f5bdb",
+    "CPD-0002": "22b148c51d4af0f8db8864d28ea7e74625673c7b2a4cff8a987a2f5ea22cf0a6",
+    "CPD-0003": "6c2d286b349e9ca0224aa4031f97db23ef341229d08ce1cfa7f9fa7e096a1203",
+    "CPD-0004": "44f0159b1cf06902ab7a67cb230e05f737f95c611419a4709e2a26ac4de8cf5f",
+    "CPD-0005": "7ca5ef029af08e9017663a22f8522800ba5e82d0a86011df636d618d7a756f40",
+    "CPD-0006": "4ea61efc906db5c78a418003d2d7d98ef77ef4d442e5b34cb691cb7b75702b7c",
+    "CPD-0007": "54f52fa332c9136c11decac83aa323a665e433902f0b90d4fed0b1dd5aa2be2f",
+    "CPD-0008": "6452afd14489fdead1887b9e2d9e1e7c2624eb20bcd29129014bd4ec27dd6b54",
+    "CPD-0009": "dcbbc216f076253090fea51c5601e39f1bf1704d4a23e9bb2e8dcb1566c37278",
+    "CPD-0010": "d534085aa62f82bd7817c66e53a3b5da1e0dfd333feb4c31c257f2444d64dc52",
+    "CPD-0011": "98810b4b26ef27ac34e4a841a4023648f12cabadad78a6d874201b9ae623fa03",
+    "CPD-0012": "c4026d844aa6a9bcb98c8550614946494206f11c3ed238a509786925f8e4d3d1",
+    "CPD-0013": "683e4a72ee34bc0d5b2a6ca53c595c65d3acde91d7faf2344e487eaf3f7d84c2",
+    "CPD-0014": "4be0a45d85b96b998dab626c1380437bc9cb77f5bb39abbb4290cc2af18882c9",
+    "CPD-0015": "64a5c5ef6c9f26946b8d62ed928802edd4064bcee0e85283dd59c724264bb725",
+    "CPD-0016": "fbe7260854d27d69b99f1f1ad58bc6563e4fad96d5aaf3c18eb59ad1a5826813",
+    "CPD-0017": "2a742561c58a20938e9b10177023a546eb2d79c78604a99405b3ca4d55382d57",
+    "CPD-0018": "72933cc4af1bcf4c5b8f7b03cd6b9928b90a7d0cb17bcf6fdd94ae369f616d96",
+    "CPD-0019": "d6758eafc940e5d524b5247403c86757b9889caebc99338a88c74298aad7023d",
+    "CPD-0020": "0c23bcd51bada3e71668e947ed580271af29dae48725fe78695b763ac0292b45",
+    "CPD-0021": "6e50126cb9a30422a3d58b896aeb31076922c32512f16e6d7972caa9a438e212",
+    "CPD-0022": "08e42a5ca431e880cc9b1bb3b61811336a9003c30a32951de12c07f09d718003",
+    "CPD-0023": "29d511d1bd191b002f27cff5289a5efce173f02f4e15c3120a776ee4906aa249",
+    "CPD-0024": "49119029d08177cf2ca32f5a235f51cb3193979cab004649c9bfbea251bd2dec",
+    "CPD-0025": "4a8f8a234c7b7436e8cee9bb562fcf2221dce4a37ecc7bfaa7c5c6f98bd7f2d5"
+  },
+  "freeze": {
+    "confirmed_at": "2026-10-09T18:17:53.107355Z",
+    "confirms": "b338bb71c2f6f850e43d97ebc50a0131c3bbd284da4d835c45d13c009648871d",
+    "operator": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository under DOA-2026-10-09-4 (DELEGATED_OPERATOR_AUTHORIZATION; issued by Felix Tacke (operator of CO.PRE.PAN))"
+  },
+  "manifest_sha256": "b338bb71c2f6f850e43d97ebc50a0131c3bbd284da4d835c45d13c009648871d",
+  "operator": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository under DOA-2026-10-09-4 (DELEGATED_OPERATOR_AUTHORIZATION; issued by Felix Tacke (operator of CO.PRE.PAN))",
+  "policy": {
+    "external_acquisition": "enabled",
+    "path": "config/acquisition_policy.json",
+    "policy_version": "canary/2026-10-09.1",
+    "sha256": "c64e13ef2073319dd6649830ce761a3084a9cfa094d1a669738ee332a0e8a289",
+    "size_bytes": 3061,
+    "status": "DECIDED"
+  },
+  "registry": {
+    "channels": 446,
+    "outlets": 126,
+    "path": "config/outlet_registry.json",
+    "proposed": 12,
+    "registered": 114,
+    "schema": "coprepan-outlet-registry/v1",
+    "sha256": "0c1bd32aa1ea01aae4754b2b82cc416b2e42ec6ce5d3b8d661a3f2a87d9cad4e",
+    "size_bytes": 637893
+  },
+  "schedule_policy": {
+    "path": "config/schedule_policy.json",
+    "sha256": "179a2a9181bf965daac1ed1a2f88b088316c02c65f0be6dd8288078fe7623764",
+    "size_bytes": 1494,
+    "version": "canary/2026-10-08.1"
+  },
+  "schema": "coprepan-acquisition-baseline/v1",
+  "schemas": [
+    "coprepan-acquisition-policy/v3",
+    "coprepan-acquisition-run-result/v2",
+    "coprepan-acquisition-run/v1",
+    "coprepan-admission-label/v2",
+    "coprepan-candidate-qualification/v2",
+    "coprepan-candidate-rules/v1",
+    "coprepan-capacity-model/v1",
+    "coprepan-crawler-identity/v1",
+    "coprepan-discovery-candidate/v1",
+    "coprepan-discovery-event/v2",
+    "coprepan-discovery-input/v2",
+    "coprepan-document-identity/v1",
+    "coprepan-document-observation/v1",
+    "coprepan-document-relation/v1",
+    "coprepan-document-version/v1",
+    "coprepan-extraction-evaluation/v1",
+    "coprepan-extraction-reference/v1",
+    "coprepan-extraction-review-case/v1",
+    "coprepan-extraction-sample/v1",
+    "coprepan-extraction/v1",
+    "coprepan-fetch-id/v1",
+    "coprepan-fetch-record/v1",
+    "coprepan-layer-fingerprint/v1",
+    "coprepan-layer-manifest/v1",
+    "coprepan-ledger-record/v2",
+    "coprepan-legacy-freeze-listing/v1",
+    "coprepan-legacy-freeze-manifest/v1",
+    "coprepan-outlet-registry/v1",
+    "coprepan-pack-index/v1",
+    "coprepan-pack/v1",
+    "coprepan-preservation-manifest/v1",
+    "coprepan-preservation-readiness/v1",
+    "coprepan-preservation-target/v1",
+    "coprepan-request-log/v2",
+    "coprepan-schedule-policy/v1",
+    "coprepan-url-key/v1",
+    "coprepan-workspace-diagnosis/v1"
+  ],
+  "scope": "canary",
+  "state": "FROZEN",
+  "storage_target": {
+    "checked_at": "2026-10-09T18:17:52.899133Z",
+    "checks": [
+      {
+        "check": "usable_root",
+        "detail": "absolute, not a filesystem root, not inside the checkout",
+        "status": "PASS"
+      },
+      {
+        "check": "reachable",
+        "detail": "is a directory",
+        "status": "PASS"
+      },
+      {
+        "check": "target_identity",
+        "detail": "coprepan-preservation-interim-d",
+        "status": "PASS"
+      },
+      {
+        "check": "free_space",
+        "detail": "3840856494080 bytes free, 21474836480 required",
+        "status": "PASS"
+      },
+      {
+        "check": "writable",
+        "detail": "a file was created and flushed",
+        "status": "PASS"
+      },
+      {
+        "check": "atomic_promotion",
+        "detail": "staged, hashed, renamed and re-read with the same digest",
+        "status": "PASS"
+      },
+      {
+        "check": "no_silent_overwrite",
+        "detail": "an exclusive create refuses an existing name",
+        "status": "PASS"
+      },
+      {
+        "check": "case_sensitivity",
+        "detail": "case-insensitive names",
+        "status": "INFO"
+      },
+      {
+        "check": "long_names",
+        "detail": "a 190-character file name can be created",
+        "status": "PASS"
+      },
+      {
+        "check": "fixity",
+        "detail": "96 object(s) verified",
+        "status": "PASS"
+      }
+    ],
+    "free_bytes": 3840856494080,
+    "required_free_bytes": 21474836480,
+    "schema": "coprepan-preservation-readiness/v1",
+    "status": "READY",
+    "target_id": "coprepan-preservation-interim-d",
+    "total_bytes": 4096788525056
+  },
+  "test_baseline": {
+    "fixtures": [
+      {
+        "path": "tests/fixtures/canary/MANIFEST.json",
+        "sha256": "c210c3623e0b5bb274ec2ecc19a38c3311d58a9e77b7912ed88074143bab9b12",
+        "size_bytes": 629
+      },
+      {
+        "path": "tests/fixtures/discovery/MANIFEST.json",
+        "sha256": "98641f572e93ffb2a7e244013f831b53175743ed9f3df6475fdf2e2fa1cea0af",
+        "size_bytes": 1180
+      },
+      {
+        "path": "tests/fixtures/qualification/MANIFEST.json",
+        "sha256": "1e7e39e5fb49cdff06a3df17962e9c1441c0a055c6176bb9869c0eb1b146e5ab",
+        "size_bytes": 317
+      }
+    ],
+    "passed": 1512,
+    "suite": "python -m pytest"
+  }
+}
