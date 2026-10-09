@@ -51,3 +51,6 @@ test_source_discovery.py     # the source-discovery inventory is the join of its
 # Source structures, consolidated overview, third wave, operator workflow (CPD-0020)
 test_source_structures.py    # feed families, the candidate budget keeps the newest, paginated HTML archives with dated teasers, an index read incrementally, a listing outlet end to end (all synthetic)
 test_source_expansion.py     # the qualification overview is the join of its inputs; outlets new to the registry enter only by an applied proposal; the operator's tool accepts a confirmation from a person at a terminal only
+
+# The operator's canary workflow, whole procedure against a temporary repository (CPD-0021)
+test_canary_operator.py      # order and commits of the steps, tests on the arming commit and on the disarmed tree, the digest shown first, no confirmation passable, disarmed after any failure, --disarm-only

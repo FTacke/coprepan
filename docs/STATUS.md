@@ -586,3 +586,7 @@ run report that carries the evidence.
   candidates wait for a rule, incremental index reading, outlets new to the registry, the operator's one-command workflow. A third wave of nine
   new outlets proposed. `channel-parser/3`, `candidate-filter-generic/2`, `canary-driver/4`. No stage state changed; no gate closed.
   Run report: [`docs/agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md`](agent-runs/2026-10-09_integrated-source-expansion-and-acquisition-qualification.md).
+
+- 2026-10-09 (fourth run of the day) — three-wave qualification: **prepared and stopped at the operator's gate; no request, no canary, nothing
+  registered**. The operator's wrapper was reviewed on its error paths and ten defects repaired (CPD-0021); the three waves are laid out as
+  one decision sheet. Still one outlet with verified acquisition. Run report: [`docs/agent-runs/2026-10-09_three-wave-qualification-prepared.md`](agent-runs/2026-10-09_three-wave-qualification-prepared.md).

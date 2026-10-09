@@ -187,6 +187,11 @@ What it does, and where it waits for you:
 7. `verify`, `measure`, copies receipt, start state, verification and measurement to `docs/canary/evidence/<run id>/`, commits;
 8. **disarms, commits, pushes** — also when anything after step 2 failed or was interrupted. If it cannot, it says so in capitals and exits 2.
 
+Since CPD-0021 the tool prints the scope (outlets, budget, channels, policy version) **before** it asks for `ARM`, refuses a wrong scope
+without arming, reads the switch back from the file, `HEAD` and `origin/main` after disarming (exit 2 if any says `enabled`), keeps the
+evidence of a run that ended incomplete, and runs the tests again on the disarmed tree. After a killed process (closed console, power cut):
+`python scripts/canary_operator.py --disarm-only` — it starts nothing.
+
 It must be started in a terminal by a person: both confirmations are read from the terminal and refused from a pipe, a file or an argument, so
 an agent's shell cannot give them. After it has run, ask an agent run for the evaluation (it starts from the evidence directory and runs the
 tests on the disarmed tree, which §6 asks for).
