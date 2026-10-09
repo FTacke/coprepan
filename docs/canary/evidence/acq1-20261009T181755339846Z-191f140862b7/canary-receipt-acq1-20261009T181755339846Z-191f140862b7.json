@@ -1,0 +1,898 @@
+{
+  "baseline_id": "b338bb71c2f6f850e43d97ebc50a0131c3bbd284da4d835c45d13c009648871d",
+  "bytes": {
+    "preserved_objects": 7833794,
+    "received_bodies": 7557486
+  },
+  "channels": {
+    "cr_diario_extra": [
+      "cr_diario_extra:ch:rss_001",
+      "cr_diario_extra:ch:sitemap_001"
+    ],
+    "cr_la_nacion": [
+      "cr_la_nacion:ch:rss_001",
+      "cr_la_nacion:ch:sitemap_001"
+    ],
+    "cu_5_de_septiembre": [
+      "cu_5_de_septiembre:ch:rss_r001"
+    ],
+    "cu_havanatimes": [
+      "cu_havanatimes:ch:rss_003",
+      "cu_havanatimes:ch:sitemap_index_001"
+    ],
+    "cu_juventud_rebelde": [
+      "cu_juventud_rebelde:ch:sitemap_index_001"
+    ],
+    "cu_periodico26": [
+      "cu_periodico26:ch:rss_001",
+      "cu_periodico26:ch:atom_001"
+    ],
+    "cu_trabajadores": [
+      "cu_trabajadores:ch:rss_003",
+      "cu_trabajadores:ch:sitemap_index_001"
+    ],
+    "do_el_caribe": [
+      "do_el_caribe:ch:section_page_r001"
+    ],
+    "do_el_nacional": [
+      "do_el_nacional:ch:rss_r001"
+    ],
+    "do_hoy": [
+      "do_hoy:ch:rss_r001"
+    ],
+    "do_listin_diario": [
+      "do_listin_diario:ch:rss_r001",
+      "do_listin_diario:ch:sitemap_001"
+    ],
+    "ec_el_comercio": [
+      "ec_el_comercio:ch:rss_r001",
+      "ec_el_comercio:ch:sitemap_001"
+    ],
+    "ec_el_mercurio": [
+      "ec_el_mercurio:ch:rss_r001"
+    ],
+    "ec_el_universo": [
+      "ec_el_universo:ch:rss_r001"
+    ],
+    "ec_expreso": [
+      "ec_expreso:ch:rss_r001"
+    ],
+    "ec_la_republica_ec": [
+      "ec_la_republica_ec:ch:rss_r001"
+    ],
+    "ec_primicias": [
+      "ec_primicias:ch:rss_r001",
+      "ec_primicias:ch:sitemap_001"
+    ],
+    "es_abc": [
+      "es_abc:ch:rss_r001"
+    ],
+    "es_el_correo": [
+      "es_el_correo:ch:rss_r001"
+    ],
+    "es_el_pais": [
+      "es_el_pais:ch:rss_001"
+    ]
+  },
+  "checkpoints": [
+    {
+      "after": "A_probe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "B_discovery",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cr_diario_extra",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cr_diario_extra",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cr_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cr_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_5_de_septiembre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_5_de_septiembre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_havanatimes",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_havanatimes",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_juventud_rebelde",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_juventud_rebelde",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_periodico26",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_periodico26",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_trabajadores",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_trabajadores",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:do_el_caribe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:do_el_caribe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:do_el_nacional",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:do_el_nacional",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:do_hoy",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:do_hoy",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:do_listin_diario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:do_listin_diario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_el_comercio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_el_comercio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_el_mercurio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_el_mercurio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_el_universo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_el_universo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_expreso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_expreso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_la_republica_ec",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_la_republica_ec",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ec_primicias",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ec_primicias",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:es_abc",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:es_abc",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:es_el_correo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:es_el_correo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:es_el_pais",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:es_el_pais",
+      "classification": "INCOMPLETE_RESUMABLE"
+    }
+  ],
+  "commit": "16bd3529d86c29dd41b885495d7ce057919e86a2",
+  "counts": {
+    "candidates": 1334,
+    "discovery_documents_fetched": 27,
+    "failed": 0,
+    "fetch_records": 107,
+    "items_fetched": 58,
+    "pending": 0,
+    "preserved": 107,
+    "refused": 9,
+    "spooled_objects_pending": 0
+  },
+  "crawler_identity_sha256": "aa719a1e27f0fa3e3b04ed5826598a9b1b931a91391c77a98998a3651953bc4b",
+  "driver": "canary-driver/5",
+  "expansion_requests": {
+    "by_outlet": {
+      "cr_diario_extra": 0,
+      "cr_la_nacion": 0,
+      "cu_5_de_septiembre": 0,
+      "cu_havanatimes": 3,
+      "cu_juventud_rebelde": 3,
+      "cu_periodico26": 0,
+      "cu_trabajadores": 0,
+      "do_el_caribe": 0,
+      "do_el_nacional": 0,
+      "do_hoy": 0,
+      "do_listin_diario": 0,
+      "ec_el_comercio": 0,
+      "ec_el_mercurio": 0,
+      "ec_el_universo": 0,
+      "ec_expreso": 0,
+      "ec_la_republica_ec": 0,
+      "ec_primicias": 0,
+      "es_abc": 0,
+      "es_el_correo": 0,
+      "es_el_pais": 0
+    },
+    "total": 6
+  },
+  "fetcher_transport_calls": 118,
+  "finished_at": "2026-10-09T18:49:42.452605Z",
+  "operator_authorization": {
+    "authorization_id": "DOA-2026-10-09-4",
+    "authorization_sha256": "1b062edddefcf71b05bd868f974666dc5ac5ee1eba8a4079ab873d0db2f97018",
+    "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+    "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+    "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+    "record": "config/operator_authorizations/2026-10-09_qualification.json",
+    "wave": "qual-2"
+  },
+  "outlets": [
+    "cr_diario_extra",
+    "cr_la_nacion",
+    "cu_5_de_septiembre",
+    "cu_havanatimes",
+    "cu_juventud_rebelde",
+    "cu_periodico26",
+    "cu_trabajadores",
+    "do_el_caribe",
+    "do_el_nacional",
+    "do_hoy",
+    "do_listin_diario",
+    "ec_el_comercio",
+    "ec_el_mercurio",
+    "ec_el_universo",
+    "ec_expreso",
+    "ec_la_republica_ec",
+    "ec_primicias",
+    "es_abc",
+    "es_el_correo",
+    "es_el_pais"
+  ],
+  "packs": [
+    "pk1-cr_diario_extra-20261009-000",
+    "pk1-cr_la_nacion-20261009-000",
+    "pk1-cu_5_de_septiembre-20261009-000",
+    "pk1-cu_havanatimes-20261009-000",
+    "pk1-cu_juventud_rebelde-20261009-000",
+    "pk1-cu_periodico26-20261009-000",
+    "pk1-cu_trabajadores-20261009-000",
+    "pk1-do_el_caribe-20261009-000",
+    "pk1-do_el_nacional-20261009-000",
+    "pk1-do_hoy-20261009-000",
+    "pk1-do_listin_diario-20261009-000",
+    "pk1-ec_el_comercio-20261009-000",
+    "pk1-ec_el_mercurio-20261009-000",
+    "pk1-ec_el_universo-20261009-001",
+    "pk1-ec_expreso-20261009-000",
+    "pk1-ec_la_republica_ec-20261009-000",
+    "pk1-ec_primicias-20261009-001",
+    "pk1-es_abc-20261009-000",
+    "pk1-es_el_correo-20261009-000",
+    "pk1-es_el_pais-20261009-000"
+  ],
+  "policy_layers": {
+    "acquisition_decisions": {
+      "ALLOW": 84,
+      "ALLOW_RESEARCH_OVERRIDE": 1,
+      "HOLD": 6,
+      "None": 3
+    },
+    "answered_2xx_under_research_override": 1,
+    "by_outlet": {
+      "cr_diario_extra": {
+        "access_classes_observed": {
+          "bot_challenge": 1,
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 1,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 1,
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "e6342f7b47076251bf92f6d143bd9c4175f46e998535d01457fb61b8ce5deaab",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cr_la_nacion": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "0db89133864dc7939a5c50133abae7d8cae913aa9167688bd181e38236941b1c",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cu_5_de_septiembre": {
+        "access_classes_observed": {
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_UNREACHABLE": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "0614c3346d2d4cf9146b33e82dbb9def4dabefe7b5d1395c361324c5d8b77516",
+            "outcome": "FETCHED",
+            "status": 302
+          }
+        ]
+      },
+      "cu_havanatimes": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "d7f79409ceec11b250d44a8a3fb0bc4ca6acf243f86001dfcfdac0dea5695ac0",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cu_juventud_rebelde": {
+        "access_classes_observed": {
+          "none_observed": 9
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 8,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 8
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "f58b96e7c2c628dbdf7b75582d77deb5dd4983c943ea612f906b32f8005994e3",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cu_periodico26": {
+        "access_classes_observed": {
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_UNREACHABLE": 2
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "d1a3d33ba0b0775d18576aa53a5cbc20f01ff26000beef13ff31447449cd1c66",
+            "outcome": "FETCHED",
+            "status": 302
+          }
+        ]
+      },
+      "cu_trabajadores": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "None": 1,
+          "ROBOTS_UNAVAILABLE": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "80c3fe2ae1062abf56456f52518bd670f9ec3917b7f85e152b347ac6b6faf880",
+            "outcome": "FETCHED",
+            "status": 404
+          },
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "80c3fe2ae1062abf56456f52518bd670f9ec3917b7f85e152b347ac6b6faf880",
+            "outcome": "FETCHED",
+            "status": 404
+          }
+        ]
+      },
+      "do_el_caribe": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "5ff301c9251293d239fe1a3274b86f59aab7616257dbee18ff5bec6edb5566f6",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "do_el_nacional": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "a1bb05b50556a922ecc5a9b851f80b2e94e43b7331c22edec1a3dd50ca059fac",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "do_hoy": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "ab95138cf3f12245bdad15d1efa9cb8d832acedb9a8b0ee7bcc72ec5efdba01c",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "do_listin_diario": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "f4a83c240b5beb9772286c46648cd5b71220036d94e83f0c60c6956e3feedb48",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ec_el_comercio": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "4a119b8c1f119eca450e462d3d565b916f0585dc128307ca548b976d7b10d964",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ec_el_mercurio": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2292078f75dacedfa9a99ce139ba67cbb847d95d402bc057f74a530b7d93e6ff",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ec_el_universo": {
+        "access_classes_observed": {
+          "none_observed": 5
+        },
+        "answered_2xx_under_research_override": 1,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 2,
+        "requests_under_research_override": 1,
+        "robots_evidence": {
+          "None": 2,
+          "ROBOTS_ALLOW": 2,
+          "ROBOTS_DISALLOW_OBSERVED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "0bf5c93598f436c11ca29fd90d90ecce865f8a41e18d235f4b1584997db01147",
+            "outcome": "FETCHED",
+            "status": 200
+          },
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "0bf5c93598f436c11ca29fd90d90ecce865f8a41e18d235f4b1584997db01147",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ec_expreso": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "0744dc76f737ccfc7f8241add790ffc8adea48ac5b1d2c33bdbb25c2cda9bbc9",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ec_la_republica_ec": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_UNAVAILABLE": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+            "outcome": "FETCHED",
+            "status": 404
+          }
+        ]
+      },
+      "ec_primicias": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "b4db65f6c6a5f86fe8c60390ab956463ca58fceba42b62941bb6c613dcfc8ae5",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "es_abc": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "37a466e21c3d2b1b6d670d1ec46b26ea5aa399f2822075a85b6f8ad9e89118c0",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "es_el_correo": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "283c3336e8525eb768cb12369c41d4bfcc0c27fc403097f861c2696278519a99",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "es_el_pais": {
+        "access_classes_observed": {
+          "forbidden": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "forbidden",
+            "body_sha256": "553fbbd429f1a20576c9a54843e7300cddab53d00f564111cac62649214f0656",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      }
+    },
+    "direct_opt_outs": 0,
+    "holds": {
+      "ACCESS_CONTROL_OBSERVED": 3
+    },
+    "legal_review_holds": 0,
+    "outlets_with_access_control": [
+      "cr_diario_extra",
+      "do_el_caribe",
+      "es_el_pais"
+    ],
+    "outlets_with_applicable_disallow": [
+      "ec_el_universo"
+    ],
+    "requests_stopped_by_access_control": 3,
+    "requests_under_research_override": 1,
+    "semantics": "robots-decision/2"
+  },
+  "policy_version": "canary/2026-10-09.1",
+  "refused": {
+    "DEFERRED:robots_unreachable": 3,
+    "DENIED:access_control_observed": 3,
+    "DENIED:canary_budget_exhausted": 3
+  },
+  "requests": {
+    "by_outlet": {
+      "cr_diario_extra": {
+        "item": 0,
+        "other": 3
+      },
+      "cr_la_nacion": {
+        "item": 4,
+        "other": 5
+      },
+      "cu_5_de_septiembre": {
+        "item": 0,
+        "other": 1
+      },
+      "cu_havanatimes": {
+        "item": 4,
+        "other": 6
+      },
+      "cu_juventud_rebelde": {
+        "item": 4,
+        "other": 5
+      },
+      "cu_periodico26": {
+        "item": 0,
+        "other": 1
+      },
+      "cu_trabajadores": {
+        "item": 4,
+        "other": 5
+      },
+      "do_el_caribe": {
+        "item": 0,
+        "other": 1
+      },
+      "do_el_nacional": {
+        "item": 4,
+        "other": 2
+      },
+      "do_hoy": {
+        "item": 4,
+        "other": 2
+      },
+      "do_listin_diario": {
+        "item": 4,
+        "other": 4
+      },
+      "ec_el_comercio": {
+        "item": 4,
+        "other": 3
+      },
+      "ec_el_mercurio": {
+        "item": 4,
+        "other": 2
+      },
+      "ec_el_universo": {
+        "item": 4,
+        "other": 4
+      },
+      "ec_expreso": {
+        "item": 4,
+        "other": 2
+      },
+      "ec_la_republica_ec": {
+        "item": 4,
+        "other": 2
+      },
+      "ec_primicias": {
+        "item": 4,
+        "other": 4
+      },
+      "es_abc": {
+        "item": 4,
+        "other": 2
+      },
+      "es_el_correo": {
+        "item": 4,
+        "other": 3
+      },
+      "es_el_pais": {
+        "item": 0,
+        "other": 1
+      }
+    },
+    "item": 60,
+    "other": 58,
+    "total": 118
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "response_classes": {
+    "200": 98,
+    "302": 2,
+    "403": 3,
+    "404": 4
+  },
+  "run_id": "acq1-20261009T181755339846Z-191f140862b7",
+  "schedule_policy_version": "canary/2026-10-08.1",
+  "schema": "coprepan-canary-receipt/v1",
+  "started_at": "2026-10-09T18:17:55.339846Z",
+  "status": "COMPLETE",
+  "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+}
