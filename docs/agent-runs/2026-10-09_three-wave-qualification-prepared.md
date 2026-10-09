@@ -139,8 +139,14 @@ Changed: `scripts/canary_operator.py` (rewritten along the ten findings, same in
 `docs/architecture/INDEX.md`. Nothing moved or deleted; no baseline, evidence, registry, policy or rule touched.
 Reference repositories, workspace and preservation root not touched.
 
-Against AGENTS §5, for the record: once more in this run a shell command carried an **empty** here-document (the dry-run command of §4),
-no content, no effect. That is the third such slip across the three runs of today; the rule is still enforced only by my care. The hook
+**An eleventh defect** was found by starting the repaired tool for real from a non-terminal shell (`< /dev/null`): on Windows
+`isatty()` is true for the `NUL` device, so the `ARM` prompt was shown. Fixed (`is_console` reads the console mode; regression test).
+Why it matters for the report above: the "refused from a pipe or a file" claim held for pipes and files and did not hold for `NUL` until
+this fix. The tool ran twice for real this way; both times it stopped before arming anything.
+
+Against AGENTS §5, for the record: in this run a shell command carried an **empty** here-document once (the dry-run of §4) and, later,
+a **real** one (appending the regression test of defect 11 to `tests/test_canary_operator.py`, with `cat >> … <<'PYEOF'`); the content
+was checked by running the tests. That is four slips across the three runs of today; the rule is still enforced only by my care. The hook
 CO.RA.PAN uses would make it mechanical and is still only proposed.
 
 ## Operator report

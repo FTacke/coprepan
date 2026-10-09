@@ -308,3 +308,17 @@ def test_the_test_summary_counts_a_pass_only_when_nothing_failed_or_errored():
     for bad in ("3 failed, 1397 passed in 3.0s", "1 error in 0.5s", "1380 passed, 2 errors in 1s", "no tests ran in 0.1s", ""):
         with pytest.raises(tool.Stop):
             tool.test_summary(bad)
+
+
+def test_the_null_device_and_a_file_are_not_a_terminal(tmp_path, monkeypatch):
+    """Found by starting the tool with `< /dev/null`: on Windows `isatty()` is true for NUL, and the prompt was shown."""
+    import os
+    import sys
+
+    for source in (os.devnull, tmp_path / "answers.txt"):
+        Path(source).write_text("ARM\n", encoding="utf-8") if source != os.devnull else None
+        with open(source, "r", encoding="utf-8") as stream:
+            monkeypatch.setattr(sys, "stdin", stream)
+            assert tool.is_console(stream) is False
+            with pytest.raises(tool.Stop, match="person at a terminal"):
+                tool.typed_by_a_person("? ")

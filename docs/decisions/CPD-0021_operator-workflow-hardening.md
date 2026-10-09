@@ -35,6 +35,7 @@ the one place where a defect leaves `external_acquisition` on.
 | 8 | no tests on the disarmed tree (runbook §6) | the disarming was never held against the suite |
 | 9 | `date.today()` read three times | a run over midnight would have looked for another baseline file |
 | 10 | the tool could not be tested without the real checkout | the reason it was untested |
+| 11 | found by starting the repaired tool from a shell with `< /dev/null`: on Windows `isatty()` is true for the `NUL` device, so the `ARM` prompt was shown to a stream that can only answer empty | harmless (an empty answer arms nothing) but the check did not check what it claimed; `is_console` now reads the Windows console mode |
 
 ## Decision
 

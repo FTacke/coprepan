@@ -77,10 +77,25 @@ def set_switch(state: str, policy: Path | None = None) -> None:
     path.write_bytes(SWITCH.sub(lambda m: f"{m.group(1)}{state}{m.group(3)}", data).encode("utf-8"))
 
 
+def is_console(stream) -> bool:
+    """Whether a stream is a terminal. ``isatty()`` alone is not enough on Windows, where it is true for the
+    ``NUL`` device (found by starting the tool with ``< /dev/null``): there the console mode must be readable.
+    """
+    if stream is None or not stream.isatty():
+        return False
+    if os.name == "nt" and stream is sys.stdin:
+        import ctypes
+
+        mode = ctypes.c_uint32()
+        handle = ctypes.windll.kernel32.GetStdHandle(-10)         # STD_INPUT_HANDLE
+        return bool(ctypes.windll.kernel32.GetConsoleMode(handle, ctypes.byref(mode)))
+    return True
+
+
 def typed_by_a_person(prompt: str, stdin=None) -> str:
     """One line typed at a terminal. Refused when there is no terminal: this is where a person is asked."""
     stdin = sys.stdin if stdin is None else stdin
-    if stdin is None or not stdin.isatty():
+    if not is_console(stdin):
         raise Stop("this step needs a person at a terminal: no confirmation is accepted from a pipe, a file or a script")
     print(prompt, end="", flush=True)
     return stdin.readline().strip()
