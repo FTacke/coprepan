@@ -82,6 +82,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0021](../decisions/CPD-0021_operator-workflow-hardening.md) | The operator's canary workflow after its review: scope shown before `ARM`, disarming read back from file, HEAD and remote, `--disarm-only`, an incomplete run keeps its evidence | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0020 §7 |
 | [CPD-0022](../decisions/CPD-0022_delegated-operator-authorisation.md) | Delegated operator authorisation: a direction with a design; the history of the refusal | `SUPERSEDED` by CPD-0023 |
 | [CPD-0023](../decisions/CPD-0023_delegated-operator-authorisation-in-force.md) | Delegated operator authorisation in force: the authorisation record (`config/operator_authorizations/`), `src/coprepan/delegation.py`, the delegated mode of `scripts/canary_operator.py`; the interactive mode unchanged | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0024](../decisions/CPD-0024_wave-limits-cap-the-canary-budget.md) | A wave's limits cap the canary budget; a canary under a wave may be one to fifteen outlets | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 

@@ -134,17 +134,32 @@ class CanaryBudget:
 # --- what is selected ---------------------------------------------------------------------------------
 
 
-def canary_budget(outlets: int) -> CanaryBudget:
+def canary_budget(outlets: int, limits: Mapping[str, int] | None = None) -> CanaryBudget:
     """The budget of a canary of ``outlets`` outlets. Five outlets: the budget of CPD-0016. A wider
     canary (CPD-0019) keeps every per-outlet limit except the item budget, which is what the hard
     ceiling of item requests leaves for each outlet — more outlets, fewer pages of each.
+
+    ``limits`` are those of a wave of a delegated operator authorisation (CPD-0024). They can only
+    **lower** the budget: each limit of the canary is the smaller of the ordinary one and the wave's.
+    Under them a canary may also be smaller than five outlets — one to fifteen —, because a wave
+    names its outlets exactly and its limits bound what is asked of them.
     """
-    if outlets == 5:
-        return CanaryBudget()
-    if not 6 <= outlets <= 15:
-        raise CanaryStopped("a canary is five outlets, or six to fifteen")
-    per_outlet = min(CanaryBudget().item_requests_per_outlet, (HARD_ITEM_REQUESTS - 4) // outlets)
-    return CanaryBudget(outlets=outlets, item_requests_total=per_outlet * outlets, item_requests_per_outlet=per_outlet)
+    default = CanaryBudget()
+    if limits is None:
+        if outlets == 5:
+            return default
+        if not 6 <= outlets <= 15:
+            raise CanaryStopped("a canary is five outlets, or six to fifteen")
+        per_outlet = min(default.item_requests_per_outlet, (HARD_ITEM_REQUESTS - 4) // outlets)
+        return CanaryBudget(outlets=outlets, item_requests_total=per_outlet * outlets, item_requests_per_outlet=per_outlet)
+    if not 1 <= outlets <= 15:
+        raise CanaryStopped("a canary under an authorised wave is one to fifteen outlets")
+    ordinary = default.item_requests_per_outlet if outlets <= 5 else min(default.item_requests_per_outlet, (HARD_ITEM_REQUESTS - 4) // outlets)
+    per_outlet = min(ordinary, limits["item_requests_per_outlet"])
+    total = min(per_outlet * outlets, limits["item_requests_total"], HARD_ITEM_REQUESTS)
+    other = min(default.other_requests_per_outlet, limits["other_requests_per_outlet"])
+    return CanaryBudget(outlets=outlets, item_requests_total=total, item_requests_per_outlet=min(per_outlet, total), other_requests_per_outlet=other,
+                        expansion_requests_reserved_per_outlet=min(default.expansion_requests_reserved_per_outlet, other))
 
 
 def select_channels(outlet: Mapping[str, Any], disabled: Sequence[str], limit: int,
@@ -797,6 +812,14 @@ def _authorization(path: Path, wave: str, budget: CanaryBudget, outlet_ids: Sequ
         raise CanaryStopped(f"the operator authorisation does not cover this canary: {refusal}") from refusal
 
 
+def _wave_limits(path: Path, wave: str) -> dict[str, int]:
+    """The request limits of a wave of an authorisation record: what caps the canary's budget (CPD-0024)."""
+    try:
+        return dict(delegation.wave_of(delegation.load(path), wave)["limits"])
+    except delegation.AuthorizationError as refusal:
+        raise CanaryStopped(f"the operator authorisation cannot be read for its limits: {refusal}") from refusal
+
+
 def _operator_authorization(baseline: Mapping[str, Any]) -> dict[str, Any]:
     """Who armed and froze, as the start state and the receipt state it: the delegated record the baseline pins,
     or the interactive operator the freeze names. Never a guess — it is read from the frozen baseline.
@@ -853,10 +876,11 @@ def main(argv: list[str] | None = None) -> int:
 
     if arguments.command in ("verify", "measure"):
         return _after_the_run(arguments, environment, registered)
-    budget = canary_budget(len(set(arguments.outlet))) if arguments.command in ("baseline", "run") else None
+    budget = None
     if arguments.command == "baseline":
         if (arguments.authorization is None) != (arguments.wave is None):
             raise CanaryStopped("--authorization and --wave are given together or not at all")
+        budget = canary_budget(len(set(arguments.outlet)), None if arguments.authorization is None else _wave_limits(arguments.authorization, arguments.wave))
         authorization = None if arguments.authorization is None else _authorization(
             arguments.authorization, arguments.wave, budget, arguments.outlet, acquisition_policy)
         root = storage_roots.resolve_root("PRESERVATION", env=environment)
@@ -891,6 +915,8 @@ def main(argv: list[str] | None = None) -> int:
     # A baseline built under a delegated authorisation (CPD-0023) is run only while the record still says what the
     # baseline pinned: the record is read again, checked again, and its block enters the comparison like every pin.
     pinned_authorization = (baseline.get("canary") or {}).get("authorization")
+    budget = canary_budget(len(set(arguments.outlet)), None if pinned_authorization is None else _wave_limits(
+        CHECKOUT / str(pinned_authorization.get("record")), str(pinned_authorization.get("wave"))))
     authorization = None if pinned_authorization is None else _authorization(
         CHECKOUT / str(pinned_authorization.get("record")), str(pinned_authorization.get("wave")), budget, arguments.outlet, acquisition_policy,
         except_manifest=baseline["manifest_sha256"])

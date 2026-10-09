@@ -170,15 +170,16 @@ def disarm(run, repository: Path, policy: Path) -> list[str]:
     return problems
 
 
-def scope_summary(repository: Path, outlets: list[str]) -> dict:
-    """What a canary of these outlets would be, before anything is armed (no request). Refuses an unknown or unregistered outlet and a wrong count."""
+def scope_summary(repository: Path, outlets: list[str], limits: dict | None = None) -> dict:
+    """What a canary of these outlets would be, before anything is armed (no request). Refuses an unknown or unregistered outlet and a wrong count.
+    ``limits``: those of the wave of a delegated authorisation; they cap the budget and can only lower it (CPD-0024)."""
     from coprepan import canary_driver, candidate_filter, policy as policy_module, registry
 
     unique = sorted(set(outlets))
     if len(unique) != len(outlets):
         raise Stop("an outlet is named twice")
     try:
-        budget = canary_driver.canary_budget(len(unique))
+        budget = canary_driver.canary_budget(len(unique), limits)
         registered = registry.load_registry(repository / "config" / "outlet_registry.json")
         decided = policy_module.load_policy(repository / "config" / "acquisition_policy.json")
         rules = candidate_filter.load_rules(repository / "config" / "candidate_rules.json")
@@ -226,7 +227,7 @@ def delegated_scope(run, repository: Path, record_path: Path, wave_label: str, t
                 raise Stop(f"{wave_label}: the registration proposal is not the one the authorisation names (path or digest)")
             if not set(registration["only"]) <= set(wave["outlets"]):
                 raise Stop(f"{wave_label}: the registration names outlets outside the wave")
-        scope = scope_summary(repository, list(wave["outlets"]))
+        scope = scope_summary(repository, list(wave["outlets"]), dict(wave["limits"]))
         block = delegation.block_for(repository / relative, wave_label, repository=repository, outlets=scope["outlets"], budget=scope["budget"],
                                      total_requests_ceiling=scope["total_request_ceiling"], policy_version=scope["policy_version"], today=today)
     except delegation.AuthorizationError as refusal:

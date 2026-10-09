@@ -117,7 +117,7 @@ def fake_runner(world, fail=(), interrupt=None, tests_output="1400 passed, 8 ski
             if "--authorization" in command:
                 from coprepan import canary_driver, delegation
                 named = [command[i + 1] for i, word in enumerate(command) if word == "--outlet"]
-                budget = canary_driver.canary_budget(len(named))
+                budget = canary_driver.canary_budget(len(named), delegation.wave_of(delegation.load(Path(option("--authorization"))), option("--wave"))["limits"])
                 pinned = {"authorization": delegation.block_for(
                     Path(option("--authorization")), option("--wave"), repository=world.work, outlets=named, budget=budget.as_record(),
                     total_requests_ceiling=budget.total_requests_ceiling, policy_version=json.loads(

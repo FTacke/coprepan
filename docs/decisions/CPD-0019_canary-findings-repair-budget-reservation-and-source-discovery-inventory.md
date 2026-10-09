@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0024](CPD-0024_wave-limits-cap-the-canary-budget.md): under a wave of a delegated operator authorisation a canary may be one to fifteen outlets and its budget is capped by the wave's limits. This record is otherwise unchanged |
 | Decided by | the operator, in the brief of the integrated discovery, source-recovery and acquisition-qualification run of 2026-10-09, which ordered the findings F1–F7 repaired, a deterministic strategy for budget reservation and sitemap-index exploration chosen by the run, a versioned source-discovery inventory, and a second and an extended canary prepared up to the operator's gates; technical choices were delegated to the run and are recorded here. Subject to the operator's review |
 | Kind | architecture · policy (canary scope) |
 | Scope | discovery parser, robots evidence, access-control classifier, item planning, canary budgets and accounting, receipt scope, the acquisition policy file of the canary, analytic status vocabulary of source discovery, the two canaries that follow |

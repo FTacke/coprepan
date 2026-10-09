@@ -178,6 +178,49 @@ def test_the_driver_stops_when_the_record_does_not_cover_the_canary(tmp_path, mo
     assert canary_driver._authorization(home / "r.json", "wave-t", FIVE, OUTLETS, policy) != before
 
 
+# --- a wave's limits cap the budget (CPD-0024) ------------------------------------------------------------------
+
+
+def test_a_waves_limits_can_only_lower_the_budget_and_allow_a_canary_smaller_than_five():
+    budget = canary_driver.canary_budget
+    wave_b = {"item_requests_total": 100, "item_requests_per_outlet": 12, "other_requests_per_outlet": 8, "total_requests_ceiling": 164}
+    wave_c1 = {"item_requests_total": 90, "item_requests_per_outlet": 10, "other_requests_per_outlet": 8, "total_requests_ceiling": 162}
+    assert budget(8, wave_b) == budget(8) and budget(9, wave_c1) == budget(9)               # the waves already run: the same budget
+    two = budget(2, {"item_requests_total": 20, "item_requests_per_outlet": 10, "other_requests_per_outlet": 8, "total_requests_ceiling": 36})
+    assert (two.outlets, two.item_requests_per_outlet, two.item_requests_total, two.other_requests_per_outlet, two.total_requests_ceiling) == (2, 10, 20, 8, 36)
+    generous = {"item_requests_total": 10_000, "item_requests_per_outlet": 500, "other_requests_per_outlet": 99, "total_requests_ceiling": 99_999}
+    for outlets in range(1, 16):                                                               # a generous wave raises nothing
+        capped = budget(outlets, generous)
+        assert capped.item_requests_per_outlet <= 16 and capped.item_requests_total <= canary_driver.HARD_ITEM_REQUESTS and capped.other_requests_per_outlet == 8
+    tight = budget(5, {"item_requests_total": 7, "item_requests_per_outlet": 3, "other_requests_per_outlet": 2, "total_requests_ceiling": 17})
+    assert (tight.item_requests_per_outlet, tight.item_requests_total, tight.other_requests_per_outlet, tight.expansion_requests_reserved_per_outlet) == (3, 7, 2, 2)
+    for outlets in (0, 16):
+        with pytest.raises(canary_driver.CanaryStopped):
+            budget(outlets, generous)
+    for outlets in (1, 2, 4, 16):                                                              # without a wave nothing changed: five, or six to fifteen
+        with pytest.raises(canary_driver.CanaryStopped):
+            budget(outlets)
+    # the tracked records: every wave's capped budget is covered by its own limits
+    for path in sorted((harness.REPO / delegation.RECORDS).glob("*.json")):
+        for wave in delegation.load(path)["waves"]:
+            capped = budget(len(wave["outlets"]), wave["limits"])
+            assert all(capped.as_record()[key] <= wave["limits"][key] for key in ("item_requests_total", "item_requests_per_outlet", "other_requests_per_outlet"))
+            assert capped.total_requests_ceiling <= wave["limits"]["total_requests_ceiling"]
+
+
+def test_a_delegated_canary_of_two_outlets_runs_under_its_waves_limits(world):  # noqa: F811
+    record = a_record()
+    record["waves"].append({"label": "wave-two", "outlets": OUTLETS[:2], "registration": None, "canaries": 1, "note": "",
+                            "limits": {"item_requests_total": 20, "item_requests_per_outlet": 10, "other_requests_per_outlet": 8, "total_requests_ceiling": 36}})
+    commission(world, record)
+    assert delegate(world, wave="wave-two") == 0
+    command = world.seen["baseline"][0]["command"]
+    assert sorted(command[i + 1] for i, word in enumerate(command) if word == "--outlet") == sorted(OUTLETS[:2])
+    harness.assert_disarmed(world)
+    world.calls.clear()
+    assert harness.operate(world, outlets=OUTLETS[:2]) == 1 and world.calls == []                # interactively, two outlets are still not a canary
+
+
 # --- the operator tool, delegated ------------------------------------------------------------------------------
 
 
@@ -338,8 +381,7 @@ def test_an_edited_unpushed_or_invalid_record_is_refused_before_arming(world):  
 
 @pytest.mark.parametrize("change, wave", [
     (lambda r: r["waves"][0].update(outlets=[*OUTLETS[:4], "ar_clarin"]), "wave-t"),               # an outlet that is not registered
-    (lambda r: r["waves"][0]["limits"].update(item_requests_per_outlet=15), "wave-t"),             # the canary's budget exceeds the limit
-    (lambda r: r["waves"][0]["limits"].update(total_requests_ceiling=119), "wave-t"),
+    (lambda r: r["waves"][0]["limits"].update(total_requests_ceiling=119), "wave-t"),                # the one limit the cap does not lower (CPD-0024): refused
     (lambda r: r.update(policy_versions=["canary/2020-01-01.1"]), "wave-t"),
     (lambda r: r.update(valid_until="2026-10-09"), "wave-t"),                                      # out of date on the day of the run
     (lambda r: r["waves"][1]["registration"].update(proposal_sha256="0" * 64), "wave-r"),          # another proposal than the one named

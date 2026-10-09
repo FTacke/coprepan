@@ -532,6 +532,36 @@ def test_white_space_before_the_xml_declaration_does_not_make_a_feed_or_an_index
     assert discovery.PARSER_VERSION == "channel-parser/5"
 
 
+# --- the allow rules written from the listing pages preserved in wave C1 -----------------------------------
+
+
+@pytest.mark.parametrize("outlet_id, origin, articles, navigation", [
+    ("hn_criterio", "https://criterio.hn",
+     ["/la-ley-no-basta/", "/agrecasa-acumula-dictamenes-sin-que-se-concrete-clausura-definitiva-de-mina/",
+      "/17-congresistas-piden-a-marco-rubio-que-apoye-investigacion-internacional-sobre-la-masacre-de-campesinos-de-rigores/"],
+     ["/contacto", "/nosotros", "/quienes-somos", "/especiales", "/redes", "/donaciones/", "/politica-de-privacidad", "/category/actualidad/page/2/",
+      "/category/derechos-humanos/", "/category/actualidad/page/3580/", "/tag/honduras/", "/author/redaccion-criterio/"]),
+    ("pr_noticel", "https://noticel.com",
+     ["/ultima-hora/20261008/sequia-continua-disminuyendo-en-puerto-rico/", "/ultima-hora/20261009/la-junta-da-luz-verde-al-reglamento-de-salarios-del-sistema-de-rango-de-la-policia/"],
+     ["/auth/login", "/contact-us/", "/privacy-policy/", "/author/cmendez/", "/category/noticias/", "/category/ultima-hora/page/2/",
+      "/en/category/ultima-hora/", "/en/ultima-hora/20261009/an-english-item/", "/ultima-hora/", "/ultima-hora/20261008/"])])
+def test_the_listing_rules_qualify_the_articles_the_preserved_pages_named_and_none_of_their_navigation(outlet_id, origin, articles, navigation):
+    rules = candidate_filter.load_rules()[outlet_id]
+    listing = frozenset({f"{outlet_id}:ch:section_page_r001"})
+
+    def decide(path):
+        return candidate_filter.qualify({"candidate_id": f"{outlet_id}:cand:x", "outlet_id": outlet_id, "url_key": origin + path,
+                                         "first_channel_id": f"{outlet_id}:ch:section_page_r001"}, outlet_rules=rules, listing_channel_ids=listing)["decision"]
+
+    assert [decide(path) for path in articles] == ["QUALIFIED"] * len(articles)
+    assert "QUALIFIED" not in {decide(path) for path in navigation}
+    assert rules["version"] == f"{outlet_id}-candidate-rules/v1" and len(rules["allow_path_patterns"]) == 1
+
+
+def test_only_the_two_outlets_of_wave_c2_have_candidate_rules():
+    assert sorted(candidate_filter.load_rules()) == ["hn_criterio", "pr_noticel"]
+
+
 # --- F6: a channel that answers 404 is disabled, not replaced ---------------------------------------------
 
 

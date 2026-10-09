@@ -1,5 +1,18 @@
 {
   "schema": "coprepan-candidate-rules/v1",
-  "note": "Per-outlet URL rules for candidate qualification (src/coprepan/candidate_filter.py). Empty on purpose: the legacy system had no per-outlet URL rule that could be carried over, and none may be guessed from how an outlet is assumed to structure its URLs. An entry is added by review, per registered outlet, with a version: {\"<outlet_id>\": {\"version\": \"…\", \"reject_path_prefixes\": [], \"reject_path_patterns\": [], \"allow_path_patterns\": []}}.",
-  "outlets": {}
+  "note": "Per-outlet URL rules for candidate qualification (src/coprepan/candidate_filter.py). The legacy system had no per-outlet URL rule that could be carried over, and none may be guessed from how an outlet is assumed to structure its URLs. An entry is added by review, per registered outlet, with a version: {\"<outlet_id>\": {\"version\": \"…\", \"reject_path_prefixes\": [], \"reject_path_patterns\": [], \"allow_path_patterns\": []}}. The two entries of 2026-10-09 were written from the listing pages preserved in wave C1 (run acq1-20261009T151252138498Z-114b77603c1f) and checked against every link those pages named; the review is in docs/agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md.",
+  "outlets": {
+    "hn_criterio": {
+      "version": "hn_criterio-candidate-rules/v1",
+      "reject_path_prefixes": ["/category", "/tag", "/author", "/page"],
+      "reject_path_patterns": [],
+      "allow_path_patterns": ["^/[a-z0-9]+(-[a-z0-9]+){3,}/?$"]
+    },
+    "pr_noticel": {
+      "version": "pr_noticel-candidate-rules/v1",
+      "reject_path_prefixes": ["/category", "/author", "/auth", "/en"],
+      "reject_path_patterns": [],
+      "allow_path_patterns": ["^/ultima-hora/[0-9]{8}/[a-z0-9-]+/?$"]
+    }
+  }
 }

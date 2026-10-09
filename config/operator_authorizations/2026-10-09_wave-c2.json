@@ -1,0 +1,84 @@
+{
+  "schema": "coprepan-operator-authorization/v1",
+  "authorization_id": "DOA-2026-10-09-2",
+  "kind": "DELEGATED_OPERATOR_AUTHORIZATION",
+  "issued_on": "2026-10-09",
+  "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+  "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+  "source": {
+    "form": "The same written brief as DOA-2026-10-09-1 (given by the operator in the agent session on 2026-10-09, titled 'CO.PRE.PAN 3.0 - Autonomous Acquisition: Safe Recovery, Delegated Operator & Three-Wave Execution'), its section 7 on wave C2, which asks for 'a new versioned C2 scope'. This record is that scope. It is written by the commissioned agent from the brief after wave C1 had shown which outlets it concerns; it is the agent's transcription of the operator's commission, not a document signed by the operator, and it grants nothing the brief does not.",
+    "authorising_clauses": [
+      "Phase C2 - Artikelaufnahme aus HTML-Listings: Auch diese zweite Stufe wird durch den vorliegenden Auftrag ausdrücklich autorisiert, jedoch ausschließlich unter folgenden zusätzlichen Bedingungen.",
+      "Voraussetzungen: C1 hat reale Listing-Antworten konserviert. Die betroffenen Outlets sind eindeutig identifiziert. Ihre Candidate-Allow-Regeln wurden auf den konservierten Antworten entwickelt. Die Regeln wurden technisch getestet und fachlich anhand der sichtbaren Artikel- und Navigationsstruktur geprüft. Es liegen keine ungelösten Zugriffs- oder Policy-Probleme vor. Ein eigener Commit und eine neue Baseline werden verwendet. Die Artikel-Requests sind zusätzlich begrenzt.",
+      "Autorisierter Umfang: Nur die in C1 registrierten neun Outlets, und darunter nur diejenigen mit nachweislich qualifizierten HTML-Listing-Regeln. Maximal zehn zusätzliche Item-Requests je betroffenem Outlet, höchstens 90 zusätzliche Item-Requests für C2 insgesamt.",
+      "Für Discovery- und sonstige Nicht-Item-Requests gelten die bisherigen strengen Canary-Budgets. Eine zusätzliche oder erneute Discovery ist nur zulässig, soweit sie zur vorgesehenen C2-Qualifizierung erforderlich und innerhalb der geltenden Limits ausdrücklich abgedeckt ist.",
+      "Kein Crawling beliebiger weiterer Ressorts, Domains, Archivjahre oder zusätzlicher Zeitungen. Keine automatische Erweiterung auf weitere Publisher-Origins. Wenn die qualifizierten Regeln keine sinnvolle reale Artikelaufnahme ermöglichen, die Ursache dokumentieren, statt die Limits zu erhöhen.",
+      "Durchführung: neuer versionierter C2-Scope; Preflight; vollständige relevante Tests; neue Baseline und Freeze; begrenzte Live-Artikelaufnahme; Preservation; Verify; Replay; Evaluation; Disarming."
+    ]
+  },
+  "valid_until": "2026-10-10",
+  "policy_versions": [
+    "canary/2026-10-09.1"
+  ],
+  "actions_authorized": [
+    "turn external_acquisition on for exactly one canary of the wave and off again",
+    "run the tests on the arming commit, build the canary baseline of that commit and freeze it by its digest under this record",
+    "read again the registered channels of the wave's two outlets (their listing pages and, for hn_criterio, its feed) within the canary's non-item budget, because the candidates are re-qualified from what the listings name",
+    "request at most ten item pages per outlet that the outlet's reviewed allow rule of config/candidate_rules.json qualifies",
+    "preserve, verify, replay, measure, commit and push the evidence"
+  ],
+  "not_authorized": [
+    "any outlet other than the two of the wave; in particular not cu_14ymedio (its listing rule was developed and is not installed: an allow rule would narrow its feed to two sections, and its item budget would go to feed entries, not to the listing), not cu_cubanet and not ni_articulo66 (bot challenge on their robots files in C1: an unresolved access problem)",
+    "any section, category, archive year, domain or origin beyond the registered channels of the two outlets",
+    "any request beyond the wave's limits; raising a limit because a rule yields little; a second canary of the wave",
+    "any request to an origin under a hold; no way around a bot challenge, a paywall, a registration wall or a robots decision",
+    "general production activation, a scheduled or repeated acquisition, a change of the acquisition policy other than the switch",
+    "any change to a frozen baseline, a receipt or a decision record of the past; any claim of a human confirmation"
+  ],
+  "holds_in_force": [
+    "hn_proceso_digital, ve_efecto_cocuyo: bot challenges of 2026-10-08 and 2026-10-09; not contacted",
+    "cu_cubanet, ni_articulo66: bot challenge on robots.txt in wave C1 (2026-10-09); not contacted",
+    "a hold the driver derives from a preserved answer of any run applies at once and is not lifted by this record"
+  ],
+  "technical_gates": [
+    "clean working tree and HEAD equal to origin/main before arming",
+    "this record tracked, touched by exactly one commit, unmodified and pushed",
+    "both outlets registered; their allow rules committed in config/candidate_rules.json and pinned by the baseline",
+    "the full test suite passes on the arming commit",
+    "the baseline is READY_TO_FREEZE with nothing blocking, pins this record's id and digest and the wave, and is frozen once",
+    "the canary's budget is capped by the wave's limits (CPD-0024)",
+    "preflight READY; the driver's own refusals (drift, pushed HEAD, empty spool, budgets, robots, holds) unchanged",
+    "verification after the run: read-back, fixity, replay without network, receipt re-derived from evidence, budget respected",
+    "disarming read back in the file, in HEAD and on origin/main"
+  ],
+  "stop_conditions": [
+    "any technical gate not met",
+    "the canary is not exactly the wave's outlets, or a limit of its budget exceeds the wave's",
+    "the policy version is not one this record names, or the record is out of date",
+    "the wave already has a frozen baseline",
+    "a refusal by the agent environment's own permission layer: recorded, not worked around"
+  ],
+  "disarming": "After the canary, whatever its outcome, external_acquisition is set to disabled, committed and pushed, and the state is read back from the file, HEAD and origin/main. A run that cannot show this ends as not disarmed, never as done.",
+  "decisions": [
+    "hn_criterio: an article is a root-level slug of at least four hyphen-separated words; category, tag, author and paging paths are rejected. On the three preserved pages this qualifies 24 links, all articles, and none of the 23 others; an article with a shorter slug is missed, which is the safe side",
+    "pr_noticel: an article is /ultima-hora/<eight digits>/<slug>/; category, author, login and the English tree are rejected. On the three preserved pages this qualifies 15 links, all articles, and none of the 95 others"
+  ],
+  "waves": [
+    {
+      "label": "wave-c2",
+      "outlets": [
+        "hn_criterio",
+        "pr_noticel"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 20,
+        "item_requests_per_outlet": 10,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 36
+      },
+      "canaries": 1,
+      "note": "The brief allows ten additional item requests per affected outlet and at most 90 in all; two outlets are affected and qualified, so the wave's total is 20. other_requests_per_outlet is the canary budget in force; total_requests_ceiling is 20 + 2 x 8."
+    }
+  ]
+}

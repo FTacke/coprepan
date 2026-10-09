@@ -180,3 +180,88 @@ Applied from `config/registry_review/wave_c_proposal_2026-10-09.json` (digest pi
 registered**, 69 proposed, 373 channels; record `config/registry_review/wave_c_registration_2026-10-09.json`; the policy is
 unchanged. The review package's naming convention would spell two of the new ids differently (`hn_criterio_hn`,
 `ni_articulo_66`); they are registered under the ids of the proposal, and the package only recommends.
+
+## Phase C1 — nine outlets new to the registry
+
+| | |
+|---|---|
+| Authorisation | `DOA-2026-10-09-1`, wave `wave-c1`, mode `DELEGATED_OPERATOR_AUTHORIZATION` (record SHA-256 as in wave B). Nothing typed, nothing simulated |
+| Arming commit | `25a182614ed69bb035c0b9d12286acd391535023` — tests on it: **1500 passed** |
+| Baseline | `docs/canary/BASELINE_FROZEN_2026-10-09_wave-c1.json`, digest `455b04bea0e46cb85b0ab96db3ec1114714267dc37b6555b0066b717545caf62`, commit `9cd3f3f` |
+| Run | `acq1-20261009T151252138498Z-114b77603c1f`, 17:12:52–17:22:19 local; receipt `COMPLETE`; driver `canary-driver/5`, parser `channel-parser/5` |
+| Evidence | commit `0d53ca3`, `docs/canary/evidence/acq1-20261009T151252138498Z-114b77603c1f/` |
+| Disarming | commit `fe63275df537707fcdca6ed1de162f4b11acf85d`; read independently: `disabled` in the file, in `HEAD`, on `origin/main`; tree clean; tests on the disarmed tree **1500 passed** |
+
+**Requests:** 73 real requests — 47 item, 26 other; limits: 90 item requests (10 per outlet), 8 other per outlet. Answers: 62 ×
+200, 2 × 403, 1 × 404, 1 × 503. Refused before transport: 4 (`access_control_observed`), 5 (`canary_budget_exhausted`).
+**Verification `PASS`** on all eight checks: 231 bodies read back and verified, 66 `RAW_PRESERVED` = 66 verified = 66 expected,
+41 extractions replayed without network with 0 differing, receipt re-derived, 73 transport calls = 73 derived, nothing pending,
+budget respected. 2 026 480 bytes preserved.
+
+| Outlet | Channel documents | Entries → candidates | Item requests | Article pages (200), preserved and replayed | Result |
+|---|---|---|---|---|---|
+| `ar_el_tribuno` | two feeds 200 (25 + 25) | 50 → 40 | 10 | **10** | **`ACQUISITION_VERIFIED`** |
+| `bo_opinion` | two feeds 200 (20 + 20) | 40 → 37 | 10 | **10** | **`ACQUISITION_VERIFIED`** |
+| `cu_14ymedio` | feed 200 (148); section page 200 (122 links) | 270 → 197: 148 qualified (feed), **47 waiting** (listing) | 10 | **9** (one 503) | **`ACQUISITION_VERIFIED`**; the feed also carries sponsored blog entries (one of the nine is an advertisement for a crypto exchange) |
+| `hn_criterio` | feed 200 (5), read under `ALLOW_RESEARCH_OVERRIDE` (`Disallow: /feed/$`); category page 200 and **two further pages by numbered pagination** (90 + 92 + 93 links) | 280 → 54: 5 qualified (feed), **47 waiting** (listing) | 5 | **5** | **`ACQUISITION_VERIFIED`** (exactly the five the feed lists) |
+| `ni_nicaragua_investiga` | `robots.txt` 404 (`ROBOTS_UNAVAILABLE`); feed 200 (13) | 13 → 13 | 10 requests for 5 pages; 5 further refused by the budget | **5** | **`ACQUISITION_VERIFIED`**; feed links carry `utm_` parameters that the site redirects, and every hop is a request |
+| `uy_montevideo_portal` | two feeds 200 (8 + 52) | 60 → **1** | 2 requests | 1 | not verified: **finding F12**, below |
+| `pr_noticel` | category page 200 and two further pages (234 + 233 + 233 links) | 700 → 112: **110 waiting**, 2 rejected | 0 | 0 | as designed: a listing is its only channel; preserved, nothing requested |
+| `cu_cubanet` | `robots.txt` **403, a browser challenge** | — | 0 (2 channel documents refused) | 0 | **hold**; one request was made and nothing after it |
+| `ni_articulo66` | `robots.txt` **403, a browser challenge** | — | 0 (2 refused) | 0 | **hold**; one request was made and nothing after it |
+
+Body text under the experimental baseline extractor (a measurement of the extractor, not of the pages): `ar_el_tribuno` median
+2 936 characters, `bo_opinion` 1 919, `ni_nicaragua_investiga` 4 734, `uy_montevideo_portal` 3 200; `cu_14ymedio` 719 and
+`hn_criterio` 314 — **the preserved pages of those two are full article pages** (22 to 111 paragraph elements each; read from the
+packs), so the short text is the extractor's, and is material for Phase 3, not a doubt about the acquisition.
+
+**New in this wave:** 5 outlets with article pages preserved, verified and replayed, all new to the project; **ar, cu and hn**
+had no verified outlet before (bo and ni did, from waves A and B). Three listing outlets have real listing answers preserved
+(8 pages in all).
+
+### What the wave qualified, as the brief asked
+
+| Asked | Result |
+|---|---|
+| official RSS catalogues, section and regional feeds | the front-page and regional feeds of El Tribuno (Salta) and Opinión (Cochabamba) yield articles; Montevideo Portal's two `anxml.aspx` feeds parse (60 entries) and fail at identity (F12) |
+| HTML archives | `ni_articulo66`'s yearly archive and `cu_cubanet`'s list were **not reached**: both origins challenge even `robots.txt` |
+| numbered pagination | **exercised on real servers for the first time**: `/category/…/page/2/` and `/page/3/` followed for `hn_criterio` and `pr_noticel` within the reserved expansion budget (2 each) |
+| dates | not evaluated from these pages in this run |
+| candidate filter | every link of a listing waited (204 candidates); nothing a listing named was requested |
+| navigation links | on the preserved pages 23 of 47 (`hn_criterio`), 95 of 110 (`pr_noticel`) and 27 of 47 (`cu_14ymedio`) waiting links are navigation, corporate pages, video or paging — the reason a listing needs a rule |
+
+### Findings of wave C1
+
+| | Finding | Status |
+|---|---|---|
+| F12 | `uy_montevideo_portal`'s feeds link articles as `auc.aspx?<number>`: a query without a parameter name. The URL key drops it, so 60 entries are **one candidate** | not repaired: it needs a URL rule that can keep a nameless query, i.e. a new URL-key rule version for that outlet, with its own tests. Recorded for the next run |
+| F13 | feed links with `utm_` parameters cost two requests per article where the site redirects them | by design (a hop is a request); a candidate could be requested by its key instead — a change to weigh, not made |
+| — | two more origins answer `robots.txt` with a browser challenge (403): the classifier of F2 recognised a third product | held; four challenged origins in all now |
+| — | `canary-driver/5` (F9) and `channel-parser/5` (F10) were live: no feed of this wave answered with HTML or leading white space, so neither was exercised on a real server | open |
+
+## Preparing C2 — the allow rules, written from the preserved pages
+
+The eight listing pages of C1 were read from the packs (copies in the session scratchpad, nothing fetched). For each outlet
+every waiting candidate was sorted by eye into article and not-article from the visible structure of the address and the page,
+and a rule was written and applied to all of them offline:
+
+| Outlet | Rule (`allow_path_patterns`) | Waiting in C1 | Qualified under the rule | Not qualified | Checked |
+|---|---|---|---|---|---|
+| `pr_noticel` | `^/ultima-hora/[0-9]{8}/[a-z0-9-]+/?$` | 110 | 15 — all articles (`/ultima-hora/20261008/…`, `/ultima-hora/20261009/…`) | 95: categories (58), authors (29), paging (2), the English tree (3), login, contact, privacy (3) | no article among the 95; no non-article among the 15 |
+| `hn_criterio` | `^/[a-z0-9]+(-[a-z0-9]+){3,}/?$` (a root-level slug of at least four words) | 47 | 24 — all articles | 23: categories and paging (16), `/contacto`, `/nosotros`, `/quienes-somos`, `/especiales`, `/redes`, `/donaciones/`, `/politica-de-privacidad` | as above. The rule is a heuristic of this site's addresses: an article with a slug of three words or fewer is missed, which errs on the safe side |
+| `cu_14ymedio` | `^/(cuba\|internacional)/[a-z0-9-]+_1_[0-9]+[.]html$`, rejecting the terms page | 47 | 20 — all articles | 27: sections, topics, corporate pages, four videos (`_7_`), the terms page | **developed and not installed** — see below |
+
+**Which outlets C2 concerns, and why not the third.** `pr_noticel` and `hn_criterio`: a qualified rule, no access or policy
+problem, and the listing is what the item budget would go to (`pr_noticel` has no other channel; `hn_criterio`'s feed has five
+entries, all fetched). `cu_14ymedio` is left out for two reasons that are facts of the design, not of the site: an allow rule
+applies to every candidate of the outlet, so it would narrow the outlet's **feed** to two sections — a content decision this
+run was not given —, and 138 qualified feed candidates are due before any listing candidate, so its ten requests would not
+test the listing route at all. `cu_cubanet` and `ni_articulo66` are held (an unresolved access problem, by the brief's own
+condition). The other four outlets of C1 have no listing channel.
+
+The two rules are in `config/candidate_rules.json` with versions, a regression test holds them against the addresses the
+preserved pages named, and the scope is its own record: `config/operator_authorizations/2026-10-09_wave-c2.json`
+(`DOA-2026-10-09-2`, wave `wave-c2`: two outlets, ten item requests each, 20 in all, the ordinary eight other requests each).
+A canary of two outlets under ten requests each needed one rule: a wave's limits cap the budget
+([CPD-0024](../decisions/CPD-0024_wave-limits-cap-the-canary-budget.md)); for waves B and C1 the capped budget equals the one
+they ran under.
