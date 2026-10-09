@@ -4818,7 +4818,8 @@
         "version": "cu_5_de_septiembre-url-rules/v1"
       },
       "web_origins": [
-        "https://www.5septiembre.cu"
+        "https://www.5septiembre.cu",
+        "https://5septiembre.cu"
       ]
     },
     {
@@ -5408,7 +5409,8 @@
         "version": "cu_periodico26-url-rules/v1"
       },
       "web_origins": [
-        "http://www.periodico26.cu"
+        "http://www.periodico26.cu",
+        "http://periodico26.cu"
       ]
     },
     {
@@ -9766,7 +9768,8 @@
         "version": "hn_radio_progreso-url-rules/v1"
       },
       "web_origins": [
-        "https://radioprogresohn.net"
+        "https://radioprogresohn.net",
+        "https://www.radioprogresohn.net"
       ]
     },
     {
@@ -9813,7 +9816,8 @@
         "version": "mx_animal_politico-url-rules/v1"
       },
       "web_origins": [
-        "https://www.animalpolitico.com"
+        "https://www.animalpolitico.com",
+        "https://animalpolitico.com"
       ]
     },
     {

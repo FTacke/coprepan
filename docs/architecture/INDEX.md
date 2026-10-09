@@ -84,6 +84,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0023](../decisions/CPD-0023_delegated-operator-authorisation-in-force.md) | Delegated operator authorisation in force: the authorisation record (`config/operator_authorizations/`), `src/coprepan/delegation.py`, the delegated mode of `scripts/canary_operator.py`; the interactive mode unchanged | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0024](../decisions/CPD-0024_wave-limits-cap-the-canary-budget.md) | A wave's limits cap the canary budget; a canary under a wave may be one to fifteen outlets | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0025](../decisions/CPD-0025_comprehensive-source-qualification.md) | Qualification of the whole source stock: dispositions by rule (`scripts/build_qualification_proposal.py`), registration amendments (`scripts/amend_registration.py`), nameless query in the URL key, scope of allow rules, `utm_` removal, waves of up to 24 outlets | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0026](../decisions/CPD-0026_identity-rebuild-after-url-rules-v2-classifier-3-and-origin-amendments.md) | Identity rebuild adopted after a URL-rule amendment; access-control/3; four origin amendments; the access-restriction review | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 

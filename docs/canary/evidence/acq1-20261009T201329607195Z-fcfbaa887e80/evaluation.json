@@ -1,0 +1,2159 @@
+{
+  "outlets": {
+    "pr_metro_puerto_rico": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 117
+      },
+      "channels": {
+        "pr_metro_puerto_rico:ch:rss_001": {
+          "candidates_listed": 58,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.metro.pr/arc/outboundfeeds/google-news-feed/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.metro.pr/arc/outboundfeeds/google-news-feed/?outputType=xml"
+            }
+          ],
+          "entries": 58,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 58,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "pr_metro_puerto_rico:ch:sitemap_001": {
+          "candidates_listed": 117,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.metro.pr/arc/outboundfeeds/sitemap/latest/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.metro.pr/arc/outboundfeeds/sitemap/latest/?outputType=xml"
+            }
+          ],
+          "entries": 117,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 117,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 3467,
+        "body_characters_median": 1872,
+        "body_characters_min": 1625,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1937,
+          "channel_id": "pr_metro_puerto_rico:ch:rss_001",
+          "final_url": "https://www.metro.pr/noticias/2026/10/09/abren-compuerta-en-carraizo-pero-que-pasa-con-la-plata/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.metro.pr/noticias/2026/10/09/abren-compuerta-en-carraizo-pero-que-pasa-con-la-plata/"
+        },
+        {
+          "body_characters": 3467,
+          "channel_id": "pr_metro_puerto_rico:ch:rss_001",
+          "final_url": "https://www.metro.pr/negocios/2026/10/09/fundacion-carlos-iii-de-espana-distingue-al-ingeniero-puertorriqueno-jose-domingo-perez-muniz/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.metro.pr/negocios/2026/10/09/fundacion-carlos-iii-de-espana-distingue-al-ingeniero-puertorriqueno-jose-domingo-perez-muniz/"
+        },
+        {
+          "body_characters": 1807,
+          "channel_id": "pr_metro_puerto_rico:ch:rss_001",
+          "final_url": "https://www.metro.pr/noticias/2026/10/08/isaias-podria-acercarse-a-categoria-3-antes-de-tocar-tierra/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.metro.pr/noticias/2026/10/08/isaias-podria-acercarse-a-categoria-3-antes-de-tocar-tierra/"
+        },
+        {
+          "body_characters": 1625,
+          "channel_id": "pr_metro_puerto_rico:ch:rss_001",
+          "final_url": "https://www.metro.pr/noticias/2026/10/09/mayaguez-bajo-advertencia-de-inundaciones-por-fuertes-lluvias/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.metro.pr/noticias/2026/10/09/mayaguez-bajo-advertencia-de-inundaciones-por-fuertes-lluvias/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "py_abc_color": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 155
+      },
+      "channels": {
+        "py_abc_color:ch:rss_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.abc.com.py/arc/outboundfeeds/rss/nacionales/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.abc.com.py/arc/outboundfeeds/rss/nacionales/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "py_abc_color:ch:sitemap_002": {
+          "candidates_listed": 55,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://api.diarioabc.com.py/storage/sitemaps/deportes-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://api.diarioabc.com.py/storage/sitemaps/deportes-sitemap.xml"
+            }
+          ],
+          "entries": 57,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 57,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4673,
+        "body_characters_median": 2707,
+        "body_characters_min": 1270,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 2951,
+          "channel_id": "py_abc_color:ch:rss_001",
+          "final_url": "https://www.abc.com.py/policiales/2026/10/09/pasajero-fallecio-de-un-infarto-durante-un-viaje-en-colectivo-de-asuncion-a-pilar/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.com.py/policiales/2026/10/09/pasajero-fallecio-de-un-infarto-durante-un-viaje-en-colectivo-de-asuncion-a-pilar/"
+        },
+        {
+          "body_characters": 1270,
+          "channel_id": "py_abc_color:ch:rss_001",
+          "final_url": "https://www.abc.com.py/nacionales/2026/10/08/fallecio-el-reconocido-medico-y-comediante-juan-vicente-bicho-aquino/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.com.py/nacionales/2026/10/08/fallecio-el-reconocido-medico-y-comediante-juan-vicente-bicho-aquino/"
+        },
+        {
+          "body_characters": 2463,
+          "channel_id": "py_abc_color:ch:rss_001",
+          "final_url": "https://www.abc.com.py/nacionales/2026/10/09/fernando-de-la-mora-denuncian-destrozos-en-avenida-santa-teresa/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.com.py/nacionales/2026/10/09/fernando-de-la-mora-denuncian-destrozos-en-avenida-santa-teresa/"
+        },
+        {
+          "body_characters": 4673,
+          "channel_id": "py_abc_color:ch:rss_001",
+          "final_url": "https://www.abc.com.py/economia/2026/10/09/una-hoja-de-ruta-para-la-aplicacion-de-la-ia-en-los-paises-en-desarrollo/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.com.py/economia/2026/10/09/una-hoja-de-ruta-para-la-aplicacion-de-la-ia-en-los-paises-en-desarrollo/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "py_adn_digital": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "py_adn_digital:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.adndigital.com.py/feed",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://www.adndigital.com.py/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    },
+    "py_la_nacion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 100
+      },
+      "channels": {
+        "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 3051,
+        "body_characters_median": 1850,
+        "body_characters_min": 1262,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1262,
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+          "final_url": "https://www.lanacion.com.py/mundo/2026/10/09/fuerte-sismo-de-magnitud-77-sacude-panama-y-provoca-panico/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.py/mundo/2026/10/09/fuerte-sismo-de-magnitud-77-sacude-panama-y-provoca-panico/"
+        },
+        {
+          "body_characters": 1855,
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+          "final_url": "https://www.lanacion.com.py/pais/2026/10/09/deysi-paola-sospechan-que-el-presunto-feminicida-estaria-atrincherado-en-su-vivienda/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.py/pais/2026/10/09/deysi-paola-sospechan-que-el-presunto-feminicida-estaria-atrincherado-en-su-vivienda/"
+        },
+        {
+          "body_characters": 1845,
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+          "final_url": "https://www.lanacion.com.py/pais/2026/10/09/anuncian-que-la-feria-palmear-se-posterga-por-el-clima-y-se-realizara-el-sabado-17-de-octubre/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.py/pais/2026/10/09/anuncian-que-la-feria-palmear-se-posterga-por-el-clima-y-se-realizara-el-sabado-17-de-octubre/"
+        },
+        {
+          "body_characters": 3051,
+          "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+          "final_url": "https://www.lanacion.com.py/negocios/2026/10/09/paraguay-se-posiciona-como-epicentro-de-la-gestion-humana-en-america/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.py/negocios/2026/10/09/paraguay-se-posiciona-como-epicentro-de-la-gestion-humana-en-america/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "py_noticias_cde": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "py_noticias_cde:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://noticiascde.com.py/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticiascde.com.py/feed"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 2864,
+        "body_characters_median": 2402,
+        "body_characters_min": 2025,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 2188,
+          "channel_id": "py_noticias_cde:ch:rss_r001",
+          "final_url": "https://noticiascde.com.py/maneja-seguro-en-tormentas-y-raudales/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticiascde.com.py/maneja-seguro-en-tormentas-y-raudales/"
+        },
+        {
+          "body_characters": 2864,
+          "channel_id": "py_noticias_cde:ch:rss_r001",
+          "final_url": "https://noticiascde.com.py/que-hacer-si-tu-pareja-quiere-separarse-y-vos-no/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticiascde.com.py/que-hacer-si-tu-pareja-quiere-separarse-y-vos-no/"
+        },
+        {
+          "body_characters": 2616,
+          "channel_id": "py_noticias_cde:ch:rss_r001",
+          "final_url": "https://noticiascde.com.py/el-precio-impagable-de-abandonar-a-la-familia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticiascde.com.py/el-precio-impagable-de-abandonar-a-la-familia/"
+        },
+        {
+          "body_characters": 2025,
+          "channel_id": "py_noticias_cde:ch:rss_r001",
+          "final_url": "https://noticiascde.com.py/la-trampa-de-estar-siempre-ocupado/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticiascde.com.py/la-trampa-de-estar-siempre-ocupado/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "py_ultima_hora": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 200
+      },
+      "channels": {
+        "py_ultima_hora:ch:section_page_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.ultimahora.com/<slug>-n<id>",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://www.ultimahora.com/<slug>-n<id>"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "py_ultima_hora:ch:sitemap_index_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.ultimahora.com/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.ultimahora.com/sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.ultimahora.com/sitemap-202607.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.ultimahora.com/sitemap-202607.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.ultimahora.com/sitemap-202605.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.ultimahora.com/sitemap-202605.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.ultimahora.com/sitemap-202610.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.ultimahora.com/sitemap-202610.xml"
+            }
+          ],
+          "entries": 6520,
+          "entry_problems": {
+            "candidate_budget_exhausted": 6079
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 241,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 2789,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 2699,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 791,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 7932,
+        "body_characters_median": 7035,
+        "body_characters_min": 5545,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 5545,
+          "channel_id": "py_ultima_hora:ch:sitemap_index_001",
+          "final_url": "https://www.ultimahora.com/calles-de-asuncion-con-crateres-en-medio-de-presunta-mafia-del-asfalto",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.ultimahora.com/calles-de-asuncion-con-crateres-en-medio-de-presunta-mafia-del-asfalto"
+        },
+        {
+          "body_characters": 7303,
+          "channel_id": "py_ultima_hora:ch:sitemap_index_001",
+          "final_url": "https://www.ultimahora.com/plaza-uruguaya-pulmon-historico-en-jaque-por-obras-de-revitalizacion",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.ultimahora.com/plaza-uruguaya-pulmon-historico-en-jaque-por-obras-de-revitalizacion"
+        },
+        {
+          "body_characters": 7932,
+          "channel_id": "py_ultima_hora:ch:sitemap_index_001",
+          "final_url": "https://www.ultimahora.com/mbappe-celeste-y-el-futbol-como-poesia-colectiva-o-estupidez-la-pelota-sigue-siendo-inocente",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.ultimahora.com/mbappe-celeste-y-el-futbol-como-poesia-colectiva-o-estupidez-la-pelota-sigue-siendo-inocente"
+        },
+        {
+          "body_characters": 6768,
+          "channel_id": "py_ultima_hora:ch:sitemap_index_001",
+          "final_url": "https://www.ultimahora.com/la-anr-es-caso-de-estudio-y-criticas-opositoras-son-parte-de-la-disputa",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.ultimahora.com/la-anr-es-caso-de-estudio-y-criticas-opositoras-son-parte-de-la-disputa"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 4,
+        "channel_document:404": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": 10.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 9
+      }
+    },
+    "sv_diario_co_latino": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "sv_diario_co_latino:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diariocolatino.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.diariocolatino.com/feed"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 6833,
+        "body_characters_median": 5301,
+        "body_characters_min": 2863,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 6833,
+          "channel_id": "sv_diario_co_latino:ch:rss_r001",
+          "final_url": "https://www.diariocolatino.com/el-imperio-gringo-y-el-sionismo-cristiano-ultima-parte/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariocolatino.com/el-imperio-gringo-y-el-sionismo-cristiano-ultima-parte/"
+        },
+        {
+          "body_characters": 6140,
+          "channel_id": "sv_diario_co_latino:ch:rss_r001",
+          "final_url": "https://www.diariocolatino.com/cristosal-advierte-riesgos-por-donaciones-privadas-de-bitcoin-al-estado-salvadoreno/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariocolatino.com/cristosal-advierte-riesgos-por-donaciones-privadas-de-bitcoin-al-estado-salvadoreno/"
+        },
+        {
+          "body_characters": 2863,
+          "channel_id": "sv_diario_co_latino:ch:rss_r001",
+          "final_url": "https://www.diariocolatino.com/veteranos-rendiran-tributo-a-victimas-del-terremoto-del-86/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariocolatino.com/veteranos-rendiran-tributo-a-victimas-del-terremoto-del-86/"
+        },
+        {
+          "body_characters": 4462,
+          "channel_id": "sv_diario_co_latino:ch:rss_r001",
+          "final_url": "https://www.diariocolatino.com/hacienda-pide-autorizacion-emitir-deuda-515-millones-financiar-presupuesto/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariocolatino.com/hacienda-pide-autorizacion-emitir-deuda-515-millones-financiar-presupuesto/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "sv_diario_el_mundo": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 55,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "sv_diario_el_mundo:ch:section_page_r001": {
+          "candidates_listed": 57,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://diario.elmundo.sv/nacionales",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://diario.elmundo.sv/nacionales"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://diario.elmundo.sv/nacionales?page=2",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://diario.elmundo.sv/nacionales?page=2"
+            },
+            {
+              "expansion_depth": 2,
+              "final_url": "https://diario.elmundo.sv/nacionales?page=3",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://diario.elmundo.sv/nacionales?page=3"
+            }
+          ],
+          "entries": 275,
+          "entry_problems": {
+            "off_origin": 63
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 91,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 92,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 2,
+              "entries": 92,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 3
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 3
+      }
+    },
+    "uy_el_observador": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 88
+      },
+      "channels": {
+        "uy_el_observador:ch:sitemap_001": {
+          "candidates_listed": 88,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elobservador.com.uy/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elobservador.com.uy/sitemap.xml"
+            }
+          ],
+          "entries": 88,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 88,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "uy_el_observador:ch:sitemap_index_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elobservador.com.uy/sitemap/images-full/sitemap-index.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elobservador.com.uy/sitemap/images-full/sitemap-index.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202509.xml.gz",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202509.xml.gz"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202608.xml.gz",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202608.xml.gz"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202501.xml.gz",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elobservador.com.uy//sitemap/images-full/sitemap-202501.xml.gz"
+            }
+          ],
+          "entries": 62,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 62,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNPARSEABLE",
+              "problems": [
+                "invalid_xml: not well-formed (invalid token): line 1, column 0"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNPARSEABLE",
+              "problems": [
+                "invalid_xml: not well-formed (invalid token): line 1, column 0"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNPARSEABLE",
+              "problems": [
+                "invalid_xml: not well-formed (invalid token): line 1, column 0"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4902,
+        "body_characters_median": 4731,
+        "body_characters_min": 4171,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4902,
+          "channel_id": "uy_el_observador:ch:sitemap_001",
+          "final_url": "https://www.elobservador.com.uy/futbol-internacional/la-decision-mourinho-federico-valverde-luego-ser-la-duda-finalmente-fue-convocado-real-madrid-el-partido-villarreal-n6059972",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elobservador.com.uy/futbol-internacional/la-decision-mourinho-federico-valverde-luego-ser-la-duda-finalmente-fue-convocado-real-madrid-el-partido-villarreal-n6059972"
+        },
+        {
+          "body_characters": 4171,
+          "channel_id": "uy_el_observador:ch:sitemap_001",
+          "final_url": "https://www.elobservador.com.uy/futbol/penarol-vs-progreso-la-decima-fecha-del-torneo-clausura-dia-hora-cancha-equipo-arbitral-y-donde-verlo-n6059891",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elobservador.com.uy/futbol/penarol-vs-progreso-la-decima-fecha-del-torneo-clausura-dia-hora-cancha-equipo-arbitral-y-donde-verlo-n6059891"
+        },
+        {
+          "body_characters": 4583,
+          "channel_id": "uy_el_observador:ch:sitemap_001",
+          "final_url": "https://www.elobservador.com.uy/mundo/terremoto-panama-es-el-tercero-gran-magnitud-la-region-cuatro-meses-n6060015",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elobservador.com.uy/mundo/terremoto-panama-es-el-tercero-gran-magnitud-la-region-cuatro-meses-n6060015"
+        },
+        {
+          "body_characters": 4879,
+          "channel_id": "uy_el_observador:ch:sitemap_001",
+          "final_url": "https://www.elobservador.com.uy/futbol/a-un-paso-los-50-goles-y-una-jornada-muy-especial-matias-arezo-cumple-100-partidos-penarol-este-sabado-progreso-el-torneo-clausura-n6059975",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elobservador.com.uy/futbol/a-un-paso-los-50-goles-y-una-jornada-muy-especial-matias-arezo-cumple-100-partidos-penarol-este-sabado-progreso-el-torneo-clausura-n6059975"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 5,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 9
+      }
+    },
+    "uy_el_pais": {
+      "access_classes_observed": {
+        "bot_challenge": 1
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "uy_el_pais:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elpais.com.uy/rss",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://www.elpais.com.uy/rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "uy_el_pais:ch:sitemap_index_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.elpais.com.uy/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {
+        "channel_document:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1,
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    },
+    "uy_ladiaria": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 400
+      },
+      "channels": {
+        "uy_ladiaria:ch:rss_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://ladiaria.com.uy/feeds/articulos/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiaria.com.uy/feeds/articulos/"
+            }
+          ],
+          "entries": 328,
+          "entry_problems": {
+            "candidate_budget_exhausted": 128
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 328,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "uy_ladiaria:ch:sitemap_index_001": {
+          "candidates_listed": 393,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://ladiaria.com.uy/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiaria.com.uy/sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ladiaria.com.uy/sitemap-news_48hs.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiaria.com.uy/sitemap-news_48hs.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ladiaria.com.uy/sitemap-news_sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiaria.com.uy/sitemap-news_sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ladiaria.com.uy/sitemap-news_sitemap.xml?p=2",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiaria.com.uy/sitemap-news_sitemap.xml?p=2"
+            }
+          ],
+          "entries": 2416,
+          "entry_problems": {
+            "candidate_budget_exhausted": 1607
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 297,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 119,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 1000,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 1000,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 17085,
+        "body_characters_median": 10940,
+        "body_characters_min": 5088,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 17085,
+          "channel_id": "uy_ladiaria:ch:rss_001",
+          "final_url": "https://ladiaria.com.uy/ciencia/articulo/2026/9/sueltame-pasado-la-poblacion-de-leones-marinos-de-uruguay-no-logra-recuperarse-de-su-larga-e-inadecuada-explotacion-comercial/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiaria.com.uy/ciencia/articulo/2026/9/sueltame-pasado-la-poblacion-de-leones-marinos-de-uruguay-no-logra-recuperarse-de-su-larga-e-inadecuada-explotacion-comercial/"
+        },
+        {
+          "body_characters": 5088,
+          "channel_id": "uy_ladiaria:ch:rss_001",
+          "final_url": "https://ladiaria.com.uy/le-monde-diplomatique/articulo/2026/10/nemesis-de-trump/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiaria.com.uy/le-monde-diplomatique/articulo/2026/10/nemesis-de-trump/"
+        },
+        {
+          "body_characters": 13606,
+          "channel_id": "uy_ladiaria:ch:rss_001",
+          "final_url": "https://ladiaria.com.uy/opinion/articulo/2026/10/cartas-en-busqueda-de-interlocutores-defensa-de-los-estudios-pedagogicos-en-la-formacion-de-los-educadores-uruguayos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiaria.com.uy/opinion/articulo/2026/10/cartas-en-busqueda-de-interlocutores-defensa-de-los-estudios-pedagogicos-en-la-formacion-de-los-educadores-uruguayos/"
+        },
+        {
+          "body_characters": 8275,
+          "channel_id": "uy_ladiaria:ch:rss_001",
+          "final_url": "https://ladiaria.com.uy/educacion/articulo/2026/10/rita-segato-en-uruguay-la-educacion-los-derechos-humanos-y-la-necesidad-de-hacer-frente-a-la-normalizacion-de-la-crueldad/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiaria.com.uy/educacion/articulo/2026/10/rita-segato-en-uruguay-la-educacion-los-derechos-humanos-y-la-necesidad-de-hacer-frente-a-la-normalizacion-de-la-crueldad/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 5,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 9
+      }
+    },
+    "uy_montevideo_portal": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 57
+      },
+      "channels": {
+        "uy_montevideo_portal:ch:rss_r001": {
+          "candidates_listed": 8,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.montevideo.com.uy/anxml.aspx?59",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.montevideo.com.uy/anxml.aspx?59"
+            }
+          ],
+          "entries": 8,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 8,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 2,
+          "items_requested": 2
+        },
+        "uy_montevideo_portal:ch:rss_r002": {
+          "candidates_listed": 52,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.montevideo.com.uy/anxml.aspx?58",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.montevideo.com.uy/anxml.aspx?58"
+            }
+          ],
+          "entries": 52,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 52,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 2716,
+        "body_characters_median": 2449,
+        "body_characters_min": 2183,
+        "floor": 500,
+        "labelled": 2,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 2
+      },
+      "items": [
+        {
+          "body_characters": 2716,
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Detuvieron-a-un-uruguayo-en-Paraguay-por-tener-barriles-con-insumos-para-producir-cocaina-uc978024",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.montevideo.com.uy/auc.aspx?978024"
+        },
+        {
+          "body_characters": 2183,
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Pentagono-de-EE-UU-transmitira-en-vivo-una-ejecucion-por-fusilamiento-quien-es-uc977980",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.montevideo.com.uy/auc.aspx?977980"
+        }
+      ],
+      "items_2xx": 2,
+      "items_requested": 2,
+      "redirect_hops": 0,
+      "refused": {
+        "item:canary_budget_exhausted": 2
+      },
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 2
+      },
+      "requests_per_2xx_item": 2.0,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 4
+      }
+    },
+    "ve_analitica": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 12
+      },
+      "channels": {
+        "ve_analitica:ch:rss_r001": {
+          "candidates_listed": 12,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.analitica.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.analitica.com/feed"
+            }
+          ],
+          "entries": 12,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 12,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8908,
+        "body_characters_median": 3211,
+        "body_characters_min": 1100,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1794,
+          "channel_id": "ve_analitica:ch:rss_r001",
+          "final_url": "https://www.analitica.com/actualidad-internacional/marco-rubio-se-reunio-con-dinorah-figuera-para-abordar-la-transicion-democratica-en-venezuela/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.analitica.com/actualidad-internacional/marco-rubio-se-reunio-con-dinorah-figuera-para-abordar-la-transicion-democratica-en-venezuela/"
+        },
+        {
+          "body_characters": 1100,
+          "channel_id": "ve_analitica:ch:rss_r001",
+          "final_url": "https://www.analitica.com/actualidad-internacional/terremoto-de-magnitud-77-sacude-panama-y-reportan-danos-estructurales/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.analitica.com/actualidad-internacional/terremoto-de-magnitud-77-sacude-panama-y-reportan-danos-estructurales/"
+        },
+        {
+          "body_characters": 8908,
+          "channel_id": "ve_analitica:ch:rss_r001",
+          "final_url": "https://www.analitica.com/opinion/lider-multiplicador-de-capacidad/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.analitica.com/opinion/lider-multiplicador-de-capacidad/"
+        },
+        {
+          "body_characters": 4628,
+          "channel_id": "ve_analitica:ch:rss_r001",
+          "final_url": "https://www.analitica.com/emprendimiento/arys-presenta-la-unica-app-de-asistencia-vial-360/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.analitica.com/emprendimiento/arys-presenta-la-unica-app-de-asistencia-vial-360/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ve_correo_del_caroni": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "ve_correo_del_caroni:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://correodelcaroni.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://correodelcaroni.com/feed"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 953,
+        "body_characters_median": 842,
+        "body_characters_min": 821,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 953,
+          "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+          "final_url": "https://correodelcaroni.com/pais-politico/gran-alianza-ciudadana-conquistas-populares-y-voto-masivo-se-consolidan-como-la-unica-ruta-para-recuperar-la-democracia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://correodelcaroni.com/pais-politico/gran-alianza-ciudadana-conquistas-populares-y-voto-masivo-se-consolidan-como-la-unica-ruta-para-recuperar-la-democracia/"
+        },
+        {
+          "body_characters": 821,
+          "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+          "final_url": "https://correodelcaroni.com/deportes/guardianes-forzo-a-un-quinto-juego-y-todo-se-decide-en-cleveland/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://correodelcaroni.com/deportes/guardianes-forzo-a-un-quinto-juego-y-todo-se-decide-en-cleveland/"
+        },
+        {
+          "body_characters": 836,
+          "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+          "final_url": "https://correodelcaroni.com/deportes/singapur-el-mayor-reto-del-calendario/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://correodelcaroni.com/deportes/singapur-el-mayor-reto-del-calendario/"
+        },
+        {
+          "body_characters": 849,
+          "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+          "final_url": "https://correodelcaroni.com/deportes/jorge-martin-reconoce-superioridad-de-marc-marquez/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://correodelcaroni.com/deportes/jorge-martin-reconoce-superioridad-de-marc-marquez/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": 20.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ve_el_impulso": {
+      "access_classes_observed": {
+        "bot_challenge": 1
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "ve_el_impulso:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.elimpulso.com/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    },
+    "ve_el_nacional": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 156
+      },
+      "channels": {
+        "ve_el_nacional:ch:rss_003": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elnacional.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elnacional.com/feed/"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ve_el_nacional:ch:sitemap_002": {
+          "candidates_listed": 153,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elnacional.com/news-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elnacional.com/sitemap-news.xml"
+            }
+          ],
+          "entries": 157,
+          "entry_problems": {
+            "off_origin": 4
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 157,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 31914,
+        "body_characters_median": 2413,
+        "body_characters_min": 1802,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 31914,
+          "channel_id": "ve_el_nacional:ch:rss_003",
+          "final_url": "https://www.elnacional.com/2026/10/hector-navarro-si-yo-fuera-delcy-rodriguez-renunciaria/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnacional.com/2026/10/hector-navarro-si-yo-fuera-delcy-rodriguez-renunciaria/"
+        },
+        {
+          "body_characters": 1802,
+          "channel_id": "ve_el_nacional:ch:rss_003",
+          "final_url": "https://www.elnacional.com/2026/10/jose-ramirez-se-viste-de-heroe-y-revive-a-cleveland-en-la-serie-divisional/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnacional.com/2026/10/jose-ramirez-se-viste-de-heroe-y-revive-a-cleveland-en-la-serie-divisional/"
+        },
+        {
+          "body_characters": 2422,
+          "channel_id": "ve_el_nacional:ch:rss_003",
+          "final_url": "https://www.elnacional.com/2026/10/carlos-julio-rojas-queda-en-libertad-plena-tras-absolucion-del-tribunal/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnacional.com/2026/10/carlos-julio-rojas-queda-en-libertad-plena-tras-absolucion-del-tribunal/"
+        },
+        {
+          "body_characters": 2404,
+          "channel_id": "ve_el_nacional:ch:rss_003",
+          "final_url": "https://www.elnacional.com/2026/10/los-videos-mas-impactantes-del-fuerte-aluvion-que-arrastro-vehiculos-autobuses-y-arboles-en-chile/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnacional.com/2026/10/los-videos-mas-impactantes-del-fuerte-aluvion-que-arrastro-vehiculos-autobuses-y-arboles-en-chile/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ve_eldiario": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 45
+      },
+      "channels": {
+        "ve_eldiario:ch:rss_003": {
+          "candidates_listed": 12,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://eldiario.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://eldiario.com/feed/"
+            }
+          ],
+          "entries": 12,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 12,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ve_eldiario:ch:sitemap_001": {
+          "candidates_listed": 45,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://eldiario.com/news-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://eldiario.com/news-sitemap.xml"
+            }
+          ],
+          "entries": 45,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 45,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8562,
+        "body_characters_median": 7304,
+        "body_characters_min": 6982,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 6982,
+          "channel_id": "ve_eldiario:ch:rss_003",
+          "final_url": "https://eldiario.com/2026/10/09/apoyo-eeuu-venezuela/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldiario.com/2026/10/09/apoyo-eeuu-venezuela/"
+        },
+        {
+          "body_characters": 7296,
+          "channel_id": "ve_eldiario:ch:rss_003",
+          "final_url": "https://eldiario.com/2026/10/09/prohibicion-vehiculos-carga-pesada/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldiario.com/2026/10/09/prohibicion-vehiculos-carga-pesada/"
+        },
+        {
+          "body_characters": 7313,
+          "channel_id": "ve_eldiario:ch:rss_003",
+          "final_url": "https://eldiario.com/2026/10/09/sistema-gestion-tramites-sunahip/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldiario.com/2026/10/09/sistema-gestion-tramites-sunahip/"
+        },
+        {
+          "body_characters": 8562,
+          "channel_id": "ve_eldiario:ch:rss_003",
+          "final_url": "https://eldiario.com/2026/10/09/rubio-figuera-reunion/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldiario.com/2026/10/09/rubio-figuera-reunion/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "ve_eluniversal": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 17,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "ve_eluniversal:ch:sitemap_001": {
+          "candidates_listed": 18,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.eluniversal.com/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.eluniversal.com/sitemap.xml"
+            }
+          ],
+          "entries": 18,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 18,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 4,
+        "body_characters_max": 0,
+        "body_characters_median": 0,
+        "body_characters_min": 0,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 0,
+          "channel_id": "ve_eluniversal:ch:sitemap_001",
+          "final_url": "https://www.eluniversal.com/balances",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eluniversal.com/balances"
+        },
+        {
+          "body_characters": 0,
+          "channel_id": "ve_eluniversal:ch:sitemap_001",
+          "final_url": "https://www.eluniversal.com/tecnologia",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eluniversal.com/tecnologia"
+        },
+        {
+          "body_characters": 0,
+          "channel_id": "ve_eluniversal:ch:sitemap_001",
+          "final_url": "https://www.eluniversal.com/sucesos",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eluniversal.com/sucesos"
+        },
+        {
+          "body_characters": 0,
+          "channel_id": "ve_eluniversal:ch:sitemap_001",
+          "final_url": "https://www.eluniversal.com/gastronomia",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eluniversal.com/gastronomia"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 5,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_DISALLOW_OBSERVED": 5
+      }
+    },
+    "ve_ultimas_noticias": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "ve_ultimas_noticias:ch:rss_003": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://ultimasnoticias.com.ve/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ultimasnoticias.com.ve/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ve_ultimas_noticias:ch:sitemap_index_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://ultimasnoticias.com.ve/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ultimasnoticias.com.ve/sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.2026.xml",
+              "redirect_hops": 0,
+              "status": 500,
+              "url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.2026.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.xml",
+              "redirect_hops": 0,
+              "status": 500,
+              "url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.2025.xml",
+              "redirect_hops": 0,
+              "status": 500,
+              "url": "https://ultimasnoticias.com.ve/sitemap-posttype-post.2025.xml"
+            }
+          ],
+          "entries": 12,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 12,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_500"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_500"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_500"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4426,
+        "body_characters_median": 3993,
+        "body_characters_min": 1454,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4031,
+          "channel_id": "ve_ultimas_noticias:ch:rss_003",
+          "final_url": "https://ultimasnoticias.com.ve/progamers/pc/netease-anuncia-ecc-redline-un-shooter-tactico-gratuito-con-deportes-extremos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ultimasnoticias.com.ve/progamers/pc/netease-anuncia-ecc-redline-un-shooter-tactico-gratuito-con-deportes-extremos/"
+        },
+        {
+          "body_characters": 1454,
+          "channel_id": "ve_ultimas_noticias:ch:rss_003",
+          "final_url": "https://ultimasnoticias.com.ve/deportes/harold-castro-sigue-con-su-poder-en-corea-del-sur/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ultimasnoticias.com.ve/deportes/harold-castro-sigue-con-su-poder-en-corea-del-sur/"
+        },
+        {
+          "body_characters": 4426,
+          "channel_id": "ve_ultimas_noticias:ch:rss_003",
+          "final_url": "https://ultimasnoticias.com.ve/negocios/playoffs-de-la-mlb-2026-la-ola-venezolana-arrasa-en-las-grandes-ligas/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ultimasnoticias.com.ve/negocios/playoffs-de-la-mlb-2026-la-ola-venezolana-arrasa-en-las-grandes-ligas/"
+        },
+        {
+          "body_characters": 3956,
+          "channel_id": "ve_ultimas_noticias:ch:rss_003",
+          "final_url": "https://ultimasnoticias.com.ve/progamers/movil/cod-mobile-vampiros-y-hombres-lobo-llegaran-para-la-temporada-9/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ultimasnoticias.com.ve/progamers/movil/cod-mobile-vampiros-y-hombres-lobo-llegaran-para-la-temporada-9/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "channel_document:500": 3,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 9
+      }
+    }
+  },
+  "run_id": "acq1-20261009T201329607195Z-fcfbaa887e80",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 58,
+    "items_requested": 58,
+    "outlets": 19,
+    "outlets_with_2xx_items": 15
+  }
+}

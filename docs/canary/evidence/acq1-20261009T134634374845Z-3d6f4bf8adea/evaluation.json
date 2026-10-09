@@ -1,0 +1,704 @@
+{
+  "outlets": {
+    "bo_el_deber": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 79,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "bo_el_deber:ch:rss_main": {
+          "candidates_listed": 25,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://eldeber.com.bo/feed",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://eldeber.com.bo/feed"
+            }
+          ],
+          "entries": 25,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 25,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 15,
+          "items_requested": 16
+        },
+        "bo_el_deber:ch:sitemap_main": {
+          "candidates_listed": 55,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://eldeber.com.bo/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://eldeber.com.bo/sitemap.xml"
+            }
+          ],
+          "entries": 55,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 55,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 5554,
+        "body_characters_median": 3745,
+        "body_characters_min": 1630,
+        "floor": 500,
+        "labelled": 15,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 15,
+        "301": 1
+      },
+      "items": [
+        {
+          "body_characters": 3745,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/pais/urioste-cambia-fiscales-9-departamentos-legislativo-alista-eleccion-nuevo-titular_1791541467",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/pais/urioste-cambia-fiscales-9-departamentos-legislativo-alista-eleccion-nuevo-titular_1791541467"
+        },
+        {
+          "body_characters": 1630,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/opinion/cara-cara_1791508959",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/opinion/cara-cara_1791508959"
+        },
+        {
+          "body_characters": 1750,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/pais/mariaca-participo-negociaciones-bloqueadores-pedido-evismo-gobierno_1791550814",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/pais/mariaca-participo-negociaciones-bloqueadores-pedido-evismo-gobierno_1791550814"
+        },
+        {
+          "body_characters": 2680,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/pais/diputados-aprueban-bs-300-millones-depositos-judiciales-pase-cuentas-tsj_1791511553",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/pais/diputados-aprueban-bs-300-millones-depositos-judiciales-pase-cuentas-tsj_1791511553"
+        },
+        {
+          "body_characters": 4435,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/opinion/cirugia-mayor_1791508772",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/opinion/cirugia-mayor_1791508772"
+        },
+        {
+          "body_characters": 4992,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/mundo/navy-pillay-figuras-destacadas-defensa-justicia-internacional_1791546038",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/mundo/navy-pillay-figuras-destacadas-defensa-justicia-internacional_1791546038"
+        },
+        {
+          "body_characters": 1645,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/mundo/bolsonarismo-vuelve-impulsar-noticia-falsa-lula-quiere-cerrar-iglesias_1791513671",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/mundo/bolsonarismo-vuelve-impulsar-noticia-falsa-lula-quiere-cerrar-iglesias_1791513671"
+        },
+        {
+          "body_characters": 2252,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/mundo/casi-15-000-arrestados-ice-sur-california-fueron-deportados-revela-estudio_1791513896",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/mundo/casi-15-000-arrestados-ice-sur-california-fueron-deportados-revela-estudio_1791513896"
+        },
+        {
+          "body_characters": 4555,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/opinion/estamos-formando-profesionales-capaces-pensar-tiempos-ia_1791507275",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/opinion/estamos-formando-profesionales-capaces-pensar-tiempos-ia_1791507275"
+        },
+        {
+          "body_characters": 4673,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/opinion/avanzando-acertadamente-50-50_1791508373",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/opinion/avanzando-acertadamente-50-50_1791508373"
+        },
+        {
+          "body_characters": 5554,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/mundo/jurista-sudafricana-navanethem-navi-pillay-premio-nobel-paz-2026_1791542170",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/mundo/jurista-sudafricana-navanethem-navi-pillay-premio-nobel-paz-2026_1791542170"
+        },
+        {
+          "body_characters": 0,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/deportes/suspenden-gran-premio-integracion-oriente-fuerte-accidente_1791552644",
+          "redirect_hops": 0,
+          "redirect_not_followed": "DENY: off_origin",
+          "status": 301,
+          "url": "https://eldeber.com.bo/deportes/suspenden-gran-premio-integracion-oriente-fuerte-accidente_1791552644"
+        },
+        {
+          "body_characters": 3021,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/economia/buses-reducen-salidas-tarifas-quedan-pendientes-martes_1791542485",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/economia/buses-reducen-salidas-tarifas-quedan-pendientes-martes_1791542485"
+        },
+        {
+          "body_characters": 5189,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/opinion/andres-santa-cruz-memoria-vuelve-abrirse_1791508197",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/opinion/andres-santa-cruz-memoria-vuelve-abrirse_1791508197"
+        },
+        {
+          "body_characters": 2385,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/pais/atracadores-ingresan-dos-casas-potosi-roban-bs-3-5-millones_1791513863",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/pais/atracadores-ingresan-dos-casas-potosi-roban-bs-3-5-millones_1791513863"
+        },
+        {
+          "body_characters": 3980,
+          "channel_id": "bo_el_deber:ch:rss_main",
+          "final_url": "https://eldeber.com.bo/economia/gasolina-gobierno-pacto-quitar-subsidio-2027_1791542847",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eldeber.com.bo/economia/gasolina-gobierno-pacto-quitar-subsidio-2027_1791542847"
+        }
+      ],
+      "items_2xx": 15,
+      "items_requested": 16,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 15,
+        "item:301": 1
+      },
+      "requests_per_2xx_item": 1.2,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 18
+      }
+    },
+    "do_diario_libre": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 465
+      },
+      "channels": {
+        "do_diario_libre:ch:rss_main": {
+          "candidates_listed": 39,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diariolibre.com/feed/portada.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.diariolibre.com/feed"
+            }
+          ],
+          "entries": 39,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 39,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "do_diario_libre:ch:sitemap_sitemapnews": {
+          "candidates_listed": 463,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diariolibre.com/sitemapnews",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.diariolibre.com/sitemapnews"
+            }
+          ],
+          "entries": 527,
+          "entry_problems": {
+            "candidate_budget_exhausted": 64
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 527,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 16,
+          "items_requested": 16
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 7582,
+        "body_characters_median": 3152,
+        "body_characters_min": 1981,
+        "floor": 500,
+        "labelled": 16,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 16
+      },
+      "items": [
+        {
+          "body_characters": 3591,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/mundo/america-latina/2026/10/07/maltrato-pinguinos-en-mar-del-plata-y-denuncia-de-fundacion-fauna/3681767",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/mundo/america-latina/2026/10/07/maltrato-pinguinos-en-mar-del-plata-y-denuncia-de-fundacion-fauna/3681767"
+        },
+        {
+          "body_characters": 2738,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/actualidad/nacional/2026/10/07/gestiona-arreglo-de-nave-danada-por-fuego-en-merca-santo-domingo/3681918",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/nacional/2026/10/07/gestiona-arreglo-de-nave-danada-por-fuego-en-merca-santo-domingo/3681918"
+        },
+        {
+          "body_characters": 3335,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/actualidad/sucesos/2026/10/07/intento-de-asalto-en-joyeria-gisac-jewelry/3681881",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/sucesos/2026/10/07/intento-de-asalto-en-joyeria-gisac-jewelry/3681881"
+        },
+        {
+          "body_characters": 4474,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/deportes/beisbol/2026/10/07/andy-pages-pega-el-ht-que-clasifica-a-los-dodgers/3681905",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/deportes/beisbol/2026/10/07/andy-pages-pega-el-ht-que-clasifica-a-los-dodgers/3681905"
+        },
+        {
+          "body_characters": 3198,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/planeta/clima/2026/10/08/pronostican-lluvias-y-tormentas-para-este-jueves-en-el-clima-en-rd/3682088",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/planeta/clima/2026/10/08/pronostican-lluvias-y-tormentas-para-este-jueves-en-el-clima-en-rd/3682088"
+        },
+        {
+          "body_characters": 2179,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/revista/cultura/2026/10/08/el-prodigio-y-tono-rosario-presentan-ta-chula-en-digital/3682254",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/revista/cultura/2026/10/08/el-prodigio-y-tono-rosario-presentan-ta-chula-en-digital/3682254"
+        },
+        {
+          "body_characters": 3091,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/usa/actualidad/2026/10/07/gobierno-trump-y-zuckerberg-usaran-ia-para-predecir-enfermedades/3681808",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/usa/actualidad/2026/10/07/gobierno-trump-y-zuckerberg-usaran-ia-para-predecir-enfermedades/3681808"
+        },
+        {
+          "body_characters": 2956,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/mundo/america-latina/2026/10/07/cuba-establece-beneficios-fiscales-para-discapacidad-y-empleo/3681816",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/mundo/america-latina/2026/10/07/cuba-establece-beneficios-fiscales-para-discapacidad-y-empleo/3681816"
+        },
+        {
+          "body_characters": 3889,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/revista/sociales/2026/10/07/santo-domingo-motors-presenta-el-infiniti-qx65/3681710",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/revista/sociales/2026/10/07/santo-domingo-motors-presenta-el-infiniti-qx65/3681710"
+        },
+        {
+          "body_characters": 1981,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/revista/sociales/2026/10/08/downtown-center-culmina-programacion-artlive/3682343",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/revista/sociales/2026/10/08/downtown-center-culmina-programacion-artlive/3682343"
+        },
+        {
+          "body_characters": 2227,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/revista/musica/2026/10/08/album-no-era-el-plan-de-gabriel-pagan-nominado-a-latin-grammy/3682281",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/revista/musica/2026/10/08/album-no-era-el-plan-de-gabriel-pagan-nominado-a-latin-grammy/3682281"
+        },
+        {
+          "body_characters": 3489,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/economia/consumo/2026/10/07/anuncian-mas-recursos-y-apoyo-tecnico-para-fortalecer-al-odac/3681637",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/economia/consumo/2026/10/07/anuncian-mas-recursos-y-apoyo-tecnico-para-fortalecer-al-odac/3681637"
+        },
+        {
+          "body_characters": 3707,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/usa/actualidad/2026/10/07/donald-trump-impulsa-elecciones-legislativas-texas/3681929",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/usa/actualidad/2026/10/07/donald-trump-impulsa-elecciones-legislativas-texas/3681929"
+        },
+        {
+          "body_characters": 7582,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/mundo/resto-del-mundo/2026/10/07/lo-que-se-sabe-de-la-supuesta-peste-neumonica-en-rusia/3681665",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/mundo/resto-del-mundo/2026/10/07/lo-que-se-sabe-de-la-supuesta-peste-neumonica-en-rusia/3681665"
+        },
+        {
+          "body_characters": 3107,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/deportes/beisbol/2026/10/07/john-sang-afianza-su-legado-comunicacional-con-las-aguilas/3681951",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/deportes/beisbol/2026/10/07/john-sang-afianza-su-legado-comunicacional-con-las-aguilas/3681951"
+        },
+        {
+          "body_characters": 2993,
+          "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+          "final_url": "https://www.diariolibre.com/mundo/estados-unidos/2026/10/07/cargos-por-torturas-a-estadounidenses-contra-nicolas-maduro/3681773",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/mundo/estados-unidos/2026/10/07/cargos-por-torturas-a-estadounidenses-contra-nicolas-maduro/3681773"
+        }
+      ],
+      "items_2xx": 16,
+      "items_requested": 16,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 16
+      },
+      "requests_per_2xx_item": 1.12,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 18
+      }
+    },
+    "hn_proceso_digital": {
+      "access_classes_observed": {
+        "bot_challenge": 2
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "hn_proceso_digital:ch:rss_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://proceso.hn/rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "hn_proceso_digital:ch:sitemap_index_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://proceso.hn/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 2
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 2
+      }
+    },
+    "py_la_nacion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {
+            "off_origin": 100
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    },
+    "ve_efecto_cocuyo": {
+      "access_classes_observed": {
+        "bot_challenge": 10
+      },
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "ve_efecto_cocuyo:ch:rss_main": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://efectococuyo.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://efectococuyo.com/rss"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "ve_efecto_cocuyo:ch:sitemap_index_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://efectococuyo.com/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://efectococuyo.com/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "item:access_control_observed": 10
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "channel_document:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 2,
+        "ROBOTS_NOT_EVALUATED": 10
+      }
+    }
+  },
+  "run_id": "acq1-20261009T134634374845Z-3d6f4bf8adea",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 31,
+    "items_requested": 32,
+    "outlets": 5,
+    "outlets_with_2xx_items": 2
+  }
+}

@@ -20,7 +20,9 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
-**State at the end of 2026-10-09 (§5d; this paragraph is the current one, the two around it are history):** four canaries ran with
+**State after the qualification run of 2026-10-09 (§5e; this paragraph is the current one, the others are history):** the whole known stock of 145 outlet hypotheses is registered and tested or deferred with its reason: 114 outlets are registered, **83 have verified acquisition, in all 20 countries; none is operationally stable**; 18 origins are held behind an access control. An intake-readiness configuration exists and starts nothing. Nothing is activated and the switch is `disabled`.
+
+**State at the end of the acquisition run of 2026-10-09 (§5d; history):** four canaries ran with
 real requests — the operator's second canary and three waves armed and frozen by a commissioned agent under versioned
 authorisation records (CPD-0023). 22 outlets are registered; **14 have verified acquisition, in 11 countries; none is
 operationally stable**; four origins are held behind browser challenges. Nothing is activated and the switch is `disabled`.
@@ -146,11 +148,11 @@ defects (§5a).
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0021 and CPD-0023 to CPD-0025 `ACTIVE_WITH_VALIDATION_DEBT`; CPD-0022 `SUPERSEDED` by CPD-0023 (§6; see the registry for each) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0021 and CPD-0023 to CPD-0026 `ACTIVE_WITH_VALIDATION_DEBT`; CPD-0022 `SUPERSEDED` by CPD-0023 (§6; see the registry for each) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
-| Outlet registry | schema, validator, lookup implemented and unit-tested; holds **91 outlets: 22 registered (each by a registration record: 5 for the first canary, 8 of wave B and 9 of wave C on 2026-10-09 under a delegated operator authorisation), 69 proposed** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
+| Outlet registry | schema, validator, lookup implemented and unit-tested; holds **126 outlets: 114 registered (each by a registration record; 92 of them on 2026-10-09 by rule for a bounded qualification, CPD-0025; six amended by amendment records), 12 proposed** | `config/outlet_registry.json`, `src/coprepan/registry.py`, `tests/test_registry.py` |
 | Legacy outlet import | executed 2026-10-07 on a copy of the legacy database; deterministic on repetition; real schema equal to the assumed one; legacy-name → `outlet_id` table produced as `hypothesis`. **Not reviewed by a human** | `src/coprepan/legacy_registry_import.py`, `config/registry_review/`, corpus supply §16 |
 | Legacy archaeology and component dispositions | recorded | [`docs/legacy/ARCHAEOLOGY.md`](legacy/ARCHAEOLOGY.md), CPD-0004 |
 | Acquisition run and fetch record | implemented and unit-tested; run kinds `recorded_replay` and `http_fetch` | `src/coprepan/acquisition.py`, [`docs/acquisition/INDEX.md`](acquisition/INDEX.md) |
@@ -342,6 +344,31 @@ Real requests, four completed canaries. Report: [`2026-10-09`](agent-runs/2026-1
   says `FAILED` and says so.
 - **Candidate rules:** two outlets (`hn_criterio`, `pr_noticel`), written from preserved listing pages. Every other outlet has generic rules only.
 - **Nothing is activated.** The switch is `disabled`; every production gate that was open is open.
+
+
+### 5e. After the qualification run of 2026-10-09 (CPD-0025, CPD-0026)
+
+Real requests, five qualification waves under `DOA-2026-10-09-4`. Report: [`2026-10-09`](agent-runs/2026-10-09_comprehensive-source-qualification-and-intake-readiness.md). §5d is history.
+
+- **The stock:** 145 distinct outlet hypotheses, one disposition each (`config/source_discovery/qualification_dispositions_2026-10-09.json`):
+  114 registered, 31 deferred (no evidenced channel 22, closed 2, moved 2, open identity 2, no origin 2, legal hold 1).
+- **The waves:** 97 outlets, four item requests each, 584 requests of 1 800 allowed; 72 outlets answered with item pages (284 pages). Every
+  wave ended disarmed. Each wave's first verification failed one check for an identity row relabelled by a URL-rule amendment; after the identity
+  rebuild (a change decision, CPD-0026 — **taken by the commissioned agent, to be confirmed by the operator**) each verifies `PASS` in a second file.
+- **Stages** (`config/source_discovery/source_inventory_2026-10-09.1.json`; page:
+  [`SOURCE_QUALIFICATION_2026-10-09.1`](corpus_supply/SOURCE_QUALIFICATION_2026-10-09.1.md)): `ACQUISITION_VERIFIED` **83** (at this run's
+  budget: at least three item pages), `TECHNICALLY_QUALIFIED` 6, `REGISTERED` and nothing more 25, not registered 31. `OPERATIONALLY_STABLE` **0**.
+  Verified outlets per country: pa 8, ar 7, pe 6, ve 6, cl 5, co 5, ec 5, es 5, gt 5, hn 5, cu 4, do 4, py 4, ni 3, pr 3, bo 2, sv 2, uy 2, cr 1, mx 1.
+- **Held (18):** `cr_diario_extra`, `cu_cubanet`, `do_el_caribe`, `es_el_pais`, `gt_nuestrodiario`, `hn_diariotiempo`, `hn_proceso_digital`,
+  `mx_el_siglo_de_torreon`, `mx_la_jornada`, `mx_milenio`, `ni_articulo66`, `ni_el_19_digital`, `pe_expreso`, `pe_peru21`, `py_adn_digital`,
+  `uy_el_pais`, `ve_efecto_cocuyo`, `ve_el_impulso`. Compared with the legacy record in `config/source_discovery/access_restriction_review_2026-10-09.json`:
+  one is this project's false positive (`mx_la_jornada`; repaired, `access-control/3`, not yet confirmed live), four depend on an open decision,
+  thirteen are not accessible now. No hold was lifted and none worked around.
+- **Confirmed on real servers in this run:** F8, F9, F10, F11, F12, F14. **Repaired and not yet confirmed live:** F13 (`utm_` not requested),
+  F15 (the classifier), F16 (four origins amended from the redirect of their robots address).
+- **Intake readiness:** `config/intake/intake_readiness_2026-10-09.1.json` — 85 outlets (83 tier A, 2 tier B), 119 channels, 20 countries.
+  **It starts nothing**; a 12- or 24-hour intake is a separate, separately authorised run and needs a driver of its own.
+- **Not shown:** stability (one run per outlet, one day), that each preserved item page is an article (not read one by one), extraction quality.
 
 ## 6. Validation debt
 
@@ -642,3 +669,10 @@ run report that carries the evidence.
   1 → 14, countries 1 → 11; 17 outlets registered (22 in all). Four defects of this project found on real servers and repaired (F8, F9, F10,
   F14), two recorded and open (F11, F12); four origins held. One interrupted start left two unrecorded requests. The switch is `disabled`.
   Run report: [`docs/agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md`](agent-runs/2026-10-09_autonomous-acquisition-recovery-and-three-wave-execution.md).
+
+- 2026-10-09 (seventh run of the day) — **the whole known source stock qualified** (CPD-0025, CPD-0026). 145 outlet hypotheses counted and
+  given one disposition each; 92 registered by rule (114 in all); five delegated waves over 97 outlets, 584 requests. Outlets with verified
+  acquisition 14 → 83, countries 11 → 20; 18 origins held, compared one by one with the legacy record (one our own false positive, repaired).
+  F8–F12 and F14 confirmed on real servers. An identity rebuild after a URL-rule amendment was adopted by the agent as a change decision and
+  awaits the operator's confirmation. An intake-readiness configuration of 85 outlets exists and starts nothing. The switch is `disabled`.
+  Run report: [`docs/agent-runs/2026-10-09_comprehensive-source-qualification-and-intake-readiness.md`](agent-runs/2026-10-09_comprehensive-source-qualification-and-intake-readiness.md).

@@ -1,5 +1,17 @@
 {
   "files": {
+    "cloudflare_jsd_on_a_403_page.html": {
+      "sha256": "aaff9c42e332e97978891936905bd5d83afc812786dc4496a2efaebb432d173e",
+      "size_bytes": 1084
+    },
+    "cloudflare_jsd_on_a_410_page.html": {
+      "sha256": "f964a6a413b219bb7e4ab427b68e9e1d09628d7a2d80bba3b79209fda312e1f7",
+      "size_bytes": 1483
+    },
+    "cloudflare_managed_challenge_403.html": {
+      "sha256": "53a8a29dfb35871b4b873ef0c6318c0510af087331c3c5dc3a4f3da6fff4e165",
+      "size_bytes": 5631
+    },
     "rss_cdata_doctype.xml": {
       "sha256": "88d5e3263c25340ebfbac0a95787f50893c3e47472ec736105110cbfe15156e9",
       "size_bytes": 1371
@@ -7,6 +19,10 @@
     "sucuri_challenge_307.html": {
       "sha256": "9fb11d14ec6e80c05738584a367bcb4dd47d10f816598fa4a8b3d94254b28316",
       "size_bytes": 484
+    },
+    "varnish_403_on_robots.html": {
+      "sha256": "553fbbd429f1a20576c9a54843e7300cddab53d00f564111cac62649214f0656",
+      "size_bytes": 425
     }
   }
 }

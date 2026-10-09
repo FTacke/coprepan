@@ -103,7 +103,7 @@ def test_the_challenge_of_2026_10_08_is_recognised_by_what_it_is_not_by_its_stat
     for status in (307, 200, 403, 503):
         assert AC.classify_response(status, SUCURI_HEADERS, body) == AC.BOT_CHALLENGE, status
     assert AC.classify_response(307, SUCURI_HEADERS + [("Content-Encoding", "gzip")], gzip.compress(body)) == AC.BOT_CHALLENGE
-    assert AC.BOT_CHALLENGE in AC.ORIGIN_HOLD and AC.CLASSIFIER_VERSION == "access-control/2"
+    assert AC.BOT_CHALLENGE in AC.ORIGIN_HOLD and AC.CLASSIFIER_VERSION == "access-control/3"
     # an ordinary redirect answer and an ordinary small page are not challenges
     moved = b"<html><head><title>307 Temporary Redirect</title></head><body>The document has moved.</body></html>"
     assert AC.classify_response(307, [("Location", "/nueva")], moved) == AC.NONE_OBSERVED
@@ -641,6 +641,24 @@ def test_every_outlet_hypothesis_has_one_disposition_and_what_is_registered_is_w
     for row in rows:
         if row["disposition"] not in ("REGISTER", "ALREADY_REGISTERED"):
             assert (tracked.outlets[row["outlet_id"]]["registration_status"] == "proposed") if row["in_registry_before"] else (row["outlet_id"] not in tracked.outlets)
+
+
+# --- F15 (qualification run, 2026-10-09): Cloudflare's detection script is not a challenge -------------------
+
+
+def test_the_detection_script_on_an_ordinary_page_is_not_a_challenge_and_a_real_challenge_still_is():
+    """Four answers preserved on 2026-10-09, as received (decoded): ``mx_la_jornada``'s retired Atom feed answered 410 Gone
+    with Cloudflare's detection script and was classified ``bot_challenge`` — the origin was held although its RSS feed had
+    just listed 30 entries. ``py_adn_digital``'s 403 carried the same script; a 403 it is, a challenge it is not."""
+    html = [("Content-Type", "text/html; charset=UTF-8"), ("Server", "cloudflare")]
+    assert AC.classify_response(410, html, fixture("cloudflare_jsd_on_a_410_page.html")) == AC.NONE_OBSERVED
+    assert AC.classify_response(403, html, fixture("cloudflare_jsd_on_a_403_page.html")) == AC.FORBIDDEN
+    assert AC.classify_response(403, html, fixture("cloudflare_managed_challenge_403.html")) == AC.BOT_CHALLENGE          # by its body alone
+    assert AC.classify_response(403, [*html, ("cf-mitigated", "challenge")], b"") == AC.BOT_CHALLENGE                     # and by the header alone
+    assert AC.classify_response(403, [("Server", "Varnish")], fixture("varnish_403_on_robots.html")) == AC.FORBIDDEN       # `feeds.elpais.com/robots.txt`
+    assert AC.classify_response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html")) == AC.BOT_CHALLENGE            # F2 unchanged
+    assert AC.NONE_OBSERVED not in AC.ORIGIN_HOLD and AC.FORBIDDEN in AC.ORIGIN_HOLD                                      # a 403 still ends the origin's run
+    assert AC.CLASSIFIER_VERSION == "access-control/3"
 
 
 # --- F14 (wave C2, 2026-10-09): a second run for an outlet on a day whose pack is sealed ---------------------

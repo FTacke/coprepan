@@ -19,7 +19,9 @@ from urllib.parse import urlsplit
 
 # /2 (canary finding F2, CPD-0019): the Sucuri JavaScript challenge is known, and a small body is
 # inspected whatever its status — the challenge of 2026-10-08 came as a 307 without a `Location`.
-CLASSIFIER_VERSION = "access-control/2"
+# /3 (qualification run of 2026-10-09): Cloudflare's detection script on an ordinary page is not a challenge
+# (`mx_la_jornada`: a 410 Gone of a retired feed held the origin; `py_adn_digital`: a plain 403 was named a challenge).
+CLASSIFIER_VERSION = "access-control/3"
 
 NONE_OBSERVED = "none_observed"
 UNKNOWN = "unknown"                       # no answer was classified (a transport failure, a replay)
@@ -39,7 +41,10 @@ ORIGIN_HOLD = (AUTH_REQUIRED, FORBIDDEN, LEGAL_BLOCK, RATE_LIMITED, CAPTCHA, BOT
 _INSPECTED_BYTES = 64 * 1024
 _SMALL_BODY_BYTES = 32 * 1024             # a challenge page is small; an article that embeds a form widget is not
 _CAPTCHA_MARKERS = (b"g-recaptcha", b"h-captcha", b"hcaptcha.com/1/api.js", b"cf-turnstile", b"captcha-delivery.com", b"px-captcha")
-_CHALLENGE_MARKERS = (b"cdn-cgi/challenge-platform", b"cf-chl-", b"just a moment...", b"checking your browser",
+# Cloudflare: the challenge itself (`…/challenge-platform/h/…/orchestrate/…`, `_cf_chl_opt`) — not the path
+# `cdn-cgi/challenge-platform` alone, which also carries the detection script Cloudflare adds to ordinary pages
+# (`…/scripts/jsd/main.js`): a plain 410 with that script was read as a challenge and held an origin whose feed worked.
+_CHALLENGE_MARKERS = (b"cdn-cgi/challenge-platform/h/", b"_cf_chl_opt", b"cf-chl-", b"just a moment...", b"checking your browser",
                       b"attention required! | cloudflare", b"_incapsula_resource", b"ddos-guard",
                       # Sucuri CloudProxy: a script that computes a cookie and reloads the page.
                       b"sucuri_cloudproxy_js", b"sucuri_cloudproxy_uuid")

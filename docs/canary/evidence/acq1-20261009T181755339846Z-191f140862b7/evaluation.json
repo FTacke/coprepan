@@ -1,0 +1,2033 @@
+{
+  "outlets": {
+    "cr_diario_extra": {
+      "access_classes_observed": {
+        "bot_challenge": 1
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "cr_diario_extra:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diarioextra.com/rss/",
+              "redirect_hops": 0,
+              "status": 403,
+              "url": "https://www.diarioextra.com/rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_403"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cr_diario_extra:ch:sitemap_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.diarioextra.com/sitemap-news.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {
+        "channel_document:403": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1,
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    },
+    "cr_la_nacion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 110
+      },
+      "channels": {
+        "cr_la_nacion:ch:rss_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.nacion.com/arc/outboundfeeds/rss/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.nacion.com/rss"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "cr_la_nacion:ch:sitemap_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.nacion.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.nacion.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 5094,
+        "body_characters_median": 3760,
+        "body_characters_min": 1871,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1871,
+          "channel_id": "cr_la_nacion:ch:rss_001",
+          "final_url": "https://www.nacion.com/sucesos/fiscalia-de-estados-unidos-revela-cargos-contra/O6MRS4WU3ZCUNDC2PKFPQBB2XU/story/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.nacion.com/sucesos/fiscalia-de-estados-unidos-revela-cargos-contra/O6MRS4WU3ZCUNDC2PKFPQBB2XU/story/"
+        },
+        {
+          "body_characters": 5094,
+          "channel_id": "cr_la_nacion:ch:rss_001",
+          "final_url": "https://www.nacion.com/opinion/columnistas/que-tienen-en-comun-los-monos-y-los-ninos-al/D2CXWLX4KRANVLMHM75HL4VGWI/story/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.nacion.com/opinion/columnistas/que-tienen-en-comun-los-monos-y-los-ninos-al/D2CXWLX4KRANVLMHM75HL4VGWI/story/"
+        },
+        {
+          "body_characters": 4099,
+          "channel_id": "cr_la_nacion:ch:rss_001",
+          "final_url": "https://www.nacion.com/puro-deporte/piden-penas-de-carcel-para-equipo-medico-que/ZKJEJCPFVFBUFMPGCCZTPCQQ7M/story/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.nacion.com/puro-deporte/piden-penas-de-carcel-para-equipo-medico-que/ZKJEJCPFVFBUFMPGCCZTPCQQ7M/story/"
+        },
+        {
+          "body_characters": 3421,
+          "channel_id": "cr_la_nacion:ch:rss_001",
+          "final_url": "https://www.nacion.com/puro-deporte/malcon-pilone-revela-dos-noticias-sobre-su-regreso/N6ZGVRD7KJFNBETDWI7KK3XOPE/story/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.nacion.com/puro-deporte/malcon-pilone-revela-dos-noticias-sobre-su-regreso/N6ZGVRD7KJFNBETDWI7KK3XOPE/story/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "cu_5_de_septiembre": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "cu_5_de_septiembre:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_unreachable",
+              "url": "https://www.5septiembre.cu/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_unreachable"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_unreachable": 1
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNREACHABLE": 1
+      }
+    },
+    "cu_havanatimes": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 206,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "cu_havanatimes:ch:rss_003": {
+          "candidates_listed": 7,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://havanatimesenespanol.org/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://havanatimesenespanol.org/feed/"
+            }
+          ],
+          "entries": 7,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 7,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "cu_havanatimes:ch:sitemap_index_001": {
+          "candidates_listed": 207,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://havanatimesenespanol.org/sitemap_index.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://havanatimesenespanol.org/sitemap_index.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://havanatimesenespanol.org/post-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://havanatimesenespanol.org/post-sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://havanatimesenespanol.org/post-sitemap41.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://havanatimesenespanol.org/post-sitemap41.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://havanatimesenespanol.org/post-sitemap40.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://havanatimesenespanol.org/post-sitemap40.xml"
+            }
+          ],
+          "entries": 3044,
+          "entry_problems": {
+            "candidate_budget_exhausted": 2793
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 44,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 1001,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 999,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 1000,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 16327,
+        "body_characters_median": 5875,
+        "body_characters_min": 4211,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 16327,
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "final_url": "https://havanatimesenespanol.org/noticias/las-noticias-internacionales-en-breve-del-jueves-8-de-octubre-de-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://havanatimesenespanol.org/noticias/las-noticias-internacionales-en-breve-del-jueves-8-de-octubre-de-2026/"
+        },
+        {
+          "body_characters": 4211,
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "final_url": "https://havanatimesenespanol.org/opinion/cuba-sin-gas-para-cocinar-para-la-gente-pobre/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://havanatimesenespanol.org/opinion/cuba-sin-gas-para-cocinar-para-la-gente-pobre/"
+        },
+        {
+          "body_characters": 6809,
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "final_url": "https://havanatimesenespanol.org/noticias/la-patrulla-fronteriza-despliega-una-unidad-tactica-contra-manifestantes-que-bloquean-la-construccion-del-muro-fronterizo-en-arizona/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://havanatimesenespanol.org/noticias/la-patrulla-fronteriza-despliega-una-unidad-tactica-contra-manifestantes-que-bloquean-la-construccion-del-muro-fronterizo-en-arizona/"
+        },
+        {
+          "body_characters": 4942,
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "final_url": "https://havanatimesenespanol.org/opinion/tambien-pude-haber-caido-en-la-manosfera/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://havanatimesenespanol.org/opinion/tambien-pude-haber-caido-en-la-manosfera/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 5,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 9
+      }
+    },
+    "cu_juventud_rebelde": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 200
+      },
+      "channels": {
+        "cu_juventud_rebelde:ch:sitemap_index_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.juventudrebelde.cu/sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.juventudrebelde.cu/sitemap.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.juventudrebelde.cu/sitemap-0.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.juventudrebelde.cu/sitemap-0.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.juventudrebelde.cu/sitemap-1.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.juventudrebelde.cu/sitemap-1.xml"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://www.juventudrebelde.cu/sitemap-2.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.juventudrebelde.cu/sitemap-2.xml"
+            }
+          ],
+          "entries": 139368,
+          "entry_problems": {
+            "candidate_budget_exhausted": 139165
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 3,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 50000,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 50000,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 39365,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4119,
+        "body_characters_median": 2510,
+        "body_characters_min": 1522,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 2327,
+          "channel_id": "cu_juventud_rebelde:ch:sitemap_index_001",
+          "final_url": "https://www.juventudrebelde.cu/cuba/2009-01-06/las-relaciones-entre-panama-y-cuba-son-un-ejemplo",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.juventudrebelde.cu/cuba/2009-01-06/las-relaciones-entre-panama-y-cuba-son-un-ejemplo"
+        },
+        {
+          "body_characters": 4119,
+          "channel_id": "cu_juventud_rebelde:ch:sitemap_index_001",
+          "final_url": "https://www.juventudrebelde.cu/internacionales/2009-04-18/solo-de-la-organizacion-y-la-unidad-vendra-el-cambio-1",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.juventudrebelde.cu/internacionales/2009-04-18/solo-de-la-organizacion-y-la-unidad-vendra-el-cambio-1"
+        },
+        {
+          "body_characters": 1522,
+          "channel_id": "cu_juventud_rebelde:ch:sitemap_index_001",
+          "final_url": "https://www.juventudrebelde.cu/deportes/2012-01-16/revelan-preseleccion-estadounidense-de-baloncesto-a-juegos-olimpicos",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.juventudrebelde.cu/deportes/2012-01-16/revelan-preseleccion-estadounidense-de-baloncesto-a-juegos-olimpicos"
+        },
+        {
+          "body_characters": 2693,
+          "channel_id": "cu_juventud_rebelde:ch:sitemap_index_001",
+          "final_url": "https://www.juventudrebelde.cu/internacionales/2012-01-18/venezuela-segura",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.juventudrebelde.cu/internacionales/2012-01-18/venezuela-segura"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 4,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 2.0,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 8
+      }
+    },
+    "cu_periodico26": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "cu_periodico26:ch:atom_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_unreachable",
+              "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=atom"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_unreachable"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cu_periodico26:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_unreachable",
+              "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_unreachable"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_unreachable": 2
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNREACHABLE": 2
+      }
+    },
+    "cu_trabajadores": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "cu_trabajadores:ch:rss_003": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.trabajadores.cu/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "http://www.trabajadores.cu/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "cu_trabajadores:ch:sitemap_index_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://www.trabajadores.cu/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 3979,
+        "body_characters_median": 2653,
+        "body_characters_min": 787,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3979,
+          "channel_id": "cu_trabajadores:ch:rss_003",
+          "final_url": "https://www.trabajadores.cu/20261009/el-crimen-de-la-higuera/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.trabajadores.cu/20261009/el-crimen-de-la-higuera/"
+        },
+        {
+          "body_characters": 2720,
+          "channel_id": "cu_trabajadores:ch:rss_003",
+          "final_url": "https://www.trabajadores.cu/20261009/jornada-de-la-cultura-dedicada-a-fundacion-de-matanzas/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.trabajadores.cu/20261009/jornada-de-la-cultura-dedicada-a-fundacion-de-matanzas/"
+        },
+        {
+          "body_characters": 787,
+          "channel_id": "cu_trabajadores:ch:rss_003",
+          "final_url": "https://www.trabajadores.cu/20261009/industrias-atlanta-busca-ingeniero-industrial/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.trabajadores.cu/20261009/industrias-atlanta-busca-ingeniero-industrial/"
+        },
+        {
+          "body_characters": 2587,
+          "channel_id": "cu_trabajadores:ch:rss_003",
+          "final_url": "https://www.trabajadores.cu/20261009/una-jornada-por-la-cultura-y-para-el-pueblo/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.trabajadores.cu/20261009/una-jornada-por-la-cultura-y-para-el-pueblo/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:canary_budget_exhausted": 1
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNAVAILABLE": 5
+      }
+    },
+    "do_el_caribe": {
+      "access_classes_observed": {
+        "bot_challenge": 1
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "do_el_caribe:ch:section_page_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.elcaribe.com.do/seccion/panorama/pais/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    },
+    "do_el_nacional": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 62
+      },
+      "channels": {
+        "do_el_nacional:ch:rss_r001": {
+          "candidates_listed": 62,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://elnacional.com.do/rss/home.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://elnacional.com.do/rss/home.xml"
+            }
+          ],
+          "entries": 62,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 62,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8893,
+        "body_characters_median": 4739,
+        "body_characters_min": 2944,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 8893,
+          "channel_id": "do_el_nacional:ch:rss_r001",
+          "final_url": "https://elnacional.com.do/nacionales/judicial/justicia-dominicana-deuda-asesinato-jovenes-club-hector-j-diaz_582897.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elnacional.com.do/nacionales/judicial/justicia-dominicana-deuda-asesinato-jovenes-club-hector-j-diaz_582897.html"
+        },
+        {
+          "body_characters": 2944,
+          "channel_id": "do_el_nacional:ch:rss_r001",
+          "final_url": "https://elnacional.com.do/politica/mpd-resalta-trayectoria-ernesto-che-guevara-59-aniversario-asesinato_582909.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elnacional.com.do/politica/mpd-resalta-trayectoria-ernesto-che-guevara-59-aniversario-asesinato_582909.html"
+        },
+        {
+          "body_characters": 5880,
+          "channel_id": "do_el_nacional:ch:rss_r001",
+          "final_url": "https://elnacional.com.do/nacionales/abinader-evalua-crear-ley-regular-proyectos-obras_583024.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elnacional.com.do/nacionales/abinader-evalua-crear-ley-regular-proyectos-obras_583024.html"
+        },
+        {
+          "body_characters": 3599,
+          "channel_id": "do_el_nacional:ch:rss_r001",
+          "final_url": "https://elnacional.com.do/deportes/knicks-postergan-negociaciones-contractuales_582998.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elnacional.com.do/deportes/knicks-postergan-negociaciones-contractuales_582998.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "do_hoy": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 77
+      },
+      "channels": {
+        "do_hoy:ch:rss_r001": {
+          "candidates_listed": 77,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://hoy.com.do/rss/home.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://hoy.com.do/rss/home.xml"
+            }
+          ],
+          "entries": 77,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 77,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4214,
+        "body_characters_median": 3276,
+        "body_characters_min": 2557,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3045,
+          "channel_id": "do_hoy:ch:rss_r001",
+          "final_url": "https://hoy.com.do/deportes/maria-garcia-util-rd-mejor-medalla_1104965.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://hoy.com.do/deportes/maria-garcia-util-rd-mejor-medalla_1104965.html"
+        },
+        {
+          "body_characters": 2557,
+          "channel_id": "do_hoy:ch:rss_r001",
+          "final_url": "https://hoy.com.do/opinion/vuelta-lio-arroz_1104973.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://hoy.com.do/opinion/vuelta-lio-arroz_1104973.html"
+        },
+        {
+          "body_characters": 4214,
+          "channel_id": "do_hoy:ch:rss_r001",
+          "final_url": "https://hoy.com.do/opinion/compliance-procrastinacion-penal_1104957.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://hoy.com.do/opinion/compliance-procrastinacion-penal_1104957.html"
+        },
+        {
+          "body_characters": 3508,
+          "channel_id": "do_hoy:ch:rss_r001",
+          "final_url": "https://hoy.com.do/economia/cuanto-recaudo-dgii-septiembre-2026_1105052.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://hoy.com.do/economia/cuanto-recaudo-dgii-septiembre-2026_1105052.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "do_listin_diario": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 200
+      },
+      "channels": {
+        "do_listin_diario:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://listindiario.com/rss/larepublica.html",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://listindiario.com/rss/larepublica/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "do_listin_diario:ch:sitemap_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://listindiario.com/sitemap-google-news.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://listindiario.com/sitemap-google-news.xml"
+            }
+          ],
+          "entries": 306,
+          "entry_problems": {
+            "candidate_budget_exhausted": 106
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 306,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8543,
+        "body_characters_median": 3006,
+        "body_characters_min": 1842,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 8543,
+          "channel_id": "do_listin_diario:ch:sitemap_001",
+          "final_url": "https://listindiario.com/puntos-de-vista/20261009/como-salir-bache-aleman_925407.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://listindiario.com/puntos-de-vista/20261009/como-salir-bache-aleman_925407.html"
+        },
+        {
+          "body_characters": 3995,
+          "channel_id": "do_listin_diario:ch:sitemap_001",
+          "final_url": "https://listindiario.com/la-republica/sector-salud/20261008/cancer-mama-inflamatorio-dar-lugar-diagnosticos-erroneos_925319.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://listindiario.com/la-republica/sector-salud/20261008/cancer-mama-inflamatorio-dar-lugar-diagnosticos-erroneos_925319.html"
+        },
+        {
+          "body_characters": 1842,
+          "channel_id": "do_listin_diario:ch:sitemap_001",
+          "final_url": "https://listindiario.com/puntos-de-vista/20261009/jurista-decreto_925410.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://listindiario.com/puntos-de-vista/20261009/jurista-decreto_925410.html"
+        },
+        {
+          "body_characters": 2018,
+          "channel_id": "do_listin_diario:ch:sitemap_001",
+          "final_url": "https://listindiario.com/la-republica/20261009/policia-nacional-detiene-tres-presuntos-implicados-intento-asalto-joyeria-villa-juana_925496.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://listindiario.com/la-republica/20261009/policia-nacional-detiene-tres-presuntos-implicados-intento-asalto-joyeria-villa-juana_925496.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "channel_document:404": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ec_el_comercio": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 129
+      },
+      "channels": {
+        "ec_el_comercio:ch:rss_r001": {
+          "candidates_listed": 20,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elcomercio.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elcomercio.com/feed/"
+            }
+          ],
+          "entries": 20,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 20,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ec_el_comercio:ch:sitemap_001": {
+          "candidates_listed": 129,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elcomercio.com/sitemap-news.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elcomercio.com/sitemap-news.xml"
+            }
+          ],
+          "entries": 129,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 129,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 5815,
+        "body_characters_median": 3357,
+        "body_characters_min": 2159,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4135,
+          "channel_id": "ec_el_comercio:ch:rss_r001",
+          "final_url": "https://www.elcomercio.com/actualidad/quito/tuberia-rota-la-carolina-sin-agua-10-barrios-este-viernes-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcomercio.com/actualidad/quito/tuberia-rota-la-carolina-sin-agua-10-barrios-este-viernes-2026/"
+        },
+        {
+          "body_characters": 2159,
+          "channel_id": "ec_el_comercio:ch:rss_r001",
+          "final_url": "https://www.elcomercio.com/deportes/futbol/max-dowman-record-guinnes-precocidad/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcomercio.com/deportes/futbol/max-dowman-record-guinnes-precocidad/"
+        },
+        {
+          "body_characters": 2579,
+          "channel_id": "ec_el_comercio:ch:rss_r001",
+          "final_url": "https://www.elcomercio.com/actualidad/seguridad/policias-incautan-cocaina-en-el-puerto-de-guayaquil-mexico-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcomercio.com/actualidad/seguridad/policias-incautan-cocaina-en-el-puerto-de-guayaquil-mexico-2026/"
+        },
+        {
+          "body_characters": 5815,
+          "channel_id": "ec_el_comercio:ch:rss_r001",
+          "final_url": "https://www.elcomercio.com/actualidad/negocios/pagarle-trabaja-feriado-octubre-ecuador/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcomercio.com/actualidad/negocios/pagarle-trabaja-feriado-octubre-ecuador/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ec_el_mercurio": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "ec_el_mercurio:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://elmercurio.com.ec/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://elmercurio.com.ec/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 1113,
+        "body_characters_median": 1090,
+        "body_characters_min": 1067,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1067,
+          "channel_id": "ec_el_mercurio:ch:rss_r001",
+          "final_url": "https://elmercurio.com.ec/deportes/2026/10/09/formula1-gp-singapur-2/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elmercurio.com.ec/deportes/2026/10/09/formula1-gp-singapur-2/"
+        },
+        {
+          "body_characters": 1067,
+          "channel_id": "ec_el_mercurio:ch:rss_r001",
+          "final_url": "https://elmercurio.com.ec/cuenca/2026/10/09/trafico-drogas-el-arenal-detenidos-policia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elmercurio.com.ec/cuenca/2026/10/09/trafico-drogas-el-arenal-detenidos-policia/"
+        },
+        {
+          "body_characters": 1113,
+          "channel_id": "ec_el_mercurio:ch:rss_r001",
+          "final_url": "https://elmercurio.com.ec/cuenca/2026/10/09/accidente-avioneta-cuenca-que-se-conoce/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elmercurio.com.ec/cuenca/2026/10/09/accidente-avioneta-cuenca-que-se-conoce/"
+        },
+        {
+          "body_characters": 1113,
+          "channel_id": "ec_el_mercurio:ch:rss_r001",
+          "final_url": "https://elmercurio.com.ec/ultimas-noticias/2026/10/09/marco-vinicio-vintimilla-reportado-desaparecido-cuenca/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://elmercurio.com.ec/ultimas-noticias/2026/10/09/marco-vinicio-vintimilla-reportado-desaparecido-cuenca/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ec_el_universo": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 100
+      },
+      "channels": {
+        "ec_el_universo:ch:rss_r001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 2,
+          "items_requested": 2
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 2306,
+        "body_characters_median": 1639,
+        "body_characters_min": 972,
+        "floor": 500,
+        "labelled": 2,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 2
+      },
+      "items": [
+        {
+          "body_characters": 2306,
+          "channel_id": "ec_el_universo:ch:rss_r001",
+          "final_url": "https://www.eluniverso.com:443/internacional/latinoamerica/simon-se-vuelve-huracan-y-se-enfila-con-fuerza-hacia-mexico-nota/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eluniverso.com/internacional/latinoamerica/simon-se-vuelve-huracan-y-se-enfila-con-fuerza-hacia-mexico-nota/"
+        },
+        {
+          "body_characters": 972,
+          "channel_id": "ec_el_universo:ch:rss_r001",
+          "final_url": "https://www.eluniverso.com:443/internacional/estados-unidos/vuelo-se-desvia-a-miami-por-turbulencia-grave-ocho-personas-fueron-llevadas-a-hospitales-nota/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://eluniverso.com/internacional/estados-unidos/vuelo-se-desvia-a-miami-por-turbulencia-grave-ocho-personas-fueron-llevadas-a-hospitales-nota/"
+        }
+      ],
+      "items_2xx": 2,
+      "items_requested": 2,
+      "redirect_hops": 0,
+      "refused": {
+        "item:canary_budget_exhausted": 2
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 2
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": 10.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 2,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "ec_expreso": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 79
+      },
+      "channels": {
+        "ec_expreso:ch:rss_r001": {
+          "candidates_listed": 79,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.expreso.ec/rss/home.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.expreso.ec/rss/home.xml"
+            }
+          ],
+          "entries": 79,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 79,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4889,
+        "body_characters_median": 3774,
+        "body_characters_min": 3222,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4889,
+          "channel_id": "ec_expreso:ch:rss_r001",
+          "final_url": "https://www.expreso.ec/quito/a-pocos-minutos-de-cumbaya-sobrevive-un-bosque-de-cuatro-hectareas-que-pocos-conocen-296228.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.expreso.ec/quito/a-pocos-minutos-de-cumbaya-sobrevive-un-bosque-de-cuatro-hectareas-que-pocos-conocen-296228.html"
+        },
+        {
+          "body_characters": 3873,
+          "channel_id": "ec_expreso:ch:rss_r001",
+          "final_url": "https://www.expreso.ec/ecuador/granasa-responder-empleados-inmobiliar-superintendencia-companias-dejan-298403.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.expreso.ec/ecuador/granasa-responder-empleados-inmobiliar-superintendencia-companias-dejan-298403.html"
+        },
+        {
+          "body_characters": 3222,
+          "channel_id": "ec_expreso:ch:rss_r001",
+          "final_url": "https://www.expreso.ec/tramites-y-servicios/elecciones-2027-son-papeletas-recibira-elector-298257.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.expreso.ec/tramites-y-servicios/elecciones-2027-son-papeletas-recibira-elector-298257.html"
+        },
+        {
+          "body_characters": 3676,
+          "channel_id": "ec_expreso:ch:rss_r001",
+          "final_url": "https://www.expreso.ec/entretenimiento/mariana-ochoa-gana-casa-famosos-mexico-4-lleva-cerca-219-000-dolares-298228.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.expreso.ec/entretenimiento/mariana-ochoa-gana-casa-famosos-mexico-4-lleva-cerca-219-000-dolares-298228.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ec_la_republica_ec": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "ec_la_republica_ec:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.larepublica.ec/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.larepublica.ec/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 3893,
+        "body_characters_median": 3419,
+        "body_characters_min": 1832,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3154,
+          "channel_id": "ec_la_republica_ec:ch:rss_r001",
+          "final_url": "https://www.larepublica.ec/blog/2026/10/08/golpen-red-que-introdujo-en-europa-42-toneladas-de-cocaina-procedente-de-ecuador/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.larepublica.ec/blog/2026/10/08/golpen-red-que-introdujo-en-europa-42-toneladas-de-cocaina-procedente-de-ecuador/"
+        },
+        {
+          "body_characters": 3893,
+          "channel_id": "ec_la_republica_ec:ch:rss_r001",
+          "final_url": "https://www.larepublica.ec/blog/2026/10/08/la-feria-del-libro-de-guadalajara-celebrara-su-edicion-40/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.larepublica.ec/blog/2026/10/08/la-feria-del-libro-de-guadalajara-celebrara-su-edicion-40/"
+        },
+        {
+          "body_characters": 3684,
+          "channel_id": "ec_la_republica_ec:ch:rss_r001",
+          "final_url": "https://www.larepublica.ec/blog/2026/10/09/la-jurista-sudafricana-navanethem-navi-pillay-premio-nobel-de-la-paz-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.larepublica.ec/blog/2026/10/09/la-jurista-sudafricana-navanethem-navi-pillay-premio-nobel-de-la-paz-2026/"
+        },
+        {
+          "body_characters": 1832,
+          "channel_id": "ec_la_republica_ec:ch:rss_r001",
+          "final_url": "https://www.larepublica.ec/blog/2026/10/08/kiosko-el-queso-mas-amado-por-los-ecuatorianos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.larepublica.ec/blog/2026/10/08/kiosko-el-queso-mas-amado-por-los-ecuatorianos/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNAVAILABLE": 5
+      }
+    },
+    "ec_primicias": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 164,
+        "QUALIFIED:no_rule_rejects": 133,
+        "REJECTED:generic: channel_document_extension .xml": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "ec_primicias:ch:rss_r001": {
+          "candidates_listed": 150,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.primicias.ec/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.primicias.ec/feed/"
+            }
+          ],
+          "entries": 358,
+          "entry_problems": {
+            "no_link": 1,
+            "off_origin": 24
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 358,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "ec_primicias:ch:sitemap_001": {
+          "candidates_listed": 156,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.primicias.ec/sitemap-google-news.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.primicias.ec/sitemap-google-news.xml"
+            }
+          ],
+          "entries": 156,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 156,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 5971,
+        "body_characters_median": 3247,
+        "body_characters_min": 3019,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3019,
+          "channel_id": "ec_primicias:ch:sitemap_001",
+          "final_url": "https://www.primicias.ec/deportes/futbol/cristiano-ronaldo-rui-borges-director-tecnico-sporting-seleccion-portugal-jorge-jesus-134510/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.primicias.ec/deportes/futbol/cristiano-ronaldo-rui-borges-director-tecnico-sporting-seleccion-portugal-jorge-jesus-134510/"
+        },
+        {
+          "body_characters": 3369,
+          "channel_id": "ec_primicias:ch:sitemap_001",
+          "final_url": "https://www.primicias.ec/sucesos/detenido-interpol-quito-narcotrafico-lavado-activos-cocaina-estados-unidos-134470/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.primicias.ec/sucesos/detenido-interpol-quito-narcotrafico-lavado-activos-cocaina-estados-unidos-134470/"
+        },
+        {
+          "body_characters": 5971,
+          "channel_id": "ec_primicias:ch:sitemap_001",
+          "final_url": "https://www.primicias.ec/seguridad/policia-ecuador-espana-desmantelan-red-narcotrafico-cocaina-espana-portugal-belgica-paises-bajos-134474/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.primicias.ec/seguridad/policia-ecuador-espana-desmantelan-red-narcotrafico-cocaina-espana-portugal-belgica-paises-bajos-134474/"
+        },
+        {
+          "body_characters": 3126,
+          "channel_id": "ec_primicias:ch:sitemap_001",
+          "final_url": "https://www.primicias.ec/sociedad/cuenca-proyecto-casa-larga-bienal-arquitectura-colombia-patrimonio-restauracion-134552/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.primicias.ec/sociedad/cuenca-proyecto-casa-larga-bienal-arquitectura-colombia-patrimonio-restauracion-134552/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "es_abc": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 25
+      },
+      "channels": {
+        "es_abc:ch:rss_r001": {
+          "candidates_listed": 25,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.abc.es/rss/2.0/portada/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.abc.es/rss/2.0/portada/"
+            }
+          ],
+          "entries": 25,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 25,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8476,
+        "body_characters_median": 4895,
+        "body_characters_min": 1911,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1911,
+          "channel_id": "es_abc:ch:rss_r001",
+          "final_url": "https://www.abc.es/espana/colau-pide-rufian-formar-parte-frente-amplio-20261009201727-nt.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.es/espana/colau-pide-rufian-formar-parte-frente-amplio-20261009201727-nt.html"
+        },
+        {
+          "body_characters": 3334,
+          "channel_id": "es_abc:ch:rss_r001",
+          "final_url": "https://www.abc.es/espana/fiscalia-pide-supremo-revise-censo-ley-nietos-20261009150522-nt.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.es/espana/fiscalia-pide-supremo-revise-censo-ley-nietos-20261009150522-nt.html"
+        },
+        {
+          "body_characters": 6457,
+          "channel_id": "es_abc:ch:rss_r001",
+          "final_url": "https://www.abc.es/play/television/noticias/tomas-gomez-exsecretario-psoe-madrid-puedo-votar-20261009121001-nt.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.es/play/television/noticias/tomas-gomez-exsecretario-psoe-madrid-puedo-votar-20261009121001-nt.html"
+        },
+        {
+          "body_characters": 8476,
+          "channel_id": "es_abc:ch:rss_r001",
+          "final_url": "https://www.abc.es/cultura/toros/toros-morante-puebla-roca-rey-tomas-rufo-valencia-hoy-directo-20261009144205-di.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.abc.es/cultura/toros/toros-morante-puebla-roca-rey-tomas-rufo-valencia-hoy-directo-20261009144205-di.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "es_el_correo": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 100
+      },
+      "channels": {
+        "es_el_correo:ch:rss_r001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elcorreo.com/rss/2.0/portada/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elcorreo.com/rss/2.0/portada"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8052,
+        "body_characters_median": 6334,
+        "body_characters_min": 2696,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 2696,
+          "channel_id": "es_el_correo:ch:rss_r001",
+          "final_url": "https://www.elcorreo.com/zurekin/belaunaldiak-entzun-20261003102539-nt.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcorreo.com/zurekin/belaunaldiak-entzun-20261003102539-nt.html"
+        },
+        {
+          "body_characters": 6038,
+          "channel_id": "es_el_correo:ch:rss_r001",
+          "final_url": "https://www.elcorreo.com/economia/inflacion-repuntara-ano-disparara-proximo-precios-energeticos-20261009130048-ntrc.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcorreo.com/economia/inflacion-repuntara-ano-disparara-proximo-precios-energeticos-20261009130048-ntrc.html"
+        },
+        {
+          "body_characters": 6630,
+          "channel_id": "es_el_correo:ch:rss_r001",
+          "final_url": "https://www.elcorreo.com/politica/fiscalia-pide-supremo-dejar-votar-nacionalizados-ley-20261009155304-ntrc.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcorreo.com/politica/fiscalia-pide-supremo-dejar-votar-nacionalizados-ley-20261009155304-ntrc.html"
+        },
+        {
+          "body_characters": 8052,
+          "channel_id": "es_el_correo:ch:rss_r001",
+          "final_url": "https://www.elcorreo.com/culturas/territorios/arte-sinrazon-inspiracio-sufrimiento-20261003005727-nt.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elcorreo.com/culturas/territorios/arte-sinrazon-inspiracio-sufrimiento-20261003005727-nt.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "es_el_pais": {
+      "access_classes_observed": {
+        "forbidden": 1
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "es_el_pais:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 1
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 1
+      }
+    }
+  },
+  "run_id": "acq1-20261009T181755339846Z-191f140862b7",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 58,
+    "items_requested": 58,
+    "outlets": 20,
+    "outlets_with_2xx_items": 15
+  }
+}

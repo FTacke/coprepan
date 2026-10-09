@@ -56,3 +56,4 @@ test_source_expansion.py     # the qualification overview is the join of its inp
 test_block_heredocs_hook.py  # the hook of AGENTS.md section 5: heredocs and here-strings refused, ordinary commands pass, wired for both shells, grants nothing
 test_canary_operator.py      # order and commits of the steps, tests on the arming commit and on the disarmed tree, the digest shown first, no confirmation passable, disarmed after any failure, --disarm-only
 test_delegated_operator.py   # the authorisation record and its check (CPD-0023); the delegated mode end to end without a prompt, written-once record, exact scope, a wave used once, disarmed after any failure, no force option; the interactive mode unchanged
+test_source_qualification.py # the inventory after qualification, the intake-readiness configuration and the access-restriction review are what their builder gives; a stage claims no more than the evidence; no held origin is in an intake (CPD-0025, CPD-0026)

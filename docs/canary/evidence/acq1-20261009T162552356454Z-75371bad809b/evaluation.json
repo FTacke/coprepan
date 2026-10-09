@@ -1,0 +1,412 @@
+{
+  "outlets": {
+    "hn_criterio": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:outlet: allow_pattern ^/[a-z0-9]+(-[a-z0-9]+){3,}/?$": 29,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1,
+        "REJECTED:outlet: not_matched_by_any_allow_pattern": 7,
+        "REJECTED:outlet: path_prefix /category": 16
+      },
+      "channels": {
+        "hn_criterio:ch:rss_r001": {
+          "candidates_listed": 5,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://criterio.hn/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/feed/"
+            }
+          ],
+          "entries": 5,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 5,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "hn_criterio:ch:section_page_r001": {
+          "candidates_listed": 50,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://criterio.hn/category/actualidad/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://criterio.hn/category/actualidad/page/2/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/page/2/"
+            },
+            {
+              "expansion_depth": 2,
+              "final_url": "https://criterio.hn/category/actualidad/page/3/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/page/3/"
+            }
+          ],
+          "entries": 275,
+          "entry_problems": {
+            "not_http": 3,
+            "off_origin": 60
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 90,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 92,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 2,
+              "entries": 93,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 10,
+        "body_characters_max": 409,
+        "body_characters_median": 349,
+        "body_characters_min": 331,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 409,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/racismo-institucional-y-acoso-detras-de-retencion-de-lideresa-garifuna-miriam-miranda/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/racismo-institucional-y-acoso-detras-de-retencion-de-lideresa-garifuna-miriam-miranda/"
+        },
+        {
+          "body_characters": 349,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/viaje-de-comitiva-del-gobierno-a-la-onu-reactiva-esperanzas-para-firma-de-memorando-de-la-cicih/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/viaje-de-comitiva-del-gobierno-a-la-onu-reactiva-esperanzas-para-firma-de-memorando-de-la-cicih/"
+        },
+        {
+          "body_characters": 331,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/inversionista-de-zede-presiona-al-gobierno-por-legalidad-del-regimen-en-honduras/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/inversionista-de-zede-presiona-al-gobierno-por-legalidad-del-regimen-en-honduras/"
+        },
+        {
+          "body_characters": 347,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/masacre-laboral-en-gobierno-de-asfura-contra-15-mil-empleados-publicos-es-abordada-por-la-oit-y-la-cidh/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/masacre-laboral-en-gobierno-de-asfura-contra-15-mil-empleados-publicos-es-abordada-por-la-oit-y-la-cidh/"
+        },
+        {
+          "body_characters": 349,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/por-que-el-embarazo-en-adolescentes-es-un-marcador-de-desigualdad/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/por-que-el-embarazo-en-adolescentes-es-un-marcador-de-desigualdad/"
+        },
+        {
+          "body_characters": 340,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/jaime-vallardo-chavez-el-artista-de-las-monedas-mundiales-representara-a-honduras-en-dos-escenarios/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/jaime-vallardo-chavez-el-artista-de-las-monedas-mundiales-representara-a-honduras-en-dos-escenarios/"
+        },
+        {
+          "body_characters": 409,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/elites-explotan-con-desinformacion-y-odio-desmesurado-tras-anuncio-de-clases-de-equidad-de-genero/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/elites-explotan-con-desinformacion-y-odio-desmesurado-tras-anuncio-de-clases-de-equidad-de-genero/"
+        },
+        {
+          "body_characters": 342,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/el-gigante-la-cueva-que-no-era-de-gigantes-sino-uno-de-los-archivos-mas-antiguos-de-honduras/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/el-gigante-la-cueva-que-no-era-de-gigantes-sino-uno-de-los-archivos-mas-antiguos-de-honduras/"
+        },
+        {
+          "body_characters": 349,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/mas-aspirantes-a-magistrados-de-la-csj-podrian-quedar-fuera-tras-investigacion-socioeconomica-y-denuncias/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/mas-aspirantes-a-magistrados-de-la-csj-podrian-quedar-fuera-tras-investigacion-socioeconomica-y-denuncias/"
+        },
+        {
+          "body_characters": 349,
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "final_url": "https://criterio.hn/17-congresistas-piden-a-marco-rubio-que-apoye-investigacion-internacional-sobre-la-masacre-de-campesinos-de-rigores/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/17-congresistas-piden-a-marco-rubio-que-apoye-investigacion-internacional-sobre-la-masacre-de-campesinos-de-rigores/"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 4,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.4,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 13,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "pr_noticel": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:outlet: allow_pattern ^/ultima-hora/[0-9]{8}/[a-z0-9-]+/?$": 17,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1,
+        "REJECTED:outlet: not_matched_by_any_allow_pattern": 2,
+        "REJECTED:outlet: path_prefix /auth": 1,
+        "REJECTED:outlet: path_prefix /author": 29,
+        "REJECTED:outlet: path_prefix /category": 60,
+        "REJECTED:outlet: path_prefix /en": 3
+      },
+      "channels": {
+        "pr_noticel:ch:section_page_r001": {
+          "candidates_listed": 114,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://noticel.com/category/ultima-hora/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://noticel.com/category/ultima-hora/page/2/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/page/2/"
+            },
+            {
+              "expansion_depth": 2,
+              "final_url": "https://noticel.com/category/ultima-hora/page/3/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/page/3/"
+            }
+          ],
+          "entries": 700,
+          "entry_problems": {
+            "off_origin": 22
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 234,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 233,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 2,
+              "entries": 233,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 8864,
+        "body_characters_median": 6213,
+        "body_characters_min": 5188,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 6291,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261009/proyecto-permitiria-a-agentes-conocer-que-personas-intervenidas-tienen-una-licencia-de-armas/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261009/proyecto-permitiria-a-agentes-conocer-que-personas-intervenidas-tienen-una-licencia-de-armas/"
+        },
+        {
+          "body_characters": 6217,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/sequia-continua-disminuyendo-en-puerto-rico/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/sequia-continua-disminuyendo-en-puerto-rico/"
+        },
+        {
+          "body_characters": 7555,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/tres-dominicanos-podrian-enfrentar-la-pena-de-muerte-por-viaje-ilegal-que-dejo-tres-muertos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/tres-dominicanos-podrian-enfrentar-la-pena-de-muerte-por-viaje-ilegal-que-dejo-tres-muertos/"
+        },
+        {
+          "body_characters": 5188,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/el-barril-de-crudo-brent-se-acerca-a-106-tras-subir-mas-del-5-ante-la-tension-en-oriente-medio/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/el-barril-de-crudo-brent-se-acerca-a-106-tras-subir-mas-del-5-ante-la-tension-en-oriente-medio/"
+        },
+        {
+          "body_characters": 6521,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/gobernadora-defiende-a-roig-e-insiste-que-versiones-de-blanca-medina-carecen-de-credibilidad/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/gobernadora-defiende-a-roig-e-insiste-que-versiones-de-blanca-medina-carecen-de-credibilidad/"
+        },
+        {
+          "body_characters": 8864,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/a-discusion-en-el-senado-y-sin-vistas-publicas-adicionales-nueva-version-del-proyecto-de-permisos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/a-discusion-en-el-senado-y-sin-vistas-publicas-adicionales-nueva-version-del-proyecto-de-permisos/"
+        },
+        {
+          "body_characters": 5733,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/donald-trump-dice-que-deberia-ganar-el-premio-nobel-de-la-paz-de-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/donald-trump-dice-que-deberia-ganar-el-premio-nobel-de-la-paz-de-2026/"
+        },
+        {
+          "body_characters": 6209,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261008/acusan-a-mujer-de-intentar-atropellar-dos-veces-a-sargento-de-la-policia-en-aguada/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261008/acusan-a-mujer-de-intentar-atropellar-dos-veces-a-sargento-de-la-policia-en-aguada/"
+        },
+        {
+          "body_characters": 5601,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261009/la-junta-da-luz-verde-al-reglamento-de-salarios-del-sistema-de-rango-de-la-policia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261009/la-junta-da-luz-verde-al-reglamento-de-salarios-del-sistema-de-rango-de-la-policia/"
+        },
+        {
+          "body_characters": 5445,
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "final_url": "https://noticel.com/ultima-hora/20261009/transmitiran-en-vivo-ejecucion-por-peloton-de-fusilamiento-de-autor-de-masacre/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://noticel.com/ultima-hora/20261009/transmitiran-en-vivo-ejecucion-por-peloton-de-fusilamiento-de-autor-de-masacre/"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 3,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.3,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 13
+      }
+    }
+  },
+  "run_id": "acq1-20261009T162552356454Z-75371bad809b",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 20,
+    "items_requested": 20,
+    "outlets": 2,
+    "outlets_with_2xx_items": 2
+  }
+}

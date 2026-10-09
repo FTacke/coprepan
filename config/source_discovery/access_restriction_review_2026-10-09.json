@@ -1,0 +1,1111 @@
+{
+ "schema": "coprepan-access-restriction-review/v1",
+ "prepared_on": "2026-10-09",
+ "what_this_is": "every origin held for an observed access control after the qualification waves of 2026-10-09, compared with what the legacy system recorded about the same outlet. Read from preserved answers and the legacy discovery audit only; no request was made for it, and no hold is lifted by it",
+ "difference_classes": {
+  "A": "the publisher's protection changed",
+  "B": "the new pipeline takes another access path",
+  "C": "the new pipeline misclassified an answer",
+  "D": "the network or the client context differs",
+  "E": "the legacy success rested on a procedure that is gone",
+  "?": "possible, not shown by evidence"
+ },
+ "legacy_client": {
+  "library": "requests (a Session with urllib3 Retry: 3 retries on 429/500/502/503/504, backoff 0.5)",
+  "user_agent": "CoprepanCrawler/0.1 (+research@university.edu; non-commercial academic research)",
+  "headers": {
+   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+   "Accept-Language": "es,en;q=0.5"
+  },
+  "pace": "1 second between requests to one host; timeout 15 seconds",
+  "robots": "robots.txt of the source's base URL only, never of a feed host; any answer other than 200 with a text type meant no restriction; Disallow lines read for * and coprepancrawler; a TDM heuristic on the file's words",
+  "network": "not recorded",
+  "source": "legacy repository, src/coprepan/utils/http.py and config/coprepan.yml (read, not changed)"
+ },
+ "v3_client": {
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)",
+  "pace": "at least 10 seconds between requests to one origin, a stated crawl delay as binding minimum, one attempt per request",
+  "robots": "the robots file of every origin that is requested, feed hosts included; 404 means unavailable and allows; 401/403/429 or a challenge on any answer holds the origin for the run"
+ },
+ "totals": {
+  "held": 18,
+  "productive_in_legacy": 4,
+  "not_in_legacy_or_never_productive": 14,
+  "own_technical_defect": 2,
+  "repaired": 1,
+  "by_group": {
+   "RECOVERABLE": [
+    "mx_la_jornada"
+   ],
+   "POTENTIALLY_RECOVERABLE": [
+    "es_el_pais",
+    "gt_nuestrodiario",
+    "py_adn_digital",
+    "ve_efecto_cocuyo"
+   ],
+   "NOT_ACCESSIBLE_NOW": [
+    "cr_diario_extra",
+    "cu_cubanet",
+    "do_el_caribe",
+    "hn_diariotiempo",
+    "hn_proceso_digital",
+    "mx_el_siglo_de_torreon",
+    "mx_milenio",
+    "ni_articulo66",
+    "ni_el_19_digital",
+    "pe_expreso",
+    "pe_peru21",
+    "uy_el_pais",
+    "ve_el_impulso"
+   ]
+  },
+  "by_restriction": {
+   "BLOCK_PAGE": 1,
+   "CHALLENGE_ON_ONE_PATH": 1,
+   "FALSE_POSITIVE_OF_OUR_CLASSIFIER": 1,
+   "FORBIDDEN_ON_ROBOTS": 1,
+   "FORBIDDEN_ON_ROBOTS_OF_THE_FEED_HOST": 1,
+   "FORBIDDEN_ON_THE_FEED": 1,
+   "JAVASCRIPT_CHALLENGE": 1,
+   "MANAGED_CHALLENGE": 10,
+   "WAF_BLOCK": 1
+  },
+  "by_country": {
+   "cr": [
+    "cr_diario_extra"
+   ],
+   "cu": [
+    "cu_cubanet"
+   ],
+   "do": [
+    "do_el_caribe"
+   ],
+   "es": [
+    "es_el_pais"
+   ],
+   "gt": [
+    "gt_nuestrodiario"
+   ],
+   "hn": [
+    "hn_diariotiempo",
+    "hn_proceso_digital"
+   ],
+   "mx": [
+    "mx_el_siglo_de_torreon",
+    "mx_la_jornada",
+    "mx_milenio"
+   ],
+   "ni": [
+    "ni_articulo66",
+    "ni_el_19_digital"
+   ],
+   "pe": [
+    "pe_expreso",
+    "pe_peru21"
+   ],
+   "py": [
+    "py_adn_digital"
+   ],
+   "uy": [
+    "uy_el_pais"
+   ],
+   "ve": [
+    "ve_efecto_cocuyo",
+    "ve_el_impulso"
+   ]
+  }
+ },
+ "outlets": [
+  {
+   "outlet_id": "cr_diario_extra",
+   "country_id": "cr",
+   "name": "Diario Extra",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NEVER_PRODUCTIVE",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": [
+     {
+      "kind": "sitemap_index",
+      "host": "www.diarioextra.com",
+      "fail_category": "discovery_inactive_by_score"
+     },
+     {
+      "kind": "sitemap",
+      "host": "www.diarioextra.com",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "www.diarioextra.com",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "www.diarioextra.com",
+      "fail_category": "none"
+     }
+    ]
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://www.diarioextra.com/rss/",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": [
+       "https://www.diarioextra.com/rss"
+      ]
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "cu_cubanet",
+   "country_id": "cu",
+   "name": "CubaNet",
+   "legacy": {
+    "in_legacy_system": false,
+    "class": null,
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.cubanet.org/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "do_el_caribe",
+   "country_id": "do",
+   "name": "El Caribe",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.elcaribe.com.do/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "es_el_pais",
+   "country_id": "es",
+   "name": "El País",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_PRODUCTIVE_REPEATED",
+    "ok_articles": 1142,
+    "ok_words": 1142473,
+    "fetch_days_with_ok_articles": 10,
+    "first_ok_fetch_day": "2025-12-19",
+    "last_ok_fetch_day": "2026-02-21",
+    "productive": true,
+    "channels": [
+     {
+      "kind": "rss",
+      "host": "feeds.elpais.com",
+      "fail_category": "none"
+     }
+    ]
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://feeds.elpais.com/robots.txt",
+      "status": 403,
+      "access_class": "forbidden",
+      "server": "Varnish",
+      "cf_mitigated": null,
+      "title": "403 Forbidden",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "FORBIDDEN_ON_ROBOTS_OF_THE_FEED_HOST",
+   "observed": "403 Forbidden from a Varnish cache for https://feeds.elpais.com/robots.txt; no challenge, no CAPTCHA, no redirect. The item host elpais.com was never asked",
+   "difference_classes": [
+    "B",
+    "D?"
+   ],
+   "explanation": "The legacy crawler read robots.txt of the outlet's base URL (elpais.com) only and treated every non-200 robots answer as no restriction; it never asked for robots.txt of the feed host. v3 asks for the robots file of every origin it requests, and its policy holds an origin whose robots address answers 403. Whether feeds.elpais.com answered 403 for that path in February 2026 is unknown: nobody asked. The feed itself was not requested by v3, so whether it still answers is unknown too",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "a decision whether a 403 for the robots address of a host that only carries feeds is 'robots unavailable' (the reading of RFC 9309 for 4xx) or an access control (the reading of the policy in force, CPD-0017); or an evidenced channel on elpais.com itself (none is known); or the publisher. Not decided and not requested here",
+   "group": "POTENTIALLY_RECOVERABLE",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "gt_nuestrodiario",
+   "country_id": "gt",
+   "name": "Nuestro Diario",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.nuestrodiario.com/robots.txt",
+      "status": 403,
+      "access_class": "forbidden",
+      "server": "awselb/2.0",
+      "cf_mitigated": null,
+      "title": "403 Forbidden",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "FORBIDDEN_ON_ROBOTS",
+   "observed": "403 Forbidden (118 bytes, server awselb/2.0) for https://www.nuestrodiario.com/robots.txt; no challenge, no CAPTCHA",
+   "difference_classes": [
+    "unexplained"
+   ],
+   "explanation": "a load balancer refuses the robots address; whether it refuses this client, this path or everything is not shown. The legacy system had no channel for the outlet",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "the same decision as for es_el_pais (403 on a robots address), or the publisher",
+   "group": "POTENTIALLY_RECOVERABLE",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "hn_diariotiempo",
+   "country_id": "hn",
+   "name": "Diario Tiempo",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://tiempo.hn/",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": null,
+      "title": "Attention Required! | Cloudflare",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "BLOCK_PAGE",
+   "observed": "403 'Attention Required! | Cloudflare' block page on the front page https://tiempo.hn/ (the page offers a CAPTCHA)",
+   "difference_classes": [
+    "unexplained"
+   ],
+   "explanation": "a block, not a challenge that could pass; the legacy system had no channel for the outlet",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "hn_proceso_digital",
+   "country_id": "hn",
+   "name": "Proceso Digital",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_PRODUCTIVE_REPEATED",
+    "ok_articles": 1763,
+    "ok_words": 657080,
+    "fetch_days_with_ok_articles": 14,
+    "first_ok_fetch_day": "2026-01-12",
+    "last_ok_fetch_day": "2026-06-15",
+    "productive": true,
+    "channels": [
+     {
+      "kind": "sitemap_index",
+      "host": "proceso.hn",
+      "fail_category": "discovery_inactive_by_score"
+     },
+     {
+      "kind": "sitemap",
+      "host": "proceso.hn",
+      "fail_category": "discovery_output_probe_failed"
+     },
+     {
+      "kind": "rss",
+      "host": "proceso.hn",
+      "fail_category": "crawl_empty_output"
+     },
+     {
+      "kind": "rss",
+      "host": "proceso.hn",
+      "fail_category": "crawl_empty_output"
+     },
+     {
+      "kind": "rss",
+      "host": "proceso.hn",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "proceso.hn",
+      "fail_category": "discovery_output_probe_failed"
+     }
+    ]
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261008",
+      "kind": "channel_document",
+      "url": "https://proceso.hn/sitemap-news.xml",
+      "status": 404,
+      "access_class": "none_observed",
+      "server": "Sucuri/Cloudproxy",
+      "cf_mitigated": null,
+      "title": "Página no encontrada - Proceso Digital",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "JAVASCRIPT_CHALLENGE",
+   "observed": "Sucuri CloudProxy JavaScript challenge (status 307 without Location) on the feed and the sitemap, 2026-10-08",
+   "difference_classes": [
+    "A"
+   ],
+   "explanation": "the legacy crawler read this outlet until 2026-06-15; the challenge was met on 2026-10-08 on the same host. A change on the publisher's side between June and October is the simplest reading; the network the two crawlers ran from may differ and is not recorded for the legacy runs",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a JavaScript challenge is not solved. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "mx_el_siglo_de_torreon",
+   "country_id": "mx",
+   "name": "El Siglo de Torreon",
+   "legacy": {
+    "in_legacy_system": false,
+    "class": null,
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.elsiglodetorreon.com.mx/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "mx_la_jornada",
+   "country_id": "mx",
+   "name": "La Jornada",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://www.jornada.com.mx/feeds/all.atom.xml",
+      "status": 410,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": null,
+      "title": "410 Gone",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": false
+   },
+   "restriction": "FALSE_POSITIVE_OF_OUR_CLASSIFIER",
+   "observed": "the RSS feed answered 200 and listed 106 entries; the retired Atom feed answered 410 Gone with Cloudflare's detection script (scripts/jsd/main.js) on an nginx error page. That page was classified bot_challenge and held the origin, and four planned item requests were refused",
+   "difference_classes": [
+    "C"
+   ],
+   "explanation": "a defect of this project: the marker 'cdn-cgi/challenge-platform' matched the detection script Cloudflare adds to ordinary pages. No access control was shown by the publisher",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": true,
+   "repair_possible": true,
+   "repair_made": true,
+   "further_access_decision_needed": false,
+   "permitted_solution": "repaired (access-control/3) and regression-tested on the preserved answer: OFFLINE_VALIDATED / LIVE_PENDING. Holds are re-derived from preserved answers under the current classifier, so the next run does not hold this origin",
+   "group": "RECOVERABLE",
+   "intake_status": "eligible after one bounded live confirmation"
+  },
+  {
+   "outlet_id": "mx_milenio",
+   "country_id": "mx",
+   "name": "Milenio",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.milenio.com/robots.txt",
+      "status": 403,
+      "access_class": "forbidden",
+      "server": "CloudFront",
+      "cf_mitigated": null,
+      "title": "ERROR: The request could not be satisfied",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "WAF_BLOCK",
+   "observed": "403 from CloudFront, 'Request blocked', for https://www.milenio.com/robots.txt",
+   "difference_classes": [
+    "unexplained"
+   ],
+   "explanation": "the robots address itself is blocked by the CDN's firewall; research had reported the outlet's only feed unresponsive since 2026-02",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted; the publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "ni_articulo66",
+   "country_id": "ni",
+   "name": "Artículo 66",
+   "legacy": {
+    "in_legacy_system": false,
+    "class": null,
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.articulo66.com/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "ni_el_19_digital",
+   "country_id": "ni",
+   "name": "El 19 Digital",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://www.el19digital.com/",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     },
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.el19digital.com/robots.txt",
+      "status": 404,
+      "access_class": "none_observed",
+      "server": "cloudflare",
+      "cf_mitigated": null,
+      "title": "Error",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "pe_expreso",
+   "country_id": "pe",
+   "name": "Expreso",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.expreso.com.pe/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "pe_peru21",
+   "country_id": "pe",
+   "name": "Perú21",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_NO_CHANNEL",
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://peru21.pe/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "py_adn_digital",
+   "country_id": "py",
+   "name": "ADN Digital",
+   "legacy": {
+    "in_legacy_system": false,
+    "class": null,
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://www.adndigital.com.py/feed",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": null,
+      "title": "403 Forbidden",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "FORBIDDEN_ON_THE_FEED",
+   "observed": "403 Forbidden (nginx behind Cloudflare) for https://www.adndigital.com.py/feed, with Cloudflare's detection script; no challenge page, no cf-mitigated header",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the class was misnamed by our classifier (bot_challenge; now forbidden) — the hold is the same either way: a 403 ends the origin's run. Why the feed address is forbidden is not shown by the answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": true,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "another evidenced channel of the outlet (a sitemap, a section feed); none is known. Not new to the legacy system: it was never in it",
+   "group": "POTENTIALLY_RECOVERABLE",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "uy_el_pais",
+   "country_id": "uy",
+   "name": "El País",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_PRODUCTIVE_REPEATED",
+    "ok_articles": 727,
+    "ok_words": 364121,
+    "fetch_days_with_ok_articles": 13,
+    "first_ok_fetch_day": "2025-12-19",
+    "last_ok_fetch_day": "2026-02-20",
+    "productive": true,
+    "channels": [
+     {
+      "kind": "sitemap_index",
+      "host": "www.elpais.com.uy",
+      "fail_category": "discovery_http_403"
+     },
+     {
+      "kind": "sitemap_index",
+      "host": "www.elpais.com.uy",
+      "fail_category": "discovery_http_403"
+     },
+     {
+      "kind": "rss",
+      "host": "www.elpais.com.uy",
+      "fail_category": "crawl_empty_output"
+     },
+     {
+      "kind": "unknown",
+      "host": "www.elpais.com.uy",
+      "fail_category": "discovery_http_403"
+     },
+     {
+      "kind": "unknown",
+      "host": "www.elpais.com.uy",
+      "fail_category": "discovery_http_403"
+     },
+     {
+      "kind": "unknown",
+      "host": "www.elpais.com.uy",
+      "fail_category": "discovery_http_403"
+     }
+    ]
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://www.elpais.com.uy/rss",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script on https://www.elpais.com.uy/rss",
+   "difference_classes": [
+    "A"
+   ],
+   "explanation": "the legacy audit already records HTTP 403 for all three sitemap addresses of this outlet while /rss answered (last article 2026-02-20); now /rss is challenged too. The protection was there and has widened",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted; the publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "ve_efecto_cocuyo",
+   "country_id": "ve",
+   "name": "Efecto Cocuyo",
+   "legacy": {
+    "in_legacy_system": true,
+    "class": "LEGACY_PRODUCTIVE_REPEATED",
+    "ok_articles": 443,
+    "ok_words": 258321,
+    "fetch_days_with_ok_articles": 11,
+    "first_ok_fetch_day": "2025-12-19",
+    "last_ok_fetch_day": "2026-02-10",
+    "productive": true,
+    "channels": [
+     {
+      "kind": "sitemap_index",
+      "host": "efectococuyo.com",
+      "fail_category": "discovery_inactive_by_score"
+     },
+     {
+      "kind": "sitemap_index",
+      "host": "efectococuyo.com",
+      "fail_category": "discovery_inactive_by_score"
+     },
+     {
+      "kind": "rss",
+      "host": "efectococuyo.com",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "efectococuyo.com",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "efectococuyo.com",
+      "fail_category": "none"
+     },
+     {
+      "kind": "rss",
+      "host": "efectococuyo.com",
+      "fail_category": "none"
+     }
+    ]
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "channel_document",
+      "url": "https://efectococuyo.com/sitemap.xml",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "nginx",
+      "cf_mitigated": null,
+      "title": "Checking your browser...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "CHALLENGE_ON_ONE_PATH",
+   "observed": "the feed https://efectococuyo.com/feed/ answered 200 and listed 10 entries; https://efectococuyo.com/sitemap.xml answered 403 with a 'Checking your browser...' page (JavaScript required). The origin was held and ten item requests were refused",
+   "difference_classes": [
+    "A",
+    "B"
+   ],
+   "explanation": "the challenge was met on a path the legacy crawler did not use for its articles (its productive channels were the feeds; its sitemap indexes were inactive). v3 selected the sitemap channel beside the feed and holds an origin on any challenge",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "a decision whether a challenge on one path holds the whole origin, and the disabling of the sitemap channel (its registered address is not the one the robots file names). A hold is not lifted by this run",
+   "group": "POTENTIALLY_RECOVERABLE",
+   "intake_status": "excluded: held"
+  },
+  {
+   "outlet_id": "ve_el_impulso",
+   "country_id": "ve",
+   "name": "El Impulso",
+   "legacy": {
+    "in_legacy_system": false,
+    "class": null,
+    "ok_articles": 0,
+    "ok_words": 0,
+    "fetch_days_with_ok_articles": 0,
+    "first_ok_fetch_day": null,
+    "last_ok_fetch_day": null,
+    "productive": false,
+    "channels": []
+   },
+   "v3": {
+    "item_pages_preserved": 0,
+    "answers": [
+     {
+      "day": "20261009",
+      "kind": "robots_txt",
+      "url": "https://www.elimpulso.com/robots.txt",
+      "status": 403,
+      "access_class": "bot_challenge",
+      "server": "cloudflare",
+      "cf_mitigated": "challenge",
+      "title": "Just a moment...",
+      "redirect_chain": []
+     }
+    ],
+    "stopped_correctly_under_the_policy_in_force": true
+   },
+   "restriction": "MANAGED_CHALLENGE",
+   "observed": "Cloudflare managed challenge: status 403, header cf-mitigated: challenge, page 'Just a moment...' with the challenge orchestration script",
+   "difference_classes": [
+    "A?",
+    "unexplained"
+   ],
+   "explanation": "the first request this project ever made to the host was challenged. Whether the publisher challenges every unknown client, this client's signature or this network is not shown by one answer",
+   "evidence_limits": "one answer per host from one network on one day; nothing is known about other clients or networks",
+   "own_technical_defect": false,
+   "repair_possible": false,
+   "repair_made": false,
+   "further_access_decision_needed": true,
+   "permitted_solution": "none that is permitted: a challenge is not solved, no other client identity or network is tried. The publisher could be asked",
+   "group": "NOT_ACCESSIBLE_NOW",
+   "intake_status": "excluded: held"
+  }
+ ]
+}

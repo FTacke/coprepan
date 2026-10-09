@@ -3377,7 +3377,8 @@
         "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
-        "https://www.5septiembre.cu"
+        "https://www.5septiembre.cu",
+        "https://5septiembre.cu"
       ]
     },
     {
@@ -3735,7 +3736,8 @@
         "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
-        "http://www.periodico26.cu"
+        "http://www.periodico26.cu",
+        "http://periodico26.cu"
       ]
     },
     {
@@ -6412,7 +6414,8 @@
         "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
-        "https://radioprogresohn.net"
+        "https://radioprogresohn.net",
+        "https://www.radioprogresohn.net"
       ]
     },
     {
@@ -6465,7 +6468,8 @@
         "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
-        "https://www.animalpolitico.com"
+        "https://www.animalpolitico.com",
+        "https://animalpolitico.com"
       ]
     },
     {
@@ -11593,7 +11597,7 @@
       ]
     }
   ],
-  "registry_sha256": "0c1bd32aa1ea01aae4754b2b82cc416b2e42ec6ce5d3b8d661a3f2a87d9cad4e",
+  "registry_sha256": "7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8",
   "review_cases": [
     {
       "case": "channels_on_the_origin_of_another_outlet",

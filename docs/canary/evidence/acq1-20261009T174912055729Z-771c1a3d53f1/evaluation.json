@@ -1,0 +1,2070 @@
+{
+  "outlets": {
+    "ar_clarin": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 210
+      },
+      "channels": {
+        "ar_clarin:ch:rss_001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.clarin.com/rss/lo-ultimo/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.clarin.com/rss"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ar_clarin:ch:sitemap_001": {
+          "candidates_listed": 210,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.clarin.com/sitemaps/sitemap_google_news.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.clarin.com/sitemaps/sitemap_google_news.xml"
+            }
+          ],
+          "entries": 1630,
+          "entry_problems": {
+            "candidate_budget_exhausted": 1420
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 1630,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 2677,
+        "body_characters_median": 1868,
+        "body_characters_min": 749,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1589,
+          "channel_id": "ar_clarin:ch:rss_001",
+          "final_url": "https://www.clarin.com/estados-unidos/trump-dice-que-el-militar-cuya-ejecucion-sera-retransmitida-se-lo-merece_0_qDUfUosVoW.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.clarin.com/estados-unidos/trump-dice-que-el-militar-cuya-ejecucion-sera-retransmitida-se-lo-merece_0_qDUfUosVoW.html"
+        },
+        {
+          "body_characters": 749,
+          "channel_id": "ar_clarin:ch:rss_001",
+          "final_url": "https://www.clarin.com/estados-unidos/alemania-francia-r-unido-y-otros-cinco-paises-rechazan-sanciones-de-eeuu-contra-la-cpi_0_QekaWNc0Ci.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.clarin.com/estados-unidos/alemania-francia-r-unido-y-otros-cinco-paises-rechazan-sanciones-de-eeuu-contra-la-cpi_0_QekaWNc0Ci.html"
+        },
+        {
+          "body_characters": 2677,
+          "channel_id": "ar_clarin:ch:rss_001",
+          "final_url": "https://www.clarin.com/politica/gobierno-autorizo-licitacion-construir-muelle-base-militar-ushuaia_0_PYHU73uDwC.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.clarin.com/politica/gobierno-autorizo-licitacion-construir-muelle-base-militar-ushuaia_0_PYHU73uDwC.html"
+        },
+        {
+          "body_characters": 2148,
+          "channel_id": "ar_clarin:ch:rss_001",
+          "final_url": "https://www.clarin.com/estados-unidos/la-onu-considera-inaceptables-las-sanciones-de-ee-uu-a-la-corte-penal-internacional_0_QRs7Q20HFZ.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.clarin.com/estados-unidos/la-onu-considera-inaceptables-las-sanciones-de-ee-uu-a-la-corte-penal-internacional_0_QRs7Q20HFZ.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ar_infobae": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 100
+      },
+      "channels": {
+        "ar_infobae:ch:rss_r001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.infobae.com/arc/outboundfeeds/rss/category/america/mundo/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/america/mundo/"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 10573,
+        "body_characters_median": 6584,
+        "body_characters_min": 4098,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4098,
+          "channel_id": "ar_infobae:ch:rss_r001",
+          "final_url": "https://www.infobae.com/america/mundo/2026/10/09/benjamin-netanyahu-acuso-al-comite-nobel-de-haber-perdido-su-brujula-moral-al-premiar-a-navi-pillay/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.infobae.com/america/mundo/2026/10/09/benjamin-netanyahu-acuso-al-comite-nobel-de-haber-perdido-su-brujula-moral-al-premiar-a-navi-pillay/"
+        },
+        {
+          "body_characters": 7199,
+          "channel_id": "ar_infobae:ch:rss_r001",
+          "final_url": "https://www.infobae.com/america/mundo/2026/10/08/salamandras-vs-humanos-por-que-unos-tienen-la-capacidad-de-regenerar-extremidades-y-otros-solo-las-cicatrizan/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.infobae.com/america/mundo/2026/10/08/salamandras-vs-humanos-por-que-unos-tienen-la-capacidad-de-regenerar-extremidades-y-otros-solo-las-cicatrizan/"
+        },
+        {
+          "body_characters": 10573,
+          "channel_id": "ar_infobae:ch:rss_r001",
+          "final_url": "https://www.infobae.com/america/mundo/2026/10/07/xi-jinping-quiere-cobrarle-mas-impuestos-a-los-chinos-mas-ricos-en-todo-el-mundo-y-lanzo-una-campana-global-para-recaudar/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.infobae.com/america/mundo/2026/10/07/xi-jinping-quiere-cobrarle-mas-impuestos-a-los-chinos-mas-ricos-en-todo-el-mundo-y-lanzo-una-campana-global-para-recaudar/"
+        },
+        {
+          "body_characters": 5970,
+          "channel_id": "ar_infobae:ch:rss_r001",
+          "final_url": "https://www.infobae.com/america/mundo/2026/10/07/el-avance-eritreo-en-adigrat-eleva-la-tension-y-amenaza-con-extender-la-guerra-del-norte-de-etiopia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.infobae.com/america/mundo/2026/10/07/el-avance-eritreo-en-adigrat-eleva-la-tension-y-amenaza-con-extender-la-guerra-del-norte-de-etiopia/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ar_la_nacion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 284
+      },
+      "channels": {
+        "ar_la_nacion:ch:rss_r001": {
+          "candidates_listed": 84,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml"
+            }
+          ],
+          "entries": 84,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 84,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "ar_la_nacion:ch:sitemap_003": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lanacion.com.ar/sitemap-articles-evergreen.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.lanacion.com.ar/sitemap-articles-evergreen.xml"
+            }
+          ],
+          "entries": 2555,
+          "entry_problems": {
+            "candidate_budget_exhausted": 2355
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 2555,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 2,
+        "body_characters_max": 556,
+        "body_characters_median": 488,
+        "body_characters_min": 441,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 441,
+          "channel_id": "ar_la_nacion:ch:rss_r001",
+          "final_url": "https://www.lanacion.com.ar/sociedad/avanza-un-fenomeno-relacionado-con-el-super-nino-que-provocara-varios-dias-grises-frescos-inestables-nid09102026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.ar/sociedad/avanza-un-fenomeno-relacionado-con-el-super-nino-que-provocara-varios-dias-grises-frescos-inestables-nid09102026/"
+        },
+        {
+          "body_characters": 441,
+          "channel_id": "ar_la_nacion:ch:rss_r001",
+          "final_url": "https://www.lanacion.com.ar/sociedad/ni-gimnasio-ni-caminata-asi-es-el-ejercicio-de-fuerza-indispensable-para-frenar-la-perdida-de-masa-nid06102026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.ar/sociedad/ni-gimnasio-ni-caminata-asi-es-el-ejercicio-de-fuerza-indispensable-para-frenar-la-perdida-de-masa-nid06102026/"
+        },
+        {
+          "body_characters": 556,
+          "channel_id": "ar_la_nacion:ch:rss_r001",
+          "final_url": "https://www.lanacion.com.ar/sociedad/el-medicamento-estrella-para-bajar-el-colesterol-y-por-que-la-dieta-sola-no-alcanza-nid20092026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.ar/sociedad/el-medicamento-estrella-para-bajar-el-colesterol-y-por-que-la-dieta-sola-no-alcanza-nid20092026/"
+        },
+        {
+          "body_characters": 536,
+          "channel_id": "ar_la_nacion:ch:rss_r001",
+          "final_url": "https://www.lanacion.com.ar/deportes/automovilismo/colapinto-saco-a-relucir-todo-su-potencial-y-espera-sumar-en-la-sprint-de-singapur-nid09102026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.lanacion.com.ar/deportes/automovilismo/colapinto-saco-a-relucir-todo-su-potencial-y-espera-sumar-en-la-sprint-de-singapur-nid09102026/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ar_pagina12": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 201
+      },
+      "channels": {
+        "ar_pagina12:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.pagina12.com.ar/rss/portada/",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://www.pagina12.com.ar/rss/portada"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "ar_pagina12:ch:sitemap_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.pagina12.com.ar/arc/outboundfeeds/breakingnews-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.pagina12.com.ar/arc/outboundfeeds/breakingnews-sitemap.xml"
+            }
+          ],
+          "entries": 200,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 200,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 3,
+        "body_characters_max": 626,
+        "body_characters_median": 437,
+        "body_characters_min": 390,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 626,
+          "channel_id": "ar_pagina12:ch:sitemap_001",
+          "final_url": "https://www.pagina12.com.ar/2026/03/12/guerra-en-medio-oriente-siguen-los-ataques-cruzados-y-vuelve-a-subir-el-petroleo/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.pagina12.com.ar/2026/03/12/guerra-en-medio-oriente-siguen-los-ataques-cruzados-y-vuelve-a-subir-el-petroleo/"
+        },
+        {
+          "body_characters": 390,
+          "channel_id": "ar_pagina12:ch:sitemap_001",
+          "final_url": "https://www.pagina12.com.ar/722820-dolar-blue-hoy-dolar-hoy-a-cuanto-cotizan-el-jueves-21-de-ma/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.pagina12.com.ar/722820-dolar-blue-hoy-dolar-hoy-a-cuanto-cotizan-el-jueves-21-de-ma"
+        },
+        {
+          "body_characters": 390,
+          "channel_id": "ar_pagina12:ch:sitemap_001",
+          "final_url": "https://www.pagina12.com.ar/722820-dolar-blue-hoy-dolar-hoy-a-cuanto-cotizan-el-jueves-21-de-ma/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.pagina12.com.ar/722820-dolar-blue-hoy-dolar-hoy-a-cuanto-cotizan-el-jueves-21-de-ma"
+        },
+        {
+          "body_characters": 485,
+          "channel_id": "ar_pagina12:ch:sitemap_001",
+          "final_url": "https://www.pagina12.com.ar/2026/07/17/dolar-blue-dolar-hoy-a-cuanto-cotizan-el-viernes-17-de-julio-de-junio-de-2026/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.pagina12.com.ar/2026/07/17/dolar-blue-dolar-hoy-a-cuanto-cotizan-el-viernes-17-de-julio-de-junio-de-2026/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {
+        "item:canary_budget_exhausted": 1
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "channel_document:404": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "ar_perfil": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 50
+      },
+      "channels": {
+        "ar_perfil:ch:rss_r001": {
+          "candidates_listed": 50,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.perfil.com/feed",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.perfil.com/feed"
+            }
+          ],
+          "entries": 50,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 50,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 9767,
+        "body_characters_median": 5857,
+        "body_characters_min": 2878,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3268,
+          "channel_id": "ar_perfil:ch:rss_r001",
+          "final_url": "https://www.perfil.com/noticias/canal-e/federico-gonzalez-presento-su-candidatura-presidencial-llego-un-punto-en-que-ya-no-quise-ser-solo-un-espectador-de-la-politica.phtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.perfil.com/noticias/canal-e/federico-gonzalez-presento-su-candidatura-presidencial-llego-un-punto-en-que-ya-no-quise-ser-solo-un-espectador-de-la-politica.phtml"
+        },
+        {
+          "body_characters": 8447,
+          "channel_id": "ar_perfil:ch:rss_r001",
+          "final_url": "https://www.perfil.com/noticias/politica/el-fallo-de-la-corte-le-quita-fuerza-a-la-sesion-del-15-y-le-da-aire-al-gobierno-para-sostener-el-dnu-70.phtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.perfil.com/noticias/politica/el-fallo-de-la-corte-le-quita-fuerza-a-la-sesion-del-15-y-le-da-aire-al-gobierno-para-sostener-el-dnu-70.phtml"
+        },
+        {
+          "body_characters": 9767,
+          "channel_id": "ar_perfil:ch:rss_r001",
+          "final_url": "https://www.perfil.com/noticias/economia/trump-apuesta-millones-a-meta-y-spacex-mientras-wall-street-sube-y-las-telefonicas-se-desploman.phtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.perfil.com/noticias/economia/trump-apuesta-millones-a-meta-y-spacex-mientras-wall-street-sube-y-las-telefonicas-se-desploman.phtml"
+        },
+        {
+          "body_characters": 2878,
+          "channel_id": "ar_perfil:ch:rss_r001",
+          "final_url": "https://www.perfil.com/noticias/nea/el-pj-correntino-ratifico-la-expulsion-de-camau-espinola-y-rechazo-el-ajuste-de-milei.phtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.perfil.com/noticias/nea/el-pj-correntino-ratifico-la-expulsion-de-camau-espinola-y-rechazo-el-ajuste-de-milei.phtml"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "ar_rio_negro": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 20
+      },
+      "channels": {
+        "ar_rio_negro:ch:rss_r001": {
+          "candidates_listed": 20,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.rionegro.com.ar/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.rionegro.com.ar/feed"
+            }
+          ],
+          "entries": 20,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 20,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 7928,
+        "body_characters_median": 5961,
+        "body_characters_min": 4828,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 4828,
+          "channel_id": "ar_rio_negro:ch:rss_r001",
+          "final_url": "https://www.rionegro.com.ar/deportes/djokovic-perdio-en-su-debut-en-el-masters-1000-de-shanghai-saldra-del-top-10-y-peligra-su-lugar-en-las-atp-finals-4753911/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.rionegro.com.ar/deportes/djokovic-perdio-en-su-debut-en-el-masters-1000-de-shanghai-saldra-del-top-10-y-peligra-su-lugar-en-las-atp-finals-4753911/"
+        },
+        {
+          "body_characters": 5521,
+          "channel_id": "ar_rio_negro:ch:rss_r001",
+          "final_url": "https://www.rionegro.com.ar/sociedad/ley-federico-rio-negro-instalara-tableros-para-que-mas-personas-puedan-comunicarse-4753496/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.rionegro.com.ar/sociedad/ley-federico-rio-negro-instalara-tableros-para-que-mas-personas-puedan-comunicarse-4753496/"
+        },
+        {
+          "body_characters": 7928,
+          "channel_id": "ar_rio_negro:ch:rss_r001",
+          "final_url": "https://www.rionegro.com.ar/servicios/jubilaciones-anses-octubre-2026-comenzo-el-pago-con-aumento-y-bono-de-70-000-4753853/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.rionegro.com.ar/servicios/jubilaciones-anses-octubre-2026-comenzo-el-pago-con-aumento-y-bono-de-70-000-4753853/"
+        },
+        {
+          "body_characters": 6402,
+          "channel_id": "ar_rio_negro:ch:rss_r001",
+          "final_url": "https://www.rionegro.com.ar/sociedad/brote-de-varicela-en-dos-escuelas-de-neuquen-la-vacunacion-es-muy-importante-4753636/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.rionegro.com.ar/sociedad/brote-de-varicela-en-dos-escuelas-de-neuquen-la-vacunacion-es-muy-importante-4753636/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "bo_brujula_digital": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "bo_brujula_digital:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://brujuladigital.net/rss.xml",
+              "redirect_hops": 0,
+              "status": 522,
+              "url": "https://brujuladigital.net/rss.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_522"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:522": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    },
+    "bo_lostiempos": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 97,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "bo_lostiempos:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lostiempos.com/rss.xml",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://www.lostiempos.com/rss.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "bo_lostiempos:ch:section_page_r001": {
+          "candidates_listed": 98,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.lostiempos.com/etiqueta/pagina-siete",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.lostiempos.com/etiqueta/pagina-siete"
+            }
+          ],
+          "entries": 228,
+          "entry_problems": {
+            "off_origin": 17
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 228,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "channel_document:404": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": 10.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 2
+      }
+    },
+    "cl_biobiochile": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 200
+      },
+      "channels": {
+        "cl_biobiochile:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_parse_error",
+              "url": "https://feeds.feedburner.com/radiobiobio/NNeJ"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_parse_error"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cl_biobiochile:ch:sitemap_001": {
+          "candidates_listed": 200,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.biobiochile.cl/news-sitemap.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.biobiochile.cl/news-sitemap.xml"
+            }
+          ],
+          "entries": 296,
+          "entry_problems": {
+            "candidate_budget_exhausted": 96
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 296,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4840,
+        "body_characters_median": 3078,
+        "body_characters_min": 2940,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 2950,
+          "channel_id": "cl_biobiochile:ch:sitemap_001",
+          "final_url": "https://www.biobiochile.cl/noticias/economia/actualidad-economica/2025/07/21/la-bolsa-de-londres-anoto-record-y-supero-los-9-000-puntos-por-primera-vez.shtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.biobiochile.cl/noticias/economia/actualidad-economica/2025/07/21/la-bolsa-de-londres-anoto-record-y-supero-los-9-000-puntos-por-primera-vez.shtml"
+        },
+        {
+          "body_characters": 4840,
+          "channel_id": "cl_biobiochile:ch:sitemap_001",
+          "final_url": "https://www.biobiochile.cl/noticias/internacional/eeuu/2025/07/21/hijo-de-expresidente-biden-alude-a-que-su-padre-habria-tomado-un-hipnotico-antes-del-debate-con-trump.shtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.biobiochile.cl/noticias/internacional/eeuu/2025/07/21/hijo-de-expresidente-biden-alude-a-que-su-padre-habria-tomado-un-hipnotico-antes-del-debate-con-trump.shtml"
+        },
+        {
+          "body_characters": 2940,
+          "channel_id": "cl_biobiochile:ch:sitemap_001",
+          "final_url": "https://www.biobiochile.cl/noticias/nacional/chile/2025/07/22/vallejo-descarta-que-cataldo-se-sume-a-comando-de-jara-boric-define-la-continuidad-de-sus-ministros.shtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.biobiochile.cl/noticias/nacional/chile/2025/07/22/vallejo-descarta-que-cataldo-se-sume-a-comando-de-jara-boric-define-la-continuidad-de-sus-ministros.shtml"
+        },
+        {
+          "body_characters": 3207,
+          "channel_id": "cl_biobiochile:ch:sitemap_001",
+          "final_url": "https://www.biobiochile.cl/noticias/sociedad/debate/2025/07/21/dijo-adios-con-la-mano-estadounidense-muere-tras-ser-succionado-por-maquina-de-resonancia-magnetica.shtml",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.biobiochile.cl/noticias/sociedad/debate/2025/07/21/dijo-adios-con-la-mano-estadounidense-muere-tras-ser-succionado-por-maquina-de-resonancia-magnetica.shtml"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_parse_error": 1
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5,
+        "ROBOTS_PARSE_ERROR": 1
+      }
+    },
+    "cl_cooperativa": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 15
+      },
+      "channels": {
+        "cl_cooperativa:ch:rss_r001": {
+          "candidates_listed": 15,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml"
+            }
+          ],
+          "entries": 15,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 15,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 1744,
+        "body_characters_median": 1585,
+        "body_characters_min": 1336,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1336,
+          "channel_id": "cl_cooperativa:ch:rss_r001",
+          "final_url": "https://www.cooperativa.cl/noticias/pais/desastres-naturales/inundaciones/aluvion-en-las-condes-bomberos-evacuo-y-rescato-a-mas-de-mil-personas/2026-10-09/111917.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.cooperativa.cl/noticias/pais/desastres-naturales/inundaciones/aluvion-en-las-condes-bomberos-evacuo-y-rescato-a-mas-de-mil-personas/2026-10-09/111917.html"
+        },
+        {
+          "body_characters": 1682,
+          "channel_id": "cl_cooperativa:ch:rss_r001",
+          "final_url": "https://www.cooperativa.cl/noticias/pais/region-de-valparaiso/rapa-nui/otros-dos-marinos-fueron-detenidos-por-presunta-violacion-grupal-en-rapa/2026-10-09/123222.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.cooperativa.cl/noticias/pais/region-de-valparaiso/rapa-nui/otros-dos-marinos-fueron-detenidos-por-presunta-violacion-grupal-en-rapa/2026-10-09/123222.html"
+        },
+        {
+          "body_characters": 1488,
+          "channel_id": "cl_cooperativa:ch:rss_r001",
+          "final_url": "https://www.cooperativa.cl/noticias/pais/educacion/beneficios/farmea-desde-ahora-junaeb-lanza-campana-para-adelantar-tramite-de-la/2026-10-09/132853.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.cooperativa.cl/noticias/pais/educacion/beneficios/farmea-desde-ahora-junaeb-lanza-campana-para-adelantar-tramite-de-la/2026-10-09/132853.html"
+        },
+        {
+          "body_characters": 1744,
+          "channel_id": "cl_cooperativa:ch:rss_r001",
+          "final_url": "https://www.cooperativa.cl/noticias/pais/desastres-naturales/inundaciones/sernageomin-advirtio-en-febrero-sobre-riesgo-de-aluviones-en-san-carlos/2026-10-09/124915.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.cooperativa.cl/noticias/pais/desastres-naturales/inundaciones/sernageomin-advirtio-en-febrero-sobre-riesgo-de-aluviones-en-san-carlos/2026-10-09/124915.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "cl_la_discusion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "cl_la_discusion:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://ladiscusion.cl/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://ladiscusion.cl/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 6295,
+        "body_characters_median": 2883,
+        "body_characters_min": 1519,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1519,
+          "channel_id": "cl_la_discusion:ch:rss_r001",
+          "final_url": "https://ladiscusion.cl/condenan-a-presidio-perpetuo-a-hombre-que-asesino-a-su-esposa-con-una-escopeta-en-el-carmen/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiscusion.cl/condenan-a-presidio-perpetuo-a-hombre-que-asesino-a-su-esposa-con-una-escopeta-en-el-carmen/"
+        },
+        {
+          "body_characters": 3103,
+          "channel_id": "cl_la_discusion:ch:rss_r001",
+          "final_url": "https://ladiscusion.cl/corte-suprema-confirma-rechazo-al-desafuero-del-gobernador-regional/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiscusion.cl/corte-suprema-confirma-rechazo-al-desafuero-del-gobernador-regional/"
+        },
+        {
+          "body_characters": 6295,
+          "channel_id": "cl_la_discusion:ch:rss_r001",
+          "final_url": "https://ladiscusion.cl/teleton-nuble-prepara-apertura-gradual-de-su-instituto-con-marcha-blanca-de-un-mes/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiscusion.cl/teleton-nuble-prepara-apertura-gradual-de-su-instituto-con-marcha-blanca-de-un-mes/"
+        },
+        {
+          "body_characters": 2664,
+          "channel_id": "cl_la_discusion:ch:rss_r001",
+          "final_url": "https://ladiscusion.cl/35-de-avance-registra-ampliacion-de-acceso-a-agua-potable-para-639-familias-en-niquen/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://ladiscusion.cl/35-de-avance-registra-ampliacion-de-acceso-a-agua-potable-para-639-familias-en-niquen/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "cl_la_tercera": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 100
+      },
+      "channels": {
+        "cl_la_tercera:ch:rss_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.latercera.com/rss"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "cl_la_tercera:ch:sitemap_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://www.latercera.com/arc/outboundfeeds/sitemap?outputType=xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 10719,
+        "body_characters_median": 6613,
+        "body_characters_min": 3863,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3863,
+          "channel_id": "cl_la_tercera:ch:rss_001",
+          "final_url": "https://www.latercera.com/videos/noticia/aluvion-en-las-condes-como-se-origino-el-fenomeno-y-que-otros-puntos-de-santiago-estan-expuestos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.latercera.com/videos/noticia/aluvion-en-las-condes-como-se-origino-el-fenomeno-y-que-otros-puntos-de-santiago-estan-expuestos/"
+        },
+        {
+          "body_characters": 10719,
+          "channel_id": "cl_la_tercera:ch:rss_001",
+          "final_url": "https://www.latercera.com/pulso/noticia/el-economista-chileno-ricardo-caballero-gana-el-premio-de-economia-rey-de-espana/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.latercera.com/pulso/noticia/el-economista-chileno-ricardo-caballero-gana-el-premio-de-economia-rey-de-espana/"
+        },
+        {
+          "body_characters": 7296,
+          "channel_id": "cl_la_tercera:ch:rss_001",
+          "final_url": "https://www.latercera.com/politica/noticia/sin-acto-kast-promulga-ley-de-reconstruccion-chile-sigue-avanzando-tambien-en-medio-de-la-emergencia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.latercera.com/politica/noticia/sin-acto-kast-promulga-ley-de-reconstruccion-chile-sigue-avanzando-tambien-en-medio-de-la-emergencia/"
+        },
+        {
+          "body_characters": 5931,
+          "channel_id": "cl_la_tercera:ch:rss_001",
+          "final_url": "https://www.latercera.com/club-la-tercera/noticia/slow-life-wellness-studio-muevete-a-tu-ritmo-con-un-20-de-descuento/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.latercera.com/club-la-tercera/noticia/slow-life-wellness-studio-muevete-a-tu-ritmo-con-un-20-de-descuento/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:canary_budget_exhausted": 1
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "cl_the_clinic": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "cl_the_clinic:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.theclinic.cl/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.theclinic.cl/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 10351,
+        "body_characters_median": 5275,
+        "body_characters_min": 1179,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 6576,
+          "channel_id": "cl_the_clinic:ch:rss_r001",
+          "final_url": "https://www.theclinic.cl/2026/10/09/el-despliegue-por-chiloe-y-rapa-nui-que-mantuvo-a-las-autoridades-de-interior-fuera-de-santiago-al-momento-del-aluvion-en-las-condes/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.theclinic.cl/2026/10/09/el-despliegue-por-chiloe-y-rapa-nui-que-mantuvo-a-las-autoridades-de-interior-fuera-de-santiago-al-momento-del-aluvion-en-las-condes/"
+        },
+        {
+          "body_characters": 1179,
+          "channel_id": "cl_the_clinic:ch:rss_r001",
+          "final_url": "https://www.theclinic.cl/2026/10/09/camaras-captaron-el-momento-exacto-en-que-el-aluvion-ingreso-a-las-calles-de-las-condes/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.theclinic.cl/2026/10/09/camaras-captaron-el-momento-exacto-en-que-el-aluvion-ingreso-a-las-calles-de-las-condes/"
+        },
+        {
+          "body_characters": 3975,
+          "channel_id": "cl_the_clinic:ch:rss_r001",
+          "final_url": "https://www.theclinic.cl/2026/10/09/comite-central-del-ps-cierra-la-puerta-a-reforma-constitucional-de-seguridad-de-senadores-y-marca-distancia-con-fidel-espinoza/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.theclinic.cl/2026/10/09/comite-central-del-ps-cierra-la-puerta-a-reforma-constitucional-de-seguridad-de-senadores-y-marca-distancia-con-fidel-espinoza/"
+        },
+        {
+          "body_characters": 10351,
+          "channel_id": "cl_the_clinic:ch:rss_r001",
+          "final_url": "https://www.theclinic.cl/2026/10/09/bitman-y-roban-regresan-a-festejar-los-20-anos-de-su-disco-de-culto-musica-para-despues-de-almuerzo-siempre-hicimos-lo-que-nos-dio-la-gana/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.theclinic.cl/2026/10/09/bitman-y-roban-regresan-a-festejar-los-20-anos-de-su-disco-de-culto-musica-para-despues-de-almuerzo-siempre-hicimos-lo-que-nos-dio-la-gana/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "co_diario_del_huila": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 10
+      },
+      "channels": {
+        "co_diario_del_huila:ch:rss_r001": {
+          "candidates_listed": 10,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://diariodelhuila.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://diariodelhuila.com/feed/"
+            }
+          ],
+          "entries": 10,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 10,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 1639,
+        "body_characters_median": 1535,
+        "body_characters_min": 1459,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1471,
+          "channel_id": "co_diario_del_huila:ch:rss_r001",
+          "final_url": "https://diariodelhuila.com/iban-a-desconectar-a-christa-pike-por-muerte-cerebral-tras-sobrevivir-a-dos-inyecciones-letales-pero-desperto/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://diariodelhuila.com/iban-a-desconectar-a-christa-pike-por-muerte-cerebral-tras-sobrevivir-a-dos-inyecciones-letales-pero-desperto/"
+        },
+        {
+          "body_characters": 1459,
+          "channel_id": "co_diario_del_huila:ch:rss_r001",
+          "final_url": "https://diariodelhuila.com/ee-uu-acusa-a-maduro-y-cilia-flores-de-conspirar-para-torturar-a-opositores-y-estadounidenses/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://diariodelhuila.com/ee-uu-acusa-a-maduro-y-cilia-flores-de-conspirar-para-torturar-a-opositores-y-estadounidenses/"
+        },
+        {
+          "body_characters": 1639,
+          "channel_id": "co_diario_del_huila:ch:rss_r001",
+          "final_url": "https://diariodelhuila.com/cidh-ordena-proteger-a-exmilitar-que-declaro-37-homicidios-ante-la-jep-tras-recibir-amenazas/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://diariodelhuila.com/cidh-ordena-proteger-a-exmilitar-que-declaro-37-homicidios-ante-la-jep-tras-recibir-amenazas/"
+        },
+        {
+          "body_characters": 1599,
+          "channel_id": "co_diario_del_huila:ch:rss_r001",
+          "final_url": "https://diariodelhuila.com/capturan-a-una-persona-y-decomisan-dos-motobombas-por-presunta-mineria-ilegal-en-neiva/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://diariodelhuila.com/capturan-a-una-persona-y-decomisan-dos-motobombas-por-presunta-mineria-ilegal-en-neiva/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 4,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "co_el_espectador": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 102
+      },
+      "channels": {
+        "co_el_espectador:ch:rss_001": {
+          "candidates_listed": 20,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elespectador.com/arc/outboundfeeds/discover/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elespectador.com/arc/outboundfeeds/discover/?outputType=xml"
+            }
+          ],
+          "entries": 20,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 20,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "co_el_espectador:ch:sitemap_003": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elespectador.com/arc/outboundfeeds/image-sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elespectador.com/arc/outboundfeeds/image-sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 7530,
+        "body_characters_median": 4329,
+        "body_characters_min": 1890,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 3441,
+          "channel_id": "co_el_espectador:ch:rss_001",
+          "final_url": "https://www.elespectador.com/colombia/medellin/descubren-el-cadaver-de-un-estadounidense-en-apartamento-de-envigado-antioquia/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elespectador.com/colombia/medellin/descubren-el-cadaver-de-un-estadounidense-en-apartamento-de-envigado-antioquia/"
+        },
+        {
+          "body_characters": 1890,
+          "channel_id": "co_el_espectador:ch:rss_001",
+          "final_url": "https://www.elespectador.com/mundo/europa/rusia-y-las-dudas-sobre-una-misteriosa-muerte-que-avivan-temores-de-encubrimiento/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elespectador.com/mundo/europa/rusia-y-las-dudas-sobre-una-misteriosa-muerte-que-avivan-temores-de-encubrimiento/"
+        },
+        {
+          "body_characters": 5217,
+          "channel_id": "co_el_espectador:ch:rss_001",
+          "final_url": "https://www.elespectador.com/especiales/medellin-sera-epicentro-del-debate-iberoamericano-sobre-el-futuro-de-la-educacion-superior/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elespectador.com/especiales/medellin-sera-epicentro-del-debate-iberoamericano-sobre-el-futuro-de-la-educacion-superior/"
+        },
+        {
+          "body_characters": 7530,
+          "channel_id": "co_el_espectador:ch:rss_001",
+          "final_url": "https://www.elespectador.com/economia/gobierno-radica-mensaje-de-urgencia-para-sumar-cop-27-billones-al-presupuesto-para-que/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elespectador.com/economia/gobierno-radica-mensaje-de-urgencia-para-sumar-cop-27-billones-al-presupuesto-para-que/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "co_el_nuevo_siglo": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 50
+      },
+      "channels": {
+        "co_el_nuevo_siglo:ch:rss_r001": {
+          "candidates_listed": 50,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elnuevosiglo.com.co/rss.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elnuevosiglo.com.co/rss.xml"
+            }
+          ],
+          "entries": 50,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 50,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 4884,
+        "body_characters_median": 4520,
+        "body_characters_min": 1795,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1795,
+          "channel_id": "co_el_nuevo_siglo:ch:rss_r001",
+          "final_url": "https://www.elnuevosiglo.com.co/politica/mintrabajo-activa-mesa-tecnica-para-liquidar-el-ministerio-de-igualdad",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnuevosiglo.com.co/politica/mintrabajo-activa-mesa-tecnica-para-liquidar-el-ministerio-de-igualdad"
+        },
+        {
+          "body_characters": 4884,
+          "channel_id": "co_el_nuevo_siglo:ch:rss_r001",
+          "final_url": "https://www.elnuevosiglo.com.co/politica/eeuu-acusa-maduro-de-proteger-guerrilla-cambio-de-cocaina",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnuevosiglo.com.co/politica/eeuu-acusa-maduro-de-proteger-guerrilla-cambio-de-cocaina"
+        },
+        {
+          "body_characters": 4498,
+          "channel_id": "co_el_nuevo_siglo:ch:rss_r001",
+          "final_url": "https://www.elnuevosiglo.com.co/politica/piden-al-congreso-crear-regimen-disciplinario-para-elegidos-por-voto-popular",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnuevosiglo.com.co/politica/piden-al-congreso-crear-regimen-disciplinario-para-elegidos-por-voto-popular"
+        },
+        {
+          "body_characters": 4543,
+          "channel_id": "co_el_nuevo_siglo:ch:rss_r001",
+          "final_url": "https://www.elnuevosiglo.com.co/nacion/caen-los-cizallas-en-bogota-senalados-de-33-robos-supermercados",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elnuevosiglo.com.co/nacion/caen-los-cizallas-en-bogota-senalados-de-33-robos-supermercados"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.25,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 5
+      }
+    },
+    "co_elcolombiano": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 48,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "co_elcolombiano:ch:section_page_r001": {
+          "candidates_listed": 50,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elcolombiano.com/medellin",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elcolombiano.com/medellin"
+            }
+          ],
+          "entries": 222,
+          "entry_problems": {
+            "invalid_url": 30,
+            "no_link": 3,
+            "off_origin": 79
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 222,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    },
+    "co_elpais": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 112
+      },
+      "channels": {
+        "co_elpais:ch:rss_002": {
+          "candidates_listed": 26,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elpais.com.co/arc/outboundfeeds/rss/category/cali/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elpais.com.co/arc/outboundfeeds/rss/category/cali/?outputType=xml"
+            }
+          ],
+          "entries": 26,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 26,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "co_elpais:ch:sitemap_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.elpais.com.co/arc/outboundfeeds/sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.elpais.com.co/arc/outboundfeeds/sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 5203,
+        "body_characters_median": 5072,
+        "body_characters_min": 4636,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 5078,
+          "channel_id": "co_elpais:ch:rss_002",
+          "final_url": "https://www.elpais.com.co/cali/la-armada-nacional-se-toma-unicentro-asi-sera-la-muestra-naval-y-de-tecnologia-que-se-vivira-este-fin-de-semana-en-cali-0829.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elpais.com.co/cali/la-armada-nacional-se-toma-unicentro-asi-sera-la-muestra-naval-y-de-tecnologia-que-se-vivira-este-fin-de-semana-en-cali-0829.html"
+        },
+        {
+          "body_characters": 4636,
+          "channel_id": "co_elpais:ch:rss_002",
+          "final_url": "https://www.elpais.com.co/cali/video-vendaval-golpea-el-norte-de-cali-y-sectores-de-yumbo-arboles-caidos-comercios-afectados-y-vias-inundadas-0735.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elpais.com.co/cali/video-vendaval-golpea-el-norte-de-cali-y-sectores-de-yumbo-arboles-caidos-comercios-afectados-y-vias-inundadas-0735.html"
+        },
+        {
+          "body_characters": 5066,
+          "channel_id": "co_elpais:ch:rss_002",
+          "final_url": "https://www.elpais.com.co/cali/habitantes-del-conjunto-guadalupe-denuncian-desaparicion-de-sus-pertenencias-tras-demolicion-por-sismo-0947.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elpais.com.co/cali/habitantes-del-conjunto-guadalupe-denuncian-desaparicion-de-sus-pertenencias-tras-demolicion-por-sismo-0947.html"
+        },
+        {
+          "body_characters": 5203,
+          "channel_id": "co_elpais:ch:rss_002",
+          "final_url": "https://www.elpais.com.co/cali/alcaldia-de-cali-y-mineducacion-unen-esfuerzos-para-reconstruir-mas-de-200-sedes-educativas-afectadas-por-el-terremoto-0806.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.elpais.com.co/cali/alcaldia-de-cali-y-mineducacion-unen-esfuerzos-para-reconstruir-mas-de-200-sedes-educativas-afectadas-por-el-terremoto-0806.html"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "co_semana": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 110
+      },
+      "channels": {
+        "co_semana:ch:rss_001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 4,
+          "items_requested": 4
+        },
+        "co_semana:ch:sitemap_r001": {
+          "candidates_listed": 100,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.semana.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.semana.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 100,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 100,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 1101,
+        "body_characters_median": 1054,
+        "body_characters_min": 995,
+        "floor": 500,
+        "labelled": 4,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 4
+      },
+      "items": [
+        {
+          "body_characters": 1058,
+          "channel_id": "co_semana:ch:rss_001",
+          "final_url": "https://www.semana.com/loterias/articulo/estos-fueron-los-numeros-de-la-antioquenita-dia-y-tarde-del-9-de-octubre-de-2026-conozca-las-combinaciones-ganadoras/202648/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.semana.com/loterias/articulo/estos-fueron-los-numeros-de-la-antioquenita-dia-y-tarde-del-9-de-octubre-de-2026-conozca-las-combinaciones-ganadoras/202648/"
+        },
+        {
+          "body_characters": 1101,
+          "channel_id": "co_semana:ch:rss_001",
+          "final_url": "https://www.semana.com/nacion/articulo/la-emotiva-sorpresa-que-recibio-un-policia-mientras-lucha-contra-la-leucemia/202624/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.semana.com/nacion/articulo/la-emotiva-sorpresa-que-recibio-un-policia-mientras-lucha-contra-la-leucemia/202624/"
+        },
+        {
+          "body_characters": 1051,
+          "channel_id": "co_semana:ch:rss_001",
+          "final_url": "https://www.semana.com/deportes/articulo/murio-eduardo-emilio-vilarete-a-los-73-anos-luto-en-la-seleccion-colombia-union-magdalena-y-atletico-nacional/202617/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.semana.com/deportes/articulo/murio-eduardo-emilio-vilarete-a-los-73-anos-luto-en-la-seleccion-colombia-union-magdalena-y-atletico-nacional/202617/"
+        },
+        {
+          "body_characters": 995,
+          "channel_id": "co_semana:ch:rss_001",
+          "final_url": "https://www.semana.com/nacion/bucaramanga/articulo/que-esta-pasando-en-la-plaza-central-de-bucaramanga-denuncian-robos-y-piden-mas-seguridad/202604/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.semana.com/nacion/bucaramanga/articulo/que-esta-pasando-en-la-plaza-central-de-bucaramanga-denuncian-robos-y-piden-mas-seguridad/202604/"
+        }
+      ],
+      "items_2xx": 4,
+      "items_requested": 4,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 4
+      },
+      "requests_per_2xx_item": 1.5,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 6
+      }
+    },
+    "cr_crhoy": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "cr_crhoy:ch:rss_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://crhoy.com:443/feed/",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://www.crhoy.com/feed/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cr_crhoy:ch:sitemap_index_001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://crhoy.com/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:canary_budget_exhausted": 1
+      },
+      "requests_answered": {
+        "channel_document:404": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 1
+      }
+    }
+  },
+  "run_id": "acq1-20261009T174912055729Z-771c1a3d53f1",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 64,
+    "items_requested": 64,
+    "outlets": 20,
+    "outlets_with_2xx_items": 16
+  }
+}

@@ -1,0 +1,1165 @@
+{
+  "outlets": {
+    "ar_el_tribuno": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 40
+      },
+      "channels": {
+        "ar_el_tribuno:ch:rss_r001": {
+          "candidates_listed": 25,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.eltribuno.com/rss-new/portada.rss",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.eltribuno.com/rss-new/portada.rss"
+            }
+          ],
+          "entries": 25,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 25,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        },
+        "ar_el_tribuno:ch:rss_r002": {
+          "candidates_listed": 25,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.eltribuno.com/rss-new/salta.rss",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.eltribuno.com/rss-new/salta.rss"
+            }
+          ],
+          "entries": 25,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 25,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 9213,
+        "body_characters_median": 2936,
+        "body_characters_min": 1274,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 4036,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-11-28-0-dia-de-la-madre-carlitos-reynaga-y-hernan-moretti-dictaran-una-masterclass-gratuita-de-reposteria",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-11-28-0-dia-de-la-madre-carlitos-reynaga-y-hernan-moretti-dictaran-una-masterclass-gratuita-de-reposteria"
+        },
+        {
+          "body_characters": 1274,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-0-0-0-nuevo-edificio-para-el-ministerio-publico",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-0-0-0-nuevo-edificio-para-el-ministerio-publico"
+        },
+        {
+          "body_characters": 4164,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/internacionales/2026-10-9-0-0-0-francia-crece-la-protesta-con-71-500-estudiantes",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/internacionales/2026-10-9-0-0-0-francia-crece-la-protesta-con-71-500-estudiantes"
+        },
+        {
+          "body_characters": 9213,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-8-15-0-como-es-el-modulo-de-alto-perfil-de-villa-las-rosas-donde-quedo-detenido-conejo-martinez",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-8-15-0-como-es-el-modulo-de-alto-perfil-de-villa-las-rosas-donde-quedo-detenido-conejo-martinez"
+        },
+        {
+          "body_characters": 2892,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/deportes/2026-10-9-0-5-0-la-ciudad-esta-lista-para-la-fiesta-nacional-del-deporte",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/deportes/2026-10-9-0-5-0-la-ciudad-esta-lista-para-la-fiesta-nacional-del-deporte"
+        },
+        {
+          "body_characters": 2575,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-9-25-0-la-perrita-brutalmente-maltratada-en-salta-se-recupera-de-un-severo-traumatismo-de-craneo",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-9-25-0-la-perrita-brutalmente-maltratada-en-salta-se-recupera-de-un-severo-traumatismo-de-craneo"
+        },
+        {
+          "body_characters": 2637,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-10-16-0-feriado-del-12-de-octubre-habra-guardias-y-horarios-especiales-en-servicios-municipales",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-10-16-0-feriado-del-12-de-octubre-habra-guardias-y-horarios-especiales-en-servicios-municipales"
+        },
+        {
+          "body_characters": 1778,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/policiales/2026-10-9-10-20-0-chocaron-dos-colectivos-de-saeta-importantes-danos-materiales-y-pasajeros-afectados",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/policiales/2026-10-9-10-20-0-chocaron-dos-colectivos-de-saeta-importantes-danos-materiales-y-pasajeros-afectados"
+        },
+        {
+          "body_characters": 2981,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-9-0-0-0-juan-gonza-vuelve-a-presentar-un-relato-del-horror",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/salta/2026-10-9-0-0-0-juan-gonza-vuelve-a-presentar-un-relato-del-horror"
+        },
+        {
+          "body_characters": 4199,
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "final_url": "https://www.eltribuno.com/espectaculos/2026-10-9-6-51-0-los-coros-valle-de-lerma-y-pallay-representaran-a-salta-en-un-encuentro-coral-en-jujuy",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.eltribuno.com/espectaculos/2026-10-9-6-51-0-los-coros-valle-de-lerma-y-pallay-representaran-a-salta-en-un-encuentro-coral-en-jujuy"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.2,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": 10.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 12
+      }
+    },
+    "bo_opinion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 37
+      },
+      "channels": {
+        "bo_opinion:ch:rss_r001": {
+          "candidates_listed": 20,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.opinion.com.bo/rss/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.opinion.com.bo/rss/"
+            }
+          ],
+          "entries": 20,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 20,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 10,
+          "items_requested": 10
+        },
+        "bo_opinion:ch:rss_r002": {
+          "candidates_listed": 20,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.opinion.com.bo/rss/cochabamba/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.opinion.com.bo/rss/cochabamba/"
+            }
+          ],
+          "entries": 20,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 20,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 6347,
+        "body_characters_median": 1919,
+        "body_characters_min": 1227,
+        "floor": 500,
+        "labelled": 10,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 10
+      },
+      "items": [
+        {
+          "body_characters": 1569,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/cochabamba/alcaldia-inicia-octubre-rosa-servicios-gratuitos-prevenir-detectar-cancer/20261008175835997374.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/cochabamba/alcaldia-inicia-octubre-rosa-servicios-gratuitos-prevenir-detectar-cancer/20261008175835997374.html"
+        },
+        {
+          "body_characters": 1664,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/pais/civicos-crucenos-ven-poco-avance-gobierno-demandas-ratifican-plazo-10-octubre/20261009082215997381.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/pais/civicos-crucenos-ven-poco-avance-gobierno-demandas-ratifican-plazo-10-octubre/20261009082215997381.html"
+        },
+        {
+          "body_characters": 2243,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/pais/bascope-tenemos-serias-sospechas-que-mariaca-estaba-detras-53-dias-bloqueo/20261009100047997392.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/pais/bascope-tenemos-serias-sospechas-que-mariaca-estaba-detras-53-dias-bloqueo/20261009100047997392.html"
+        },
+        {
+          "body_characters": 6347,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/cultura/todo-anne-carson-premio-nobel-literatura-2026/20261008214908997379.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/cultura/todo-anne-carson-premio-nobel-literatura-2026/20261008214908997379.html"
+        },
+        {
+          "body_characters": 2407,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/policial/tres-operativos-antidroga-cochabamba-paz-santa-cruz-afectan-narcotrafico-mas-us-18-millones/20261009110234997401.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/policial/tres-operativos-antidroga-cochabamba-paz-santa-cruz-afectan-narcotrafico-mas-us-18-millones/20261009110234997401.html"
+        },
+        {
+          "body_characters": 1262,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/deportes/wilstermann-agota-ultima-carta-judicial-debera-buscar-ascenso-cancha/20261009102428997396.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/deportes/wilstermann-agota-ultima-carta-judicial-debera-buscar-ascenso-cancha/20261009102428997396.html"
+        },
+        {
+          "body_characters": 5307,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/innovacion-educativa/carlos-ramirez-medico-que-volvio-chile-aulas-bolivianas-comprender-mente-humana/20261009093014997386.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/innovacion-educativa/carlos-ramirez-medico-que-volvio-chile-aulas-bolivianas-comprender-mente-humana/20261009093014997386.html"
+        },
+        {
+          "body_characters": 1611,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/pais/urioste-designa-fiscales-departamentales-suplentes-seis-ellos-son-mujeres/20261009084127997384.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/pais/urioste-designa-fiscales-departamentales-suplentes-seis-ellos-son-mujeres/20261009084127997384.html"
+        },
+        {
+          "body_characters": 2174,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/pais/secuestran-dinero-joyas-documentos-despachos-mariaca-otros-dos-exfiscales-superiores/20261008183358997376.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/pais/secuestran-dinero-joyas-documentos-despachos-mariaca-otros-dos-exfiscales-superiores/20261008183358997376.html"
+        },
+        {
+          "body_characters": 1227,
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "final_url": "https://www.opinion.com.bo/policial/tres-privados-libertad-resultan-heridos-explosion-penal-cantumarca/20261008171752997371.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.opinion.com.bo/policial/tres-privados-libertad-resultan-heridos-explosion-penal-cantumarca/20261008171752997371.html"
+        }
+      ],
+      "items_2xx": 10,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 10
+      },
+      "requests_per_2xx_item": 1.2,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 12
+      }
+    },
+    "cu_14ymedio": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 47,
+        "QUALIFIED:no_rule_rejects": 148,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "cu_14ymedio:ch:rss_r001": {
+          "candidates_listed": 148,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.14ymedio.com/rss/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.14ymedio.com/rss"
+            }
+          ],
+          "entries": 148,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 148,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 9,
+          "items_requested": 10
+        },
+        "cu_14ymedio:ch:section_page_r001": {
+          "candidates_listed": 65,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.14ymedio.com/cuba",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.14ymedio.com/cuba"
+            }
+          ],
+          "entries": 122,
+          "entry_problems": {
+            "off_origin": 11
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 122,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 765,
+        "body_characters_median": 719,
+        "body_characters_min": 590,
+        "floor": 500,
+        "labelled": 9,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 9,
+        "503": 1
+      },
+      "items": [
+        {
+          "body_characters": 719,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/blogs/consejos/auge-comercio-electronico-comunidad-latinoamericana_132_1130861.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/blogs/consejos/auge-comercio-electronico-comunidad-latinoamericana_132_1130861.html"
+        },
+        {
+          "body_characters": 734,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/internacional/protestas-interrumpen-mitin-trump-texas_1_1131696.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/internacional/protestas-interrumpen-mitin-trump-texas_1_1131696.html"
+        },
+        {
+          "body_characters": 719,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/blogs/consejos/mejorar-eficiencia-teletrabajo-optimice-rendimiento_132_1126913.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/blogs/consejos/mejorar-eficiencia-teletrabajo-optimice-rendimiento_132_1126913.html"
+        },
+        {
+          "body_characters": 590,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/blogs/economia/is-it-better-to-buy_132_1130242.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/blogs/economia/is-it-better-to-buy_132_1130242.html"
+        },
+        {
+          "body_characters": 645,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/cartelera/escudo-americas-simposio-seguridad-geopolitica_1_1131685.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/cartelera/escudo-americas-simposio-seguridad-geopolitica_1_1131685.html"
+        },
+        {
+          "body_characters": 613,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/blogs/cajon-de-sastre/guevara-leyenda-macabra-extincion_132_1131519.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/blogs/cajon-de-sastre/guevara-leyenda-macabra-extincion_132_1131519.html"
+        },
+        {
+          "body_characters": 720,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/cuba/shaka-fogonazo-quimico-dosis-masivas_1_1130410.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/cuba/shaka-fogonazo-quimico-dosis-masivas_1_1130410.html"
+        },
+        {
+          "body_characters": 765,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/cultura/festival-cine-habana-enfocara-brasil_1_1131501.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/cultura/festival-cine-habana-enfocara-brasil_1_1131501.html"
+        },
+        {
+          "body_characters": 45,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/destacamos/leido-2025_3_1121900.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 503,
+          "url": "https://www.14ymedio.com/destacamos/leido-2025_3_1121900.html"
+        },
+        {
+          "body_characters": 645,
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "final_url": "https://www.14ymedio.com/cartelera/katherine-bisquet-jorge-luis-porrata_1_1131729.html",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.14ymedio.com/cartelera/katherine-bisquet-jorge-luis-porrata_1_1131729.html"
+        }
+      ],
+      "items_2xx": 9,
+      "items_requested": 10,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 9,
+        "item:503": 1
+      },
+      "requests_per_2xx_item": 1.33,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 12
+      }
+    },
+    "cu_cubanet": {
+      "access_classes_observed": {
+        "bot_challenge": 2
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "cu_cubanet:ch:archive_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.cubanet.org/ultimas-noticias/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "cu_cubanet:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.cubanet.org/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 2
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 2
+      }
+    },
+    "hn_criterio": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 47,
+        "QUALIFIED:no_rule_rejects": 5,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "hn_criterio:ch:rss_r001": {
+          "candidates_listed": 5,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://criterio.hn/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/feed/"
+            }
+          ],
+          "entries": 5,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 5,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 5,
+          "items_requested": 5
+        },
+        "hn_criterio:ch:section_page_r001": {
+          "candidates_listed": 50,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://criterio.hn/category/actualidad/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://criterio.hn/category/actualidad/page/2/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/page/2/"
+            },
+            {
+              "expansion_depth": 2,
+              "final_url": "https://criterio.hn/category/actualidad/page/3/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://criterio.hn/category/actualidad/page/3/"
+            }
+          ],
+          "entries": 275,
+          "entry_problems": {
+            "not_http": 3,
+            "off_origin": 60
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 90,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 92,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 2,
+              "entries": 93,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 5,
+        "body_characters_max": 426,
+        "body_characters_median": 314,
+        "body_characters_min": 297,
+        "floor": 500,
+        "labelled": 5,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 5
+      },
+      "items": [
+        {
+          "body_characters": 314,
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "final_url": "https://criterio.hn/la-inminente-crisis-de-deuda-en-estados-unidos/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/la-inminente-crisis-de-deuda-en-estados-unidos/"
+        },
+        {
+          "body_characters": 297,
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "final_url": "https://criterio.hn/por-que-es-importante-la-tregua-comercial-entre-ee-uu-y-china/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/por-que-es-importante-la-tregua-comercial-entre-ee-uu-y-china/"
+        },
+        {
+          "body_characters": 426,
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "final_url": "https://criterio.hn/la-ley-no-basta/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/la-ley-no-basta/"
+        },
+        {
+          "body_characters": 383,
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "final_url": "https://criterio.hn/feriados-de-honduras-fechas-significado-y-la-historia-detras-de-cada-celebracion/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/feriados-de-honduras-fechas-significado-y-la-historia-detras-de-cada-celebracion/"
+        },
+        {
+          "body_characters": 310,
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "final_url": "https://criterio.hn/el-paso-del-tiempo-o-la-incertidumbre-de-la-vida/",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://criterio.hn/el-paso-del-tiempo-o-la-incertidumbre-de-la-vida/"
+        }
+      ],
+      "items_2xx": 5,
+      "items_requested": 5,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 4,
+        "item:200": 5
+      },
+      "requests_per_2xx_item": 1.8,
+      "requests_under_research_override": 1,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 8,
+        "ROBOTS_DISALLOW_OBSERVED": 1
+      }
+    },
+    "ni_articulo66": {
+      "access_classes_observed": {
+        "bot_challenge": 2
+      },
+      "candidate_decisions": {},
+      "channels": {
+        "ni_articulo66:ch:archive_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.articulo66.com/2026/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "ni_articulo66:ch:rss_r001": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "access_control_observed",
+              "url": "https://www.articulo66.com/feed/"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: access_control_observed"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:access_control_observed": 2
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 2
+      }
+    },
+    "ni_nicaragua_investiga": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 13
+      },
+      "channels": {
+        "ni_nicaragua_investiga:ch:rss_r001": {
+          "candidates_listed": 13,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://nicaraguainvestiga.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://nicaraguainvestiga.com/feed/"
+            }
+          ],
+          "entries": 13,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 13,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 5,
+          "items_requested": 5
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 7043,
+        "body_characters_median": 4734,
+        "body_characters_min": 3900,
+        "floor": 500,
+        "labelled": 5,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 5
+      },
+      "items": [
+        {
+          "body_characters": 4374,
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "final_url": "https://nicaraguainvestiga.com/mundo/174912-el-huracan-isaias-se-fortalece-y-alcanza-categoria-2-en-el-atlantico/#utm_source=rss&utm_medium=rss&utm_campaign=el-huracan-isaias-se-fortalece-y-alcanza-categoria-2-en-el-atlantico",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://nicaraguainvestiga.com/mundo/174912-el-huracan-isaias-se-fortalece-y-alcanza-categoria-2-en-el-atlantico/?utm_source=rss&utm_medium=rss&utm_campaign=el-huracan-isaias-se-fortalece-y-alcanza-categoria-2-en-el-atlantico"
+        },
+        {
+          "body_characters": 7043,
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "final_url": "https://nicaraguainvestiga.com/politica/174882-rafael-solis-confiesa-reeleccion-ortega/#utm_source=rss&utm_medium=rss&utm_campaign=rafael-solis-confiesa-reeleccion-ortega",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://nicaraguainvestiga.com/politica/174882-rafael-solis-confiesa-reeleccion-ortega/?utm_source=rss&utm_medium=rss&utm_campaign=rafael-solis-confiesa-reeleccion-ortega"
+        },
+        {
+          "body_characters": 5515,
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "final_url": "https://nicaraguainvestiga.com/economia/174896-turismo-caida-nicaragua-desesperada-diciembre/#utm_source=rss&utm_medium=rss&utm_campaign=turismo-caida-nicaragua-desesperada-diciembre",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://nicaraguainvestiga.com/economia/174896-turismo-caida-nicaragua-desesperada-diciembre/?utm_source=rss&utm_medium=rss&utm_campaign=turismo-caida-nicaragua-desesperada-diciembre"
+        },
+        {
+          "body_characters": 3900,
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "final_url": "https://nicaraguainvestiga.com/nacion/174900-atasco-vial-metrocentro-managua/#utm_source=rss&utm_medium=rss&utm_campaign=atasco-vial-metrocentro-managua",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://nicaraguainvestiga.com/nacion/174900-atasco-vial-metrocentro-managua/?utm_source=rss&utm_medium=rss&utm_campaign=atasco-vial-metrocentro-managua"
+        },
+        {
+          "body_characters": 4734,
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "final_url": "https://nicaraguainvestiga.com/nacion/174915-el-salvador-desarticula-red-maritima-que-sacaba-cocaina-de-nicaragua-hacia-guatemala-1-917-kilos-y-us482-millones/#utm_source=rss&utm_medium=rss&utm_campaign=el-salvador-desarticula-red-maritima-que-sacaba-cocaina-de-nicaragua-hacia-guatemala-1-917-kilos-y-us482-millones",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://nicaraguainvestiga.com/nacion/174915-el-salvador-desarticula-red-maritima-que-sacaba-cocaina-de-nicaragua-hacia-guatemala-1-917-kilos-y-us482-millones/?utm_source=rss&utm_medium=rss&utm_campaign=el-salvador-desarticula-red-maritima-que-sacaba-cocaina-de-nicaragua-hacia-guatemala-1-917-kilos-y-us482-millones"
+        }
+      ],
+      "items_2xx": 5,
+      "items_requested": 5,
+      "redirect_hops": 0,
+      "refused": {
+        "item:canary_budget_exhausted": 5
+      },
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 5
+      },
+      "requests_per_2xx_item": 1.2,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_UNAVAILABLE": 6
+      }
+    },
+    "pr_noticel": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "DEFERRED:generic: listed_by_a_listing_channel_and_no_outlet_allow_rule": 110,
+        "REJECTED:generic: is_a_registered_channel_document": 1,
+        "REJECTED:generic: site_root_is_not_an_item": 1
+      },
+      "channels": {
+        "pr_noticel:ch:section_page_r001": {
+          "candidates_listed": 112,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://noticel.com/category/ultima-hora/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/"
+            },
+            {
+              "expansion_depth": 1,
+              "final_url": "https://noticel.com/category/ultima-hora/page/2/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/page/2/"
+            },
+            {
+              "expansion_depth": 2,
+              "final_url": "https://noticel.com/category/ultima-hora/page/3/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://noticel.com/category/ultima-hora/page/3/"
+            }
+          ],
+          "entries": 700,
+          "entry_problems": {
+            "off_origin": 22
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 234,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 233,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 2,
+              "entries": 233,
+              "format": "html_listing",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 3
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 3
+      }
+    },
+    "uy_montevideo_portal": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 1
+      },
+      "channels": {
+        "uy_montevideo_portal:ch:rss_r001": {
+          "candidates_listed": 1,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.montevideo.com.uy/anxml.aspx?59",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.montevideo.com.uy/anxml.aspx?59"
+            }
+          ],
+          "entries": 8,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 8,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 1,
+          "items_requested": 1
+        },
+        "uy_montevideo_portal:ch:rss_r002": {
+          "candidates_listed": 1,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.montevideo.com.uy/anxml.aspx?58",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.montevideo.com.uy/anxml.aspx?58"
+            }
+          ],
+          "entries": 52,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 52,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 3200,
+        "body_characters_median": 3200,
+        "body_characters_min": 3200,
+        "floor": 500,
+        "labelled": 1,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 1
+      },
+      "items": [
+        {
+          "body_characters": 3200,
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Ataque-en-Medicina-estudiantes-senalan-que-no-se-reforzo-la-seguridad-del-edificio-anexo-uc978027",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.montevideo.com.uy/auc.aspx?978027"
+        }
+      ],
+      "items_2xx": 1,
+      "items_requested": 1,
+      "redirect_hops": 0,
+      "refused": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 1
+      },
+      "requests_per_2xx_item": 3.0,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 3
+      }
+    }
+  },
+  "run_id": "acq1-20261009T151252138498Z-114b77603c1f",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 40,
+    "items_requested": 41,
+    "outlets": 9,
+    "outlets_with_2xx_items": 6
+  }
+}

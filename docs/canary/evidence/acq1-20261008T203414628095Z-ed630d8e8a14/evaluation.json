@@ -1,0 +1,1725 @@
+{
+  "outlets": {
+    "bo_el_deber": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "bo_el_deber:ch:rss_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_parse_error",
+              "url": "https://eldeber.com.bo/feed"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_parse_error"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "bo_el_deber:ch:sitemap_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_parse_error",
+              "url": "https://eldeber.com.bo/sitemap.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_parse_error"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_parse_error": 2,
+        "item:off_origin": 16
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 16,
+        "ROBOTS_PARSE_ERROR": 2
+      }
+    },
+    "do_diario_libre": {
+      "access_classes_observed": {},
+      "candidate_decisions": {
+        "QUALIFIED:no_rule_rejects": 232
+      },
+      "channels": {
+        "do_diario_libre:ch:rss_main": {
+          "candidates_listed": 32,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diariolibre.com/feed/portada.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.diariolibre.com/feed"
+            }
+          ],
+          "entries": 33,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 33,
+              "format": "rss",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 13,
+          "items_requested": 13
+        },
+        "do_diario_libre:ch:sitemap_sitemapnews": {
+          "candidates_listed": 231,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://www.diariolibre.com/sitemapnews",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://www.diariolibre.com/sitemapnews"
+            }
+          ],
+          "entries": 534,
+          "entry_problems": {
+            "candidate_budget_exhausted": 303
+          },
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 534,
+              "format": "sitemap_urlset",
+              "outcome": "PARSED",
+              "problems": []
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": 18086,
+        "body_characters_median": 3703,
+        "body_characters_min": 1975,
+        "floor": 500,
+        "labelled": 13,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {
+        "200": 13
+      },
+      "items": [
+        {
+          "body_characters": 2732,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/usa/actualidad/2026/10/08/trafico-de-personas-en-puerto-rico-tras-naufragio-en-isla-de-mona/3682251",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/usa/actualidad/2026/10/08/trafico-de-personas-en-puerto-rico-tras-naufragio-en-isla-de-mona/3682251"
+        },
+        {
+          "body_characters": 4486,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/economia/turismo/2026/10/08/entre-us116-y-us226-diarios-asi-gasta-el-turista-de-ee-uu-en-rd/3681839",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/economia/turismo/2026/10/08/entre-us116-y-us226-diarios-asi-gasta-el-turista-de-ee-uu-en-rd/3681839"
+        },
+        {
+          "body_characters": 3516,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/mundo/america-latina/2026/10/08/tension-entre-chile-y-eeuu-por-dichos-sobre-magallanes/3682141",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/mundo/america-latina/2026/10/08/tension-entre-chile-y-eeuu-por-dichos-sobre-magallanes/3682141"
+        },
+        {
+          "body_characters": 5448,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/actualidad/justicia/2026/10/08/rosalba-ramos-nuevo-codigo-penal-permitira-superar-penas-irrisorias/3682289",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/justicia/2026/10/08/rosalba-ramos-nuevo-codigo-penal-permitira-superar-penas-irrisorias/3682289"
+        },
+        {
+          "body_characters": 3703,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/planeta/medioambiente/2026/10/08/pronostico-de-lluvias-en-republica-dominicana-y-alerta-amarilla/3682073",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/planeta/medioambiente/2026/10/08/pronostico-de-lluvias-en-republica-dominicana-y-alerta-amarilla/3682073"
+        },
+        {
+          "body_characters": 3816,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/deportes/beisbol/2026/10/08/tampa-elimina-a-yankees-dodgers-y-guardianes-avanzan-en-playoffs/3682106",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/deportes/beisbol/2026/10/08/tampa-elimina-a-yankees-dodgers-y-guardianes-avanzan-en-playoffs/3682106"
+        },
+        {
+          "body_characters": 6350,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/opinion/agora/2026/10/07/invitacion-a-un-gran-pacto-o-dialogo-entre-diversos-sectores/3681691",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/opinion/agora/2026/10/07/invitacion-a-un-gran-pacto-o-dialogo-entre-diversos-sectores/3681691"
+        },
+        {
+          "body_characters": 2035,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/actualidad/nacional/2026/10/08/ejecuciones-extrajudiciales-en-rd-y-derechos-humanos/3682122",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/nacional/2026/10/08/ejecuciones-extrajudiciales-en-rd-y-derechos-humanos/3682122"
+        },
+        {
+          "body_characters": 2132,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/politica/general/2026/10/08/este-pais-se-va-a-levantar-que-anuncia-rafael-paz/3682174",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/politica/general/2026/10/08/este-pais-se-va-a-levantar-que-anuncia-rafael-paz/3682174"
+        },
+        {
+          "body_characters": 1975,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/actualidad/sucesos/2026/10/07/accidente-de-transito-en-la-romana-involucra-varios-vehiculos/3681892",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/sucesos/2026/10/07/accidente-de-transito-en-la-romana-involucra-varios-vehiculos/3681892"
+        },
+        {
+          "body_characters": 18086,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/actualidad/reportajes/2026/10/07/feminicidios-en-republica-dominicana-de-julio-a-septiembre-2026/3678534",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/reportajes/2026/10/07/feminicidios-en-republica-dominicana-de-julio-a-septiembre-2026/3678534"
+        },
+        {
+          "body_characters": 2603,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/actualidad/justicia/2026/10/08/el-cnm-continua-vistas-publicas-para-elegir-seis-jueces-de-la-scj/3682128",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/actualidad/justicia/2026/10/08/el-cnm-continua-vistas-publicas-para-elegir-seis-jueces-de-la-scj/3682128"
+        },
+        {
+          "body_characters": 6342,
+          "channel_id": "do_diario_libre:ch:rss_main",
+          "final_url": "https://www.diariolibre.com/opinion/agora/2026/10/07/realidad-social-detras-de-las-cifras-de-embarazo-y-uniones-tempranas/3681625",
+          "redirect_hops": 0,
+          "redirect_not_followed": null,
+          "status": 200,
+          "url": "https://www.diariolibre.com/opinion/agora/2026/10/07/realidad-social-detras-de-las-cifras-de-embarazo-y-uniones-tempranas/3681625"
+        }
+      ],
+      "items_2xx": 13,
+      "items_requested": 13,
+      "redirect_hops": 0,
+      "refused": {
+        "item:canary_budget_exhausted": 3
+      },
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 13
+      },
+      "requests_per_2xx_item": 1.15,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 15
+      }
+    },
+    "hn_proceso_digital": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "hn_proceso_digital:ch:rss_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://proceso.hn/rss",
+              "redirect_hops": 0,
+              "status": 307,
+              "url": "https://proceso.hn/rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_307"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "hn_proceso_digital:ch:sitemap_news": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://proceso.hn/sitemap-news.xml",
+              "redirect_hops": 0,
+              "status": 404,
+              "url": "https://proceso.hn/sitemap-news.xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "http_404"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "item:off_origin": 16
+      },
+      "requests_answered": {
+        "channel_document:307": 1,
+        "channel_document:404": 1
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": 3.0,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 2,
+        "ROBOTS_NOT_EVALUATED": 16
+      }
+    },
+    "py_la_nacion": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "outcome": "robots_parse_error",
+              "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DEFERRED: robots_parse_error"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:robots_parse_error": 1,
+        "item:off_origin": 16
+      },
+      "requests_answered": {},
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_NOT_EVALUATED": 16,
+        "ROBOTS_PARSE_ERROR": 1
+      }
+    },
+    "ve_efecto_cocuyo": {
+      "access_classes_observed": {},
+      "candidate_decisions": {},
+      "channels": {
+        "ve_efecto_cocuyo:ch:rss_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://efectococuyo.com/feed/",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://efectococuyo.com/rss"
+            }
+          ],
+          "entries": 0,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNPARSEABLE",
+              "problems": [
+                "dtd_or_entity_declaration_refused"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        },
+        "ve_efecto_cocuyo:ch:sitemap_index_main": {
+          "candidates_listed": 0,
+          "documents": [
+            {
+              "expansion_depth": 0,
+              "final_url": "https://efectococuyo.com/sitemap_index.xml",
+              "redirect_hops": 0,
+              "status": 200,
+              "url": "https://efectococuyo.com/sitemap.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap2.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap3.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap4.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap5.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap6.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap7.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap8.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap9.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap10.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap11.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap12.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap13.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap14.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap15.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap16.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap17.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap18.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap19.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap20.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap21.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap22.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap23.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap24.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap25.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap26.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap27.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap28.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap29.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap30.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap31.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap32.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap33.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap34.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap35.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap36.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap37.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap38.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap39.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap40.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap41.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap42.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap43.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap44.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap45.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap46.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap47.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap48.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap49.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap50.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap51.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap52.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap53.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap54.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap55.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap56.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap57.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap58.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap59.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap60.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap61.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap62.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap63.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap64.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap65.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap66.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap67.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap68.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap69.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap70.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap71.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap72.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap73.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap74.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap75.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap76.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap77.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap78.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap79.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap80.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap81.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap82.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap83.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap84.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post-sitemap85.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/page-sitemap.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/category-sitemap.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post_tag-sitemap.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post_tag-sitemap2.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post_tag-sitemap3.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/post_tag-sitemap4.xml"
+            },
+            {
+              "outcome": "canary_budget_exhausted",
+              "url": "https://efectococuyo.com/author-sitemap.xml"
+            }
+          ],
+          "entries": 92,
+          "entry_problems": {},
+          "inputs": [
+            {
+              "depth": 0,
+              "entries": 92,
+              "format": "sitemap_index",
+              "outcome": "PARSED",
+              "problems": []
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            },
+            {
+              "depth": 1,
+              "entries": 0,
+              "format": null,
+              "outcome": "UNAVAILABLE",
+              "problems": [
+                "DENIED: canary_budget_exhausted"
+              ]
+            }
+          ],
+          "items_2xx": 0,
+          "items_requested": 0
+        }
+      },
+      "extraction": {
+        "below_the_article_text_floor": 0,
+        "body_characters_max": null,
+        "body_characters_median": null,
+        "body_characters_min": null,
+        "floor": 500,
+        "labelled": 0,
+        "note": "the experimental baseline extractor; a short text flags the extraction, not the page"
+      },
+      "item_statuses": {},
+      "items": [],
+      "items_2xx": 0,
+      "items_requested": 0,
+      "redirect_hops": 0,
+      "refused": {
+        "channel_document:canary_budget_exhausted": 92,
+        "item:off_origin": 16
+      },
+      "requests_answered": {
+        "channel_document:200": 2
+      },
+      "requests_per_2xx_item": null,
+      "requests_under_research_override": 0,
+      "robots_crawl_delay_seconds": null,
+      "robots_evidence": {
+        "ROBOTS_ALLOW": 2,
+        "ROBOTS_NOT_EVALUATED": 16
+      }
+    }
+  },
+  "run_id": "acq1-20261008T203414628095Z-ed630d8e8a14",
+  "schema": "coprepan-canary-run-evaluation/v1",
+  "totals": {
+    "items_2xx": 13,
+    "items_requested": 13,
+    "outlets": 5,
+    "outlets_with_2xx_items": 1
+  }
+}

@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0026](CPD-0026_identity-rebuild-after-url-rules-v2-classifier-3-and-origin-amendments.md): the Cloudflare challenge marker is narrowed to the challenge itself (access-control/3). This record is otherwise unchanged |
 | Amended by (2026-10-09) | [CPD-0024](CPD-0024_wave-limits-cap-the-canary-budget.md): under a wave of a delegated operator authorisation a canary may be one to fifteen outlets and its budget is capped by the wave's limits. This record is otherwise unchanged |
 | Decided by | the operator, in the brief of the integrated discovery, source-recovery and acquisition-qualification run of 2026-10-09, which ordered the findings F1–F7 repaired, a deterministic strategy for budget reservation and sitemap-index exploration chosen by the run, a versioned source-discovery inventory, and a second and an extended canary prepared up to the operator's gates; technical choices were delegated to the run and are recorded here. Subject to the operator's review |
 | Kind | architecture · policy (canary scope) |

@@ -2,7 +2,7 @@
 
 **Status: GENERATED — a recommendation for human review. It registers nothing.** Produced by
 `python -m coprepan.registry_review` from `config/outlet_registry.json`
-(SHA-256 `0c1bd32aa1ea01aae4754b2b82cc416b2e42ec6ce5d3b8d661a3f2a87d9cad4e`); a test fails if this page and the registry drift apart.
+(SHA-256 `7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8`); a test fails if this page and the registry drift apart.
 What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per outlet and channel:
 [`config/registry_review/outlet_review_package.json`](../../config/registry_review/outlet_review_package.json).
 
@@ -161,12 +161,12 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `cr_diario_extra` | Diario Extra | https://www.diarioextra.com | 2 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `cr_la_nacion` | La Nación | https://www.nacion.com | 2 rss, 2 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `cu_14ymedio` | 14ymedio | https://www.14ymedio.com | 1 rss, 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `cu_5_de_septiembre` | 5 de Septiembre | https://www.5septiembre.cu | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `cu_5_de_septiembre` | 5 de Septiembre | https://www.5septiembre.cu<br>https://5septiembre.cu | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `cu_cubanet` | CubaNet | https://www.cubanet.org | 1 archive, 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `cu_granma` | Granma | https://www.granma.cu | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
 | `cu_havana_times` | Havana Times | https://havanatimesenespanol.org | 4 rss, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `cu_juventud_rebelde` | Juventud Rebelde | https://www.juventudrebelde.cu | 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `cu_periodico_26` | Periódico 26 | http://www.periodico26.cu | 1 atom, 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`legacy_code_is_not_ascii`<br>`origin_is_plain_http`<br>`no_channel_was_active_in_legacy` |
+| `cu_periodico_26` | Periódico 26 | http://www.periodico26.cu<br>http://periodico26.cu | 1 atom, 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`legacy_code_is_not_ascii`<br>`origin_is_plain_http`<br>`no_channel_was_active_in_legacy` |
 | `cu_trabajadores` | Trabajadores | https://www.trabajadores.cu<br>+ http://www.trabajadores.cu | 4 rss, 3 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `do_diario_libre` | Diario Libre | https://www.diariolibre.com | 8 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `do_el_caribe` | El Caribe | https://www.elcaribe.com.do | 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
@@ -200,8 +200,8 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `hn_la_prensa` | La Prensa | https://www.laprensa.hn | 1 section_page, 2 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `hn_la_tribuna` | La Tribuna | https://www.latribuna.hn | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `id_spelling_differs_from_the_convention`<br>`no_channel` |
 | `hn_proceso_digital` | Proceso Digital | https://proceso.hn | 4 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
-| `hn_radio_progreso` | Radio Progreso | https://radioprogresohn.net | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `mx_animal_politico` | Animal Politico | https://www.animalpolitico.com<br>+ http://www.animalpolitico.com | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `hn_radio_progreso` | Radio Progreso | https://radioprogresohn.net<br>https://www.radioprogresohn.net | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `mx_animal_politico` | Animal Politico | https://www.animalpolitico.com<br>https://animalpolitico.com<br>+ http://www.animalpolitico.com | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `mx_el_siglo_de_torreon` | El Siglo de Torreon | https://www.elsiglodetorreon.com.mx | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `mx_el_universal` | El Universal | https://www.eluniversal.com.mx | 5 rss, 15 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `mx_la_jornada` | La Jornada | https://www.jornada.com.mx | 2 atom, 3 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
