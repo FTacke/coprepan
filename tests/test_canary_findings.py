@@ -418,7 +418,7 @@ def test_a_feed_that_carries_html_documents_in_cdata_is_read():
     parsed = discovery.parse_channel_document(fixture("rss_cdata_doctype.xml"), document_url=f"{WWW}/feed/", declared_content_type="application/rss+xml")
     assert (parsed.outcome, parsed.format, parsed.problems) == ("PARSED", "rss", ())
     assert [e.url for e in parsed.entries] == [f"{WWW}/economia/puerto-amplia-terminal/", f"{WWW}/regionales/lluvias-en-el-norte/"]
-    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/2"
+    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/3"
 
 
 LAUGHS = (b'<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;&lol;&lol;">]>'
@@ -447,7 +447,7 @@ def test_the_feed_of_2026_10_08_yields_candidates_through_discovery(tmp_path):
     tables = discovery.DiscoveryTables(tmp_path / "discovery")
     result = discovery.discover_channel(tables, RULES, channel_id=CHANNEL, start_url=f"{WWW}/feed/", provider=provider, budget=BUDGET,
                                         run_id=RUN_ID, discovered_at=T0)
-    assert len(result.candidates_new) == 2 and tables.inputs[0]["outcome"] == "PARSED" and tables.inputs[0]["parser"] == "channel-parser/2"
+    assert len(result.candidates_new) == 2 and tables.inputs[0]["outcome"] == "PARSED" and tables.inputs[0]["parser"] == discovery.PARSER_VERSION
 
 
 # --- F6: a channel that answers 404 is disabled, not replaced ---------------------------------------------
@@ -464,14 +464,27 @@ def test_the_channel_that_answered_404_is_disabled_and_no_other_path_of_that_ori
     assert len(outlet["channels"]) == 6 and outlet["web_origins"] == ["https://proceso.hn"]
 
 
-def test_a_listing_channel_is_read_only_for_an_outlet_with_an_allow_rule():
+def test_a_listing_channel_is_read_and_what_it_lists_waits_for_an_allow_rule():
+    """CPD-0019 let a canary read a listing only under an allow rule; CPD-0020 reads it and lets its
+    candidates wait (`candidate-filter-generic/2`): the listing is preserved, nothing is requested on a guess.
+    """
     outlet = {"outlet_id": OUTLET, "channels": [{"channel_id": f"{OUTLET}:ch:archive_001", "kind": "archive"},
                                                 {"channel_id": f"{OUTLET}:ch:rss_001", "kind": "rss"},
                                                 {"channel_id": f"{OUTLET}:ch:unknown_001", "kind": "unknown"}]}
-    rules = {OUTLET: {"version": "v1", "reject_path_prefixes": [], "reject_path_patterns": [], "allow_path_patterns": [r"^/\d{4}/"]}}
-    assert D.select_channels(outlet, (), 2) == [f"{OUTLET}:ch:rss_001"]
-    assert D.select_channels(outlet, (), 2, {OUTLET: {**rules[OUTLET], "allow_path_patterns": []}}) == [f"{OUTLET}:ch:rss_001"]
-    assert D.select_channels(outlet, (), 2, rules) == [f"{OUTLET}:ch:rss_001", f"{OUTLET}:ch:archive_001"]
+    assert D.select_channels(outlet, (), 2) == [f"{OUTLET}:ch:rss_001", f"{OUTLET}:ch:archive_001"]
+    listing = frozenset({f"{OUTLET}:ch:archive_001"})
+    rules = {"version": "v1", "reject_path_prefixes": [], "reject_path_patterns": [], "allow_path_patterns": [r"^/[0-9]{4}/"]}
+
+    def candidate(path, channel):
+        return {"candidate_id": f"{OUTLET}:cand:x", "outlet_id": OUTLET, "url_key": f"{WWW}{path}", "first_channel_id": channel}
+
+    from_listing = candidate_filter.qualify(candidate("/2026/10/09/nota", f"{OUTLET}:ch:archive_001"), listing_channel_ids=listing)
+    assert (from_listing["decision"], from_listing["reasons"]) == ("DEFERRED", [candidate_filter.LISTING_NEEDS_RULE])
+    assert candidate_filter.qualify(candidate("/2026/10/09/nota", f"{OUTLET}:ch:rss_001"), listing_channel_ids=listing)["decision"] == "QUALIFIED"
+    assert candidate_filter.qualify(candidate("/2026/10/09/nota", f"{OUTLET}:ch:archive_001"), outlet_rules=rules, listing_channel_ids=listing)["decision"] == "QUALIFIED"
+    assert candidate_filter.qualify(candidate("/contacto", f"{OUTLET}:ch:archive_001"), outlet_rules=rules, listing_channel_ids=listing)["decision"] == "REJECTED"
+    assert candidate_filter.qualify(candidate("/logo.png", f"{OUTLET}:ch:archive_001"), listing_channel_ids=listing)["decision"] == "REJECTED"
+    assert candidate_filter.GENERIC_RULESET == "candidate-filter-generic/2"
 
 
 # --- F7: what the candidate budget of a pass keeps out -----------------------------------------------------

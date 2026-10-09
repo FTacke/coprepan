@@ -11,6 +11,12 @@ Without ``--write`` it is a dry run that prints what would change. ``--only`` re
 outlet the operator strikes from the proposal stays ``proposed``. No legacy channel is removed or
 changed; a new channel has an empty ``legacy_observed``. After ``--write`` the registry review package
 is regenerated, because it is derived from the registry.
+
+A proposal may also carry ``new_outlets`` (CPD-0020 §6): outlets that were never in the legacy system.
+Such an outlet enters the registry only here, together with its registration record — it is never a
+``proposed`` row first, because the registry's proposed rows are the legacy import. Its id is assigned
+by the proposal the operator approves; it has no legacy alias and no legacy row; an id or an origin
+host that the registry already holds is refused.
 """
 
 from __future__ import annotations
@@ -26,7 +32,9 @@ from typing import Any, Mapping
 REPOSITORY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY / "src"))
 
-from coprepan import candidate_filter, policy, registry, registry_review  # noqa: E402
+from urllib.parse import urlsplit  # noqa: E402
+
+from coprepan import candidate_filter, naming, policy, registry, registry_review  # noqa: E402
 from coprepan.canonical import record_json, sha256_bytes  # noqa: E402
 
 PROPOSAL_SCHEMA = "coprepan-registry-registration-proposal/v1"
@@ -46,12 +54,17 @@ def apply(proposal: Mapping[str, Any], registry_document: Mapping[str, Any], rul
     if not approved_by.strip():
         raise ProposalError("a registration names who approved it")
     before = sha256_bytes(record_json(registry_document))
-    if proposal["inputs"]["registry_sha256_before"] != before:
+    # A proposal that changes rows of the registry is written for one state of it, by digest. One that
+    # only adds outlets changes no row: what it needs — that neither its ids nor its origin hosts are
+    # held — is checked below, so it can follow another proposal that was applied in between.
+    if proposal.get("proposed") and proposal["inputs"]["registry_sha256_before"] != before:
         raise ProposalError("the registry is not the registry this proposal was written for")
-    chosen = [entry for entry in proposal["proposed"] if only is None or entry["outlet_id"] in only]
-    if only is not None and {entry["outlet_id"] for entry in chosen} != set(only):
+    everything = [*proposal.get("proposed", []), *proposal.get("new_outlets", [])]
+    chosen = [entry for entry in proposal.get("proposed", []) if only is None or entry["outlet_id"] in only]
+    arriving = [entry for entry in proposal.get("new_outlets", []) if only is None or entry["outlet_id"] in only]
+    if only is not None and {entry["outlet_id"] for entry in [*chosen, *arriving]} != set(only):
         raise ProposalError("--only names an outlet the proposal does not hold")
-    if not chosen:
+    if not chosen and not arriving:
         raise ProposalError("nothing to register")
 
     new_registry, new_rules, new_policy = copy.deepcopy(dict(registry_document)), copy.deepcopy(dict(rules_document)), copy.deepcopy(dict(policy_document))
@@ -95,6 +108,54 @@ def apply(proposal: Mapping[str, Any], registry_document: Mapping[str, Any], rul
             "new_channels": entry["new_channels"], "channels_disabled_for_the_canary": entry["channels_disabled_for_the_canary"],
             "review_notes_cleared": cleared, "judgements_decided_by_the_reviewer": entry["judgements_for_the_reviewer"],
             "evidence": entry["evidence"]})
+    def host(address: str) -> str:
+        name = (urlsplit(address).hostname or "").lower()
+        return name[4:] if name.startswith("www.") else name
+
+    held_hosts = {host(origin): outlet["outlet_id"] for outlet in new_registry["outlets"] for origin in outlet["web_origins"]}
+    for entry in arriving:
+        identifier = entry["outlet_id"]
+        if not naming.is_outlet_id(identifier) or identifier[:2] != entry["country_id"]:
+            raise ProposalError(f"{identifier!r}: not an outlet id of country {entry['country_id']!r}")
+        if identifier in outlets:
+            raise ProposalError(f"{identifier}: the registry holds this id already")
+        for origin in entry["web_origins"]:
+            if host(origin) in held_hosts:
+                raise ProposalError(f"{identifier}: the origin {origin} is an origin of {held_hosts[host(origin)]}")
+        channels = {channel["channel_id"]: {"channel_id": channel["channel_id"], "kind": channel["kind"], "legacy_observed": {},
+                                            "url_history": [{"url": channel["url"], "valid_from": channel["valid_from"]}]}
+                    for channel in entry["new_channels"]}
+        if sorted(entry["channel_order"]) != sorted(channels) or not channels:
+            raise ProposalError(f"{identifier}: channel_order names exactly the channels of the outlet, and there is at least one")
+        unknown_disabled = set(entry["channels_disabled_for_the_canary"]) - set(channels)
+        if unknown_disabled:
+            raise ProposalError(f"{identifier}: disabled channels that are not channels: {sorted(unknown_disabled)}")
+        record = {
+            "outlet_id": identifier, "country_id": entry["country_id"], "registration_status": "registered",
+            "display_names": [{"name": entry["display_name"], "valid_from": "unknown", "valid_to": "unknown"}],
+            "outlet_type": "unknown", "outlet_group": "unknown", "city": "unknown", "region": "unknown", "scope": "unknown",
+            "access_model": "unknown", "medium": "unknown", "editions": [], "web_origins": list(entry["web_origins"]),
+            "timezone": "unknown", "same_outlet_basis": "unknown",
+            "url_rules": {"version": entry["url_rules"]["version"], "significant_query_params": [], "strip_path_prefixes": [], "strip_path_suffixes": []},
+            "channels": [channels[channel_id] for channel_id in entry["channel_order"]],
+            "legacy_aliases": [], "legacy_observed": {}, "review_notes": []}
+        record.update(entry["attributes_set"])
+        if any(record[field] != "unknown" for field in entry["attributes_left_unknown"]):
+            raise ProposalError(f"{identifier}: an attribute is both set and left unknown")
+        new_registry["outlets"].append(record)
+        outlets[identifier] = record
+        for origin in entry["web_origins"]:
+            held_hosts[host(origin)] = identifier
+        new_policy["disabled_channels"] = sorted(set(new_policy["disabled_channels"]) | set(entry["channels_disabled_for_the_canary"]))
+        if identifier in proposal.get("candidate_rules", {}):
+            new_rules["outlets"][identifier] = proposal["candidate_rules"][identifier]
+        registered.append({
+            "outlet_id": identifier, "display_name": entry["display_name"], "new_outlet": True, "attributes_set": entry["attributes_set"],
+            "attributes_left_unknown": entry["attributes_left_unknown"], "web_origins": entry["web_origins"], "url_rules": entry["url_rules"],
+            "channel_ids": {channel_id: channel_id for channel_id in entry["channel_order"]}, "new_channels": entry["new_channels"],
+            "channels_disabled_for_the_canary": entry["channels_disabled_for_the_canary"], "review_notes_cleared": [],
+            "judgements_decided_by_the_reviewer": entry["judgements_for_the_reviewer"], "evidence": entry["evidence"]})
+    new_registry["outlets"].sort(key=lambda outlet: outlet["outlet_id"])
     if new_policy["disabled_channels"] != policy_document["disabled_channels"]:
         new_policy["policy_version"] = proposal["policy_version_after"]
 
@@ -107,7 +168,8 @@ def apply(proposal: Mapping[str, Any], registry_document: Mapping[str, Any], rul
         "authority": f"reviewed and approved by {approved_by.strip()}; proposal {proposal['prepared_on']} prepared by an agent run (CPD-0019)",
         "scope": proposal["purpose"], "selection_rule": proposal["selection_rule"], "not_a_claim": proposal["not_a_claim"],
         "timezone_basis": proposal["timezone_basis"], "proposal_sha256": sha256_bytes(record_json(dict(proposal))),
-        "deferred": {entry["outlet_id"]: "struck from the proposal by the reviewer" for entry in proposal["proposed"] if entry not in chosen},
+        "deferred": {entry["outlet_id"]: "struck from the proposal by the reviewer" for entry in everything
+                     if entry not in chosen and entry not in arriving},
         "registry_sha256_before": before, "registry_sha256_after": sha256_bytes(record_json(new_registry)), "registered": registered}
     return {"registry": new_registry, "candidate_rules": new_rules, "policy": new_policy, "record": record}
 
@@ -126,7 +188,7 @@ def main(argv: list[str] | None = None) -> int:
     today = date.today().isoformat()
     result = apply(proposal, *(json.loads(paths[name].read_text(encoding="utf-8")) for name in ("registry", "candidate_rules", "policy")),
                    approved_by=arguments.approved_by, approved_on=today, only=arguments.only)
-    record_path = config / "registry_review" / f"extended_canary_registration_{today}.json"
+    record_path = config / "registry_review" / f"{proposal.get('record_stem', 'extended_canary')}_registration_{today}.json"
     summary = {"registered": [entry["outlet_id"] for entry in result["record"]["registered"]],
                "new_channels": sum(len(entry["new_channels"]) for entry in result["record"]["registered"]),
                "disabled_channels": result["policy"]["disabled_channels"], "policy_version": result["policy"]["policy_version"],

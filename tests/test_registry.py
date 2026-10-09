@@ -111,9 +111,13 @@ def test_the_tracked_proposal_matches_its_review_report():
     report = json.loads((REPO / "config" / "registry_review" / "legacy_registry_import_2026-10-07.json").read_text(encoding="utf-8"))
     assert report["schema"] == "coprepan-legacy-registry-import/v1"
     proposed = {o["outlet_id"] for o in registry.outlets.values() if o["registration_status"] == "proposed"}
-    assert set(registry.outlets) == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]}
+    # the outlets of the import are those that carry a legacy row; an outlet that was never in the legacy system
+    # has none, is never `proposed`, and is in the registry only by its registration record (CPD-0020 §6)
+    imported = {identifier for identifier, o in registry.outlets.items() if o["legacy_observed"]}
+    assert imported == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]} and proposed <= imported
     assert set(registry.outlets) - proposed == {e["outlet_id"] for record in registration_records() for e in record["registered"]}
-    assert report["counts"]["proposed_outlets"] == len(registry.outlets)
+    assert all(o["registration_status"] == "registered" and not o["legacy_aliases"] for i, o in registry.outlets.items() if i not in imported)
+    assert report["counts"]["proposed_outlets"] == len(imported)
     # the import's channels are the channels that carry a legacy row; a channel added by a later
     # registration has none (`legacy_observed` is empty) and is covered by its registration record
     assert report["counts"]["proposed_channels"] == sum(1 for o in registry.outlets.values() for c in o["channels"] if c["legacy_observed"])

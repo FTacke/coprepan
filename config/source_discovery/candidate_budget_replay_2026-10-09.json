@@ -1,0 +1,37 @@
+{
+  "budget": 200,
+  "documents_over_budget": [
+    {
+      "body_sha256": "a684e195ce84069d0c8ce2b2d6c07894021e66759b18961f24f4fed9859d9d50",
+      "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+      "dated_entries": 534,
+      "distinct_addresses": 534,
+      "document_order": {
+        "kept": 200,
+        "kept_newest": "2026-10-08T16:05:00-04:00",
+        "kept_oldest": "2026-10-07T15:41:00-04:00",
+        "turned_away": 334,
+        "turned_away_newer_than_oldest_kept": 0,
+        "turned_away_newest": "2026-10-07T15:30:00-04:00",
+        "turned_away_oldest": "2026-10-05T16:42:00-04:00"
+      },
+      "format": "sitemap_urlset",
+      "item_entries": 534,
+      "newest_first": {
+        "kept": 200,
+        "kept_newest": "2026-10-08T16:05:00-04:00",
+        "kept_oldest": "2026-10-07T15:41:00-04:00",
+        "turned_away": 334,
+        "turned_away_newer_than_oldest_kept": 0,
+        "turned_away_newest": "2026-10-07T15:30:00-04:00",
+        "turned_away_oldest": "2026-10-05T16:42:00-04:00"
+      },
+      "outlet_id": "do_diario_libre",
+      "url": "https://www.diariolibre.com/sitemapnews"
+    }
+  ],
+  "order": "candidate-budget-order/1",
+  "parser": "channel-parser/3",
+  "schema": "coprepan-candidate-budget-replay/v1",
+  "what_this_is": "two allotments of the same preserved listings, each from an empty candidate table; no request, no new observation"
+}

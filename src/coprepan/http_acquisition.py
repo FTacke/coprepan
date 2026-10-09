@@ -295,6 +295,7 @@ def run_http_acquisition(
     qualifications = qualification_table(workspace)
     channel_keys = frozenset(key for key in (_own_key(rules, c["url_history"][-1]["url"]) for c in channels.values()) if key)
     outlet_rules = (candidate_rules or {}).get(outlet_id)
+    listing_ids = frozenset(c["channel_id"] for c in channels.values() if c["kind"] in candidate_filter.LISTING_KINDS)
 
     def own_candidates() -> dict[str, dict[str, Any]]:
         """The candidates of *this* outlet. A workspace holds the candidates of every outlet that was
@@ -306,7 +307,7 @@ def run_http_acquisition(
     def qualify_all() -> tuple[dict[str, Any], dict[str, Any]]:
         decided_at = format_instant(clock())
         decided = {identifier: qualifications.decide(row, outlet_rules=outlet_rules, channel_url_keys=channel_keys,
-                                                     run_id=run.run_id, decided_at=decided_at)
+                                                     run_id=run.run_id, decided_at=decided_at, listing_channel_ids=listing_ids)
                    for identifier, row in own_candidates().items()}
         return decided, {identifier: tables.candidates[identifier] for identifier, row in decided.items()
                          if row["decision"] == candidate_filter.QUALIFIED}

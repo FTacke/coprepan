@@ -34,10 +34,13 @@ from .storage_roots import CHECKOUT
 
 QUALIFICATION_SCHEMA = naming.schema_id("candidate-qualification", 2)  # v2: chained rows (CPD-0010)
 RULES_SCHEMA = naming.schema_id("candidate-rules", 1)
-GENERIC_RULESET = "candidate-filter-generic/1"
+# /2 (CPD-0020): a candidate first listed by a listing channel waits for an outlet allow rule.
+GENERIC_RULESET = "candidate-filter-generic/2"
+LISTING_NEEDS_RULE = "generic: listed_by_a_listing_channel_and_no_outlet_allow_rule"
 DEFAULT_RULES_FILE = CHECKOUT / "config" / "candidate_rules.json"
 
 QUALIFIED, REJECTED, DEFERRED = "QUALIFIED", "REJECTED", "DEFERRED"
+LISTING_KINDS = ("archive", "section_page")   # registry channel kinds that are HTML listings
 DECISIONS = (QUALIFIED, REJECTED, DEFERRED)
 
 _ASSETS = ("jpg", "jpeg", "png", "gif", "webp", "svg", "ico", "bmp", "avif", "css", "js", "mjs", "json", "map",
@@ -86,8 +89,14 @@ def ruleset_id(outlet_rules: Mapping[str, Any] | None) -> str:
 
 
 def qualify(candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | None = None,
-            channel_url_keys: frozenset[str] = frozenset()) -> dict[str, Any]:
-    """Decide one candidate. Pure: the same candidate under the same rules gives the same row."""
+            channel_url_keys: frozenset[str] = frozenset(), listing_channel_ids: frozenset[str] = frozenset()) -> dict[str, Any]:
+    """Decide one candidate. Pure: the same candidate under the same rules gives the same row.
+
+    ``listing_channel_ids``: the outlet's channels that are HTML listings. A listing lists its
+    navigation beside its articles and nothing in the address tells them apart in general, so a
+    candidate first listed by one is ``DEFERRED`` until the outlet has a reviewed allow pattern:
+    the listing is read and preserved, and nothing it names is requested on a guess.
+    """
     parts = urlsplit(candidate["url_key"])
     path = parts.path or "/"
     extension = path.rsplit("/", 1)[-1].rpartition(".")[2].lower() if "." in path.rsplit("/", 1)[-1] else ""
@@ -112,10 +121,13 @@ def qualify(candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | N
         if outlet_rules["allow_path_patterns"] and not allowed_by:
             rejections.append("outlet: not_matched_by_any_allow_pattern")
 
+    waits = candidate.get("first_channel_id") in listing_channel_ids and not (outlet_rules and outlet_rules["allow_path_patterns"])
     if rejections and allowed_by:
         decision, reasons = DEFERRED, ["conflicting_rules", *allowed_by, *rejections]
     elif rejections:
         decision, reasons = REJECTED, rejections
+    elif waits:
+        decision, reasons = DEFERRED, [LISTING_NEEDS_RULE]
     else:
         decision, reasons = QUALIFIED, allowed_by or ["no_rule_rejects"]
     return {
@@ -133,11 +145,12 @@ class QualificationTable:
         self.rows = keyed(read_chained(self.path, QUALIFICATION_SCHEMA), lambda row: (row["candidate_id"], row["ruleset"]), "qualifications")
 
     def decide(self, candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | None,
-               channel_url_keys: frozenset[str], run_id: str, decided_at: str) -> dict[str, Any]:
+               channel_url_keys: frozenset[str], run_id: str, decided_at: str,
+               listing_channel_ids: frozenset[str] = frozenset()) -> dict[str, Any]:
         """The decision for a candidate under the current rules; recorded once per rule set."""
         key = (candidate["candidate_id"], ruleset_id(outlet_rules))
         if key not in self.rows:
-            row = qualify(candidate, outlet_rules=outlet_rules, channel_url_keys=channel_url_keys)
+            row = qualify(candidate, outlet_rules=outlet_rules, channel_url_keys=channel_url_keys, listing_channel_ids=listing_channel_ids)
             self.rows[key] = append_chained(self.path, QUALIFICATION_SCHEMA, {**row, "run_id": run_id, "decided_at": decided_at})
         return self.rows[key]
 

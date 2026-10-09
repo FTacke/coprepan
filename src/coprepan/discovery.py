@@ -25,10 +25,11 @@ import xml.etree.ElementTree as ET
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable, Mapping
-from urllib.parse import urldefrag, urljoin, urlsplit
+from urllib.parse import parse_qsl, urldefrag, urlencode, urljoin, urlsplit
 
 from . import naming
 from .canonical import canonical_json, require_sha256, sha256_bytes
@@ -39,7 +40,11 @@ from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 # /2 (CPD-0019): the DTD guard reads markup only (F5); the children of a sitemap index are read in
 # a stated order of priority instead of document order, and a document that was asked for and not
 # supplied counts against the document budget (F4).
-PARSER_VERSION = "channel-parser/2"
+# /3 (CPD-0020): the candidate budget of a pass is given to the newest dated entries first
+# (`candidate-budget-order/1`); an HTML listing yields its next page from `rel=next` on an anchor and
+# from numbered pagination, and the date of a teaser from the `<time>` of its `<article>`; a child of
+# an index that was read before and is stated unchanged is not asked for again (`expansion-order/2`).
+PARSER_VERSION = "channel-parser/3"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
 EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
@@ -238,20 +243,39 @@ class _Listing(HTMLParser):
         self.base: str | None = None
         self.raw: list[tuple[str, str | None, dict[str, str]]] = []
         self.open: tuple[str, list[str]] | None = None
+        # One frame per open <article>: where its entries start in `raw`, and its first <time datetime>.
+        self.articles: list[list[Any]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
+        rel = (attributes.get("rel") or "").lower().split()
         if tag == "base" and self.base is None and attributes.get("href"):
             self.base = attributes["href"].strip()  # only the first <base> counts (HTML)
-        elif tag == "link" and "next" in (attributes.get("rel") or "").lower().split() and attributes.get("href"):
+        elif tag == "link" and "next" in rel and attributes.get("href"):
             self.raw.append((RELATION_NEXT_PAGE, attributes["href"], {}))
+        elif tag == "a" and "next" in rel and attributes.get("href"):
+            self._close()
+            self.raw.append((RELATION_NEXT_PAGE, attributes["href"], {}))  # pagination the page declares, not an item
         elif tag == "a" and attributes.get("href") is not None:
             self._close()
             self.open = (attributes["href"], [])
+        elif tag == "article":
+            self._close()
+            self.articles.append([len(self.raw), None])
+        elif tag == "time" and self.articles and self.articles[-1][1] is None and (attributes.get("datetime") or "").strip():
+            self.articles[-1][1] = attributes["datetime"].strip()
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "a":
             self._close()
+        elif tag == "article" and self.articles:
+            self._close()
+            start, stated = self.articles.pop()
+            if stated:
+                # The date a teaser states for itself, as written. A hint, like a feed's pubDate.
+                for relation, _, hints in self.raw[start:]:
+                    if relation == RELATION_ITEM:
+                        hints.setdefault("published", stated)
 
     def handle_data(self, data: str) -> None:
         if self.open is not None:
@@ -275,7 +299,38 @@ def _parse_html(body: bytes, document_url: str) -> ParsedChannelDocument:
         base_url = resolved if problem is None else document_url
     # An anchor that only names a place in the page (`#top`) lists nothing.
     raw = [entry for entry in parser.raw if not (entry[1] or "").strip().startswith("#")]
-    return ParsedChannelDocument(OUTCOME_PARSED, "html_listing", _entries(raw, base_url), (), base_url)
+    entries = list(_entries(raw, base_url))
+    if not any(entry.relation == RELATION_NEXT_PAGE and entry.url for entry in entries):
+        # Numbered pagination (`numbered-pagination/1`): the page links to "itself, one page further".
+        # Only a link the document carries is followed, and only that one.
+        here, number = _listing_page(document_url)
+        for index, entry in enumerate(entries):
+            if entry.relation == RELATION_ITEM and entry.url and _listing_page(entry.url) == (here, number + 1):
+                entries[index] = ChannelEntry(entry.position, RELATION_NEXT_PAGE, entry.url_raw, entry.url, entry.hints, entry.problem)
+                break
+    return ParsedChannelDocument(OUTCOME_PARSED, "html_listing", tuple(entries), (), base_url)
+
+
+NUMBERED_PAGINATION = "numbered-pagination/1"
+_PAGE_PATH = re.compile(r"^(?P<base>.*?)/(?:page|pagina)/(?P<n>\d{1,5})/?$", re.IGNORECASE)
+_PAGE_PARAMETERS = ("page", "pagina", "paged", "pg")
+
+
+def _listing_page(url: str) -> tuple[tuple[str, str, str, str], int]:
+    """``(the listing a URL belongs to, its page number)``. A listing without a page marker is its
+    page 1. Recognised markers: a trailing ``/page/N`` or ``/pagina/N`` path, or one of the query
+    parameters ``page``, ``pagina``, ``paged``, ``pg`` (never ``p``: that is an article id elsewhere).
+    """
+    parts = urlsplit(url)
+    host = (parts.hostname or "").lower()
+    matched = _PAGE_PATH.match(parts.path)
+    if matched:
+        return (parts.scheme, host, matched["base"].rstrip("/"), parts.query), int(matched["n"])
+    query = parse_qsl(parts.query, keep_blank_values=True)
+    for index, (name, value) in enumerate(query):
+        if name.lower() in _PAGE_PARAMETERS and value.isdigit() and len(value) <= 5:
+            return (parts.scheme, host, parts.path.rstrip("/"), urlencode(query[:index] + query[index + 1:])), int(value)
+    return (parts.scheme, host, parts.path.rstrip("/"), parts.query), 1
 
 
 # --- tables ---------------------------------------------------------------------------------------
@@ -384,7 +439,7 @@ class DocumentUnavailable:
     fetch_id: str | None = None
 
 
-EXPANSION_ORDER = "expansion-order/1"
+EXPANSION_ORDER = "expansion-order/2"   # /2: a child read before and stated unchanged is skipped (CPD-0020)
 # Sitemaps that by a widespread naming convention list something other than articles (taxonomy,
 # author and static pages, media). They are read last, never skipped: the name is a convention of
 # sitemap generators, not a fact about an outlet.
@@ -393,12 +448,51 @@ _LATE_CHILD = re.compile(r"(?:^|[^a-z0-9])(?:category|categories|categoria|categ
 _EARLY_CHILD = re.compile(r"(?:^|[^a-z0-9])(?:news|noticias)(?:[^a-z0-9]|$)")
 
 
-def _lastmod_instant(text: str | None) -> datetime | None:
-    try:
-        value = datetime.fromisoformat((text or "").strip())
-    except ValueError:
+def hint_instant(text: str | None) -> datetime | None:
+    """A date hint of a channel as an instant: ISO 8601 (a date without a time is its midnight) or
+    the RFC 822 form of feeds; a value without an offset is read as UTC; anything else is ``None``.
+    Used to *order* entries, never to date a document.
+    """
+    if not text or not text.strip():
         return None
-    return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+    for parse in (datetime.fromisoformat, parsedate_to_datetime):
+        try:
+            value = parse(text.strip())
+        except (TypeError, ValueError):
+            continue
+        return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+    return None
+
+
+BUDGET_ORDER = "candidate-budget-order/1"
+
+
+def entry_instant(hints: Mapping[str, str]) -> datetime | None:
+    """When a channel says an entry is from: its publication hint, else its last modification."""
+    return hint_instant(hints.get("published")) or hint_instant(hints.get("updated")) or hint_instant(hints.get("lastmod"))
+
+
+def read_unchanged(tables: "DiscoveryTables", channel_id: str, *, before_run: str | None = None) -> dict[str, str]:
+    """``{child URL: the lastmod its index stated when it was read}`` for the children of this channel
+    that an earlier pass read completely: parsed, and with no entry turned away by a candidate budget.
+    A child the index still states with that same ``lastmod`` has nothing new by its own account.
+
+    ``before_run``: leave out what that run itself read. A run that is resumed repeats its own
+    requests so that what it records is the same evidence (CPD-0009); it does not skip them.
+    """
+    parsed = {(row["run_id"], row["document_url"]): row["input_fetch_id"] for row in tables.inputs
+              if row["channel_id"] == channel_id and row["outcome"] == OUTCOME_PARSED and row.get("depth", 0) > 0
+              and row["run_id"] != before_run}
+    cut = {row["input_fetch_id"] for row in tables.events.values()
+           if row["channel_id"] == channel_id and row["problem"] == "candidate_budget_exhausted"}
+    out: dict[str, str] = {}
+    for row in tables.events.values():
+        if row["channel_id"] == channel_id and row["relation"] == RELATION_CHILD_DOCUMENT and row["resolved_url"]:
+            read_as = parsed.get((row["run_id"], row["resolved_url"]))
+            stated = (row["hints"].get("lastmod") or "").strip()
+            if read_as is not None and read_as not in cut and stated:
+                out[row["resolved_url"]] = stated
+    return out
 
 
 def expansion_priority(entry: ChannelEntry) -> tuple[int, int, float, int]:
@@ -412,7 +506,7 @@ def expansion_priority(entry: ChannelEntry) -> tuple[int, int, float, int]:
     """
     name = urlsplit(entry.url or "").path.rsplit("/", 1)[-1].lower()
     rank = 0 if _EARLY_CHILD.search(name) else 2 if _LATE_CHILD.search(name) else 1
-    modified = _lastmod_instant(entry.hints.get("lastmod"))
+    modified = hint_instant(entry.hints.get("lastmod"))
     return (rank, 0 if modified is not None else 1, -modified.timestamp() if modified is not None else 0.0, entry.position)
 
 
@@ -464,6 +558,7 @@ def discover_channel(
     queue: deque[tuple[str, int, str | None]] = deque([(start_url, 0, None)])
     visited_urls: set[str] = set()
     visited_bodies: set[str] = set()
+    unchanged = read_unchanged(tables, channel_id, before_run=run_id)   # what earlier runs read, as of the start of this pass
 
     def stop(reason: str) -> None:
         if reason not in result.stopped_by:
@@ -514,6 +609,7 @@ def discover_channel(
             continue
 
         named: list[ChannelEntry] = []
+        rows = []
         for entry in parsed.entries:
             identifier = event_id(channel_id, document.fetch_id, entry.position, entry.url_raw)
             row = {"event_id": identifier, "run_id": run_id, "channel_id": channel_id, "outlet_id": rules.outlet_id,
@@ -529,11 +625,23 @@ def discover_channel(
                     row["problem"] = "off_origin"
                 except IdentityError:
                     row["problem"] = "invalid_url"
-            is_new_candidate = row["candidate_id"] is not None and row["candidate_id"] not in tables.candidates
-            if is_new_candidate and len(result.candidates_new) >= budget.max_candidates:
-                stop("max_candidates")
+            rows.append((entry, row))
+        # Who gets what is left of the candidate budget (`candidate-budget-order/1`): when a document
+        # lists more new candidates than fit, the newest dated ones first, then the undated in
+        # document order. Events stay in document order; only the allotment is ordered.
+        fresh: dict[str, tuple[int, float, int]] = {}
+        for entry, row in rows:
+            if row["candidate_id"] is not None and row["candidate_id"] not in tables.candidates and row["candidate_id"] not in fresh:
+                stated = entry_instant(entry.hints)
+                fresh[row["candidate_id"]] = (0 if stated is not None else 1, -stated.timestamp() if stated is not None else 0.0, entry.position)
+        room = max(0, budget.max_candidates - len(result.candidates_new))
+        granted = set(sorted(fresh, key=fresh.__getitem__)[:room]) if len(fresh) > room else set(fresh)
+        if len(fresh) > room:
+            stop("max_candidates")
+        for entry, row in rows:
+            is_new_candidate = row["candidate_id"] in granted and row["candidate_id"] not in tables.candidates
+            if row["candidate_id"] in fresh and row["candidate_id"] not in granted:
                 row["candidate_id"], row["problem"] = None, "candidate_budget_exhausted"
-                is_new_candidate = False
             if tables.add_event(row):
                 result.events_new += 1
             else:
@@ -556,6 +664,10 @@ def discover_channel(
                 result.not_read.append({"url": entry.url, "reason": "max_depth"})
             elif entry.url in visited_urls or any(entry.url == queued for queued, _, _ in queue):
                 result.notes.append(f"cycle_or_repeat_not_followed: {entry.url}")
+            elif (entry.relation == RELATION_CHILD_DOCUMENT and unchanged.get(entry.url)
+                  and unchanged[entry.url] == (entry.hints.get("lastmod") or "").strip()):
+                # `expansion-order/2`: read before, completely, and stated unchanged since — not a request.
+                result.notes.append(f"unchanged_since_read_not_asked_again: {entry.url}")
             else:
                 queue.append((entry.url, depth + 1, document.fetch_id))
     result.not_read.extend({"url": url, "reason": result.stopped_by[-1] if result.stopped_by else "not_reached"} for url, _, _ in queue

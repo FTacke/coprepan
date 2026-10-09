@@ -14,26 +14,13 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import datetime, timezone
-from email.utils import parsedate_to_datetime
 from typing import Any, Mapping
 
 from . import discovery, naming
 
-COVERAGE_SCHEMA = naming.schema_id("discovery-coverage", 1)
+# v2 (CPD-0020): what a pass kept is told apart from what was a candidate already; see `coverage`.
+COVERAGE_SCHEMA = naming.schema_id("discovery-coverage", 2)
 BUDGET_PROBLEM = "candidate_budget_exhausted"
-
-
-def _instant(text: str | None) -> datetime | None:
-    """A publication hint as an instant: ISO 8601 or the RFC 822 form of feeds; else ``None``."""
-    if not text:
-        return None
-    for parse in (datetime.fromisoformat, parsedate_to_datetime):
-        try:
-            value = parse(text.strip())
-        except (TypeError, ValueError):
-            continue
-        return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
-    return None
 
 
 def _span(instants: list[datetime]) -> dict[str, Any] | None:
@@ -61,8 +48,14 @@ def coverage(tables: discovery.DiscoveryTables, run_id: str | None = None) -> di
         named = [row for row in own if row["relation"] in (discovery.RELATION_CHILD_DOCUMENT, discovery.RELATION_NEXT_PAGE) and row["resolved_url"]]
         named_urls = list(dict.fromkeys(row["resolved_url"] for row in named))
         not_read = [url for url in named_urls if url not in read_urls.get(channel_id, set())]
-        kept_at = [at for at in (_instant(row["hints"].get("published") or row["hints"].get("lastmod")) for row in kept) if at]
-        dropped_at = [at for at in (_instant(row["hints"].get("published") or row["hints"].get("lastmod")) for row in dropped) if at]
+        # An entry "has a candidate" also when another channel listed that address before. Only the
+        # entries that *made* their candidate say what this channel's budget kept: holding what was
+        # turned away against the older, already known ones reports a loss that is none (the
+        # "44 newer" of the report of 2026-10-09 was this).
+        newly = [row for row in kept if tables.candidates.get(row["candidate_id"], {}).get("first_event_id") == row["event_id"]]
+        newly_at = [at for at in (discovery.entry_instant(row["hints"]) for row in newly) if at]
+        kept_at = [at for at in (discovery.entry_instant(row["hints"]) for row in kept) if at]
+        dropped_at = [at for at in (discovery.entry_instant(row["hints"]) for row in dropped) if at]
         channels[channel_id] = {
             "documents": dict(sorted(Counter(row["outcome"] for row in own_inputs).items())),
             "document_problems": dict(sorted(Counter(problem for row in own_inputs for problem in row["problems"]).items())),
@@ -77,6 +70,9 @@ def coverage(tables: discovery.DiscoveryTables, run_id: str | None = None) -> di
             # Only where both sides carry dates: how many of the entries turned away are newer than
             # the oldest entry that was kept. 0 means the budget cut the old end of the listing.
             "turned_away_newer_than_oldest_kept": (sum(1 for at in dropped_at if at > min(kept_at)) if kept_at and dropped_at else None),
+            "item_entries_first_listing_their_candidate": len(newly), "newly_kept_dates": _span(newly_at),
+            # The measure of an ordering loss: entries turned away although newer than one this pass kept.
+            "turned_away_newer_than_oldest_newly_kept": (sum(1 for at in dropped_at if at > min(newly_at)) if newly_at and dropped_at else None),
         }
     totals = Counter()
     for record in channels.values():

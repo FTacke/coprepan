@@ -51,13 +51,14 @@ from .storage_roots import CHECKOUT
 #     (the second level of a sitemap index); the budget is that of the frozen baseline, not of the
 #     workspace; outlet candidate rules are applied; listing channels need an allow rule; holds are
 #     re-derived from preserved answers under the current classifier.
-DRIVER_VERSION = "canary-driver/3"
+#     /4 (CPD-0020): listing channels are read without an allow rule and their candidates wait for one.
+DRIVER_VERSION = "canary-driver/4"
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
 KIND_ORDER = ("rss", "atom", "sitemap", "sitemap_index", "archive", "section_page")
-# An HTML listing lists its navigation too: such a channel is read only for an outlet whose reviewed
-# candidate rules say which paths are items (a non-empty `allow_path_patterns`).
-LISTING_KINDS = ("archive", "section_page")
+# An HTML listing lists its navigation too. Since CPD-0020 such a channel is read like any other, and
+# what it lists is requested only under a reviewed allow rule (candidate-filter-generic/2).
+LISTING_KINDS = candidate_filter.LISTING_KINDS
 # Budget groups. "other" is robots files and the registered channel documents; "expansion" is what a
 # channel document names (a sitemap of an index, a next page). Both draw on one per-outlet budget.
 ITEM, OTHER, EXPANSION = "item", "other", "expansion"
@@ -148,12 +149,10 @@ def select_channels(outlet: Mapping[str, Any], disabled: Sequence[str], limit: i
                     candidate_rules: Mapping[str, Mapping[str, Any]] | None = None) -> list[str]:
     """The channels a canary reads for an outlet: at most ``limit``, one of each kind first in the
     order ``rss, atom, sitemap, sitemap_index, archive, section_page``, in the registry's own order,
-    never a disabled one, and a listing channel only for an outlet with an allow rule.
-    Deterministic: the same registry and rules give the same selection.
+    never a disabled one. Deterministic: the same registry gives the same selection.
+    (``candidate_rules`` no longer decides the selection, CPD-0020; kept for callers.)
     """
-    listing_allowed = bool(((candidate_rules or {}).get(outlet["outlet_id"]) or {}).get("allow_path_patterns"))
-    usable = [c for c in outlet["channels"] if c["kind"] in KIND_ORDER and c["channel_id"] not in disabled
-              and (c["kind"] not in LISTING_KINDS or listing_allowed)]
+    usable = [c for c in outlet["channels"] if c["kind"] in KIND_ORDER and c["channel_id"] not in disabled]
     picked: list[str] = []
     for kind in KIND_ORDER:
         for channel in usable:
@@ -179,8 +178,9 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
         "outlets": {outlet_id: select_channels(registry_.resolve(outlet_id), disabled, budget.channels_per_outlet, candidate_rules)
                     for outlet_id in sorted(outlet_ids)},
         "channel_selection": "one channel of each kind in the order rss, atom, sitemap, sitemap_index, archive, section_page, then "
-                             "more of those kinds; registry order; never a disabled channel; a listing channel (archive, "
-                             "section_page) only for an outlet with an allow rule",
+                             "more of those kinds; registry order; never a disabled channel; what a listing channel (archive, "
+                             "section_page) lists is requested only under an outlet allow rule",
+        "candidate_budget_order": discovery.BUDGET_ORDER, "numbered_pagination": discovery.NUMBERED_PAGINATION,
         "expansion_order": discovery.EXPANSION_ORDER,
         "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of "
                              "the frozen baseline",

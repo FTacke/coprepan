@@ -191,7 +191,6 @@ def test_applied_to_a_copy_the_proposal_gives_a_valid_registry_a_record_and_a_ca
     assert selected["ni_confidencial"] == ["ni_confidencial:ch:rss_r001", "ni_confidencial:ch:sitemap_001"]
     assert selected["pa_laestrelladepanama"] == ["pa_laestrelladepanama:ch:sitemap_002", "pa_laestrelladepanama:ch:sitemap_index_001"]
     assert selected["es_el_mundo"] == ["es_el_mundo:ch:rss_r001"] and all(1 <= len(channels) <= 2 for channels in selected.values())
-    assert D.select_channels(registry.resolve("bo_lostiempos"), (), 2) == ["bo_lostiempos:ch:rss_001"]                    # without the rule: no listing
     assert tracked_policy["policy_version"] == proposal["policy_version_after"] and tracked_policy["external_acquisition"] == "disabled"
 
 
@@ -218,7 +217,7 @@ def test_the_second_canary_is_the_five_registered_outlets_with_the_channel_that_
     registry = R.load_registry(REPO / "config" / "outlet_registry.json")
     tracked = P.load_policy()
     pin = D.driver_pin(D.canary_budget(5), registry, FIRST_CANARY, tracked["disabled_channels"], candidate_filter.load_rules())
-    assert pin["driver"] == "canary-driver/3" and pin["budget"]["other_requests_per_outlet"] == 8 and pin["budget"]["item_requests_total"] == 80
+    assert pin["driver"] == D.DRIVER_VERSION and pin["budget"]["other_requests_per_outlet"] == 8 and pin["budget"]["item_requests_total"] == 80
     assert pin["outlets"]["hn_proceso_digital"] == ["hn_proceso_digital:ch:rss_main", "hn_proceso_digital:ch:sitemap_index_main"]
     assert pin["outlets"]["ve_efecto_cocuyo"] == ["ve_efecto_cocuyo:ch:rss_main", "ve_efecto_cocuyo:ch:sitemap_index_main"]
     assert pin["outlets"]["py_la_nacion"] == ["py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"]

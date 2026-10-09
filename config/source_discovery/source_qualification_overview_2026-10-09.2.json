@@ -1,0 +1,4574 @@
+{
+ "classification_rules": {
+  "KNOWN_ADDITIONAL_EVIDENCE": "the address, a variant of it, or the feed a hub page documents was known from the registry or from earlier research; the supplement adds evidence",
+  "KNOWN_IDENTICAL": "the address is a channel of the registry already",
+  "NEW_CHANNEL_FOR_EXISTING_OUTLET": "a registry outlet; no earlier file names this address or the feed it documents",
+  "NEW_OUTLET_CANDIDATE": "not in the registry and not among the earlier proposals",
+  "OUTLET_ALREADY_PROPOSED": "not in the registry; the outlet is among the 60 proposals of the prediscovery files"
+ },
+ "coverage_by_country": {
+  "ar": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "ar_el_tribuno"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 4,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "bo": {
+   "acquisition_verified": 0,
+   "closed_or_held": [
+    "bo_pagina_siete"
+   ],
+   "in_a_proposed_wave": [
+    "bo_lostiempos",
+    "bo_opinion"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 3,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 1,
+   "registry_outlets": 5,
+   "technically_qualified": 0
+  },
+  "cl": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "cl_el_mercurio"
+   ],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "co": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 3,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 5,
+   "technically_qualified": 0
+  },
+  "cr": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "cu": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "cu_14ymedio",
+    "cu_cubanet"
+   ],
+   "legacy_outlets_repeated": 3,
+   "legacy_outlets_with_accepted_articles": 3,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 4,
+   "registered": 0,
+   "registry_outlets": 5,
+   "technically_qualified": 0
+  },
+  "do": {
+   "acquisition_verified": 1,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 1,
+   "registry_outlets": 3,
+   "technically_qualified": 1
+  },
+  "ec": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "ec_el_universo",
+    "ec_primicias"
+   ],
+   "legacy_outlets_repeated": 0,
+   "legacy_outlets_with_accepted_articles": 0,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "es": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "es_el_mundo"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 1,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "gt": {
+   "acquisition_verified": 0,
+   "closed_or_held": [
+    "gt_elperiodico"
+   ],
+   "in_a_proposed_wave": [
+    "gt_lahora"
+   ],
+   "legacy_outlets_repeated": 3,
+   "legacy_outlets_with_accepted_articles": 3,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 6,
+   "technically_qualified": 0
+  },
+  "hn": {
+   "acquisition_verified": 0,
+   "closed_or_held": [
+    "hn_proceso_digital"
+   ],
+   "in_a_proposed_wave": [
+    "hn_criterio"
+   ],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 4,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 1,
+   "registry_outlets": 6,
+   "technically_qualified": 0
+  },
+  "mx": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "mx_la_jornada"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 1,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 4,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "ni": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "ni_confidencial",
+    "ni_articulo66",
+    "ni_nicaragua_investiga"
+   ],
+   "legacy_outlets_repeated": 0,
+   "legacy_outlets_with_accepted_articles": 0,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "pa": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "pa_laestrelladepanama"
+   ],
+   "legacy_outlets_repeated": 3,
+   "legacy_outlets_with_accepted_articles": 5,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 7,
+   "technically_qualified": 0
+  },
+  "pe": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "pe_diariocorreo",
+    "pe_la_republica"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 1,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 6,
+   "technically_qualified": 0
+  },
+  "pr": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "pr_noticel"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 1,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "py": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 1,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "sv": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "sv_el_diario_de_hoy"
+   ],
+   "legacy_outlets_repeated": 1,
+   "legacy_outlets_with_accepted_articles": 1,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 3,
+   "technically_qualified": 0
+  },
+  "uy": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [
+    "uy_montevideo_portal"
+   ],
+   "legacy_outlets_repeated": 2,
+   "legacy_outlets_with_accepted_articles": 2,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 0,
+   "registry_outlets": 4,
+   "technically_qualified": 0
+  },
+  "ve": {
+   "acquisition_verified": 0,
+   "closed_or_held": [],
+   "in_a_proposed_wave": [],
+   "legacy_outlets_repeated": 4,
+   "legacy_outlets_with_accepted_articles": 4,
+   "operationally_stable": 0,
+   "outlet_candidates_outside_the_registry": 3,
+   "registered": 1,
+   "registry_outlets": 5,
+   "technically_qualified": 1
+  }
+ },
+ "disposition_meaning": {
+  "DIFFERENT_CADENCE": "a publication rhythm the canary procedure does not fit",
+  "EVIDENCE_FOR_REVIEWED_WAVE": "attached as evidence to an outlet of the reviewed first wave; the wave is unchanged",
+  "EVIDENCE_ONLY": "recorded as additional evidence; no action",
+  "HOLD_LEGAL_REVIEW": "an operator decision on rights comes first; not to be requested",
+  "LATER_WAVE": "worth a registration proposal after the waves in hand",
+  "NEEDS_CURRENT_EVIDENCE": "not usable as it stands: no current address",
+  "WAVE_C": "proposed for the third canary wave (a registration proposal exists; nothing is registered)"
+ },
+ "identity_cases": [
+  {
+   "case": "pr_primera_hora",
+   "decision": "OPEN (O-11 review); nothing changed",
+   "facts": {
+    "channel_hosts": [
+     "elnuevodia.com"
+    ],
+    "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+    "legacy_ok_rows": 0,
+    "operating_status": "operating",
+    "research_origins": [
+     "https://www.primerahora.com"
+    ],
+    "web_origins": [
+     "https://www.primerahora.com"
+    ]
+   },
+   "finding": "every channel of the outlet is on another outlet's host (elnuevodia.com, the same three addresses as pr_el_nuevo_dia): the outlet has no channel of its own",
+   "recommendation": "at registration review: give pr_primera_hora no channel from elnuevodia.com; a channel on primerahora.com is known only by pattern inference; keep both outlets apart (one publisher group, two titles)"
+  },
+  {
+   "case": "cl_el_mercurio",
+   "decision": "OPEN (operator, corpus supply); the outlet is NEEDS_VERIFICATION in the review",
+   "facts": {
+    "channel_hosts": [
+     "emol.com"
+    ],
+    "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+    "legacy_ok_rows": 0,
+    "operating_status": "operating",
+    "research_origins": [
+     "https://www.emol.com",
+     "https://digital.elmercurio.com (print replica, subscription (general knowledge, not checked on 2026-10-09))"
+    ],
+    "web_origins": [
+     "https://www.emol.com"
+    ]
+   },
+   "finding": "the registry outlet named El Mercurio has the origin emol.com, the group's free portal; the newspaper's own content is behind a subscription by research",
+   "recommendation": "decide whether the outlet is Emol (then name it so, by a new display name with dates, never a new id) or El Mercurio (then emol.com is not its origin)"
+  },
+  {
+   "case": "ni_confidencial",
+   "decision": "OPEN (O-11 review; listed in the proposal)",
+   "facts": {
+    "channel_hosts": [
+     "confidencial.digital"
+    ],
+    "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+    "legacy_ok_rows": 0,
+    "operating_status": "operating",
+    "research_origins": [
+     "https://confidencial.digital (apex host is what third parties use)",
+     "https://www.confidencial.digital (registry)",
+     "historic: https://confidencial.com.ni (.ni domains of independent media were dropped in March 2025)"
+    ],
+    "web_origins": [
+     "https://www.confidencial.digital"
+    ]
+   },
+   "finding": "third parties read the feed on the apex host; the newsroom works from Costa Rica; the country of the outlet is the country it reports on",
+   "recommendation": "register the apex host as a second origin; keep country_id ni; record the seat as an attribute when the registry has one for it, not as the country"
+  },
+  {
+   "case": "bo_la_razon",
+   "decision": "OPEN (O-11 review)",
+   "facts": {
+    "channel_hosts": [
+     "la-razon.com",
+     "larazon.bo"
+    ],
+    "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+    "legacy_ok_rows": 0,
+    "operating_status": "moved",
+    "research_origins": [
+     "https://larazon.bo",
+     "https://www.la-razon.com (legacy origin; relation/redirect unverified)"
+    ],
+    "web_origins": [
+     "https://www.la-razon.com"
+    ]
+   },
+   "finding": "research finds current content under larazon.bo and a third party reports the registry origin blocked",
+   "recommendation": "an origin change is a dated addition of an origin after review, never a rewrite; the legacy alias stays"
+  },
+  {
+   "case": "ni_la_prensa",
+   "decision": "OPEN (O-11 review)",
+   "facts": {
+    "channel_hosts": [],
+    "legacy_class": "LEGACY_NO_CHANNEL",
+    "legacy_ok_rows": 0,
+    "operating_status": "moved",
+    "research_origins": [
+     "https://www.laprensani.com"
+    ],
+    "web_origins": [
+     "https://www.laprensa.com.ni"
+    ]
+   },
+   "finding": "research finds the outlet at laprensani.com since 2023 and warns of an impersonation site: the origin must be pinned exactly",
+   "recommendation": "as bo_la_razon; verify the origin against the outlet's own statement before registering"
+  },
+  {
+   "case": "closed outlets",
+   "decision": "OPEN (registry attribute for a closed outlet does not exist)",
+   "facts": {
+    "bo_pagina_siete": {
+     "channel_hosts": [
+      "paginasiete.bo"
+     ],
+     "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+     "legacy_ok_rows": 10,
+     "operating_status": "closed",
+     "research_origins": [],
+     "web_origins": [
+      "https://www.paginasiete.bo"
+     ]
+    },
+    "gt_elperiodico": {
+     "channel_hosts": [],
+     "legacy_class": "LEGACY_NO_CHANNEL",
+     "legacy_ok_rows": 0,
+     "operating_status": "closed",
+     "research_origins": [],
+     "web_origins": [
+      "https://elperiodico.com.gt"
+     ]
+    }
+   },
+   "finding": "research finds both closed in 2023; the legacy corpus holds 10 accepted articles of bo_pagina_siete and none of gt_elperiodico",
+   "recommendation": "keep both in the registry as proposed and never register them for acquisition; historical articles keep their outlet"
+  },
+  {
+   "case": "same title, different outlets",
+   "decision": "no action",
+   "facts": {
+    "el comercio": [
+     "ec_el_comercio",
+     "pe_el_comercio"
+    ],
+    "el diario": [
+     "bo_eldiario",
+     "ve_eldiario"
+    ],
+    "el mercurio": [
+     "candidate:ec:El Mercurio",
+     "cl_el_mercurio"
+    ],
+    "el nacional": [
+     "candidate:do:El Nacional",
+     "ve_el_nacional"
+    ],
+    "el observador": [
+     "candidate:cr:El Observador",
+     "uy_el_observador"
+    ],
+    "el pais": [
+     "co_elpais",
+     "es_el_pais",
+     "uy_el_pais"
+    ],
+    "el siglo": [
+     "gt_elsiglo",
+     "pa_el_siglo"
+    ],
+    "el universal": [
+     "mx_el_universal",
+     "ve_eluniversal"
+    ],
+    "expreso": [
+     "candidate:ec:Expreso",
+     "pe_expreso"
+    ],
+    "la nacion": [
+     "ar_la_nacion",
+     "cr_la_nacion",
+     "py_la_nacion"
+    ],
+    "la prensa": [
+     "hn_la_prensa",
+     "ni_la_prensa",
+     "pa_la_prensa"
+    ],
+    "la republica": [
+     "candidate:ec:La Republica (EC)",
+     "pe_la_republica",
+     "uy_larepublica"
+    ]
+   },
+   "finding": "titles that occur more than once across countries among registry outlets and outlet candidates",
+   "recommendation": "the country prefix of the id keeps them apart; never merge by title"
+  },
+  {
+   "case": "hosts shared by registry outlets",
+   "decision": "no action",
+   "facts": {
+    "channels_on_a_host_that_is_not_an_origin": {
+     "bo_la_razon": [
+      "larazon.bo"
+     ],
+     "cl_biobiochile": [
+      "feeds.feedburner.com"
+     ],
+     "es_el_pais": [
+      "feeds.elpais.com"
+     ],
+     "pr_primera_hora": [
+      "elnuevodia.com"
+     ],
+     "py_abc_color": [
+      "api.diarioabc.com.py"
+     ]
+    },
+    "origins": {}
+   },
+   "finding": "origin hosts that belong to more than one registry outlet, and outlets with channels on a host that is not one of their origins (a feed on a foreign host is a channel origin, never an outlet origin)",
+   "recommendation": "none beyond the cases above"
+  }
+ ],
+ "inputs": {
+  "inventory": {
+   "file": "source_discovery_inventory_2026-10-09.1.json",
+   "sha256": "fa07441b3aec715a3ad626640e4ef1d3a1c4fcc3875b943752774276aefc7e9b"
+  },
+  "proposals": [
+   {
+    "file": "extended_canary_proposal_2026-10-09.json",
+    "sha256": "b3da8def97951cb76cb807d58f4c4613ab37e276e8811ae78f75a967364ae2f2"
+   },
+   {
+    "file": "wave_c_proposal_2026-10-09.json",
+    "sha256": "f7ccc255c9c9d9d5cfada68bee4183a64d860e709de45d5fe0df0a51684816e4"
+   }
+  ],
+  "reviews": [
+   {
+    "file": "extended_canary_review_2026-10-09.json",
+    "sha256": "caf1f282567d197554c5b6eb6338d872c0c02034fed3c221b6c4bbd6fd482d9d"
+   }
+  ],
+  "supplement": {
+   "file": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+   "sha256": "bfa9d4776f0f9eebc9ad86a96ec97955b02b64bd3c9e306811545cc1745536b2",
+   "status": "EVIDENCE_ONLY_NOT_REGISTRY_NOT_LIVE_QUALIFICATION"
+  }
+ },
+ "normalisation": "addresses are compared without scheme, a leading `www.` and a trailing slash, with the query sorted; a match that ignores the query is a `variant`; outlets are matched by registry id, then by host, then by country and title",
+ "outlet_candidates": [
+  {
+   "addresses": [
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.eltribuno.com/rss-new/portada.rss"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.eltribuno.com/rss-new/salta.rss"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.eltribuno.com/rss-new/politica.rss"
+    }
+   ],
+   "country_id": "ar",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Tribuno",
+   "named_in": [
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": null,
+   "proposed_outlet_id": "ar_el_tribuno",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "NEW_OUTLET_CANDIDATE",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "section_feed",
+     "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/america/mundo/"
+    },
+    {
+     "evidence": "cms_pattern_inference",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml"
+    },
+    {
+     "evidence": "cms_pattern_inference",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "news_sitemap",
+     "url": "https://www.infobae.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+    }
+   ],
+   "country_id": "ar",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Infobae",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.infobae.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.perfil.com/feed"
+    }
+   ],
+   "country_id": "ar",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Perfil",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.perfil.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.rionegro.com.ar/feed"
+    }
+   ],
+   "country_id": "ar",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Río Negro",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.rionegro.com.ar",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://brujuladigital.net/rss.xml"
+    }
+   ],
+   "country_id": "bo",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Brújula Digital",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://brujuladigital.net",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "bo",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Correo del Sur",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://correodelsur.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.opinion.com.bo/rss/"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.opinion.com.bo/rss/cochabamba/"
+    }
+   ],
+   "country_id": "bo",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Opinión",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.opinion.com.bo",
+   "proposed_outlet_id": "bo_opinion",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml"
+    }
+   ],
+   "country_id": "cl",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Cooperativa",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.cooperativa.cl",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://ladiscusion.cl/feed/"
+    }
+   ],
+   "country_id": "cl",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "La Discusión",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://ladiscusion.cl",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.theclinic.cl/feed/"
+    }
+   ],
+   "country_id": "cl",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "The Clinic",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.theclinic.cl",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://diariodelhuila.com/feed/"
+    }
+   ],
+   "country_id": "co",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario del Huila",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://diariodelhuila.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.elnuevosiglo.com.co/rss.xml"
+    }
+   ],
+   "country_id": "co",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Nuevo Siglo",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.elnuevosiglo.com.co",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "cms_pattern_inference",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.lasillavacia.com/feed/"
+    }
+   ],
+   "country_id": "co",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "La Silla Vacía",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.lasillavacia.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "cr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Delfino.cr",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://delfino.cr",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "cr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Observador",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://observador.cr",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "cms_pattern_inference",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://semanariouniversidad.com/feed/"
+    }
+   ],
+   "country_id": "cr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Semanario Universidad",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://semanariouniversidad.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.14ymedio.com/rss"
+    },
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_section",
+     "url": "https://www.14ymedio.com/cuba"
+    }
+   ],
+   "country_id": "cu",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "14ymedio",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.14ymedio.com",
+   "proposed_outlet_id": "cu_14ymedio",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.5septiembre.cu/feed"
+    }
+   ],
+   "country_id": "cu",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "5 de Septiembre",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json"
+   ],
+   "origin": "https://www.5septiembre.cu",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group1.json",
+     "type": "rss",
+     "url": "https://www.cubanet.org/feed"
+    },
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_archive",
+     "url": "https://www.cubanet.org/ultimas-noticias/"
+    }
+   ],
+   "country_id": "cu",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "CubaNet",
+   "named_in": [
+    "prediscovery_2026-10-09_group1.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.cubanet.org",
+   "proposed_outlet_id": "cu_cubanet",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_section",
+     "url": "https://diariodecuba.com/cuba"
+    }
+   ],
+   "country_id": "cu",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario de Cuba",
+   "named_in": [
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": null,
+   "proposed_outlet_id": "cu_diario_de_cuba",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "NEW_OUTLET_CANDIDATE",
+    "disposition": "LATER_WAVE",
+    "priority": "P0"
+   },
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "do",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Acento",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://acento.com.do",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://elnacional.com.do/rss/home.xml"
+    }
+   ],
+   "country_id": "do",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Nacional",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://elnacional.com.do",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://hoy.com.do/rss/home.xml"
+    }
+   ],
+   "country_id": "do",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Hoy",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://hoy.com.do",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://elmercurio.com.ec/feed/"
+    }
+   ],
+   "country_id": "ec",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Mercurio",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://elmercurio.com.ec",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.expreso.ec/rss/home.xml"
+    }
+   ],
+   "country_id": "ec",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Expreso",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.expreso.ec",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.larepublica.ec/feed/"
+    }
+   ],
+   "country_id": "ec",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "La Republica (EC)",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.larepublica.ec",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.abc.es/rss/2.0/portada/"
+    }
+   ],
+   "country_id": "es",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "ABC",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.abc.es",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.elcorreo.com/rss/2.0/portada"
+    }
+   ],
+   "country_id": "es",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Correo",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.elcorreo.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.eldiario.es/rss"
+    }
+   ],
+   "country_id": "es",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "elDiario.es",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.eldiario.es",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://emisorasunidas.com/feed/"
+    }
+   ],
+   "country_id": "gt",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Emisoras Unidas",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://emisorasunidas.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "http://feeds.feedburner.com/PlazaPublicaRssFeed"
+    }
+   ],
+   "country_id": "gt",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Plaza Publica",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.plazapublica.com.gt",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "gt",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Prensa Comunitaria",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://prensacomunitaria.org",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://contracorriente.red/feed/"
+    }
+   ],
+   "country_id": "hn",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Contracorriente",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://contracorriente.red",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://criterio.hn/feed/"
+    },
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_section",
+     "url": "https://criterio.hn/category/actualidad/"
+    }
+   ],
+   "country_id": "hn",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Criterio.hn",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://criterio.hn",
+   "proposed_outlet_id": "hn_criterio",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://radioprogresohn.net/feed/"
+    }
+   ],
+   "country_id": "hn",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Radio Progreso",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://radioprogresohn.net",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "http://www.animalpolitico.com/feed/"
+    }
+   ],
+   "country_id": "mx",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Animal Politico",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://www.animalpolitico.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.elsiglodetorreon.com.mx/index.xml"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss_historic",
+     "url": "http://www.elsiglodetorreon.com.mx/channel/local.xml"
+    }
+   ],
+   "country_id": "mx",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Siglo de Torreon",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.elsiglodetorreon.com.mx",
+   "proposed_outlet_id": "mx_el_siglo_de_torreon",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "NEEDS_CURRENT_EVIDENCE",
+    "priority": "P2"
+   },
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.elsoldemexico.com.mx/rss.xml"
+    }
+   ],
+   "country_id": "mx",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Sol de Mexico",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://oem.com.mx/elsoldemexico",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss_hub",
+     "url": "https://expansion.mx/canales-rss"
+    }
+   ],
+   "country_id": "mx",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Expansión México",
+   "named_in": [
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": null,
+   "proposed_outlet_id": "mx_expansion",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "NEW_OUTLET_CANDIDATE",
+    "disposition": "NEEDS_CURRENT_EVIDENCE",
+    "priority": "P1"
+   },
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://www.articulo66.com/feed/"
+    },
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_archive",
+     "url": "https://www.articulo66.com/2026/"
+    }
+   ],
+   "country_id": "ni",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Articulo 66",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.articulo66.com",
+   "proposed_outlet_id": "ni_articulo66",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://despacho505.com/feed/"
+    }
+   ],
+   "country_id": "ni",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Despacho 505",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json"
+   ],
+   "origin": "https://despacho505.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group2.json",
+     "type": "rss",
+     "url": "https://nicaraguainvestiga.com/feed/"
+    },
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_sections",
+     "url": "https://nicaraguainvestiga.com/"
+    }
+   ],
+   "country_id": "ni",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Nicaragua Investiga",
+   "named_in": [
+    "prediscovery_2026-10-09_group2.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://nicaraguainvestiga.com",
+   "proposed_outlet_id": "ni_nicaragua_investiga",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.panama24horas.com.pa/panama/feed/"
+    }
+   ],
+   "country_id": "pa",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Panama 24 Horas",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.panama24horas.com.pa",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.panamaamerica.com.pa/rss/recent/index.xml"
+    }
+   ],
+   "country_id": "pa",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Panama America",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.panamaamerica.com.pa",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "pa",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "TVN Noticias",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.tvn-2.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://losandes.com.pe/feed/"
+    }
+   ],
+   "country_id": "pe",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario Los Andes",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://losandes.com.pe",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://diariouno.pe/feed/"
+    }
+   ],
+   "country_id": "pe",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario UNO",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://diariouno.pe",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://elbuho.pe/feed/"
+    }
+   ],
+   "country_id": "pe",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Buho",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://elbuho.pe",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "pr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Centro de Periodismo Investigativo (CPI)",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.periodismoinvestigativo.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "pr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Vocero",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.elvocero.com (domain from background knowledge, unverified)",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_section",
+     "url": "https://noticel.com/category/ultima-hora/"
+    }
+   ],
+   "country_id": "pr",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "NotiCel",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.noticel.com (domain from background knowledge, unverified)",
+   "proposed_outlet_id": "pr_noticel",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.adndigital.com.py/feed"
+    }
+   ],
+   "country_id": "py",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "ADN Digital",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.adndigital.com.py",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "py",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario HOY",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.hoy.com.py",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://noticiascde.com.py/feed"
+    }
+   ],
+   "country_id": "py",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Noticias CDE",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://noticiascde.com.py",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.diariocolatino.com/feed"
+    }
+   ],
+   "country_id": "sv",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario Co Latino",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.diariocolatino.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "sv",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Diario El Salvador",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://diarioelsalvador.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "publisher_page_observed",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_html_edition",
+     "url": "https://beta.elfaro.net/edicion"
+    }
+   ],
+   "country_id": "sv",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Faro",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://elfaro.net",
+   "proposed_outlet_id": "sv_el_faro",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "DIFFERENT_CADENCE",
+    "priority": "P1"
+   },
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "uy",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Busqueda",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "unknown (busqueda.com.uy from background knowledge, unverified)",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [],
+   "country_id": "uy",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Telegrafo",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "unknown (eltelegrafo.com seen in an ahrefs listing; eltelegrafo.com.uy unverified)",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?59"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?58"
+    },
+    {
+     "evidence": "publisher_documented",
+     "from": "coprepan_prediscovery_ergaenzung_2026-10-09.json",
+     "type": "publisher_rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?1303"
+    }
+   ],
+   "country_id": "uy",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Montevideo Portal",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json",
+    "coprepan_prediscovery_ergaenzung_2026-10-09.json"
+   ],
+   "origin": "https://www.montevideo.com.uy",
+   "proposed_outlet_id": "uy_montevideo_portal",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "OUTLET_ALREADY_PROPOSED",
+    "disposition": "WAVE_C",
+    "priority": "P0"
+   },
+   "waves": [
+    "wave C: proposed"
+   ]
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.analitica.com/feed"
+    }
+   ],
+   "country_id": "ve",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Analitica",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.analitica.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://correodelcaroni.com/feed"
+    }
+   ],
+   "country_id": "ve",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "Correo del Caroni",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://correodelcaroni.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  },
+  {
+   "addresses": [
+    {
+     "evidence": "search_evidence",
+     "from": "prediscovery_2026-10-09_group3.json",
+     "type": "rss",
+     "url": "https://www.elimpulso.com/feed"
+    }
+   ],
+   "country_id": "ve",
+   "host_is_a_registry_origin_of": [],
+   "in_registry": false,
+   "name": "El Impulso",
+   "named_in": [
+    "prediscovery_2026-10-09_group3.json"
+   ],
+   "origin": "https://www.elimpulso.com",
+   "proposed_outlet_id": null,
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "waves": []
+  }
+ ],
+ "overview_version": "2026-10-09.2",
+ "schema": "coprepan-source-qualification-overview/v1",
+ "sources": [
+  {
+   "access_control_hold": false,
+   "country_id": "ar",
+   "display_name": "Clarín",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1758,
+   "operating_status": "operating",
+   "outlet_id": "ar_clarin",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ar",
+   "display_name": "La Nación",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 1,
+   "operating_status": "operating",
+   "outlet_id": "ar_la_nacion",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ar",
+   "display_name": "Página/12",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ar_pagina12",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "bo",
+   "display_name": "El Deber",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 2556,
+   "operating_status": "operating",
+   "outlet_id": "bo_el_deber",
+   "priority_score": 6,
+   "registration_status": "registered",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "REGISTERED"
+   ],
+   "supplement": null,
+   "waves": [
+    "first canary (2026-10-08)"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "bo",
+   "display_name": "El Diario",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "uncertain",
+   "outlet_id": "bo_eldiario",
+   "priority_score": 0,
+   "registration_status": "proposed",
+   "researched_channels": 0,
+   "review_recommendation": null,
+   "route_class": "NO_ROUTE_KNOWN",
+   "stages": [
+    "RESEARCHED"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "bo",
+   "display_name": "La Razón",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "moved",
+   "outlet_id": "bo_la_razon",
+   "priority_score": 8,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "bo",
+   "display_name": "Los Tiempos",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 1,
+   "operating_status": "operating",
+   "outlet_id": "bo_lostiempos",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "NEEDS_VERIFICATION",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "bo",
+   "display_name": "Página Siete",
+   "in_registry": true,
+   "legacy_channels": 9,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 10,
+   "operating_status": "closed",
+   "outlet_id": "bo_pagina_siete",
+   "priority_score": 0,
+   "registration_status": "proposed",
+   "researched_channels": 0,
+   "review_recommendation": null,
+   "route_class": "CLOSED",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cl",
+   "display_name": "BioBioChile",
+   "in_registry": true,
+   "legacy_channels": 4,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 898,
+   "operating_status": "operating",
+   "outlet_id": "cl_biobiochile",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cl",
+   "display_name": "El Mercurio",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "cl_el_mercurio",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "NEEDS_VERIFICATION",
+   "route_class": "INDEX_EXPANSION_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cl",
+   "display_name": "La Tercera",
+   "in_registry": true,
+   "legacy_channels": 4,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1259,
+   "operating_status": "operating",
+   "outlet_id": "cl_la_tercera",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "co",
+   "display_name": "El Espectador",
+   "in_registry": true,
+   "legacy_channels": 8,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1408,
+   "operating_status": "operating",
+   "outlet_id": "co_el_espectador",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "co",
+   "display_name": "El Tiempo",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "co_el_tiempo",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 11,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+    "disposition": "HOLD_LEGAL_REVIEW"
+   },
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "co",
+   "display_name": "El Colombiano",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "co_elcolombiano",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "co",
+   "display_name": "El País",
+   "in_registry": true,
+   "legacy_channels": 18,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 21,
+   "operating_status": "operating",
+   "outlet_id": "co_elpais",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "co",
+   "display_name": "Semana",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 2,
+   "operating_status": "operating",
+   "outlet_id": "co_semana",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cr",
+   "display_name": "CRHoy",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 775,
+   "operating_status": "operating",
+   "outlet_id": "cr_crhoy",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cr",
+   "display_name": "Diario Extra",
+   "in_registry": true,
+   "legacy_channels": 4,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "cr_diario_extra",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cr",
+   "display_name": "La Nación",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1198,
+   "operating_status": "operating",
+   "outlet_id": "cr_la_nacion",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cu",
+   "display_name": "Granma",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "cu_granma",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cu",
+   "display_name": "Havana Times",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 51,
+   "operating_status": "operating",
+   "outlet_id": "cu_havanatimes",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cu",
+   "display_name": "Juventud Rebelde",
+   "in_registry": true,
+   "legacy_channels": 1,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 77,
+   "operating_status": "operating",
+   "outlet_id": "cu_juventud_rebelde",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "INDEX_EXPANSION_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cu",
+   "display_name": "Periódico 26",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "uncertain",
+   "outlet_id": "cu_periodico26",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "cu",
+   "display_name": "Trabajadores",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 207,
+   "operating_status": "operating",
+   "outlet_id": "cu_trabajadores",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "do",
+   "display_name": "Diario Libre",
+   "in_registry": true,
+   "legacy_channels": 10,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 2180,
+   "operating_status": "operating",
+   "outlet_id": "do_diario_libre",
+   "priority_score": 3,
+   "registration_status": "registered",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "TECHNICALLY_QUALIFIED",
+    "REGISTERED",
+    "ACQUISITION_VERIFIED"
+   ],
+   "supplement": null,
+   "waves": [
+    "first canary (2026-10-08)"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "do",
+   "display_name": "El Caribe",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "do_el_caribe",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "do",
+   "display_name": "Listín Diario",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1574,
+   "operating_status": "operating",
+   "outlet_id": "do_listin_diario",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ec",
+   "display_name": "El Comercio",
+   "in_registry": true,
+   "legacy_channels": 4,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ec_el_comercio",
+   "priority_score": 18,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "KNOWN_IDENTICAL",
+    "disposition": "EVIDENCE_ONLY"
+   },
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ec",
+   "display_name": "El Universo",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ec_el_universo",
+   "priority_score": 18,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+    "disposition": "EVIDENCE_FOR_REVIEWED_WAVE"
+   },
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ec",
+   "display_name": "Primicias",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ec_primicias",
+   "priority_score": 18,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "es",
+   "display_name": "El Mundo",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "es_el_mundo",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "es",
+   "display_name": "El País",
+   "in_registry": true,
+   "legacy_channels": 1,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1142,
+   "operating_status": "operating",
+   "outlet_id": "es_el_pais",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "es",
+   "display_name": "La Vanguardia",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "es_la_vanguardia",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "elPeriódico",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "closed",
+   "outlet_id": "gt_elperiodico",
+   "priority_score": 0,
+   "registration_status": "proposed",
+   "researched_channels": 1,
+   "review_recommendation": null,
+   "route_class": "CLOSED",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "El Siglo",
+   "in_registry": true,
+   "legacy_channels": 8,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 525,
+   "operating_status": "operating",
+   "outlet_id": "gt_elsiglo",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "La Hora",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "gt_lahora",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "Nuestro Diario",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "gt_nuestrodiario",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "Prensa Libre",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 609,
+   "operating_status": "operating",
+   "outlet_id": "gt_prensa_libre",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "gt",
+   "display_name": "Publinews",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 736,
+   "operating_status": "uncertain",
+   "outlet_id": "gt_publinews",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "hn",
+   "display_name": "Diario Tiempo",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "hn_diariotiempo",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "hn",
+   "display_name": "El Heraldo",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 7,
+   "operating_status": "operating",
+   "outlet_id": "hn_el_heraldo",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "hn",
+   "display_name": "Hondudiario",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 100,
+   "operating_status": "operating",
+   "outlet_id": "hn_hondudiario",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "hn",
+   "display_name": "La Prensa",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 6,
+   "operating_status": "operating",
+   "outlet_id": "hn_la_prensa",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "hn",
+   "display_name": "La Tribuna",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "hn_latribuna",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": true,
+   "country_id": "hn",
+   "display_name": "Proceso Digital",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1763,
+   "operating_status": "operating",
+   "outlet_id": "hn_proceso_digital",
+   "priority_score": 0,
+   "registration_status": "registered",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "ACCESS_CONTROL_HOLD",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "REGISTERED"
+   ],
+   "supplement": null,
+   "waves": [
+    "first canary (2026-10-08)"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "mx",
+   "display_name": "El Universal",
+   "in_registry": true,
+   "legacy_channels": 21,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1889,
+   "operating_status": "operating",
+   "outlet_id": "mx_el_universal",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "mx",
+   "display_name": "La Jornada",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "mx_la_jornada",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 6,
+   "review_recommendation": "NEEDS_VERIFICATION",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "mx",
+   "display_name": "Milenio",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "mx_milenio",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ni",
+   "display_name": "Confidencial",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ni_confidencial",
+   "priority_score": 18,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ni",
+   "display_name": "El 19 Digital",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "ni_el_19_digital",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ni",
+   "display_name": "La Prensa",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "moved",
+   "outlet_id": "ni_la_prensa",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "CRÍTICA",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 210,
+   "operating_status": "operating",
+   "outlet_id": "pa_critica",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "Día a Día",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "uncertain",
+   "outlet_id": "pa_diaadia",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "El Siglo",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pa_el_siglo",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "La Prensa",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1350,
+   "operating_status": "operating",
+   "outlet_id": "pa_la_prensa",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "La Estrella de Panamá",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 1,
+   "operating_status": "operating",
+   "outlet_id": "pa_laestrelladepanama",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": "DEFER",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "Metro Libre",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+   "legacy_ok_rows": 2,
+   "operating_status": "operating",
+   "outlet_id": "pa_metro_libre",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pa",
+   "display_name": "Mi Diario",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 583,
+   "operating_status": "operating",
+   "outlet_id": "pa_midiario",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "Diario Correo",
+   "in_registry": true,
+   "legacy_channels": 20,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 3542,
+   "operating_status": "operating",
+   "outlet_id": "pe_diariocorreo",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "El Comercio",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pe_el_comercio",
+   "priority_score": 8,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "El Peruano",
+   "in_registry": true,
+   "legacy_channels": 23,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pe_elperuano",
+   "priority_score": 8,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "Expreso",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pe_expreso",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "LISTING_ONLY",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "La República",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pe_la_republica",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pe",
+   "display_name": "Perú21",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pe_peru21",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pr",
+   "display_name": "El Nuevo Día",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pr_el_nuevo_dia",
+   "priority_score": 8,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+    "disposition": "LATER_WAVE"
+   },
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pr",
+   "display_name": "Metro Puerto Rico",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1389,
+   "operating_status": "operating",
+   "outlet_id": "pr_metro_puerto_rico",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "pr",
+   "display_name": "Primera Hora",
+   "in_registry": true,
+   "legacy_channels": 3,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "pr_primera_hora",
+   "priority_score": 8,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "py",
+   "display_name": "ABC Color",
+   "in_registry": true,
+   "legacy_channels": 20,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 2367,
+   "operating_status": "operating",
+   "outlet_id": "py_abc_color",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+    "disposition": "EVIDENCE_ONLY"
+   },
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "py",
+   "display_name": "La Nación",
+   "in_registry": true,
+   "legacy_channels": 1,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "py_la_nacion",
+   "priority_score": 4,
+   "registration_status": "registered",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "REGISTERED"
+   ],
+   "supplement": null,
+   "waves": [
+    "first canary (2026-10-08)"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "py",
+   "display_name": "Última Hora",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 350,
+   "operating_status": "operating",
+   "outlet_id": "py_ultima_hora",
+   "priority_score": 2,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "INDEX_EXPANSION_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "sv",
+   "display_name": "Diario El Mundo",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "sv_diario_el_mundo",
+   "priority_score": 12,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "sv",
+   "display_name": "El Diario de Hoy",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1321,
+   "operating_status": "operating",
+   "outlet_id": "sv_el_diario_de_hoy",
+   "priority_score": 6,
+   "registration_status": "proposed",
+   "researched_channels": 5,
+   "review_recommendation": "READY_FOR_REGISTRATION_REVIEW",
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": [
+    "extended canary: proposed"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "sv",
+   "display_name": "La Prensa Gráfica",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "sv_la_prensa_grafica",
+   "priority_score": 0,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "NO_ROUTE_KNOWN",
+   "stages": [
+    "RESEARCHED"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "uy",
+   "display_name": "El Observador",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "operating",
+   "outlet_id": "uy_el_observador",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": {
+    "classification": "NEW_CHANNEL_FOR_EXISTING_OUTLET",
+    "disposition": "LATER_WAVE"
+   },
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "uy",
+   "display_name": "El País",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 727,
+   "operating_status": "operating",
+   "outlet_id": "uy_el_pais",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "uy",
+   "display_name": "La diaria",
+   "in_registry": true,
+   "legacy_channels": 2,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 895,
+   "operating_status": "operating",
+   "outlet_id": "uy_ladiaria",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "uy",
+   "display_name": "La República",
+   "in_registry": true,
+   "legacy_channels": 0,
+   "legacy_class": "LEGACY_NO_CHANNEL",
+   "legacy_ok_rows": 0,
+   "operating_status": "uncertain",
+   "outlet_id": "uy_larepublica",
+   "priority_score": 0,
+   "registration_status": "proposed",
+   "researched_channels": 1,
+   "review_recommendation": null,
+   "route_class": "NO_ROUTE_KNOWN",
+   "stages": [
+    "RESEARCHED"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ve",
+   "display_name": "Efecto Cocuyo",
+   "in_registry": true,
+   "legacy_channels": 6,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 443,
+   "operating_status": "operating",
+   "outlet_id": "ve_efecto_cocuyo",
+   "priority_score": 3,
+   "registration_status": "registered",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE",
+    "TECHNICALLY_QUALIFIED",
+    "REGISTERED"
+   ],
+   "supplement": null,
+   "waves": [
+    "first canary (2026-10-08)"
+   ]
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ve",
+   "display_name": "El Nacional",
+   "in_registry": true,
+   "legacy_channels": 7,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 1232,
+   "operating_status": "operating",
+   "outlet_id": "ve_el_nacional",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ve",
+   "display_name": "El Diario",
+   "in_registry": true,
+   "legacy_channels": 20,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 427,
+   "operating_status": "operating",
+   "outlet_id": "ve_eldiario",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 4,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ve",
+   "display_name": "El Universal",
+   "in_registry": true,
+   "legacy_channels": 1,
+   "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+   "legacy_ok_rows": 0,
+   "operating_status": "uncertain",
+   "outlet_id": "ve_eluniversal",
+   "priority_score": 4,
+   "registration_status": "proposed",
+   "researched_channels": 2,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  },
+  {
+   "access_control_hold": false,
+   "country_id": "ve",
+   "display_name": "Últimas Noticias",
+   "in_registry": true,
+   "legacy_channels": 5,
+   "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+   "legacy_ok_rows": 218,
+   "operating_status": "operating",
+   "outlet_id": "ve_ultimas_noticias",
+   "priority_score": 3,
+   "registration_status": "proposed",
+   "researched_channels": 3,
+   "review_recommendation": null,
+   "route_class": "STANDARD_CHANNEL_CANDIDATE",
+   "stages": [
+    "RESEARCHED",
+    "CANDIDATE"
+   ],
+   "supplement": null,
+   "waves": []
+  }
+ ],
+ "stage_rules": {
+  "ACQUISITION_VERIFIED": "the inventory's ACQUISITION_VERIFIED: at least 5 item pages 2xx, preserved, verified and replayed in one bounded run",
+  "CANDIDATE": "a concrete discovery address is on file with an evidence level other than `unknown`",
+  "OPERATIONALLY_STABLE": "three such runs on three days within at least fourteen days, no hold in between (CPD-0019 §8)",
+  "REGISTERED": "registry `registration_status` is `registered`",
+  "RESEARCHED": "named in a research file with a source",
+  "TECHNICALLY_QUALIFIED": "this project read a channel document of the outlet from a real server and the current parser finds an item entry in it (the inventory's QUALIFIED)"
+ },
+ "supplement": [
+  {
+   "addresses_in_notes": [
+    "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml"
+   ],
+   "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+   "conflicting_evidence": [],
+   "country_id": "ec",
+   "discovery_kind": "publisher_rss_hub",
+   "discovery_url": "https://www.eluniverso.com/rss/",
+   "disposition": "EVIDENCE_FOR_REVIEWED_WAVE",
+   "disposition_reason": "the publisher's own RSS page corroborates the Arc feed already in the reviewed first wave; the wave is not changed",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.eluniverso.com/rss/",
+   "in_registry": true,
+   "matches": [
+    {
+     "address": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+     "match": "earlier_research",
+     "ref": [
+      "ec_el_universo",
+      "prediscovery_2026-10-09_group2.json",
+      "search_evidence"
+     ]
+    }
+   ],
+   "outlet_id_candidate": "ec_el_universo",
+   "outlet_name": "El Universo",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "EXISTING_OUTLET_NEW_ROUTE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "KNOWN_IDENTICAL",
+   "conflicting_evidence": [],
+   "country_id": "ec",
+   "discovery_kind": "publisher_rss",
+   "discovery_url": "https://www.elcomercio.com/feed/",
+   "disposition": "EVIDENCE_ONLY",
+   "disposition_reason": "the channel is in the registry; first-party corroboration, no new channel",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.elcomercio.com/feed-rss/",
+   "in_registry": true,
+   "matches": [
+    {
+     "address": "https://www.elcomercio.com/feed/",
+     "match": "registry_channel",
+     "ref": "ec_el_comercio:ch:rss_002"
+    }
+   ],
+   "outlet_id_candidate": "ec_el_comercio",
+   "outlet_name": "El Comercio",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "EXACT_CHANNEL_IN_REGISTRY"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "ni",
+   "discovery_kind": "publisher_html_archive",
+   "discovery_url": "https://www.articulo66.com/2026/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "independent Nicaraguan outlet; a yearly archive with numbered pages (a structure no wave has) beside a feed named by earlier research",
+   "earlier_proposal": {
+    "name": "Articulo 66",
+    "origin": "https://www.articulo66.com",
+    "provenance": "prediscovery_2026-10-09_group2.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://www.articulo66.com/2026/",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "ni_articulo66",
+   "outlet_name": "Artículo 66",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "ni",
+   "discovery_kind": "publisher_html_sections",
+   "discovery_url": "https://nicaraguainvestiga.com/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "second independent Nicaraguan outlet; a feed named by earlier research; the supplement shows current sections",
+   "earlier_proposal": {
+    "name": "Nicaragua Investiga",
+    "origin": "https://nicaraguainvestiga.com",
+    "provenance": "prediscovery_2026-10-09_group2.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://nicaraguainvestiga.com/",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "ni_nicaragua_investiga",
+   "outlet_name": "Nicaragua Investiga",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "cu",
+   "discovery_kind": "publisher_html_section",
+   "discovery_url": "https://www.14ymedio.com/cuba",
+   "disposition": "WAVE_C",
+   "disposition_reason": "independent Cuban outlet; a feed named by earlier research and a section listing",
+   "earlier_proposal": {
+    "name": "14ymedio",
+    "origin": "https://www.14ymedio.com",
+    "provenance": "prediscovery_2026-10-09_group1.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://www.14ymedio.com/cuba",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "cu_14ymedio",
+   "outlet_name": "14ymedio",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "cu",
+   "discovery_kind": "publisher_html_archive",
+   "discovery_url": "https://www.cubanet.org/ultimas-noticias/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "independent Cuban outlet; a feed named by earlier research and a news archive",
+   "earlier_proposal": {
+    "name": "CubaNet",
+    "origin": "https://www.cubanet.org",
+    "provenance": "prediscovery_2026-10-09_group1.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://www.cubanet.org/ultimas-noticias/",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "cu_cubanet",
+   "outlet_name": "CubaNet",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "NEW_OUTLET_CANDIDATE",
+   "conflicting_evidence": [],
+   "country_id": "cu",
+   "discovery_kind": "publisher_html_section",
+   "discovery_url": "https://diariodecuba.com/cuba",
+   "disposition": "LATER_WAVE",
+   "disposition_reason": "a third independent Cuban outlet known by a section page only: a listing without a feed; after the first listing outlets have run",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://diariodecuba.com/cuba",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "cu_diario_de_cuba",
+   "outlet_name": "Diario de Cuba",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.montevideo.com.uy/anxml.aspx?58",
+    "https://www.montevideo.com.uy/anxml.aspx?1303"
+   ],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "uy",
+   "discovery_kind": "publisher_rss",
+   "discovery_url": "https://www.montevideo.com.uy/anxml.aspx?59",
+   "disposition": "WAVE_C",
+   "disposition_reason": "publisher-documented RSS catalogue, named by two independent research files; a feed address that is a query string",
+   "earlier_proposal": {
+    "name": "Montevideo Portal",
+    "origin": "https://www.montevideo.com.uy",
+    "provenance": "prediscovery_2026-10-09_group3.json"
+   },
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.montevideo.com.uy/Utiles/Las-noticias-de-Montevideo-Portal-en-formato-RSS-uc27383",
+   "in_registry": false,
+   "matches": [
+    {
+     "address": "https://www.montevideo.com.uy/anxml.aspx?59",
+     "match": "earlier_proposal",
+     "ref": "Montevideo Portal"
+    },
+    {
+     "address": "https://www.montevideo.com.uy/anxml.aspx?58",
+     "match": "earlier_proposal",
+     "ref": "Montevideo Portal"
+    },
+    {
+     "address": "https://www.montevideo.com.uy/anxml.aspx?1303",
+     "match": "earlier_proposal",
+     "ref": "Montevideo Portal"
+    }
+   ],
+   "outlet_id_candidate": "uy_montevideo_portal",
+   "outlet_name": "Montevideo Portal",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.opinion.com.bo/rss/cochabamba/"
+   ],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "bo",
+   "discovery_kind": "publisher_rss",
+   "discovery_url": "https://www.opinion.com.bo/rss/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "publisher-documented RSS catalogue and a third-party crawler reading it; regional daily (Cochabamba)",
+   "earlier_proposal": {
+    "name": "Opinión",
+    "origin": "https://www.opinion.com.bo",
+    "provenance": "prediscovery_2026-10-09_group1.json"
+   },
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.opinion.com.bo/rss/listado/",
+   "in_registry": false,
+   "matches": [
+    {
+     "address": "https://www.opinion.com.bo/rss/",
+     "match": "earlier_proposal",
+     "ref": "Opinión"
+    }
+   ],
+   "outlet_id_candidate": "bo_opinion",
+   "outlet_name": "Opinión",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.eltribuno.com/rss-new/salta.rss",
+    "https://www.eltribuno.com/rss-new/politica.rss"
+   ],
+   "classification": "NEW_OUTLET_CANDIDATE",
+   "conflicting_evidence": [],
+   "country_id": "ar",
+   "discovery_kind": "publisher_rss",
+   "discovery_url": "https://www.eltribuno.com/rss-new/portada.rss",
+   "disposition": "WAVE_C",
+   "disposition_reason": "publisher-documented RSS catalogue; regional daily (Salta); not in any earlier file",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.eltribuno.com/page-rss",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "ar_el_tribuno",
+   "outlet_name": "El Tribuno",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "pr",
+   "discovery_kind": "publisher_html_section",
+   "discovery_url": "https://noticel.com/category/ultima-hora/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "an independent Puerto Rican outlet known by a chronological category page only: a listing read without an allow rule, its candidates waiting",
+   "earlier_proposal": {
+    "name": "NotiCel",
+    "origin": "https://www.noticel.com (domain from background knowledge, unverified)",
+    "provenance": "prediscovery_2026-10-09_group3.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://noticel.com/category/ultima-hora/",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "pr_noticel",
+   "outlet_name": "NotiCel",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "hn",
+   "discovery_kind": "publisher_html_section",
+   "discovery_url": "https://criterio.hn/category/actualidad/",
+   "disposition": "WAVE_C",
+   "disposition_reason": "Honduran outlet while the origin of Proceso Digital is held; a feed a third-party crawler reads and a category listing",
+   "earlier_proposal": {
+    "name": "Criterio.hn",
+    "origin": "https://criterio.hn",
+    "provenance": "prediscovery_2026-10-09_group2.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://criterio.hn/category/actualidad/",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "hn_criterio",
+   "outlet_name": "Criterio.hn",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P0",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "NEW_OUTLET_CANDIDATE",
+   "conflicting_evidence": [],
+   "country_id": "mx",
+   "discovery_kind": "publisher_rss_hub",
+   "discovery_url": "https://expansion.mx/canales-rss",
+   "disposition": "NEEDS_CURRENT_EVIDENCE",
+   "disposition_reason": "the hub page is known, no feed address is: nothing to register yet; a business title, not a general daily",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://expansion.mx/canales-rss",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "mx_expansion",
+   "outlet_name": "Expansión México",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [],
+   "country_id": "sv",
+   "discovery_kind": "publisher_html_edition",
+   "discovery_url": "https://beta.elfaro.net/edicion",
+   "disposition": "DIFFERENT_CADENCE",
+   "disposition_reason": "monthly editions on a beta host: not comparable to a daily feed; needs its own schedule and an origin decision",
+   "earlier_proposal": {
+    "name": "El Faro",
+    "origin": "https://elfaro.net",
+    "provenance": "prediscovery_2026-10-09_group3.json"
+   },
+   "evidence_grade": "publisher_page_observed",
+   "evidence_url": "https://beta.elfaro.net/edicion",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "sv_el_faro",
+   "outlet_name": "El Faro",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.elnuevodia.com/arc/outboundfeeds/rss/?outputType=xml"
+   ],
+   "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+   "conflicting_evidence": [],
+   "country_id": "pr",
+   "discovery_kind": "publisher_rss_hub",
+   "discovery_url": "https://www.elnuevodia.com/rss/",
+   "disposition": "LATER_WAVE",
+   "disposition_reason": "a publisher-documented Arc feed for an outlet the registry holds only sitemap indexes for; the outlet is paywalled since 2017 by research",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.elnuevodia.com/rss/",
+   "in_registry": true,
+   "matches": [
+    {
+     "address": "https://www.elnuevodia.com/arc/outboundfeeds/rss/?outputType=xml",
+     "match": "earlier_research",
+     "ref": [
+      "pr_el_nuevo_dia",
+      "prediscovery_2026-10-09_group3.json",
+      "cms_pattern_inference"
+     ]
+    }
+   ],
+   "outlet_id_candidate": "pr_el_nuevo_dia",
+   "outlet_name": "El Nuevo Día",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "EXISTING_OUTLET_NEW_ROUTE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.elobservador.com.uy/rss/pages/ultimo-momento.xml"
+   ],
+   "classification": "NEW_CHANNEL_FOR_EXISTING_OUTLET",
+   "conflicting_evidence": [],
+   "country_id": "uy",
+   "discovery_kind": "publisher_rss_hub",
+   "discovery_url": "https://www.elobservador.com.uy/contenidos/rss.html",
+   "disposition": "LATER_WAVE",
+   "disposition_reason": "a publisher-documented latest-news feed for an outlet the registry holds only sitemaps for",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.elobservador.com.uy/contenidos/rss.html",
+   "in_registry": true,
+   "matches": [],
+   "outlet_id_candidate": "uy_el_observador",
+   "outlet_name": "El Observador",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "EXISTING_OUTLET_NEW_ROUTE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+   "conflicting_evidence": [],
+   "country_id": "py",
+   "discovery_kind": "publisher_rss",
+   "discovery_url": "https://www.abc.com.py/arc/outboundfeeds/rss/nacionales/",
+   "disposition": "EVIDENCE_ONLY",
+   "disposition_reason": "a 2019 page describing feeds the registry already holds with a query suffix: a variant, not a new channel",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.abc.com.py/articulos/rss-142.html",
+   "in_registry": true,
+   "matches": [
+    {
+     "address": "https://www.abc.com.py/arc/outboundfeeds/rss/nacionales/",
+     "match": "registry_channel_variant",
+     "ref": "py_abc_color:ch:rss_001"
+    }
+   ],
+   "outlet_id_candidate": "py_abc_color",
+   "outlet_name": "ABC Color",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P1",
+   "supplement_relation": "EXISTING_OUTLET_NEW_ROUTE"
+  },
+  {
+   "addresses_in_notes": [
+    "https://www.eltiempo.com/rss/colombia.xml"
+   ],
+   "classification": "KNOWN_ADDITIONAL_EVIDENCE",
+   "conflicting_evidence": [],
+   "country_id": "co",
+   "discovery_kind": "publisher_rss_hub",
+   "discovery_url": "https://www.eltiempo.com/rss",
+   "disposition": "HOLD_LEGAL_REVIEW",
+   "disposition_reason": "the publisher's RSS page states personal, non-commercial use and restricts AI use: a licence and TDM decision of the operator comes before any registration",
+   "earlier_proposal": null,
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.eltiempo.com/rss",
+   "in_registry": true,
+   "matches": [
+    {
+     "address": "https://www.eltiempo.com/rss/colombia.xml",
+     "match": "earlier_research",
+     "ref": [
+      "co_el_tiempo",
+      "prediscovery_2026-10-09_group1.json",
+      "search_evidence"
+     ]
+    }
+   ],
+   "outlet_id_candidate": "co_el_tiempo",
+   "outlet_name": "El Tiempo",
+   "requires_specific_legal_review": true,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P2",
+   "supplement_relation": "EXISTING_OUTLET_NEW_ROUTE"
+  },
+  {
+   "addresses_in_notes": [],
+   "classification": "OUTLET_ALREADY_PROPOSED",
+   "conflicting_evidence": [
+    "the supplement's feed address (documentation of 2008) and the address a feed directory lists differ; neither is confirmed current"
+   ],
+   "country_id": "mx",
+   "discovery_kind": "publisher_rss_historic",
+   "discovery_url": "http://www.elsiglodetorreon.com.mx/channel/local.xml",
+   "disposition": "NEEDS_CURRENT_EVIDENCE",
+   "disposition_reason": "documentation of 2008; a feed directory names another address; neither is current evidence",
+   "earlier_proposal": {
+    "name": "El Siglo de Torreon",
+    "origin": "https://www.elsiglodetorreon.com.mx",
+    "provenance": "prediscovery_2026-10-09_group2.json"
+   },
+   "evidence_grade": "publisher_documented",
+   "evidence_url": "https://www.elsiglodetorreon.com.mx/blogs/2008/rss-en-el-siglo-de-torreon.html",
+   "in_registry": false,
+   "matches": [],
+   "outlet_id_candidate": "mx_el_siglo_de_torreon",
+   "outlet_name": "El Siglo de Torreón",
+   "requires_specific_legal_review": false,
+   "status": "RESEARCH_ONLY / NOT_REGISTERED / NOT_LIVE_VALIDATED",
+   "supplement_priority": "P2",
+   "supplement_relation": "NEW_OUTLET_CANDIDATE"
+  }
+ ],
+ "totals": {
+  "countries": 20,
+  "countries_with_acquisition_verified": [
+   "do"
+  ],
+  "outlet_candidates_by_stage": {
+   "CANDIDATE": 51,
+   "RESEARCHED": 63
+  },
+  "outlet_candidates_outside_the_registry": 63,
+  "registry_outlets": 82,
+  "registry_outlets_by_stage": {
+   "ACQUISITION_VERIFIED": 1,
+   "CANDIDATE": 79,
+   "OPERATIONALLY_STABLE": 0,
+   "REGISTERED": 5,
+   "RESEARCHED": 82,
+   "TECHNICALLY_QUALIFIED": 2
+  },
+  "supplement_by_classification": {
+   "KNOWN_ADDITIONAL_EVIDENCE": 4,
+   "KNOWN_IDENTICAL": 1,
+   "NEW_CHANNEL_FOR_EXISTING_OUTLET": 1,
+   "NEW_OUTLET_CANDIDATE": 3,
+   "OUTLET_ALREADY_PROPOSED": 10
+  },
+  "supplement_by_disposition": {
+   "DIFFERENT_CADENCE": 1,
+   "EVIDENCE_FOR_REVIEWED_WAVE": 1,
+   "EVIDENCE_ONLY": 2,
+   "HOLD_LEGAL_REVIEW": 1,
+   "LATER_WAVE": 3,
+   "NEEDS_CURRENT_EVIDENCE": 2,
+   "WAVE_C": 9
+  },
+  "supplement_entries": 19
+ },
+ "what_this_is": "a reading aid over the evidence files; not a registry. Research entries are hypotheses; only TECHNICALLY_QUALIFIED and later rest on this project's own observation"
+}

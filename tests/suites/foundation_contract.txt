@@ -48,3 +48,6 @@ test_extractor_candidates.py # pins, refusal without the pinned tool; with the t
 # Canary findings F1-F7, source discovery, the extended canary (CPD-0019)
 test_canary_findings.py      # regression tests of the findings of the first real canary: coded robots file, Sucuri challenge, foreign candidates, budgets and index expansion, DOCTYPE in CDATA, the 404 channel, candidate-budget coverage
 test_source_discovery.py     # the source-discovery inventory is the join of its evidence; the registration proposal applies to a copy and gives a canary the driver can pin
+# Source structures, consolidated overview, third wave, operator workflow (CPD-0020)
+test_source_structures.py    # feed families, the candidate budget keeps the newest, paginated HTML archives with dated teasers, an index read incrementally, a listing outlet end to end (all synthetic)
+test_source_expansion.py     # the qualification overview is the join of its inputs; outlets new to the registry enter only by an applied proposal; the operator's tool accepts a confirmation from a person at a terminal only

@@ -214,7 +214,7 @@ def cand(path, outlet=OUTLET):
 def test_generic_rules_are_about_the_url_only(path, decision, reason):
     row_ = CF.qualify(cand(path), channel_url_keys=frozenset({f"{WWW}/rss"}))
     assert (row_["decision"], row_["reasons"][0]) == (decision, reason)
-    assert row_["ruleset"] == "candidate-filter-generic/1+no-outlet-rules"
+    assert row_["ruleset"] == "candidate-filter-generic/2+no-outlet-rules"
 
 
 def test_outlet_rules_reject_allow_and_conflict():
@@ -229,7 +229,7 @@ def test_outlet_rules_reject_allow_and_conflict():
     assert conflict["decision"] == "DEFERRED" and conflict["reasons"][0] == "conflicting_rules"
     assert "outlet: allow_pattern ^/tag/destacado" in conflict["reasons"] and "outlet: path_prefix /tag" in conflict["reasons"]
     assert CF.qualify(cand("/galeria/1.jpg"), outlet_rules=rules)["decision"] == "REJECTED"
-    assert q("/x")["ruleset"] == "candidate-filter-generic/1+uy_diario_ejemplo-candidates/1"
+    assert q("/x")["ruleset"] == "candidate-filter-generic/2+uy_diario_ejemplo-candidates/1"
 
 
 def test_an_outlet_without_rules_gets_generic_rules_and_the_tracked_file_guesses_none():
