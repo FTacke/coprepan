@@ -1,0 +1,462 @@
+{
+  "baseline_id": "455b04bea0e46cb85b0ab96db3ec1114714267dc37b6555b0066b717545caf62",
+  "bytes": {
+    "preserved_objects": 2026480,
+    "received_bodies": 1810679
+  },
+  "channels": {
+    "ar_el_tribuno": [
+      "ar_el_tribuno:ch:rss_r001",
+      "ar_el_tribuno:ch:rss_r002"
+    ],
+    "bo_opinion": [
+      "bo_opinion:ch:rss_r001",
+      "bo_opinion:ch:rss_r002"
+    ],
+    "cu_14ymedio": [
+      "cu_14ymedio:ch:rss_r001",
+      "cu_14ymedio:ch:section_page_r001"
+    ],
+    "cu_cubanet": [
+      "cu_cubanet:ch:rss_r001",
+      "cu_cubanet:ch:archive_r001"
+    ],
+    "hn_criterio": [
+      "hn_criterio:ch:rss_r001",
+      "hn_criterio:ch:section_page_r001"
+    ],
+    "ni_articulo66": [
+      "ni_articulo66:ch:rss_r001",
+      "ni_articulo66:ch:archive_r001"
+    ],
+    "ni_nicaragua_investiga": [
+      "ni_nicaragua_investiga:ch:rss_r001"
+    ],
+    "pr_noticel": [
+      "pr_noticel:ch:section_page_r001"
+    ],
+    "uy_montevideo_portal": [
+      "uy_montevideo_portal:ch:rss_r001",
+      "uy_montevideo_portal:ch:rss_r002"
+    ]
+  },
+  "checkpoints": [
+    {
+      "after": "A_probe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "B_discovery",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ar_el_tribuno",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ar_el_tribuno",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:bo_opinion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:bo_opinion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_14ymedio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_14ymedio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:cu_cubanet",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:cu_cubanet",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:hn_criterio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:hn_criterio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ni_articulo66",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ni_articulo66",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ni_nicaragua_investiga",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ni_nicaragua_investiga",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pr_noticel",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pr_noticel",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:uy_montevideo_portal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:uy_montevideo_portal",
+      "classification": "INCOMPLETE_RESUMABLE"
+    }
+  ],
+  "commit": "25a182614ed69bb035c0b9d12286acd391535023",
+  "counts": {
+    "candidates": 454,
+    "discovery_documents_fetched": 16,
+    "failed": 0,
+    "fetch_records": 66,
+    "items_fetched": 41,
+    "pending": 0,
+    "preserved": 66,
+    "refused": 9,
+    "spooled_objects_pending": 0
+  },
+  "crawler_identity_sha256": "aa719a1e27f0fa3e3b04ed5826598a9b1b931a91391c77a98998a3651953bc4b",
+  "driver": "canary-driver/5",
+  "expansion_requests": {
+    "by_outlet": {
+      "ar_el_tribuno": 0,
+      "bo_opinion": 0,
+      "cu_14ymedio": 0,
+      "cu_cubanet": 0,
+      "hn_criterio": 2,
+      "ni_articulo66": 0,
+      "ni_nicaragua_investiga": 0,
+      "pr_noticel": 2,
+      "uy_montevideo_portal": 0
+    },
+    "total": 4
+  },
+  "fetcher_transport_calls": 73,
+  "finished_at": "2026-10-09T15:22:19.699684Z",
+  "operator_authorization": {
+    "authorization_id": "DOA-2026-10-09-1",
+    "authorization_sha256": "5bff88088e75ba27f337900ab18fbd030206ce87f10cc560c9c33ba56f6a8d38",
+    "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+    "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+    "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+    "record": "config/operator_authorizations/2026-10-09_waves-b-c1.json",
+    "wave": "wave-c1"
+  },
+  "outlets": [
+    "ar_el_tribuno",
+    "bo_opinion",
+    "cu_14ymedio",
+    "cu_cubanet",
+    "hn_criterio",
+    "ni_articulo66",
+    "ni_nicaragua_investiga",
+    "pr_noticel",
+    "uy_montevideo_portal"
+  ],
+  "packs": [
+    "pk1-ar_el_tribuno-20261009-000",
+    "pk1-bo_opinion-20261009-000",
+    "pk1-cu_14ymedio-20261009-000",
+    "pk1-cu_cubanet-20261009-000",
+    "pk1-hn_criterio-20261009-000",
+    "pk1-ni_articulo66-20261009-000",
+    "pk1-ni_nicaragua_investiga-20261009-000",
+    "pk1-pr_noticel-20261009-000",
+    "pk1-uy_montevideo_portal-20261009-000"
+  ],
+  "policy_layers": {
+    "acquisition_decisions": {
+      "ALLOW": 56,
+      "ALLOW_RESEARCH_OVERRIDE": 1,
+      "HOLD": 4,
+      "None": 5
+    },
+    "answered_2xx_under_research_override": 1,
+    "by_outlet": {
+      "ar_el_tribuno": {
+        "access_classes_observed": {
+          "none_observed": 13
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 12,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 12
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "680beae13ab4cb3581b53c6f979c984677b6fbdc5e5991ad7114d6eba754df66",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "bo_opinion": {
+        "access_classes_observed": {
+          "none_observed": 13
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 12,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 12
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "642a7265250440ab779d95136e22d3f9b1b02be9bfb325aa810b9b0a061f1b98",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cu_14ymedio": {
+        "access_classes_observed": {
+          "none_observed": 13
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 12,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 12
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "71e463fdaddc02a9f632061827ec3e8c9c1b91bcd6da81ca1745a3a3a62a98ac",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "cu_cubanet": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 2
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "e34ef70b9dea70c88e1fcfdeda9bf11648ab446895ec419f2bb953ef8e6c841e",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "hn_criterio": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 1,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 8,
+        "requests_under_research_override": 1,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 8,
+          "ROBOTS_DISALLOW_OBSERVED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "243d0ead7e941613e7a206540a78de7cc88ca0ccf4a20ee21539b30f1e701486",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ni_articulo66": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 2
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "f709ddb2d81551431f45255595aa70a8d361af2787cc36390458166597c93cfe",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "ni_nicaragua_investiga": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "None": 5,
+          "ROBOTS_UNAVAILABLE": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+            "outcome": "FETCHED",
+            "status": 404
+          }
+        ]
+      },
+      "pr_noticel": {
+        "access_classes_observed": {
+          "none_observed": 4
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 3,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 3
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2fdc70684a24b8482479974ae45dc00a9d1cb012e52a0c3c80c3e27c8fe68b6b",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "uy_montevideo_portal": {
+        "access_classes_observed": {
+          "none_observed": 4
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 3,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 3
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2a2609ba38c6cc2d6908d77fafe23b3668d391dafce11b430c24cb2506a157ba",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "direct_opt_outs": 0,
+    "holds": {
+      "ACCESS_CONTROL_OBSERVED": 4
+    },
+    "legal_review_holds": 0,
+    "outlets_with_access_control": [
+      "cu_cubanet",
+      "ni_articulo66"
+    ],
+    "outlets_with_applicable_disallow": [
+      "hn_criterio"
+    ],
+    "requests_stopped_by_access_control": 4,
+    "requests_under_research_override": 1,
+    "semantics": "robots-decision/2"
+  },
+  "policy_version": "canary/2026-10-09.1",
+  "refused": {
+    "DENIED:access_control_observed": 4,
+    "DENIED:canary_budget_exhausted": 5
+  },
+  "requests": {
+    "by_outlet": {
+      "ar_el_tribuno": {
+        "item": 10,
+        "other": 3
+      },
+      "bo_opinion": {
+        "item": 10,
+        "other": 3
+      },
+      "cu_14ymedio": {
+        "item": 10,
+        "other": 4
+      },
+      "cu_cubanet": {
+        "item": 0,
+        "other": 1
+      },
+      "hn_criterio": {
+        "item": 5,
+        "other": 5
+      },
+      "ni_articulo66": {
+        "item": 0,
+        "other": 1
+      },
+      "ni_nicaragua_investiga": {
+        "item": 10,
+        "other": 2
+      },
+      "pr_noticel": {
+        "item": 0,
+        "other": 4
+      },
+      "uy_montevideo_portal": {
+        "item": 2,
+        "other": 3
+      }
+    },
+    "item": 47,
+    "other": 26,
+    "total": 73
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "response_classes": {
+    "200": 62,
+    "403": 2,
+    "404": 1,
+    "503": 1
+  },
+  "run_id": "acq1-20261009T151252138498Z-114b77603c1f",
+  "schedule_policy_version": "canary/2026-10-08.1",
+  "schema": "coprepan-canary-receipt/v1",
+  "started_at": "2026-10-09T15:12:52.138498Z",
+  "status": "COMPLETE",
+  "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+}
