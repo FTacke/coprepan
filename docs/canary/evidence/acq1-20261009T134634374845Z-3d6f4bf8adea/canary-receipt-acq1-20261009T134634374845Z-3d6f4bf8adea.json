@@ -1,0 +1,281 @@
+{
+  "baseline_id": "9bd2da67d435a439c5ae1b52f7d3561c19c5907e18717f792381757bd8173977",
+  "bytes": {
+    "preserved_objects": 1934466,
+    "received_bodies": 1796017
+  },
+  "channels": {
+    "bo_el_deber": [
+      "bo_el_deber:ch:rss_main",
+      "bo_el_deber:ch:sitemap_main"
+    ],
+    "do_diario_libre": [
+      "do_diario_libre:ch:rss_main",
+      "do_diario_libre:ch:sitemap_sitemapnews"
+    ],
+    "hn_proceso_digital": [
+      "hn_proceso_digital:ch:rss_main",
+      "hn_proceso_digital:ch:sitemap_index_main"
+    ],
+    "py_la_nacion": [
+      "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"
+    ],
+    "ve_efecto_cocuyo": [
+      "ve_efecto_cocuyo:ch:rss_main",
+      "ve_efecto_cocuyo:ch:sitemap_index_main"
+    ]
+  },
+  "checkpoints": [
+    {
+      "after": "A_probe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "B_discovery",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:bo_el_deber",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:bo_el_deber",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:do_diario_libre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:do_diario_libre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:hn_proceso_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:hn_proceso_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:py_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:py_la_nacion",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ve_efecto_cocuyo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ve_efecto_cocuyo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    }
+  ],
+  "commit": "7ec0fa3598b22cf57de6e400acdcb40a9bdc1e81",
+  "counts": {
+    "candidates": 323,
+    "discovery_documents_fetched": 7,
+    "failed": 0,
+    "fetch_records": 43,
+    "items_fetched": 32,
+    "pending": 0,
+    "preserved": 43,
+    "refused": 12,
+    "spooled_objects_pending": 0
+  },
+  "crawler_identity_sha256": "aa719a1e27f0fa3e3b04ed5826598a9b1b931a91391c77a98998a3651953bc4b",
+  "driver": "canary-driver/4",
+  "expansion_requests": {
+    "by_outlet": {
+      "bo_el_deber": 0,
+      "do_diario_libre": 0,
+      "hn_proceso_digital": 0,
+      "py_la_nacion": 0,
+      "ve_efecto_cocuyo": 0
+    },
+    "total": 0
+  },
+  "fetcher_transport_calls": 45,
+  "finished_at": "2026-10-09T13:52:55.422928Z",
+  "outlets": [
+    "bo_el_deber",
+    "do_diario_libre",
+    "hn_proceso_digital",
+    "py_la_nacion",
+    "ve_efecto_cocuyo"
+  ],
+  "packs": [
+    "pk1-bo_el_deber-20261009-000",
+    "pk1-do_diario_libre-20261009-000",
+    "pk1-py_la_nacion-20261009-000",
+    "pk1-ve_efecto_cocuyo-20261009-000"
+  ],
+  "policy_layers": {
+    "acquisition_decisions": {
+      "ALLOW": 39,
+      "HOLD": 12
+    },
+    "answered_2xx_under_research_override": 0,
+    "by_outlet": {
+      "bo_el_deber": {
+        "access_classes_observed": {
+          "none_observed": 19
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 18,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 18
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "35db54211ae12f7f6db8c698cf6173119317a9aa4e60068985c6fb89c1fd1270",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "do_diario_libre": {
+        "access_classes_observed": {
+          "none_observed": 19
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 18,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 18
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "ebb96d72eee80ec0eedda779e23d6320641c9f7977f5a814c5042d1d42b9fdd2",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "hn_proceso_digital": {
+        "access_classes_observed": {},
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 2
+        },
+        "robots_files": []
+      },
+      "py_la_nacion": {
+        "access_classes_observed": {
+          "none_observed": 2
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 1,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "3ce58c99a05492a23f23ac0deb012e9a707c96b7b4bf9046e4126ed0f55c599c",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "ve_efecto_cocuyo": {
+        "access_classes_observed": {
+          "bot_challenge": 1,
+          "none_observed": 2
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 2,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 2,
+          "ROBOTS_NOT_EVALUATED": 10
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "70453822be931297aa1ebf3f8de09abdf4458a103ad29c8bda21ec68e4dd5d16",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "direct_opt_outs": 0,
+    "holds": {
+      "ACCESS_CONTROL_OBSERVED": 12
+    },
+    "legal_review_holds": 0,
+    "outlets_with_access_control": [
+      "ve_efecto_cocuyo"
+    ],
+    "outlets_with_applicable_disallow": [],
+    "requests_stopped_by_access_control": 12,
+    "requests_under_research_override": 0,
+    "semantics": "robots-decision/2"
+  },
+  "policy_version": "canary/2026-10-09.1",
+  "refused": {
+    "DENIED:access_control_observed": 12
+  },
+  "requests": {
+    "by_outlet": {
+      "bo_el_deber": {
+        "item": 16,
+        "other": 3
+      },
+      "do_diario_libre": {
+        "item": 16,
+        "other": 4
+      },
+      "hn_proceso_digital": {
+        "item": 0,
+        "other": 0
+      },
+      "py_la_nacion": {
+        "item": 0,
+        "other": 2
+      },
+      "ve_efecto_cocuyo": {
+        "item": 0,
+        "other": 4
+      }
+    },
+    "item": 32,
+    "other": 13,
+    "total": 45
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "response_classes": {
+    "200": 41,
+    "301": 1,
+    "403": 1
+  },
+  "run_id": "acq1-20261009T134634374845Z-3d6f4bf8adea",
+  "schedule_policy_version": "canary/2026-10-08.1",
+  "schema": "coprepan-canary-receipt/v1",
+  "started_at": "2026-10-09T13:46:34.374845Z",
+  "status": "COMPLETE",
+  "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+}

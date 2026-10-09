@@ -1,0 +1,70 @@
+{
+  "approved_baseline_sha256": "9bd2da67d435a439c5ae1b52f7d3561c19c5907e18717f792381757bd8173977",
+  "at": "2026-10-09T13:46:34.374845Z",
+  "budget": {
+    "channels_per_outlet": 2,
+    "discovery_max_bytes": 4194304,
+    "discovery_max_candidates": 200,
+    "discovery_max_depth": 2,
+    "discovery_max_documents": 4,
+    "expansion_requests_reserved_per_outlet": 3,
+    "item_requests_per_outlet": 16,
+    "item_requests_total": 80,
+    "other_requests_per_outlet": 8,
+    "outlets": 5
+  },
+  "crawler_identity": {
+    "operator": {
+      "contact_email": "felix.tacke@uni-marburg.de",
+      "contact_url": "https://coprepan.hispanistica.com/crawler/",
+      "crawler_name": "PanhispanicMediaResearchBot",
+      "organisation": "Marburg University"
+    },
+    "schema": "coprepan-crawler-identity/v1",
+    "scope": "external",
+    "software": {
+      "fetcher": "http-fetcher/1",
+      "name": "coprepan",
+      "version": "0.3.0"
+    },
+    "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+  },
+  "crawler_page": {
+    "crawler_page_sha256": "391d83160862efa92b492a4792ac76878333fe455ff56ad25fbc1e9554571dc7",
+    "public_check_utc": "2026-10-08T14:12:42Z",
+    "receipt": "DEPLOY_RECEIPT_2026-10-08b.json",
+    "receipt_sha256": "408e22626baeca3847628aa51de7b08fc63aff8d54a6268d0c979ccc267a8385",
+    "site_url": "https://coprepan.hispanistica.com/"
+  },
+  "driver": "canary-driver/4",
+  "hard_item_request_ceiling": 100,
+  "head": "a0b384377190758b62960cc7d2487bf2e5bf7e59",
+  "origin_main_as_last_fetched": "a0b384377190758b62960cc7d2487bf2e5bf7e59",
+  "outlets": [
+    "bo_el_deber",
+    "do_diario_libre",
+    "hn_proceso_digital",
+    "py_la_nacion",
+    "ve_efecto_cocuyo"
+  ],
+  "pinned_commit": "7ec0fa3598b22cf57de6e400acdcb40a9bdc1e81",
+  "policy_file_sha256": "c64e13ef2073319dd6649830ce761a3084a9cfa094d1a669738ee332a0e8a289",
+  "policy_version": "canary/2026-10-09.1",
+  "preflight": "READY",
+  "preservation_target": {
+    "marker_sha256": "e4714c8c004f3f83c095c40e9851a9446eee92ece84378a46f2ef729200ad8d7",
+    "target_id": "coprepan-preservation-interim-d"
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "run_id": "acq1-20261009T134634374845Z-3d6f4bf8adea",
+  "schema": "coprepan-canary-start-state/v1",
+  "spool_pending_records": 0,
+  "tests_passed": 1431,
+  "working_tree_clean": true
+}
