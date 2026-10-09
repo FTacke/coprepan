@@ -195,7 +195,8 @@ def test_events_record_what_was_listed_and_candidates_fold_by_url_key(tmp_path):
     assert events[0]["observed_url"] != events[1]["observed_url"]
     assert [tables.candidates[c]["url_key"] for c in result.candidates_new] == [
         ARTICLE, f"{WWW}/Regionales/puerto-separan-cargas", f"{WWW}/breves/123", f"{WWW}/docs/informe.pdf"]
-    assert tables.candidates[result.candidates_new[0]]["fetch_url"] == f"{ARTICLE}?utm_source=rss&utm_medium=feed"
+    # the request is made without the campaign tags (`channel-parser/6`, F13); the event keeps the URL as it was listed
+    assert tables.candidates[result.candidates_new[0]]["fetch_url"] == ARTICLE and events[0]["observed_url"].endswith("?utm_source=rss&utm_medium=feed")
     problems = [e["problem"] for e in events if e["relation"] == "item"]
     assert problems == [None, None, None, "no_link", None, "off_origin", "not_http", None]
     event = events[0]

@@ -373,8 +373,17 @@ def _strip_variant_markers(path: str, rules: OutletUrlRules) -> str:
             return path
 
 
+NAMELESS_QUERY = ""   # in ``significant_query_params``: a query component without ``=`` is kept (``auc.aspx?978027``)
+
+
 def _significant_query(query: str, significant: Sequence[str]) -> str:
-    """Keep the declared parameters only, each normalised, in a fixed order."""
+    """Keep the declared parameters only, each normalised, in a fixed order.
+
+    The empty name (:data:`NAMELESS_QUERY`) declares the **nameless** components significant: a
+    component without ``=``, which some sites use as the whole identifier of a page (canary finding
+    F12: ``auc.aspx?978027``). It keeps exactly those; a named parameter beside it is still dropped
+    unless it is declared too. An outlet that does not declare it is keyed as before.
+    """
     if not query or not significant:
         return ""
     wanted = set(significant)
@@ -384,7 +393,10 @@ def _significant_query(query: str, significant: Sequence[str]) -> str:
             continue
         name, separator, value = pair.partition("=")
         name = _normalise_escapes(name)
-        if name in wanted:
+        if not separator:
+            if NAMELESS_QUERY in wanted:
+                kept.append((name, "", ""))
+        elif name in wanted and name != NAMELESS_QUERY:
             kept.append((name, separator, _normalise_escapes(value)))
     return "&".join(f"{name}{separator}{value}" for name, separator, value in sorted(kept))
 

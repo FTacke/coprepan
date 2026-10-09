@@ -49,7 +49,9 @@ from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 # a whole Arc sitemap that states its own pages that way yielded no candidate.
 # /5 (wave B, 2026-10-09, finding F10): white space before the XML declaration is not part of the document that is
 # parsed (a WordPress feed and its sitemap index arrived with three empty lines in front and were unparseable).
-PARSER_VERSION = "channel-parser/5"
+# /6 (qualification run, 2026-10-09, finding F13): ``utm_`` parameters are not part of the URL that is requested
+# (`without_tracking`): a site that redirects them away cost a second request per article. The observed URL is kept.
+PARSER_VERSION = "channel-parser/6"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
 EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
@@ -397,6 +399,20 @@ class DiscoveryTables:
         return True
 
 
+def without_tracking(url: str, significant: Sequence[str] = ()) -> str:
+    """The URL without its ``utm_`` parameters — campaign tags that name where a link was shown, never a page.
+    Nothing else is touched: every other parameter, their order, the path and the fragment stay as stated, and a
+    ``utm_`` parameter an outlet declares significant is kept. The URL key never held these parameters; this is
+    about the request (finding F13: a site that redirects them away costs two requests per article).
+    """
+    parts = urlsplit(url)
+    if "utm_" not in parts.query:
+        return url
+    kept = [pair for pair in parts.query.split("&")
+            if not (pair.partition("=")[0].startswith("utm_") and pair.partition("=")[0] not in significant)]
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, "&".join(kept), parts.fragment))
+
+
 def https_for_registered_host(url: str, web_origins: Sequence[str]) -> str | None:
     """The https form of an http URL whose host the outlet has registered under https and not under
     http — or None, which is every other case. A publisher's own sitemap or feed sometimes states its pages
@@ -644,6 +660,9 @@ def discover_channel(
                 secure = https_for_registered_host(entry.url, rules.web_origins)
                 if secure is not None:                       # the observed URL stays as it was stated; the hint says what was done
                     row["resolved_url"], row["hints"] = secure, {**row["hints"], "scheme_read_as": "https"}
+                plain = without_tracking(row["resolved_url"], rules.significant_query_params)
+                if plain != row["resolved_url"]:
+                    row["resolved_url"], row["hints"] = plain, {**row["hints"], "tracking_parameters_removed": "utm_"}
                 try:
                     row["url_key"] = canonical_url_key(rules, requested_url=row["resolved_url"]).key
                     row["candidate_id"] = candidate_id(rules.outlet_id, row["url_key"])

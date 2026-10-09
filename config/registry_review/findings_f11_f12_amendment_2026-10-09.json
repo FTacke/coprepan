@@ -1,0 +1,49 @@
+{
+  "amendments": [
+    {
+      "add_channels": [],
+      "add_web_origins": [
+        "https://eluniverso.com"
+      ],
+      "evidence": [
+        {
+          "claim": "100 of 100 item links of the feed https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml are on https://eluniverso.com; the feed's own channel link and self link name the same host",
+          "how": "read from the answer preserved in wave B (run acq1-20261009T142840328590Z-ba05d926eee9, pack pk1-ec_el_universo-20261009-000, fetch id ending 622b4585); replayed offline, no request",
+          "source": "docs/canary/evidence/acq1-20261009T142840328590Z-ba05d926eee9/"
+        }
+      ],
+      "outlet_id": "ec_el_universo",
+      "reason": "F11: every article the outlet's own feed lists lies on the apex host; the registration held the www host only, so all 100 entries were off-origin and nothing was requested",
+      "url_rules": null
+    },
+    {
+      "add_channels": [],
+      "add_web_origins": [],
+      "evidence": [
+        {
+          "claim": "60 of 60 item links of the feeds anxml.aspx?59 and anxml.aspx?58 have the form https://www.montevideo.com.uy/auc.aspx?<digits>; the one that was requested redirected to an article address under /Noticias/",
+          "how": "read from the discovery events and the request log of wave C1 (run acq1-20261009T151252138498Z-114b77603c1f); no request",
+          "source": "docs/canary/evidence/acq1-20261009T151252138498Z-114b77603c1f/"
+        }
+      ],
+      "outlet_id": "uy_montevideo_portal",
+      "reason": "F12: the feeds link each article as auc.aspx?<number>, a query without a parameter name; the URL key dropped it and 60 entries of two feeds were one candidate",
+      "url_rules": {
+        "basis": "the nameless query component is the article's identifier in the addresses the outlet's feeds state; every named parameter is still dropped. The empty name declares nameless components significant (identity.NAMELESS_QUERY)",
+        "significant_query_params": [
+          ""
+        ],
+        "version": "uy_montevideo_portal-url-rules/v2"
+      }
+    }
+  ],
+  "authority": "reviewed and approved by Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository under the operator's brief of 2026-10-09 'Comprehensive Source Qualification, Registry Expansion & Intake Readiness' (DELEGATED_OPERATOR_AUTHORIZATION; issued by Felix Tacke (operator of CO.PRE.PAN)); amendment 2026-10-09 prepared by an agent run (CPD-0025)",
+  "gate": "O-11",
+  "prepared_on": "2026-10-09",
+  "purpose": "what the canaries of 2026-10-09 showed about two registered outlets whose registration could not yield an article: the origin its own feed names (F11) and the query that identifies its articles (F12)",
+  "record_stem": "findings_f11_f12",
+  "registry_sha256_after": "1fd06663eaefd6821db57b40f610a3d35103de2dc3cc2c2021ec2fa0082cc4fb",
+  "registry_sha256_before": "d1b80dfd2793a62115f757a4d01b36c0398e5997dbe188b8da326e7e871533c1",
+  "reviewed_on": "2026-10-09",
+  "schema": "coprepan-registry-amendment/v1"
+}

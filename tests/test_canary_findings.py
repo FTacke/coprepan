@@ -418,7 +418,7 @@ def test_a_feed_that_carries_html_documents_in_cdata_is_read():
     parsed = discovery.parse_channel_document(fixture("rss_cdata_doctype.xml"), document_url=f"{WWW}/feed/", declared_content_type="application/rss+xml")
     assert (parsed.outcome, parsed.format, parsed.problems) == ("PARSED", "rss", ())
     assert [e.url for e in parsed.entries] == [f"{WWW}/economia/puerto-amplia-terminal/", f"{WWW}/regionales/lluvias-en-el-norte/"]
-    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/5"
+    assert parsed.entries[0].hints["published"] == "Thu, 08 Oct 2026 20:25:50 +0000" and discovery.PARSER_VERSION == "channel-parser/6"
 
 
 LAUGHS = (b'<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;&lol;&lol;">]>'
@@ -482,7 +482,7 @@ def test_an_http_entry_of_a_host_registered_under_https_is_read_as_https_and_not
     assert events[0]["observed_url"].startswith("http://") and events[0]["resolved_url"].startswith("https://www.diario.example/")
     assert events[0]["hints"]["scheme_read_as"] == "https" and "scheme_read_as" not in events[1]["hints"]
     assert all(tables.candidates[c]["fetch_url"].startswith("https://www.diario.example/") for c in result.candidates_new)
-    assert discovery.PARSER_VERSION == "channel-parser/5"
+    assert discovery.PARSER_VERSION == "channel-parser/6"
 
 
 # --- F9, F10 (wave B, 2026-10-09) --------------------------------------------------------------------------
@@ -529,7 +529,118 @@ def test_white_space_before_the_xml_declaration_does_not_make_a_feed_or_an_index
     assert discovery.parse_channel_document(b"\n\n \n", document_url=f"{WWW}/feed/").problems == ("empty_document",)
     assert discovery.parse_channel_document(front + b'<?xml version="1.0"?><!DOCTYPE rss [<!ENTITY x "y">]><rss/>', document_url=f"{WWW}/feed/").problems == (
         "dtd_or_entity_declaration_refused",)
-    assert discovery.PARSER_VERSION == "channel-parser/5"
+    assert discovery.PARSER_VERSION == "channel-parser/6"
+
+
+# --- F11, F12, F13 and the scope of an allow rule (qualification run, 2026-10-09) ------------------------------
+
+
+def test_a_nameless_query_is_kept_only_for_an_outlet_that_declares_it_and_named_parameters_are_still_dropped():
+    """``uy_montevideo_portal`` links each article as ``auc.aspx?978027``: 60 feed entries were one candidate (F12)."""
+    from coprepan.identity import NAMELESS_QUERY, OutletUrlRules, canonical_url_key
+
+    origin = "https://www.portal.example"
+    generic = OutletUrlRules("uy_portal", (origin,), "uy_portal-url-rules/v1")
+    declared = OutletUrlRules("uy_portal", (origin,), "uy_portal-url-rules/v2", (NAMELESS_QUERY,))
+    key = lambda rules, url: canonical_url_key(rules, requested_url=url).key  # noqa: E731
+    assert key(generic, f"{origin}/auc.aspx?978027") == key(generic, f"{origin}/auc.aspx?978024") == f"{origin}/auc.aspx"     # the defect
+    assert key(declared, f"{origin}/auc.aspx?978027") == f"{origin}/auc.aspx?978027" != key(declared, f"{origin}/auc.aspx?978024")
+    # tracking and other named parameters beside it are dropped; the order does not matter; a key of a key is the key
+    assert key(declared, f"{origin}/auc.aspx?utm_source=rss&978027&fbclid=x") == f"{origin}/auc.aspx?978027"
+    assert key(declared, f"{origin}/auc.aspx?978027&utm_medium=feed") == key(declared, key(declared, f"{origin}/auc.aspx?978027"))
+    assert key(declared, f"{origin}/Noticias/una-nota-uc978027?utm_source=x") == f"{origin}/Noticias/una-nota-uc978027"     # an ordinary address is unchanged
+    assert key(declared, f"{origin}/x?id=7") == f"{origin}/x"                                                                  # `id` is not declared
+    both = OutletUrlRules("uy_portal", (origin,), "uy_portal-url-rules/v3", (NAMELESS_QUERY, "id"))
+    assert key(both, f"{origin}/x?id=7&abc") == f"{origin}/x?abc&id=7"
+    tracked = R.load_registry(CHECKOUT / "config" / "outlet_registry.json")
+    assert tracked.url_rules("uy_montevideo_portal").significant_query_params == (NAMELESS_QUERY,)
+    assert [o for o in tracked.outlets.values() if o["url_rules"]["significant_query_params"]] == [tracked.outlets["uy_montevideo_portal"]]
+    assert tracked.outlets["ec_el_universo"]["web_origins"] == ["https://www.eluniverso.com", "https://eluniverso.com"]             # F11
+
+
+def test_campaign_tags_are_not_requested_and_nothing_else_about_a_url_changes(tmp_path):
+    """``ni_nicaragua_investiga``'s feed links carried ``utm_`` tags the site redirected away: ten requests for five pages (F13)."""
+    plain = discovery.without_tracking
+    assert plain("https://d.example/a/?utm_source=rss&utm_medium=feed") == "https://d.example/a/"
+    assert plain("https://d.example/a?id=7&utm_campaign=x&page=2#top") == "https://d.example/a?id=7&page=2#top"
+    assert plain("https://d.example/a?utm_source=x&978027") == "https://d.example/a?978027"
+    for untouched in ("https://d.example/a", "https://d.example/a?id=7&fbclid=1", "https://d.example/utm_source/a", "https://d.example/a?autm_x=1&mutm_=2", "https://d.example/a?UTM_Source=x"):   # the lower-case tags only
+        assert plain(untouched) == untouched
+    assert plain("https://d.example/a?utm_source=rss", ("utm_source",)) == "https://d.example/a?utm_source=rss"      # declared significant: kept
+
+    rules = discovery.OutletUrlRules(OUTLET, (WWW,), f"{OUTLET}-url-rules/v1")
+    body = feed((f"{WWW}/nota/1?utm_source=rss&amp;utm_medium=feed", f"{WWW}/nota/2"))
+
+    def provider(url, depth):
+        return discovery.ChannelDocument(url, url, fid(url), body, "application/rss+xml", "identity")
+
+    tables = discovery.DiscoveryTables(tmp_path / "discovery")
+    result = discovery.discover_channel(tables, rules, channel_id=CHANNEL, start_url=f"{WWW}/feed/", provider=provider, budget=BUDGET, run_id=RUN_ID, discovered_at=T0)
+    events = sorted(tables.events.values(), key=lambda row: row["position"])
+    assert events[0]["observed_url"].endswith("utm_medium=feed") and events[0]["resolved_url"] == f"{WWW}/nota/1"
+    assert events[0]["hints"]["tracking_parameters_removed"] == "utm_" and "tracking_parameters_removed" not in events[1]["hints"]
+    assert [tables.candidates[c]["fetch_url"] for c in result.candidates_new] == [f"{WWW}/nota/1", f"{WWW}/nota/2"]
+
+
+def test_an_allow_rule_sorts_what_a_listing_names_and_does_not_narrow_a_feed_of_the_same_outlet():
+    rules = {"version": "v1", "reject_path_prefixes": ["/temas"], "reject_path_patterns": [], "allow_path_patterns": [r"^/cuba/[a-z0-9-]+_1_[0-9]+[.]html$"]}
+    listing = frozenset({f"{OUTLET}:ch:section_page_001"})
+
+    def decide(path, channel):
+        return candidate_filter.qualify({"candidate_id": f"{OUTLET}:cand:x", "outlet_id": OUTLET, "url_key": f"{WWW}{path}", "first_channel_id": channel},
+                                        outlet_rules=rules, listing_channel_ids=listing)["decision"]
+
+    assert decide("/cuba/una-nota_1_1131569.html", f"{OUTLET}:ch:section_page_001") == "QUALIFIED"
+    assert decide("/cultura/otra-nota_1_1131570.html", f"{OUTLET}:ch:section_page_001") == "REJECTED"          # listed, and not what the rule calls an article
+    assert decide("/cultura/otra-nota_1_1131570.html", f"{OUTLET}:ch:rss_001") == "QUALIFIED"                   # the feed's own entry: not narrowed
+    assert decide("/temas/cine/", f"{OUTLET}:ch:rss_001") == "REJECTED"                                         # a reject rule applies to every candidate
+
+
+def test_an_amendment_adds_to_a_registration_and_refuses_everything_else(tmp_path):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("amend_registration_under_test", CHECKOUT / "scripts" / "amend_registration.py")
+    amender = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(amender)
+    document = json.loads((CHECKOUT / "config" / "outlet_registry.json").read_text(encoding="utf-8"))
+    evidence = [{"claim": "c", "how": "h", "source": "s"}]
+
+    def amendment(**entry):
+        return {"schema": "coprepan-registry-amendment/v1", "gate": "O-11", "record_stem": "t", "prepared_on": "2026-10-09", "purpose": "p",
+                "amendments": [{"outlet_id": "bo_el_deber", "reason": "r", "add_web_origins": [], "url_rules": None, "add_channels": [], "evidence": evidence, **entry}]}
+
+    apply = lambda a: amender.apply(a, document, approved_by="A Tester", approved_on="2026-10-09")  # noqa: E731
+    result = apply(amendment(add_web_origins=["https://www.eldeber.com.bo"]))
+    amended = {o["outlet_id"]: o for o in result["registry"]["outlets"]}["bo_el_deber"]
+    assert amended["web_origins"] == ["https://eldeber.com.bo", "https://www.eldeber.com.bo"]                   # added at the end: the canonical origin stays first
+    assert result["record"]["registry_sha256_before"] != result["record"]["registry_sha256_after"] and "A Tester" in result["record"]["authority"]
+    for refused in (amendment(), amendment(add_web_origins=["https://eldeber.com.bo"]), amendment(add_web_origins=["https://www.diariolibre.com"]),
+                    amendment(outlet_id="co_el_tiempo", add_web_origins=["https://x.example"]), amendment(add_web_origins=["https://x.example"], evidence=[]),
+                    amendment(add_web_origins=["https://x.example"], reason=""), amendment(url_rules={"version": "bo_el_deber-url-rules/v1", "significant_query_params": [], "basis": "b"}),
+                    amendment(add_web_origins=["https://x.example"], force=True), {**amendment(add_web_origins=["https://x.example"]), "gate": "O-1"}):
+        with pytest.raises((amender.AmendmentError, R.RegistryError)):
+            apply(refused)
+    with pytest.raises(amender.AmendmentError):
+        amender.apply(amendment(add_web_origins=["https://x.example"]), document, approved_by=" ", approved_on="2026-10-09")
+
+
+def test_every_outlet_hypothesis_has_one_disposition_and_what_is_registered_is_what_the_rules_registered():
+    dispositions = json.loads((CHECKOUT / "config" / "source_discovery" / "qualification_dispositions_2026-10-09.json").read_text(encoding="utf-8"))
+    rows = dispositions["dispositions"]
+    assert dispositions["hypotheses"] == len(rows) == len({row["outlet_id"] for row in rows}) == 145
+    assert dispositions["by_disposition"] == {"ALREADY_REGISTERED": 22, "CLOSED": 2, "DOMAIN_CHANGE": 2, "IDENTITY_OPEN": 2, "LEGAL_HOLD": 1,
+                                              "NO_EVIDENCED_CHANNEL": 22, "NO_ORIGIN": 2, "REGISTER": 92}
+    assert all(row["reason"] for row in rows)
+    by_id = {row["outlet_id"]: row for row in rows}
+    assert by_id["co_el_tiempo"]["disposition"] == "LEGAL_HOLD" and by_id["bo_pagina_siete"]["disposition"] == "CLOSED"
+    tracked = R.load_registry(CHECKOUT / "config" / "outlet_registry.json")
+    registered = {o["outlet_id"] for o in tracked.outlets.values() if o["registration_status"] == "registered"}
+    assert registered == {row["outlet_id"] for row in rows if row["disposition"] in ("REGISTER", "ALREADY_REGISTERED")} and len(registered) == 114
+    assert "co_el_tiempo" not in registered
+    # a deferred hypothesis of the registry stays proposed; one from research alone is not in the registry at all
+    for row in rows:
+        if row["disposition"] not in ("REGISTER", "ALREADY_REGISTERED"):
+            assert (tracked.outlets[row["outlet_id"]]["registration_status"] == "proposed") if row["in_registry_before"] else (row["outlet_id"] not in tracked.outlets)
 
 
 # --- F14 (wave C2, 2026-10-09): a second run for an outlet on a day whose pack is sealed ---------------------
@@ -628,7 +739,7 @@ def test_a_listing_channel_is_read_and_what_it_lists_waits_for_an_allow_rule():
     assert candidate_filter.qualify(candidate("/2026/10/09/nota", f"{OUTLET}:ch:archive_001"), outlet_rules=rules, listing_channel_ids=listing)["decision"] == "QUALIFIED"
     assert candidate_filter.qualify(candidate("/contacto", f"{OUTLET}:ch:archive_001"), outlet_rules=rules, listing_channel_ids=listing)["decision"] == "REJECTED"
     assert candidate_filter.qualify(candidate("/logo.png", f"{OUTLET}:ch:archive_001"), listing_channel_ids=listing)["decision"] == "REJECTED"
-    assert candidate_filter.GENERIC_RULESET == "candidate-filter-generic/2"
+    assert candidate_filter.GENERIC_RULESET == "candidate-filter-generic/3"
 
 
 # --- F7: what the candidate budget of a pass keeps out -----------------------------------------------------

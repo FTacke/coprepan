@@ -98,7 +98,7 @@ def test_the_check_returns_the_block_a_baseline_pins():
 
 
 @pytest.mark.parametrize("changes, said", [
-    ({"outlets": [*OUTLETS, "ar_clarin"]}, "not authorised: ['ar_clarin']"),
+    ({"outlets": [*OUTLETS, "bo_pagina_siete"]}, "not authorised: ['bo_pagina_siete']"),
     ({"outlets": OUTLETS[:4]}, "missing: ['ve_efecto_cocuyo']"),
     ({"outlets": [*OUTLETS[:4], "co_el_tiempo"]}, "co_el_tiempo"),
     ({"budget": {**FIVE.as_record(), "item_requests_per_outlet": 17}}, "exceeds the authorised limits"),
@@ -189,12 +189,12 @@ def test_a_waves_limits_can_only_lower_the_budget_and_allow_a_canary_smaller_tha
     two = budget(2, {"item_requests_total": 20, "item_requests_per_outlet": 10, "other_requests_per_outlet": 8, "total_requests_ceiling": 36})
     assert (two.outlets, two.item_requests_per_outlet, two.item_requests_total, two.other_requests_per_outlet, two.total_requests_ceiling) == (2, 10, 20, 8, 36)
     generous = {"item_requests_total": 10_000, "item_requests_per_outlet": 500, "other_requests_per_outlet": 99, "total_requests_ceiling": 99_999}
-    for outlets in range(1, 16):                                                               # a generous wave raises nothing
+    for outlets in range(1, 25):                                                               # a generous wave raises nothing
         capped = budget(outlets, generous)
         assert capped.item_requests_per_outlet <= 16 and capped.item_requests_total <= canary_driver.HARD_ITEM_REQUESTS and capped.other_requests_per_outlet == 8
     tight = budget(5, {"item_requests_total": 7, "item_requests_per_outlet": 3, "other_requests_per_outlet": 2, "total_requests_ceiling": 17})
     assert (tight.item_requests_per_outlet, tight.item_requests_total, tight.other_requests_per_outlet, tight.expansion_requests_reserved_per_outlet) == (3, 7, 2, 2)
-    for outlets in (0, 16):
+    for outlets in (0, 25):
         with pytest.raises(canary_driver.CanaryStopped):
             budget(outlets, generous)
     for outlets in (1, 2, 4, 16):                                                              # without a wave nothing changed: five, or six to fifteen
@@ -380,13 +380,13 @@ def test_an_edited_unpushed_or_invalid_record_is_refused_before_arming(world):  
 
 
 @pytest.mark.parametrize("change, wave", [
-    (lambda r: r["waves"][0].update(outlets=[*OUTLETS[:4], "ar_clarin"]), "wave-t"),               # an outlet that is not registered
+    (lambda r: r["waves"][0].update(outlets=[*OUTLETS[:4], "bo_pagina_siete"]), "wave-t"),               # an outlet that is not registered
     (lambda r: r["waves"][0]["limits"].update(total_requests_ceiling=119), "wave-t"),                # the one limit the cap does not lower (CPD-0024): refused
     (lambda r: r.update(policy_versions=["canary/2020-01-01.1"]), "wave-t"),
     (lambda r: r.update(valid_until="2026-10-09"), "wave-t"),                                      # out of date on the day of the run
     (lambda r: r["waves"][1]["registration"].update(proposal_sha256="0" * 64), "wave-r"),          # another proposal than the one named
     (lambda r: r["waves"][1]["registration"].update(proposal="config/registry_review/absent.json"), "wave-r"),
-    (lambda r: r["waves"][1]["registration"].update(only=["ar_clarin"]), "wave-r"),                # registers outside the wave
+    (lambda r: r["waves"][1]["registration"].update(only=["bo_pagina_siete"]), "wave-r"),                # registers outside the wave
     (lambda r: r.update(kind="SOMETHING_ELSE"), "wave-t")])
 def test_a_scope_the_record_does_not_cover_stops_before_arming(world, change, wave):  # noqa: F811
     record = copy.deepcopy(a_record())
@@ -407,7 +407,7 @@ def test_a_wave_with_a_registration_runs_when_the_proposal_is_the_one_named(worl
 def test_the_delegated_mode_takes_nothing_else_and_offers_no_force(world):  # noqa: F811
     commission(world)
     record = str(world.work / RECORD)
-    for arguments in (["--authorization", record], ["--wave", "wave-t"], ["--authorization", record, "--wave", "wave-t", "--outlet", "ar_clarin"],
+    for arguments in (["--authorization", record], ["--wave", "wave-t"], ["--authorization", record, "--wave", "wave-t", "--outlet", "bo_pagina_siete"],
                       ["--authorization", record, "--wave", "wave-t", "--label", "other"], ["--authorization", record, "--wave", "wave-t", "--operator", "A Person"],
                       ["--authorization", record, "--wave", "wave-t", "--force"], ["--authorization", record, "--wave", "wave-t", "--skip-tests"],
                       ["--authorization", record, "--wave", "wave-t", "--budget", "200"], ["--authorization", record, "--wave", "wave-t", "--confirm", DIGEST],

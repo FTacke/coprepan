@@ -536,7 +536,7 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 
 | Kind | Form or values | Defined in |
 |---|---|---|
-| component versions | `channel-parser/5` (F8, F10: 2026-10-09), `candidate-filter-generic/2`, `canary-driver/5` (F9: 2026-10-09), `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1` | CPD-0020 §1–§3 |
+| component versions | `channel-parser/6` (F8, F10, F13: 2026-10-09), `candidate-filter-generic/3` (allow patterns apply to listed candidates only), `canary-driver/5` (F9: 2026-10-09), `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1` | CPD-0020 §1–§3 |
 | qualification reason (added) | `generic: listed_by_a_listing_channel_and_no_outlet_allow_rule` (decision `DEFERRED`) | CPD-0020 §2 |
 | **listing channel** (term) | a registry channel of kind `archive` or `section_page`: an HTML page that lists articles beside navigation | CPD-0020 §2 |
 | **analytic stages** (a reading aid; the flags of CPD-0019 §8 under the brief's names) | `RESEARCHED`, `CANDIDATE`, `TECHNICALLY_QUALIFIED`, `REGISTERED`, `ACQUISITION_VERIFIED`, `OPERATIONALLY_STABLE` | CPD-0020 §5 |

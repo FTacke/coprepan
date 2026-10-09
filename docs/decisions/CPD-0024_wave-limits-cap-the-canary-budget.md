@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-09) | [CPD-0025](CPD-0025_comprehensive-source-qualification.md): a canary under a wave may be one to 24 outlets. This record is otherwise unchanged |
 | Decided by | the run commissioned by the operator's brief of 2026-10-09 ("Autonomous Acquisition: Safe Recovery, Delegated Operator & Three-Wave Execution"), §7: wave C2 is authorised for "nur diejenigen [Outlets] mit nachweislich qualifizierten HTML-Listing-Regeln", with "maximal zehn zusätzliche Item-Requests je betroffenem Outlet". The mechanism is the run's technical choice, subject to the operator's review |
 | Kind | procedure · budgets |
 | Scope | `canary_driver.canary_budget` when a canary runs under a wave of a delegated operator authorisation |

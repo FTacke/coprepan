@@ -95,12 +95,12 @@ def failed(report):
 
 
 def test_as_committed_the_canary_may_not_run_and_every_gate_says_why():
-    report = CN.preflight(outlet_ids=["uy_el_pais"], tests_passed=None, tests_commit=None, code_commit=COMMIT,
+    report = CN.preflight(outlet_ids=["co_el_tiempo"], tests_passed=None, tests_commit=None, code_commit=COMMIT,
                           approved_baseline=None, required_free_bytes=None, now=NOW, environment={})
     assert report["status"] == "NOT_READY" and report["schema"] == "coprepan-canary-preflight/v1"
     switch_off = P.load_policy()["external_acquisition"] == "disabled"
     assert failed(report) == {
-        "outlet_registered:uy_el_pais": "O-11", **({"acquisition_policy_decided": "O-1"} if switch_off else {}),
+        "outlet_registered:co_el_tiempo": "O-11", **({"acquisition_policy_decided": "O-1"} if switch_off else {}),
         "preservation_target_ready": "O-3", "runtime_workspace_configured": "O-3",
         "tests_green_on_this_commit": "engineering", "no_configuration_drift": "canary_approval"}
     assert report["open_by_gate"] == {**({"O-1": 1} if switch_off else {}), "O-11": 1, "O-3": 2, "canary_approval": 1, "engineering": 1}
@@ -116,7 +116,7 @@ def test_as_committed_the_canary_may_not_run_and_every_gate_says_why():
 
 
 def test_the_command_exits_non_zero_until_everything_passes(capsys):
-    assert CN.main(["preflight", "--outlet", "uy_el_pais", "--commit", COMMIT]) == 1
+    assert CN.main(["preflight", "--outlet", "co_el_tiempo", "--commit", COMMIT]) == 1
     assert json.loads(capsys.readouterr().out)["status"] == "NOT_READY"
     assert CN.main(["plan", "--outlets", "5", "--seed", "canary-1"]) == 0
     assert json.loads(capsys.readouterr().out)["outlets_selected"] == 5     # planning selects; it starts nothing

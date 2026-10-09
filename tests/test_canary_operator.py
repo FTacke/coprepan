@@ -253,7 +253,7 @@ def test_a_wrong_digest_freezes_nothing_and_disarms(world, typed):
 def test_the_scope_is_refused_before_anything_is_armed(world, capsys):
     commits = git(world.work, "rev-list", "--count", "HEAD")
     assert operate(world, outlets=["bo_el_deber"]) == 1                                  # one outlet is not a canary
-    assert operate(world, outlets=[*OUTLETS[:4], "ar_clarin"]) == 1                      # proposed, not registered
+    assert operate(world, outlets=[*OUTLETS[:4], "bo_pagina_siete"]) == 1                      # proposed, not registered
     assert operate(world, outlets=[*OUTLETS, "bo_el_deber"]) == 1                        # named twice
     assert world.calls == [] and git(world.work, "rev-list", "--count", "HEAD") == commits
     assert capsys.readouterr().out.count("STOPPED") == 3

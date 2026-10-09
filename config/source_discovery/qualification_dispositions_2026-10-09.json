@@ -1,0 +1,1868 @@
+{
+  "by_disposition": {
+    "ALREADY_REGISTERED": 22,
+    "CLOSED": 2,
+    "DOMAIN_CHANGE": 2,
+    "IDENTITY_OPEN": 2,
+    "LEGAL_HOLD": 1,
+    "NO_EVIDENCED_CHANNEL": 22,
+    "NO_ORIGIN": 2,
+    "REGISTER": 92
+  },
+  "dispositions": [
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Clarín",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.clarin.com"
+      ],
+      "outlet_id": "ar_clarin",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "El Tribuno",
+      "origins": [
+        "https://www.eltribuno.com"
+      ],
+      "outlet_id": "ar_el_tribuno",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Infobae",
+      "operating_status": null,
+      "origins": [
+        "https://www.infobae.com"
+      ],
+      "outlet_id": "ar_infobae",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "La Nación",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.lanacion.com.ar"
+      ],
+      "outlet_id": "ar_la_nacion",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "Página/12",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.pagina12.com.ar"
+      ],
+      "outlet_id": "ar_pagina12",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Perfil",
+      "operating_status": null,
+      "origins": [
+        "https://www.perfil.com"
+      ],
+      "outlet_id": "ar_perfil",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ar",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Río Negro",
+      "operating_status": null,
+      "origins": [
+        "https://www.rionegro.com.ar"
+      ],
+      "outlet_id": "ar_rio_negro",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Brújula Digital",
+      "operating_status": null,
+      "origins": [
+        "https://brujuladigital.net"
+      ],
+      "outlet_id": "bo_brujula_digital",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Correo del Sur",
+      "operating_status": null,
+      "origins": [
+        "https://correodelsur.com"
+      ],
+      "outlet_id": "bo_correo_del_sur",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "El Deber",
+      "origins": [
+        "https://eldeber.com.bo"
+      ],
+      "outlet_id": "bo_el_deber",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El Diario",
+      "operating_status": "uncertain",
+      "origins": [
+        "https://www.eldiario.net"
+      ],
+      "outlet_id": "bo_eldiario",
+      "reason": "no channel from the legacy system, a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "DOMAIN_CHANGE",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "La Razón",
+      "operating_status": "moved",
+      "origins": [
+        "https://www.la-razon.com"
+      ],
+      "outlet_id": "bo_la_razon",
+      "reason": "Current content is indexed under larazon.bo (article dated 2026-07-04 in search results); registry origin www.la-razon.com is the older domain and Metawatch reports it blocked by Cloudflare"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "Los Tiempos",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.lostiempos.com"
+      ],
+      "outlet_id": "bo_lostiempos",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Opinión",
+      "origins": [
+        "https://www.opinion.com.bo"
+      ],
+      "outlet_id": "bo_opinion",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "bo",
+      "disposition": "CLOSED",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "Página Siete",
+      "operating_status": "closed",
+      "origins": [
+        "https://www.paginasiete.bo"
+      ],
+      "outlet_id": "bo_pagina_siete",
+      "reason": "Last edition 2023-06-29; board chairman Raúl Garafulic announced closure after 13 years citing economic asphyxiation"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "BioBioChile",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.biobiochile.cl"
+      ],
+      "outlet_id": "cl_biobiochile",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Cooperativa",
+      "operating_status": null,
+      "origins": [
+        "https://www.cooperativa.cl"
+      ],
+      "outlet_id": "cl_cooperativa",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "IDENTITY_OPEN",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Mercurio",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.emol.com"
+      ],
+      "outlet_id": "cl_el_mercurio",
+      "reason": "the registry's origin is emol.com, the group's free portal; whether the outlet is Emol or El Mercurio is an open corpus-supply decision"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "La Discusión",
+      "operating_status": null,
+      "origins": [
+        "https://ladiscusion.cl"
+      ],
+      "outlet_id": "cl_la_discusion",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "La Tercera",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.latercera.com"
+      ],
+      "outlet_id": "cl_la_tercera",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cl",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "The Clinic",
+      "operating_status": null,
+      "origins": [
+        "https://www.theclinic.cl"
+      ],
+      "outlet_id": "cl_the_clinic",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario del Huila",
+      "operating_status": null,
+      "origins": [
+        "https://diariodelhuila.com"
+      ],
+      "outlet_id": "co_diario_del_huila",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El Espectador",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elespectador.com"
+      ],
+      "outlet_id": "co_el_espectador",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Nuevo Siglo",
+      "operating_status": null,
+      "origins": [
+        "https://www.elnuevosiglo.com.co"
+      ],
+      "outlet_id": "co_el_nuevo_siglo",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "LEGAL_HOLD",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El Tiempo",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.eltiempo.com"
+      ],
+      "outlet_id": "co_el_tiempo",
+      "reason": "excluded until a separate licence / TDM decision (the operator's brief of 2026-10-09)"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El Colombiano",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elcolombiano.com"
+      ],
+      "outlet_id": "co_elcolombiano",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "El País",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elpais.com.co"
+      ],
+      "outlet_id": "co_elpais",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "co",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "La Silla Vacía",
+      "operating_status": null,
+      "origins": [
+        "https://www.lasillavacia.com"
+      ],
+      "outlet_id": "co_la_silla_vacia",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "co",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "Semana",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.semana.com"
+      ],
+      "outlet_id": "co_semana",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "CRHoy",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.crhoy.com"
+      ],
+      "outlet_id": "cr_crhoy",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Delfino.cr",
+      "operating_status": null,
+      "origins": [
+        "https://delfino.cr"
+      ],
+      "outlet_id": "cr_delfino_cr",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "Diario Extra",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.diarioextra.com"
+      ],
+      "outlet_id": "cr_diario_extra",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Observador",
+      "operating_status": null,
+      "origins": [
+        "https://observador.cr"
+      ],
+      "outlet_id": "cr_el_observador",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "La Nación",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.nacion.com"
+      ],
+      "outlet_id": "cr_la_nacion",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cr",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Semanario Universidad",
+      "operating_status": null,
+      "origins": [
+        "https://semanariouniversidad.com"
+      ],
+      "outlet_id": "cr_semanario_universidad",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "14ymedio",
+      "origins": [
+        "https://www.14ymedio.com"
+      ],
+      "outlet_id": "cu_14ymedio",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "5 de Septiembre",
+      "operating_status": null,
+      "origins": [
+        "https://www.5septiembre.cu"
+      ],
+      "outlet_id": "cu_5_de_septiembre",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "CubaNet",
+      "origins": [
+        "https://www.cubanet.org"
+      ],
+      "outlet_id": "cu_cubanet",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "NO_ORIGIN",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario de Cuba",
+      "operating_status": null,
+      "origins": [],
+      "outlet_id": "cu_diario_de_cuba",
+      "reason": "research names the outlet and no origin"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Granma",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.granma.cu"
+      ],
+      "outlet_id": "cu_granma",
+      "reason": "no channel from the legacy system, a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Havana Times",
+      "operating_status": "operating",
+      "origins": [
+        "https://havanatimesenespanol.org"
+      ],
+      "outlet_id": "cu_havanatimes",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Juventud Rebelde",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.juventudrebelde.cu"
+      ],
+      "outlet_id": "cu_juventud_rebelde",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "Periódico 26",
+      "operating_status": "uncertain",
+      "origins": [
+        "http://www.periodico26.cu"
+      ],
+      "outlet_id": "cu_periodico26",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "cu",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Trabajadores",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.trabajadores.cu"
+      ],
+      "outlet_id": "cu_trabajadores",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "do",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Acento",
+      "operating_status": null,
+      "origins": [
+        "https://acento.com.do"
+      ],
+      "outlet_id": "do_acento",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "do",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Diario Libre",
+      "origins": [
+        "https://www.diariolibre.com"
+      ],
+      "outlet_id": "do_diario_libre",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "do",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El Caribe",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elcaribe.com.do"
+      ],
+      "outlet_id": "do_el_caribe",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "do",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Nacional",
+      "operating_status": null,
+      "origins": [
+        "https://elnacional.com.do"
+      ],
+      "outlet_id": "do_el_nacional",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "do",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Hoy",
+      "operating_status": null,
+      "origins": [
+        "https://hoy.com.do"
+      ],
+      "outlet_id": "do_hoy",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "do",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Listín Diario",
+      "operating_status": "operating",
+      "origins": [
+        "https://listindiario.com"
+      ],
+      "outlet_id": "do_listin_diario",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Comercio",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elcomercio.com"
+      ],
+      "outlet_id": "ec_el_comercio",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Mercurio",
+      "operating_status": null,
+      "origins": [
+        "https://elmercurio.com.ec"
+      ],
+      "outlet_id": "ec_el_mercurio",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "El Universo",
+      "origins": [
+        "https://www.eluniverso.com",
+        "https://eluniverso.com"
+      ],
+      "outlet_id": "ec_el_universo",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Expreso",
+      "operating_status": null,
+      "origins": [
+        "https://www.expreso.ec"
+      ],
+      "outlet_id": "ec_expreso",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "La Republica (EC)",
+      "operating_status": null,
+      "origins": [
+        "https://www.larepublica.ec"
+      ],
+      "outlet_id": "ec_la_republica_ec",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ec",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Primicias",
+      "origins": [
+        "https://www.primicias.ec"
+      ],
+      "outlet_id": "ec_primicias",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "es",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "ABC",
+      "operating_status": null,
+      "origins": [
+        "https://www.abc.es"
+      ],
+      "outlet_id": "es_abc",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "es",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Correo",
+      "operating_status": null,
+      "origins": [
+        "https://www.elcorreo.com"
+      ],
+      "outlet_id": "es_el_correo",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "es",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "El Mundo",
+      "origins": [
+        "https://www.elmundo.es"
+      ],
+      "outlet_id": "es_el_mundo",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "es",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El País",
+      "operating_status": "operating",
+      "origins": [
+        "https://elpais.com"
+      ],
+      "outlet_id": "es_el_pais",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "es",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "elDiario.es",
+      "operating_status": null,
+      "origins": [
+        "https://www.eldiario.es"
+      ],
+      "outlet_id": "es_eldiario_es",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "es",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La Vanguardia",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.lavanguardia.com"
+      ],
+      "outlet_id": "es_la_vanguardia",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "CLOSED",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "elPeriódico",
+      "operating_status": "closed",
+      "origins": [
+        "https://elperiodico.com.gt"
+      ],
+      "outlet_id": "gt_elperiodico",
+      "reason": "Closure announced 2023-05-12; last edition 2023-05-15 after almost 27 years; print had already stopped in November 2022. Founder Jose Ruben Zamora arrested 2022-07-29. Website stayed online only three days after the announcement (Ramon Zamora, per LatAm Journalism Review). All print editions 1996-2023 are reported as available in the Central American independent media archive CAIMA (launch 31 January, year per Agencia Ocote: 2025)."
+    },
+    {
+      "country_id": "gt",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El Siglo",
+      "operating_status": "operating",
+      "origins": [
+        "https://elsiglo.com.gt"
+      ],
+      "outlet_id": "gt_elsiglo",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Emisoras Unidas",
+      "operating_status": null,
+      "origins": [
+        "https://emisorasunidas.com"
+      ],
+      "outlet_id": "gt_emisoras_unidas",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "La Hora",
+      "origins": [
+        "https://lahora.gt"
+      ],
+      "outlet_id": "gt_lahora",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Nuestro Diario",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.nuestrodiario.com"
+      ],
+      "outlet_id": "gt_nuestrodiario",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Plaza Publica",
+      "operating_status": null,
+      "origins": [
+        "https://www.plazapublica.com.gt"
+      ],
+      "outlet_id": "gt_plaza_publica",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Prensa Comunitaria",
+      "operating_status": null,
+      "origins": [
+        "https://prensacomunitaria.org"
+      ],
+      "outlet_id": "gt_prensa_comunitaria",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Prensa Libre",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.prensalibre.com"
+      ],
+      "outlet_id": "gt_prensa_libre",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "gt",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Publinews",
+      "operating_status": "uncertain",
+      "origins": [
+        "https://www.publinews.gt"
+      ],
+      "outlet_id": "gt_publinews",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Contracorriente",
+      "operating_status": null,
+      "origins": [
+        "https://contracorriente.red"
+      ],
+      "outlet_id": "hn_contracorriente",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Criterio.hn",
+      "origins": [
+        "https://criterio.hn"
+      ],
+      "outlet_id": "hn_criterio",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Diario Tiempo",
+      "operating_status": "operating",
+      "origins": [
+        "https://tiempo.hn"
+      ],
+      "outlet_id": "hn_diariotiempo",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "El Heraldo",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elheraldo.hn"
+      ],
+      "outlet_id": "hn_el_heraldo",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Hondudiario",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.hondudiario.com"
+      ],
+      "outlet_id": "hn_hondudiario",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "La Prensa",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.laprensa.hn"
+      ],
+      "outlet_id": "hn_la_prensa",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La Tribuna",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.latribuna.hn"
+      ],
+      "outlet_id": "hn_latribuna",
+      "reason": "no channel from the legacy system, a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Proceso Digital",
+      "origins": [
+        "https://proceso.hn"
+      ],
+      "outlet_id": "hn_proceso_digital",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "hn",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Radio Progreso",
+      "operating_status": null,
+      "origins": [
+        "https://radioprogresohn.net"
+      ],
+      "outlet_id": "hn_radio_progreso",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Animal Politico",
+      "operating_status": null,
+      "origins": [
+        "https://www.animalpolitico.com"
+      ],
+      "outlet_id": "mx_animal_politico",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Siglo de Torreon",
+      "operating_status": null,
+      "origins": [
+        "https://www.elsiglodetorreon.com.mx"
+      ],
+      "outlet_id": "mx_el_siglo_de_torreon",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Sol de Mexico",
+      "operating_status": null,
+      "origins": [
+        "https://oem.com.mx/elsoldemexico"
+      ],
+      "outlet_id": "mx_el_sol_de_mexico",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El Universal",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.eluniversal.com.mx"
+      ],
+      "outlet_id": "mx_el_universal",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "NO_ORIGIN",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Expansión México",
+      "operating_status": null,
+      "origins": [],
+      "outlet_id": "mx_expansion",
+      "reason": "research names the outlet and no origin"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La Jornada",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.jornada.com.mx"
+      ],
+      "outlet_id": "mx_la_jornada",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "mx",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Milenio",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.milenio.com"
+      ],
+      "outlet_id": "mx_milenio",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ni",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Artículo 66",
+      "origins": [
+        "https://www.articulo66.com"
+      ],
+      "outlet_id": "ni_articulo66",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ni",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Confidencial",
+      "origins": [
+        "https://www.confidencial.digital",
+        "https://confidencial.digital"
+      ],
+      "outlet_id": "ni_confidencial",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ni",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Despacho 505",
+      "operating_status": null,
+      "origins": [
+        "https://despacho505.com"
+      ],
+      "outlet_id": "ni_despacho_505",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ni",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El 19 Digital",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.el19digital.com"
+      ],
+      "outlet_id": "ni_el_19_digital",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ni",
+      "disposition": "DOMAIN_CHANGE",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La Prensa",
+      "operating_status": "moved",
+      "origins": [
+        "https://www.laprensa.com.ni"
+      ],
+      "outlet_id": "ni_la_prensa",
+      "reason": "Registry origin laprensa.com.ni is dead: La Prensa migrated to www.laprensani.com from 2023 and the regime dropped the .ni domains of independent media on the night of 2025-03-13. Print stopped in August 2021; staff went into exile in July 2022 (mostly Costa Rica); plant seized August 2022. Articles dated 2026-10-08 and 2026-10-09 are indexed on the new domain."
+    },
+    {
+      "country_id": "ni",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Nicaragua Investiga",
+      "origins": [
+        "https://nicaraguainvestiga.com"
+      ],
+      "outlet_id": "ni_nicaragua_investiga",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "CRÍTICA",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.critica.com.pa"
+      ],
+      "outlet_id": "pa_critica",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "Día a Día",
+      "operating_status": "uncertain",
+      "origins": [
+        "https://www.diaadia.com.pa"
+      ],
+      "outlet_id": "pa_diaadia",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Siglo",
+      "operating_status": "operating",
+      "origins": [
+        "https://elsiglo.com.pa"
+      ],
+      "outlet_id": "pa_el_siglo",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "La Prensa",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.prensa.com"
+      ],
+      "outlet_id": "pa_la_prensa",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "La Estrella de Panamá",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.laestrella.com.pa"
+      ],
+      "outlet_id": "pa_laestrelladepanama",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "name": "Metro Libre",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.metrolibre.com"
+      ],
+      "outlet_id": "pa_metro_libre",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Mi Diario",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.midiario.com"
+      ],
+      "outlet_id": "pa_midiario",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Panama 24 Horas",
+      "operating_status": null,
+      "origins": [
+        "https://www.panama24horas.com.pa"
+      ],
+      "outlet_id": "pa_panama_24_horas",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Panama America",
+      "operating_status": null,
+      "origins": [
+        "https://www.panamaamerica.com.pa"
+      ],
+      "outlet_id": "pa_panama_america",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "pa",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "TVN Noticias",
+      "operating_status": null,
+      "origins": [
+        "https://www.tvn-2.com"
+      ],
+      "outlet_id": "pa_tvn_noticias",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario Los Andes",
+      "operating_status": null,
+      "origins": [
+        "https://losandes.com.pe"
+      ],
+      "outlet_id": "pe_diario_los_andes",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario UNO",
+      "operating_status": null,
+      "origins": [
+        "https://diariouno.pe"
+      ],
+      "outlet_id": "pe_diario_uno",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Diario Correo",
+      "origins": [
+        "https://diariocorreo.pe"
+      ],
+      "outlet_id": "pe_diariocorreo",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Buho",
+      "operating_status": null,
+      "origins": [
+        "https://elbuho.pe"
+      ],
+      "outlet_id": "pe_el_buho",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "El Comercio",
+      "operating_status": "operating",
+      "origins": [
+        "https://elcomercio.pe"
+      ],
+      "outlet_id": "pe_el_comercio",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Peruano",
+      "operating_status": "operating",
+      "origins": [
+        "https://elperuano.pe"
+      ],
+      "outlet_id": "pe_elperuano",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Expreso",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.expreso.com.pe"
+      ],
+      "outlet_id": "pe_expreso",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "La República",
+      "origins": [
+        "https://larepublica.pe"
+      ],
+      "outlet_id": "pe_la_republica",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "pe",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Perú21",
+      "operating_status": "operating",
+      "origins": [
+        "https://peru21.pe"
+      ],
+      "outlet_id": "pe_peru21",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Centro de Periodismo Investigativo (CPI)",
+      "operating_status": null,
+      "origins": [
+        "https://www.periodismoinvestigativo.com"
+      ],
+      "outlet_id": "pr_centro_de_periodismo_investigativo_cpi",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Nuevo Día",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elnuevodia.com"
+      ],
+      "outlet_id": "pr_el_nuevo_dia",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Vocero",
+      "operating_status": null,
+      "origins": [
+        "https://www.elvocero.com (domain from background knowledge, unverified)"
+      ],
+      "outlet_id": "pr_el_vocero",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Metro Puerto Rico",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.metro.pr"
+      ],
+      "outlet_id": "pr_metro_puerto_rico",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "NotiCel",
+      "origins": [
+        "https://noticel.com"
+      ],
+      "outlet_id": "pr_noticel",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "pr",
+      "disposition": "IDENTITY_OPEN",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "Primera Hora",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.primerahora.com"
+      ],
+      "outlet_id": "pr_primera_hora",
+      "reason": "every channel the registry holds for it is on the host of pr_el_nuevo_dia; it has no evidenced channel of its own"
+    },
+    {
+      "country_id": "py",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "ABC Color",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.abc.com.py"
+      ],
+      "outlet_id": "py_abc_color",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "py",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "ADN Digital",
+      "operating_status": null,
+      "origins": [
+        "https://www.adndigital.com.py"
+      ],
+      "outlet_id": "py_adn_digital",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "py",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario HOY",
+      "operating_status": null,
+      "origins": [
+        "https://www.hoy.com.py"
+      ],
+      "outlet_id": "py_diario_hoy",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "py",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "La Nación",
+      "origins": [
+        "https://www.lanacion.com.py"
+      ],
+      "outlet_id": "py_la_nacion",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "py",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Noticias CDE",
+      "operating_status": null,
+      "origins": [
+        "https://noticiascde.com.py"
+      ],
+      "outlet_id": "py_noticias_cde",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "py",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Última Hora",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.ultimahora.com"
+      ],
+      "outlet_id": "py_ultima_hora",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario Co Latino",
+      "operating_status": null,
+      "origins": [
+        "https://www.diariocolatino.com"
+      ],
+      "outlet_id": "sv_diario_co_latino",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "Diario El Mundo",
+      "operating_status": "operating",
+      "origins": [
+        "https://diario.elmundo.sv"
+      ],
+      "outlet_id": "sv_diario_el_mundo",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Diario El Salvador",
+      "operating_status": null,
+      "origins": [
+        "https://diarioelsalvador.com"
+      ],
+      "outlet_id": "sv_diario_el_salvador",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "El Diario de Hoy",
+      "origins": [
+        "https://www.elsalvador.com"
+      ],
+      "outlet_id": "sv_el_diario_de_hoy",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Faro",
+      "operating_status": null,
+      "origins": [
+        "https://elfaro.net"
+      ],
+      "outlet_id": "sv_el_faro",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "sv",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La Prensa Gráfica",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.laprensagrafica.com"
+      ],
+      "outlet_id": "sv_la_prensa_grafica",
+      "reason": "no channel from the legacy system, a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Busqueda",
+      "operating_status": null,
+      "origins": [
+        "unknown (busqueda.com.uy from background knowledge, unverified)"
+      ],
+      "outlet_id": "uy_busqueda",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Observador",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elobservador.com.uy"
+      ],
+      "outlet_id": "uy_el_observador",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El País",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elpais.com.uy"
+      ],
+      "outlet_id": "uy_el_pais",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Telegrafo",
+      "operating_status": null,
+      "origins": [
+        "unknown (eltelegrafo.com seen in an ahrefs listing; eltelegrafo.com.uy unverified)"
+      ],
+      "outlet_id": "uy_el_telegrafo",
+      "reason": "no channel from a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "La diaria",
+      "operating_status": "operating",
+      "origins": [
+        "https://ladiaria.com.uy"
+      ],
+      "outlet_id": "uy_ladiaria",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "NO_EVIDENCED_CHANNEL",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "name": "La República",
+      "operating_status": "uncertain",
+      "origins": [
+        "https://www.lr21.com.uy"
+      ],
+      "outlet_id": "uy_larepublica",
+      "reason": "no channel from the legacy system, a search result or the publisher; addresses inferred from a content system's usual layout are not requested"
+    },
+    {
+      "country_id": "uy",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Montevideo Portal",
+      "origins": [
+        "https://www.montevideo.com.uy"
+      ],
+      "outlet_id": "uy_montevideo_portal",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Analitica",
+      "operating_status": null,
+      "origins": [
+        "https://www.analitica.com"
+      ],
+      "outlet_id": "ve_analitica",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "Correo del Caroni",
+      "operating_status": null,
+      "origins": [
+        "https://correodelcaroni.com"
+      ],
+      "outlet_id": "ve_correo_del_caroni",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "ALREADY_REGISTERED",
+      "in_registry_before": true,
+      "name": "Efecto Cocuyo",
+      "origins": [
+        "https://efectococuyo.com"
+      ],
+      "outlet_id": "ve_efecto_cocuyo",
+      "reason": "registered by an earlier record"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": false,
+      "legacy_class": null,
+      "name": "El Impulso",
+      "operating_status": null,
+      "origins": [
+        "https://www.elimpulso.com"
+      ],
+      "outlet_id": "ve_el_impulso",
+      "reason": "identity, country and origin known from research; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El Nacional",
+      "operating_status": "operating",
+      "origins": [
+        "https://www.elnacional.com"
+      ],
+      "outlet_id": "ve_el_nacional",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "El Diario",
+      "operating_status": "operating",
+      "origins": [
+        "https://eldiario.com"
+      ],
+      "outlet_id": "ve_eldiario",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "name": "El Universal",
+      "operating_status": "uncertain",
+      "origins": [
+        "https://www.eluniversal.com"
+      ],
+      "outlet_id": "ve_eluniversal",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    },
+    {
+      "country_id": "ve",
+      "disposition": "REGISTER",
+      "in_registry_before": true,
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "name": "Últimas Noticias",
+      "operating_status": "operating",
+      "origins": [
+        "https://ultimasnoticias.com.ve"
+      ],
+      "outlet_id": "ve_ultimas_noticias",
+      "reason": "identity, country and origin known; at least one evidenced channel"
+    }
+  ],
+  "hypotheses": 145,
+  "inputs": {
+    "inventory": {
+      "file": "source_discovery_inventory_2026-10-09.1.json",
+      "sha256": "fa07441b3aec715a3ad626640e4ef1d3a1c4fcc3875b943752774276aefc7e9b"
+    },
+    "overview": {
+      "file": "source_qualification_overview_2026-10-09.2.json",
+      "sha256": "028cf8c0e9d4445fef7a828d4396e67bb0fe555cf885708984577acf8ee2383a"
+    },
+    "registry_sha256_before": "1fd06663eaefd6821db57b40f610a3d35103de2dc3cc2c2021ec2fa0082cc4fb"
+  },
+  "prepared_on": "2026-10-09",
+  "rules": "(the first that applies decides):\n\n- an outlet that is registered already keeps its registration;\n- ``LEGAL_HOLD``: an outlet excluded until a licence / TDM decision (``co_el_tiempo``);\n- ``CLOSED``: research found the outlet closed;\n- ``DOMAIN_CHANGE``: research found it moved to another host — its canonical origin would be a dead one;\n- ``IDENTITY_OPEN``: an identity case recorded as open (which title an origin belongs to; channels on another outlet's host);\n- ``NO_ORIGIN`` / ``HOST_HELD``: no origin is known, or the host is an origin of another outlet;\n- ``NO_EVIDENCED_CHANNEL``: no channel is known from the legacy system, a search result or the publisher —\n  an address inferred from how a content system usually looks is a guess, and a guess is not requested;\n- otherwise ``REGISTER``: identity, country and origin are known and at least one channel is evidenced.",
+  "schema": "coprepan-qualification-dispositions/v1"
+}

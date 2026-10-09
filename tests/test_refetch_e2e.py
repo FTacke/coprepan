@@ -18,7 +18,7 @@ from support_http import LocalSite, Response
 from test_core_pipeline import Canary
 from test_offline_e2e import ARTICLE, HTML, OUTLET, RSS, SITEMAP, T0, WWW, Pass, fx, script
 
-ARTICLE_PATH = "/Economia/Puerto-crecimiento-2026.html?utm_source=rss&utm_medium=feed"
+ARTICLE_PATH = "/Economia/Puerto-crecimiento-2026.html"   # the feed lists it with utm_ tags; the request is made without them (channel-parser/6)
 ARTICLE_CANDIDATE = discovery.candidate_id(OUTLET, ARTICLE)
 V1, V2 = fx("canary/nota_v1.html"), fx("canary/nota_v2.html")
 

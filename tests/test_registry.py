@@ -79,12 +79,28 @@ def test_the_tracked_registry_is_valid_and_every_registration_has_a_record():
             assert all(item["source"] and item["how"] for item in entry["evidence"])
             recorded[entry["outlet_id"]] = entry
     assert set(registered) == set(recorded)
+    # An amendment record (CPD-0025) adds to a registration and removes nothing: origins at the end, a new version of
+    # the URL rules, channels. The registry is the registration with its amendments, in the order of their records.
+    amended = {outlet_id: {"web_origins": list(entry["web_origins"]), "url_rules_version": entry["url_rules"]["version"],
+                           "significant_query_params": [], "channel_ids": set(entry["channel_ids"].values())} for outlet_id, entry in recorded.items()}
+    for path in sorted((REPO / "config" / "registry_review").glob("*_amendment_*.json")):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        assert record["schema"] == "coprepan-registry-amendment/v1" and record["gate"] == "O-11" and record["authority"]
+        for change in record["amendments"]:
+            state = amended[change["outlet_id"]]                                    # only a registered outlet is amended
+            assert change["reason"] and all(item["claim"] and item["how"] and item["source"] for item in change["evidence"])
+            state["web_origins"] += change["add_web_origins"]
+            if change["url_rules"]:
+                assert change["url_rules"]["version"] != state["url_rules_version"] and change["url_rules"]["basis"]
+                state["url_rules_version"], state["significant_query_params"] = change["url_rules"]["version"], change["url_rules"]["significant_query_params"]
+            state["channel_ids"] |= {channel["channel_id"] for channel in change["add_channels"]}
     for outlet_id, outlet in registered.items():
-        entry = recorded[outlet_id]
+        entry, state = recorded[outlet_id], amended[outlet_id]
         assert all(outlet[field] == value for field, value in entry["attributes_set"].items())
-        assert outlet["timezone"] != "unknown" and outlet["url_rules"]["version"] == entry["url_rules"]["version"] != "proposed"
-        assert {channel["channel_id"] for channel in outlet["channels"]} == set(entry["channel_ids"].values())
-        assert outlet["web_origins"] == entry["web_origins"] and outlet["review_notes"] == []
+        assert outlet["timezone"] != "unknown" and outlet["url_rules"]["version"] == state["url_rules_version"] != "proposed"
+        assert outlet["url_rules"]["significant_query_params"] == state["significant_query_params"]
+        assert {channel["channel_id"] for channel in outlet["channels"]} == state["channel_ids"]
+        assert outlet["web_origins"] == state["web_origins"] and outlet["review_notes"] == []
         # what was not evidenced stays unknown
         assert all(outlet[field] == "unknown" for field in entry["attributes_left_unknown"])
 

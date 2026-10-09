@@ -57,6 +57,7 @@ from .storage_roots import CHECKOUT
 DRIVER_VERSION = "canary-driver/5"
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
+MAX_OUTLETS_OF_A_WAVE = 24          # CPD-0025: at four item requests per outlet, 24 outlets are what the ceiling leaves
 KIND_ORDER = ("rss", "atom", "sitemap", "sitemap_index", "archive", "section_page")
 # An HTML listing lists its navigation too. Since CPD-0020 such a channel is read like any other, and
 # what it lists is requested only under a reviewed allow rule (candidate-filter-generic/2).
@@ -152,8 +153,8 @@ def canary_budget(outlets: int, limits: Mapping[str, int] | None = None) -> Cana
             raise CanaryStopped("a canary is five outlets, or six to fifteen")
         per_outlet = min(default.item_requests_per_outlet, (HARD_ITEM_REQUESTS - 4) // outlets)
         return CanaryBudget(outlets=outlets, item_requests_total=per_outlet * outlets, item_requests_per_outlet=per_outlet)
-    if not 1 <= outlets <= 15:
-        raise CanaryStopped("a canary under an authorised wave is one to fifteen outlets")
+    if not 1 <= outlets <= MAX_OUTLETS_OF_A_WAVE:
+        raise CanaryStopped(f"a canary under an authorised wave is one to {MAX_OUTLETS_OF_A_WAVE} outlets")
     ordinary = default.item_requests_per_outlet if outlets <= 5 else min(default.item_requests_per_outlet, (HARD_ITEM_REQUESTS - 4) // outlets)
     per_outlet = min(ordinary, limits["item_requests_per_outlet"])
     total = min(per_outlet * outlets, limits["item_requests_total"], HARD_ITEM_REQUESTS)

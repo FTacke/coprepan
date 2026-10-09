@@ -214,13 +214,19 @@ def cand(path, outlet=OUTLET):
 def test_generic_rules_are_about_the_url_only(path, decision, reason):
     row_ = CF.qualify(cand(path), channel_url_keys=frozenset({f"{WWW}/rss"}))
     assert (row_["decision"], row_["reasons"][0]) == (decision, reason)
-    assert row_["ruleset"] == "candidate-filter-generic/2+no-outlet-rules"
+    assert row_["ruleset"] == "candidate-filter-generic/3+no-outlet-rules"
 
 
 def test_outlet_rules_reject_allow_and_conflict():
     rules = {"version": "uy_diario_ejemplo-candidates/1", "reject_path_prefixes": ["/tag", "/autor"],
              "reject_path_patterns": [r"/galeria/"], "allow_path_patterns": [r"-\d+\.html$", r"^/tag/destacado"]}
-    q = lambda path: CF.qualify(cand(path), outlet_rules=rules)  # noqa: E731
+    listing = f"{OUTLET}:ch:section_page_001"
+    # the candidates of a listing: an allow pattern says which of them are articles
+    q = lambda path: CF.qualify({**cand(path), "first_channel_id": listing}, outlet_rules=rules, listing_channel_ids=frozenset({listing}))  # noqa: E731
+    # the candidates of a feed of the same outlet: reject rules apply, the allow patterns do not narrow them (`/3`)
+    fed = lambda path: CF.qualify({**cand(path), "first_channel_id": f"{OUTLET}:ch:rss_001"}, outlet_rules=rules, listing_channel_ids=frozenset({listing}))  # noqa: E731
+    assert (fed("/sin-numero")["decision"], fed("/sin-numero")["reasons"]) == ("QUALIFIED", ["no_rule_rejects"])
+    assert fed("/tag/economia")["reasons"] == ["outlet: path_prefix /tag"] and fed("/Economia/Nota-1.html")["decision"] == "QUALIFIED"
     assert q("/Economia/Nota-1.html")["decision"] == "QUALIFIED"
     assert q("/tag/economia")["reasons"] == ["outlet: path_prefix /tag", "outlet: not_matched_by_any_allow_pattern"]
     assert q("/tagliatelle-1.html")["decision"] == "QUALIFIED"               # a prefix ends at a segment boundary
@@ -229,7 +235,7 @@ def test_outlet_rules_reject_allow_and_conflict():
     assert conflict["decision"] == "DEFERRED" and conflict["reasons"][0] == "conflicting_rules"
     assert "outlet: allow_pattern ^/tag/destacado" in conflict["reasons"] and "outlet: path_prefix /tag" in conflict["reasons"]
     assert CF.qualify(cand("/galeria/1.jpg"), outlet_rules=rules)["decision"] == "REJECTED"
-    assert q("/x")["ruleset"] == "candidate-filter-generic/2+uy_diario_ejemplo-candidates/1"
+    assert q("/x")["ruleset"] == "candidate-filter-generic/3+uy_diario_ejemplo-candidates/1"
 
 
 def test_an_outlet_without_rules_gets_generic_rules_and_the_tracked_file_guesses_none():

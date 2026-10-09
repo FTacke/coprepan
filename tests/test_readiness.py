@@ -175,7 +175,7 @@ def test_the_repository_as_committed_is_pre_freeze_and_says_why():
     assert m["state"] == "PRE_FREEZE" and m["schema"] == "coprepan-acquisition-baseline/v1"
     assert [reason.split(":")[0] for reason in m["blocking"]] == (["O-1"] if m["policy"]["external_acquisition"] == "disabled" else []) + ["O-3", "O-4"]
     assert m["schedule_policy"]["version"].startswith("canary/") and m["components"]["extractor_lifecycle"] == "EXPERIMENTAL"
-    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (91, 22, 69, 373)
+    assert (m["registry"]["outlets"], m["registry"]["registered"], m["registry"]["proposed"], m["registry"]["channels"]) == (126, 114, 12, 446)
     assert m["policy"]["status"] == "DECIDED" and m["policy"]["external_acquisition"] in ("enabled", "disabled")   # decided; armed only for the canary
     assert m["crawler_identity"]["state"] == "configured" and m["crawler_identity"]["identity"]["operator"]["crawler_name"] == "PanhispanicMediaResearchBot"
     assert m["storage_target"] == {"status": "not_configured"} and m["code"]["commit"] == COMMIT
@@ -334,12 +334,14 @@ def test_the_package_recommends_and_registers_nothing():
     review = RR.build_review(json.loads(before.decode("utf-8")))
     assert REGISTRY.read_bytes() == before and review["status"].startswith("RECOMMENDATION_ONLY")
     registry = R.load_registry(REGISTRY)
-    assert sum(o["registration_status"] == "registered" for o in registry.outlets.values()) == 22   # by a registration record, not by the package
-    assert (review["summary"]["outlets"], review["summary"]["channels"]) == (91, 373)
+    assert sum(o["registration_status"] == "registered" for o in registry.outlets.values()) == 114   # by a registration record, not by the package
+    assert (review["summary"]["outlets"], review["summary"]["channels"]) == (126, 446)
 
 
-NEW_TO_THE_REGISTRY = {"ar_el_tribuno", "bo_opinion", "cu_14ymedio", "cu_cubanet", "hn_criterio", "ni_articulo66", "ni_nicaragua_investiga",
-                       "pr_noticel", "uy_montevideo_portal"}
+# Outlets that were never in the legacy system: those a registration record marks as new (wave C: 9; the qualification of 2026-10-09: 35).
+NEW_TO_THE_REGISTRY = {entry["outlet_id"] for path in sorted((Path(__file__).resolve().parents[1] / "config" / "registry_review").glob("*_registration_*.json"))
+                       for entry in json.loads(path.read_text(encoding="utf-8"))["registered"] if entry.get("new_outlet")}
+assert len(NEW_TO_THE_REGISTRY) == 44 and {"ar_el_tribuno", "pr_noticel", "ar_infobae"} <= NEW_TO_THE_REGISTRY
 
 
 def test_every_outlet_has_the_fields_a_reviewer_needs():
@@ -365,7 +367,7 @@ def test_every_outlet_has_the_fields_a_reviewer_needs():
 def test_the_id_convention_is_uniform_and_collision_free_on_the_real_proposal():
     review = json.loads(PACKAGE.read_text(encoding="utf-8"))
     recommended = [entry["recommended_outlet_id"] for entry in review["outlets"]]
-    assert len(set(recommended)) == len(recommended) == 91 and None not in recommended
+    assert len(set(recommended)) == len(recommended) == 126 and None not in recommended
     from coprepan import naming
     assert all(naming.is_outlet_id(value) for value in recommended)
     changed = {e["outlet_id"]: e["recommended_outlet_id"] for e in review["outlets"] if e["recommended_outlet_id"] != e["outlet_id"]}
@@ -383,7 +385,7 @@ def test_channel_ids_are_unique_and_well_formed():
 
     review = json.loads(PACKAGE.read_text(encoding="utf-8"))
     ids = [channel["recommended_channel_id"] for entry in review["outlets"] for channel in entry["channels"]]
-    assert len(ids) == len(set(ids)) == 373 and all(is_channel_id(value) for value in ids)
+    assert len(ids) == len(set(ids)) == 446 and all(is_channel_id(value) for value in ids)
     assert all(len(value.split(":ch:")[1]) <= 60 for value in ids)
 
 
@@ -398,7 +400,7 @@ def test_review_cases_are_flagged_and_never_merged():
     assert by_id["cr_crhoy"]["additional_origin_candidates"] == ["https://crhoy.com"]
     assert by_id["co_el_tiempo"]["recommended_action"] == "FIND_CHANNELS_OR_LEAVE_UNREGISTERED"
     assert review["summary"]["by_recommended_action"] == {
-        "CHECK_CHANNEL_ATTRIBUTION": 6, "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 65, "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 20}
+        "CHECK_CHANNEL_ATTRIBUTION": 6, "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 112, "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 8}
 
 
 def test_same_outlet_candidates_are_a_review_case_not_a_merge():

@@ -84,7 +84,7 @@ def script(site):
         "/sitemaps/anidado.xml": Response(200, XML, fx("discovery/sitemap_nested_index.xml")),
         "/sitemaps/profundo.xml": Response(200, XML, b"<urlset><url><loc>https://www.diario-ejemplo.test/profundo/1</loc></url></urlset>"),
         # /profundo/1 itself is not served: the item answers 404
-        "/Economia/Puerto-crecimiento-2026.html?utm_source=rss&utm_medium=feed": Response(200, HTML, fx("canary/nota_v1.html")),
+        "/Economia/Puerto-crecimiento-2026.html": Response(200, HTML, fx("canary/nota_v1.html")),
         "/Regionales/puerto-separan-cargas": [Response(503, HTML + [("Retry-After", "5")], b"<html><body>mantenimiento</body></html>"),
                                               Response(200, HTML, fx("canary/nota_republicada.html"), chunked=True)],
         "/breves/123": Response(301, [("Location", "/breves/123/")]),
@@ -224,7 +224,7 @@ def test_raw_bytes_on_the_preservation_root_are_what_the_server_sent(done):
         record = preserved.fetch_record(fetch_id)
         bodies[(record["request"]["requested_url"], record["response"]["status"])] = (preserved.body(fetch_id), record)
     assert bodies[(f"{WWW}/rss.xml", 200)][0] == fx("discovery/rss.xml")
-    assert bodies[(f"{ARTICLE}?utm_source=rss&utm_medium=feed", 200)][0] == fx("canary/nota_v1.html")
+    assert bodies[(ARTICLE, 200)][0] == fx("canary/nota_v1.html")
     packed, record = bodies[(f"{WWW}/sitemaps/2026-10.xml", 200)]
     assert packed == gzip.compress(fx("discovery/sitemap_urlset.xml"), mtime=0) and record["response"]["content_encoding"] == "gzip"
     chunked, record = bodies[(f"{WWW}/Regionales/puerto-separan-cargas", 200)]

@@ -35,7 +35,7 @@ from .storage_roots import CHECKOUT
 QUALIFICATION_SCHEMA = naming.schema_id("candidate-qualification", 2)  # v2: chained rows (CPD-0010)
 RULES_SCHEMA = naming.schema_id("candidate-rules", 1)
 # /2 (CPD-0020): a candidate first listed by a listing channel waits for an outlet allow rule.
-GENERIC_RULESET = "candidate-filter-generic/2"
+GENERIC_RULESET = "candidate-filter-generic/3"
 LISTING_NEEDS_RULE = "generic: listed_by_a_listing_channel_and_no_outlet_allow_rule"
 DEFAULT_RULES_FILE = CHECKOUT / "config" / "candidate_rules.json"
 
@@ -113,15 +113,19 @@ def qualify(candidate: Mapping[str, Any], *, outlet_rules: Mapping[str, Any] | N
         rejections.append("generic: is_a_registered_channel_document")
 
     allowed_by: list[str] = []
+    from_listing = candidate.get("first_channel_id") in listing_channel_ids
     if outlet_rules:
         rejections += [f"outlet: path_prefix {prefix}" for prefix in outlet_rules["reject_path_prefixes"]
                        if path == prefix or path.startswith(prefix.rstrip("/") + "/")]
         rejections += [f"outlet: path_pattern {pattern}" for pattern in outlet_rules["reject_path_patterns"] if re.search(pattern, path)]
         allowed_by = [f"outlet: allow_pattern {pattern}" for pattern in outlet_rules["allow_path_patterns"] if re.search(pattern, path)]
-        if outlet_rules["allow_path_patterns"] and not allowed_by:
+        # An allow pattern says which of the things a **listing** names are articles. It does not narrow a feed or a
+        # sitemap of the same outlet, which name articles already (`/3`; before, a rule written for a section page
+        # would have cut the outlet's feed down to that section).
+        if outlet_rules["allow_path_patterns"] and not allowed_by and from_listing:
             rejections.append("outlet: not_matched_by_any_allow_pattern")
 
-    waits = candidate.get("first_channel_id") in listing_channel_ids and not (outlet_rules and outlet_rules["allow_path_patterns"])
+    waits = from_listing and not (outlet_rules and outlet_rules["allow_path_patterns"])
     if rejections and allowed_by:
         decision, reasons = DEFERRED, ["conflicting_rules", *allowed_by, *rejections]
     elif rejections:
