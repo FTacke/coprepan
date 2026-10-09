@@ -385,13 +385,14 @@ def transport_calls(record: Mapping[str, Any]) -> int:
 
 def access_holds_from_evidence(workspace: core_pipeline.Workspace, run_id: str | None = None, *,
                                reclassify: bool = False) -> dict[str, str]:
-    """``{origin: access control}`` seen in the workspace's fetch records (all runs, or one): a run
-    that is resumed or started again asks nothing more of an origin that has refused this crawler,
-    until a person has looked at it.
+    """``{origin or URL: access control}`` seen in the workspace's fetch records (all runs, or one): a run
+    that is resumed or started again asks nothing more of what has refused this crawler. The key is an
+    origin or one URL, by the scope of what was asked (`access_control.hold_scope`, CPD-0027).
 
-    ``reclassify``: also hold an origin whose *stored answer* the current classifier recognises as
-    an access control although the classifier of its day did not (canary finding F2). The stored
-    record is not changed; this reads the answer again, from the pack, and says so by the class.
+    ``reclassify``: read every stored answer again under the classifier in force, in **both** directions:
+    an answer the classifier of its day missed holds (canary finding F2), and an answer it misread no
+    longer does (F15: a 410 page that was called a challenge). The stored record is not changed.
+    Without it the recorded class is taken as it stands.
     """
     holds: dict[str, str] = {}
     for identifier in pack_ids(workspace):
@@ -402,13 +403,16 @@ def access_holds_from_evidence(workspace: core_pipeline.Workspace, run_id: str |
             if run_id is not None and record["run_id"] != run_id:
                 continue
             observed = record["policy"]["access_class_observed"]
-            if reclassify and observed not in access_control.ORIGIN_HOLD and record["outcome"] == acquisition.OUTCOME_FETCHED:
+            if reclassify and record["outcome"] == acquisition.OUTCOME_FETCHED and observed not in (
+                    access_control.LOGIN_REDIRECT, access_control.PAYWALL_REDIRECT):     # those are read from a redirect target, not from the answer
                 headers = [(header[0], header[1]) for header in record["response"]["headers"]]
                 observed = access_control.classify_response(record["response"]["status"], headers, pack.read_body(path, entry))
-            if observed in access_control.ORIGIN_HOLD:
-                origin = policy._origin(record["response"]["final_url"])
-                if origin:
-                    holds.setdefault(origin, observed)
+            scope = access_control.hold_scope(record["fetch_kind"], observed)
+            final_url = record["response"]["final_url"] if record.get("response") else None
+            if scope == access_control.SCOPE_ORIGIN and final_url and policy._origin(final_url):
+                holds.setdefault(policy._origin(final_url), observed)
+            elif scope == access_control.SCOPE_URL and final_url:
+                holds.setdefault(final_url, observed)
     return holds
 
 

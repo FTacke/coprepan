@@ -1,5 +1,9 @@
 {
   "files": {
+    "browser_check_403_on_a_sitemap.html": {
+      "sha256": "b4b94e6496f82953c3c9d3d25bb482409d0204bf741e0db198b944bfe1409172",
+      "size_bytes": 7355
+    },
     "cloudflare_jsd_on_a_403_page.html": {
       "sha256": "aaff9c42e332e97978891936905bd5d83afc812786dc4496a2efaebb432d173e",
       "size_bytes": 1084
@@ -11,6 +15,14 @@
     "cloudflare_managed_challenge_403.html": {
       "sha256": "53a8a29dfb35871b4b873ef0c6318c0510af087331c3c5dc3a4f3da6fff4e165",
       "size_bytes": 5631
+    },
+    "cloudfront_request_blocked_403.html": {
+      "sha256": "ad721851577a775f1ffeb97c605bea20ce2b84893f0db3206c889c04cd8fe2c1",
+      "size_bytes": 919
+    },
+    "load_balancer_403_on_robots.html": {
+      "sha256": "58bf2215b395dcac74c009aa98701854e43cbe54a1cd3a95fee6a647ca9910d4",
+      "size_bytes": 118
     },
     "rss_cdata_doctype.xml": {
       "sha256": "88d5e3263c25340ebfbac0a95787f50893c3e47472ec736105110cbfe15156e9",

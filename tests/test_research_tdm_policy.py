@@ -71,7 +71,7 @@ def test_a_disallow_is_observed_and_overridden_only_openly_with_its_provenance()
     assert override == {"basis": "SCIENTIFIC_TDM_POLICY_V1", "decided_in": "CPD-0017", "robots_rule": "disallow: /privado/",
                         "robots_txt_sha256": PRIVATE.sha256, "product_token": TOKEN, "conditions": list(P.TDM_CONDITIONS),
                         "url": f"{WWW}/privado/x", "at": "2026-10-07T12:00:00.000000Z"}
-    assert decision.evidence["robots_decision"] == "disallowed" and decision.evidence["robots_decision_semantics"] == "robots-decision/2"
+    assert decision.evidence["robots_decision"] == "disallowed" and decision.evidence["robots_decision_semantics"] == "robots-decision/3"
     again = g.evaluate(intent(url=f"{WWW}/privado/x"), PRIVATE)                # deterministic
     assert (again.decision, again.reasons, dict(again.evidence)) == (decision.decision, decision.reasons, dict(decision.evidence))
 
@@ -228,7 +228,7 @@ def test_the_tracked_policy_pins_its_research_layer():
     pin = P.research_tdm_pin(tracked)
     assert pin == P.research_tdm_pin(P.load_policy()) and len(pin["research_tdm_policy_sha256"]) == 64
     assert (pin["research_tdm_policy_version"], pin["decided_in"], pin["robots_decision_semantics"], pin["robots_mode"]) == (
-        "SCIENTIFIC_TDM_POLICY_V1", "CPD-0017", "robots-decision/2", "research_tdm_override")
+        "SCIENTIFIC_TDM_POLICY_V1", "CPD-0017", "robots-decision/3", "research_tdm_override")
     changed = json.loads(json.dumps(tracked))
     changed["research_tdm"]["conditions"]["non_commercial"] = False
     slower = json.loads(json.dumps(tracked))
@@ -275,15 +275,40 @@ def test_an_access_control_is_recorded_ends_the_call_and_holds_the_origin(site, 
     assert fetcher.access_holds == {WWW: expected}
 
 
-def test_a_refused_robots_file_is_an_access_control_not_an_absent_robots_file(site):
-    site.routes.update({"/robots.txt": Response(403, HTML, b"<html>forbidden</html>"), "/nota": Response(200, HTML, PAGE)})
+@pytest.mark.parametrize("status", [401, 403, 404, 410])
+def test_a_plain_4xx_for_the_robots_address_is_a_robots_file_that_is_not_available(site, status):
+    """RFC 9309 §2.3.1.3. Until CPD-0027 a 401 or a 403 here held the whole origin (`es_el_pais`: a 403 from a cache for
+    the robots address of a feed host). The class is still recorded; it holds nothing; the resource answers for itself."""
+    site.routes.update({"/robots.txt": Response(status, HTML, b"<html>no</html>"), "/nota": Response(200, HTML, PAGE),
+                        "/cerrada": Response(403, HTML, b"<html>forbidden</html>")})
+    fetcher, _ = make_fetcher(site, policy=loopback())
+    outcome = get(fetcher, "/nota")
+    assert outcome.final == "FETCHED" and site.paths() == ["/robots.txt", "/nota"] and fetcher.access_holds == {}
+    assert outcome.last.policy["robots_decision"] == "absent"
+    assert fetcher.robots_exchanges[0][1].policy["access_class_observed"] == {401: "auth_required", 403: "forbidden"}.get(status, "none_observed")
+    # the liberal reading of the robots address changes nothing for the resource: its own refusal is respected
+    refused = get(fetcher, "/cerrada")
+    assert refused.last.status == 403 and fetcher.access_holds == {WWW: "forbidden"}
+    assert get(fetcher, "/nota").final == "DENIED"
+
+
+def test_a_challenge_on_the_robots_address_still_holds_the_origin_and_a_429_is_a_rate_limit_not_a_missing_file(site):
+    challenge = b"<html><head><title>Just a moment...</title></head><body><script>window._cf_chl_opt={};</script></body></html>"
+    site.routes.update({"/robots.txt": Response(403, HTML + [("cf-mitigated", "challenge")], challenge), "/nota": Response(200, HTML, PAGE)})
     fetcher, _ = make_fetcher(site, policy=loopback())
     outcome = get(fetcher, "/nota")
     assert (outcome.final, outcome.decision.reasons) == ("DENIED", ("access_control_observed",)) and site.paths() == ["/robots.txt"]
-    assert fetcher.robots_exchanges[0][1].policy["access_class_observed"] == "forbidden"
-    absent, _ = make_fetcher(site, policy=loopback())
-    site.routes["/robots.txt"] = Response(404, HTML, b"")
-    assert get(absent, "/nota").final == "FETCHED"                              # 404: no robots file, and no refusal
+    assert fetcher.access_holds == {WWW: "bot_challenge"}
+    limited, _ = make_fetcher(site, policy=loopback())
+    site.routes["/robots.txt"] = Response(429, HTML + [("Retry-After", "120")], b"<html>slow down</html>")
+    before = len(site.requests)
+    outcome = get(limited, "/nota")
+    assert outcome.final == "DENIED" and [path for path, _ in site.requests[before:]] == ["/robots.txt"] and limited.access_holds == {WWW: "rate_limited"}
+    for status in (500, 502, 503):                                              # RFC 9309 §2.3.1.4: unreachable, complete restraint
+        unreachable, _ = make_fetcher(site, policy=loopback())
+        site.routes["/robots.txt"] = Response(status, HTML, b"<html>error</html>")
+        before = len(site.requests)
+        assert get(unreachable, "/nota").final != "FETCHED" and [path for path, _ in site.requests[before:]] == ["/robots.txt"]
 
 
 @pytest.mark.parametrize("target, expected", [("/login?next=/nota", AC.LOGIN_REDIRECT), ("/iniciar-sesion", AC.LOGIN_REDIRECT),
@@ -358,7 +383,7 @@ def test_the_driver_reads_disallowed_paths_under_the_override_and_its_receipt_co
     assert {"/privado/uno", "/privado/dos", "/ok"} <= set(site.paths()) and not any(key.endswith("robots_disallow") for key in receipt["refused"])
     assert stats["requests_under_research_override"] == 2 == stats["answered_2xx_under_research_override"]
     assert stats["outlets_with_applicable_disallow"] == [OUTLET] and stats["outlets_with_access_control"] == []
-    assert stats["acquisition_decisions"]["ALLOW_RESEARCH_OVERRIDE"] == 2 and stats["semantics"] == "robots-decision/2"
+    assert stats["acquisition_decisions"]["ALLOW_RESEARCH_OVERRIDE"] == 2 and stats["semantics"] == "robots-decision/3"
     assert receipt["research_tdm"] == P.research_tdm_pin(run.fetcher.gate.policy)
     rows = [row for row in H.request_rows(run.workspace) if row["event"] == "FINISHED" and (row.get("policy_layers") or {}).get("override")]
     assert sorted(row["url"] for row in rows) == [f"{WWW}/privado/dos", f"{WWW}/privado/uno"]

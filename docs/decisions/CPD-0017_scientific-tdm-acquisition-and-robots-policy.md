@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-08 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-10) | [CPD-0027](CPD-0027_access-holds-have-a-scope-and-a-refused-robots-address-is-not-a-refused-origin.md): an observed access control holds what was asked — an origin, or one URL of a channel — and a plain 401/403 for a robots address is a robots file that is not available; §4's origin-wide hold is replaced by the scope table there. The three layers, the override and its conditions are unchanged |
 | Decided by | the operator, in the brief of the research-TDM policy run of 2026-10-08, which ordered that robots evidence, research-TDM eligibility and the acquisition decision be kept apart, that a `Disallow` alone no longer deny, and that technical access controls never be worked around. Recorded and worked out technically by that run; subject to the operator's review and to a review by the university's legal office, which has **not** taken place |
 | Kind | policy |
 | Scope | what a robots file, a machine-readable reservation, a technical access control, a publisher's direct opt-out and a legal review hold each mean for a request of this project's crawler |

@@ -132,6 +132,10 @@ def evidence_from_response(status: int | None, body: bytes | None, content_encod
             return RobotsEvidence(EVIDENCE_FETCHED, sha256_bytes(body), RobotsRules({}, parse_error=True),
                                   f"http_{status}; {error.reason}")
         return RobotsEvidence(EVIDENCE_FETCHED, sha256_bytes(body), parse_robots(readable), f"http_{status}")
+    if status == 429:
+        # A rate limit is not a missing robots file (CPD-0027; RFC 9309 treats 4xx as unavailable, and 429 says "not
+        # now"): unreachable, which the policy defers on. The answer also holds the origin as a rate limit.
+        return RobotsEvidence(EVIDENCE_UNREACHABLE, detail="http_429")
     if status is not None and 400 <= status < 500:
         return RobotsEvidence(EVIDENCE_ABSENT, detail=f"http_{status}")
     return RobotsEvidence(EVIDENCE_UNREACHABLE, detail=f"http_{status}" if status is not None else "no_response")

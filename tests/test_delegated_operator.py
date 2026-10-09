@@ -26,6 +26,7 @@ from test_canary_operator import world  # noqa: F401  (the fixture: a temporary 
 tool, git, OUTLETS, TODAY, DIGEST, RUN_ID = harness.tool, harness.git, harness.OUTLETS, harness.TODAY, harness.DIGEST, harness.RUN_ID
 RECORD = "config/operator_authorizations/test-record.json"
 PROPOSAL = "config/registry_review/a-proposal.json"
+POLICY = json.loads((harness.REPO / "config" / "acquisition_policy.json").read_text(encoding="utf-8"))["policy_version"]   # the tracked policy the temporary repository copies
 FIVE = canary_driver.canary_budget(5)
 LIMITS = {"item_requests_total": 80, "item_requests_per_outlet": 16, "other_requests_per_outlet": 8, "total_requests_ceiling": 120}
 
@@ -34,7 +35,7 @@ def a_record(**changes) -> dict:
     record = {
         "schema": delegation.AUTHORIZATION_SCHEMA, "authorization_id": "DOA-TEST-1", "kind": delegation.MODE_DELEGATED,
         "issued_on": "2026-10-09", "issued_by": "An Operator", "issued_to": "an agent", "valid_until": "2026-10-11",
-        "source": {"form": "a brief", "authorising_clauses": ["the brief says so"]}, "policy_versions": ["canary/2026-10-09.1"],
+        "source": {"form": "a brief", "authorising_clauses": ["the brief says so"]}, "policy_versions": [POLICY],
         "actions_authorized": ["one canary per wave"], "not_authorized": ["anything else"], "holds_in_force": [],
         "technical_gates": ["all of them"], "stop_conditions": ["any gate not met"], "disarming": "always, read back", "decisions": [],
         "waves": [{"label": "wave-t", "outlets": list(OUTLETS), "registration": None, "limits": dict(LIMITS), "canaries": 1, "note": ""},
@@ -46,7 +47,7 @@ def a_record(**changes) -> dict:
 
 def checked(record, label="wave-t", **changes):
     arguments = {"outlets": OUTLETS, "budget": FIVE.as_record(), "total_requests_ceiling": FIVE.total_requests_ceiling,
-                 "policy_version": "canary/2026-10-09.1", "today": TODAY, **changes}
+                 "policy_version": POLICY, "today": TODAY, **changes}
     return delegation.check({**record, "_sha256": "s" * 64}, label, **arguments)
 
 
@@ -134,7 +135,7 @@ def test_the_block_is_built_only_from_a_record_in_its_place_and_a_damaged_baseli
     (home / "r.json").write_text(json.dumps(a_record()), encoding="utf-8")
     (tmp_path / "elsewhere.json").write_text(json.dumps(a_record()), encoding="utf-8")
     arguments = {"repository": tmp_path, "outlets": OUTLETS, "budget": FIVE.as_record(), "total_requests_ceiling": FIVE.total_requests_ceiling,
-                 "policy_version": "canary/2026-10-09.1", "today": TODAY}
+                 "policy_version": POLICY, "today": TODAY}
     block = delegation.block_for(home / "r.json", "wave-t", **arguments)
     assert block["record"] == f"{delegation.RECORDS}/r.json" and block["authorization_sha256"] == sha256_bytes((home / "r.json").read_bytes())
     with pytest.raises(delegation.AuthorizationError, match="lies in"):
@@ -165,7 +166,7 @@ def test_the_driver_stops_when_the_record_does_not_cover_the_canary(tmp_path, mo
     home.mkdir(parents=True)
     (home / "r.json").write_text(json.dumps(a_record()), encoding="utf-8")
     monkeypatch.setattr(canary_driver, "CHECKOUT", tmp_path)
-    policy = {"policy_version": "canary/2026-10-09.1"}
+    policy = {"policy_version": POLICY}
     monkeypatch.setattr(canary_driver, "datetime", type("Fixed", (), {"now": staticmethod(lambda tz=None: __import__("datetime").datetime(2026, 10, 10, tzinfo=tz))}))
     assert canary_driver._authorization(home / "r.json", "wave-t", FIVE, OUTLETS, policy)["wave"] == "wave-t"
     with pytest.raises(canary_driver.CanaryStopped, match="does not cover this canary"):

@@ -255,14 +255,18 @@ class HttpFetcher:
         intent = FetchIntent(url, request.outlet_id, request.fetch_kind, self.clock(), host, request.channel_id)
         origin = _origin(url)
         if request.fetch_kind == acquisition.FETCH_KIND_ROBOTS:
-            return self.gate.evaluate(intent, access_observed=self.access_holds.get(origin))
+            return self.gate.evaluate(intent, access_observed=self._held(origin, url))
         # Ask the gate first without robots evidence: a request that is refused for another
         # reason must not cause a robots request either.
-        first = self.gate.evaluate(intent, access_observed=self.access_holds.get(origin))
+        first = self.gate.evaluate(intent, access_observed=self._held(origin, url))
         if first.decision != DEFER or first.reasons != ("robots_not_consulted",):
             return first
         evidence = self.robots_evidence(request.outlet_id, origin)  # may itself meet an access control
-        return self.gate.evaluate(intent, evidence, access_observed=self.access_holds.get(origin))
+        return self.gate.evaluate(intent, evidence, access_observed=self._held(origin, url))
+
+    def _held(self, origin: str | None, url: str) -> str | None:
+        """The access control that holds this request: one on its origin, or one on exactly this URL (CPD-0027)."""
+        return self.access_holds.get(origin) or self.access_holds.get(url)
 
     # -- transport -------------------------------------------------------------------------------
 
@@ -318,8 +322,11 @@ class HttpFetcher:
                 revalidates = {"fetch_id": request.revalidates_fetch_id, "body_sha256": request.revalidates_body_sha256}
             if policy["access_class_observed"] == access_control.UNKNOWN:
                 policy["access_class_observed"] = access_control.classify_response(status, headers, body)
-            if policy["access_class_observed"] in access_control.ORIGIN_HOLD:
+            scope = access_control.hold_scope(request.fetch_kind, policy["access_class_observed"])
+            if scope == access_control.SCOPE_ORIGIN:
                 self.access_holds.setdefault(_origin(url) or url, policy["access_class_observed"])
+            elif scope == access_control.SCOPE_URL:
+                self.access_holds.setdefault(url, policy["access_class_observed"])       # this route, not the outlet
             return RecordedExchange(fetch_finished_at=self.clock(), status=status, response_headers=tuple(headers),
                                     body=body, final_url=url, redirect_chain=tuple(chain),
                                     redirect_statuses=tuple(statuses), redirect_not_followed=not_followed,

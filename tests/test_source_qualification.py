@@ -32,9 +32,10 @@ def builder():
 def test_the_tracked_files_are_what_the_builder_gives_from_the_tracked_evidence(tmp_path):
     inventory = load(INVENTORY)
     registry_now = builder().sha256_bytes((REPO / "config" / "outlet_registry.json").read_bytes())
-    if inventory["inputs"]["registry"]["sha256"] != registry_now:
+    policy_now = json.loads((REPO / "config" / "acquisition_policy.json").read_text(encoding="utf-8"))["policy_version"]
+    if inventory["inputs"]["registry"]["sha256"] != registry_now or inventory["inputs"]["policy_version"] != policy_now:
         import pytest
-        pytest.skip("the registry has changed since this inventory version was built: a version is rebuilt only from its own inputs")
+        pytest.skip("the registry or the policy has changed since this inventory version was built: a version is rebuilt only from its own inputs")
     out = [tmp_path / "inventory.json", tmp_path / "readiness.json", tmp_path / "page.md"]
     assert builder().main(["--version", "2026-10-09.1", "--out-inventory", str(out[0]), "--out-readiness", str(out[1]), "--out-md", str(out[2])]) == 0
     assert [path.read_bytes() for path in out] == [INVENTORY.read_bytes(), READINESS.read_bytes(), PAGE.read_bytes()]

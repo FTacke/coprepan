@@ -75,7 +75,9 @@ ACCESS_CONTROL_OBSERVED, DIRECT_OPT_OUT, LEGAL_REVIEW_HOLD = "ACCESS_CONTROL_OBS
 _HOLD_REASONS = {"access_control_observed": ACCESS_CONTROL_OBSERVED, "explicit_opt_out": DIRECT_OPT_OUT,
                  "legal_review_hold": LEGAL_REVIEW_HOLD}
 
-ROBOTS_DECISION_SEMANTICS = "robots-decision/2"   # /1: Disallow denies. /2: the three layers of CPD-0017
+# /1: Disallow denies. /2: the three layers of CPD-0017. /3 (CPD-0027): a 401 or 403 for the robots address is a robots
+# file that is not available and holds nothing by itself; a 429 for it is unreachable; holds have a scope.
+ROBOTS_DECISION_SEMANTICS = "robots-decision/3"
 TDM_BASIS_NONE = "not_applicable"
 TDM_BASES = ("SCIENTIFIC_TDM_POLICY_V1",)
 # Every one must be stated `true` by the decided policy for a research override to exist. They are

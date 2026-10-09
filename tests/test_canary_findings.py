@@ -103,7 +103,7 @@ def test_the_challenge_of_2026_10_08_is_recognised_by_what_it_is_not_by_its_stat
     for status in (307, 200, 403, 503):
         assert AC.classify_response(status, SUCURI_HEADERS, body) == AC.BOT_CHALLENGE, status
     assert AC.classify_response(307, SUCURI_HEADERS + [("Content-Encoding", "gzip")], gzip.compress(body)) == AC.BOT_CHALLENGE
-    assert AC.BOT_CHALLENGE in AC.ORIGIN_HOLD and AC.CLASSIFIER_VERSION == "access-control/3"
+    assert AC.BOT_CHALLENGE in AC.ORIGIN_HOLD and AC.CLASSIFIER_VERSION == "access-control/4"
     # an ordinary redirect answer and an ordinary small page are not challenges
     moved = b"<html><head><title>307 Temporary Redirect</title></head><body>The document has moved.</body></html>"
     assert AC.classify_response(307, [("Location", "/nueva")], moved) == AC.NONE_OBSERVED
@@ -113,7 +113,9 @@ def test_the_challenge_of_2026_10_08_is_recognised_by_what_it_is_not_by_its_stat
     assert len(article) > 32 * 1024 and AC.classify_response(200, HTML, article) == AC.NONE_OBSERVED
 
 
-def test_after_the_challenge_nothing_more_is_asked_of_the_origin_and_nothing_about_the_client_changes(site):
+def test_after_the_challenge_that_route_is_not_asked_again_an_item_challenge_ends_the_origin_and_nothing_about_the_client_changes(site):
+    """Until CPD-0027 a challenge on a feed held the whole origin. It holds the feed: another route may be asked, and
+    the first challenge on an *item* ends the origin — the thing itself is protected, and nothing tries again."""
     site.routes.update({"/robots.txt": Response(200, PLAIN, b"User-agent: *\nCrawl-Delay: 3\n"),
                         "/rss": Response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html")),
                         "/sitemap-news.xml": Response(404, HTML, b"<html><body>No encontrada</body></html>"), "/nota": Response(200, HTML, PAGE)})
@@ -123,26 +125,50 @@ def test_after_the_challenge_nothing_more_is_asked_of_the_origin_and_nothing_abo
     assert outcome.last.body == fixture("sucuri_challenge_307.html")           # the challenge page itself is the preserved evidence
     asked = list(site.paths())
     assert asked == ["/robots.txt", "/rss"]
-    for path, kind in (("/sitemap-news.xml", acquisition.FETCH_KIND_CHANNEL_DOCUMENT), ("/nota", acquisition.FETCH_KIND_ITEM), ("/rss", acquisition.FETCH_KIND_CHANNEL_DOCUMENT)):
+    again = get(fetcher, "/rss", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT)                       # the challenged route: not asked again
+    assert (again.final, again.decision.reasons, again.decision.acquisition_decision) == ("DENIED", ("access_control_observed",), "HOLD")
+    assert site.paths() == asked and fetcher.access_holds == {f"{WWW}/rss": AC.BOT_CHALLENGE}
+    assert get(fetcher, "/sitemap-news.xml", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT).last.status == 404    # another route answers for itself
+    site.routes["/protegida"] = Response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html"))
+    assert get(fetcher, "/protegida", fetch_kind=acquisition.FETCH_KIND_ITEM).last.policy["access_class_observed"] == AC.BOT_CHALLENGE
+    asked = list(site.paths())
+    for path, kind in (("/nota", acquisition.FETCH_KIND_ITEM), ("/protegida", acquisition.FETCH_KIND_ITEM), ("/otra-ruta.xml", acquisition.FETCH_KIND_CHANNEL_DOCUMENT)):
         later = get(fetcher, path, fetch_kind=kind)
         assert (later.final, later.decision.reasons, later.decision.acquisition_decision) == ("DENIED", ("access_control_observed",), "HOLD")
-    assert site.paths() == asked and fetcher.access_holds == {WWW: AC.BOT_CHALLENGE}
+    assert site.paths() == asked and fetcher.access_holds == {f"{WWW}/rss": AC.BOT_CHALLENGE, WWW: AC.BOT_CHALLENGE}
     # no cookie, no second user agent, no script: the two requests that were made say the same thing
     assert all("cookie" not in headers for _, headers in site.requests)
     assert len({headers["user-agent"] for _, headers in site.requests}) == 1
 
 
-def test_the_driver_does_not_read_the_second_channel_of_an_origin_that_challenged_the_first(tmp_path, site):
-    scripted(site)
-    site.routes["/rss.xml"] = Response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html"))
+def test_a_challenged_channel_is_held_as_that_channel_and_the_outlets_other_channel_is_read(tmp_path, site):
+    """`ve_efecto_cocuyo`, 2026-10-09, mirrored: one channel is challenged, the other lists articles. Until CPD-0027 the
+    first challenge ended the outlet; now the challenged route is held, the other is read, and its articles are requested."""
+    scripted(site, paths=("/ok",))
+    site.routes["/sitemap_index.xml"] = Response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html"))
     run = Drive(tmp_path / "challenged", site)
     run.go()
-    assert site.paths() == ["/robots.txt", "/rss.xml"]                           # stage B and stage C asked nothing
+    assert site.paths().count("/sitemap_index.xml") == 1 and "/ok" in site.paths()       # the challenge was met once; the feed's article was read
     receipt = run.receipt()
-    assert receipt["policy_layers"]["outlets_with_access_control"] == [OUTLET] and receipt["counts"]["items_fetched"] == 0
-    assert receipt["refused"]["DENIED:access_control_observed"] >= 1
+    assert receipt["policy_layers"]["outlets_with_access_control"] == [OUTLET] and receipt["counts"]["items_fetched"] >= 1
     held = [r for r in D.fetch_records(run.workspace) if r["policy"]["access_class_observed"] == AC.BOT_CHALLENGE]
     assert len(held) == 1 and run.states()[held[0]["fetch_id"]] == "RAW_PRESERVED"
+    assert D.access_holds_from_evidence(run.workspace, reclassify=True) == {f"{WWW}/sitemap_index.xml": AC.BOT_CHALLENGE}
+    # a later run does not ask the held route again, and still reads the other
+    before = len(site.requests)
+    again = Drive(tmp_path / "challenged", site, start=datetime(2026, 10, 20, 12, 0, 0, tzinfo=timezone.utc))
+    again.fetcher.access_holds.update(D.access_holds_from_evidence(again.workspace, reclassify=True))
+    again.go()
+    assert "/sitemap_index.xml" not in [path for path, _ in site.requests[before:]] and "/rss.xml" in [path for path, _ in site.requests[before:]]
+
+
+def test_a_challenge_on_the_only_channel_ends_the_outlets_run_without_an_item(tmp_path, site):
+    scripted(site)
+    site.routes["/rss.xml"] = Response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html"))
+    run = Drive(tmp_path / "only", site)
+    run.go()
+    assert site.paths().count("/rss.xml") == 1 and run.receipt()["counts"]["items_fetched"] == 0      # nothing listed, nothing requested
+    assert not [path for path in site.paths() if path not in ("/robots.txt", "/rss.xml", "/sitemap_index.xml")]
 
 
 def test_a_stored_answer_the_old_classifier_missed_holds_its_origin_when_it_is_read_again(tmp_path, site, monkeypatch):
@@ -154,12 +180,12 @@ def test_a_stored_answer_the_old_classifier_missed_holds_its_origin_when_it_is_r
         first.go()
     assert "/sitemap_index.xml" in site.paths()                                  # the request that should not have been sent
     assert D.access_holds_from_evidence(first.workspace) == {}                   # the record says what was recorded …
-    assert D.access_holds_from_evidence(first.workspace, reclassify=True) == {WWW: AC.BOT_CHALLENGE}   # … the stored answer says more
+    assert D.access_holds_from_evidence(first.workspace, reclassify=True) == {f"{WWW}/rss.xml": AC.BOT_CHALLENGE}   # … the stored answer says more
     before = len(site.requests)
     again = Drive(tmp_path / "missed", site, start=datetime(2026, 10, 20, 12, 0, 0, tzinfo=timezone.utc))
     again.fetcher.access_holds.update(D.access_holds_from_evidence(again.workspace, reclassify=True))
     again.go()
-    assert len(site.requests) == before                                          # a later canary asks that origin nothing
+    assert "/rss.xml" not in [path for path, _ in site.requests[before:]]          # a later canary does not ask the challenged route again
     assert [r["policy"]["access_class_observed"] for r in D.fetch_records(first.workspace) if r["response"]["status"] == 307] == ["none_observed"]
 
 
@@ -658,7 +684,84 @@ def test_the_detection_script_on_an_ordinary_page_is_not_a_challenge_and_a_real_
     assert AC.classify_response(403, [("Server", "Varnish")], fixture("varnish_403_on_robots.html")) == AC.FORBIDDEN       # `feeds.elpais.com/robots.txt`
     assert AC.classify_response(307, SUCURI_HEADERS, fixture("sucuri_challenge_307.html")) == AC.BOT_CHALLENGE            # F2 unchanged
     assert AC.NONE_OBSERVED not in AC.ORIGIN_HOLD and AC.FORBIDDEN in AC.ORIGIN_HOLD                                      # a 403 still ends the origin's run
-    assert AC.CLASSIFIER_VERSION == "access-control/3"
+    assert AC.CLASSIFIER_VERSION == "access-control/4"
+
+
+# --- CPD-0027: what an access control holds depends on what was asked ----------------------------------------
+
+
+def test_the_scope_of_a_hold_follows_what_was_asked_and_never_lets_a_real_control_pass():
+    scope = AC.hold_scope
+    for kind in (AC.KIND_ROBOTS, AC.KIND_CHANNEL, AC.KIND_ITEM):
+        assert scope(kind, AC.RATE_LIMITED) == AC.SCOPE_ORIGIN                       # "slower" means all of it
+        assert scope(kind, AC.NONE_OBSERVED) is None and scope(kind, AC.LOGIN_REDIRECT) is None and scope(kind, AC.UNKNOWN) is None
+    # the robots address: a plain refusal is a robots file that is not available; a server that challenges even this challenges the client
+    assert scope(AC.KIND_ROBOTS, AC.FORBIDDEN) is None and scope(AC.KIND_ROBOTS, AC.AUTH_REQUIRED) is None
+    assert {scope(AC.KIND_ROBOTS, c) for c in (AC.BOT_CHALLENGE, AC.CAPTCHA, AC.BLOCKED, AC.LEGAL_BLOCK)} == {AC.SCOPE_ORIGIN}
+    # two robots addresses of 2026-10-09 that answered 403: a firewall block page holds the origin, a bare 403 of a load balancer nothing
+    assert AC.classify_response(403, [("Server", "CloudFront")], fixture("cloudfront_request_blocked_403.html")) == AC.BLOCKED
+    assert AC.classify_response(403, [("Server", "awselb/2.0")], fixture("load_balancer_403_on_robots.html")) == AC.FORBIDDEN
+    assert AC.classify_response(200, HTML, fixture("cloudfront_request_blocked_403.html")) == AC.NONE_OBSERVED       # the words alone, on a page that was served, are not a block
+    # a discovery route: that route
+    assert {scope(AC.KIND_CHANNEL, c) for c in (AC.FORBIDDEN, AC.AUTH_REQUIRED, AC.BOT_CHALLENGE, AC.CAPTCHA, AC.LEGAL_BLOCK)} == {AC.SCOPE_URL}
+    # the thing itself: the origin, for every control
+    assert {scope(AC.KIND_ITEM, c) for c in AC.ORIGIN_HOLD} == {AC.SCOPE_ORIGIN}
+    assert AC.HOLD_SCOPE_VERSION == "access-hold-scope/1"
+
+
+def test_the_three_cases_of_2026_10_09_replayed_on_their_preserved_answers(site):
+    """`es_el_pais`, `mx_la_jornada`, `ve_efecto_cocuyo`: the answers as received (decoded), served again by a loopback
+    site. Under the policy of 2026-10-09 each of them ended an outlet; under CPD-0027 none does, and each real control
+    still holds what it was observed on."""
+    varnish, gone, check = fixture("varnish_403_on_robots.html"), fixture("cloudflare_jsd_on_a_410_page.html"), fixture("browser_check_403_on_a_sitemap.html")
+    assert AC.classify_response(403, [("Server", "Varnish")], varnish) == AC.FORBIDDEN and AC.hold_scope(AC.KIND_ROBOTS, AC.FORBIDDEN) is None
+    assert AC.classify_response(410, HTML, gone) == AC.NONE_OBSERVED
+    assert AC.classify_response(403, [("Server", "nginx")], check) == AC.BOT_CHALLENGE and AC.hold_scope(AC.KIND_CHANNEL, AC.BOT_CHALLENGE) == AC.SCOPE_URL
+    # El País: the feed host refuses its robots address; the feed answers; the article host has a robots file of its own
+    site.routes.update({"/robots.txt": Response(403, [("Server", "Varnish")], varnish),
+                        "/feed": Response(200, [("Content-Type", "application/rss+xml")], feed(("/nota",))), "/nota": Response(200, HTML, PAGE)})
+    fetcher, _ = make_fetcher(site)
+    listed = get(fetcher, "/feed", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT)
+    assert listed.final == "FETCHED" and listed.last.policy["robots_decision"] == "absent" and fetcher.access_holds == {}
+    assert get(fetcher, "/nota", fetch_kind=acquisition.FETCH_KIND_ITEM).final == "FETCHED"
+    # La Jornada: a retired feed answers 410 with a detection script; the working feed and its articles are not held
+    site.routes.update({"/robots.txt": Response(200, PLAIN, b"User-agent: *\nDisallow:\n"), "/feeds/all.atom.xml": Response(410, HTML, gone)})
+    fetcher, _ = make_fetcher(site)
+    retired = get(fetcher, "/feeds/all.atom.xml", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT)
+    assert retired.last.status == 410 and retired.last.policy["access_class_observed"] == AC.NONE_OBSERVED and fetcher.access_holds == {}
+    assert get(fetcher, "/feed", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT).final == "FETCHED" and get(fetcher, "/nota", fetch_kind=acquisition.FETCH_KIND_ITEM).final == "FETCHED"
+    # Efecto Cocuyo: the sitemap is behind a browser check; that route is held; the feed's articles are requested
+    site.routes["/sitemap.xml"] = Response(403, [("Server", "nginx"), ("Content-Type", "text/html")], check)
+    fetcher, _ = make_fetcher(site)
+    challenged = get(fetcher, "/sitemap.xml", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT)
+    assert challenged.last.policy["access_class_observed"] == AC.BOT_CHALLENGE and challenged.last.body == check       # preserved as received
+    assert fetcher.access_holds == {f"{WWW}/sitemap.xml": AC.BOT_CHALLENGE}
+    before = len(site.requests)
+    assert get(fetcher, "/sitemap.xml", fetch_kind=acquisition.FETCH_KIND_CHANNEL_DOCUMENT).final == "DENIED" and len(site.requests) == before
+    assert get(fetcher, "/nota", fetch_kind=acquisition.FETCH_KIND_ITEM).final == "FETCHED"
+    assert all("cookie" not in headers for _, headers in site.requests) and len({headers["user-agent"] for _, headers in site.requests}) == 1
+
+
+def test_a_feed_host_and_an_article_host_answer_each_for_themselves(site):
+    """A feed on another host (feeds.elpais.com beside elpais.com): a hold on one host says nothing about the other,
+    in either direction, and a feed that answers does not stand in for the article host's own robots file."""
+    from test_fetcher import FEEDS
+
+    site.routes.update({"/robots.txt": Response(200, PLAIN, b"User-agent: *\nDisallow:\n"), "/nota": Response(200, HTML, PAGE),
+                        "/portada.xml": Response(200, [("Content-Type", "application/rss+xml")], feed(("/nota",)))})
+    feed_request = F.FetchRequest(f"{FEEDS}/portada.xml", OUTLET, acquisition.FETCH_KIND_CHANNEL_DOCUMENT)
+    held_feed_host, _ = make_fetcher(site)
+    held_feed_host.access_holds[FEEDS] = AC.BOT_CHALLENGE                         # the feed host has challenged this client
+    assert held_feed_host.fetch(feed_request).final == "DENIED"
+    assert get(held_feed_host, "/nota", fetch_kind=acquisition.FETCH_KIND_ITEM).final == "FETCHED"    # the article host is asked for itself
+    assert held_feed_host.access_holds == {FEEDS: AC.BOT_CHALLENGE}
+    held_article_host, _ = make_fetcher(site)
+    held_article_host.access_holds[WWW] = AC.BOT_CHALLENGE                        # the article host has; the feed host has not
+    assert held_article_host.fetch(feed_request).final == "FETCHED"
+    assert get(held_article_host, "/nota", fetch_kind=acquisition.FETCH_KIND_ITEM).final == "DENIED"  # a feed that answers opens nothing
+    # each host's robots file was asked of that host: told apart by the Host header
+    hosts = {headers["host"].split(":")[0] for path, headers in site.requests if path == "/robots.txt"}
+    assert hosts == {"www.diario-ejemplo.test", "feeds.agregador.test"}
 
 
 # --- F14 (wave C2, 2026-10-09): a second run for an outlet on a day whose pack is sealed ---------------------

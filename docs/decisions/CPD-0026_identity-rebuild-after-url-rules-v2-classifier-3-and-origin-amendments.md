@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Amended by (2026-10-10) | [CPD-0027](CPD-0027_access-holds-have-a-scope-and-a-refused-robots-address-is-not-a-refused-origin.md): holds are re-derived from preserved answers in both directions only since CPD-0027; §3's sentence that `mx_la_jornada` would be released by re-derivation was not true of the code as it then stood |
 | Decided by | the run commissioned by the operator's briefs of 2026-10-09 ("Comprehensive Source Qualification, Registry Expansion & Intake Readiness": "Alle sinnvollen technischen und organisatorischen Entscheidungen innerhalb dieses Scopes selbstständig treffen"; its addendum on access restrictions: "Eine technische Korrektur ist zulässig, wenn sie einen Fehler unserer Implementierung behebt und keine Zugriffskontrolle umgeht"). **§1 is a decision the code reserves for a person** (`identity_rebuild.adopt(replace_conflicting=True)`): it was taken by the commissioned agent on the evidence below and is submitted to the operator's review as such |
 | Kind | change decision (reprocessing under a new version) · classifier · registry |
 | Scope | the identity tables of the runtime workspace; `access_control`; four registry rows |
