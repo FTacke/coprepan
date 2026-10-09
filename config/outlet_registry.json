@@ -228,6 +228,64 @@
       "access_model": "unknown",
       "channels": [
         {
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.eltribuno.com/rss-new/portada.rss",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r002",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.eltribuno.com/rss-new/salta.rss",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "ar",
+      "display_names": [
+        {
+          "name": "El Tribuno",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "ar_el_tribuno",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Argentina/Salta",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "ar_el_tribuno-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.eltribuno.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
           "channel_id": "ar_la_nacion:ch:sitemap_index_001",
           "kind": "sitemap_index",
           "legacy_observed": {
@@ -1367,6 +1425,64 @@
       },
       "web_origins": [
         "https://www.lostiempos.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.opinion.com.bo/rss/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "bo_opinion:ch:rss_r002",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.opinion.com.bo/rss/cochabamba/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "bo",
+      "display_names": [
+        {
+          "name": "Opinión",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "bo_opinion",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/La_Paz",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "bo_opinion-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.opinion.com.bo"
       ]
     },
     {
@@ -4086,6 +4202,122 @@
       },
       "web_origins": [
         "https://www.nacion.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.14ymedio.com/rss",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "cu_14ymedio:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.14ymedio.com/cuba",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "cu",
+      "display_names": [
+        {
+          "name": "14ymedio",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "cu_14ymedio",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Havana",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "cu_14ymedio-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.14ymedio.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "cu_cubanet:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.cubanet.org/feed",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "cu_cubanet:ch:archive_r001",
+          "kind": "archive",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.cubanet.org/ultimas-noticias/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "cu",
+      "display_names": [
+        {
+          "name": "CubaNet",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "cu_cubanet",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Havana",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "cu_cubanet-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.cubanet.org"
       ]
     },
     {
@@ -7311,6 +7543,64 @@
     },
     {
       "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://criterio.hn/feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://criterio.hn/category/actualidad/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "hn",
+      "display_names": [
+        {
+          "name": "Criterio.hn",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "hn_criterio",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Tegucigalpa",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "hn_criterio-url-rules/v1"
+      },
+      "web_origins": [
+        "https://criterio.hn"
+      ]
+    },
+    {
+      "access_model": "unknown",
       "channels": [],
       "city": "unknown",
       "country_id": "hn",
@@ -9160,6 +9450,64 @@
       "access_model": "unknown",
       "channels": [
         {
+          "channel_id": "ni_articulo66:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.articulo66.com/feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "ni_articulo66:ch:archive_r001",
+          "kind": "archive",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.articulo66.com/2026/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "ni",
+      "display_names": [
+        {
+          "name": "Artículo 66",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "ni_articulo66",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Managua",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "ni_articulo66-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.articulo66.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
           "channel_id": "ni_confidencial:ch:rss_r001",
           "kind": "rss",
           "legacy_observed": {},
@@ -9506,6 +9854,53 @@
       },
       "web_origins": [
         "https://www.laprensa.com.ni"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://nicaraguainvestiga.com/feed/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "ni",
+      "display_names": [
+        {
+          "name": "Nicaragua Investiga",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "ni_nicaragua_investiga",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Managua",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "ni_nicaragua_investiga-url-rules/v1"
+      },
+      "web_origins": [
+        "https://nicaraguainvestiga.com"
       ]
     },
     {
@@ -12814,6 +13209,53 @@
       "access_model": "unknown",
       "channels": [
         {
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://noticel.com/category/ultima-hora/",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "pr",
+      "display_names": [
+        {
+          "name": "NotiCel",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "pr_noticel",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Puerto_Rico",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "pr_noticel-url-rules/v1"
+      },
+      "web_origins": [
+        "https://noticel.com"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
           "channel_id": "pr_primera_hora:ch:sitemap_index_001",
           "kind": "sitemap_index",
           "legacy_observed": {
@@ -14906,6 +15348,64 @@
       },
       "web_origins": [
         "https://www.lr21.com.uy"
+      ]
+    },
+    {
+      "access_model": "unknown",
+      "channels": [
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.montevideo.com.uy/anxml.aspx?59",
+              "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r002",
+          "kind": "rss",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.montevideo.com.uy/anxml.aspx?58",
+              "valid_from": "unknown"
+            }
+          ]
+        }
+      ],
+      "city": "unknown",
+      "country_id": "uy",
+      "display_names": [
+        {
+          "name": "Montevideo Portal",
+          "valid_from": "unknown",
+          "valid_to": "unknown"
+        }
+      ],
+      "editions": [],
+      "legacy_aliases": [],
+      "legacy_observed": {},
+      "medium": "unknown",
+      "outlet_group": "unknown",
+      "outlet_id": "uy_montevideo_portal",
+      "outlet_type": "unknown",
+      "region": "unknown",
+      "registration_status": "registered",
+      "review_notes": [],
+      "same_outlet_basis": "not_applicable",
+      "scope": "unknown",
+      "timezone": "America/Montevideo",
+      "url_rules": {
+        "significant_query_params": [],
+        "strip_path_prefixes": [],
+        "strip_path_suffixes": [],
+        "version": "uy_montevideo_portal-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.montevideo.com.uy"
       ]
     },
     {

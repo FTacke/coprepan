@@ -1,0 +1,634 @@
+{
+  "authority": "reviewed and approved by Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository under DOA-2026-10-09-1 (DELEGATED_OPERATOR_AUTHORIZATION; issued by Felix Tacke (operator of CO.PRE.PAN)); proposal 2026-10-09 prepared by an agent run (CPD-0019)",
+  "deferred": {},
+  "gate": "O-11",
+  "not_a_claim": "a technical canary set; not a sample of the press of any country; no address in it has been requested by this project; every address is a hypothesis from research",
+  "proposal_sha256": "f7ccc255c9c9d9d5cfada68bee4183a64d860e709de45d5fe0df0a51684816e4",
+  "registered": [
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Argentina/Salta"
+      },
+      "channel_ids": {
+        "ar_el_tribuno:ch:rss_r001": "ar_el_tribuno:ch:rss_r001",
+        "ar_el_tribuno:ch:rss_r002": "ar_el_tribuno:ch:rss_r002"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "El Tribuno",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.eltribuno.com/rss-new/portada.rss (publisher_rss): Add Argentine regional newspaper (Salta), official feeds for local/society/politics",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.eltribuno.com/page-rss"
+        },
+        {
+          "claim": "channel ar_el_tribuno:ch:rss_r001 (rss) at https://www.eltribuno.com/rss-new/portada.rss: publisher_documented; Other official feed: /rss-new/salta.rss and /rss-new/politica.rss.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.eltribuno.com/page-rss"
+        },
+        {
+          "claim": "channel ar_el_tribuno:ch:rss_r002 (rss) at https://www.eltribuno.com/rss-new/salta.rss: publisher_documented; Other official feed: /rss-new/salta.rss and /rss-new/politica.rss.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.eltribuno.com/page-rss"
+        },
+        {
+          "claim": "time zone America/Argentina/Salta",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "El Tribuno also publishes for Jujuy and Tucumán: whether those are editions of this outlet or outlets of their own is open; only the Salta and front-page feeds are named"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.eltribuno.com/rss-new/portada.rss",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r002",
+          "kind": "rss",
+          "url": "https://www.eltribuno.com/rss-new/salta.rss",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "ar_el_tribuno",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ar_el_tribuno-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.eltribuno.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/La_Paz"
+      },
+      "channel_ids": {
+        "bo_opinion:ch:rss_r001": "bo_opinion:ch:rss_r001",
+        "bo_opinion:ch:rss_r002": "bo_opinion:ch:rss_r002"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Opinión",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.opinion.com.bo/rss/ (publisher_rss): New regional daily in Cochabamba; official RSS hub lists general and regional feeds",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.opinion.com.bo/rss/listado/"
+        },
+        {
+          "claim": "channel bo_opinion:ch:rss_r001 (rss) at https://www.opinion.com.bo/rss/: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/opinion-bo/"
+        },
+        {
+          "claim": "channel bo_opinion:ch:rss_r001 (rss) at https://www.opinion.com.bo/rss/: publisher_documented; Official links include /rss/cochabamba/; RSS endpoint click produced unsupported XML content in web reader, not crawler validation.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.opinion.com.bo/rss/listado/"
+        },
+        {
+          "claim": "channel bo_opinion:ch:rss_r002 (rss) at https://www.opinion.com.bo/rss/cochabamba/: publisher_documented; Official links include /rss/cochabamba/; RSS endpoint click produced unsupported XML content in web reader, not crawler validation.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.opinion.com.bo/rss/listado/"
+        },
+        {
+          "claim": "time zone America/La_Paz",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [],
+      "new_channels": [
+        {
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.opinion.com.bo/rss/",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "bo_opinion:ch:rss_r002",
+          "kind": "rss",
+          "url": "https://www.opinion.com.bo/rss/cochabamba/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "bo_opinion",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "bo_opinion-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.opinion.com.bo"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Havana"
+      },
+      "channel_ids": {
+        "cu_14ymedio:ch:rss_r001": "cu_14ymedio:ch:rss_r001",
+        "cu_14ymedio:ch:section_page_r001": "cu_14ymedio:ch:section_page_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "14ymedio",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.14ymedio.com/cuba (publisher_html_section): Diversify Cuba beyond 169 legacy annotated articles; Cuba section has recent links and subtopics",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.14ymedio.com/cuba"
+        },
+        {
+          "claim": "channel cu_14ymedio:ch:rss_r001 (rss) at https://www.14ymedio.com/rss: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/cuba_news_rss_feeds/"
+        },
+        {
+          "claim": "channel cu_14ymedio:ch:section_page_r001 (section_page) at https://www.14ymedio.com/cuba: publisher_page_observed; Explicit dated topic listing also at /temas/represion/.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.14ymedio.com/cuba"
+        },
+        {
+          "claim": "time zone America/Havana",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "the section page is a listing: it is read and preserved, and what it lists waits for an allow rule (CPD-0020)"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.14ymedio.com/rss",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "cu_14ymedio:ch:section_page_r001",
+          "kind": "section_page",
+          "url": "https://www.14ymedio.com/cuba",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "cu_14ymedio",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "cu_14ymedio-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.14ymedio.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Havana"
+      },
+      "channel_ids": {
+        "cu_cubanet:ch:archive_r001": "cu_cubanet:ch:archive_r001",
+        "cu_cubanet:ch:rss_r001": "cu_cubanet:ch:rss_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "CubaNet",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.cubanet.org/ultimas-noticias/ (publisher_html_archive): Active independent Cuba daily listings with titles/authors/dates",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.cubanet.org/ultimas-noticias/"
+        },
+        {
+          "claim": "channel cu_cubanet:ch:rss_r001 (rss) at https://www.cubanet.org/feed: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/cuba_news_rss_feeds/"
+        },
+        {
+          "claim": "channel cu_cubanet:ch:archive_r001 (archive) at https://www.cubanet.org/ultimas-noticias/: publisher_page_observed; This publisher identifies as independent press on its pages.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.cubanet.org/ultimas-noticias/"
+        },
+        {
+          "claim": "time zone America/Havana",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "earlier research describes the outlet as based in Miami: country_id cu is the country it reports on, the time zone follows it; the seat is not recorded as the country",
+        "the archive is a listing: read and preserved, its candidates wait for an allow rule"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "cu_cubanet:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.cubanet.org/feed",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "cu_cubanet:ch:archive_r001",
+          "kind": "archive",
+          "url": "https://www.cubanet.org/ultimas-noticias/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "cu_cubanet",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "cu_cubanet-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.cubanet.org"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Tegucigalpa"
+      },
+      "channel_ids": {
+        "hn_criterio:ch:rss_r001": "hn_criterio:ch:rss_r001",
+        "hn_criterio:ch:section_page_r001": "hn_criterio:ch:section_page_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Criterio.hn",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://criterio.hn/category/actualidad/ (publisher_html_section): Honduras alternate while Proceso Digital held; datelined multi-article listing",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://criterio.hn/category/actualidad/"
+        },
+        {
+          "claim": "channel hn_criterio:ch:rss_r001 (rss) at https://criterio.hn/feed/: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/criterio-hn/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://criterio.hn/feed/; 5 articles sampled, dated 2026-09-30 to 2026-10-01"
+        },
+        {
+          "claim": "channel hn_criterio:ch:section_page_r001 (section_page) at https://criterio.hn/category/actualidad/: publisher_page_observed; Official category lists many Oct 2026 dated items.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://criterio.hn/category/actualidad/"
+        },
+        {
+          "claim": "time zone America/Tegucigalpa",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "the category page is a listing: read and preserved, its candidates wait for an allow rule"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://criterio.hn/feed/",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "kind": "section_page",
+          "url": "https://criterio.hn/category/actualidad/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "hn_criterio",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "hn_criterio-url-rules/v1"
+      },
+      "web_origins": [
+        "https://criterio.hn"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Managua"
+      },
+      "channel_ids": {
+        "ni_articulo66:ch:archive_r001": "ni_articulo66:ch:archive_r001",
+        "ni_articulo66:ch:rss_r001": "ni_articulo66:ch:rss_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Artículo 66",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.articulo66.com/2026/ (publisher_html_archive): Independent Nicaragua news archive, large year-month pagination, dated item links",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.articulo66.com/2026/"
+        },
+        {
+          "claim": "channel ni_articulo66:ch:rss_r001 (rss) at https://www.articulo66.com/feed/: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/ (URL appears only inside Feedspot's follow-link parameter)"
+        },
+        {
+          "claim": "channel ni_articulo66:ch:archive_r001 (archive) at https://www.articulo66.com/2026/: publisher_page_observed; Archive spans >190 pages in indexed source; no claim about RSS.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.articulo66.com/2026/"
+        },
+        {
+          "claim": "time zone America/Managua",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "independent Nicaraguan media work largely from exile: country_id ni is the country reported on; the seat is unknown here",
+        "the yearly archive is a listing with numbered pages: read page by page within the reserved budget, its candidates wait for an allow rule"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "ni_articulo66:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.articulo66.com/feed/",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "ni_articulo66:ch:archive_r001",
+          "kind": "archive",
+          "url": "https://www.articulo66.com/2026/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "ni_articulo66",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ni_articulo66-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.articulo66.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Managua"
+      },
+      "channel_ids": {
+        "ni_nicaragua_investiga:ch:rss_r001": "ni_nicaragua_investiga:ch:rss_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Nicaragua Investiga",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://nicaraguainvestiga.com/ (publisher_html_sections): Nicaragua zero accepted legacy; active thematic sections and dated items",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://nicaraguainvestiga.com/"
+        },
+        {
+          "claim": "channel ni_nicaragua_investiga:ch:rss_r001 (rss) at https://nicaraguainvestiga.com/feed/: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/"
+        },
+        {
+          "claim": "time zone America/Managua",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "as ni_articulo66 for country and seat",
+        "the supplement notes agency material (AFP) among the items: syndication is not told apart by anything yet"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://nicaraguainvestiga.com/feed/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "ni_nicaragua_investiga",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ni_nicaragua_investiga-url-rules/v1"
+      },
+      "web_origins": [
+        "https://nicaraguainvestiga.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Puerto_Rico"
+      },
+      "channel_ids": {
+        "pr_noticel:ch:section_page_r001": "pr_noticel:ch:section_page_r001"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "NotiCel",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://noticel.com/category/ultima-hora/ (publisher_html_section): Puerto Rico new independent editorial source, chronological local news",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://noticel.com/category/ultima-hora/"
+        },
+        {
+          "claim": "channel pr_noticel:ch:section_page_r001 (section_page) at https://noticel.com/category/ultima-hora/: publisher_page_observed; Homepage has Oct 2026 articles; avoid treating category counts as articles.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://noticel.com/category/ultima-hora/"
+        },
+        {
+          "claim": "time zone America/Puerto_Rico",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "a listing is its only channel: this wave reads and preserves it and requests no article of it; an allow rule written from the preserved page comes before any item",
+        "earlier research gave the host with www. from background knowledge; the supplement observed the host without it"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "kind": "section_page",
+          "url": "https://noticel.com/category/ultima-hora/",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "pr_noticel",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "pr_noticel-url-rules/v1"
+      },
+      "web_origins": [
+        "https://noticel.com"
+      ]
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Montevideo"
+      },
+      "channel_ids": {
+        "uy_montevideo_portal:ch:rss_r001": "uy_montevideo_portal:ch:rss_r001",
+        "uy_montevideo_portal:ch:rss_r002": "uy_montevideo_portal:ch:rss_r002"
+      },
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Montevideo Portal",
+      "evidence": [
+        {
+          "claim": "the outlet and its discovery route https://www.montevideo.com.uy/anxml.aspx?59 (publisher_rss): New Uruguay publisher with 12 official channel URLs; avoids lone-outlet bias",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.montevideo.com.uy/Utiles/Las-noticias-de-Montevideo-Portal-en-formato-RSS-uc27383"
+        },
+        {
+          "claim": "channel uy_montevideo_portal:ch:rss_r001 (rss) at https://www.montevideo.com.uy/anxml.aspx?59: search_evidence",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "search snippet of the RSS page: 'Canal de Noticias (anxml.aspx?59)'"
+        },
+        {
+          "claim": "channel uy_montevideo_portal:ch:rss_r001 (rss) at https://www.montevideo.com.uy/anxml.aspx?59: publisher_documented; Official news feed ?59; featured ?58; opinion ?1303.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.montevideo.com.uy/Utiles/Las-noticias-de-Montevideo-Portal-en-formato-RSS-uc27383"
+        },
+        {
+          "claim": "channel uy_montevideo_portal:ch:rss_r002 (rss) at https://www.montevideo.com.uy/anxml.aspx?58: publisher_documented; Official news feed ?59; featured ?58; opinion ?1303.",
+          "how": "the operator's external research of 2026-10-09 (publisher pages as indexed by a web search; no request by this project's crawler)",
+          "source": "https://www.montevideo.com.uy/Utiles/Las-noticias-de-Montevideo-Portal-en-formato-RSS-uc27383"
+        },
+        {
+          "claim": "time zone America/Montevideo",
+          "how": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_decided_by_the_reviewer": [
+        "a portal, not a newspaper with a print edition: whether it belongs in a press corpus is a corpus-supply judgement"
+      ],
+      "new_channels": [
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?59",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r002",
+          "kind": "rss",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?58",
+          "valid_from": "unknown"
+        }
+      ],
+      "new_outlet": true,
+      "outlet_id": "uy_montevideo_portal",
+      "review_notes_cleared": [],
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "uy_montevideo_portal-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.montevideo.com.uy"
+      ]
+    }
+  ],
+  "registry_sha256_after": "d1b80dfd2793a62115f757a4d01b36c0398e5997dbe188b8da326e7e871533c1",
+  "registry_sha256_before": "10cb59ef8c73839140ac94fecac1e8e6c91fb79df56d2812e98d7e9f8fa4ec5a",
+  "reviewed_on": "2026-10-09",
+  "schema": "coprepan-registry-registration/v1",
+  "scope": "the outlets of the third canary wave: outlets that were never in the legacy system (CPD-0020 §6)",
+  "selection_rule": "nine outlets of seven countries from the consolidated prediscovery, chosen for what the earlier waves lack: countries the legacy system read thinly or not at all (Nicaragua ×2, Cuba ×2, Uruguay, Puerto Rico, Honduras, Bolivia, Argentina), publisher-documented RSS catalogues, a feed address that is a query string, regional dailies, and four HTML listings — a yearly archive with numbered pages, a chronological archive, two section pages — of which one outlet has nothing else",
+  "timezone_basis": "the IANA zone of the country the outlet reports on (for an Argentine regional daily: the zone of its province)"
+}

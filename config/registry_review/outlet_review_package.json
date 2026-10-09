@@ -689,6 +689,67 @@
     },
     {
       "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "rss": 2
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ar_el_tribuno:ch:rss_new_portada",
+          "url": "https://www.eltribuno.com/rss-new/portada.rss"
+        },
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r002",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ar_el_tribuno:ch:rss_new_salta",
+          "url": "https://www.eltribuno.com/rss-new/salta.rss"
+        }
+      ],
+      "country_id": "ar",
+      "display_name": "El Tribuno",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "ar_el_tribuno",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "ar_el_tribuno",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.eltribuno.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
       "channel_count": 7,
       "channel_kinds": {
         "rss": 1,
@@ -1279,6 +1340,67 @@
       ],
       "web_origins": [
         "https://www.lostiempos.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "rss": 2
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "bo_opinion:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "bo_opinion:ch:rss_main",
+          "url": "https://www.opinion.com.bo/rss/"
+        },
+        {
+          "channel_id": "bo_opinion:ch:rss_r002",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "bo_opinion:ch:rss_cochabamba",
+          "url": "https://www.opinion.com.bo/rss/cochabamba/"
+        }
+      ],
+      "country_id": "bo",
+      "display_name": "Opinión",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "bo_opinion",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "bo_opinion",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.opinion.com.bo"
       ]
     },
     {
@@ -2618,6 +2740,130 @@
       ],
       "web_origins": [
         "https://www.nacion.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "rss": 1,
+        "section_page": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "cu_14ymedio:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "cu_14ymedio:ch:rss_main",
+          "url": "https://www.14ymedio.com/rss"
+        },
+        {
+          "channel_id": "cu_14ymedio:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "cu_14ymedio:ch:section_page_cuba",
+          "url": "https://www.14ymedio.com/cuba"
+        }
+      ],
+      "country_id": "cu",
+      "display_name": "14ymedio",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "cu_14ymedio",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "cu_14ymedio",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.14ymedio.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "archive": 1,
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "cu_cubanet:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "cu_cubanet:ch:rss_main",
+          "url": "https://www.cubanet.org/feed"
+        },
+        {
+          "channel_id": "cu_cubanet:ch:archive_r001",
+          "kind": "archive",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "cu_cubanet:ch:archive_ultimas_noticias",
+          "url": "https://www.cubanet.org/ultimas-noticias/"
+        }
+      ],
+      "country_id": "cu",
+      "display_name": "CubaNet",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "cu_cubanet",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "cu_cubanet",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.cubanet.org"
       ]
     },
     {
@@ -4360,6 +4606,69 @@
     },
     {
       "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "rss": 1,
+        "section_page": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "hn_criterio_hn:ch:rss_main",
+          "url": "https://criterio.hn/feed/"
+        },
+        {
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "hn_criterio_hn:ch:section_page_category_actualidad",
+          "url": "https://criterio.hn/category/actualidad/"
+        }
+      ],
+      "country_id": "hn",
+      "display_name": "Criterio.hn",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "hn_criterio",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "hn_criterio_hn",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "id_spelling_differs_from_the_convention",
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://criterio.hn"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
       "channel_count": 0,
       "channel_kinds": {},
       "channel_legacy_statuses": {},
@@ -5263,6 +5572,69 @@
     },
     {
       "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "archive": 1,
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "ni_articulo66:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ni_articulo_66:ch:rss_main",
+          "url": "https://www.articulo66.com/feed/"
+        },
+        {
+          "channel_id": "ni_articulo66:ch:archive_r001",
+          "kind": "archive",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ni_articulo_66:ch:archive_2026",
+          "url": "https://www.articulo66.com/2026/"
+        }
+      ],
+      "country_id": "ni",
+      "display_name": "Artículo 66",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "ni_articulo66",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "ni_articulo_66",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "id_spelling_differs_from_the_convention",
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.articulo66.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
       "channel_count": 6,
       "channel_kinds": {
         "rss": 3,
@@ -5473,6 +5845,55 @@
       ],
       "web_origins": [
         "https://www.laprensa.com.ni"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
+      "channel_count": 1,
+      "channel_kinds": {
+        "rss": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 1
+      },
+      "channels": [
+        {
+          "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "ni_nicaragua_investiga:ch:rss_main",
+          "url": "https://nicaraguainvestiga.com/feed/"
+        }
+      ],
+      "country_id": "ni",
+      "display_name": "Nicaragua Investiga",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "ni_nicaragua_investiga",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "ni_nicaragua_investiga",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://nicaraguainvestiga.com"
       ]
     },
     {
@@ -7100,6 +7521,55 @@
     },
     {
       "additional_origin_candidates": [],
+      "channel_count": 1,
+      "channel_kinds": {
+        "section_page": 1
+      },
+      "channel_legacy_statuses": {
+        "None": 1
+      },
+      "channels": [
+        {
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "kind": "section_page",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "pr_noticel:ch:section_page_category_ultima_hora",
+          "url": "https://noticel.com/category/ultima-hora/"
+        }
+      ],
+      "country_id": "pr",
+      "display_name": "NotiCel",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "pr_noticel",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "pr_noticel",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://noticel.com"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
       "channel_count": 3,
       "channel_kinds": {
         "sitemap_index": 3
@@ -8191,6 +8661,67 @@
     },
     {
       "additional_origin_candidates": [],
+      "channel_count": 2,
+      "channel_kinds": {
+        "rss": 2
+      },
+      "channel_legacy_statuses": {
+        "None": 2
+      },
+      "channels": [
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "uy_montevideo_portal:ch:rss_anxml_59",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?59"
+        },
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r002",
+          "kind": "rss",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "uy_montevideo_portal:ch:rss_anxml_58",
+          "url": "https://www.montevideo.com.uy/anxml.aspx?58"
+        }
+      ],
+      "country_id": "uy",
+      "display_name": "Montevideo Portal",
+      "hosts_not_of_the_outlet": [],
+      "legacy": [],
+      "outlet_id": "uy_montevideo_portal",
+      "publisher": "unknown",
+      "publisher_evidence": [],
+      "recommended_action": "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES",
+      "recommended_outlet_id": "uy_montevideo_portal",
+      "unknown_fields": [
+        "outlet_type",
+        "outlet_group",
+        "city",
+        "region",
+        "scope",
+        "access_model",
+        "medium"
+      ],
+      "url_rules_are_placeholder": false,
+      "warnings": [
+        "no_channel_was_active_in_legacy"
+      ],
+      "web_origins": [
+        "https://www.montevideo.com.uy"
+      ]
+    },
+    {
+      "additional_origin_candidates": [],
       "channel_count": 6,
       "channel_kinds": {
         "rss": 4,
@@ -8902,7 +9433,7 @@
       ]
     }
   ],
-  "registry_sha256": "10cb59ef8c73839140ac94fecac1e8e6c91fb79df56d2812e98d7e9f8fa4ec5a",
+  "registry_sha256": "d1b80dfd2793a62115f757a4d01b36c0398e5997dbe188b8da326e7e871533c1",
   "review_cases": [
     {
       "case": "channels_on_the_origin_of_another_outlet",
@@ -8918,7 +9449,7 @@
   "summary": {
     "by_recommended_action": {
       "CHECK_CHANNEL_ATTRIBUTION": 6,
-      "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 56,
+      "CONFIRM_ID_AND_COMPLETE_ATTRIBUTES": 65,
       "FIND_CHANNELS_OR_LEAVE_UNREGISTERED": 20
     },
     "by_warning": {
@@ -8926,15 +9457,15 @@
       "channels_on_hosts_that_are_not_the_outlet": 5,
       "channels_on_the_origin_of_another_outlet": 1,
       "display_name_shared_across_countries": 19,
-      "id_spelling_differs_from_the_convention": 21,
+      "id_spelling_differs_from_the_convention": 23,
       "legacy_code_is_not_ascii": 6,
       "no_channel": 20,
-      "no_channel_was_active_in_legacy": 32,
+      "no_channel_was_active_in_legacy": 41,
       "origin_is_plain_http": 1
     },
-    "channels": 357,
-    "ids_changed_by_the_convention": 21,
-    "outlets": 82,
+    "channels": 373,
+    "ids_changed_by_the_convention": 23,
+    "outlets": 91,
     "review_cases": 1
   }
 }
