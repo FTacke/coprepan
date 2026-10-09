@@ -1,0 +1,744 @@
+{
+  "candidate_rules": {
+    "bo_lostiempos": {
+      "allow_path_patterns": [
+        "^/(?:[^/]+/)+[0-9]{8}/[^/]+/?$"
+      ],
+      "reject_path_patterns": [],
+      "reject_path_prefixes": [],
+      "version": "bo_lostiempos-candidate-rules/v1"
+    }
+  },
+  "candidate_rules_basis": {
+    "bo_lostiempos": "article addresses of the form /actualidad/<seccion>/YYYYMMDD/<slug> in search results of 2026-10-09 (prediscovery group 1); a hypothesis: what the rule rejects is on record in the qualification table and nothing is deleted by it"
+  },
+  "gate": "O-11",
+  "inputs": {
+    "inventory": {
+      "file": "source_discovery_inventory_2026-10-09.1.json",
+      "sha256": "fa07441b3aec715a3ad626640e4ef1d3a1c4fcc3875b943752774276aefc7e9b"
+    },
+    "registry_sha256_before": "39b3709d02f609e53db5434daee93fbb07a7161556249ccd521aa7d73782ca02"
+  },
+  "not_a_claim": "a technical canary set; not a sample of the press of any country; no channel in it has been tested by this project; every address from research is a hypothesis",
+  "open_for_the_operator": [
+    "whether each outlet is wanted in a canary at all (ownership, state or exile status and paywalls are noted per outlet in the inventory)",
+    "whether emol.com stands for El Mercurio",
+    "whether an apex host beside the www host is one outlet's origin (ni_confidencial)",
+    "whether a metered or freemium paywall is to be met at all: the policy never works around one, and a login or paywall redirect ends the path"
+  ],
+  "policy_version_after": "canary/2026-10-09.2",
+  "prepared_on": "2026-10-09",
+  "proposed": [
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/La_Paz"
+      },
+      "channel_order": [
+        "bo_lostiempos:ch:rss_001",
+        "bo_lostiempos:ch:section_page_r001",
+        "bo_lostiempos:ch:unknown_001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Los Tiempos",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Own article on 82nd anniversary homage dated 2025-10-28 and items dated 2026 appear in search results",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "search results for lostiempos.com on 2026-10-09"
+        },
+        {
+          "claim": "channel bo_lostiempos:ch:section_page_r001 (section_page) at https://www.lostiempos.com/: the outlet's front page, read as a listing; article addresses of the form /actualidad/<seccion>/YYYYMMDD/<slug> seen in search results",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "search result listing on 2026-10-09"
+        },
+        {
+          "claim": "time zone America/La_Paz",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [
+        "the front page is read as a listing under the allow rule of this proposal; the rule's pattern is a hypothesis from search-result URLs and is confirmed or replaced by the qualification rows of the canary"
+      ],
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "new_channels": [
+        {
+          "channel_id": "bo_lostiempos:ch:section_page_r001",
+          "kind": "section_page",
+          "url": "https://www.lostiempos.com/",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "bo_lostiempos",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "bo_lostiempos-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.lostiempos.com"
+      ],
+      "why_in_the_set": "HTML listing beside a feed the legacy system read once; Drupal; regional daily"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Santiago"
+      },
+      "channel_order": [
+        "cl_el_mercurio:ch:sitemap_index_001",
+        "cl_el_mercurio:ch:sitemap_index_002",
+        "cl_el_mercurio:ch:sitemap_index_003"
+      ],
+      "channels_disabled_for_the_canary": [
+        "cl_el_mercurio:ch:sitemap_index_002",
+        "cl_el_mercurio:ch:sitemap_index_003"
+      ],
+      "display_name": "El Mercurio",
+      "evidence": [
+        {
+          "claim": "operating status: operating — No closure report; emol.com pages indexed; registry sitemap indexes answered HTTP 200 in legacy",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "search results for emol.com on 2026-10-09"
+        },
+        {
+          "claim": "time zone America/Santiago",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [
+        "emol.com is the free portal of the El Mercurio group: whether it stands for the newspaper is a corpus-supply question, open",
+        "the photo and video indexes are disabled for the canary"
+      ],
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "new_channels": [],
+      "outlet_id": "cl_el_mercurio",
+      "review_notes_cleared": [],
+      "route_class": "INDEX_EXPANSION_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "cl_el_mercurio-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.emol.com"
+      ],
+      "why_in_the_set": "sitemap index only: the legacy system never expanded one; proprietary platform"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Guayaquil"
+      },
+      "channel_order": [
+        "ec_el_universo:ch:rss_r001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "El Universo",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Third-party crawler sampled 12 articles dated 2026-10-01. Ownership changed: Perez family announced sale of all shares on 2026-02-12 to an investor group led by Yves Maia Pardini, with Integra Capital (Jose Luis Manzano) advising; cartoonist Bonil left in March 2026.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/el-universo/ ; https://www.vistazo.com/actualidad/nacional/2026-02-12-quien-compro-diario-el-universo-inversionista-asume-control-medio-centenario-JA10679145"
+        },
+        {
+          "claim": "channel ec_el_universo:ch:rss_r001 (rss) at https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml: search_evidence; no note",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/el-universo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml; 12 articles sampled, dated 2026-10-01; also https://rss.feedspot.com/ecuador_news_rss_feeds/"
+        },
+        {
+          "claim": "time zone America/Guayaquil",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "new_channels": [
+        {
+          "channel_id": "ec_el_universo:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "ec_el_universo",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ec_el_universo-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.eluniverso.com"
+      ],
+      "why_in_the_set": "no legacy channel (its discovery ended on the legacy TDM heuristic); Arc XP feed named by a third-party crawler; Ecuador had no productive outlet"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Guayaquil"
+      },
+      "channel_order": [
+        "ec_primicias:ch:rss_r001",
+        "ec_primicias:ch:sitemap_001",
+        "ec_primicias:ch:sitemap_index_001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Primicias",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Site pages and articles indexed; listed in SembraMedia directory; feed URL documented in March 2026.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "WebSearch 2026-10-09; https://directorio.sembramedia.org/primicias/"
+        },
+        {
+          "claim": "channel ec_primicias:ch:rss_r001 (rss) at https://www.primicias.ec/feed/: search_evidence; Not in registry.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://github.com/koala73/worldmonitor/issues/821 (opened 2026-03-02); search snippets also show an 'RSS' link in the site footer"
+        },
+        {
+          "claim": "time zone America/Guayaquil",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "new_channels": [
+        {
+          "channel_id": "ec_primicias:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.primicias.ec/feed/",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "ec_primicias",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ec_primicias-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.primicias.ec"
+      ],
+      "why_in_the_set": "legacy fetched pages and its extractor rejected all; digital native; a feed not in the registry"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "Europe/Madrid"
+      },
+      "channel_order": [
+        "es_el_mundo:ch:rss_r001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "El Mundo",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Third-party crawler sampled 20 articles dated 2026-09-30/10-01.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/el-mundo/"
+        },
+        {
+          "claim": "channel es_el_mundo:ch:rss_r001 (rss) at https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml: search_evidence; Feed lives on uecdn.es, not elmundo.es - the origin must be explicitly authorised in the registry.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/el-mundo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml; 20 articles sampled, dated 2026-09-30"
+        },
+        {
+          "claim": "time zone Europe/Madrid",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [
+        "the feed host is authorised as a channel origin only: no item is requested from it"
+      ],
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "new_channels": [
+        {
+          "channel_id": "es_el_mundo:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "es_el_mundo",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "es_el_mundo-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.elmundo.es"
+      ],
+      "why_in_the_set": "no legacy channel; the feed lives on a CDN host of another registrable domain; freemium paywall expected for part of the items"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Guatemala"
+      },
+      "channel_order": [
+        "gt_lahora:ch:rss_003",
+        "gt_lahora:ch:sitemap_index_001",
+        "gt_lahora:ch:sitemap_index_002",
+        "gt_lahora:ch:rss_001",
+        "gt_lahora:ch:rss_002"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "La Hora",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Third-party crawler sampled 10 articles (URL dates 2026/09/30).",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/la-hora-gt/"
+        },
+        {
+          "claim": "time zone America/Guatemala",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "new_channels": [],
+      "outlet_id": "gt_lahora",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "gt_lahora-url-rules/v1"
+      },
+      "web_origins": [
+        "https://lahora.gt"
+      ],
+      "why_in_the_set": "legacy never productive although its channels answered; WordPress; a short feed and a Yoast index"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Mexico_City"
+      },
+      "channel_order": [
+        "mx_la_jornada:ch:rss_r001",
+        "mx_la_jornada:ch:atom_r001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "La Jornada",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Listed with live feeds by Feedspot and with print issues by PressReader; no 2026-dated article retrieved by search.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/la_jornada_rss_feeds/"
+        },
+        {
+          "claim": "channel mx_la_jornada:ch:rss_r001 (rss) at https://www.jornada.com.mx/rss/edicion.xml?v=1: search_evidence; Print-edition feed. Feeder.co claims the site has no native RSS (conflicting).",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/la_jornada_rss_feeds/"
+        },
+        {
+          "claim": "channel mx_la_jornada:ch:atom_r001 (atom) at https://www.jornada.com.mx/feeds/all.atom.xml: search_evidence; Atom feed of everything, if still served.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://rss.feedspot.com/la_jornada_rss_feeds/ (listed under the label 'Cartones')"
+        },
+        {
+          "claim": "time zone America/Mexico_City",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "new_channels": [
+        {
+          "channel_id": "mx_la_jornada:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://www.jornada.com.mx/rss/edicion.xml?v=1",
+          "valid_from": "unknown"
+        },
+        {
+          "channel_id": "mx_la_jornada:ch:atom_r001",
+          "kind": "atom",
+          "url": "https://www.jornada.com.mx/feeds/all.atom.xml",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "mx_la_jornada",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "mx_la_jornada-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.jornada.com.mx"
+      ],
+      "why_in_the_set": "no legacy channel; RSS and Atom of two feed generations, a query parameter in the feed address; sources disagree on whether a feed exists"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Managua"
+      },
+      "channel_order": [
+        "ni_confidencial:ch:rss_r001",
+        "ni_confidencial:ch:sitemap_001",
+        "ni_confidencial:ch:unknown_001",
+        "ni_confidencial:ch:sitemap_index_001",
+        "ni_confidencial:ch:rss_001",
+        "ni_confidencial:ch:rss_002"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Confidencial",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Publishes from exile (director Carlos F. Chamorro in Costa Rica since January 2019, again from 2021; newsroom raided and confiscated). Third-party crawler sampled 20 articles dated 2026-09-28 to 2026-09-30.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/confidencial-ni/ ; https://ijnet.org/es/resource/periodismo-desde-el-exilio-confidencial-resiste-al-r%C3%A9gimen-en-nicaragua"
+        },
+        {
+          "claim": "channel ni_confidencial:ch:rss_r001 (rss) at https://confidencial.digital/feed/: search_evidence; Registry holds https://www.confidencial.digital/feed and /rss (technically_empty). Try the apex host with trailing slash.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://metawatch.iptc.org/sites/confidencial-ni/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://confidencial.digital/feed/; 20 articles sampled, dated 2026-09-28 to 2026-09-30"
+        },
+        {
+          "claim": "time zone America/Managua",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [
+        "adds the apex host as a second web origin: third parties read the feed there, the registry held only the www host",
+        "the newsroom works from exile in Costa Rica: the time zone is that of the country the outlet reports on, a review judgement",
+        "the English section is not excluded by any rule yet"
+      ],
+      "legacy_class": "LEGACY_NEVER_PRODUCTIVE",
+      "new_channels": [
+        {
+          "channel_id": "ni_confidencial:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://confidencial.digital/feed/",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "ni_confidencial",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "ni_confidencial-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.confidencial.digital",
+        "https://confidencial.digital"
+      ],
+      "why_in_the_set": "legacy never productive; a feed on the apex host named by a third-party crawler; Nicaragua had no productive outlet"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Panama"
+      },
+      "channel_order": [
+        "pa_laestrelladepanama:ch:sitemap_002",
+        "pa_laestrelladepanama:ch:sitemap_index_001",
+        "pa_laestrelladepanama:ch:sitemap_001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "La Estrella de Panamá",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Search results show a front-page PDF dated 2026-08-07 and an edition page dated 2026-07-06 on laestrella.com.pa.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "search snippets (laestrella.com.pa binrepository PDF, atp.gob.pa report April 2026); older 2016-17 OFAC/Waked closure threats were resolved in 2017 (tvn-2.com, revistaeyn.com)"
+        },
+        {
+          "claim": "time zone America/Panama",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_PRODUCTIVE_SPORADIC",
+      "new_channels": [],
+      "outlet_id": "pa_laestrelladepanama",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "pa_laestrelladepanama-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.laestrella.com.pa"
+      ],
+      "why_in_the_set": "legacy read it through sitemaps and kept one article; a 'megasitemap' index and a Google sitemap on a platform shared by three Panamanian outlets"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Lima"
+      },
+      "channel_order": [
+        "pe_diariocorreo:ch:rss_001",
+        "pe_diariocorreo:ch:sitemap_003",
+        "pe_diariocorreo:ch:sitemap_index_001",
+        "pe_diariocorreo:ch:rss_002",
+        "pe_diariocorreo:ch:rss_003",
+        "pe_diariocorreo:ch:unknown_001",
+        "pe_diariocorreo:ch:rss_004",
+        "pe_diariocorreo:ch:rss_005",
+        "pe_diariocorreo:ch:rss_006",
+        "pe_diariocorreo:ch:rss_007",
+        "pe_diariocorreo:ch:rss_008",
+        "pe_diariocorreo:ch:sitemap_001",
+        "pe_diariocorreo:ch:sitemap_002",
+        "pe_diariocorreo:ch:sitemap_004",
+        "pe_diariocorreo:ch:sitemap_005",
+        "pe_diariocorreo:ch:sitemap_006",
+        "pe_diariocorreo:ch:sitemap_007",
+        "pe_diariocorreo:ch:sitemap_008",
+        "pe_diariocorreo:ch:sitemap_009",
+        "pe_diariocorreo:ch:rss_009"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "Diario Correo",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Legacy Google-News feeds successful until 2026-06-15.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "registry"
+        },
+        {
+          "claim": "time zone America/Lima",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "new_channels": [],
+      "outlet_id": "pe_diariocorreo",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "pe_diariocorreo-url-rules/v1"
+      },
+      "web_origins": [
+        "https://diariocorreo.pe"
+      ],
+      "why_in_the_set": "the most productive outlet of the legacy system: a control of what was known to work; Arc XP custom feeds"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/Lima"
+      },
+      "channel_order": [
+        "pe_la_republica:ch:rss_r001"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "La República",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Third-party reader shows feed items dated 2026-10-08/09.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "https://feeder.co/discover/7f5f8b6b16/larepublica-pe-rss-economia"
+        },
+        {
+          "claim": "channel pe_la_republica:ch:rss_r001 (rss) at https://larepublica.pe/rss/economia: search_evidence; section feed, fresh today per third party",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "feeder.co listing, items dated 2026-10-09"
+        },
+        {
+          "claim": "time zone America/Lima",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [
+        "one section feed only: what the canary acquires is the economy section, not the outlet"
+      ],
+      "legacy_class": "LEGACY_NO_CHANNEL",
+      "new_channels": [
+        {
+          "channel_id": "pe_la_republica:ch:rss_r001",
+          "kind": "rss",
+          "url": "https://larepublica.pe/rss/economia",
+          "valid_from": "unknown"
+        }
+      ],
+      "outlet_id": "pe_la_republica",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "pe_la_republica-url-rules/v1"
+      },
+      "web_origins": [
+        "https://larepublica.pe"
+      ],
+      "why_in_the_set": "no legacy channel (legacy TDM heuristic); a section feed a third-party reader shows with current items"
+    },
+    {
+      "attributes_left_unknown": [
+        "access_model",
+        "city",
+        "medium",
+        "outlet_group",
+        "outlet_type",
+        "region",
+        "scope"
+      ],
+      "attributes_set": {
+        "same_outlet_basis": "not_applicable",
+        "timezone": "America/El_Salvador"
+      },
+      "channel_order": [
+        "sv_el_diario_de_hoy:ch:rss_001",
+        "sv_el_diario_de_hoy:ch:sitemap_index_002",
+        "sv_el_diario_de_hoy:ch:sitemap_index_001",
+        "sv_el_diario_de_hoy:ch:rss_002",
+        "sv_el_diario_de_hoy:ch:rss_003"
+      ],
+      "channels_disabled_for_the_canary": [],
+      "display_name": "El Diario de Hoy",
+      "evidence": [
+        {
+          "claim": "operating status: operating — Print edition ENDED: last print issue 2026-03-28 (with sister tabloid MAS!); fully digital at elsalvador.com. Legacy RSS active until 2026-06-15.",
+          "how": "passive web research of 2026-10-09 (search results and third-party pages); no page of the outlet was fetched",
+          "source": "en.wikipedia El_Diario_de_Hoy (citing La Noticia SV 2026-03-27); diario.elmundo.sv article 'El Diario de Hoy anuncia el cierre de su edicion impresa'; registry"
+        },
+        {
+          "claim": "time zone America/El_Salvador",
+          "how": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)",
+          "source": "IANA Time Zone Database, zone1970.tab"
+        }
+      ],
+      "judgements_for_the_reviewer": [],
+      "legacy_class": "LEGACY_PRODUCTIVE_REPEATED",
+      "new_channels": [],
+      "outlet_id": "sv_el_diario_de_hoy",
+      "review_notes_cleared": [],
+      "route_class": "STANDARD_CHANNEL_CANDIDATE",
+      "url_rules": {
+        "basis": "the generic rules (no significant query parameter, no variant marker); not derived from this outlet's URLs; to be confirmed or replaced by a new version after the canary's collision diagnostic",
+        "version": "sv_el_diario_de_hoy-url-rules/v1"
+      },
+      "web_origins": [
+        "https://www.elsalvador.com"
+      ],
+      "why_in_the_set": "productive in the legacy system until June 2026: a second control; WordPress with a Yoast index"
+    }
+  ],
+  "purpose": "the outlets of the extended, deliberately heterogeneous canary (CPD-0019 §8)",
+  "schema": "coprepan-registry-registration-proposal/v1",
+  "selection_rule": "twelve outlets of ten countries chosen from the source-discovery inventory for difference, not for ease: four the legacy system had no channel for, four it never got a usable article from, two it read sporadically, two it read well (controls); feeds of four families (WordPress, Arc XP, proprietary RSS, Atom), a feed on a foreign host, a section feed, three kinds of sitemap index, and one HTML listing. Ecuador and Nicaragua, the two countries without a productive legacy outlet, are in it",
+  "status": "PROPOSAL — nothing in it is registered; it becomes a registration only when the operator approves it and scripts/apply_registration_proposal.py is run with --write",
+  "timezone_basis": "the IANA zone of the outlet's country (or of its mainland seat where the country has several)"
+}

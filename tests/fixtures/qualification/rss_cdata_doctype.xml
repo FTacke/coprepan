@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+>
+<!-- a comment that mentions <!DOCTYPE feed> is a comment -->
+<channel>
+	<title>Diario Ejemplo</title>
+	<atom:link href="https://www.diario-ejemplo.test/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.diario-ejemplo.test/</link>
+	<item>
+		<title>El puerto amplía su terminal</title>
+		<link>https://www.diario-ejemplo.test/economia/puerto-amplia-terminal/</link>
+		<pubDate>Thu, 08 Oct 2026 20:25:50 +0000</pubDate>
+		<guid isPermaLink="false">https://www.diario-ejemplo.test/?p=101</guid>
+		<content:encoded><![CDATA[<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"></head><body><p>Texto inventado de la primera nota.</p></body></html>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>Lluvias en el norte</title>
+		<link>https://www.diario-ejemplo.test/regionales/lluvias-en-el-norte/</link>
+		<pubDate>Thu, 08 Oct 2026 19:10:00 +0000</pubDate>
+		<guid isPermaLink="false">https://www.diario-ejemplo.test/?p=102</guid>
+		<description><![CDATA[Un resumen con <!ENTITY escrito como texto> dentro de CDATA.]]></description>
+		<content:encoded><![CDATA[<!doctype html><html><body><p>Texto inventado de la segunda nota.</p></body></html>]]></content:encoded>
+	</item>
+</channel>
+</rss>

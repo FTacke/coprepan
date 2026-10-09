@@ -1,7 +1,7 @@
 {
   "schema": "coprepan-acquisition-policy/v3",
   "note": "The acquisition policy (master plan O-1), decided for the first real canary only (CPD-0013, amended by CPD-0017): a conservative policy for a bounded run on about five registered outlets, not a policy for scheduled crawling. Three layers are kept apart: what a robots.txt says (evidence), whether the project's scientific text-and-data-mining policy covers a request (research_tdm), and the acquisition decision. Only public, unauthenticated, ordinary HTTP(S) is requested. A technical access control - an authentication demand, a 401 or 403, an enforced rate limit (429), a CAPTCHA, a bot challenge, a login or a paywall - is never worked around: it is recorded, that path stops, and nothing more is asked of that origin in the run. robots.txt is always read and recorded. A Disallow that applies is recorded as observed; it is overridden only under research_tdm (basis SCIENTIFIC_TDM_POLICY_V1, every condition stated true), and every such request is recorded as ALLOW_RESEARCH_OVERRIDE with the rule and the file's digest. This is the project's policy, not a claim of conformance with RFC 9309 and not legal advice. An absent robots file allows, an unreachable one and one that cannot be parsed hold. A Crawl-delay that is an unambiguous number binds as the minimum pause for that origin; an origin that asks for more than crawl_delay_max_seconds is not fetched at all. A direct opt-out of a publisher (opt_outs) and a legal review hold (research_tdm.legal_review_holds) stop every request to that source until a person has decided. One process, one request at a time, at most one request per origin in min_interval_seconds_per_origin. Raw bodies are preserved in protected research storage for research and verification only and are never part of a distribution package. 'external_acquisition' is 'enabled' only while a canary is armed (CPD-0016 section 4).",
-  "policy_version": "canary/2026-10-08.2",
+  "policy_version": "canary/2026-10-09.1",
   "status": "DECIDED",
   "scope": "external",
   "external_acquisition": "disabled",
@@ -34,6 +34,7 @@
   "disabled_outlets": [],
   "disabled_channels": [
     "hn_proceso_digital:ch:rss_comments_feed",
+    "hn_proceso_digital:ch:sitemap_news",
     "ve_efecto_cocuyo:ch:rss_comments_feed"
   ],
   "opt_outs": [],

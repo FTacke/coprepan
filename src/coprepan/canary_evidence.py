@@ -272,7 +272,10 @@ def verify(
 
     # 5. the receipt, re-derived from evidence, equals the one the run wrote (volatile fields excluded)
     volatile = {"started_at", "finished_at", "fetcher_transport_calls", "checkpoints", "status"}
-    same = {k: v for k, v in stored_receipt.items() if k not in volatile} == {k: v for k, v in rebuilt_receipt.items() if k not in volatile}
+    # Every field the stored receipt states must be re-derived exactly. A field a later driver adds to
+    # a receipt is not held against a receipt that was written before it existed.
+    same = {k: v for k, v in stored_receipt.items() if k not in volatile} == {
+        k: v for k, v in rebuilt_receipt.items() if k not in volatile and k in stored_receipt}
     check("receipt_rederived_from_evidence", same, "every count of the stored receipt equals the count derived from the packs, the log, the ledger and the manifests")
     check("receipt_request_count_equals_the_runs_own_counter",
           stored_receipt.get("fetcher_transport_calls") == stored_receipt["requests"]["total"],

@@ -1,0 +1,12 @@
+{
+  "files": {
+    "rss_cdata_doctype.xml": {
+      "sha256": "88d5e3263c25340ebfbac0a95787f50893c3e47472ec736105110cbfe15156e9",
+      "size_bytes": 1371
+    },
+    "sucuri_challenge_307.html": {
+      "sha256": "9fb11d14ec6e80c05738584a367bcb4dd47d10f816598fa4a8b3d94254b28316",
+      "size_bytes": 484
+    }
+  }
+}

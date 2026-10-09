@@ -31,6 +31,9 @@ Rules:
 | `discovery/listing.html` | an HTML listing page: two `<base>` elements, relative, scheme-relative, fragment-only, `javascript:` and empty links, an unclosed element | synthetic, 2026-10-07 | same |
 | `discovery/malformed.xml` | a feed cut off in the middle, with an unescaped `&` | synthetic, 2026-10-07 | same |
 
+| `qualification/sucuri_challenge_307.html` | the page a Sucuri CloudProxy answers with when it challenges a client: the title, the `noscript` line and the script skeleton with the marker `sucuri_cloudproxy_js`; the cookie-computing payload and the decoder loop are **not** reproduced | written for the test on 2026-10-09 after the answer preserved in the first canary (2026-10-08, body SHA-256 `8426d573…1914c`, which stays in the preservation root and is not versioned); a vendor's template, no publisher content | `tests/test_canary_findings.py` |
+| `qualification/rss_cdata_doctype.xml` | an RSS 2.0 feed of the invented outlet whose items carry whole HTML documents, `<!DOCTYPE html>` included, in CDATA, a comment that mentions a doctype and an `<!ENTITY` written as text | synthetic, 2026-10-09; shaped after the feed that was refused in the first canary; no third-party text | same |
+
 **Why no recorded real channel document:** the legacy system stored no feed, sitemap or page
 (legacy archaeology F-1), and no network access is permitted. These fixtures are written to
 contain the cases the code must handle; they are not a sample of how real outlets behave.

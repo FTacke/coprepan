@@ -92,6 +92,9 @@ class FetchRequest:
     if_modified_since: str | None = None
     revalidates_fetch_id: str | None = None
     revalidates_body_sha256: str | None = None
+    # For a channel document: how far below the registered channel document it is (0: the channel
+    # document itself; 1: a sitemap an index names, a next page). Budgets may tell the two apart.
+    expansion_depth: int = 0
 
     def __post_init__(self) -> None:
         conditional = self.if_none_match is not None or self.if_modified_since is not None
@@ -227,7 +230,9 @@ class HttpFetcher:
             else:
                 exchange = self._attempt(request, request_id(request, self.clock()), 1, decision)
                 self.robots_exchanges.append((outlet_id, exchange))
-                self._robots[key] = robots.evidence_from_response(exchange.status, exchange.body)
+                # The exchange is preserved as received; the content coding is undone for parsing only.
+                self._robots[key] = robots.evidence_from_response(
+                    exchange.status, exchange.body, acquisition.content_encoding_of(exchange.response_headers))
         return self._robots[key]
 
     def robots_seen(self, outlet_id: str) -> list[robots.RobotsEvidence]:

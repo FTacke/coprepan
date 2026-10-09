@@ -14,8 +14,11 @@ from dataclasses import dataclass, field
 from typing import Mapping
 
 from .canonical import sha256_bytes
+from .extraction import ContentDecodingError, decode_content
 
-PARSER_VERSION = "robots-parser/2"  # /2: a byte-order mark is not part of the first line; `parse_error`
+# /2: a byte-order mark is not part of the first line; `parse_error`.
+# /3: the HTTP content coding of the answer is undone before it is parsed (canary finding F1, CPD-0019).
+PARSER_VERSION = "robots-parser/3"
 ALLOWED, DISALLOWED = "allowed", "disallowed"
 
 EVIDENCE_FETCHED = "fetched"            # a robots file was retrieved and parsed
@@ -113,12 +116,22 @@ def parse_robots(body: bytes) -> RobotsRules:
                        parse_error=content > 0 and understood == 0)
 
 
-def evidence_from_response(status: int | None, body: bytes | None) -> RobotsEvidence:
+def evidence_from_response(status: int | None, body: bytes | None, content_encoding: str = "identity") -> RobotsEvidence:
     """Turn the answer to a ``/robots.txt`` request into evidence. No interpretation beyond the
     three states: a 2xx file is parsed, a 4xx is "absent", anything else is "unreachable".
+
+    ``body`` is the payload as received and ``content_encoding`` its HTTP content coding: the coding
+    is undone *for reading only* — ``sha256`` stays the digest of the bytes as received, which are
+    the bytes that are preserved. A body whose coding cannot be undone is a file that cannot be
+    read: a parse error, which the policy holds on — never a guess at what it might have said.
     """
     if status is not None and 200 <= status < 300 and body is not None:
-        return RobotsEvidence(EVIDENCE_FETCHED, sha256_bytes(body), parse_robots(body), f"http_{status}")
+        try:
+            readable = decode_content(body, content_encoding)
+        except ContentDecodingError as error:
+            return RobotsEvidence(EVIDENCE_FETCHED, sha256_bytes(body), RobotsRules({}, parse_error=True),
+                                  f"http_{status}; {error.reason}")
+        return RobotsEvidence(EVIDENCE_FETCHED, sha256_bytes(body), parse_robots(readable), f"http_{status}")
     if status is not None and 400 <= status < 500:
         return RobotsEvidence(EVIDENCE_ABSENT, detail=f"http_{status}")
     return RobotsEvidence(EVIDENCE_UNREACHABLE, detail=f"http_{status}" if status is not None else "no_response")

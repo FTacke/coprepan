@@ -191,7 +191,7 @@ def test_the_manifest_references_everything_an_acquisition_start_rests_on():
         assert schema in m["schemas"], schema
     assert m["components"]["extractor"] == "baseline_html/0.1.0" and m["components"]["pack_writer"] == "pack-writer/1"
     assert {entry["path"] for entry in m["test_baseline"]["fixtures"]} == {
-        "tests/fixtures/canary/MANIFEST.json", "tests/fixtures/discovery/MANIFEST.json"}
+        "tests/fixtures/canary/MANIFEST.json", "tests/fixtures/discovery/MANIFEST.json", "tests/fixtures/qualification/MANIFEST.json"}
     assert m["registry"]["path"] == "config/outlet_registry.json" and len(m["registry"]["sha256"]) == 64
     assert not any(str(REPO) in json.dumps(m) for _ in (0,))  # relative paths only
 

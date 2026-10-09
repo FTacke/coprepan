@@ -202,7 +202,7 @@ def test_events_record_what_was_listed_and_candidates_fold_by_url_key(tmp_path):
     assert {"run_id", "channel_id", "outlet_id", "input_fetch_id", "position", "relation", "observed_url", "resolved_url",
             "hints", "discovered_at", "parser"} <= set(event)
     assert (event["parser"], event["discovered_at"], event["input_fetch_id"]) == (
-        "channel-parser/1", "2026-10-07T12:00:00.000000Z", fid(f"{WWW}/rss.xml"))
+        D.PARSER_VERSION, "2026-10-07T12:00:00.000000Z", fid(f"{WWW}/rss.xml"))
     assert [(i["format"], i["outcome"], i["depth"], i["entries"]) for i in tables.inputs] == [
         ("rss", "PARSED", 0, 8), ("rss", "PARSED", 1, 2)]
     assert tables.inputs[1]["parent_fetch_id"] == fid(f"{WWW}/rss.xml")

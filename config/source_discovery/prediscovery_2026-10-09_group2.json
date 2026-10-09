@@ -1,0 +1,2372 @@
+{
+ "checked_on": "2026-10-09",
+ "method": "passive web search; no request to any publisher",
+ "notes": [
+  "Nothing here is verified working: every channel is a hypothesis for a later gated, identified technical probe.",
+  "Evidence came from WebSearch result lists/snippets and from third-party pages only (IPTC Metawatch, Feedspot, Feeder.co, Wikipedia, State Media Monitor, a GitHub issue, a 2020 OPML on adamisacson.com). Publisher URLs appear as cited strings; none was requested.",
+  "Entries marked 'background knowledge ... NOT searched' are unverified and must not be copied into the registry as facts.",
+  "Channel entries with url null record that a search was made and nothing was found.",
+  "'hn_proceso_digital' obstacles from the project's own 2026-10-08 crawl were supplied by the caller."
+ ],
+ "outlets": [
+  {
+   "outlet_id": "do_diario_libre",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30 via the portada feed.",
+    "source": "https://metawatch.iptc.org/sites/diario-libre/"
+   },
+   "current_origins": [
+    "https://www.diariolibre.com"
+   ],
+   "cms": {
+    "value": "proprietary/unknown (article URLs /seccion/sub/YYYY/MM/DD/slug/numeric-id; feeds under /rss/*.xml)",
+    "evidence_level": "unknown",
+    "source": "URL shapes seen in Metawatch sample; no CMS identification found"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.diariolibre.com/rss/portada.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/diario-libre/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.diariolibre.com/rss/portada.xml; 20 articles sampled, dated 2026-09-30",
+     "note": "Also in registry (legacy status active, no recorded success)."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.diariolibre.com/rss/actualidad.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-01-30",
+     "note": "Sibling section feeds in registry with same status: economia.xml, deportes.xml, opinion.xml (success 2026-01-30); revista.xml (active, no success); videos.xml (technically_empty)."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.diariolibre.com/sitemapnews",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-01-30",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.diariolibre.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": "Legacy crawler did not expand indexes."
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.diariolibre.com/servicios/rss",
+     "evidence_level": "search_evidence",
+     "source": "Search result titled 'Canales RSS - Diario Libre' (2026-10-09)",
+     "note": "Publisher's own page listing its RSS channels; useful to enumerate section feeds in the gated probe."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo Diario Libre / Omnimedia (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "free national daily",
+   "city": "Santo Domingo",
+   "recommended_approach": "generic RSS (portada + section feeds), news sitemap as second channel",
+   "priority": "high",
+   "priority_reason": "Feed confirmed in use by a third-party crawler nine days ago and legacy channels were productive.",
+   "open_questions": [
+    "Owner group not verified by search."
+   ]
+  },
+  {
+   "outlet_id": "do_el_caribe",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Search results show section pages with headlines dated 2026-10-08 and a print-edition page listing 'Periodico del Jueves 08 octubre, 2026'; new director general appointed 2026.",
+    "source": "WebSearch 2026-10-09 (result pages https://www.elcaribe.com.do/seccion/panorama/pais/ and /periodico/)"
+   },
+   "current_origins": [
+    "https://www.elcaribe.com.do"
+   ],
+   "cms": {
+    "value": "WordPress with Yoast SEO (inferred)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "Search-result titles 'Pais archivos - Periodico elCaribe' / 'Panorama archivos - ...' (Yoast Spanish default archive title), paths /seccion/<cat>/, /tag/<tag>/, /autor/<name>/, images under an 'uploads' bucket on img.mmc.com.do. Not observed directly."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elcaribe.com.do/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress convention; CMS evidence see cms",
+     "note": "NOT observed. A targeted search for this exact URL found nothing."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elcaribe.com.do/sitemap_index.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast convention",
+     "note": "NOT observed."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elcaribe.com.do/news-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast News convention (only if the add-on is installed)",
+     "note": "NOT observed."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elcaribe.com.do/wp-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress core convention",
+     "note": "NOT observed; usually disabled when Yoast is active."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.elcaribe.com.do/seccion/panorama/pais/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress category-feed convention applied to an observed category URL",
+     "note": "NOT observed."
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.elcaribe.com.do/seccion/panorama/pais/",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Pais archivos - Periodico elCaribe' with items dated 2026-10-08",
+     "note": "Other observed listings: /seccion/panorama/, /seccion/panorama/salud/, /seccion/actualidad/, /seccion/ciudad/, /autor/elcaribe/."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Multimedios del Caribe (also CDN canal 37, CDN Deportes); president Manuel Estrella, vice-president Felix Garcia; Grupo Popular reported as keeping 30% (Diario Libre report, undated in result)",
+   "outlet_type": "national daily",
+   "city": "Santo Domingo",
+   "recommended_approach": "generic RSS if /feed/ exists, otherwise nested sitemap index exploration; fallback HTML listing of /seccion/ pages with URL pattern rule (/<section>/<subsection>/<slug>/)",
+   "priority": "high",
+   "priority_reason": "No legacy channel at all; strong WordPress/Yoast indicators make a cheap probe likely to succeed.",
+   "open_questions": [
+    "Does /feed/ exist and is it full or truncated?",
+    "Article URLs carry no date - URL rule must separate articles from /seccion/, /tag/, /autor/ pages."
+   ]
+  },
+  {
+   "outlet_id": "do_listin_diario",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "No 2026-dated third-party item retrieved; legacy news sitemap succeeded 2026-01-30; PressReader lists the title. Treat as operating, weakly evidenced.",
+    "source": "registry + WebSearch 2026-10-09"
+   },
+   "current_origins": [
+    "https://listindiario.com"
+   ],
+   "cms": {
+    "value": "unknown (sitemap naming sitemap-index.xml / sitemap-google-news.xml is not a WordPress convention; identical naming at primicias.ec suggests a shared vendor - speculation)",
+    "evidence_level": "unknown",
+    "source": "registry URLs only"
+   },
+   "candidate_channels": [
+    {
+     "type": "news_sitemap",
+     "url": "https://listindiario.com/sitemap-google-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-01-30",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://listindiario.com/sitemap-index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": "Not expanded by legacy crawler."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://listindiario.com/rss/larepublica/",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (OPML dated 2020-05-22)",
+     "note": "Six years old, predates the current site; may be dead. Hypothesis only."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editora Listin Diario (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Santo Domingo",
+   "recommended_approach": "generic news sitemap; nested sitemap index exploration for backfill",
+   "priority": "medium",
+   "priority_reason": "Already has a working legacy news sitemap; only needs index expansion.",
+   "open_questions": [
+    "Current RSS availability unknown (searches found none).",
+    "Ownership not verified by search."
+   ]
+  },
+  {
+   "outlet_id": "ec_el_comercio",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30/10-01. Company in prolonged labour/financial crisis (about 10 months of unpaid wages, planned dismissal of ~40 staff reported by Primicias); no evidence of closure found.",
+    "source": "https://metawatch.iptc.org/sites/el-comercio-ec/ ; https://primicias.ec/noticias/economia/comercio-autodemanda-juicio-bienes-trabajadores"
+   },
+   "current_origins": [
+    "https://www.elcomercio.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "Feed at /feed/ and slug URLs with trailing slash in Metawatch sample; registry also holds /sitemap-news.xml. Not observed directly."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elcomercio.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-comercio-ec/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.elcomercio.com/feed/; 20 articles sampled, dated 2026-09-30 to 2026-10-01; also https://rss.feedspot.com/ecuador_news_rss_feeds/",
+     "note": "Registry has /feed and /rss as active without recorded success."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elcomercio.com/sitemap-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, no recorded success",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elcomercio.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (index forced inactive, expansion not implemented), HTTP 200",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "institutional instability",
+     "evidence": "Unpaid wages and asset litigation reported; output volume may be reduced.",
+     "source": "https://primicias.ec/noticias/economia/comercio-autodemanda-juicio-bienes-trabajadores"
+    }
+   ],
+   "owner_group": "Grupo El Comercio C.A., owned by Remigio Angel Gonzalez (Albavision) since the 2014/2015 sale by the Mantilla family (LatAm Journalism Review)",
+   "outlet_type": "national daily (print status in 2026 not established)",
+   "city": "Quito",
+   "recommended_approach": "generic RSS; sitemap index exploration for backfill",
+   "priority": "high",
+   "priority_reason": "Feed demonstrably served to a third-party crawler on 2026-10-01.",
+   "open_questions": [
+    "Is the print edition still published in 2026? Not established by search.",
+    "Article URLs carry no date (/actualidad/politica/<slug>/)."
+   ]
+  },
+  {
+   "outlet_id": "ec_el_universo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 12 articles dated 2026-10-01. Ownership changed: Perez family announced sale of all shares on 2026-02-12 to an investor group led by Yves Maia Pardini, with Integra Capital (Jose Luis Manzano) advising; cartoonist Bonil left in March 2026.",
+    "source": "https://metawatch.iptc.org/sites/el-universo/ ; https://www.vistazo.com/actualidad/nacional/2026-02-12-quien-compro-diario-el-universo-inversionista-asume-control-medio-centenario-JA10679145"
+   },
+   "current_origins": [
+    "https://www.eluniverso.com",
+    "https://eluniverso.com (sampled article links appear without www)"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "Feed URLs under /arc/outboundfeeds/ documented by Metawatch, Feedspot and a GitHub issue"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-universo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml; 12 articles sampled, dated 2026-10-01; also https://rss.feedspot.com/ecuador_news_rss_feeds/",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/category/noticias/?outputType=xml",
+     "evidence_level": "search_evidence",
+     "source": "https://github.com/koala73/worldmonitor/issues/821 (opened 2026-03-02)",
+     "note": "Category feed pattern; other sections presumably analogous (not observed)."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.eluniverso.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention; CMS evidence see cms",
+     "note": "NOT observed."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.eluniverso.com/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "NOT observed."
+    },
+    {
+     "type": "section_feed",
+     "url": "http://www.eluniverso.com/rss/noticias.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": "Pre-Arc feed path, very likely dead; listed only to avoid re-discovery."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "access model",
+     "evidence": "Not established by search; a paywall/registration model may exist.",
+     "source": "none"
+    }
+   ],
+   "owner_group": "Since 2026-02-12: investor group led by Yves Maia Pardini (Florida), advised by Integra Capital; previously Perez family for 100+ years",
+   "outlet_type": "national daily",
+   "city": "Guayaquil",
+   "recommended_approach": "generic RSS (Arc outbound feed) plus Arc news sitemap",
+   "priority": "high",
+   "priority_reason": "No legacy channel; documented live Arc feed.",
+   "open_questions": [
+    "Paywall/registration model unknown.",
+    "Host canonicalisation www vs apex for article URLs.",
+    "Editorial-independence note: 2026 ownership change."
+   ]
+  },
+  {
+   "outlet_id": "ec_primicias",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Site pages and articles indexed; listed in SembraMedia directory; feed URL documented in March 2026.",
+    "source": "WebSearch 2026-10-09; https://directorio.sembramedia.org/primicias/"
+   },
+   "current_origins": [
+    "https://www.primicias.ec",
+    "https://primicias.ec (links appear with and without www)"
+   ],
+   "cms": {
+    "value": "unknown (a /feed/ URL is documented, but sitemap naming sitemap-index.xml / sitemap-google-news.xml is not a WordPress default)",
+    "evidence_level": "unknown",
+    "source": "registry + GitHub issue"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.primicias.ec/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://github.com/koala73/worldmonitor/issues/821 (opened 2026-03-02); search snippets also show an 'RSS' link in the site footer",
+     "note": "Not in registry."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.primicias.ec/sitemap-google-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty (no usable output), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.primicias.ec/sitemap-index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.primicias.ec/tag/ecuador/1855/",
+     "evidence_level": "search_evidence",
+     "source": "Search results show paginated tag pages /tag/<tag>/<n>/",
+     "note": "Deep pagination exists; only a fallback."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (not searched)",
+   "outlet_type": "digital native",
+   "city": "Quito",
+   "recommended_approach": "generic RSS first; news sitemap second; sitemap index for backfill",
+   "priority": "high",
+   "priority_reason": "Legacy sitemaps yielded nothing; a feed URL not yet in the registry is documented.",
+   "open_questions": [
+    "Why did the legacy news sitemap produce no usable output (empty outside news hours vs. URL classification)?",
+    "Owner not searched."
+   ]
+  },
+  {
+   "outlet_id": "es_el_mundo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30/10-01.",
+    "source": "https://metawatch.iptc.org/sites/el-mundo/"
+   },
+   "current_origins": [
+    "https://www.elmundo.es",
+    "feed host: https://e00-elmundo.uecdn.es (Unidad Editorial CDN, different registrable domain)"
+   ],
+   "cms": {
+    "value": "proprietary (Unidad Editorial); article URLs /seccion/YYYY/MM/DD/<hex-id>.html",
+    "evidence_level": "unknown",
+    "source": "URL shapes in Metawatch sample"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-mundo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml; 20 articles sampled, dated 2026-09-30",
+     "note": "Feed lives on uecdn.es, not elmundo.es - the origin must be explicitly authorised in the registry."
+    },
+    {
+     "type": "rss",
+     "url": "https://e00-elmundo.uecdn.es/rss/portada.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/spanish_news_rss_feeds/",
+     "note": "Variant path without /elmundo/; one of the two may be stale."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://e00-elmundo.uecdn.es/elmundo/rss/espana.xml",
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "NOT observed; section feeds presumably follow the portada pattern - to be enumerated in the gated probe, do not rely on this URL."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "freemium paywall",
+     "evidence": "El Mundo launched its paywall in October 2019 with a freemium model (daily subscriber-only 'Premium' pieces).",
+     "source": "WebSearch 2026-10-09 (IESE blog, Reuters Institute DNR 2021 Spain)"
+    }
+   ],
+   "owner_group": "Unidad Editorial / RCS MediaGroup (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Madrid",
+   "recommended_approach": "generic RSS on the CDN host; mark Premium articles as paywalled (no full text)",
+   "priority": "high",
+   "priority_reason": "No legacy channel; live feed documented.",
+   "open_questions": [
+    "Section feed list and sitemap location unknown.",
+    "Share of Premium (locked) articles in the feed."
+   ]
+  },
+  {
+   "outlet_id": "es_el_pais",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30.",
+    "source": "https://metawatch.iptc.org/sites/el-pais/"
+   },
+   "current_origins": [
+    "https://elpais.com",
+    "feed host: https://feeds.elpais.com"
+   ],
+   "cms": {
+    "value": "Arc XP (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified; not evidenced by today's sources)",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-pais/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada; 20 articles sampled, dated 2026-09-30; registry: active, last success 2026-02-21",
+     "note": "Sampled items include /us/ and /america/ edition URLs - edition filtering needed for a Spain-only corpus."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/english.elpais.com/portada",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/spanish_news_rss_feeds/",
+     "note": "English edition; shows the per-site feed pattern (site/<host>/portada). Not wanted for a Spanish corpus."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "metered paywall",
+     "evidence": "Paywall activated May 2020, metered (10 free articles per month at launch); later reports of a possible move to freemium, not confirmed.",
+     "source": "WebSearch 2026-10-09 (INMA, Vozpopuli, Reuters Institute)"
+    }
+   ],
+   "owner_group": "PRISA (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Madrid",
+   "recommended_approach": "generic RSS; add section/edition feeds following the documented pattern after the gated probe",
+   "priority": "high",
+   "priority_reason": "Existing channel confirmed live by a third party.",
+   "open_questions": [
+    "Which edition feeds (espana, america, mexico...) are in scope is an operator decision."
+   ]
+  },
+  {
+   "outlet_id": "es_la_vanguardia",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30/10-01.",
+    "source": "https://metawatch.iptc.org/sites/la-vanguardia/"
+   },
+   "current_origins": [
+    "https://www.lavanguardia.com"
+   ],
+   "cms": {
+    "value": "proprietary/unknown; article URLs /seccion/YYYYMMDD/<id>/<slug>.html",
+    "evidence_level": "unknown",
+    "source": "URL shapes in Metawatch sample"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.lavanguardia.com/rss/home.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/la-vanguardia/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.lavanguardia.com/rss/home.xml; 20 articles sampled, dated 2026-09-30; https://rss.feedspot.com/lavanguardia_rss_feeds/",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.lavanguardia.com/rss/politica.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/lavanguardia_rss_feeds/ (34 feeds listed)",
+     "note": "Same pattern https://www.lavanguardia.com/rss/<x>.xml listed for: internacional, politica, vida, deportes, economia, opinion, cultura, gente, sucesos, participacion, lacontra, natural, ciencia, vida/salud, tecnologia, local/catalunya, local/paisvasco, local/valencia, local/sevilla, local/madrid, local/girona, local/lleida, local/tarragona, local/barcelona, comer, mascotas, vivo, magazine, motor, ocio/viajes, series, television, mamas-y-papas."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall",
+     "evidence": "Sources disagree on the model: metered experiment in 2019 (IESE) vs. freemium from 2020 (Reuters Institute). 136,736 digital subscriptions per OJD (March 2024).",
+     "source": "WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Grupo Godo (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily (Barcelona-based)",
+   "city": "Barcelona",
+   "recommended_approach": "generic RSS (home + section feeds)",
+   "priority": "high",
+   "priority_reason": "No legacy channel; 34 live-looking feeds documented.",
+   "open_questions": [
+    "Paywall model today.",
+    "Catalan edition is separate and out of scope."
+   ]
+  },
+  {
+   "outlet_id": "gt_elperiodico",
+   "operating_status": {
+    "value": "closed",
+    "evidence": "Closure announced 2023-05-12; last edition 2023-05-15 after almost 27 years; print had already stopped in November 2022. Founder Jose Ruben Zamora arrested 2022-07-29. Website stayed online only three days after the announcement (Ramon Zamora, per LatAm Journalism Review). All print editions 1996-2023 are reported as available in the Central American independent media archive CAIMA (launch 31 January, year per Agencia Ocote: 2025).",
+    "source": "https://latamjournalismreview.org/articles/in-a-blow-to-journalism-guatemalas-elperiodico-announces-closure/ ; https://latamjournalismreview.org/es/articles/archivo-digital-conserva-el-legado-de-investigacion-de-elperiodico-y-otros-periodicos-centroamericanos/ ; https://www.aljazeera.com/news/2023/5/12/guatemalas-elperiodico-shutting-due-to-government-persecution"
+   },
+   "current_origins": [],
+   "cms": {
+    "value": "n/a (site offline)",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elperiodico.com.gt/rss",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": "Historical only; outlet closed in 2023. Do not probe."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "outlet closed",
+     "evidence": "No current publication; domain status in 2026 unknown.",
+     "source": "see operating_status"
+    }
+   ],
+   "owner_group": "Aldea Global S.A. (Zamora family); company reported as staying open only to settle obligations",
+   "outlet_type": "national daily (defunct)",
+   "city": "Guatemala City",
+   "recommended_approach": "no compliant live access; historical material only via the CAIMA archive, which needs a separate institutional/licensing decision",
+   "priority": "low",
+   "priority_reason": "Closed since 2023-05-15; nothing to crawl.",
+   "open_questions": [
+    "Mark registration_status as closed in the registry?",
+    "CAIMA archive URL and terms of use not established."
+   ]
+  },
+  {
+   "outlet_id": "gt_elsiglo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Online newspaper; indexed homepage items dated 2026-09-30 and 2026-10-08; described by Wikipedia as an online newspaper founded 1991.",
+    "source": "WebSearch 2026-10-09 (results from elsiglo.com.gt); https://en.wikipedia.org/wiki/El_Siglo_(Guatemala)"
+   },
+   "current_origins": [
+    "https://elsiglo.com.gt"
+   ],
+   "cms": {
+    "value": "WordPress with Yoast SEO (inferred)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "Registry holds /feed/, /comments/feed/, /sitemap_index.xml, /news-sitemap.xml; search titles 'Nacionales Archives - El Siglo Guatemala', paths /category/actualidad/, /page/1278/."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elsiglo.com.gt/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, last success 2026-02-10, HTTP 200 valid XML",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://elsiglo.com.gt/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty ('crawl produced 0 usable articles'), last success 2026-02-20",
+     "note": "Discovery worked; extraction/classification failed downstream."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://elsiglo.com.gt/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (index forced inactive), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://elsiglo.com.gt/nacional/",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Nacionales Archives - El Siglo Guatemala'",
+     "note": "Also /cultura/; paginated /page/<n>/ up to 1612 pages seen."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Novigo S.A. (Wikipedia infobox, undated)",
+   "outlet_type": "digital newspaper (formerly print daily)",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS + news sitemap; the legacy failure looks like an extraction/URL-rule problem (root-level slugs without date, e.g. /que-espera-a-guatemala-en-el-2026/), not a discovery problem",
+   "priority": "medium",
+   "priority_reason": "Channels exist and answer; small outlet with a high share of opinion columns.",
+   "open_questions": [
+    "Why 0 usable articles in legacy: URL rule or extractor?",
+    "Article volume per day."
+   ]
+  },
+  {
+   "outlet_id": "gt_lahora",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 10 articles (URL dates 2026/09/30).",
+    "source": "https://metawatch.iptc.org/sites/la-hora-gt/"
+   },
+   "current_origins": [
+    "https://lahora.gt"
+   ],
+   "cms": {
+    "value": "WordPress with Yoast SEO (inferred)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "/feed/ and /sitemap_index.xml in registry; ?p= shortlinks in search results; URL shape /seccion/<author>/YYYY/MM/DD/<slug>/."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://lahora.gt/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/la-hora-gt/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://lahora.gt/feed/; 10 articles sampled, dated 2026-10-01 (URL paths 2026/09/30); registry: technically_empty, HTTP 200 valid XML",
+     "note": "Feed is demonstrably populated for a third party, so the legacy 'technically_empty' is likely a classification artefact. Only 10 items - poll often."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://lahora.gt/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, HTTP 200 valid XML",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://lahora.gt/news-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast News convention",
+     "note": "NOT observed."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Marroquin family (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily (evening paper, digital-first)",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS with short polling interval; nested sitemap index exploration for completeness",
+   "priority": "high",
+   "priority_reason": "Never yielded articles in legacy although the feed is live and small - a cheap win.",
+   "open_questions": [
+    "Author segment in the URL path (/nacionales/<author>/...) must be allowed by the URL rule."
+   ]
+  },
+  {
+   "outlet_id": "gt_nuestrodiario",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Site indexed with title 'Noticias de Guatemala y USA' and sections Guatemala, Chapines en USA, Tu Comunidad, Deportes; active apps ('Nuestro Diario: Noticias GT'), X/YouTube/TikTok accounts. No dated 2026 article retrieved by search.",
+    "source": "WebSearch 2026-10-09; https://en.wikipedia.org/wiki/Nuestro_Diario"
+   },
+   "current_origins": [
+    "https://www.nuestrodiario.com",
+    "https://www.nuestrodiario.com.gt (second site, carries Guatemala City contact data)",
+    "https://gt.nuestrodiario.com (appeared as a result link in one search, not confirmed in a second)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://www.nuestrodiario.com/tu-comunidad",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Noticias de Tu Comunidad'",
+     "note": "Section listing; article URL pattern not observed."
+    },
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No feed or sitemap URL found in 3 searches; Feedspot's Guatemala list does not include the outlet."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "app-centred distribution",
+     "evidence": "Publisher pushes an app with a digital replica of the print edition; app subscription model changed in November 2023, core news now free.",
+     "source": "Google Play / App Store listings via WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Diarios Modernos, S.A.",
+   "outlet_type": "tabloid / popular national daily (highest circulation in Guatemala per Wikipedia, uncited)",
+   "city": "Guatemala City",
+   "recommended_approach": "gated probe of robots.txt and standard sitemap locations on both domains; otherwise source-specific adapter over HTML section listings",
+   "priority": "medium",
+   "priority_reason": "Important popular title but no documented machine-readable channel; needs probing before effort is spent.",
+   "open_questions": [
+    "Which of the three hosts is canonical for articles?",
+    "Any sitemap at all?"
+   ]
+  },
+  {
+   "outlet_id": "gt_prensa_libre",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-10-01.",
+    "source": "https://metawatch.iptc.org/sites/prensa-libre/"
+   },
+   "current_origins": [
+    "https://www.prensalibre.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred, strong)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "/feed/, /comments/feed/, /web-stories/feed/ in registry; ?p= shortlinks in search results; Yoast-style /news-sitemap.xml in registry."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.prensalibre.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/prensa-libre/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.prensalibre.com/feed/; 20 articles sampled, dated 2026-10-01; https://rss.feedspot.com/guatemala_news_rss_feeds/ ; registry: active, last success 2026-06-15",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.prensalibre.com/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-06-13, but 'crawl produced 0 usable articles'",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.prensalibre.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.prensalibre.com/economia/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress category-feed convention; Feedspot's Prensa Libre list (https://rss.feedspot.com/prensalibre_rss_feeds/) reports ~20 section feeds but exact URLs were not read",
+     "note": "NOT observed."
+    },
+    {
+     "type": "rss",
+     "url": "https://www.prensalibre.com/comments/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active",
+     "note": "Comment feed - should be removed from discovery, not an article channel."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "access model",
+     "evidence": "Not established by search; a registration/metered wall may apply to some content.",
+     "source": "none"
+    }
+   ],
+   "owner_group": "Prensa Libre S.A. / Casa Editora Prensa Libre (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS + news sitemap; investigate why discovery succeeded but no usable articles were produced (extractor or paywall)",
+   "priority": "high",
+   "priority_reason": "Leading Guatemalan daily; channels work, failure is downstream.",
+   "open_questions": [
+    "Paywall/registration model.",
+    "Drop the comments feed from the channel list."
+   ]
+  },
+  {
+   "outlet_id": "gt_publinews",
+   "operating_status": {
+    "value": "uncertain",
+    "evidence": "No 2026-dated third-party evidence retrieved; legacy google-news feed succeeded 2026-06-15, so probably operating. Feedspot lists the outlet without a feed URL.",
+    "source": "registry; https://rss.feedspot.com/guatemala_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.publinews.gt"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "legacy_evidence",
+    "source": "Registry URLs under /arc/outboundfeeds/"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/google-news-feed/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-06-15",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/sitemap/latest/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty (0 usable articles)",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/news/noticias/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, last success 2026-02-10",
+     "note": "Siblings: /news/deportes/, /news/entretenimiento/."
+    },
+    {
+     "type": "rss",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "NOT observed."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "NOT observed."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Historically a joint venture of Metro International (25%) and Grupo Emisoras Unidas; current ownership not established",
+   "outlet_type": "free daily",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS (Arc google-news feed) + Arc news sitemap",
+   "priority": "medium",
+   "priority_reason": "One legacy channel works; free-sheet content is lighter and partly syndicated.",
+   "open_questions": [
+    "Current owner.",
+    "Share of agency/syndicated Metro World News content."
+   ]
+  },
+  {
+   "outlet_id": "hn_diariotiempo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Digital-only since the print edition stopped on 2015-10-27 (asset freeze of Grupo Continental). Search results show tiempo.hn articles dated 2026-10-05, 2026-10-06 and 2026-10-07 and an active X account.",
+    "source": "WebSearch 2026-10-09 (result links on tiempo.hn; x.com/TiempoHonduras); https://latamjournalismreview.org/?p=41533"
+   },
+   "current_origins": [
+    "https://tiempo.hn"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "Two URL generations seen in results: /seccion/YYYY/MM/DD/<slug>/ (with trailing slash, June 2026) and /seccion/YYYY/MM/DD/<slug> (no slash, October 2026) - possibly a platform change in 2026."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No feed or sitemap documented by search. A WordPress-style /feed/ is conceivable for the older URL generation but the CMS is not identified, so no URL is proposed."
+    },
+    {
+     "type": "html_listing",
+     "url": "https://tiempo.hn/",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Noticias de Honduras y el mundo - Tiempo.hn' with current headlines",
+     "note": "Section prefixes seen in article URLs: /honduras/, /sucesos/, /cronometro/futbol-nacional-honduras/, /riflazos/."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Rosenthal family / formerly Grupo Continental (Wikipedia stub; current corporate holder not established)",
+   "outlet_type": "digital newspaper (former national daily)",
+   "city": "San Pedro Sula",
+   "recommended_approach": "gated probe of robots.txt/sitemaps; article URLs carry a full date, so an HTML listing with URL pattern rule is a sound fallback",
+   "priority": "medium",
+   "priority_reason": "Alive and productive, dated URLs make it easy once a channel is found; no documented feed.",
+   "open_questions": [
+    "Which platform since the 2026 URL change?",
+    "Sitemap location."
+   ]
+  },
+  {
+   "outlet_id": "hn_el_heraldo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Current articles and tag pages indexed; publisher newsletter pages carry 2026 content.",
+    "source": "WebSearch 2026-10-09 (results on elheraldo.hn)"
+   },
+   "current_origins": [
+    "https://www.elheraldo.hn"
+   ],
+   "cms": {
+    "value": "proprietary OPSA platform (historically built on eZ Publish by Aplyca; current stack unknown)",
+    "evidence_level": "search_evidence",
+    "source": "https://share.se7enx.com/directory/companies-ez-5-era/aplyca/el-heraldo-honduras (old directory entry); article URLs end in an ID like -DH13416151"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap",
+     "url": "https://www.elheraldo.hn/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, last success 2026-06-12",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elheraldo.hn/sitemapforgoogle.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, HTTP 200",
+     "note": "Name suggests the Google News sitemap."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elheraldo.hn/megasitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "rss",
+     "url": "http://feeds.feedburner.com/elheraldo_titulares",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": "FeedBurner host (Google), six years old, probably stale. Sibling: http://feeds.feedburner.com/elheraldo_opinion."
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.elheraldo.hn/cronologia/-/meta/<tag>",
+     "evidence_level": "search_evidence",
+     "source": "Search results show chronology/tag pages of this shape (e.g. /cronologia/-/meta/grupo-continental)",
+     "note": "Pattern, not a single URL; fallback only."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "registration wall",
+     "evidence": "OPSA titles introduced a registration wall ('muro de registro'): La Prensa at its 58th anniversary, El Heraldo later ('hito ... muro de registro').",
+     "source": "https://www.elheraldo.hn/honduras/el-heraldo-hito-periodismo-muro-registro-HG11174344 (result title/slug only, page not opened)"
+    }
+   ],
+   "owner_group": "Grupo OPSA (Organizacion Publicitaria S.A.; also La Prensa, Diez)",
+   "outlet_type": "national daily",
+   "city": "Tegucigalpa",
+   "recommended_approach": "source-specific handling of the OPSA sitemaps (sitemapforgoogle.xml + megasitemap index); URL rule on the trailing ID (-XX########)",
+   "priority": "medium",
+   "priority_reason": "Sitemaps answer but never produced usable output; registration wall may truncate full text.",
+   "open_questions": [
+    "Does the registration wall hide article bodies from non-logged-in clients?",
+    "Why were the sitemaps 'technically empty'?"
+   ]
+  },
+  {
+   "outlet_id": "hn_hondudiario",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 10 articles dated 2026-09-30/10-01.",
+    "source": "https://metawatch.iptc.org/sites/hondudiario/"
+   },
+   "current_origins": [
+    "https://www.hondudiario.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred, strong)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "/feed/, /comments/feed/, category feed and /sitemap_index.xml in registry; URL shape /YYYY/MM/DD/<slug>/."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.hondudiario.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/hondudiario/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.hondudiario.com/feed/; 10 articles sampled, dated 2026-09-30 to 2026-10-01; registry: active, last success 2026-06-15",
+     "note": "Only ~10 items - poll often."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.hondudiario.com/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.hondudiario.com/noticias-de-honduras/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (not searched)",
+   "outlet_type": "digital native",
+   "city": "Tegucigalpa",
+   "recommended_approach": "generic RSS; sitemap index exploration for backfill",
+   "priority": "high",
+   "priority_reason": "Works for a third party today; dated URLs.",
+   "open_questions": [
+    "Owner not searched."
+   ]
+  },
+  {
+   "outlet_id": "hn_la_prensa",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Pages carrying 2026 content indexed (authors, newsletter, print-edition pieces).",
+    "source": "WebSearch 2026-10-09 (results on laprensa.hn)"
+   },
+   "current_origins": [
+    "https://www.laprensa.hn",
+    "https://ediciones.laprensa.hn (print-edition PDFs seen in results)"
+   ],
+   "cms": {
+    "value": "proprietary OPSA platform (same framework as El Heraldo and Diez)",
+    "evidence_level": "search_evidence",
+    "source": "https://share.se7enx.com/directory/companies-ez-5-era/aplyca/el-heraldo-honduras ('La Prensa site and framework was replicated ... ElHeraldo.hn and Diez.hn'); article URLs end in an ID like -NELP894955"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap",
+     "url": "https://www.laprensa.hn/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.laprensa.hn/sitemapforgoogle.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.laprensa.hn/megasitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.laprensa.hn/cronologia/-/meta/<tag>",
+     "evidence_level": "search_evidence",
+     "source": "Search results show pages of this shape (e.g. /cronologia/-/meta/hechos-en-honduras)",
+     "note": "Pattern, fallback only."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "registration wall",
+     "evidence": "OPSA titles introduced a registration wall ('muro de registro'): La Prensa at its 58th anniversary, El Heraldo later ('hito ... muro de registro').",
+     "source": "https://www.elheraldo.hn/honduras/diario-la-prensa-celebra-su-58-aniversario-con-lanzamiento-nuevo-muro-de-registro-para-sus-lectores-periodismo-de-calidad-honduras-HP10683062 (result title only)"
+    }
+   ],
+   "owner_group": "Grupo OPSA",
+   "outlet_type": "national daily",
+   "city": "San Pedro Sula",
+   "recommended_approach": "same OPSA adapter as hn_el_heraldo",
+   "priority": "medium",
+   "priority_reason": "Same platform and same obstacle as El Heraldo; one adapter serves both.",
+   "open_questions": [
+    "Effect of the registration wall on full text.",
+    "No RSS documented."
+   ]
+  },
+  {
+   "outlet_id": "hn_latribuna",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Described as an active daily (Wikipedia, LinkedIn/X profiles); an article dated 2024-08-24 is indexed; no 2026-dated item was retrieved, so current activity is weakly evidenced.",
+    "source": "WebSearch 2026-10-09; https://en.wikipedia.org/wiki/La_Tribuna_(Honduras)"
+   },
+   "current_origins": [
+    "https://www.latribuna.hn",
+    "https://cdn.latribuna.hn (image host named in a search summary)"
+   ],
+   "cms": {
+    "value": "WordPress (inferred, weak)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "Indexed article URL https://www.latribuna.hn/2024/08/24/<slug>/ has the WordPress day-and-name permalink shape. No stronger evidence."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.latribuna.hn/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress convention; weak CMS evidence",
+     "note": "NOT observed; two targeted searches found no documented feed."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.latribuna.hn/wp-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress core convention",
+     "note": "NOT observed."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.latribuna.hn/sitemap_index.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast / Rank Math convention",
+     "note": "NOT observed."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Periodicos y Revistas S.A. de C.V. (PYRSA); owned by former president Carlos Roberto Flores (Wikipedia)",
+   "outlet_type": "national daily (tabloid format)",
+   "city": "Tegucigalpa",
+   "recommended_approach": "generic RSS if the WordPress hypothesis holds; dated URLs make sitemap/listing fallback easy",
+   "priority": "high",
+   "priority_reason": "Major Honduran daily with no channel in the registry; probe is cheap.",
+   "open_questions": [
+    "CMS identification is weak - confirm in gated probe.",
+    "Bot protection unknown."
+   ]
+  },
+  {
+   "outlet_id": "hn_proceso_digital",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party crawler sampled 20 articles dated 2026-09-30 through the feed.",
+    "source": "https://metawatch.iptc.org/sites/proceso-digital/"
+   },
+   "current_origins": [
+    "https://proceso.hn"
+   ],
+   "cms": {
+    "value": "WordPress (inferred, strong)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "Registry holds /feed/ and /comments/feed/ (WordPress signature); root-level slug permalinks with trailing slash in the Metawatch sample. Theme and SEO plugin NOT identified by search."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://proceso.hn/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/proceso-digital/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://proceso.hn/feed/; 20 articles sampled, dated 2026-09-30; registry: active, last success 2026-06-15",
+     "note": "Best candidate. This is the canonical WordPress path WITH trailing slash; our 2026-10-08 Sucuri challenge was on /rss, a different path. Whether Sucuri also challenges /feed/ for our user agent is untested."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://proceso.hn/sitemap-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, last success 2026-06-13; own crawl 2026-10-08: HTTP 404",
+     "note": "Gone. No replacement URL is publicly documented (3 targeted searches, none returned a proceso.hn sitemap)."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://proceso.hn/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200 at legacy time",
+     "note": "Status today unknown."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://proceso.hn/wp-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress core convention (since 5.5)",
+     "note": "NOT observed."
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://proceso.hn/sitemap_index.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast / Rank Math convention; plugin not identified",
+     "note": "NOT observed."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://proceso.hn/news-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast News / Rank Math News convention; plugin not identified",
+     "note": "NOT observed. The disappearance of /sitemap-news.xml may indicate a plugin change, which would fit this name - speculation."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "Sucuri bot protection",
+     "evidence": "Own crawl 2026-10-08: /rss answered with a Sucuri JavaScript challenge. No third-party documentation found.",
+     "source": "project crawl log (caller-provided)"
+    },
+    {
+     "kind": "news sitemap removed",
+     "evidence": "Own crawl 2026-10-08: /sitemap-news.xml HTTP 404.",
+     "source": "project crawl log (caller-provided)"
+    }
+   ],
+   "owner_group": "unknown (not searched); founded 2005-04-29 as a digital outlet",
+   "outlet_type": "digital native",
+   "city": "Tegucigalpa",
+   "recommended_approach": "generic RSS on /feed/ (drop /rss and /feed without slash); root-level slug URLs need a URL rule that excludes pages and daily 'resumen-de-noticias' digests; stop on any Sucuri challenge - do not solve JavaScript challenges",
+   "priority": "high",
+   "priority_reason": "A third-party crawler read 20 fresh items from /feed/ nine days ago, so a compliant route very likely exists.",
+   "open_questions": [
+    "Does Sucuri challenge /feed/ for the project user agent?",
+    "Which sitemap replaced /sitemap-news.xml?",
+    "Feed holds ~20 items: required polling interval."
+   ]
+  },
+  {
+   "outlet_id": "mx_el_universal",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "No 2026-dated article retrieved; listed as a live site by IPTC Metawatch (status robots_disallow); legacy channels succeeded until 2026-02-10.",
+    "source": "https://metawatch.iptc.org/sites/el-universal-spanish/ ; registry"
+   },
+   "current_origins": [
+    "https://www.eluniversal.com.mx"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "legacy_evidence",
+    "source": "Registry URLs under /arc/outboundfeeds/"
+   },
+   "candidate_channels": [
+    {
+     "type": "news_sitemap",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-02-10",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/general/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-02-10",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/sitemap/category/nacion/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-01-12",
+     "note": "17 category sitemaps of this shape in the registry (nacion, mundo, estados, cartera, cultura, deportes, opinion, ...)."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/deultima/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: active, last success 2026-02-10",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.eluniversal.com.mx/consultas/sitemapindex.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (index forced inactive), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "rss",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "NOT observed."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "robots restriction reported by third party",
+     "evidence": "IPTC Metawatch: status robots_disallow - 'The site's robots.txt disallows our crawler' (either its user agent Metawatch/2.0 or all user agents at the site root; the page does not say which).",
+     "source": "https://metawatch.iptc.org/sites/el-universal-spanish/"
+    }
+   ],
+   "owner_group": "El Universal Compania Periodistica Nacional (Ealy Ortiz family) (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Mexico City",
+   "recommended_approach": "generic news sitemap + category sitemaps, but ONLY after the gated probe reads robots.txt for the project user agent",
+   "priority": "high",
+   "priority_reason": "Flagship Mexican daily with productive legacy channels; robots policy must be re-read first.",
+   "open_questions": [
+    "Does robots.txt disallow generic/unknown crawlers or only named bots?",
+    "Do /arc/outboundfeeds/ paths fall under a Disallow?"
+   ]
+  },
+  {
+   "outlet_id": "mx_la_jornada",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Listed with live feeds by Feedspot and with print issues by PressReader; no 2026-dated article retrieved by search.",
+    "source": "https://rss.feedspot.com/la_jornada_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.jornada.com.mx",
+    "historic: http://www.jornada.unam.mx (feed URLs in a 2020 OPML)"
+   ],
+   "cms": {
+    "value": "proprietary/unknown; two feed generations (/rss/*.xml and /feeds/*.atom.xml)",
+    "evidence_level": "unknown",
+    "source": "Feedspot listing"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.jornada.com.mx/rss/edicion.xml?v=1",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/la_jornada_rss_feeds/",
+     "note": "Print-edition feed. Feeder.co claims the site has no native RSS (conflicting)."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.jornada.com.mx/rss/opinion.xml?v=1",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/la_jornada_rss_feeds/",
+     "note": ""
+    },
+    {
+     "type": "atom",
+     "url": "https://www.jornada.com.mx/feeds/all.atom.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/la_jornada_rss_feeds/ (listed under the label 'Cartones')",
+     "note": "Atom feed of everything, if still served."
+    },
+    {
+     "type": "atom",
+     "url": "https://www.jornada.com.mx/feeds/mundo.atom.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/la_jornada_rss_feeds/",
+     "note": "Same shape listed for economia, ciencia-y-tecnologia, sociedad, cultura, deportes, espectaculos, capital, estados."
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.jornada.com.mx/feeds/category/politica.rss",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/la_jornada_rss_feeds/",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "http://www.jornada.unam.mx/rss/politica.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": "Old UNAM host; likely redirects or dead."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "DEMOS, Desarrollo de Medios S.A. de C.V. (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Mexico City",
+   "recommended_approach": "generic RSS/Atom; print edition also has a stable dated URL tree (/YYYY/MM/DD/...) usable for an HTML listing rule",
+   "priority": "high",
+   "priority_reason": "No legacy channel; several documented feed URLs and open access.",
+   "open_questions": [
+    "Which feed generation is live in 2026?",
+    "Print-edition vs. 'ultimas' online articles are different URL families."
+   ]
+  },
+  {
+   "outlet_id": "mx_milenio",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Search results show the 'Ultima hora' page with newest entries dated 08.10.2026 and a live-coverage article of 2026-10-07.",
+    "source": "WebSearch 2026-10-09 (results https://www.milenio.com/ultima-hora, https://milenio.com/el-clima/tormentas-tropicales-simon-isaias-en-vivo-7-de-octubre)"
+   },
+   "current_origins": [
+    "https://www.milenio.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://www.milenio.com/ultima-hora",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Noticias de hoy - Ultima hora - Grupo Milenio', entries dated 08.10.2026",
+     "note": "Chronological listing; best documented route today."
+    },
+    {
+     "type": "rss",
+     "url": "https://www.milenio.com/rss",
+     "evidence_level": "search_evidence",
+     "source": "https://feeder.co/discover/088092482d/milenio-com ('Not responding since February 06, 2026'); also in the 2020 Isacson OPML",
+     "note": "Probably discontinued in February 2026. Feedspot lists Milenio without a feed URL."
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.milenio.com/temas/<tema>",
+     "evidence_level": "search_evidence",
+     "source": "Search result https://www.milenio.com/temas/sitios-web",
+     "note": "Topic pages; pattern only."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "feed withdrawn",
+     "evidence": "The only known RSS endpoint is reported unresponsive since 2026-02-06.",
+     "source": "https://feeder.co/discover/088092482d/milenio-com"
+    }
+   ],
+   "owner_group": "Grupo Multimedios (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Mexico City (group based in Monterrey)",
+   "recommended_approach": "gated probe of robots.txt for sitemaps; otherwise HTML listing (/ultima-hora) with URL pattern rule (/seccion/<slug>, no date in URL)",
+   "priority": "high",
+   "priority_reason": "Major national daily with no legacy channel; needs a listing adapter unless a sitemap appears.",
+   "open_questions": [
+    "Sitemap/news-sitemap location.",
+    "Regional editions (Monterrey, Jalisco, Laguna ...) in or out of scope?"
+   ]
+  },
+  {
+   "outlet_id": "ni_confidencial",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Publishes from exile (director Carlos F. Chamorro in Costa Rica since January 2019, again from 2021; newsroom raided and confiscated). Third-party crawler sampled 20 articles dated 2026-09-28 to 2026-09-30.",
+    "source": "https://metawatch.iptc.org/sites/confidencial-ni/ ; https://ijnet.org/es/resource/periodismo-desde-el-exilio-confidencial-resiste-al-r%C3%A9gimen-en-nicaragua"
+   },
+   "current_origins": [
+    "https://confidencial.digital (apex host is what third parties use)",
+    "https://www.confidencial.digital (registry)",
+    "historic: https://confidencial.com.ni (.ni domains of independent media were dropped in March 2025)"
+   ],
+   "cms": {
+    "value": "WordPress with Yoast SEO (inferred, strong)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "/feed/ in use; ?p= shortlinks in search results; /sitemap_index.xml and /news-sitemap.xml in registry."
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://confidencial.digital/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/confidencial-ni/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://confidencial.digital/feed/; 20 articles sampled, dated 2026-09-28 to 2026-09-30",
+     "note": "Registry holds https://www.confidencial.digital/feed and /rss (technically_empty). Try the apex host with trailing slash."
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.confidencial.digital/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: technically_empty, HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://confidencial.digital/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry: inactive (score 39), HTTP 200",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "exile / state hostility",
+     "evidence": "Outlet operates from Costa Rica; its former .ni domain is no longer usable. No reader-side paywall found.",
+     "source": "WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Promedia / Chamorro family, independent (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified for the company name)",
+   "outlet_type": "digital native (weekly origin), in exile",
+   "city": "San Jose, Costa Rica (originally Managua)",
+   "recommended_approach": "generic RSS on the apex host; news sitemap second",
+   "priority": "high",
+   "priority_reason": "Key independent Nicaraguan source; feed confirmed live for a third party.",
+   "open_questions": [
+    "Did the legacy failure come from the www host or the missing trailing slash?",
+    "English section (/english/) must be excluded by URL rule."
+   ]
+  },
+  {
+   "outlet_id": "ni_el_19_digital",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Homepage indexed with the date 'Jueves, 08 de Octubre del 2026' and current headlines.",
+    "source": "WebSearch 2026-10-09 (result https://www.el19digital.com/)"
+   },
+   "current_origins": [
+    "https://www.el19digital.com"
+   ],
+   "cms": {
+    "value": "proprietary/unknown; article URLs /articulos/ver/<numeric-id>-<slug> and /articulos/ver/titulo:<numeric-id>-<slug>",
+    "evidence_level": "unknown",
+    "source": "URL shapes in search results"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://www.el19digital.com/",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'El 19 Digital - Portal de Noticias de Nicaragua'",
+     "note": "Only documented route. No feed or sitemap found in 2 searches."
+    },
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No RSS/sitemap documented."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "state media",
+     "evidence": "Classified State-Controlled by State Media Monitor (2022-2026): flagship government/FSLN portal under the Communication Council of Rosario Murillo; staff paid by the presidency (~C$6.4m/yr); no editorial independence.",
+     "source": "https://statemediamonitor.com/2026/06/el-19-digital/"
+    }
+   ],
+   "owner_group": "Government of Nicaragua / FSLN communications apparatus",
+   "outlet_type": "state outlet (digital)",
+   "city": "Managua",
+   "recommended_approach": "source-specific adapter over HTML listings with URL rule /articulos/ver/; do NOT enumerate numeric ids",
+   "priority": "low",
+   "priority_reason": "State propaganda portal without documented feeds; inclusion is an editorial decision and the adapter cost is high.",
+   "open_questions": [
+    "Is a state-controlled outlet wanted in the corpus (operator decision)?",
+    "Two URL variants for the same article (with and without 'titulo:') need canonicalisation.",
+    "Geo-blocking or hosting restrictions unknown."
+   ]
+  },
+  {
+   "outlet_id": "ni_la_prensa",
+   "operating_status": {
+    "value": "moved",
+    "evidence": "Registry origin laprensa.com.ni is dead: La Prensa migrated to www.laprensani.com from 2023 and the regime dropped the .ni domains of independent media on the night of 2025-03-13. Print stopped in August 2021; staff went into exile in July 2022 (mostly Costa Rica); plant seized August 2022. Articles dated 2026-10-08 and 2026-10-09 are indexed on the new domain.",
+    "source": "https://www.laprensani.com/2025/03/14/nacionales/3447327-dictadura-bota-los-dominios-ni-de-medios-independientes-en-nicaragua (result title only) ; https://www.tvn-2.com/mundo/centroamerica/diario-prensa-nicaragua-exilia-personal_1_1994296.html ; WebSearch 2026-10-09"
+   },
+   "current_origins": [
+    "https://www.laprensani.com"
+   ],
+   "cms": {
+    "value": "unknown (URL shape /YYYY/MM/DD/<seccion>/<numeric-id>-<slug>, author pages /author/<name> - WordPress-like but not established)",
+    "evidence_level": "unknown",
+    "source": "URL shapes in search results"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://www.laprensani.com/deportes",
+     "evidence_level": "search_evidence",
+     "source": "Search result 'Noticias de Deportes - LA PRENSA Nicaragua'",
+     "note": "Section listing; dated article URLs make a URL rule straightforward."
+    },
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No feed or sitemap documented in 3 searches. A WordPress /feed/ is conceivable but the CMS is not identified."
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "metered paywall",
+     "evidence": "Publisher FAQ: a limited number of free articles per month, then subscription (offer '$1/semanal'); some pieces subscriber-only.",
+     "source": "WebSearch 2026-10-09 (result https://www.laprensani.com/preguntas-frecuentes, snippet only)"
+    },
+    {
+     "kind": "impersonation risk",
+     "evidence": "In August 2024 La Prensa warned of a Russian-origin site impersonating it and stated it publishes only on www.laprensani.com - pin the exact origin.",
+     "source": "https://diariolibre.com/mundo/america-latina/2024/08/23/diario-la-prensa-de-nicaragua-denuncia-que-sitio-web/2828545 (snippet)"
+    },
+    {
+     "kind": "exile",
+     "evidence": "Newsroom operates from Costa Rica, Mexico, Spain, Germany and the United States (UNESCO).",
+     "source": "WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Editorial La Prensa S.A. (Chamorro/Holmann family) (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified for the company name)",
+   "outlet_type": "national daily, digital-only, in exile",
+   "city": "Managua (newsroom in exile, largely San Jose, Costa Rica)",
+   "recommended_approach": "update web_origins first; gated probe of robots.txt/sitemaps on the new domain; HTML listing with dated URL rule as fallback; expect truncated text behind the meter",
+   "priority": "high",
+   "priority_reason": "Registry points to a dead domain; the outlet is alive and central for Nicaragua.",
+   "open_questions": [
+    "Feed/sitemap on laprensani.com.",
+    "How the meter is enforced (client-side vs server-side).",
+    "Same-outlet continuity laprensa.com.ni -> laprensani.com to be recorded in the registry."
+   ]
+  }
+ ],
+ "proposed_new_outlets": [
+  {
+   "country_id": "do",
+   "name": "Hoy",
+   "origin": "https://hoy.com.do",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/hoy-do/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://hoy.com.do/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01"
+   },
+   "current_origins": [
+    "https://hoy.com.do"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://hoy.com.do/rss/home.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/hoy-do/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://hoy.com.do/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editora Hoy / Grupo Corripio (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Santo Domingo",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Third-party-confirmed feed; article URLs /seccion/<slug>_<id>.html.",
+   "open_questions": []
+  },
+  {
+   "country_id": "do",
+   "name": "El Nacional",
+   "origin": "https://elnacional.com.do",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/el-nacional-do/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://elnacional.com.do/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01"
+   },
+   "current_origins": [
+    "https://elnacional.com.do"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elnacional.com.do/rss/home.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-nacional-do/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://elnacional.com.do/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "likely same group and platform as Hoy (identical feed path and URL shape; ownership background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national evening daily",
+   "city": "Santo Domingo",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Easy to add, but adds little owner diversity next to Hoy.",
+   "open_questions": [
+    "Same owner as Hoy? If so pick only one for diversity."
+   ]
+  },
+  {
+   "country_id": "do",
+   "name": "Acento",
+   "origin": "https://acento.com.do",
+   "operating_status": {
+    "value": "uncertain",
+    "evidence": "Not evidenced by today's searches.",
+    "source": "none"
+   },
+   "current_origins": [
+    "https://acento.com.do"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No feed URL documented by search."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent digital native (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "digital native",
+   "city": "Santo Domingo",
+   "recommended_approach": "gated probe, then decide",
+   "priority": "medium",
+   "priority_reason": "Would add an independent digital-native voice; channel still unknown.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ec",
+   "name": "Expreso",
+   "origin": "https://www.expreso.ec",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/expreso-ec/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.expreso.ec/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01"
+   },
+   "current_origins": [
+    "https://www.expreso.ec"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.expreso.ec/rss/home.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/expreso-ec/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.expreso.ec/rss/home.xml; 20 articles sampled, dated 2026-09-30 to 2026-10-01",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Graficos Nacionales S.A. (Granasa) (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Guayaquil",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Confirmed feed; different owner from El Universo and El Comercio.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ec",
+   "name": "El Mercurio",
+   "origin": "https://elmercurio.com.ec",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/ecuador_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://elmercurio.com.ec"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elmercurio.com.ec/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/ecuador_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (not searched)",
+   "outlet_type": "regional daily",
+   "city": "Cuenca",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Regional (Austro) coverage with a standard feed.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ec",
+   "name": "La Republica (EC)",
+   "origin": "https://www.larepublica.ec",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/ecuador_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.larepublica.ec"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.larepublica.ec/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/ecuador_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (not searched)",
+   "outlet_type": "digital native",
+   "city": "Guayaquil (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Digital-native option with a standard feed.",
+   "open_questions": []
+  },
+  {
+   "country_id": "es",
+   "name": "elDiario.es",
+   "origin": "https://www.eldiario.es",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/spanish_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.eldiario.es"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.eldiario.es/rss",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/spanish_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "membership model",
+     "evidence": "82,350 paying members per OJD (March 2024); content generally open.",
+     "source": "WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Diario de Prensa Digital S.L., journalist-owned (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "digital native",
+   "city": "Madrid",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Open-access digital native with member model; balances the three legacy dailies editorially.",
+   "open_questions": []
+  },
+  {
+   "country_id": "es",
+   "name": "ABC",
+   "origin": "https://www.abc.es",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/abc-es/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.abc.es/rss/2.0/portada/; 20 articles sampled, dated 2026-09-30 to 2026-10-01"
+   },
+   "current_origins": [
+    "https://www.abc.es"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.abc.es/rss/2.0/portada/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/abc-es/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.abc.es/rss/2.0/portada/; 20 articles sampled, dated 2026-09-30 to 2026-10-01",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "freemium paywall",
+     "evidence": "ABC adopted a freemium paywall in 2020 (Reuters Institute DNR 2021).",
+     "source": "WebSearch 2026-10-09"
+    }
+   ],
+   "owner_group": "Vocento (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "national daily",
+   "city": "Madrid",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Conservative national daily with confirmed feed; adds a fourth owner group.",
+   "open_questions": []
+  },
+  {
+   "country_id": "es",
+   "name": "El Correo",
+   "origin": "https://www.elcorreo.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/el-correo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.elcorreo.com/rss/2.0/portada; 20 articles sampled, dated 2026-09-30"
+   },
+   "current_origins": [
+    "https://www.elcorreo.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elcorreo.com/rss/2.0/portada",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-correo/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.elcorreo.com/rss/2.0/portada; 20 articles sampled, dated 2026-09-30",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall",
+     "evidence": "Vocento regionals run subscription walls (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified).",
+     "source": "none"
+    }
+   ],
+   "owner_group": "Vocento (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "regional daily",
+   "city": "Bilbao",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Regional (Basque Country) coverage with confirmed feed; same group as ABC.",
+   "open_questions": []
+  },
+  {
+   "country_id": "gt",
+   "name": "Plaza Publica",
+   "origin": "https://www.plazapublica.com.gt",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020); Feedspot lists the outlet without a feed URL"
+   },
+   "current_origins": [
+    "https://www.plazapublica.com.gt"
+   ],
+   "cms": {
+    "value": "Drupal (inferred, weak: /content/<slug> and /users/<name> paths in search results)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "URL shapes"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "http://feeds.feedburner.com/PlazaPublicaRssFeed",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020); Feedspot lists the outlet without a feed URL",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Universidad Rafael Landivar (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "digital native (investigative, university-based)",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Independent long-form journalism; feed evidence is old.",
+   "open_questions": [
+    "FeedBurner feed is from 2020; current native feed unknown."
+   ]
+  },
+  {
+   "country_id": "gt",
+   "name": "Emisoras Unidas",
+   "origin": "https://emisorasunidas.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/guatemala_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://emisorasunidas.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://emisorasunidas.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/guatemala_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo Emisoras Unidas (also co-owner of Publinews)",
+   "outlet_type": "radio-news group website",
+   "city": "Guatemala City",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "High-volume national news with standard feed; note overlap with Publinews ownership.",
+   "open_questions": []
+  },
+  {
+   "country_id": "gt",
+   "name": "Prensa Comunitaria",
+   "origin": "https://prensacomunitaria.org",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Active X profile names the website.",
+    "source": "WebSearch 2026-10-09"
+   },
+   "current_origins": [
+    "https://prensacomunitaria.org"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": null,
+     "evidence_level": "unknown",
+     "source": "none",
+     "note": "No feed URL documented by search."
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "community journalism collective",
+   "outlet_type": "digital native, regional/indigenous community coverage",
+   "city": "Guatemala (departmental network)",
+   "recommended_approach": "gated probe, then decide",
+   "priority": "medium",
+   "priority_reason": "Adds regional and indigenous perspectives absent from the capital dailies; channel unknown.",
+   "open_questions": []
+  },
+  {
+   "country_id": "hn",
+   "name": "Criterio.hn",
+   "origin": "https://criterio.hn",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/criterio-hn/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://criterio.hn/feed/; 5 articles sampled, dated 2026-09-30 to 2026-10-01"
+   },
+   "current_origins": [
+    "https://criterio.hn"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://criterio.hn/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/criterio-hn/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://criterio.hn/feed/; 5 articles sampled, dated 2026-09-30 to 2026-10-01",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent (not searched)",
+   "outlet_type": "digital native",
+   "city": "Tegucigalpa",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Independent digital native with confirmed feed; low volume.",
+   "open_questions": []
+  },
+  {
+   "country_id": "hn",
+   "name": "Contracorriente",
+   "origin": "https://contracorriente.red",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)"
+   },
+   "current_origins": [
+    "https://contracorriente.red"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://contracorriente.red/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent (not searched)",
+   "outlet_type": "digital native (investigative)",
+   "city": "Tegucigalpa / San Pedro Sula (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Investigative digital native; feed evidence from 2020.",
+   "open_questions": []
+  },
+  {
+   "country_id": "hn",
+   "name": "Radio Progreso",
+   "origin": "https://radioprogresohn.net",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)"
+   },
+   "current_origins": [
+    "https://radioprogresohn.net"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://radioprogresohn.net/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Jesuit-run community radio (ERIC-SJ) (background knowledge of the researcher, NOT searched on 2026-10-09 - treat as unverified)",
+   "outlet_type": "regional community broadcaster website",
+   "city": "El Progreso, Yoro",
+   "recommended_approach": "generic RSS",
+   "priority": "low",
+   "priority_reason": "Regional non-capital voice; feed evidence from 2020, low volume.",
+   "open_questions": []
+  },
+  {
+   "country_id": "mx",
+   "name": "El Sol de Mexico",
+   "origin": "https://oem.com.mx/elsoldemexico",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/el-sol-de-mexico/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.elsoldemexico.com.mx/rss.xml; 20 articles sampled, dated 2026-09-30"
+   },
+   "current_origins": [
+    "https://oem.com.mx/elsoldemexico"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elsoldemexico.com.mx/rss.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/el-sol-de-mexico/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://www.elsoldemexico.com.mx/rss.xml; 20 articles sampled, dated 2026-09-30",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Organizacion Editorial Mexicana (OEM)",
+   "outlet_type": "national daily (head of a large regional chain)",
+   "city": "Mexico City",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Confirmed feed; OEM adds a fourth owner group and a gateway to regional 'El Sol de ...' titles.",
+   "open_questions": [
+    "Articles now live under oem.com.mx/elsoldemexico/ while the feed is on elsoldemexico.com.mx - two origins to authorise."
+   ]
+  },
+  {
+   "country_id": "mx",
+   "name": "Animal Politico",
+   "origin": "https://www.animalpolitico.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)"
+   },
+   "current_origins": [
+    "https://www.animalpolitico.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "http://www.animalpolitico.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://adamisacson.com/files/200522_adams_feeds.opml (2020)",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent digital native (not searched)",
+   "outlet_type": "digital native",
+   "city": "Mexico City",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Leading independent digital native; feed evidence from 2020 only.",
+   "open_questions": [
+    "Feed path may have changed since 2020."
+   ]
+  },
+  {
+   "country_id": "mx",
+   "name": "El Siglo de Torreon",
+   "origin": "https://www.elsiglodetorreon.com.mx",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/mexican_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.elsiglodetorreon.com.mx"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "none"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elsiglodetorreon.com.mx/index.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/mexican_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (not searched)",
+   "outlet_type": "regional daily",
+   "city": "Torreon, Coahuila",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Northern regional daily with a listed feed; balances the Mexico City focus.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ni",
+   "name": "Despacho 505",
+   "origin": "https://despacho505.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://metawatch.iptc.org/sites/despacho505/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://despacho505.com/feed/; 10 articles sampled, dated 2026-09-30"
+   },
+   "current_origins": [
+    "https://despacho505.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://despacho505.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://metawatch.iptc.org/sites/despacho505/ - IPTC Metawatch (third-party identified crawler) lists discovery strategy config:rss with feed https://despacho505.com/feed/; 10 articles sampled, dated 2026-09-30",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent, in exile (not searched)",
+   "outlet_type": "digital native",
+   "city": "exile (Nicaragua coverage)",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "Confirmed feed; article URLs /seccion/<id>-<slug>/.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ni",
+   "name": "Nicaragua Investiga",
+   "origin": "https://nicaraguainvestiga.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://nicaraguainvestiga.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://nicaraguainvestiga.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent (not searched)",
+   "outlet_type": "digital native",
+   "city": "exile (Nicaragua coverage)",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Independent outlet with a listed feed.",
+   "open_questions": []
+  },
+  {
+   "country_id": "ni",
+   "name": "Articulo 66",
+   "origin": "https://www.articulo66.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Feed or site listed by a third party on 2026-10-09.",
+    "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/ (URL appears only inside Feedspot's follow-link parameter)"
+   },
+   "current_origins": [
+    "https://www.articulo66.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "feed URL shape"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.articulo66.com/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/nicaragua_news_rss_feeds/ (URL appears only inside Feedspot's follow-link parameter)",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent (not searched)",
+   "outlet_type": "digital native",
+   "city": "exile (Nicaragua coverage)",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Independent outlet; feed evidence indirect.",
+   "open_questions": []
+  }
+ ]
+}

@@ -1,0 +1,2544 @@
+{
+ "checked_on": "2026-10-09",
+ "method": "passive web search; no request to any publisher",
+ "notes": [
+  "Nothing here is verified working: every channel is a hypothesis for a later gated technical probe.",
+  "Evidence levels: search_evidence | legacy_evidence | cms_pattern_inference | unknown. Statements marked 'background knowledge' were not confirmed today and count as unknown.",
+  "Third-party pages fetched: rss.feedspot.com country lists (pe, py, sv, ve, panama), feeder.co, es.wikipedia.org, latamjournalismreview.org. feedspot lists for Puerto Rico/Uruguay returned 404.",
+  "Search engine results occasionally include publisher URLs and snippets; these were read as search results only, never requested.",
+  "Legacy statuses 'inactive (score=39)' / 'sitemap_index forced inactive' mean the old crawler could not expand sitemap indexes; they are not evidence that the source is empty."
+ ],
+ "search_count": {
+  "web_searches": 44,
+  "third_party_page_fetches": 17,
+  "third_party_fetches_returning_404": 4
+ },
+ "outlets": [
+  {
+   "outlet_id": "pa_critica",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy RSS delivered articles until 2026-06-15; EPASA page footers (c) 2026 list Critica as a group brand. No 2026 closure report found.",
+    "source": "registry + search snippets of panamaamerica.com.pa pages"
+   },
+   "current_origins": [
+    "https://www.critica.com.pa"
+   ],
+   "cms": {
+    "value": "unknown (proprietary EPASA platform?)",
+    "evidence_level": "unknown",
+    "source": "no CMS evidence found"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.critica.com.pa/rss.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15, discovered by heuristic",
+     "note": "best existing route"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.critica.com.pa/sitemap_google_news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots",
+     "note": "re-test parser"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.critica.com.pa/index_google.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, last_success 2026-06-12",
+     "note": ""
+    },
+    {
+     "type": "rss",
+     "url": "https://www.critica.com.pa/rss/recent/index.xml",
+     "evidence_level": "unknown",
+     "source": "analogy only: sister title Panama America is listed on feedspot with panamaamerica.com.pa/rss/recent/index.xml",
+     "note": "NOT observed for critica.com.pa; test only in gated probe"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo EPASA (Editora Panama America S.A.) - search_evidence (panamaamerica.com.pa footer snippets; SIP resolution 2016)",
+   "outlet_type": "national tabloid daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "legacy RSS was active and productive in June 2026",
+   "open_questions": [
+    "Does the EPASA 'rss/recent/index.xml' pattern exist here?",
+    "Print status 2026 not confirmed"
+   ]
+  },
+  {
+   "outlet_id": "pa_diaadia",
+   "operating_status": {
+    "value": "uncertain",
+    "evidence": "EPASA page footers (c) 2026 still list Dia a Dia as a brand; no article-level evidence for 2026 and no closure report found. Legacy channels answered HTTP 200 but never yielded articles.",
+    "source": "search snippets of panamaamerica.com.pa; registry"
+   },
+   "current_origins": [
+    "https://www.diaadia.com.pa"
+   ],
+   "cms": {
+    "value": "unknown (probably same EPASA platform as critica.com.pa)",
+    "evidence_level": "unknown",
+    "source": "no evidence"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.diaadia.com.pa/rss.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, never successful",
+     "note": "same path as Critica where it works; may be empty feed or parser issue"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.diaadia.com.pa/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo EPASA - search_evidence",
+   "outlet_type": "tabloid daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic RSS after gated re-probe; otherwise HTML listing with URL pattern rule",
+   "priority": "low",
+   "priority_reason": "status unconfirmed and same owner as Critica (little diversity gain)",
+   "open_questions": [
+    "Is the site still updated in 2026?",
+    "Why was rss.xml empty?"
+   ]
+  },
+  {
+   "outlet_id": "pa_el_siglo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "No 2026 closure report found; group (GESE) titles shown publishing in 2026 (La Estrella front page 2026-08-07). El Siglo itself not individually confirmed.",
+    "source": "search snippets (laestrella.com.pa binrepository PDF, atp.gob.pa report April 2026); older 2016-17 OFAC/Waked closure threats were resolved in 2017 (tvn-2.com, revistaeyn.com)"
+   },
+   "current_origins": [
+    "https://elsiglo.com.pa"
+   ],
+   "cms": {
+    "value": "unknown; shared platform across elsiglo.com.pa / laestrella.com.pa / metrolibre.com (identical sitemap.xml + sitemapforgoogle.xml + megasitemap.xml triple; '/binrepository/' asset path seen in a laestrella.com.pa search-result URL, a path style associated with Xalok CMS - NOT confirmed; a Xalok client search found no mention)",
+    "evidence_level": "unknown",
+    "source": "registry channel triple; search-result URL https://www.laestrella.com.pa/binrepository/...pdf; newsinitiative.withgoogle.com/cms-providers/xalok (no Panama client named)"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://elsiglo.com.pa/megasitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 200, from robots.txt",
+     "note": "megasitemap.xml is a sitemap index that the legacy system never expanded (HTTP 200, 'INACTIVE score=39'); the failure is on our side, not evidence of an empty source"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://elsiglo.com.pa/sitemapforgoogle.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots.txt",
+     "note": "name suggests Google-News sitemap; re-test parser"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://elsiglo.com.pa/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "GESE (Grupo Editorial El Siglo y La Estrella); 51% of shares donated in 2017 to Fundacion Publicando Historia after OFAC sanctions on Abdul Waked - search_evidence (tvn-2.com, revistaeyn.com); current 2026 ownership not confirmed",
+   "outlet_type": "tabloid daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "nested sitemap index exploration (megasitemap.xml), fallback news sitemap",
+   "priority": "medium",
+   "priority_reason": "sitemap index exists but was never expanded; tabloid sister of La Estrella",
+   "open_questions": [
+    "Is megasitemap.xml date-partitioned?",
+    "No RSS found by search - does one exist?"
+   ]
+  },
+  {
+   "outlet_id": "pa_laestrelladepanama",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Search results show a front-page PDF dated 2026-08-07 and an edition page dated 2026-07-06 on laestrella.com.pa.",
+    "source": "search snippets (laestrella.com.pa binrepository PDF, atp.gob.pa report April 2026); older 2016-17 OFAC/Waked closure threats were resolved in 2017 (tvn-2.com, revistaeyn.com)"
+   },
+   "current_origins": [
+    "https://www.laestrella.com.pa"
+   ],
+   "cms": {
+    "value": "unknown; shared platform across elsiglo.com.pa / laestrella.com.pa / metrolibre.com (identical sitemap.xml + sitemapforgoogle.xml + megasitemap.xml triple; '/binrepository/' asset path seen in a laestrella.com.pa search-result URL, a path style associated with Xalok CMS - NOT confirmed; a Xalok client search found no mention)",
+    "evidence_level": "unknown",
+    "source": "registry channel triple; search-result URL https://www.laestrella.com.pa/binrepository/...pdf; newsinitiative.withgoogle.com/cms-providers/xalok (no Panama client named)"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.laestrella.com.pa/megasitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 200, from robots.txt",
+     "note": "megasitemap.xml is a sitemap index that the legacy system never expanded (HTTP 200, 'INACTIVE score=39'); the failure is on our side, not evidence of an empty source"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.laestrella.com.pa/sitemapforgoogle.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots.txt",
+     "note": "name suggests Google-News sitemap; re-test parser"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.laestrella.com.pa/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200; last_success 2026-01-26",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "GESE (Grupo Editorial El Siglo y La Estrella); 51% of shares donated in 2017 to Fundacion Publicando Historia after OFAC sanctions on Abdul Waked - search_evidence (tvn-2.com, revistaeyn.com); current 2026 ownership not confirmed",
+   "outlet_type": "national daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "nested sitemap index exploration (megasitemap.xml), fallback news sitemap",
+   "priority": "high",
+   "priority_reason": "oldest national daily; sitemap index exists, only index expansion missing",
+   "open_questions": [
+    "Is megasitemap.xml date-partitioned?",
+    "No RSS found by search - does one exist?"
+   ]
+  },
+  {
+   "outlet_id": "pa_metro_libre",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Listed in an April 2026 media-monitoring report of Autoridad de Turismo de Panama (articles cited); no closure report found.",
+    "source": "search snippets (laestrella.com.pa binrepository PDF, atp.gob.pa report April 2026); older 2016-17 OFAC/Waked closure threats were resolved in 2017 (tvn-2.com, revistaeyn.com)"
+   },
+   "current_origins": [
+    "https://www.metrolibre.com"
+   ],
+   "cms": {
+    "value": "unknown; shared platform across elsiglo.com.pa / laestrella.com.pa / metrolibre.com (identical sitemap.xml + sitemapforgoogle.xml + megasitemap.xml triple; '/binrepository/' asset path seen in a laestrella.com.pa search-result URL, a path style associated with Xalok CMS - NOT confirmed; a Xalok client search found no mention)",
+    "evidence_level": "unknown",
+    "source": "registry channel triple; search-result URL https://www.laestrella.com.pa/binrepository/...pdf; newsinitiative.withgoogle.com/cms-providers/xalok (no Panama client named)"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.metrolibre.com/megasitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 200, from robots.txt",
+     "note": "megasitemap.xml is a sitemap index that the legacy system never expanded (HTTP 200, 'INACTIVE score=39'); the failure is on our side, not evidence of an empty source"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.metrolibre.com/sitemapforgoogle.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots.txt; last_success 2026-01-25",
+     "note": "name suggests Google-News sitemap; re-test parser"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.metrolibre.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (owner not found today; identical technical platform to the GESE titles suggests a link - unconfirmed)",
+   "outlet_type": "free daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "nested sitemap index exploration (megasitemap.xml), fallback news sitemap",
+   "priority": "medium",
+   "priority_reason": "free daily; sitemap index exists but was never expanded",
+   "open_questions": [
+    "Is megasitemap.xml date-partitioned?",
+    "No RSS found by search - does one exist?",
+    "Owner of Metro Libre in 2026?"
+   ]
+  },
+  {
+   "outlet_id": "pa_la_prensa",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy news sitemap successful until 2026-06-15; search results show current prensa.com pages.",
+    "source": "registry; search results"
+   },
+   "current_origins": [
+    "https://www.prensa.com"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html"
+   },
+   "candidate_channels": [
+    {
+     "type": "news_sitemap",
+     "url": "https://www.prensa.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15, from robots.txt",
+     "note": "best existing route"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.prensa.com/arc/outboundfeeds/sitemap?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-12, but 0 usable articles",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.prensa.com/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention; Arc identification per prensa.com article",
+     "note": "not observed"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.prensa.com/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.prensa.com/tema/<tag>/<page>/",
+     "evidence_level": "search_evidence",
+     "source": "search result URLs e.g. https://www.prensa.com/tema/attt/7/ and https://www.prensa.com/locales/102/",
+     "note": "paginated topic/section listings exist"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall (type unconfirmed)",
+     "evidence": "La Prensa is known to operate a digital subscription/registration model; not confirmed by a search today",
+     "source": "background knowledge of the researcher, NOT confirmed by a search on 2026-10-09"
+    }
+   ],
+   "owner_group": "Corporacion La Prensa S.A. (Corprensa) - search_evidence (prensa.com Arc article)",
+   "outlet_type": "national daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic news sitemap (Arc)",
+   "priority": "high",
+   "priority_reason": "reference daily; Arc news sitemap worked in June 2026; '0 usable articles' points to extraction/paywall, to be checked",
+   "open_questions": [
+    "Paywall type and effect on article body extraction",
+    "Why did sitemap crawl yield 0 usable articles?"
+   ]
+  },
+  {
+   "outlet_id": "pa_midiario",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy news sitemap successful until 2026-06-15.",
+    "source": "registry"
+   },
+   "current_origins": [
+    "https://www.midiario.com"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html"
+   },
+   "candidate_channels": [
+    {
+     "type": "news_sitemap",
+     "url": "https://www.midiario.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15",
+     "note": "best existing route"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.midiario.com/arc/outboundfeeds/sitemap?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 404",
+     "note": "dead; variant with trailing slash '/sitemap/?outputType=xml' untested"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.midiario.com/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Corporacion La Prensa S.A. (Corprensa) - search_evidence",
+   "outlet_type": "tabloid daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic news sitemap (Arc)",
+   "priority": "medium",
+   "priority_reason": "works technically; same owner as La Prensa",
+   "open_questions": []
+  },
+  {
+   "outlet_id": "pe_diariocorreo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy Google-News feeds successful until 2026-06-15.",
+    "source": "registry"
+   },
+   "current_origins": [
+    "https://diariocorreo.pe"
+   ],
+   "cms": {
+    "value": "Arc XP (Grupo El Comercio custom 'arcio' outbound feeds)",
+    "evidence_level": "legacy_evidence",
+    "source": "registry URLs with '?outputType=xml' and /arcio/ paths discovered from robots.txt; Grupo El Comercio named as Arc customer (prensa.com article)"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://diariocorreo.pe/arcio/google-news-feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15",
+     "note": "best existing route"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://diariocorreo.pe/arcio/google-news-feed/category/<politica|peru|mundo|deportes|espectaculos>/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15",
+     "note": "economia and miscelanea were empty; edicion/lima 404"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://diariocorreo.pe/sitemap/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": "children /sitemap/news/<section>/ and /sitemap/web/<section>/ known"
+    },
+    {
+     "type": "rss",
+     "url": "https://diariocorreo.pe/arcio/rss/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, 0 usable articles, from html_head",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo El Comercio (Prensmart) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national/regional popular daily (regional editions)",
+   "city": "Lima",
+   "recommended_approach": "generic RSS (Arc google-news-feed) + per-section feeds",
+   "priority": "high",
+   "priority_reason": "multiple working feeds in June 2026",
+   "open_questions": [
+    "Regional editions (/edicion/<city>/) need their own listing route"
+   ]
+  },
+  {
+   "outlet_id": "pe_el_comercio",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Search results return current elcomercio.pe pages; feedspot lists the site; no closure report.",
+    "source": "search results; https://rss.feedspot.com/peru_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://elcomercio.pe"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elcomercio.pe/arcio/rss/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Grupo El Comercio Arc pattern observed in registry for sister site diariocorreo.pe",
+     "note": "NOT observed for elcomercio.pe; no search hit for it"
+    },
+    {
+     "type": "rss",
+     "url": "https://elcomercio.pe/arcio/google-news-feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "same sister-site pattern (diariocorreo.pe legacy, active)",
+     "note": "not observed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://elcomercio.pe/sitemap/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "same sister-site pattern (diariocorreo.pe legacy, HTTP 200)",
+     "note": "not observed"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://elcomercio.pe/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "generic Arc XP convention",
+     "note": "not observed; GEC sites appear to use custom /arcio/ paths instead"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://elcomercio.pe/archivo/",
+     "evidence_level": "search_evidence",
+     "source": "search result URLs under https://elcomercio.pe/archivo/<section>/<subsection>/",
+     "note": "an 'archivo' section tree exists; whether it is date-browsable is unknown"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "metered paywall / subscriber-only content",
+     "evidence": "El Comercio runs a digital subscription with subscriber-only pieces; not confirmed by search today",
+     "source": "background knowledge of the researcher, NOT confirmed by a search on 2026-10-09"
+    }
+   ],
+   "owner_group": "Grupo El Comercio (Miro Quesada family) - search_evidence (infomercado.pe names GEC and its chairman)",
+   "outlet_type": "national daily (newspaper of record)",
+   "city": "Lima",
+   "recommended_approach": "generic RSS / sitemap index via Arc (paths to be read from robots.txt in the gated probe)",
+   "priority": "high",
+   "priority_reason": "most important Peruvian daily and currently has NO channel in the registry",
+   "open_questions": [
+    "Exact feed/sitemap paths (robots.txt)",
+    "Share of subscriber-only articles"
+   ]
+  },
+  {
+   "outlet_id": "pe_elperuano",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Andina reports El Peruano anniversaries; search results show current elperuano.pe/noticia/ pages.",
+    "source": "andina.pe snippets; search results"
+   },
+   "current_origins": [
+    "https://elperuano.pe"
+   ],
+   "cms": {
+    "value": "unknown (in-house, Editora Peru)",
+    "evidence_level": "unknown",
+    "source": "no evidence"
+   },
+   "candidate_channels": [
+    {
+     "type": "news_sitemap",
+     "url": "https://elperuano.pe/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots.txt",
+     "note": "served but legacy parser found nothing usable; re-test"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://elperuano.pe/sitemap-noticias.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, from robots.txt",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://elperuano.pe/sitemap/<seccion>.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200; sections politica, actualidad, economia, opinion, derecho, central, pais, mundo, deportes, cultural, editorial ...",
+     "note": "per-section sitemaps"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://elperuano.pe/noticia/<id>-<slug>",
+     "evidence_level": "search_evidence",
+     "source": "search result URL https://elperuano.pe/noticia/300075-...",
+     "note": "article URL rule; numeric ids are sequential"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "state media",
+     "evidence": "Official gazette published by state company Editora Peru (also runs Andina agency)",
+     "source": "andina.pe / gob.pe snippets (search_evidence)"
+    }
+   ],
+   "owner_group": "Editora Peru (Peruvian State) - search_evidence",
+   "outlet_type": "state outlet / official gazette with news section",
+   "city": "Lima",
+   "recommended_approach": "generic news sitemap after parser re-test; fallback per-section sitemaps",
+   "priority": "medium",
+   "priority_reason": "all sitemaps answered 200; state outlet adds institutional register but is not independent",
+   "open_questions": [
+    "Why were 200-OK sitemaps 'technically empty' (namespace, JS-rendered articles, date filter)?",
+    "No RSS found by search"
+   ]
+  },
+  {
+   "outlet_id": "pe_expreso",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "es.wikipedia names a director for 2024 and cites an Oct-2025 article; search results show current category pages.",
+    "source": "https://es.wikipedia.org/wiki/Expreso_(Peru); search results"
+   },
+   "current_origins": [
+    "https://www.expreso.com.pe"
+   ],
+   "cms": {
+    "value": "unknown (URL style /categoria/<slug>/ and /<section>/<slug>/<id>/; not enough to name a CMS)",
+    "evidence_level": "unknown",
+    "source": "search result URLs"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://www.expreso.com.pe/categoria/top-de-noticias/",
+     "evidence_level": "search_evidence",
+     "source": "search result URL",
+     "note": "category listing"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.expreso.com.pe/categoria/archivo/",
+     "evidence_level": "search_evidence",
+     "source": "search result URL",
+     "note": "'archivo' category; nature unknown"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.expreso.com.pe/opinion/",
+     "evidence_level": "search_evidence",
+     "source": "search result URL",
+     "note": "section listing"
+    },
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot lists expreso.com.pe without a feed URL ('Generate RSS')",
+     "note": "no native feed known to the directory"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editora Expreso Extra (since 2015) - search_evidence (es.wikipedia)",
+   "outlet_type": "national daily (right-wing/conservative per Wikipedia; disinformation accusations noted there)",
+   "city": "Lima",
+   "recommended_approach": "probe robots.txt for sitemaps; otherwise HTML listing with URL pattern rule",
+   "priority": "medium",
+   "priority_reason": "adds ideological diversity; no known feed, needs probe",
+   "open_questions": [
+    "CMS? sitemap in robots.txt?",
+    "Does /feed/ exist (only if WordPress is confirmed)?"
+   ]
+  },
+  {
+   "outlet_id": "pe_la_republica",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Third-party reader shows feed items dated 2026-10-08/09.",
+    "source": "https://feeder.co/discover/7f5f8b6b16/larepublica-pe-rss-economia"
+   },
+   "current_origins": [
+    "https://larepublica.pe"
+   ],
+   "cms": {
+    "value": "Arc XP (named as Arc customer in older Arc/prensa.com announcement; '?outputType=rss' parameter on feed URL is consistent)",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html"
+   },
+   "candidate_channels": [
+    {
+     "type": "section_feed",
+     "url": "https://larepublica.pe/rss/economia",
+     "evidence_level": "search_evidence",
+     "source": "feeder.co listing, items dated 2026-10-09",
+     "note": "section feed, fresh today per third party"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://larepublica.pe/rss/economia.xml?outputType=rss",
+     "evidence_level": "search_evidence",
+     "source": "feeder.co 'More RSS feeds from larepublica.pe'",
+     "note": "alternate spelling of same feed"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://larepublica.pe/rss/<seccion>.xml?outputType=rss",
+     "evidence_level": "cms_pattern_inference",
+     "source": "pattern generalised from the economia feed",
+     "note": "other sections (politica, sociedad, mundo, deportes) NOT observed"
+    },
+    {
+     "type": "html_listing",
+     "url": "https://larepublica.pe/<seccion>/<yyyy>/<mm>/<dd>/<slug>",
+     "evidence_level": "search_evidence",
+     "source": "search result article URLs with date path",
+     "note": "URL pattern rule for articles"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo La Republica Publicaciones (Mohme family) - search_evidence weak (larepublica.pe article title naming Gustavo Mohme Llona)",
+   "outlet_type": "national daily",
+   "city": "Lima",
+   "recommended_approach": "per-section RSS (enumerate sections), then sitemap from robots.txt",
+   "priority": "high",
+   "priority_reason": "major centre-left daily with NO registry channel; a live section feed is evidenced",
+   "open_questions": [
+    "Is there an all-sections feed (/rss/ or /rss.xml)?",
+    "Sitemap paths"
+   ]
+  },
+  {
+   "outlet_id": "pe_peru21",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Listed with a feed in feedspot's 2026 Peru list; sold by Grupo El Comercio to Media Chirimoya S.A.C. (Cecilia Valenzuela), announced January 2023.",
+    "source": "https://rss.feedspot.com/peru_news_rss_feeds/; https://infomercado.pe/el-comercio-acuerda-venta-de-peru-21-300123-mc/"
+   },
+   "current_origins": [
+    "https://peru21.pe"
+   ],
+   "cms": {
+    "value": "unknown (was on Grupo El Comercio's Arc; feed path '/rss/?q=html/cms...' suggests a different platform after the 2023 sale)",
+    "evidence_level": "unknown",
+    "source": "feedspot truncated feed URL"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://peru21.pe/rss/?q=html%2Fcms%.. (TRUNCATED in source)",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/peru_news_rss_feeds/",
+     "note": "full query string not visible; must be read from the page <link> in the gated probe"
+    },
+    {
+     "type": "rss",
+     "url": "https://peru21.pe/arcio/rss/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "old GEC Arc pattern",
+     "note": "likely obsolete after ownership change; low confidence"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Media Chirimoya S.A.C. (Cecilia Valenzuela) since 2023 - search_evidence (infomercado.pe)",
+   "outlet_type": "national daily (compact)",
+   "city": "Lima",
+   "recommended_approach": "generic RSS once the full feed URL is known; else sitemap from robots.txt",
+   "priority": "medium",
+   "priority_reason": "independent of GEC since 2023 (diversity gain); feed exists but exact URL truncated",
+   "open_questions": [
+    "Full RSS URL",
+    "Current CMS"
+   ]
+  },
+  {
+   "outlet_id": "pr_el_nuevo_dia",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print edition ENDED: last print issue Sunday 2026-09-27 after 56 years; continues digital-only. ~150 employees laid off.",
+    "source": "AP 2026-09-21 via abcnews.com/ajc.com; elcaribe.com.do; elnuevodia.com English story on the final Primera Hora print issue"
+   },
+   "current_origins": [
+    "https://www.elnuevodia.com"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "legacy_evidence",
+    "source": "registry URLs /arc/outboundfeeds/...?outputType=xml discovered from robots.txt (Arc-specific path); search summary also notes Arc image CDN"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elnuevodia.com/arc/outboundfeeds/news-sitemap-index?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200, from robots.txt",
+     "note": "news sitemap index; only expansion missing"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elnuevodia.com/arc/outboundfeeds/sitemap-index?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": "full archive index"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.elnuevodia.com/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall",
+     "evidence": "Digital subscription model since 2017; described in 2021 as 'the only paid media outlet in Puerto Rico' (paywall + registration)",
+     "source": "https://www.inma.org/blogs/conference/post.cfm/premium-content-proper-messaging-are-the-subscriptions-formula-at-el-nuevo-dia"
+    }
+   ],
+   "owner_group": "GFR Media (Grupo Ferre Rangel) - search_evidence (en.wikipedia News media in Puerto Rico; AP)",
+   "outlet_type": "national daily, digital-only since 2026-09-27",
+   "city": "Guaynabo / San Juan",
+   "recommended_approach": "nested sitemap index exploration (Arc news-sitemap-index)",
+   "priority": "high",
+   "priority_reason": "main PR daily; indexes answer 200, only expansion missing; paywall may truncate bodies",
+   "open_questions": [
+    "Paywall share and whether article bodies are served to non-subscribers",
+    "URL structure may change after the digital-only relaunch"
+   ]
+  },
+  {
+   "outlet_id": "pr_metro_puerto_rico",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Not closed: brands Metro Puerto Rico and El Calce acquired by Vision News Media, LLC (reported Nov 2025); weekly print on Thursdays plus digital; Report for America partner 2026.",
+    "source": "search snippets of metro.pr articles dated 2025-11-13 and 2026-01-29"
+   },
+   "current_origins": [
+    "https://www.metro.pr"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "legacy_evidence",
+    "source": "registry URLs /arc/outboundfeeds/... from robots.txt"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.metro.pr/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive: 'sitemap_index forced inactive, expansion not implemented'",
+     "note": "failure on our side"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.metro.pr/arc/outboundfeeds/google-news-feed/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, last_success 2026-02-20, 0 usable articles",
+     "note": "feed fetched OK; extraction failed"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.metro.pr/arc/outboundfeeds/news/<noticias|deportes|entretenimiento>/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty; noticias/deportes last_success 2026-02-20",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.metro.pr/arc/outboundfeeds/sitemap/latest/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.metro.pr/<seccion>/<yyyy>/<mm>/<dd>/<slug>/",
+     "evidence_level": "search_evidence",
+     "source": "search result article URLs",
+     "note": "URL pattern rule"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "platform migration risk",
+     "evidence": "Ownership changed in late 2025 (Metro World News/ previous licensee -> Vision News Media); CMS may be migrated away from Arc",
+     "source": "metro.pr snippet 2025-11-13"
+    }
+   ],
+   "owner_group": "Vision News Media, LLC (since 2025) - search_evidence",
+   "outlet_type": "free newspaper (weekly print) + digital",
+   "city": "San Juan",
+   "recommended_approach": "generic RSS (Arc google-news-feed) + sitemap index; fix extractor",
+   "priority": "high",
+   "priority_reason": "free access, feeds fetched OK in 2026; '0 usable articles' is an extraction problem",
+   "open_questions": [
+    "Still on Arc after the sale?"
+   ]
+  },
+  {
+   "outlet_id": "pr_primera_hora",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print edition ENDED: last print issue (no. 7,291) on 2026-09-24; continues 100% digital.",
+    "source": "AP 2026-09-21 via abcnews.com/ajc.com; elcaribe.com.do; elnuevodia.com English story on the final Primera Hora print issue"
+   },
+   "current_origins": [
+    "https://www.primerahora.com"
+   ],
+   "cms": {
+    "value": "Arc XP (inferred from sister title El Nuevo Dia, same publisher GFR Media; not directly evidenced for primerahora.com)",
+    "evidence_level": "cms_pattern_inference",
+    "source": "sister-site inference; search result https://www.primerahora.com/preguntas-frecuentes shows the domain is live"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.primerahora.com/arc/outboundfeeds/news-sitemap-index?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "pattern of sister site elnuevodia.com (registry)",
+     "note": "NOT observed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.primerahora.com/arc/outboundfeeds/sitemap-index?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "pattern of sister site elnuevodia.com (registry)",
+     "note": "NOT observed"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.primerahora.com/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "NOT observed"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "registry defect",
+     "evidence": "All three legacy channels of pr_primera_hora point to www.elnuevodia.com URLs, not primerahora.com - the outlet effectively has no channel of its own",
+     "source": "registry"
+    }
+   ],
+   "owner_group": "GFR Media (Grupo Ferre Rangel) - search_evidence",
+   "outlet_type": "popular daily, digital-only since 2026-09-24",
+   "city": "Guaynabo / San Juan",
+   "recommended_approach": "read robots.txt in gated probe, then nested sitemap index exploration",
+   "priority": "high",
+   "priority_reason": "free-access popular title; registry channels are wrong (belong to El Nuevo Dia)",
+   "open_questions": [
+    "Own sitemap/feeds on primerahora.com?",
+    "Paywall? (none reported)"
+   ]
+  },
+  {
+   "outlet_id": "py_abc_color",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy Arc RSS feeds active (last_success 2026-02-10); no closure report.",
+    "source": "registry"
+   },
+   "current_origins": [
+    "https://www.abc.com.py"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html ; registry /arc/outboundfeeds/ URLs"
+   },
+   "candidate_channels": [
+    {
+     "type": "section_feed",
+     "url": "https://www.abc.com.py/arc/outboundfeeds/rss/<nacionales|mundo|deportes|espectaculos|ciencia|tecnologia|noticias-del-dia>/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-10, from robots.txt",
+     "note": "'noticias-del-dia' is the broadest feed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.abc.com.py/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.abc.com.py/arc/outboundfeeds/sitemap-index?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "sitemap",
+     "url": "https://api.diarioabc.com.py/storage/sitemaps/<nacionales|articulos|deportes|...>-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active but never successful; host api.diarioabc.com.py",
+     "note": "alternate origin (pre-Arc archive API?)"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editorial Azeta S.A. (Zuccolillo family) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily",
+   "city": "Asuncion",
+   "recommended_approach": "per-section RSS (Arc) + news-sitemap-index",
+   "priority": "high",
+   "priority_reason": "working feeds, leading national daily",
+   "open_questions": [
+    "No success since 2026-02-10 - was the crawler stopped or did feeds change?",
+    "What is api.diarioabc.com.py?"
+   ]
+  },
+  {
+   "outlet_id": "py_la_nacion",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Project crawl on 2026-10-08 observed the Arc sitemap being served.",
+    "source": "project observation (given in task)"
+   },
+   "current_origins": [
+    "https://www.lanacion.com.py"
+   ],
+   "cms": {
+    "value": "Arc XP",
+    "evidence_level": "search_evidence",
+    "source": "prensa.com article 'Prensa y Mi Diario adquieren contenido Arc' (search snippet, undated, pre-2021): Corporacion La Prensa moves La Prensa and Mi Diario to Arc Publishing; also names El Comercio (Peru), La Republica (Peru), ABC Color (Paraguay), La Nacion (Paraguay) as Arc customers. https://www.prensa.com/Prensa-Diario-adquieren-contenido-Arc_0_5257724231.html ; project observation of /arc/outboundfeeds/sitemap/"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap",
+     "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry (active) + project observation 2026-10-08",
+     "note": "confirmed served by our own gated crawl, not by this research"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.lanacion.com.py/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.lanacion.com.py/arc/outboundfeeds/rss/?outputType=xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Arc XP convention",
+     "note": "not observed"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo Nacion de Comunicaciones (linked to Grupo Cartes) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily",
+   "city": "Fernando de la Mora / Asuncion",
+   "recommended_approach": "generic sitemap (Arc) + news sitemap",
+   "priority": "high",
+   "priority_reason": "already serving a sitemap to our crawler",
+   "open_questions": [
+    "Owner link to ex-president Cartes: relevant for independence note"
+   ]
+  },
+  {
+   "outlet_id": "py_ultima_hora",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Search results show ultimahora.com pages re-indexed in Jul-Sep 2026; no closure report.",
+    "source": "search results"
+   },
+   "current_origins": [
+    "https://www.ultimahora.com"
+   ],
+   "cms": {
+    "value": "Brightspot",
+    "evidence_level": "search_evidence",
+    "source": "Brightspot case study 'Grupo AJ Vierci' (2022 migration of Ultima Hora): https://www.brightspot.com/customers/case-studies/grupo-aj-vierci"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.ultimahora.com/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": "Brightspot serves news sitemap as an index; expansion needed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.ultimahora.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.ultimahora.com/<slug>-n<id>",
+     "evidence_level": "search_evidence",
+     "source": "search result URLs e.g. .../ultima-hora-tambien-te-ofrece-los-hechos-positivos-n3018084",
+     "note": "legacy article id suffix; newer Brightspot articles may be slug-only"
+    },
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot lists ultimahora.com without a feed URL",
+     "note": "no feed known"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editorial El Pais S.A., Grupo A.J. Vierci - search_evidence (en.wikipedia; Brightspot case study)",
+   "outlet_type": "national daily",
+   "city": "Asuncion",
+   "recommended_approach": "nested sitemap index exploration (news-sitemap.xml)",
+   "priority": "high",
+   "priority_reason": "both sitemap indexes answer 200; only expansion missing",
+   "open_questions": [
+    "RSS availability on Brightspot instance"
+   ]
+  },
+  {
+   "outlet_id": "sv_diario_el_mundo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print edition ENDED on 2024-03-01 after 57 years; continues as digital-only outlet (celebrated 59th anniversary online).",
+    "source": "https://www.vozdeamerica.com/a/diarioelmundo-cierre-elsalvador-razones-econimicas-/7509813.html ; diarioelsalvador.com ; diario.elmundo.sv snippets"
+   },
+   "current_origins": [
+    "https://diario.elmundo.sv"
+   ],
+   "cms": {
+    "value": "unknown (proprietary; URL forms '/ampArticle/<slug>?amp=1', '/<seccion>/<slug>', 'Section Page' titles)",
+    "evidence_level": "unknown",
+    "source": "search result URLs"
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://diario.elmundo.sv/nacionales",
+     "evidence_level": "search_evidence",
+     "source": "section path taken from article URLs https://diario.elmundo.sv/nacionales/<slug> in search results; sections also listed in the site's llms.txt per search snippet (Nacionales, Politica, Economia, Deportes)",
+     "note": "section listing page assumed at section root - to verify"
+    },
+    {
+     "type": "rss",
+     "url": "http://elmundo.com.sv/feed",
+     "evidence_level": "search_evidence",
+     "source": "GDACS news record (2015) referencing elmundo.com.sv/feed",
+     "note": "OLD domain and old WordPress-style feed; almost certainly obsolete"
+    },
+    {
+     "type": "sitemap",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": "read robots.txt in gated probe"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Editora El Mundo S.A. (Borja family; president Juan Jose Borja Papini) - search_evidence (diario.elmundo.sv snippets, en.wikipedia)",
+   "outlet_type": "national daily, digital-only since 2024",
+   "city": "San Salvador",
+   "recommended_approach": "probe robots.txt for sitemap; else HTML section listing with URL pattern rule",
+   "priority": "medium",
+   "priority_reason": "no channel in registry and none evidenced; open access, moderate size",
+   "open_questions": [
+    "Sitemap/feeds?",
+    "Old domain elmundo.com.sv / elmundo.sv - redirects?"
+   ]
+  },
+  {
+   "outlet_id": "sv_el_diario_de_hoy",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print edition ENDED: last print issue 2026-03-28 (with sister tabloid MAS!); fully digital at elsalvador.com. Legacy RSS active until 2026-06-15.",
+    "source": "en.wikipedia El_Diario_de_Hoy (citing La Noticia SV 2026-03-27); diario.elmundo.sv article 'El Diario de Hoy anuncia el cierre de su edicion impresa'; registry"
+   },
+   "current_origins": [
+    "https://www.elsalvador.com",
+    "https://www.eldiariodehoy.com"
+   ],
+   "cms": {
+    "value": "WordPress (Yoast-style sitemap index)",
+    "evidence_level": "search_evidence",
+    "source": "search result URLs https://www.elsalvador.com/?p=1267755 and https://www.eldiariodehoy.com/?p=67744 (WordPress post-id permalinks); registry /feed and /sitemap_index.xml answering 200"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elsalvador.com/rss.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-06-15",
+     "note": "best existing route"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.elsalvador.com/feed",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, last_success 2026-01-12",
+     "note": "WordPress default feed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elsalvador.com/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": "Yoast index; expansion needed"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elsalvador.com/news-sitemap.xml",
+     "evidence_level": "cms_pattern_inference",
+     "source": "Yoast News convention",
+     "note": "not observed"
+    },
+    {
+     "type": "rss",
+     "url": "https://www.eldiariodehoy.com/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress convention on alternate domain seen in search results",
+     "note": "not observed; role of eldiariodehoy.com unclear (e-paper/brand site?)"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo Editorial Altamirano (Altamirano family) - search_evidence weak (named in search summary), otherwise background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily, digital-only since 2026-03-28",
+   "city": "San Salvador",
+   "recommended_approach": "generic RSS + nested Yoast sitemap index",
+   "priority": "high",
+   "priority_reason": "working RSS in June 2026; index available for backfill",
+   "open_questions": [
+    "What is published on eldiariodehoy.com vs elsalvador.com after the print closure?"
+   ]
+  },
+  {
+   "outlet_id": "sv_la_prensa_grafica",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Described (anniversary 111) as the oldest newspaper still in circulation in El Salvador; no closure report in 2026 searches.",
+    "source": "search snippet (LinkedIn profile); en.wikipedia La_Prensa_Grafica"
+   },
+   "current_origins": [
+    "https://www.laprensagrafica.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "three searches returned no technical information"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot lists laprensagrafica.com without a feed URL ('Generate RSS')",
+     "note": "no native feed known to the directory"
+    },
+    {
+     "type": "sitemap",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": "read robots.txt in gated probe"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "unknown",
+     "evidence": "No public report on paywall or bot protection found",
+     "source": "searches 2026-10-09"
+    }
+   ],
+   "owner_group": "Grupo LPG / Dutriz Hermanos (Dutriz family) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily (print still circulating per search snippet)",
+   "city": "Antiguo Cuscatlan / San Salvador",
+   "recommended_approach": "gated probe of robots.txt/homepage <link> first; then sitemap or HTML listing",
+   "priority": "high",
+   "priority_reason": "largest remaining print daily of El Salvador with NO channel in registry; nothing discoverable passively",
+   "open_questions": [
+    "Everything technical: feeds, sitemaps, CMS, paywall"
+   ]
+  },
+  {
+   "outlet_id": "uy_el_observador",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print daily ended April 2020 (weekly Saturday print since); news portal updated daily; search results show current pages.",
+    "source": "https://es.wikipedia.org/wiki/El_Observador_(Uruguay) (edited 2026-01-23)"
+   },
+   "current_origins": [
+    "https://www.elobservador.com.uy"
+   ],
+   "cms": {
+    "value": "unknown proprietary platform (same '/sitemap/news-full/sitemap-index.xml' layout and '-a<id>' / '-n<id>' URL ids as diariodecuyo.com.ar seen in search results; vendor not identified - a Thinkindot hypothesis was NOT confirmed)",
+    "evidence_level": "unknown",
+    "source": "registry; search results for diariodecuyo.com.ar; builtwith trends page (no site list)"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elobservador.com.uy/sitemap/news-full/sitemap-index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive: 'sitemap_index forced inactive, expansion not implemented', from robots.txt",
+     "note": "failure on our side"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elobservador.com.uy/sitemap-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, 0 usable articles, from robots.txt",
+     "note": "fetched OK; extraction failed"
+    },
+    {
+     "type": "sitemap",
+     "url": "https://www.elobservador.com.uy/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty",
+     "note": ""
+    },
+    {
+     "type": "html_listing",
+     "url": "https://www.elobservador.com.uy/perfil/<id>-<autor>/<page>",
+     "evidence_level": "search_evidence",
+     "source": "search result URLs",
+     "note": "paginated author listings exist; section listings likely similar"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall (unconfirmed)",
+     "evidence": "El Observador has run a membership/metered model; not confirmed by search today",
+     "source": "background knowledge of the researcher, NOT confirmed by a search on 2026-10-09"
+    }
+   ],
+   "owner_group": "Investor group led by Werthein and Hochbaum - search_evidence (es.wikipedia infobox)",
+   "outlet_type": "national daily (digital-first, weekly print)",
+   "city": "Montevideo",
+   "recommended_approach": "nested sitemap index exploration + news sitemap; fix extractor",
+   "priority": "high",
+   "priority_reason": "sitemaps were fetched; failures are expansion/extraction on our side",
+   "open_questions": [
+    "Paywall effect on bodies",
+    "RSS? none found"
+   ]
+  },
+  {
+   "outlet_id": "uy_el_pais",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Described by third parties (semrush/coresignal snippets, Nov 2025) as the most visited Uruguayan news site; no closure report.",
+    "source": "search snippets"
+   },
+   "current_origins": [
+    "https://www.elpais.com.uy"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "no evidence"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elpais.com.uy/rss",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, last_success 2026-02-20, 0 usable articles",
+     "note": "the only route that was not blocked"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elpais.com.uy/news-sitemap-latest.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 403, from robots.txt",
+     "note": "blocked for the legacy crawler"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elpais.com.uy/news-sitemap-content.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 403, from robots.txt",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elpais.com.uy/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive, HTTP 403",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "bot protection / access denied",
+     "evidence": "All sitemap URLs returned HTTP 403 to the legacy crawler while /rss answered; WAF vendor not identified",
+     "source": "registry"
+    },
+    {
+     "kind": "paywall (subscription)",
+     "evidence": "Subscriber login exists (app listing: subscribers access with user/password); wall type unconfirmed",
+     "source": "apps.apple.com listing snippet (search_evidence)"
+    }
+   ],
+   "owner_group": "El Pais S.A. (Scheck family) - company name search_evidence (coresignal snippet); family background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily",
+   "city": "Montevideo",
+   "recommended_approach": "generic RSS with identified crawler UA; if 403 persists: 'no compliant access known' for sitemaps",
+   "priority": "medium",
+   "priority_reason": "largest Uruguayan daily but sitemaps answered 403; RSS route needs a gated re-test",
+   "open_questions": [
+    "Does the 403 depend on user agent?",
+    "robots.txt policy toward crawlers",
+    "Paywall type"
+   ]
+  },
+  {
+   "outlet_id": "uy_ladiaria",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Knight Center/LJR 2025 coverage: 23,000 subscribers; cooperative newsroom active.",
+    "source": "latamjournalismreview.org / platform.coop snippets"
+   },
+   "current_origins": [
+    "https://ladiaria.com.uy"
+   ],
+   "cms": {
+    "value": "utopia-cms (own open-source CMS, Python)",
+    "evidence_level": "search_evidence",
+    "source": "GitHub organisation 'ladiaria' lists repository utopia-cms ('open source platform for community based newsrooms') - https://github.com/ladiaria"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://ladiaria.com.uy/feeds/articulos/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, last_success 2026-02-20, from html_head",
+     "note": "feed advertised in page head; fetched OK, extraction failed"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://ladiaria.com.uy/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive: 'sitemap_index forced inactive, expansion not implemented', from robots.txt",
+     "note": "failure on our side"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "metered paywall / subscription",
+     "evidence": "About 90% of revenue from subscriptions; digital subscriptions emphasised. Exact free-article quota not found",
+     "source": "pubrio.com / platform.coop snippets (search_evidence)"
+    }
+   ],
+   "owner_group": "Cooperativa la diaria (staff-owned cooperative) - search_evidence",
+   "outlet_type": "national daily (cooperative, centre-left)",
+   "city": "Montevideo",
+   "recommended_approach": "generic RSS + nested sitemap index; source-specific handling of paywalled bodies",
+   "priority": "medium",
+   "priority_reason": "owner diversity (cooperative) and open-source CMS; paywall limits full text",
+   "open_questions": [
+    "Free-article quota",
+    "utopia-cms feed/sitemap URL scheme can be read from the public repo (third party, allowed)"
+   ]
+  },
+  {
+   "outlet_id": "uy_larepublica",
+   "operating_status": {
+    "value": "uncertain",
+    "evidence": "es.wikipedia reports no closure (creditor proceedings Feb 2019, new owners April 2019; publisher Juan Blanco active 2023-2026 per a secondary profile) but gives the official site as www.republica.com.uy, NOT lr21.com.uy. No 2026 page from either domain surfaced in search.",
+    "source": "https://es.wikipedia.org/wiki/La_Republica_(Uruguay); lingua-sinica.org profile"
+   },
+   "current_origins": [
+    "https://www.republica.com.uy (per Wikipedia)",
+    "https://www.lr21.com.uy (registry; current role unconfirmed)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "no evidence"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": "LR21 was the long-time digital brand; whether it still publishes or redirects is unknown"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "domain ambiguity",
+     "evidence": "Registry origin lr21.com.uy differs from the official site named by Wikipedia (republica.com.uy)",
+     "source": "es.wikipedia"
+    },
+    {
+     "kind": "editorial independence note",
+     "evidence": "Secondary profile reports paid cooperation/special publications with Chinese state media",
+     "source": "lingua-sinica.org (search_evidence, secondary source)"
+    }
+   ],
+   "owner_group": "REG S.A. per es.wikipedia infobox (director Nestor Molina Diaz); earlier Grupo ICK (2011) - search_evidence",
+   "outlet_type": "national daily (left-leaning)",
+   "city": "Montevideo",
+   "recommended_approach": "gated probe of both origins before any channel work",
+   "priority": "low",
+   "priority_reason": "status and canonical domain unresolved; no channel ever known",
+   "open_questions": [
+    "Which domain is canonical in 2026?",
+    "Is the paper still publishing daily?"
+   ]
+  },
+  {
+   "outlet_id": "ve_efecto_cocuyo",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Project crawl 2026-10-08 observed live sitemap index and feed.",
+    "source": "project observation (given in task)"
+   },
+   "current_origins": [
+    "https://efectococuyo.com"
+   ],
+   "cms": {
+    "value": "WordPress (Yoast-style sitemap index, 92 child sitemaps)",
+    "evidence_level": "search_evidence",
+    "source": "project observation 2026-10-08; feedspot lists efectococuyo.com/feed"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://efectococuyo.com/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry (active, html_head) + feedspot + project observation (/rss -> /feed/)",
+     "note": "primary"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://efectococuyo.com/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200; project observed 92 children",
+     "note": "backfill route"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://efectococuyo.com/<categoria>/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress convention",
+     "note": "category base not observed"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Independent non-profit digital outlet (founded by Luz Mely Reyes, Laura Weffer, Josefina Ruggiero) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "digital native",
+   "city": "Caracas",
+   "recommended_approach": "generic RSS + nested sitemap index exploration",
+   "priority": "high",
+   "priority_reason": "independent, open, standard WordPress",
+   "open_questions": [
+    "Exclude /comments/feed/ channel from registry use"
+   ]
+  },
+  {
+   "outlet_id": "ve_el_nacional",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Print edition suspended 2018-12-14; continues online. HQ seized May 2021; website blocked by main Venezuelan ISPs since Feb 2022.",
+    "source": "https://es.wikipedia.org/wiki/El_Nacional_(Venezuela)"
+   },
+   "current_origins": [
+    "https://www.elnacional.com"
+   ],
+   "cms": {
+    "value": "WordPress (Yoast)",
+    "evidence_level": "legacy_evidence",
+    "source": "registry: /feed/ discovered via html_head and Yoast-style /sitemap_index.xml from robots.txt; feedspot lists elnacional.com/feed"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elnacional.com/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-10, html_head; https://rss.feedspot.com/venezuela_news_rss_feeds/",
+     "note": "primary"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elnacional.com/sitemap-news.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-10",
+     "note": ""
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://www.elnacional.com/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, never successful",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://www.elnacional.com/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200, from robots.txt",
+     "note": "backfill route"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "geo/ISP blocking inside Venezuela",
+     "evidence": "Blocked by Venezuelan ISPs since Feb 2022 - irrelevant for a crawler outside Venezuela",
+     "source": "es.wikipedia"
+    }
+   ],
+   "owner_group": "C.A. Editora El Nacional (Miguel Henrique Otero, directing from exile in Madrid) - search_evidence (es.wikipedia)",
+   "outlet_type": "national daily, digital-only since 2018",
+   "city": "Caracas (newsroom partly in exile)",
+   "recommended_approach": "generic RSS + news sitemap",
+   "priority": "high",
+   "priority_reason": "opposition-leaning reference title with working feed",
+   "open_questions": []
+  },
+  {
+   "outlet_id": "ve_eldiario",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Legacy feeds active until 2026-02-10; listed on feedspot.",
+    "source": "registry; https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://eldiario.com"
+   ],
+   "cms": {
+    "value": "WordPress (Yoast)",
+    "evidence_level": "legacy_evidence",
+    "source": "registry: /feed/ discovered via html_head and Yoast-style /sitemap_index.xml from robots.txt and /categoria/<x>/feed/ channels"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://eldiario.com/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-08; feedspot",
+     "note": "primary"
+    },
+    {
+     "type": "news_sitemap",
+     "url": "https://eldiario.com/news-sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-10, from robots.txt",
+     "note": ""
+    },
+    {
+     "type": "section_feed",
+     "url": "https://eldiario.com/categoria/<venezuela|politica|economia|mundo|cultura|deportes|sucesos|tecnologia>/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-08..10",
+     "note": ""
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://eldiario.com/sitemap_index.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200",
+     "note": "backfill route"
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown (digital relaunch of El Diario de Caracas brand; owner not researched today)",
+   "outlet_type": "digital native",
+   "city": "Caracas",
+   "recommended_approach": "generic RSS + news sitemap",
+   "priority": "high",
+   "priority_reason": "standard WordPress, many working feeds",
+   "open_questions": [
+    "Owner/publisher",
+    "No success logged after 2026-02-10 - crawler pause or change?"
+   ]
+  },
+  {
+   "outlet_id": "ve_eluniversal",
+   "operating_status": {
+    "value": "uncertain",
+    "evidence": "es.wikipedia (latest status info from 2020): digital edition maintained, print resumed 2020-11-01 as a Sunday weekly. No 2026 confirmation found; feedspot still lists eluniversal.com (no feed URL).",
+    "source": "https://es.wikipedia.org/wiki/El_Universal_(Venezuela); https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.eluniversal.com",
+    "http://www.eluniversal.com.ve (listed by Wikipedia as official Venezuelan site; unverified)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": "no evidence"
+   },
+   "candidate_channels": [
+    {
+     "type": "sitemap",
+     "url": "https://www.eluniversal.com/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: technically_empty, HTTP 200, never successful",
+     "note": "served but nothing usable"
+    },
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot: 'Generate RSS' (no native feed known)",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "editorial independence note",
+     "evidence": "Sold July 2014 to opaque Spanish firm Epalisticia SL; CPJ reported softened editorial line afterwards",
+     "source": "cpj.org, lapatilla.com snippets; es.wikipedia"
+    },
+    {
+     "kind": "name collision",
+     "evidence": "Searches are dominated by El Universal (Mexico/Colombia) and El Universo (Ecuador)",
+     "source": "searches 2026-10-09"
+    }
+   ],
+   "owner_group": "Epalisticia SL (since 2014) - search_evidence",
+   "outlet_type": "national daily (weekly print per 2020 info)",
+   "city": "Caracas",
+   "recommended_approach": "gated probe (robots.txt, homepage <link>); else HTML listing with URL pattern rule",
+   "priority": "medium",
+   "priority_reason": "historic reference daily but status/tech unknown and only an empty sitemap on record",
+   "open_questions": [
+    "Operating in 2026?",
+    "Feeds? CMS?"
+   ]
+  },
+  {
+   "outlet_id": "ve_ultimas_noticias",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "Listed with feed on feedspot; legacy feed active until 2026-02-10.",
+    "source": "registry; https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://ultimasnoticias.com.ve"
+   ],
+   "cms": {
+    "value": "WordPress",
+    "evidence_level": "legacy_evidence",
+    "source": "registry: /feed/ and /comments/feed/ discovered via html_head; feedspot ultimasnoticias.com.ve/feed"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://ultimasnoticias.com.ve/feed/",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: active, last_success 2026-02-10; feedspot",
+     "note": "primary"
+    },
+    {
+     "type": "sitemap_index",
+     "url": "https://ultimasnoticias.com.ve/sitemap.xml",
+     "evidence_level": "legacy_evidence",
+     "source": "registry legacy_observed: inactive (index not expanded), HTTP 200, from robots.txt",
+     "note": "backfill route"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://ultimasnoticias.com.ve/<categoria>/feed/",
+     "evidence_level": "cms_pattern_inference",
+     "source": "WordPress convention",
+     "note": "category base not observed"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "editorial independence note",
+     "evidence": "Bought 2013 by financier Robert Hanson; described as pro-government by Le Monde and Reuters (2024); 2014 censorship resignations",
+     "source": "en.wikipedia Ultimas_Noticias; latamjournalismreview.org; caracaschronicles.com"
+    }
+   ],
+   "owner_group": "Grupo Ultimas Noticias (ex Cadena Capriles), owner Robert Hanson per Wikipedia - search_evidence",
+   "outlet_type": "national popular daily (pro-government line)",
+   "city": "Caracas",
+   "recommended_approach": "generic RSS + nested sitemap index",
+   "priority": "high",
+   "priority_reason": "technically easy; balances opposition-leaning titles",
+   "open_questions": [
+    "Exclude /comments/feed/ channel"
+   ]
+  }
+ ],
+ "proposed_new_outlets": [
+  {
+   "country_id": "pa",
+   "name": "Panama America",
+   "origin": "https://www.panamaamerica.com.pa",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works); many current pages in search results",
+    "source": "https://rss.feedspot.com/panama_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.panamaamerica.com.pa"
+   ],
+   "cms": {
+    "value": "unknown (EPASA platform)",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.panamaamerica.com.pa/rss/recent/index.xml",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/panama_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo EPASA (same owner as pa_critica, pa_diaadia)",
+   "outlet_type": "national daily",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "quality broadsheet of EPASA; adds register but not owner diversity",
+   "open_questions": []
+  },
+  {
+   "country_id": "pa",
+   "name": "TVN Noticias",
+   "origin": "https://www.tvn-2.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "current pages in search results; listed on feedspot without feed URL",
+    "source": "https://rss.feedspot.com/panama_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.tvn-2.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot: no feed URL shown",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Televisora Nacional S.A. - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "broadcaster news site",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "probe robots.txt; sitemap",
+   "priority": "medium",
+   "priority_reason": "different owner group (broadcast)",
+   "open_questions": [
+    "feeds?"
+   ]
+  },
+  {
+   "country_id": "pa",
+   "name": "Panama 24 Horas",
+   "origin": "https://www.panama24horas.com.pa",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/panama_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.panama24horas.com.pa"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "unknown",
+    "source": "feed path in feedspot"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.panama24horas.com.pa/panama/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/panama_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "digital native",
+   "city": "Ciudad de Panama",
+   "recommended_approach": "generic RSS",
+   "priority": "low",
+   "priority_reason": "digital-native option with a listed feed; reputation to be assessed",
+   "open_questions": [
+    "owner, editorial standards"
+   ]
+  },
+  {
+   "country_id": "pe",
+   "name": "El Buho",
+   "origin": "https://elbuho.pe",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/peru_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://elbuho.pe"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://elbuho.pe/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/peru_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "independent regional publisher - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "regional digital/weekly",
+   "city": "Arequipa",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "regional (south) and independent of Lima groups",
+   "open_questions": []
+  },
+  {
+   "country_id": "pe",
+   "name": "Diario Los Andes",
+   "origin": "https://losandes.com.pe",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/peru_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://losandes.com.pe"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://losandes.com.pe/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/peru_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "regional daily",
+   "city": "Puno",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "Andean regional variety (Puno)",
+   "open_questions": [
+    "owner"
+   ]
+  },
+  {
+   "country_id": "pe",
+   "name": "Diario UNO",
+   "origin": "https://diariouno.pe",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/peru_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://diariouno.pe"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed/ path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://diariouno.pe/feed/",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/peru_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "national daily (left-leaning) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "city": "Lima",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "editorial counterweight to GEC titles and Expreso",
+   "open_questions": [
+    "owner"
+   ]
+  },
+  {
+   "country_id": "pr",
+   "name": "El Vocero",
+   "origin": "https://www.elvocero.com (domain from background knowledge, unverified)",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "App Store listing describes it as circulation leader; remaining print daily after GFR titles went digital (inference)",
+    "source": "apps.apple.com snippet"
+   },
+   "current_origins": [
+    "https://www.elvocero.com (domain from background knowledge, unverified)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Publi-Inversiones - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily (free distribution)",
+   "city": "San Juan",
+   "recommended_approach": "probe robots.txt; sitemap/RSS",
+   "priority": "high",
+   "priority_reason": "now the main printed daily of PR; different owner from GFR",
+   "open_questions": [
+    "origin, feeds, CMS"
+   ]
+  },
+  {
+   "country_id": "pr",
+   "name": "NotiCel",
+   "origin": "https://www.noticel.com (domain from background knowledge, unverified)",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "en.wikipedia: online newspaper based in San Juan, owned by Alfredo Escalera",
+    "source": "https://en.wikipedia.org/wiki/NotiCel"
+   },
+   "current_origins": [
+    "https://www.noticel.com (domain from background knowledge, unverified)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Alfredo Escalera - search_evidence (en.wikipedia)",
+   "outlet_type": "digital native",
+   "city": "San Juan",
+   "recommended_approach": "probe robots.txt",
+   "priority": "medium",
+   "priority_reason": "first digital-native daily of PR",
+   "open_questions": [
+    "origin, feeds"
+   ]
+  },
+  {
+   "country_id": "pr",
+   "name": "Centro de Periodismo Investigativo (CPI)",
+   "origin": "https://www.periodismoinvestigativo.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "non-profit founded 2007, content distributed free of charge",
+    "source": "findyournews.org / reportforamerica.org snippets"
+   },
+   "current_origins": [
+    "https://www.periodismoinvestigativo.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "501(c)(3) non-profit - search_evidence",
+   "outlet_type": "digital native, investigative non-profit",
+   "city": "San Juan",
+   "recommended_approach": "probe robots.txt",
+   "priority": "medium",
+   "priority_reason": "non-profit owner type, long-form register; low volume",
+   "open_questions": [
+    "feeds, licence (CPI republication terms may be favourable)"
+   ]
+  },
+  {
+   "country_id": "py",
+   "name": "Diario HOY",
+   "origin": "https://www.hoy.com.py",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot without feed URL",
+    "source": "https://rss.feedspot.com/paraguay_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.hoy.com.py"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot: 'Generate RSS'",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Grupo Multimedia / Nacion Media - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national digital daily",
+   "city": "Asuncion",
+   "recommended_approach": "probe robots.txt",
+   "priority": "medium",
+   "priority_reason": "widely read digital title",
+   "open_questions": [
+    "owner overlap with La Nacion?"
+   ]
+  },
+  {
+   "country_id": "py",
+   "name": "ADN Digital",
+   "origin": "https://www.adndigital.com.py",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/paraguay_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.adndigital.com.py"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.adndigital.com.py/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/paraguay_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "digital native",
+   "city": "Asuncion",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "digital-native with listed feed",
+   "open_questions": [
+    "owner"
+   ]
+  },
+  {
+   "country_id": "py",
+   "name": "Noticias CDE",
+   "origin": "https://noticiascde.com.py",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/paraguay_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://noticiascde.com.py"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://noticiascde.com.py/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/paraguay_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "regional digital outlet",
+   "city": "Ciudad del Este",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "regional (Alto Parana / tri-border) coverage",
+   "open_questions": [
+    "owner, volume"
+   ]
+  },
+  {
+   "country_id": "sv",
+   "name": "El Faro",
+   "origin": "https://elfaro.net",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot without feed URL",
+    "source": "https://rss.feedspot.com/el_salvador_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://elfaro.net"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "feedspot: 'Generate RSS'",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "exile",
+     "evidence": "El Faro moved its legal seat to Costa Rica (2023) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+     "source": "background"
+    }
+   ],
+   "owner_group": "Fundacion Periodistica El Faro (Costa Rica) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "digital native, investigative",
+   "city": "San Salvador / San Jose (CR)",
+   "recommended_approach": "probe robots.txt",
+   "priority": "high",
+   "priority_reason": "leading independent digital native of Central America",
+   "open_questions": [
+    "feeds"
+   ]
+  },
+  {
+   "country_id": "sv",
+   "name": "Diario Co Latino",
+   "origin": "https://www.diariocolatino.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/el_salvador_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.diariocolatino.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.diariocolatino.com/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/el_salvador_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "worker cooperative - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "national daily (left-leaning, cooperative)",
+   "city": "San Salvador",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "owner-type and ideological diversity, listed feed",
+   "open_questions": []
+  },
+  {
+   "country_id": "sv",
+   "name": "Diario El Salvador",
+   "origin": "https://diarioelsalvador.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "current article URLs in search results (e.g. /diario-el-mundo-cierra-su-edicion-impresa-despues-de-57-anos/470348)",
+    "source": "search results"
+   },
+   "current_origins": [
+    "https://diarioelsalvador.com"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "html_listing",
+     "url": "https://diarioelsalvador.com/<slug>/<id>",
+     "evidence_level": "search_evidence",
+     "source": "search result URL",
+     "note": "article URL rule"
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "state media",
+     "evidence": "government-founded newspaper (2020) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+     "source": "background"
+    }
+   ],
+   "owner_group": "State of El Salvador - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "state outlet",
+   "city": "San Salvador",
+   "recommended_approach": "probe robots.txt; URL pattern rule",
+   "priority": "low",
+   "priority_reason": "state voice for contrast; only if state outlets are wanted",
+   "open_questions": [
+    "feeds"
+   ]
+  },
+  {
+   "country_id": "uy",
+   "name": "Montevideo Portal",
+   "origin": "https://www.montevideo.com.uy",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "publishes an RSS help page listing channel feeds",
+    "source": "https://www.montevideo.com.uy/categoria/Formato-RSS-402 (search snippet)"
+   },
+   "current_origins": [
+    "https://www.montevideo.com.uy"
+   ],
+   "cms": {
+    "value": "proprietary (ASP.NET, 'anxml.aspx' feeds)",
+    "evidence_level": "search_evidence",
+    "source": "RSS page snippet"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?59",
+     "evidence_level": "search_evidence",
+     "source": "search snippet of the RSS page: 'Canal de Noticias (anxml.aspx?59)'",
+     "note": "host prefix assumed from the page's domain"
+    },
+    {
+     "type": "section_feed",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?<58|60|133|728|1727>",
+     "evidence_level": "search_evidence",
+     "source": "same snippet (destacada, tiempo libre, tecnologia, negocios, deportes)",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "digital native portal",
+   "city": "Montevideo",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "open access, documented feeds, digital-native",
+   "open_questions": [
+    "owner"
+   ]
+  },
+  {
+   "country_id": "uy",
+   "name": "El Telegrafo",
+   "origin": "unknown (eltelegrafo.com seen in an ahrefs listing; eltelegrafo.com.uy unverified)",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "described by a directory as regional daily of Paysandu",
+    "source": "w3newspapers.com / ahrefs snippets"
+   },
+   "current_origins": [
+    "unknown (eltelegrafo.com seen in an ahrefs listing; eltelegrafo.com.uy unverified)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "regional daily",
+   "city": "Paysandu",
+   "recommended_approach": "probe after origin is confirmed",
+   "priority": "medium",
+   "priority_reason": "interior (litoral) regional daily",
+   "open_questions": [
+    "canonical domain",
+    "feeds"
+   ]
+  },
+  {
+   "country_id": "uy",
+   "name": "Busqueda",
+   "origin": "unknown (busqueda.com.uy from background knowledge, unverified)",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "described by a directory as weekly on politics/economy",
+    "source": "w3newspapers.com snippet"
+   },
+   "current_origins": [
+    "unknown (busqueda.com.uy from background knowledge, unverified)"
+   ],
+   "cms": {
+    "value": "unknown",
+    "evidence_level": "unknown",
+    "source": ""
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "",
+     "evidence_level": "unknown",
+     "source": "none found",
+     "note": ""
+    }
+   ],
+   "obstacles": [
+    {
+     "kind": "paywall",
+     "evidence": "subscription weekly - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+     "source": "background"
+    }
+   ],
+   "owner_group": "unknown",
+   "outlet_type": "national weekly",
+   "city": "Montevideo",
+   "recommended_approach": "probe; likely paywalled",
+   "priority": "low",
+   "priority_reason": "prestige weekly but probably hard paywall",
+   "open_questions": [
+    "access model"
+   ]
+  },
+  {
+   "country_id": "ve",
+   "name": "El Impulso",
+   "origin": "https://www.elimpulso.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.elimpulso.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.elimpulso.com/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Carmona family - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "regional daily (digital)",
+   "city": "Barquisimeto",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "oldest regional daily, non-Caracas",
+   "open_questions": []
+  },
+  {
+   "country_id": "ve",
+   "name": "Correo del Caroni",
+   "origin": "https://correodelcaroni.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://correodelcaroni.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://correodelcaroni.com/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "Natera family - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "outlet_type": "regional daily (digital)",
+   "city": "Ciudad Guayana",
+   "recommended_approach": "generic RSS",
+   "priority": "high",
+   "priority_reason": "independent regional voice (Guayana)",
+   "open_questions": []
+  },
+  {
+   "country_id": "ve",
+   "name": "Analitica",
+   "origin": "https://www.analitica.com",
+   "operating_status": {
+    "value": "operating",
+    "evidence": "listed on feedspot on 2026-10-09 (directory listing only; not proof the feed works)",
+    "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/"
+   },
+   "current_origins": [
+    "https://www.analitica.com"
+   ],
+   "cms": {
+    "value": "WordPress (inferred from /feed path only)",
+    "evidence_level": "unknown",
+    "source": "feed path"
+   },
+   "candidate_channels": [
+    {
+     "type": "rss",
+     "url": "https://www.analitica.com/feed",
+     "evidence_level": "search_evidence",
+     "source": "https://rss.feedspot.com/venezuela_news_rss_feeds/",
+     "note": ""
+    }
+   ],
+   "obstacles": [],
+   "owner_group": "unknown",
+   "outlet_type": "digital native (opinion/analysis, since 1990s) - background knowledge of the researcher, NOT confirmed by a search on 2026-10-09",
+   "city": "Caracas",
+   "recommended_approach": "generic RSS",
+   "priority": "medium",
+   "priority_reason": "early digital native; alternatives worth checking: Tal Cual, El Pitazo (not researched today)",
+   "open_questions": [
+    "owner"
+   ]
+  }
+ ]
+}

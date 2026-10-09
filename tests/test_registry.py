@@ -90,9 +90,14 @@ def test_the_tracked_registry_is_valid_and_every_registration_has_a_record():
 
 
 def test_the_canary_subset_is_small_and_spread_over_countries():
+    """The subset of the first canary (the registration record of 2026-10-08): five outlets, five
+    countries. A later registration record is a different set with its own selection rule.
+    """
     registry = R.load_registry(REPO / "config" / "outlet_registry.json")
-    registered = [o for o in registry.outlets.values() if o["registration_status"] == "registered"]
-    assert len(registered) >= 5 and len({o["country_id"] for o in registered}) == len(registered)
+    first = json.loads((REPO / "config" / "registry_review" / "canary_subset_registration_2026-10-08.json").read_text(encoding="utf-8"))
+    registered = [registry.outlets[entry["outlet_id"]] for entry in first["registered"]]
+    assert all(o["registration_status"] == "registered" for o in registered)
+    assert len(registered) == 5 and len({o["country_id"] for o in registered}) == len(registered)
     kinds = {channel["kind"] for o in registered for channel in o["channels"]}
     assert {"rss", "sitemap"} <= kinds
 
@@ -109,7 +114,9 @@ def test_the_tracked_proposal_matches_its_review_report():
     assert set(registry.outlets) == {row["proposed_outlet_id"] for row in report["legacy_name_to_outlet_id"]}
     assert set(registry.outlets) - proposed == {e["outlet_id"] for record in registration_records() for e in record["registered"]}
     assert report["counts"]["proposed_outlets"] == len(registry.outlets)
-    assert report["counts"]["proposed_channels"] == sum(len(o["channels"]) for o in registry.outlets.values())
+    # the import's channels are the channels that carry a legacy row; a channel added by a later
+    # registration has none (`legacy_observed` is empty) and is covered by its registration record
+    assert report["counts"]["proposed_channels"] == sum(1 for o in registry.outlets.values() for c in o["channels"] if c["legacy_observed"])
     for row in report["legacy_name_to_outlet_id"]:
         assert registry.legacy_alias(row["country_code"], row["slug"]) == [row["proposed_outlet_id"]]
         assert row["mapping_status"] == "hypothesis"

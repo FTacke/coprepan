@@ -220,7 +220,7 @@ def run_http_acquisition(
             "event": EVENT_PLANNED, "request_id": identifier, "run_id": run.run_id, "url": request.url,
             "outlet_id": request.outlet_id, "fetch_kind": request.fetch_kind, "channel_id": request.channel_id,
             "candidate_id": request.candidate_id, "conditional": bool(request.conditional_headers),
-            "planned_at": format_instant(planned_at)})
+            "expansion_depth": request.expansion_depth, "planned_at": format_instant(planned_at)})
         outcome = fetcher.fetch(request, planned_at=planned_at)
         fetch_ids = [record(request.outlet_id, exchange) for exchange in outcome.exchanges]
         while fetcher.robots_exchanges:  # robots answers are evidence of the decision: preserved like any fetch
@@ -257,7 +257,8 @@ def run_http_acquisition(
 
     def provider_for(channel_id: str | None):
         def provider(url: str, depth: int):
-            outcome, fetch_ids = fetch(FetchRequest(url, outlet_id, acquisition.FETCH_KIND_CHANNEL_DOCUMENT, channel_id))
+            outcome, fetch_ids = fetch(FetchRequest(url, outlet_id, acquisition.FETCH_KIND_CHANNEL_DOCUMENT, channel_id,
+                                                    expansion_depth=depth))
             last = outcome.last
             if outcome.final != FINAL_FETCHED or last is None:
                 reason = outcome.decision.reasons[0] if not outcome.attempts else (last.failure_reason or "no_response")
@@ -295,11 +296,18 @@ def run_http_acquisition(
     channel_keys = frozenset(key for key in (_own_key(rules, c["url_history"][-1]["url"]) for c in channels.values()) if key)
     outlet_rules = (candidate_rules or {}).get(outlet_id)
 
+    def own_candidates() -> dict[str, dict[str, Any]]:
+        """The candidates of *this* outlet. A workspace holds the candidates of every outlet that was
+        ever read in it; an outlet's run qualifies, schedules and requests its own and no other
+        (canary finding F3: the others were planned under this outlet's id and refused at the gate).
+        """
+        return {identifier: row for identifier, row in tables.candidates.items() if row["outlet_id"] == outlet_id}
+
     def qualify_all() -> tuple[dict[str, Any], dict[str, Any]]:
         decided_at = format_instant(clock())
         decided = {identifier: qualifications.decide(row, outlet_rules=outlet_rules, channel_url_keys=channel_keys,
                                                      run_id=run.run_id, decided_at=decided_at)
-                   for identifier, row in tables.candidates.items()}
+                   for identifier, row in own_candidates().items()}
         return decided, {identifier: tables.candidates[identifier] for identifier, row in decided.items()
                          if row["decision"] == candidate_filter.QUALIFIED}
 
@@ -327,7 +335,7 @@ def run_http_acquisition(
     return {
         "run_id": run.run_id, "open_pack_ids": sorted(packs), "discovery": discoveries,
         "requests": dict(sorted(finals.items())), "recorded": dict(sorted(recorded.items())),
-        "candidates_known": len(tables.candidates),
+        "candidates_known": len(own_candidates()),
         "qualification": dict(sorted(Counter(row["decision"] for row in decisions.values()).items())),
         "candidates_requested": len(due),
         "lifecycle": dict(sorted(Counter(state.state for state in states.values()).items())),

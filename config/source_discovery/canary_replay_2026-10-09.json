@@ -1,0 +1,1312 @@
+{
+  "answers_classified_differently_now": [
+    {
+      "body_sha256": "8426d57326465bed21953335c8c65a7bbb6ff956e1bf8141997e9b4d2361914c",
+      "class_now": "bot_challenge",
+      "classifier_now": "access-control/2",
+      "fetch_id": "ft1:dbdf990fd7d756c134cde3951728977a23f81079dff06a1a6a8d180c3c3991bb",
+      "outlet_id": "hn_proceso_digital",
+      "recorded_class": "none_observed",
+      "run_id": "acq1-20261008T203414628095Z-ed630d8e8a14",
+      "status": 307,
+      "url": "https://proceso.hn/rss"
+    }
+  ],
+  "candidates_by_outlet": {
+    "do_diario_libre": 232
+  },
+  "channel_documents": [
+    {
+      "body_sha256": "2205e2a3fb9e97fc59585864d71c7d63baaebb1056ac1122802147de136e312f",
+      "channel_id": "do_diario_libre:ch:rss_main",
+      "child_documents": 0,
+      "expansion_order": "expansion-order/1",
+      "first_children_in_read_order": [],
+      "format": "rss",
+      "item_entries": 33,
+      "item_entries_with_url": 33,
+      "outcome_now": "PARSED",
+      "outlet_id": "do_diario_libre",
+      "parser_now": "channel-parser/2",
+      "problems": [],
+      "url": "https://www.diariolibre.com/feed/portada.xml"
+    },
+    {
+      "body_sha256": "a684e195ce84069d0c8ce2b2d6c07894021e66759b18961f24f4fed9859d9d50",
+      "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+      "child_documents": 0,
+      "expansion_order": "expansion-order/1",
+      "first_children_in_read_order": [],
+      "format": "sitemap_urlset",
+      "item_entries": 534,
+      "item_entries_with_url": 534,
+      "outcome_now": "PARSED",
+      "outlet_id": "do_diario_libre",
+      "parser_now": "channel-parser/2",
+      "problems": [],
+      "url": "https://www.diariolibre.com/sitemapnews"
+    },
+    {
+      "body_sha256": "99353f517cc6be67207c245804d31f9ffcfcedb89f0394e85703d8b277c8c392",
+      "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+      "child_documents": 0,
+      "expansion_order": "expansion-order/1",
+      "first_children_in_read_order": [],
+      "format": "rss",
+      "item_entries": 10,
+      "item_entries_with_url": 10,
+      "outcome_now": "PARSED",
+      "outlet_id": "ve_efecto_cocuyo",
+      "parser_now": "channel-parser/2",
+      "problems": [],
+      "url": "https://efectococuyo.com/feed/"
+    },
+    {
+      "body_sha256": "8c698ed97ca2b39e1841b0285b50da2f542429820a5ffe379b36b242ef50d5c4",
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "child_documents": 92,
+      "expansion_order": "expansion-order/1",
+      "first_children_in_read_order": [
+        {
+          "lastmod": "2026-10-08T15:41:05+00:00",
+          "path": "/post-sitemap.xml"
+        },
+        {
+          "lastmod": "2026-10-08T15:41:05+00:00",
+          "path": "/post-sitemap85.xml"
+        },
+        {
+          "lastmod": "2026-08-31T20:38:40+00:00",
+          "path": "/post-sitemap84.xml"
+        },
+        {
+          "lastmod": "2026-06-25T22:16:39+00:00",
+          "path": "/post-sitemap83.xml"
+        },
+        {
+          "lastmod": "2026-05-01T03:57:22+00:00",
+          "path": "/post-sitemap82.xml"
+        }
+      ],
+      "format": "sitemap_index",
+      "item_entries": 0,
+      "item_entries_with_url": 0,
+      "outcome_now": "PARSED",
+      "outlet_id": "ve_efecto_cocuyo",
+      "parser_now": "channel-parser/2",
+      "problems": [],
+      "url": "https://efectococuyo.com/sitemap_index.xml"
+    }
+  ],
+  "discovery_coverage_as_recorded": {
+    "channels": {
+      "bo_el_deber:ch:rss_main": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "DEFERRED: robots_parse_error": 1
+        },
+        "documents": {
+          "UNAVAILABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "bo_el_deber:ch:sitemap_main": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "DEFERRED: robots_parse_error": 1
+        },
+        "documents": {
+          "UNAVAILABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "do_diario_libre:ch:rss_main": {
+        "distinct_candidates_listed": 32,
+        "document_problems": {},
+        "documents": {
+          "PARSED": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 33,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 33,
+        "kept_dates": {
+          "dated_entries": 33,
+          "newest": "2026-10-08T14:36:00+00:00",
+          "oldest": "2026-10-07T00:01:00+00:00"
+        },
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "do_diario_libre:ch:sitemap_sitemapnews": {
+        "distinct_candidates_listed": 231,
+        "document_problems": {},
+        "documents": {
+          "PARSED": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 534,
+        "item_entries_turned_away_by_candidate_budget": 303,
+        "item_entries_with_candidate": 231,
+        "kept_dates": {
+          "dated_entries": 231,
+          "newest": "2026-10-08T20:05:00+00:00",
+          "oldest": "2026-10-07T04:01:00+00:00"
+        },
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": {
+          "dated_entries": 303,
+          "newest": "2026-10-07T16:20:00+00:00",
+          "oldest": "2026-10-05T20:42:00+00:00"
+        },
+        "turned_away_newer_than_oldest_kept": 44
+      },
+      "hn_proceso_digital:ch:rss_main": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "http_307": 1
+        },
+        "documents": {
+          "UNAVAILABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "hn_proceso_digital:ch:sitemap_news": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "http_404": 1
+        },
+        "documents": {
+          "UNAVAILABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "DEFERRED: robots_parse_error": 1
+        },
+        "documents": {
+          "UNAVAILABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "ve_efecto_cocuyo:ch:rss_main": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "dtd_or_entity_declaration_refused": 1
+        },
+        "documents": {
+          "UNPARSEABLE": 1
+        },
+        "documents_named": 0,
+        "documents_named_and_not_read": 0,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      },
+      "ve_efecto_cocuyo:ch:sitemap_index_main": {
+        "distinct_candidates_listed": 0,
+        "document_problems": {
+          "DENIED: canary_budget_exhausted": 92
+        },
+        "documents": {
+          "PARSED": 1,
+          "UNAVAILABLE": 92
+        },
+        "documents_named": 92,
+        "documents_named_and_not_read": 92,
+        "item_entries": 0,
+        "item_entries_turned_away_by_candidate_budget": 0,
+        "item_entries_with_candidate": 0,
+        "kept_dates": null,
+        "not_read_sample": [
+          "https://efectococuyo.com/post-sitemap.xml",
+          "https://efectococuyo.com/post-sitemap2.xml",
+          "https://efectococuyo.com/post-sitemap3.xml",
+          "https://efectococuyo.com/post-sitemap4.xml",
+          "https://efectococuyo.com/post-sitemap5.xml"
+        ],
+        "other_item_problems": {},
+        "turned_away_dates": null,
+        "turned_away_newer_than_oldest_kept": null
+      }
+    },
+    "limits": [
+      "a report of what was listed in the documents that were read; it cannot see what an unread document lists",
+      "dates are the channel's own hints, as written; an entry without a readable date is not in a date span"
+    ],
+    "parser_versions": [
+      "channel-parser/1"
+    ],
+    "run_id": null,
+    "schema": "coprepan-discovery-coverage/v1",
+    "totals": {
+      "documents_named": 92,
+      "documents_named_and_not_read": 92,
+      "item_entries": 567,
+      "item_entries_turned_away_by_candidate_budget": 303,
+      "item_entries_with_candidate": 264
+    }
+  },
+  "discovery_inputs_as_recorded": [
+    {
+      "channel_id": "bo_el_deber:ch:rss_main",
+      "document_url": "https://eldeber.com.bo/feed",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DEFERRED: robots_parse_error"
+      ]
+    },
+    {
+      "channel_id": "do_diario_libre:ch:rss_main",
+      "document_url": "https://www.diariolibre.com/feed",
+      "outcome": "PARSED",
+      "parser": "channel-parser/1",
+      "problems": []
+    },
+    {
+      "channel_id": "hn_proceso_digital:ch:rss_main",
+      "document_url": "https://proceso.hn/rss",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "http_307"
+      ]
+    },
+    {
+      "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+      "document_url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DEFERRED: robots_parse_error"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+      "document_url": "https://efectococuyo.com/rss",
+      "outcome": "UNPARSEABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "dtd_or_entity_declaration_refused"
+      ]
+    },
+    {
+      "channel_id": "bo_el_deber:ch:sitemap_main",
+      "document_url": "https://eldeber.com.bo/sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DEFERRED: robots_parse_error"
+      ]
+    },
+    {
+      "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+      "document_url": "https://www.diariolibre.com/sitemapnews",
+      "outcome": "PARSED",
+      "parser": "channel-parser/1",
+      "problems": []
+    },
+    {
+      "channel_id": "hn_proceso_digital:ch:sitemap_news",
+      "document_url": "https://proceso.hn/sitemap-news.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "http_404"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/sitemap.xml",
+      "outcome": "PARSED",
+      "parser": "channel-parser/1",
+      "problems": []
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap2.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap3.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap4.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap5.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap6.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap7.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap8.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap9.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap10.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap11.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap12.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap13.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap14.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap15.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap16.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap17.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap18.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap19.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap20.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap21.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap22.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap23.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap24.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap25.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap26.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap27.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap28.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap29.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap30.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap31.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap32.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap33.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap34.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap35.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap36.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap37.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap38.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap39.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap40.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap41.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap42.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap43.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap44.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap45.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap46.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap47.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap48.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap49.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap50.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap51.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap52.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap53.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap54.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap55.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap56.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap57.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap58.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap59.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap60.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap61.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap62.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap63.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap64.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap65.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap66.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap67.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap68.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap69.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap70.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap71.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap72.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap73.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap74.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap75.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap76.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap77.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap78.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap79.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap80.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap81.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap82.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap83.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap84.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post-sitemap85.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/page-sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/category-sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post_tag-sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post_tag-sitemap2.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post_tag-sitemap3.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/post_tag-sitemap4.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    },
+    {
+      "channel_id": "ve_efecto_cocuyo:ch:sitemap_index_main",
+      "document_url": "https://efectococuyo.com/author-sitemap.xml",
+      "outcome": "UNAVAILABLE",
+      "parser": "channel-parser/1",
+      "problems": [
+        "DENIED: canary_budget_exhausted"
+      ]
+    }
+  ],
+  "origins_held_by_the_recorded_classes_alone": {},
+  "origins_held_for_a_next_canary": {
+    "https://proceso.hn": "bot_challenge"
+  },
+  "robots_files": [
+    {
+      "body_sha256": "35db54211ae12f7f6db8c698cf6173119317a9aa4e60068985c6fb89c1fd1270",
+      "content_encoding": "gzip",
+      "crawl_delays": {},
+      "groups": {
+        "*": 7
+      },
+      "outlet_id": "bo_el_deber",
+      "parse_error_as_received": true,
+      "parse_error_now": false,
+      "parser_now": "robots-parser/3",
+      "sitemaps": [
+        "https://eldeber.com.bo/sitemap.xml",
+        "https://eldeber.com.bo/sitemap_lite.xml",
+        "https://eldeber.com.bo/sitemap-news.xml",
+        "https://eldeber.com.bo/sitemap-organico.xml",
+        "https://eldeber.com.bo/sitemap-secciones.xml"
+      ],
+      "url": "https://eldeber.com.bo/robots.txt"
+    },
+    {
+      "body_sha256": "ebb96d72eee80ec0eedda779e23d6320641c9f7977f5a814c5042d1d42b9fdd2",
+      "content_encoding": "identity",
+      "crawl_delays": {},
+      "groups": {
+        "*": 2
+      },
+      "outlet_id": "do_diario_libre",
+      "parse_error_as_received": false,
+      "parse_error_now": false,
+      "parser_now": "robots-parser/3",
+      "sitemaps": [
+        "https://www.diariolibre.com/sitemap.xml",
+        "https://www.diariolibre.com/sitemapnews"
+      ],
+      "url": "https://www.diariolibre.com/robots.txt"
+    },
+    {
+      "body_sha256": "13b1204a93fdae1b8434ae7177956e6fa98d5643846df0734820fe264429e025",
+      "content_encoding": "identity",
+      "crawl_delays": {
+        "*": "3"
+      },
+      "groups": {
+        "*": 0
+      },
+      "outlet_id": "hn_proceso_digital",
+      "parse_error_as_received": false,
+      "parse_error_now": false,
+      "parser_now": "robots-parser/3",
+      "sitemaps": [],
+      "url": "https://proceso.hn/robots.txt"
+    },
+    {
+      "body_sha256": "3ce58c99a05492a23f23ac0deb012e9a707c96b7b4bf9046e4126ed0f55c599c",
+      "content_encoding": "gzip",
+      "crawl_delays": {},
+      "groups": {
+        "*": 5
+      },
+      "outlet_id": "py_la_nacion",
+      "parse_error_as_received": true,
+      "parse_error_now": false,
+      "parser_now": "robots-parser/3",
+      "sitemaps": [
+        "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml"
+      ],
+      "url": "https://www.lanacion.com.py/robots.txt"
+    },
+    {
+      "body_sha256": "70453822be931297aa1ebf3f8de09abdf4458a103ad29c8bda21ec68e4dd5d16",
+      "content_encoding": "identity",
+      "crawl_delays": {},
+      "groups": {
+        "*": 1
+      },
+      "outlet_id": "ve_efecto_cocuyo",
+      "parse_error_as_received": false,
+      "parse_error_now": false,
+      "parser_now": "robots-parser/3",
+      "sitemaps": [
+        "https://efectococuyo.com/sitemap_index.xml"
+      ],
+      "url": "https://efectococuyo.com/robots.txt"
+    }
+  ],
+  "robots_origins": [
+    "https://efectococuyo.com",
+    "https://eldeber.com.bo",
+    "https://proceso.hn",
+    "https://www.diariolibre.com",
+    "https://www.lanacion.com.py"
+  ],
+  "schema": "coprepan-canary-findings-replay/v1",
+  "what_this_is": "the preserved answers of the workspace read again by the current code; reproducibility of a repair, no new observation of any server"
+}

@@ -45,3 +45,6 @@ test_evidence_integrity.py   # chained primary evidence; candidates and identity
 test_storage_contract.py     # pinned bundle; the shared reference cases; outage, spool, drain, interruption points and a root change on the real code paths
 # Classical extractor candidates of the Phase-3 comparison (CPD-0018)
 test_extractor_candidates.py # pins, refusal without the pinned tool; with the tools (extra phase3): record shape, determinism, content coding, blinding
+# Canary findings F1-F7, source discovery, the extended canary (CPD-0019)
+test_canary_findings.py      # regression tests of the findings of the first real canary: coded robots file, Sucuri challenge, foreign candidates, budgets and index expansion, DOCTYPE in CDATA, the 404 channel, candidate-budget coverage
+test_source_discovery.py     # the source-discovery inventory is the join of its evidence; the registration proposal applies to a copy and gives a canary the driver can pin

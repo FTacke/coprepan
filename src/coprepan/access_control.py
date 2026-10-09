@@ -17,7 +17,9 @@ import zlib
 from typing import Iterable
 from urllib.parse import urlsplit
 
-CLASSIFIER_VERSION = "access-control/1"
+# /2 (canary finding F2, CPD-0019): the Sucuri JavaScript challenge is known, and a small body is
+# inspected whatever its status — the challenge of 2026-10-08 came as a 307 without a `Location`.
+CLASSIFIER_VERSION = "access-control/2"
 
 NONE_OBSERVED = "none_observed"
 UNKNOWN = "unknown"                       # no answer was classified (a transport failure, a replay)
@@ -38,7 +40,9 @@ _INSPECTED_BYTES = 64 * 1024
 _SMALL_BODY_BYTES = 32 * 1024             # a challenge page is small; an article that embeds a form widget is not
 _CAPTCHA_MARKERS = (b"g-recaptcha", b"h-captcha", b"hcaptcha.com/1/api.js", b"cf-turnstile", b"captcha-delivery.com", b"px-captcha")
 _CHALLENGE_MARKERS = (b"cdn-cgi/challenge-platform", b"cf-chl-", b"just a moment...", b"checking your browser",
-                      b"attention required! | cloudflare", b"_incapsula_resource", b"ddos-guard")
+                      b"attention required! | cloudflare", b"_incapsula_resource", b"ddos-guard",
+                      # Sucuri CloudProxy: a script that computes a cookie and reloads the page.
+                      b"sucuri_cloudproxy_js", b"sucuri_cloudproxy_uuid")
 _LOGIN_SEGMENTS = frozenset(("login", "log-in", "signin", "sign-in", "iniciar-sesion", "inicio-sesion", "ingresar", "acceder",
                              "auth", "sso", "account", "accounts", "cuenta", "mi-cuenta", "registro", "register"))
 _PAYWALL_SEGMENTS = frozenset(("paywall", "suscripcion", "suscripciones", "suscribete", "suscribirse", "subscribe",
@@ -63,7 +67,10 @@ def classify_response(status: int, headers: Iterable[tuple[str, str]], body: byt
     lowered = {name.lower(): value.strip().lower() for name, value in headers}
     if lowered.get("cf-mitigated") == "challenge":
         return BOT_CHALLENGE
-    if status in (403, 429, 503) or (200 <= status < 300 and len(body) <= _SMALL_BODY_BYTES):
+    # A challenge page is small and comes with whatever status the protection likes: 200, 403, 503,
+    # or a redirect status that names no target. The status therefore does not select what is read;
+    # the size does, except for the three statuses a protection typically answers with.
+    if status in (403, 429, 503) or len(body) <= _SMALL_BODY_BYTES:
         text = _decoded_prefix(body, headers)
         if any(marker in text for marker in _CAPTCHA_MARKERS):
             return CAPTCHA

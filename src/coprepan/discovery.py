@@ -24,7 +24,7 @@ import re
 import xml.etree.ElementTree as ET
 from collections import deque
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Callable, Mapping
@@ -36,7 +36,10 @@ from .extraction import ContentDecodingError, decode_content
 from .identity import IdentityError, OffOriginError, OutletUrlRules, canonical_url_key, format_instant, is_channel_id
 from .jsonl import append_chained, append_row, keyed, read_chained, read_rows
 
-PARSER_VERSION = "channel-parser/1"
+# /2 (CPD-0019): the DTD guard reads markup only (F5); the children of a sitemap index are read in
+# a stated order of priority instead of document order, and a document that was asked for and not
+# supplied counts against the document budget (F4).
+PARSER_VERSION = "channel-parser/2"
 INPUT_SCHEMA = naming.schema_id("discovery-input", 2)  # v2: chained rows (CPD-0010)
 EVENT_SCHEMA = naming.schema_id("discovery-event", 2)  # v2: chained rows (CPD-0010)
 CANDIDATE_SCHEMA = naming.schema_id("discovery-candidate", 1)
@@ -58,6 +61,10 @@ ROBOTS_SITEMAP_SLUG = "robots_sitemaps"
 _XML_DECLARATION = re.compile(rb"\s*<\?xml[^>]*\?>", re.IGNORECASE)
 _HTML_START = re.compile(rb"\s*(?:<!--.*?-->\s*)*<(?:!doctype\s+html|html[\s>])", re.IGNORECASE | re.DOTALL)
 _FORBIDDEN_XML = re.compile(rb"<!(?:DOCTYPE|ENTITY)", re.IGNORECASE)
+# Character data and comments are text, not markup: a `<!DOCTYPE html>` that a feed carries inside a
+# CDATA section (an embedded page) declares nothing. Matched left to right, so whichever of the two
+# opens first owns everything up to its own terminator; one that never closes is not removed.
+_XML_TEXT_ONLY = re.compile(rb"<!--.*?-->|<!\[CDATA\[.*?\]\]>", re.DOTALL)
 _SCHEMES = ("http", "https")
 
 
@@ -141,9 +148,10 @@ def parse_channel_document(body: bytes, *, document_url: str, declared_content_t
     declared_html = declared_content_type in ("text/html", "application/xhtml+xml")
     if _HTML_START.match(_XML_DECLARATION.sub(b"", body[:4096], count=1)):
         return _parse_html(body, document_url)
-    if _FORBIDDEN_XML.search(body):
+    if _FORBIDDEN_XML.search(_XML_TEXT_ONLY.sub(b"", body)):
         # No DTD, no entity declarations: nothing a feed or sitemap needs, and the classic way to
-        # make an XML parser expand or fetch something.
+        # make an XML parser expand or fetch something. Looked for in the markup only — not in
+        # CDATA sections and comments, where the same characters are content (canary finding F5).
         return ParsedChannelDocument(OUTCOME_UNPARSEABLE, None, (), ("dtd_or_entity_declaration_refused",), document_url)
     try:
         root = ET.fromstring(body)
@@ -376,9 +384,42 @@ class DocumentUnavailable:
     fetch_id: str | None = None
 
 
+EXPANSION_ORDER = "expansion-order/1"
+# Sitemaps that by a widespread naming convention list something other than articles (taxonomy,
+# author and static pages, media). They are read last, never skipped: the name is a convention of
+# sitemap generators, not a fact about an outlet.
+_LATE_CHILD = re.compile(r"(?:^|[^a-z0-9])(?:category|categories|categoria|categorias|tag|tags|post_tag|etiqueta|etiquetas|"
+                         r"author|authors|autor|autores|page|pages|pagina|paginas|attachment|image|images|video|videos)(?:[^a-z0-9]|$)")
+_EARLY_CHILD = re.compile(r"(?:^|[^a-z0-9])(?:news|noticias)(?:[^a-z0-9]|$)")
+
+
+def _lastmod_instant(text: str | None) -> datetime | None:
+    try:
+        value = datetime.fromisoformat((text or "").strip())
+    except ValueError:
+        return None
+    return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+
+
+def expansion_priority(entry: ChannelEntry) -> tuple[int, int, float, int]:
+    """The order in which the documents a sitemap index names are read (``expansion-order/1``).
+
+    A budget rarely reaches every child of an index, so which ones are read is a decision and is
+    made here, deterministically, from what the index itself says: first a child whose name marks
+    it as a news sitemap, last one whose name marks it as a taxonomy, author, page or media
+    sitemap; within each class the most recently modified first (``lastmod``), a child without a
+    readable ``lastmod`` after those with one; document order breaks every tie.
+    """
+    name = urlsplit(entry.url or "").path.rsplit("/", 1)[-1].lower()
+    rank = 0 if _EARLY_CHILD.search(name) else 2 if _LATE_CHILD.search(name) else 1
+    modified = _lastmod_instant(entry.hints.get("lastmod"))
+    return (rank, 0 if modified is not None else 1, -modified.timestamp() if modified is not None else 0.0, entry.position)
+
+
 @dataclass
 class DiscoveryResult:
     channel_id: str
+    documents_asked: int = 0
     documents_read: int = 0
     bytes_read: int = 0
     events_new: int = 0
@@ -387,6 +428,8 @@ class DiscoveryResult:
     candidates_listed: list[str] = field(default_factory=list)
     stopped_by: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
+    # Documents the channel named and this pass did not ask for, with the limit that was the reason.
+    not_read: list[dict[str, str]] = field(default_factory=list)
 
 
 Provider = Callable[[str, int], "ChannelDocument | DocumentUnavailable"]
@@ -406,9 +449,13 @@ def discover_channel(
     """Read a channel and everything it names within the budget; record inputs, events, candidates.
 
     ``provider(url, depth)`` supplies each channel document (in production: the fetcher behind the
-    policy gate; in tests: recorded bytes). Breadth-first and in document order, so the same
-    documents always give the same rows in the same order. Idempotent: an input, an event or a
+    policy gate; in tests: recorded bytes). Breadth-first; events are recorded in document order,
+    and the documents an index names are *read* in the order of :func:`expansion_priority` — so the
+    same documents always give the same rows in the same order. Idempotent: an input, an event or a
     candidate that is already recorded is not recorded again.
+
+    ``max_documents`` bounds the documents **asked for**: one the provider could not supply (a
+    refusal, a 404) has used its place. What a pass named and did not ask for is in ``not_read``.
     """
     if not is_channel_id(channel_id) or not channel_id.startswith(f"{rules.outlet_id}:ch:"):
         raise DiscoveryError(f"{channel_id!r} is not a channel of {rules.outlet_id}")
@@ -423,14 +470,15 @@ def discover_channel(
             result.stopped_by.append(reason)
 
     while queue:
+        if result.documents_asked >= budget.max_documents:
+            stop("max_documents")
+            break
         url, depth, parent = queue.popleft()
         if url in visited_urls:
             result.notes.append(f"cycle_or_repeat_not_followed: {url}")
             continue
-        if result.documents_read >= budget.max_documents:
-            stop("max_documents")
-            break
         visited_urls.add(url)
+        result.documents_asked += 1
         document = provider(url, depth)
         base_row = {"run_id": run_id, "channel_id": channel_id, "document_url": url, "depth": depth,
                     "parent_fetch_id": parent, "read_at": at, "parser": PARSER_VERSION}
@@ -465,6 +513,7 @@ def discover_channel(
             result.notes.append(f"unparseable: {url}: {'; '.join(parsed.problems)}")
             continue
 
+        named: list[ChannelEntry] = []
         for entry in parsed.entries:
             identifier = event_id(channel_id, document.fetch_id, entry.position, entry.url_raw)
             row = {"event_id": identifier, "run_id": run_id, "channel_id": channel_id, "outlet_id": rules.outlet_id,
@@ -498,10 +547,17 @@ def discover_channel(
                 if row["candidate_id"] not in result.candidates_listed:
                     result.candidates_listed.append(row["candidate_id"])
             if entry.url is not None and entry.relation in (RELATION_CHILD_DOCUMENT, RELATION_NEXT_PAGE):
-                if depth + 1 > budget.max_depth:
-                    stop("max_depth")
-                elif entry.url in visited_urls or any(entry.url == queued for queued, _, _ in queue):
-                    result.notes.append(f"cycle_or_repeat_not_followed: {entry.url}")
-                else:
-                    queue.append((entry.url, depth + 1, document.fetch_id))
+                named.append(entry)
+        # Read order of what this document names: children of an index by priority, then pagination.
+        named.sort(key=lambda e: (e.relation != RELATION_CHILD_DOCUMENT, *(expansion_priority(e) if e.relation == RELATION_CHILD_DOCUMENT else (0, 0, 0.0, e.position))))
+        for entry in named:
+            if depth + 1 > budget.max_depth:
+                stop("max_depth")
+                result.not_read.append({"url": entry.url, "reason": "max_depth"})
+            elif entry.url in visited_urls or any(entry.url == queued for queued, _, _ in queue):
+                result.notes.append(f"cycle_or_repeat_not_followed: {entry.url}")
+            else:
+                queue.append((entry.url, depth + 1, document.fetch_id))
+    result.not_read.extend({"url": url, "reason": result.stopped_by[-1] if result.stopped_by else "not_reached"} for url, _, _ in queue
+                           if url not in visited_urls)
     return result
