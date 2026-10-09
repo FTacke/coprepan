@@ -1,0 +1,847 @@
+{
+  "baseline_id": "a70d8d052e206d01bb5e2c5ae254de3c37c89bc6730e09ab6ece329b86683428",
+  "bytes": {
+    "preserved_objects": 4529169,
+    "received_bodies": 8581719
+  },
+  "channels": {
+    "ni_despacho_505": [
+      "ni_despacho_505:ch:rss_r001"
+    ],
+    "ni_el_19_digital": [
+      "ni_el_19_digital:ch:section_page_r001"
+    ],
+    "pa_critica": [
+      "pa_critica:ch:rss_001",
+      "pa_critica:ch:sitemap_002"
+    ],
+    "pa_diaadia": [
+      "pa_diaadia:ch:rss_001",
+      "pa_diaadia:ch:sitemap_001"
+    ],
+    "pa_el_siglo": [
+      "pa_el_siglo:ch:sitemap_001",
+      "pa_el_siglo:ch:sitemap_index_001"
+    ],
+    "pa_la_prensa": [
+      "pa_la_prensa:ch:sitemap_001",
+      "pa_la_prensa:ch:section_page_r001"
+    ],
+    "pa_laestrelladepanama": [
+      "pa_laestrelladepanama:ch:sitemap_001",
+      "pa_laestrelladepanama:ch:sitemap_index_001"
+    ],
+    "pa_metro_libre": [
+      "pa_metro_libre:ch:sitemap_002",
+      "pa_metro_libre:ch:sitemap_index_001"
+    ],
+    "pa_midiario": [
+      "pa_midiario:ch:sitemap_001",
+      "pa_midiario:ch:sitemap_002"
+    ],
+    "pa_panama_24_horas": [
+      "pa_panama_24_horas:ch:rss_r001"
+    ],
+    "pa_panama_america": [
+      "pa_panama_america:ch:rss_r001"
+    ],
+    "pe_diario_los_andes": [
+      "pe_diario_los_andes:ch:rss_r001"
+    ],
+    "pe_diario_uno": [
+      "pe_diario_uno:ch:rss_r001"
+    ],
+    "pe_el_buho": [
+      "pe_el_buho:ch:rss_r001"
+    ],
+    "pe_el_comercio": [
+      "pe_el_comercio:ch:section_page_r001"
+    ],
+    "pe_elperuano": [
+      "pe_elperuano:ch:sitemap_002",
+      "pe_elperuano:ch:section_page_r001"
+    ],
+    "pe_expreso": [
+      "pe_expreso:ch:section_page_r001",
+      "pe_expreso:ch:section_page_r002"
+    ],
+    "pe_peru21": [
+      "pe_peru21:ch:rss_r001"
+    ],
+    "pr_el_nuevo_dia": [
+      "pr_el_nuevo_dia:ch:sitemap_index_001",
+      "pr_el_nuevo_dia:ch:sitemap_index_002"
+    ]
+  },
+  "checkpoints": [
+    {
+      "after": "A_probe",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "B_discovery",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ni_despacho_505",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ni_despacho_505",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:ni_el_19_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:ni_el_19_digital",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_critica",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_critica",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_diaadia",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_diaadia",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_el_siglo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_el_siglo",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_la_prensa",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_la_prensa",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_laestrelladepanama",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_laestrelladepanama",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_metro_libre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_metro_libre",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_midiario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_midiario",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_panama_24_horas",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_panama_24_horas",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pa_panama_america",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pa_panama_america",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_diario_los_andes",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_diario_los_andes",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_diario_uno",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_diario_uno",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_el_buho",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_el_buho",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_el_comercio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_el_comercio",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_elperuano",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_elperuano",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_expreso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_expreso",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pe_peru21",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pe_peru21",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "C_item_fetch:pr_el_nuevo_dia",
+      "classification": "INCOMPLETE_RESUMABLE"
+    },
+    {
+      "after": "E_derive:pr_el_nuevo_dia",
+      "classification": "INCOMPLETE_RESUMABLE"
+    }
+  ],
+  "commit": "dda6722dde19d3025f7b89d79bba8b7ecbd5cb13",
+  "counts": {
+    "candidates": 1738,
+    "discovery_documents_fetched": 37,
+    "failed": 4,
+    "fetch_records": 112,
+    "items_fetched": 56,
+    "pending": 0,
+    "preserved": 108,
+    "refused": 7,
+    "spooled_objects_pending": 0
+  },
+  "crawler_identity_sha256": "aa719a1e27f0fa3e3b04ed5826598a9b1b931a91391c77a98998a3651953bc4b",
+  "driver": "canary-driver/5",
+  "expansion_requests": {
+    "by_outlet": {
+      "ni_despacho_505": 0,
+      "ni_el_19_digital": 0,
+      "pa_critica": 0,
+      "pa_diaadia": 0,
+      "pa_el_siglo": 3,
+      "pa_la_prensa": 0,
+      "pa_laestrelladepanama": 3,
+      "pa_metro_libre": 3,
+      "pa_midiario": 0,
+      "pa_panama_24_horas": 0,
+      "pa_panama_america": 0,
+      "pe_diario_los_andes": 0,
+      "pe_diario_uno": 0,
+      "pe_el_buho": 0,
+      "pe_el_comercio": 0,
+      "pe_elperuano": 0,
+      "pe_expreso": 0,
+      "pe_peru21": 0,
+      "pr_el_nuevo_dia": 3
+    },
+    "total": 12
+  },
+  "fetcher_transport_calls": 115,
+  "finished_at": "2026-10-09T19:57:49.052688Z",
+  "operator_authorization": {
+    "authorization_id": "DOA-2026-10-09-4",
+    "authorization_sha256": "1b062edddefcf71b05bd868f974666dc5ac5ee1eba8a4079ab873d0db2f97018",
+    "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+    "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+    "mode": "DELEGATED_OPERATOR_AUTHORIZATION",
+    "record": "config/operator_authorizations/2026-10-09_qualification.json",
+    "wave": "qual-4"
+  },
+  "outlets": [
+    "ni_despacho_505",
+    "ni_el_19_digital",
+    "pa_critica",
+    "pa_diaadia",
+    "pa_el_siglo",
+    "pa_la_prensa",
+    "pa_laestrelladepanama",
+    "pa_metro_libre",
+    "pa_midiario",
+    "pa_panama_24_horas",
+    "pa_panama_america",
+    "pe_diario_los_andes",
+    "pe_diario_uno",
+    "pe_el_buho",
+    "pe_el_comercio",
+    "pe_elperuano",
+    "pe_expreso",
+    "pe_peru21",
+    "pr_el_nuevo_dia"
+  ],
+  "packs": [
+    "pk1-ni_despacho_505-20261009-000",
+    "pk1-ni_el_19_digital-20261009-000",
+    "pk1-pa_critica-20261009-000",
+    "pk1-pa_diaadia-20261009-000",
+    "pk1-pa_el_siglo-20261009-000",
+    "pk1-pa_la_prensa-20261009-000",
+    "pk1-pa_laestrelladepanama-20261009-000",
+    "pk1-pa_metro_libre-20261009-000",
+    "pk1-pa_midiario-20261009-000",
+    "pk1-pa_panama_24_horas-20261009-000",
+    "pk1-pa_panama_america-20261009-000",
+    "pk1-pe_diario_los_andes-20261009-000",
+    "pk1-pe_diario_uno-20261009-000",
+    "pk1-pe_el_buho-20261009-000",
+    "pk1-pe_el_comercio-20261009-000",
+    "pk1-pe_elperuano-20261009-000",
+    "pk1-pe_expreso-20261009-000",
+    "pk1-pe_peru21-20261009-000",
+    "pk1-pr_el_nuevo_dia-20261009-000"
+  ],
+  "policy_layers": {
+    "acquisition_decisions": {
+      "ALLOW": 93,
+      "HOLD": 4,
+      "None": 3
+    },
+    "answered_2xx_under_research_override": 0,
+    "by_outlet": {
+      "ni_despacho_505": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_UNAVAILABLE": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+            "outcome": "FETCHED",
+            "status": 404
+          }
+        ]
+      },
+      "ni_el_19_digital": {
+        "access_classes_observed": {
+          "bot_challenge": 1,
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_UNAVAILABLE": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "e8fa1641933774e8a6c8a2c7cc962b0d4a4bd5431d2dbeb302db3176f3d1ee65",
+            "outcome": "FETCHED",
+            "status": 404
+          }
+        ]
+      },
+      "pa_critica": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "21f3f86a58a2156813dbbe3aa509ada15d1e9d77e92cc54e73d228b78edbd7d7",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_diaadia": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "2a787f20489a257692bad5f16ae5ceb28876cd38d8d9cde9c84a2d3835e30bab",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_el_siglo": {
+        "access_classes_observed": {
+          "none_observed": 8,
+          "unknown": 2
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "c78044138f055bb48f4ac974c1dd064172eab49912bdca25a826cb0719dcdf3c",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_la_prensa": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "79b1cb6700714a9f11eb3fedfa2620cb3caf889c7144fd444eb4c8881be5cd80",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_laestrelladepanama": {
+        "access_classes_observed": {
+          "none_observed": 8,
+          "unknown": 2
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "176845f1a9906a615ee41416bad2fc4b44dd887e85b72951df576be0e5d50bc3",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_metro_libre": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "f5ebd37e88d5f8cc506542c06aadf89be73339a963049988d3893edfc70fbba1",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_midiario": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "a7fb243e77023e258edb20ab118334abc8a500e6f3c09ff755e199d65fc5880e",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pa_panama_24_horas": {
+        "access_classes_observed": {
+          "none_observed": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_PARSE_ERROR": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "38b0c3a1ac87ba49f02da595bd531f54ec5cb54727fa98b606719303527b195f",
+            "outcome": "FETCHED",
+            "status": 202
+          }
+        ]
+      },
+      "pa_panama_america": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "5ce4d0d604c66eb4cecaaffae8f19b68154cf743f7e830f5bcebe78f98d67b74",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_diario_los_andes": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "f6487b18293ef95d87846fa3c3d07869c258ef8056e276ed14e6ccbcdc62366b",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_diario_uno": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "4bc99f6b6e86eb66561f4f5b76f900ba6f47e351c79abef69006c7e949097eac",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_el_buho": {
+        "access_classes_observed": {
+          "none_observed": 6
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 5,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 5
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "13051126b325b837be540431bde9ddc49f25e951c6a37b673dc3b66a8236e2ae",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_el_comercio": {
+        "access_classes_observed": {
+          "none_observed": 2
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 1,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "26b67827bbe1cbe59c1533c51de0f230ef1ec298a8c5fcbf157b6560d7779fe5",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_elperuano": {
+        "access_classes_observed": {
+          "none_observed": 7
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 6,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_ALLOW": 6
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "51d0f0af6dab4c33a5269d8d6a0cd2906d0d7172483db8134858d67c166199b7",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      },
+      "pe_expreso": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 2
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "a9e7261a4a5b486caadb75b40e3490644fd297f5219320f4dd126a2ebea688ee",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "pe_peru21": {
+        "access_classes_observed": {
+          "bot_challenge": 1
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 0,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "ROBOTS_NOT_EVALUATED": 1
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "bot_challenge",
+            "body_sha256": "d614cc6c85df06df59959d05b47be9e7977f9af8af39121af4fd1c1e6ce60561",
+            "outcome": "FETCHED",
+            "status": 403
+          }
+        ]
+      },
+      "pr_el_nuevo_dia": {
+        "access_classes_observed": {
+          "none_observed": 10
+        },
+        "answered_2xx_under_research_override": 0,
+        "general_tdm_reservation_observed": 0,
+        "requests_allowed_by_robots": 9,
+        "requests_under_research_override": 0,
+        "robots_evidence": {
+          "None": 3,
+          "ROBOTS_ALLOW": 9
+        },
+        "robots_files": [
+          {
+            "access_class_observed": "none_observed",
+            "body_sha256": "7bf50f142d9d5d46e4e825dcf7fd9e0a9df826b27f5cd2d237948689edaf4fe3",
+            "outcome": "FETCHED",
+            "status": 200
+          }
+        ]
+      }
+    },
+    "direct_opt_outs": 0,
+    "holds": {
+      "ACCESS_CONTROL_OBSERVED": 3
+    },
+    "legal_review_holds": 0,
+    "outlets_with_access_control": [
+      "ni_el_19_digital",
+      "pe_expreso",
+      "pe_peru21"
+    ],
+    "outlets_with_applicable_disallow": [],
+    "requests_stopped_by_access_control": 3,
+    "requests_under_research_override": 0,
+    "semantics": "robots-decision/2"
+  },
+  "policy_version": "canary/2026-10-09.1",
+  "refused": {
+    "DEFERRED:robots_parse_error": 1,
+    "DENIED:access_control_observed": 3,
+    "DENIED:canary_budget_exhausted": 3
+  },
+  "requests": {
+    "by_outlet": {
+      "ni_despacho_505": {
+        "item": 4,
+        "other": 2
+      },
+      "ni_el_19_digital": {
+        "item": 0,
+        "other": 2
+      },
+      "pa_critica": {
+        "item": 4,
+        "other": 3
+      },
+      "pa_diaadia": {
+        "item": 4,
+        "other": 3
+      },
+      "pa_el_siglo": {
+        "item": 4,
+        "other": 6
+      },
+      "pa_la_prensa": {
+        "item": 4,
+        "other": 4
+      },
+      "pa_laestrelladepanama": {
+        "item": 4,
+        "other": 6
+      },
+      "pa_metro_libre": {
+        "item": 4,
+        "other": 6
+      },
+      "pa_midiario": {
+        "item": 4,
+        "other": 3
+      },
+      "pa_panama_24_horas": {
+        "item": 0,
+        "other": 1
+      },
+      "pa_panama_america": {
+        "item": 4,
+        "other": 2
+      },
+      "pe_diario_los_andes": {
+        "item": 4,
+        "other": 2
+      },
+      "pe_diario_uno": {
+        "item": 4,
+        "other": 2
+      },
+      "pe_el_buho": {
+        "item": 4,
+        "other": 2
+      },
+      "pe_el_comercio": {
+        "item": 0,
+        "other": 2
+      },
+      "pe_elperuano": {
+        "item": 4,
+        "other": 3
+      },
+      "pe_expreso": {
+        "item": 0,
+        "other": 1
+      },
+      "pe_peru21": {
+        "item": 0,
+        "other": 1
+      },
+      "pr_el_nuevo_dia": {
+        "item": 4,
+        "other": 8
+      }
+    },
+    "item": 56,
+    "other": 59,
+    "total": 115
+  },
+  "research_tdm": {
+    "decided_in": "CPD-0017",
+    "research_tdm_policy_sha256": "c4923d8ac54ddd6a00071a2e6f4cc01d8f2ea44df95b3c9306cbe8f69ef7969e",
+    "research_tdm_policy_version": "SCIENTIFIC_TDM_POLICY_V1",
+    "robots_decision_semantics": "robots-decision/2",
+    "robots_mode": "research_tdm_override"
+  },
+  "response_classes": {
+    "200": 100,
+    "202": 1,
+    "403": 3,
+    "404": 4,
+    "failed:body_limit_exceeded": 4
+  },
+  "run_id": "acq1-20261009T193446137419Z-b0efeac62718",
+  "schedule_policy_version": "canary/2026-10-08.1",
+  "schema": "coprepan-canary-receipt/v1",
+  "started_at": "2026-10-09T19:34:46.137419Z",
+  "status": "COMPLETE",
+  "storage_contract_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+  "user_agent": "PanhispanicMediaResearchBot/0.3.0 (+https://coprepan.hispanistica.com/crawler/; felix.tacke@uni-marburg.de)"
+}
