@@ -1,0 +1,237 @@
+{
+  "schema": "coprepan-operator-authorization/v1",
+  "authorization_id": "DOA-2026-10-09-4",
+  "kind": "DELEGATED_OPERATOR_AUTHORIZATION",
+  "issued_on": "2026-10-09",
+  "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+  "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-10-09 in this repository",
+  "source": {
+    "form": "Written brief given by the operator in the agent session on 2026-10-09, titled 'CO.PRE.PAN 3.0 - Comprehensive Source Qualification, Registry Expansion & Intake Readiness'. The brief is quoted, not paraphrased. This record is written by the commissioned agent from that brief: it is the agent's transcription of the operator's commission, not a document signed by the operator, and it grants nothing the brief does not. The outlets are those the rules of scripts/build_qualification_proposal.py registered from the repository's own inventory (config/source_discovery/qualification_dispositions_2026-10-09.json), together with the outlets registered before that have no verified acquisition and no hold.",
+    "authorising_clauses": [
+      "Dieser Auftrag autorisiert einen zeitlich auf diesen Run begrenzten, technisch kontrollierten Qualifizierungsbetrieb für sämtliche bereits im Repository dokumentierten Outlet-Kandidaten.",
+      "Die Autorisierung umfasst: [...] begrenzte echte HTTP-Requests an zulässige Quellen; Erweiterung und Korrektur von Registry-Einträgen; Registrierung qualifizierter Outlets; [...] begrenzte Artikelaufnahme als Nachweis; Tests, Preservation, Replay und Evaluation; versionierte Baselines und Delegationsdatensätze; temporäres Arming und automatisches Disarming; Dokumentation, Commits und Push.",
+      "Kein `ARM`, keine manuelle Digest-Eingabe und keine zusätzliche projektspezifische Freigabe für Tätigkeiten verlangen, die dieser Auftrag ausdrücklich umfasst. Die Autorisierung muss in einem versionierten Datensatz mit eingefrorenem Scope und nachvollziehbarer Herkunft dokumentiert werden.",
+      "Für diesen umfassenden Qualifizierungs-Run gelten als harte zusätzliche Obergrenzen: maximal 4 Item-Requests je Outlet; maximal 8 sonstige HTTP-Requests je Outlet, einschließlich Robots, Discovery-Dokumenten, Expansion und Redirects; maximal 1.800 HTTP-Transportrequests insgesamt; höchstens eine gleichzeitig laufende Anfrage je Publisher-Origin; grundsätzlich mindestens 10 Sekunden Abstand zwischen Anfragen an denselben Origin; bei Rate-Limits, 429, 503 oder anderen Belastungsindikatoren angemessener Backoff beziehungsweise Hold.",
+      "Wenn das Gesamtbudget erreicht ist, ausstehende Quellen als nicht geprüft ausweisen, nicht still auslassen und nicht nachträglich neue Budgets erzeugen.",
+      "Grenzen: Keine allgemeine Production Activation. Kein unbegrenztes Crawling. Keine zusätzlichen Publisher außerhalb des vorhandenen Kandidateninventars ohne gesonderte Autorisierung. Keine Umgehung von Bot-Challenges, Captchas, Paywalls oder Zugriffssperren. Bestehende Holds respektieren. Keine eigenmächtige Ausweitung bestehender Research-/Robots-Overrides. `co_el_tiempo` bleibt bis zur gesonderten Lizenz-/TDM-Entscheidung ausgeschlossen."
+    ]
+  },
+  "valid_until": "2026-10-11",
+  "policy_versions": [
+    "canary/2026-10-09.1"
+  ],
+  "actions_authorized": [
+    "turn external_acquisition on for exactly one canary per wave and off again",
+    "run the tests on the arming commit, build the canary baseline of that commit and freeze it by its digest under this record",
+    "make the requests the canary driver makes for a wave's outlets within the wave's limits: robots files, the registered channel documents and what they name, at most four item pages per outlet",
+    "preserve, verify, replay, measure, commit and push the evidence"
+  ],
+  "not_authorized": [
+    "any outlet outside the five waves; co_el_tiempo; any outlet that is not registered; any publisher outside the repository's inventory",
+    "any request to an origin under a hold (hn_proceso_digital, ve_efecto_cocuyo, cu_cubanet, ni_articulo66, and any origin a run of this record comes to hold); no way around a bot challenge, a captcha, a paywall, a registration wall or a robots decision",
+    "any request beyond a wave's limits; a second canary of a wave; more than 1800 transport requests under this record in all (the five waves allow 1164)",
+    "articles listed only by an HTML listing without a reviewed allow rule: the listing answers are preserved and nothing they name is requested",
+    "a 12- or 24-hour intake, a scheduler, a repeated acquisition, general production activation, a change of the acquisition policy other than the switch",
+    "any change to a frozen baseline, a receipt, an earlier authorisation record or a decision record of the past; any claim of a human confirmation"
+  ],
+  "holds_in_force": [
+    "hn_proceso_digital, ve_efecto_cocuyo, cu_cubanet, ni_articulo66: bot challenges of 2026-10-08 and 2026-10-09; in no wave; not contacted",
+    "a hold the driver derives from a preserved answer of any run applies at once and is not lifted by this record",
+    "the research-TDM override of CPD-0017 applies as it is in the policy in force; this record does not widen it"
+  ],
+  "technical_gates": [
+    "clean working tree and HEAD equal to origin/main before arming",
+    "this record tracked, touched by exactly one commit, unmodified and pushed",
+    "every outlet of the wave registered",
+    "the full test suite passes on the arming commit",
+    "the baseline is READY_TO_FREEZE with nothing blocking, pins this record's id and digest and the wave, and is frozen once per wave",
+    "the canary's budget is capped by the wave's limits (CPD-0024); a wave is at most 24 outlets (CPD-0025)",
+    "the policy's pace: at least ten seconds between requests to one origin, a stated crawl delay as the binding minimum, one attempt per request",
+    "preflight READY; the driver's own refusals (drift, pushed HEAD, empty spool, budgets, robots, holds) unchanged",
+    "verification after the run: read-back, fixity, replay without network, receipt re-derived from evidence, budget respected",
+    "disarming read back in the file, in HEAD and on origin/main"
+  ],
+  "stop_conditions": [
+    "any technical gate not met",
+    "the canary is not exactly the wave's outlets, or a limit of its budget exceeds the wave's",
+    "the policy version is not one this record names, or the record is out of date",
+    "the wave already has a frozen baseline",
+    "a refusal by the agent environment's own permission layer: recorded, not worked around"
+  ],
+  "disarming": "After a wave's canary, whatever its outcome, external_acquisition is set to disabled, committed and pushed, and the state is read back from the file, HEAD and origin/main. A run that cannot show this ends as not disarmed, never as done.",
+  "decisions": [
+    "the thirteen outlets with verified acquisition and no finding to check are in no wave: their evidence is used as it is",
+    "ec_primicias is in a wave although it is verified: its acquisition of 2026-10-09 went by a route since closed (F9), and its sitemap route has not been taken",
+    "ec_el_universo (F11, apex origin added), uy_montevideo_portal (F12, nameless query kept), py_la_nacion (F8) and gt_lahora (F10) are in a wave to confirm their repairs on the real servers",
+    "a wave that stops is not repeated under this record; its outlets are reported as not tested"
+  ],
+  "waves": [
+    {
+      "label": "qual-1",
+      "outlets": [
+        "ar_clarin",
+        "ar_infobae",
+        "ar_la_nacion",
+        "ar_pagina12",
+        "ar_perfil",
+        "ar_rio_negro",
+        "bo_brujula_digital",
+        "bo_lostiempos",
+        "cl_biobiochile",
+        "cl_cooperativa",
+        "cl_la_discusion",
+        "cl_la_tercera",
+        "cl_the_clinic",
+        "co_diario_del_huila",
+        "co_el_espectador",
+        "co_el_nuevo_siglo",
+        "co_elcolombiano",
+        "co_elpais",
+        "co_semana",
+        "cr_crhoy"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 80,
+        "item_requests_per_outlet": 4,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 240
+      },
+      "canaries": 1,
+      "note": "20 outlets in the alphabetical order of their ids; four item requests and eight other requests per outlet, as the brief states; at most 240 requests in this wave"
+    },
+    {
+      "label": "qual-2",
+      "outlets": [
+        "cr_diario_extra",
+        "cr_la_nacion",
+        "cu_5_de_septiembre",
+        "cu_havanatimes",
+        "cu_juventud_rebelde",
+        "cu_periodico26",
+        "cu_trabajadores",
+        "do_el_caribe",
+        "do_el_nacional",
+        "do_hoy",
+        "do_listin_diario",
+        "ec_el_comercio",
+        "ec_el_mercurio",
+        "ec_el_universo",
+        "ec_expreso",
+        "ec_la_republica_ec",
+        "ec_primicias",
+        "es_abc",
+        "es_el_correo",
+        "es_el_pais"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 80,
+        "item_requests_per_outlet": 4,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 240
+      },
+      "canaries": 1,
+      "note": "20 outlets in the alphabetical order of their ids; four item requests and eight other requests per outlet, as the brief states; at most 240 requests in this wave"
+    },
+    {
+      "label": "qual-3",
+      "outlets": [
+        "es_eldiario_es",
+        "es_la_vanguardia",
+        "gt_elsiglo",
+        "gt_emisoras_unidas",
+        "gt_lahora",
+        "gt_nuestrodiario",
+        "gt_prensa_libre",
+        "gt_publinews",
+        "hn_contracorriente",
+        "hn_diariotiempo",
+        "hn_el_heraldo",
+        "hn_hondudiario",
+        "hn_la_prensa",
+        "hn_radio_progreso",
+        "mx_animal_politico",
+        "mx_el_siglo_de_torreon",
+        "mx_el_universal",
+        "mx_la_jornada",
+        "mx_milenio"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 76,
+        "item_requests_per_outlet": 4,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 228
+      },
+      "canaries": 1,
+      "note": "19 outlets in the alphabetical order of their ids; four item requests and eight other requests per outlet, as the brief states; at most 228 requests in this wave"
+    },
+    {
+      "label": "qual-4",
+      "outlets": [
+        "ni_despacho_505",
+        "ni_el_19_digital",
+        "pa_critica",
+        "pa_diaadia",
+        "pa_el_siglo",
+        "pa_la_prensa",
+        "pa_laestrelladepanama",
+        "pa_metro_libre",
+        "pa_midiario",
+        "pa_panama_24_horas",
+        "pa_panama_america",
+        "pe_diario_los_andes",
+        "pe_diario_uno",
+        "pe_el_buho",
+        "pe_el_comercio",
+        "pe_elperuano",
+        "pe_expreso",
+        "pe_peru21",
+        "pr_el_nuevo_dia"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 76,
+        "item_requests_per_outlet": 4,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 228
+      },
+      "canaries": 1,
+      "note": "19 outlets in the alphabetical order of their ids; four item requests and eight other requests per outlet, as the brief states; at most 228 requests in this wave"
+    },
+    {
+      "label": "qual-5",
+      "outlets": [
+        "pr_metro_puerto_rico",
+        "py_abc_color",
+        "py_adn_digital",
+        "py_la_nacion",
+        "py_noticias_cde",
+        "py_ultima_hora",
+        "sv_diario_co_latino",
+        "sv_diario_el_mundo",
+        "uy_el_observador",
+        "uy_el_pais",
+        "uy_ladiaria",
+        "uy_montevideo_portal",
+        "ve_analitica",
+        "ve_correo_del_caroni",
+        "ve_el_impulso",
+        "ve_el_nacional",
+        "ve_eldiario",
+        "ve_eluniversal",
+        "ve_ultimas_noticias"
+      ],
+      "registration": null,
+      "limits": {
+        "item_requests_total": 76,
+        "item_requests_per_outlet": 4,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 228
+      },
+      "canaries": 1,
+      "note": "19 outlets in the alphabetical order of their ids; four item requests and eight other requests per outlet, as the brief states; at most 228 requests in this wave"
+    }
+  ]
+}
