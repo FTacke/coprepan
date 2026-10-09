@@ -141,7 +141,7 @@ defects (§5a).
 |---|---|---|
 | Agent instructions | in place | `AGENTS.md`, `CLAUDE.md` |
 | Document hierarchy and authority index | in place | `docs/architecture/INDEX.md` |
-| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0020 `ACTIVE_WITH_VALIDATION_DEBT` (§6; see the registry for each) | `docs/decisions/` |
+| Decisions | CPD-0001 to CPD-0004 `ACTIVE`; CPD-0005 to CPD-0021 `ACTIVE_WITH_VALIDATION_DEBT`; CPD-0022 `DIRECTION_NOT_STARTED` (§6; see the registry for each) | `docs/decisions/` |
 | **Foundation Core I** (master plan §12 item 3) | **complete** as infrastructure: all six items implemented and tested; the legacy import executed and repeatable; CPD-0003 reviewed. Reproducibility / infrastructure integrity only | run report of 2026-10-07 (core pipeline) §2 |
 | Naming contract — lexical rules for corpus, generation, provenance class, `country_id`, `outlet_id`, `release_id`, schema ids | implemented and unit-tested | `src/coprepan/naming.py`, `tests/test_naming.py` |
 | Naming contract — serialisation of fetch, channel, document, version, unit, sentence, token ids; canonical URL key | implemented and unit-tested (CPD-0003); **no id minted** | `src/coprepan/identity.py`, `tests/test_identity.py`, [`docs/identity/INDEX.md`](identity/INDEX.md) |
@@ -590,3 +590,11 @@ run report that carries the evidence.
 - 2026-10-09 (fourth run of the day) — three-wave qualification: **prepared and stopped at the operator's gate; no request, no canary, nothing
   registered**. The operator's wrapper was reviewed on its error paths and ten defects repaired (CPD-0021); the three waves are laid out as
   one decision sheet. Still one outlet with verified acquisition. Run report: [`docs/agent-runs/2026-10-09_three-wave-qualification-prepared.md`](agent-runs/2026-10-09_three-wave-qualification-prepared.md).
+
+- 2026-10-09 (fifth run of the day) — **the operator started the second canary by hand; it stopped after the tests on the arming commit and
+  disarmed itself** (`17cde55` armed, `fb912a1` disarmed, six minutes; no baseline, no request). Cause, reproduced: 22 tests written on
+  2026-10-09 copied the tracked policy and assumed its switch was `disabled`; on the arming commit it is not. Repaired; the suite passes in
+  both states of the switch again. The disarming of the tool worked on its first real use (file, `HEAD`, remote read back). A hook now refuses
+  heredocs mechanically (AGENTS §5). **Delegated operator authorisation was decided by the operator as a direction (CPD-0022) and not built**:
+  the permission layer of the agent's session refused it, and it was not worked around. Still one outlet with verified acquisition; no
+  request since 2026-10-08. Run report: [`docs/agent-runs/2026-10-09_delegation-blocked-and-manual-canary-diagnosed.md`](agent-runs/2026-10-09_delegation-blocked-and-manual-canary-diagnosed.md).

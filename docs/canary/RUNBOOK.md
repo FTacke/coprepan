@@ -206,3 +206,15 @@ The waves, each its own arming, baseline and budget, never two in one:
 
 In wave C five channels are HTML listings without an allow rule: they are read and preserved, and **nothing they list is requested**. `pr_noticel`
 has no other channel and will show no item; that is the design, not a failure. The allow rules are written afterwards from the preserved pages.
+
+## 10. The manual start of 2026-10-09 and what it showed
+
+The operator ran §9's command at 14:15. The tool armed (`17cde55`), ran the tests on the arming commit, **stopped because 22 tests failed**,
+and disarmed (`fb912a1`; file, `HEAD` and `origin/main` read back `disabled`). No baseline was built, nothing was frozen, no request was
+made, and the label `second` is not used up (a label is used by a frozen baseline, and there is none).
+
+The failures were the agent's own: tests added on 2026-10-09 copied `config/acquisition_policy.json` into a temporary repository and assumed
+its switch was `disabled`. On an arming commit it is `enabled`. They are repaired, and the suite was run on an export of the arming commit to
+show it (the report has the numbers). **The same command can be run again.**
+
+Delegated arming by an agent (CPD-0022) is a direction, not a procedure: §1 and the freeze stay a person's two typed confirmations.

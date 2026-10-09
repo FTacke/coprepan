@@ -119,6 +119,10 @@ here-strings mangle line breaks, backslashes, quotes and line endings here.
   to a file and use `git commit -F <file>`.
 - All text files in this repository are LF (`.gitattributes`, `.editorconfig`). When a script
   writes text, write LF explicitly.
+- **The rule is mechanical since 2026-10-09**: a Claude Code hook (`.claude/settings.json` →
+  `scripts/hooks/block_heredocs.py`) refuses a shell command that contains a heredoc or a
+  PowerShell here-string before it runs. A refusal by the hook is not an obstacle to work around —
+  with another shell, an encoded command or a different quoting — it is the rule applying.
 
 ## 6. Storage roots and paths
 

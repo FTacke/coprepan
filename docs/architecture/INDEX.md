@@ -80,6 +80,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0019](../decisions/CPD-0019_canary-findings-repair-budget-reservation-and-source-discovery-inventory.md) | Repair of the first canary's findings F1–F7; hop-wise budgets with a part reserved for index expansion; the source-discovery inventory and its analytic flags; second and extended canary | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0016 §1–§2 |
 | [CPD-0020](../decisions/CPD-0020_candidate-budget-order-listings-new-outlets-and-operator-workflow.md) | Candidate budget newest-first; HTML listings (pagination, dates, waiting candidates); an index read incrementally; outlets new to the registry; the consolidated qualification overview; the operator's canary workflow | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0019 §7, §9 |
 | [CPD-0021](../decisions/CPD-0021_operator-workflow-hardening.md) | The operator's canary workflow after its review: scope shown before `ARM`, disarming read back from file, HEAD and remote, `--disarm-only`, an incomplete run keeps its evidence | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0020 §7 |
+| [CPD-0022](../decisions/CPD-0022_delegated-operator-authorisation.md) | Delegated operator authorisation: a direction with a design; nothing built, nothing amended | `DIRECTION_NOT_STARTED` |
 
 ## 3. Component specifications — active
 
@@ -140,6 +141,7 @@ Machine-checked contracts:
 | Feed families, the newest-first candidate budget, paginated and dated HTML listings, incremental index reading, a listing outlet end to end — on synthetic documents (CPD-0020) | `src/coprepan/discovery.py`, `candidate_filter.py`, `http_acquisition.py`, `canary_driver.py` | `tests/test_source_structures.py` |
 | The operator's workflow run against a real temporary git repository with a bare remote, a failure injected at every step: after any outcome the switch is off in the file, HEAD and remote, or the tool says so and exits 2 (CPD-0021) | `scripts/canary_operator.py` | `tests/test_canary_operator.py` |
 | The qualification overview is the join of its inputs; an outlet new to the registry enters only by an applied proposal and never by collision; the operator's workflow accepts a confirmation from a terminal only | `config/source_discovery/source_qualification_overview_*.json`, `config/registry_review/wave_c_proposal_2026-10-09.json`, `scripts/consolidate_source_discovery.py`, `scripts/apply_registration_proposal.py`, `scripts/canary_operator.py` | `tests/test_source_expansion.py` |
+| No heredoc or here-string in a shell command (AGENTS §5), enforced by a hook | `scripts/hooks/block_heredocs.py`, `.claude/settings.json` | `tests/test_block_heredocs_hook.py` |
 | The research-TDM layer of the policy gate; access controls as observed evidence | `src/coprepan/policy.py`, `src/coprepan/access_control.py`, `src/coprepan/fetcher.py` | `tests/test_research_tdm_policy.py` |
 
 ## 4. Open decisions and gates

@@ -191,7 +191,9 @@ def test_applied_to_a_copy_the_proposal_gives_a_valid_registry_a_record_and_a_ca
     assert selected["ni_confidencial"] == ["ni_confidencial:ch:rss_r001", "ni_confidencial:ch:sitemap_001"]
     assert selected["pa_laestrelladepanama"] == ["pa_laestrelladepanama:ch:sitemap_002", "pa_laestrelladepanama:ch:sitemap_index_001"]
     assert selected["es_el_mundo"] == ["es_el_mundo:ch:rss_r001"] and all(1 <= len(channels) <= 2 for channels in selected.values())
-    assert tracked_policy["policy_version"] == proposal["policy_version_after"] and tracked_policy["external_acquisition"] == "disabled"
+    # applying a proposal never touches the switch: it is what the tracked policy says, armed or not
+    assert tracked_policy["policy_version"] == proposal["policy_version_after"]
+    assert tracked_policy["external_acquisition"] == P.load_policy()["external_acquisition"]
 
 
 def test_a_proposal_is_refused_for_another_registry_without_a_name_or_for_an_outlet_it_does_not_hold():

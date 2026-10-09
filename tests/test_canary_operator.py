@@ -62,6 +62,9 @@ def world(tmp_path, monkeypatch):
     (work / "config").mkdir()
     for name in ("outlet_registry.json", "candidate_rules.json", "acquisition_policy.json"):
         shutil.copyfile(REPO / "config" / name, work / "config" / name)
+    # The temporary repository starts disarmed whatever the checkout's switch says: this suite is also run on the
+    # arming commit, where the tracked policy is `enabled` (the operator's run of 2026-10-09 stopped on exactly that).
+    tool.set_switch("disabled", work / "config" / "acquisition_policy.json")
     (work / "docs" / "canary").mkdir(parents=True)
     (work / "docs" / "canary" / "RUNBOOK.md").write_text("runbook\n", encoding="utf-8")
     git(work, "add", "-A")
