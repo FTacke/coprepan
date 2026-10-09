@@ -1,0 +1,180 @@
+{
+  "apply_with": "python scripts/apply_registration_proposal.py --proposal config/registry_review/extended_canary_proposal_2026-10-09.json --approved-by \"<name>\" --only ec_el_universo --only ec_primicias --only es_el_mundo --only gt_lahora --only ni_confidencial --only pe_diariocorreo --only pe_la_republica --only sv_el_diario_de_hoy [--write]",
+  "basis": "the registry, the legacy discovery audit, the prediscovery files and the inventory of 2026-10-09 (all digests in the inventory); no new research, no request to any publisher, and no result of the second canary (it has not run)",
+  "counts": {
+    "DEFER": 1,
+    "NEEDS_VERIFICATION": 3,
+    "READY_FOR_REGISTRATION_REVIEW": 8
+  },
+  "criterion": "READY_FOR_REGISTRATION_REVIEW: a channel is named with search evidence of 2026-09/10 or by a legacy success, the origin is unambiguous, and what is open is a reviewer's judgement, not a missing fact. NEEDS_VERIFICATION: the route or the scope rests on conflicting, old or no evidence. DEFER: not useful in this wave.",
+  "entries": [
+    {
+      "evidence": "Arc XP RSS read by a third-party crawler with articles dated 2026-09-30/10-01; a category feed documented 2026-03-02",
+      "legacy": "LEGACY_NO_CHANNEL: all 10 legacy discovery runs stopped on the legacy TDM heuristic; no page was ever fetched",
+      "outlet_id": "ec_el_universo",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "access model unknown (paywall or registration possible: a redirect to a login or paywall ends that path and is not worked around)",
+        "ownership changed 2026-02-12 (editorial-independence note, no policy relevance)",
+        "robots.txt never read: a general reservation would be recorded, CPD-0017"
+      ],
+      "value": "Ecuador had no legacy outlet with repeated accepted output; one of two proposed Ecuadorian sources"
+    },
+    {
+      "evidence": "/feed/ documented in a public issue of 2026-03-02 and an RSS link in the site footer per search; legacy news sitemap answered 200 but yielded nothing",
+      "legacy": "LEGACY_NEVER_PRODUCTIVE: 1,155 pages fetched, none accepted (1,148 too_short) — an extractor verdict, not a channel failure",
+      "outlet_id": "ec_primicias",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "the feed evidence is seven months old and not from a crawler report",
+        "CMS unknown"
+      ],
+      "value": "Ecuador, digital native; a publisher other than El Universo"
+    },
+    {
+      "evidence": "RSS read by a third-party crawler, articles dated 2026-09-30/10-01",
+      "legacy": "LEGACY_NO_CHANNEL (legacy TDM heuristic)",
+      "outlet_id": "es_el_mundo",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "feed host e00-elmundo.uecdn.es is another registrable domain: authorised as channel origin only, items stay on elmundo.es (the gate allows this, tested)",
+        "freemium paywall for part of the items",
+        "an item that redirects to a subscription page ends that path only"
+      ],
+      "value": "second Spanish source beside the one legacy outlet (es_el_pais); different publisher group"
+    },
+    {
+      "evidence": "/feed/ read by a third-party crawler with 10 items; WordPress with Yoast inferred from /sitemap_index.xml and shortlinks",
+      "legacy": "LEGACY_NEVER_PRODUCTIVE: 8 discovery runs, no article row at all; all five legacy channels answered 200 and were judged empty by the legacy output probe",
+      "outlet_id": "gt_lahora",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "the feed holds only about 10 items: little per visit",
+        "an author segment in the article path must not be rejected by a rule (none is set)"
+      ],
+      "value": "Guatemala; the failure looks like a legacy classification artefact — a clean test of whether the repaired path reads an ordinary WordPress site"
+    },
+    {
+      "evidence": "feed on the apex host read by a third-party crawler (2026-09/10); WordPress with Yoast inferred",
+      "legacy": "LEGACY_NEVER_PRODUCTIVE: all channels answered 200 on the www host, none produced anything; no article row",
+      "outlet_id": "ni_confidencial",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "adds the apex host as a second origin (a reviewer's decision, listed in the proposal)",
+        "time zone: the country the outlet reports on, not its seat in exile",
+        "the English section is not excluded by any rule",
+        "exile and state hostility are noted for the reviewer; they change nothing in the project's requests"
+      ],
+      "value": "Nicaragua had no legacy outlet with accepted output; the proposal's only Nicaraguan source"
+    },
+    {
+      "evidence": "legacy success on the Arc google-news feed and on a sitemap, 2026-06-15",
+      "legacy": "LEGACY_PRODUCTIVE_REPEATED: 3,542 accepted rows, last 2026-06-15 — the most productive legacy outlet",
+      "outlet_id": "pe_diariocorreo",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "a control, not new coverage: adds little to country coverage",
+        "regional editions need their own routes (not attempted)"
+      ],
+      "value": "tells apart a failure of the new path from a failure of an outlet: if this outlet fails in a canary, the cause is ours"
+    },
+    {
+      "evidence": "section feed read by a third party with items dated 2026-10-09",
+      "legacy": "LEGACY_NO_CHANNEL (legacy TDM heuristic)",
+      "outlet_id": "pe_la_republica",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "one section (economy): what is acquired is that section, not the outlet",
+        "no all-sections feed or sitemap is known"
+      ],
+      "value": "a Peruvian source of another publisher group than El Comercio; later waves can add routes"
+    },
+    {
+      "evidence": "legacy success on /rss.xml, 2026-06-15; Yoast index answered 200",
+      "legacy": "LEGACY_PRODUCTIVE_REPEATED: 1,321 accepted rows, last 2026-06-15",
+      "outlet_id": "sv_el_diario_de_hoy",
+      "recommendation": "READY_FOR_REGISTRATION_REVIEW",
+      "risks": [
+        "print ended 2026-03-28; a second domain eldiariodehoy.com is not an origin of the proposal",
+        "58 legacy fetch errors"
+      ],
+      "value": "a second control; El Salvador"
+    },
+    {
+      "evidence": "two feed generations listed by a feed directory; no 2026-dated item retrieved; another directory says the site has no native RSS",
+      "legacy": "LEGACY_NO_CHANNEL (legacy TDM heuristic)",
+      "outlet_id": "mx_la_jornada",
+      "recommendation": "NEEDS_VERIFICATION",
+      "risks": [
+        "it is unknown which, if any, of the two proposed feeds is live",
+        "print-edition and online URL families differ"
+      ],
+      "to_verify": "the first canary contact is itself the cheapest check (two channel requests); registering it first and learning from the receipt is a reasonable operator choice, but it is not an evidenced route",
+      "value": "Mexico has one legacy outlet; high value if a route works"
+    },
+    {
+      "evidence": "a Drupal default feed the legacy system stamped once but judged empty; the front page as a listing rests on one hypothesised allow pattern from search-result URLs",
+      "legacy": "LEGACY_PRODUCTIVE_SPORADIC: 1 accepted of 10 rows; 9 discarded as homepage",
+      "outlet_id": "bo_lostiempos",
+      "recommendation": "NEEDS_VERIFICATION",
+      "risks": [
+        "listing channels have never run live; an HTML front page also lists navigation",
+        "the candidate rule is untested"
+      ],
+      "to_verify": "strike it from the first wave; a later set can carry it with the rule",
+      "value": "Bolivia, regional daily; the only entry that would exercise listing discovery"
+    },
+    {
+      "evidence": "a sitemap index the legacy system never expanded; no RSS found in three searches",
+      "legacy": "LEGACY_NEVER_PRODUCTIVE: 267 pages fetched, all too_short; discovery timed out in 5 of 12 runs",
+      "outlet_id": "cl_el_mercurio",
+      "recommendation": "NEEDS_VERIFICATION",
+      "risks": [
+        "emol.com is the free portal of the group: whether it stands for the newspaper is an open operator decision",
+        "unknown whether the index lists recent articles"
+      ],
+      "to_verify": "operator decision on Emol; contents of the index (an index expansion on a non-WordPress site is first tested by the second canary's other indexes)",
+      "value": "Chile already has two outlets with repeated legacy output"
+    },
+    {
+      "evidence": "legacy channels only: a 'megasitemap' index never expanded and a Google sitemap judged empty; no search evidence of a working route",
+      "legacy": "LEGACY_PRODUCTIVE_SPORADIC: 1 accepted of 764 rows, 675 discarded as gallery",
+      "outlet_id": "pa_laestrelladepanama",
+      "recommendation": "DEFER",
+      "risks": [
+        "same platform as two other Panamanian outlets: three sources of one pattern if it works, three failures if not"
+      ],
+      "to_verify": "revisit after the index expansion has run on a real server",
+      "value": "Panama already has three outlets with repeated legacy output"
+    }
+  ],
+  "first_wave_shape": "eight outlets in six countries (ec ×2, es, gt, ni, pe ×2, sv); a canary of eight has 12 item requests per outlet (96 in all, ceiling 100). Two controls (pe_diariocorreo, sv_el_diario_de_hoy), six outlets that never gave the legacy system a usable article. No listing channel and no candidate rule are in it; the policy's disabled-channel list is unchanged by it.",
+  "of_the_eight_formerly_unproductive": {
+    "NEEDS_VERIFICATION": [
+      "mx_la_jornada",
+      "cl_el_mercurio"
+    ],
+    "READY_FOR_REGISTRATION_REVIEW": [
+      "ec_el_universo",
+      "es_el_mundo",
+      "pe_la_republica",
+      "ec_primicias",
+      "gt_lahora",
+      "ni_confidencial"
+    ]
+  },
+  "prepared_on": "2026-10-09",
+  "proposal": "extended_canary_proposal_2026-10-09.json",
+  "recommended_first_wave": [
+    "ec_el_universo",
+    "ec_primicias",
+    "es_el_mundo",
+    "gt_lahora",
+    "ni_confidencial",
+    "pe_diariocorreo",
+    "pe_la_republica",
+    "sv_el_diario_de_hoy"
+  ],
+  "schema": "coprepan-registry-registration-review/v1",
+  "status": "RECOMMENDATION — not a registration, not a registry state; the labels are the reviewer's aid (READY_FOR_REGISTRATION_REVIEW, NEEDS_VERIFICATION, DEFER)"
+}

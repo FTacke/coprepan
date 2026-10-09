@@ -223,3 +223,39 @@ def test_the_second_canary_is_the_five_registered_outlets_with_the_channel_that_
     assert pin["outlets"]["ve_efecto_cocuyo"] == ["ve_efecto_cocuyo:ch:rss_main", "ve_efecto_cocuyo:ch:sitemap_index_main"]
     assert pin["outlets"]["py_la_nacion"] == ["py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml"]
     assert tracked["external_acquisition"] in ("disabled", "enabled")            # which of the two is the arming's business, not this test's
+
+
+# --- the review of the proposal ----------------------------------------------------------------------
+
+REVIEW = REPO / "config" / "registry_review" / "extended_canary_review_2026-10-09.json"
+
+
+def test_the_review_covers_the_proposal_and_its_first_wave_applies_to_a_copy(tmp_path):
+    review, proposal = load(REVIEW), load(PROPOSAL)
+    labels = {"READY_FOR_REGISTRATION_REVIEW", "NEEDS_VERIFICATION", "DEFER"}
+    assert [e["outlet_id"] for e in review["entries"]] == [e["outlet_id"] for e in sorted(proposal["proposed"], key=lambda e: [x["outlet_id"] for x in review["entries"]].index(e["outlet_id"]))]
+    assert {e["outlet_id"] for e in review["entries"]} == {e["outlet_id"] for e in proposal["proposed"]}
+    assert all(e["recommendation"] in labels and e["evidence"] and e["risks"] and e["legacy"] for e in review["entries"])
+    ready = [e["outlet_id"] for e in review["entries"] if e["recommendation"] == "READY_FOR_REGISTRATION_REVIEW"]
+    assert review["recommended_first_wave"] == sorted(ready)
+    assert review["counts"] == {label: sum(1 for e in review["entries"] if e["recommendation"] == label) for label in labels}
+    if any(R.load_registry(REPO / "config" / "outlet_registry.json").outlets[o]["registration_status"] != "proposed" for o in ready):
+        pytest.skip("the proposal has been applied")
+    applier = script("apply_registration_proposal")
+    copy = checkout_copy(tmp_path)
+    arguments = ["--proposal", str(PROPOSAL), "--approved-by", "a test", "--repository", str(copy), "--write"]
+    for outlet in ready:
+        arguments += ["--only", outlet]
+    assert applier.main(arguments) == 0
+    registry = R.load_registry(copy / "config" / "outlet_registry.json")
+    struck = {e["outlet_id"] for e in proposal["proposed"]} - set(ready)
+    assert all(registry.outlets[o]["registration_status"] == "proposed" for o in struck)
+    # the wave carries no listing channel, no candidate rule, and leaves the policy as it is
+    assert candidate_filter.load_rules(copy / "config" / "candidate_rules.json") == {}
+    assert (copy / "config" / "acquisition_policy.json").read_bytes() == (REPO / "config" / "acquisition_policy.json").read_bytes()
+    budget = D.canary_budget(len(ready))
+    pin = D.driver_pin(budget, registry, ready, P.load_policy(copy / "config" / "acquisition_policy.json")["disabled_channels"], {})
+    assert (budget.outlets, budget.item_requests_per_outlet, budget.item_requests_total) == (8, 12, 96)
+    assert all(1 <= len(channels) <= 2 for channels in pin["outlets"].values())
+    assert not [c for channels in pin["outlets"].values() for c in channels if ":ch:section_page" in c or ":ch:archive" in c]
+    assert len({o[:2] for o in ready}) == 6

@@ -118,6 +118,11 @@ canary and authorise nothing further.
 
 ### 8.1 Second canary — the five registered outlets
 
+**Who does what (checked 2026-10-09, [report](../agent-runs/2026-10-09_second-real-canary-and-extended-readiness.md)).** §1 is marked a person's step and CPD-0016 §4 makes the
+freeze (§3) the operator's act of stating the digest; the agent therefore stops before §1 and does not arm, whatever the brief
+says about the canary itself. Everything else (tests, baseline *build*, preflight, `run`, `verify`, `measure`, disarm, the
+evaluation) can follow in one agent run once §1 and the freeze are done by the operator and committed and pushed.
+
 No preparation is open. In order: arm (§1) → tests on `P` (§2) → baseline with a new file name (§3) → preflight and run (§4)
 → verify and measure (§5) → disarm (§6).
 
@@ -154,6 +159,11 @@ python -m pytest        → commit registry, candidate rules, policy, the regist
 `--only` registers a part; what is struck stays `proposed`. A canary is five outlets or six to fifteen: with twelve, each gets 8
 item requests (96 in all, ceiling 100). Then §1–§6 with the twelve `--outlet` arguments. It is a separate canary with its own
 arming, baseline and budget; do not run it in the same arming as the second canary.
+
+**Review of 2026-10-09.** `config/registry_review/extended_canary_review_2026-10-09.json` rates the twelve entries: eight
+`READY_FOR_REGISTRATION_REVIEW`, three `NEEDS_VERIFICATION` (`mx_la_jornada`, `bo_lostiempos`, `cl_el_mercurio`), one `DEFER`
+(`pa_laestrelladepanama`). Its recommended first wave is eight outlets of six countries (a canary of eight: 12 item requests
+each, 96 in all); the file carries the exact `--only` command. The wave needs no candidate rule and changes no policy value.
 
 A proposal that has been applied cannot be applied again (it is written for the registry it names by digest); a later set is a new
 proposal.

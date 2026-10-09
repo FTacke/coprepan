@@ -546,3 +546,9 @@ run report that carries the evidence.
   `disabled`). A second canary prepared; an extended canary of twelve outlets as a registration proposal. The permission refusals of
   2026-10-08 were diagnosed: all were the arming chain, none a file or configuration fault. No stage state changed; no gate closed.
   Run report: [`docs/agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md`](agent-runs/2026-10-09_discovery-source-recovery-and-acquisition-qualification.md).
+
+- 2026-10-09 (later) — second canary: **not run; stopped at the operator's gate** (arming, §1 of the runbook, and the freeze of the
+  baseline are a person's acts). No request to any publisher; the switch stays `disabled`. In the same run the proposal of the
+  extended canary was reviewed: 8 of 12 outlets `READY_FOR_REGISTRATION_REVIEW` (recommended first wave of six countries), 3
+  `NEEDS_VERIFICATION`, 1 `DEFER` (`config/registry_review/extended_canary_review_2026-10-09.json`; a recommendation, nothing
+  registered). No stage state changed. Run report: [`docs/agent-runs/2026-10-09_second-real-canary-and-extended-readiness.md`](agent-runs/2026-10-09_second-real-canary-and-extended-readiness.md).
