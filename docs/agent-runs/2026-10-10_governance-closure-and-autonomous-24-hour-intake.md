@@ -60,3 +60,39 @@ Commit `227d2d0` holds everything of §2 to §4 (21 files) and was pushed under 
 ("Operator's research supplement of 2026-10-09 …"): the message file of this commit could not be written over a file of the same
 name left by an earlier run, and the stale file was used. The content of the commit is right; only its message is wrong. A pushed
 commit is not rewritten here (no forced push); the commit that adds this section carries the message `227d2d0` should have had.
+
+## 5. The short integrated canary of the controller (`in1-20261010-pilot`)
+
+Under `DIA-2026-10-10-1` (`config/intake/authorizations/2026-10-10_pilot.json`): six outlets (`ar_el_tribuno`, `cr_la_nacion`,
+`cu_havanatimes`, `hn_criterio`, `uy_montevideo_portal`, `ve_efecto_cocuyo`), eleven channels, 30 minutes, cycles of ten minutes, at most
+150 requests. Started by `scripts/intake_operator.py start`: armed in `8d858ac`, full suite on the arming commit, baseline `e5c9b558…`
+frozen in `29c6d57`, preflight `READY`, state written at 2026-10-10T08:20:47Z (10:20:47 local), scheduled task registered and started.
+The session did nothing further: the task ran the controller, finalized, disarmed (`10fe6fd`) and removed itself at 08:50:07Z.
+
+| | |
+|---|---|
+| outcome | `COMPLETED`, verification `PASS` (seven checks) |
+| cycles, runs, restarts, outlet errors | 3, 3, 0, 0 |
+| requests | 46 of 150: 21 item (three redirect hops among them), 25 other |
+| fetch records, answers | 40, all `200`, all `RAW_PRESERVED`, 40 bodies read back from the preservation root and their digests compared |
+| item pages 2xx | 18, three of each outlet; all technically usable under the experimental extractor |
+| last request decided | before 08:49:17Z, 90 seconds before the deadline 08:50:47Z; none at or after it |
+| recovery diagnosis after the run | `CLEAN`, identity `CORRECT` |
+| disarming | `disabled` in the file, in HEAD and on `origin/main`; the task is gone |
+| anomaly flags | `hn_criterio`: three pages `very_short_text` and `duplicate_body_of_other_document` (median 347 body characters) — the known case |
+
+What it showed:
+
+- **No page of the 18 is "new".** All 327 candidates first listed were dated before the start by their channels; in half an hour that is
+  what is to be expected, and the measurement says so instead of counting first sightings as new articles.
+- **A cycle is slow by design.** With ten seconds between requests to one origin and outlets served one after another, the first cycle
+  took 4 min 41 s for six outlets (about 47 s each). For 87 outlets that is about an hour: the hourly polls of the 24-hour intake will in
+  effect be spaced by the length of a cycle, an hour or somewhat more. Not changed: it is the price of one request at a time per origin
+  without concurrency in the workspace.
+- **Not tested for real: a killed controller.** Ending the controller's process from this session was refused by the permission layer of
+  the agent's environment and was not attempted another way. The restart is qualified offline (a process that ends mid-cycle, a process
+  that ends between receiving and preserving, a second process holding the lock) and by the task having started the controller.
+- Nothing was repaired after the pilot: no defect was found. The code of the 24-hour intake is the code of the pilot.
+
+Report of the pilot: `docs/intake/reports/in1-20261010-pilot/` (imported by `import-report`).
+

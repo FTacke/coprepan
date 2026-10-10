@@ -411,7 +411,11 @@ Report: [`2026-10-10`](agent-runs/2026-10-10_governance-closure-and-autonomous-2
   verification, measurement, anomaly flags, a review package, a disarming that commits one file and forces nothing.
 - **Validated:** offline, against a loopback outlet, a clock that does not wait and a temporary git repository
   (`tests/test_intake.py`, `tests/test_intake_operator.py`). What has run against real servers is stated below, and only there.
-- **Run for real:** nothing yet at the time of this entry.
+- **Run for real — the short canary of the controller** (`in1-20261010-pilot`, `DIA-2026-10-10-1`): six outlets, 30 minutes, 46 requests of 150,
+  18 item pages (none of them new by the intake's own measure), verification `PASS`, finalized and disarmed by the scheduled task
+  without the session. A killed controller was not tested for real. Report: `docs/intake/reports/in1-20261010-pilot/`.
+- **The 24-hour intake** (`in1-20261010-24h`, `DIA-2026-10-10-2`): see the run report §6 for whether and when it was started. Until its
+  finalizer has run, nothing about its yield is known, and `external_acquisition` is `enabled` between its arming and its disarming.
 
 ## 6. Validation debt
 

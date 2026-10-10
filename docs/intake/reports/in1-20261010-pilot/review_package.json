@@ -1,0 +1,351 @@
+{
+  "flagger": "intake-anomaly-flags/1",
+  "intake_id": "in1-20261010-pilot",
+  "pages": 18,
+  "per_outlet": 4,
+  "sample": [
+    {
+      "automated_flags": [],
+      "body_characters": 3879,
+      "channel_id": "ar_el_tribuno:ch:rss_r001",
+      "country_id": "ar",
+      "fetch_id": "ft1:041f8962d250be577a659035948b6392c9c64a16a1c6d3ea14cd18f376af30d7",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "ar_el_tribuno",
+      "url": "https://www.eltribuno.com/policiales/2026-10-10-0-0-0-extraditaran-desde-australia-a-un-acusado-de-estafar-con-bitcoin"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 5371,
+      "channel_id": "ar_el_tribuno:ch:rss_r001",
+      "country_id": "ar",
+      "fetch_id": "ft1:9ea4212957b7f8187841eb45c270885d5aee7143dc78d937315df6416f4121f8",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "ar_el_tribuno",
+      "url": "https://www.eltribuno.com/salta/2026-10-10-0-0-0-nacion-restringe-el-comercio-de-frontera-y-estalla-el-rechazo"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2029,
+      "channel_id": "ar_el_tribuno:ch:rss_r001",
+      "country_id": "ar",
+      "fetch_id": "ft1:f76750155caf20a0f56b9fe38148c8d8278b2e479db259b1f52ebcd3d4c0fde9",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "ar_el_tribuno",
+      "url": "https://www.eltribuno.com/deportes/2026-10-9-23-1-0-juampi-ale-arranca-en-toay-como-lider-de-la-fiat-competizione"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2343,
+      "channel_id": "cr_la_nacion:ch:sitemap_001",
+      "country_id": "cr",
+      "fetch_id": "ft1:4f21efc4270758c120de34654a60251e9e0bb348d4d6da8177b1e0626adda1a1",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cr_la_nacion",
+      "url": "https://www.nacion.com/puro-deporte/alejandro-bran-admite-que-se-equivoco-me-habia/ILSHLQTMNFHZHEQ3XKIJPMYVV4/story/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 8626,
+      "channel_id": "cr_la_nacion:ch:sitemap_001",
+      "country_id": "cr",
+      "fetch_id": "ft1:a6b40997494378a3169f1418143b0604bbade4d7eac5e159268fa7af6617bad0",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cr_la_nacion",
+      "url": "https://www.nacion.com/economia/cinco-graficos-muestran-senales-de-deterioro-en-la/RGL5OD6LJVH2PEURYTM7BRXAAE/story/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 7736,
+      "channel_id": "cr_la_nacion:ch:sitemap_001",
+      "country_id": "cr",
+      "fetch_id": "ft1:13221b901fe01c2fa40f070f0d2a85076ad5f3ec0c0c2793c7e54f2d18f59d05",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cr_la_nacion",
+      "url": "https://www.nacion.com/el-pais/inestabilidad-en-tipo-de-cambio-desincentiva/RMIMWTVZLFATRKI44LCN2LG72A/story/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 12216,
+      "channel_id": "cu_havanatimes:ch:rss_003",
+      "country_id": "cu",
+      "fetch_id": "ft1:d93538d7b009d9a86da068f06f47b8dcad42d9c70a1b0e2af7f5ffb002256e30",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cu_havanatimes",
+      "url": "https://havanatimesenespanol.org/diarios/lynn-cruz/cuba-la-religion-sin-fidel/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2512,
+      "channel_id": "cu_havanatimes:ch:rss_003",
+      "country_id": "cu",
+      "fetch_id": "ft1:760187432f7970bb369a3f9358627a643466c3f06d8d07e10815118b427ef482",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cu_havanatimes",
+      "url": "https://havanatimesenespanol.org/diarios/antigona-urbana/la-reina-de-las-aguas/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 4430,
+      "channel_id": "cu_havanatimes:ch:rss_003",
+      "country_id": "cu",
+      "fetch_id": "ft1:12bc60016a6c1fc779835aa4a60972ef9c0cce6fb37441613881e0439b7f0dcc",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "cu_havanatimes",
+      "url": "https://havanatimesenespanol.org/noticias/un-terremoto-de-magnitud-75-sacudio-panama-el-viernes/"
+    },
+    {
+      "automated_flags": [
+        "very_short_text",
+        "duplicate_body_of_other_document"
+      ],
+      "body_characters": 347,
+      "channel_id": "hn_criterio:ch:section_page_r001",
+      "country_id": "hn",
+      "fetch_id": "ft1:42754651ad0e7d59907ff036c7dcf9171e6a03ffe0738539455ce5ff439bac07",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "hn_criterio",
+      "url": "https://criterio.hn/honduras-alinea-su-politica-de-seguridad-con-la-agenda-antiterrorista-de-estados-unidos/"
+    },
+    {
+      "automated_flags": [
+        "very_short_text",
+        "duplicate_body_of_other_document"
+      ],
+      "body_characters": 331,
+      "channel_id": "hn_criterio:ch:section_page_r001",
+      "country_id": "hn",
+      "fetch_id": "ft1:8ac6270dccbf135811af7d4c754c7a693c8989e42f6a7e10db88fab19e14cd0e",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "hn_criterio",
+      "url": "https://criterio.hn/agrecasa-acumula-dictamenes-sin-que-se-concrete-clausura-definitiva-de-mina/"
+    },
+    {
+      "automated_flags": [
+        "very_short_text",
+        "duplicate_body_of_other_document"
+      ],
+      "body_characters": 347,
+      "channel_id": "hn_criterio:ch:section_page_r001",
+      "country_id": "hn",
+      "fetch_id": "ft1:92861959bd23b54ad979b471ff6e911e4af1734a1a37c2b8badb46cc77233ecc",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "hn_criterio",
+      "url": "https://criterio.hn/menores-de-edad-entre-capturados-como-terroristas-en-operacion-escudo-de-honduras/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2745,
+      "channel_id": "uy_montevideo_portal:ch:rss_r001",
+      "country_id": "uy",
+      "fetch_id": "ft1:0cdc67e8bec86d58158b45671be395f4d659581ebe1a983b139da43cdd683982",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "uy_montevideo_portal",
+      "url": "https://www.montevideo.com.uy/Noticias/Cancilleria-divulgo-contactos-de-emergencia-para-uruguayos-por-terremoto-en-Panama-uc978097"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 1923,
+      "channel_id": "uy_montevideo_portal:ch:rss_r001",
+      "country_id": "uy",
+      "fetch_id": "ft1:3b9117fe7f446fd5df92384240c016023c9f8250c7fcb55985d47a9e9487807f",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "uy_montevideo_portal",
+      "url": "https://www.montevideo.com.uy/Noticias/Dieciseis-restaurantes-hicieron-fraude-electrico-en-Cataluna--como-los-descubrieron--uc978096"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2648,
+      "channel_id": "uy_montevideo_portal:ch:rss_r001",
+      "country_id": "uy",
+      "fetch_id": "ft1:011effbe6db3bc46d138ba19647e954cfdea2a080c4cdfe36848d63cf8c7f881",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "older_than_window",
+      "outlet_id": "uy_montevideo_portal",
+      "url": "https://www.montevideo.com.uy/Noticias/Orsi-encabezara-el-lunes-un-Consejo-de-Ministros-con-agenda-abierta-en-Suarez-y-Reyes-uc978095"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2627,
+      "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+      "country_id": "ve",
+      "fetch_id": "ft1:bb3cddc8a8e5d4786e801ab0085034d8cc33c0d75725a0f1bad01119a269c77f",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "ve_efecto_cocuyo",
+      "url": "https://efectococuyo.com/la-humanidad/foro-penal-registra-que-aun-hay-322-presos-politicos-en-venezuela/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 3088,
+      "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+      "country_id": "ve",
+      "fetch_id": "ft1:54a84b9c21b039e081efe1d0f184d47bad32fc2e705911929c0c07a72d72185f",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "ve_efecto_cocuyo",
+      "url": "https://efectococuyo.com/internacionales/cruce-de-acusaciones-entre-petro-y-dirigentes-chavistas-marca-foro-socialista-en-mexico/"
+    },
+    {
+      "automated_flags": [],
+      "body_characters": 2667,
+      "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+      "country_id": "ve",
+      "fetch_id": "ft1:6c432961a1feb166649ba04175c52597f4a84d53884c4da2390efc6d93dd79a8",
+      "human_review": {
+        "is_article": null,
+        "note": null,
+        "published_in_window": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "text_complete": null
+      },
+      "novelty": "known_before_intake",
+      "outlet_id": "ve_efecto_cocuyo",
+      "url": "https://efectococuyo.com/la-humanidad/metro-de-caracas-aumenta-la-tarifa-del-pasaje-a-160-bolivares/"
+    }
+  ],
+  "schema": "coprepan-intake-review-package/v1",
+  "status": "PREPARED — no page has been reviewed; every human_review field is empty and stays empty until a person fills it",
+  "strata": {
+    "ar": 3,
+    "cr": 3,
+    "cu": 3,
+    "hn": 3,
+    "uy": 3,
+    "ve": 3
+  }
+}

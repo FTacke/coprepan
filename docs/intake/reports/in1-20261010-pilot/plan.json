@@ -1,0 +1,216 @@
+{
+  "budget": {
+    "backlog_items_per_outlet_cycle": 1,
+    "cycle_seconds": 600,
+    "discovery_max_bytes": 4194304,
+    "discovery_max_candidates": 200,
+    "discovery_max_depth": 2,
+    "discovery_max_documents": 4,
+    "duration_seconds": 1800,
+    "item_requests_per_origin": 10,
+    "item_requests_per_outlet": 8,
+    "item_requests_per_outlet_hour": 8,
+    "items_per_outlet_cycle": 2,
+    "total_requests": 150
+  },
+  "controller": "intake-controller/1",
+  "derived_from": {
+    "readiness_sha256": "fd1512a03e0a7542a034632509c038a74f3ac8f33c139940dfa28613184a787e",
+    "readiness_version": "2026-10-10.1",
+    "registry_sha256": "7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8"
+  },
+  "intake_id": "in1-20261010-pilot",
+  "left_out": {},
+  "outlets": [
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "entries_last": 25,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.eltribuno.com/rss-new/portada.rss"
+        },
+        {
+          "channel_id": "ar_el_tribuno:ch:rss_r002",
+          "entries_last": 25,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.eltribuno.com/rss-new/salta.rss"
+        }
+      ],
+      "country_id": "ar",
+      "outlet_id": "ar_el_tribuno",
+      "robots_crawl_delay_seconds_observed": 10.0,
+      "tier": "A",
+      "web_origins": [
+        "https://www.eltribuno.com"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "cr_la_nacion:ch:sitemap_001",
+          "entries_last": 100,
+          "kind": "sitemap",
+          "poll_class": "sitemap",
+          "poll_seconds": 3600,
+          "url": "https://www.nacion.com/arc/outboundfeeds/news-sitemap/?outputType=xml"
+        },
+        {
+          "channel_id": "cr_la_nacion:ch:rss_001",
+          "entries_last": 100,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.nacion.com/rss"
+        }
+      ],
+      "country_id": "cr",
+      "outlet_id": "cr_la_nacion",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://www.nacion.com"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "entries_last": 7,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://havanatimesenespanol.org/feed/"
+        },
+        {
+          "channel_id": "cu_havanatimes:ch:sitemap_index_001",
+          "entries_last": 3044,
+          "kind": "sitemap_index",
+          "poll_class": "sitemap_index",
+          "poll_seconds": 21600,
+          "url": "https://havanatimesenespanol.org/sitemap_index.xml"
+        }
+      ],
+      "country_id": "cu",
+      "outlet_id": "cu_havanatimes",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://havanatimesenespanol.org"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": "hn_criterio-candidate-rules/v1",
+      "channels": [
+        {
+          "channel_id": "hn_criterio:ch:rss_r001",
+          "entries_last": 5,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://criterio.hn/feed/"
+        },
+        {
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "entries_last": 275,
+          "kind": "section_page",
+          "poll_class": "listing",
+          "poll_seconds": 7200,
+          "url": "https://criterio.hn/category/actualidad/"
+        }
+      ],
+      "country_id": "hn",
+      "outlet_id": "hn_criterio",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://criterio.hn"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "entries_last": 8,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.montevideo.com.uy/anxml.aspx?59"
+        },
+        {
+          "channel_id": "uy_montevideo_portal:ch:rss_r002",
+          "entries_last": 52,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.montevideo.com.uy/anxml.aspx?58"
+        }
+      ],
+      "country_id": "uy",
+      "outlet_id": "uy_montevideo_portal",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "B",
+      "web_origins": [
+        "https://www.montevideo.com.uy"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "entries_last": 10,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://efectococuyo.com/rss"
+        }
+      ],
+      "country_id": "ve",
+      "outlet_id": "ve_efecto_cocuyo",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://efectococuyo.com"
+      ]
+    }
+  ],
+  "policy_version": "canary/2026-10-10.1",
+  "poll_seconds_by_class": {
+    "bulk": 43200,
+    "feed": 3600,
+    "large_sitemap": 21600,
+    "listing": 7200,
+    "sitemap": 3600,
+    "sitemap_index": 21600
+  },
+  "schema": "coprepan-intake-plan/v1",
+  "totals": {
+    "channels": 11,
+    "countries": [
+      "ar",
+      "cr",
+      "cu",
+      "hn",
+      "uy",
+      "ve"
+    ],
+    "outlets": 6,
+    "tier_a": 5,
+    "tier_b": 1
+  }
+}

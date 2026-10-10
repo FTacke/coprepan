@@ -1,0 +1,686 @@
+{
+  "countries": {
+    "ar": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 5
+    },
+    "cr": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 7
+    },
+    "cu": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 8
+    },
+    "hn": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 7
+    },
+    "uy": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 8
+    },
+    "ve": {
+      "items_2xx": 3,
+      "items_requested": 3,
+      "new_dated_in_window_2xx": 0,
+      "new_undated_later_poll_2xx": 0,
+      "outlets": 1,
+      "outlets_with_2xx_items": 1,
+      "technically_usable": 3,
+      "transport_calls": 5
+    }
+  },
+  "cycles": 3,
+  "deadline_at_utc": "2026-10-10T08:50:47.030693Z",
+  "flagger": "intake-anomaly-flags/1",
+  "intake_id": "in1-20261010-pilot",
+  "not_a_claim": "counts of one bounded intake under an experimental extractor; flags are mechanical hints, not labels a person gave; no statement about an outlet's output, about the press of a country or about suitability for a release",
+  "novelty_classes": {
+    "first_poll_undated": "first listed at its channel's first poll of the intake, undated: stock, not known to be new",
+    "known_before_intake": "listed before the intake began",
+    "new_dated_in_window": "first listed during the intake, and its channel dates it inside the intake window",
+    "new_undated_later_poll": "first listed in a poll after its channel's first poll of the intake; the channel states no date",
+    "older_than_window": "first listed during the intake; its channel dates it before the intake began"
+  },
+  "outlets": {
+    "ar_el_tribuno": {
+      "access_classes_observed": {},
+      "body_characters_median": 3879,
+      "candidates_first_listed_in_the_intake": {
+        "older_than_window": 35
+      },
+      "channels": {
+        "ar_el_tribuno:ch:rss_r001": {
+          "candidates_first_listed": {
+            "older_than_window": 25
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 25,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        },
+        "ar_el_tribuno:ch:rss_r002": {
+          "candidates_first_listed": {
+            "older_than_window": 10
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 25,
+          "items_2xx": 0,
+          "items_requested": 0,
+          "polls": 1
+        }
+      },
+      "country_id": "ar",
+      "flags": {},
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 3879,
+          "candidate_id": "ar_el_tribuno:cand:fd4d26e7d9904a96",
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "fetch_id": "ft1:041f8962d250be577a659035948b6392c9c64a16a1c6d3ea14cd18f376af30d7",
+          "final_url": "https://www.eltribuno.com/policiales/2026-10-10-0-0-0-extraditaran-desde-australia-a-un-acusado-de-estafar-con-bitcoin",
+          "first_listed_at": "2026-10-10T08:20:49.643513Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T04:47:51+00:00",
+          "requested_at": "2026-10-10T08:21:10.690169Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.eltribuno.com/policiales/2026-10-10-0-0-0-extraditaran-desde-australia-a-un-acusado-de-estafar-con-bitcoin"
+        },
+        {
+          "body_characters": 2029,
+          "candidate_id": "ar_el_tribuno:cand:dace08afbaf24024",
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "fetch_id": "ft1:f76750155caf20a0f56b9fe38148c8d8278b2e479db259b1f52ebcd3d4c0fde9",
+          "final_url": "https://www.eltribuno.com/deportes/2026-10-9-23-1-0-juampi-ale-arranca-en-toay-como-lider-de-la-fiat-competizione",
+          "first_listed_at": "2026-10-10T08:20:49.643513Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T04:47:51+00:00",
+          "requested_at": "2026-10-10T08:31:05.585351Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.eltribuno.com/deportes/2026-10-9-23-1-0-juampi-ale-arranca-en-toay-como-lider-de-la-fiat-competizione"
+        },
+        {
+          "body_characters": 5371,
+          "candidate_id": "ar_el_tribuno:cand:d20f46567d4bbc01",
+          "channel_id": "ar_el_tribuno:ch:rss_r001",
+          "fetch_id": "ft1:9ea4212957b7f8187841eb45c270885d5aee7143dc78d937315df6416f4121f8",
+          "final_url": "https://www.eltribuno.com/salta/2026-10-10-0-0-0-nacion-restringe-el-comercio-de-frontera-y-estalla-el-rechazo",
+          "first_listed_at": "2026-10-10T08:20:49.643513Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T04:47:51+00:00",
+          "requested_at": "2026-10-10T08:41:03.365740Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.eltribuno.com/salta/2026-10-10-0-0-0-nacion-restringe-el-comercio-de-frontera-y-estalla-el-rechazo"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "older_than_window": 3
+      },
+      "items_2xx_without_any_flag": 3,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "A",
+      "transport_calls": 5,
+      "watched": false
+    },
+    "cr_la_nacion": {
+      "access_classes_observed": {},
+      "body_characters_median": 7736,
+      "candidates_first_listed_in_the_intake": {
+        "older_than_window": 64
+      },
+      "channels": {
+        "cr_la_nacion:ch:rss_001": {
+          "candidates_first_listed": {},
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 100,
+          "items_2xx": 0,
+          "items_requested": 0,
+          "polls": 1
+        },
+        "cr_la_nacion:ch:sitemap_001": {
+          "candidates_first_listed": {
+            "older_than_window": 64
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 100,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        }
+      },
+      "country_id": "cr",
+      "flags": {},
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 7736,
+          "candidate_id": "cr_la_nacion:cand:ece0f559c7fa318b",
+          "channel_id": "cr_la_nacion:ch:sitemap_001",
+          "fetch_id": "ft1:13221b901fe01c2fa40f070f0d2a85076ad5f3ec0c0c2793c7e54f2d18f59d05",
+          "final_url": "https://www.nacion.com/el-pais/inestabilidad-en-tipo-de-cambio-desincentiva/RMIMWTVZLFATRKI44LCN2LG72A/story/",
+          "first_listed_at": "2026-10-10T08:21:20.237564Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T08:15:00.800000+00:00",
+          "requested_at": "2026-10-10T08:22:01.760984Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.nacion.com/el-pais/inestabilidad-en-tipo-de-cambio-desincentiva/RMIMWTVZLFATRKI44LCN2LG72A/story/"
+        },
+        {
+          "body_characters": 8626,
+          "candidate_id": "cr_la_nacion:cand:068c1d969d96d1b9",
+          "channel_id": "cr_la_nacion:ch:sitemap_001",
+          "fetch_id": "ft1:a6b40997494378a3169f1418143b0604bbade4d7eac5e159268fa7af6617bad0",
+          "final_url": "https://www.nacion.com/economia/cinco-graficos-muestran-senales-de-deterioro-en-la/RGL5OD6LJVH2PEURYTM7BRXAAE/story/",
+          "first_listed_at": "2026-10-10T08:21:20.237564Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T07:00:00.720000+00:00",
+          "requested_at": "2026-10-10T08:30:49.775809Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.nacion.com/economia/cinco-graficos-muestran-senales-de-deterioro-en-la/RGL5OD6LJVH2PEURYTM7BRXAAE/story/"
+        },
+        {
+          "body_characters": 2343,
+          "candidate_id": "cr_la_nacion:cand:f83726313daf6a1f",
+          "channel_id": "cr_la_nacion:ch:sitemap_001",
+          "fetch_id": "ft1:4f21efc4270758c120de34654a60251e9e0bb348d4d6da8177b1e0626adda1a1",
+          "final_url": "https://www.nacion.com/puro-deporte/alejandro-bran-admite-que-se-equivoco-me-habia/ILSHLQTMNFHZHEQ3XKIJPMYVV4/story/",
+          "first_listed_at": "2026-10-10T08:21:20.237564Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T05:01:07.115000+00:00",
+          "requested_at": "2026-10-10T08:41:04.152953Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.nacion.com/puro-deporte/alejandro-bran-admite-que-se-equivoco-me-habia/ILSHLQTMNFHZHEQ3XKIJPMYVV4/story/"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "older_than_window": 3
+      },
+      "items_2xx_without_any_flag": 3,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "A",
+      "transport_calls": 7,
+      "watched": false
+    },
+    "cu_havanatimes": {
+      "access_classes_observed": {},
+      "body_characters_median": 4430,
+      "candidates_first_listed_in_the_intake": {
+        "older_than_window": 204
+      },
+      "channels": {
+        "cu_havanatimes:ch:rss_003": {
+          "candidates_first_listed": {
+            "older_than_window": 4
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 7,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        },
+        "cu_havanatimes:ch:sitemap_index_001": {
+          "candidates_first_listed": {
+            "older_than_window": 200
+          },
+          "documents_read": 4,
+          "documents_unavailable": 0,
+          "entries_listed": 2049,
+          "items_2xx": 0,
+          "items_requested": 0,
+          "polls": 1
+        }
+      },
+      "country_id": "cu",
+      "flags": {},
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 2512,
+          "candidate_id": "cu_havanatimes:cand:ab6d35c782ab6203",
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "fetch_id": "ft1:760187432f7970bb369a3f9358627a643466c3f06d8d07e10815118b427ef482",
+          "final_url": "https://havanatimesenespanol.org/diarios/antigona-urbana/la-reina-de-las-aguas/",
+          "first_listed_at": "2026-10-10T08:22:10.841814Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T03:39:53+00:00",
+          "requested_at": "2026-10-10T08:23:12.301712Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://havanatimesenespanol.org/diarios/antigona-urbana/la-reina-de-las-aguas/"
+        },
+        {
+          "body_characters": 4430,
+          "candidate_id": "cu_havanatimes:cand:0af2b11680fd66ae",
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "fetch_id": "ft1:12bc60016a6c1fc779835aa4a60972ef9c0cce6fb37441613881e0439b7f0dcc",
+          "final_url": "https://havanatimesenespanol.org/noticias/un-terremoto-de-magnitud-75-sacudio-panama-el-viernes/",
+          "first_listed_at": "2026-10-10T08:22:10.841814Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-10T03:19:33+00:00",
+          "requested_at": "2026-10-10T08:30:51.027572Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://havanatimesenespanol.org/noticias/un-terremoto-de-magnitud-75-sacudio-panama-el-viernes/"
+        },
+        {
+          "body_characters": 12216,
+          "candidate_id": "cu_havanatimes:cand:df0065367a03a0a9",
+          "channel_id": "cu_havanatimes:ch:rss_003",
+          "fetch_id": "ft1:d93538d7b009d9a86da068f06f47b8dcad42d9c70a1b0e2af7f5ffb002256e30",
+          "final_url": "https://havanatimesenespanol.org/diarios/lynn-cruz/cuba-la-religion-sin-fidel/",
+          "first_listed_at": "2026-10-10T08:22:10.841814Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-09T23:27:00+00:00",
+          "requested_at": "2026-10-10T08:40:49.790061Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://havanatimesenespanol.org/diarios/lynn-cruz/cuba-la-religion-sin-fidel/"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "older_than_window": 3
+      },
+      "items_2xx_without_any_flag": 3,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 5,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "A",
+      "transport_calls": 8,
+      "watched": false
+    },
+    "hn_criterio": {
+      "access_classes_observed": {},
+      "body_characters_median": 347,
+      "candidates_first_listed_in_the_intake": {},
+      "channels": {
+        "hn_criterio:ch:rss_r001": {
+          "candidates_first_listed": {},
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 5,
+          "items_2xx": 0,
+          "items_requested": 0,
+          "polls": 1
+        },
+        "hn_criterio:ch:section_page_r001": {
+          "candidates_first_listed": {},
+          "documents_read": 3,
+          "documents_unavailable": 0,
+          "entries_listed": 275,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        }
+      },
+      "country_id": "hn",
+      "flags": {
+        "duplicate_body_of_other_document": 3,
+        "very_short_text": 3
+      },
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 347,
+          "candidate_id": "hn_criterio:cand:6e7377d62c74f15c",
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "fetch_id": "ft1:92861959bd23b54ad979b471ff6e911e4af1734a1a37c2b8badb46cc77233ecc",
+          "final_url": "https://criterio.hn/menores-de-edad-entre-capturados-como-terroristas-en-operacion-escudo-de-honduras/",
+          "first_listed_at": "2026-10-09T15:14:48.026893Z",
+          "flags": [
+            "very_short_text",
+            "duplicate_body_of_other_document"
+          ],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-10-03T12:00:00-06:00",
+          "requested_at": "2026-10-10T08:23:54.635743Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://criterio.hn/menores-de-edad-entre-capturados-como-terroristas-en-operacion-escudo-de-honduras/"
+        },
+        {
+          "body_characters": 347,
+          "candidate_id": "hn_criterio:cand:8c2ecd9397f26311",
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "fetch_id": "ft1:42754651ad0e7d59907ff036c7dcf9171e6a03ffe0738539455ce5ff439bac07",
+          "final_url": "https://criterio.hn/honduras-alinea-su-politica-de-seguridad-con-la-agenda-antiterrorista-de-estados-unidos/",
+          "first_listed_at": "2026-10-09T15:14:48.026893Z",
+          "flags": [
+            "very_short_text",
+            "duplicate_body_of_other_document"
+          ],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-10-01T19:10:50-06:00",
+          "requested_at": "2026-10-10T08:30:52.033128Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://criterio.hn/honduras-alinea-su-politica-de-seguridad-con-la-agenda-antiterrorista-de-estados-unidos/"
+        },
+        {
+          "body_characters": 331,
+          "candidate_id": "hn_criterio:cand:80096d0ca04eaec0",
+          "channel_id": "hn_criterio:ch:section_page_r001",
+          "fetch_id": "ft1:8ac6270dccbf135811af7d4c754c7a693c8989e42f6a7e10db88fab19e14cd0e",
+          "final_url": "https://criterio.hn/agrecasa-acumula-dictamenes-sin-que-se-concrete-clausura-definitiva-de-mina/",
+          "first_listed_at": "2026-10-09T15:14:48.026893Z",
+          "flags": [
+            "very_short_text",
+            "duplicate_body_of_other_document"
+          ],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-09-29T20:15:26-06:00",
+          "requested_at": "2026-10-10T08:40:50.565464Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://criterio.hn/agrecasa-acumula-dictamenes-sin-que-se-concrete-clausura-definitiva-de-mina/"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "known_before_intake": 3
+      },
+      "items_2xx_without_any_flag": 0,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 4,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "A",
+      "transport_calls": 7,
+      "watched": true
+    },
+    "uy_montevideo_portal": {
+      "access_classes_observed": {},
+      "body_characters_median": 2648,
+      "candidates_first_listed_in_the_intake": {
+        "older_than_window": 24
+      },
+      "channels": {
+        "uy_montevideo_portal:ch:rss_r001": {
+          "candidates_first_listed": {
+            "older_than_window": 7
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 8,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        },
+        "uy_montevideo_portal:ch:rss_r002": {
+          "candidates_first_listed": {
+            "older_than_window": 17
+          },
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 52,
+          "items_2xx": 0,
+          "items_requested": 0,
+          "polls": 1
+        }
+      },
+      "country_id": "uy",
+      "flags": {},
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 2745,
+          "candidate_id": "uy_montevideo_portal:cand:f67c7bc3e8e0e322",
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "fetch_id": "ft1:0cdc67e8bec86d58158b45671be395f4d659581ebe1a983b139da43cdd683982",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Cancilleria-divulgo-contactos-de-emergencia-para-uruguayos-por-terremoto-en-Panama-uc978097",
+          "first_listed_at": "2026-10-10T08:24:04.000748Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-09T21:21:00-03:00",
+          "requested_at": "2026-10-10T08:24:25.188096Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.montevideo.com.uy/auc.aspx?978097"
+        },
+        {
+          "body_characters": 1923,
+          "candidate_id": "uy_montevideo_portal:cand:e50de0bf3fa0da76",
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "fetch_id": "ft1:3b9117fe7f446fd5df92384240c016023c9f8250c7fcb55985d47a9e9487807f",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Dieciseis-restaurantes-hicieron-fraude-electrico-en-Cataluna--como-los-descubrieron--uc978096",
+          "first_listed_at": "2026-10-10T08:24:04.000748Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-09T21:00:00-03:00",
+          "requested_at": "2026-10-10T08:30:54.270745Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.montevideo.com.uy/auc.aspx?978096"
+        },
+        {
+          "body_characters": 2648,
+          "candidate_id": "uy_montevideo_portal:cand:3bba42d02002e0c0",
+          "channel_id": "uy_montevideo_portal:ch:rss_r001",
+          "fetch_id": "ft1:011effbe6db3bc46d138ba19647e954cfdea2a080c4cdfe36848d63cf8c7f881",
+          "final_url": "https://www.montevideo.com.uy/Noticias/Orsi-encabezara-el-lunes-un-Consejo-de-Ministros-con-agenda-abierta-en-Suarez-y-Reyes-uc978095",
+          "first_listed_at": "2026-10-10T08:24:04.000748Z",
+          "flags": [],
+          "novelty": "older_than_window",
+          "published_hint_utc": "2026-10-09T20:46:00-03:00",
+          "requested_at": "2026-10-10T08:40:51.957423Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://www.montevideo.com.uy/auc.aspx?978095"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "older_than_window": 3
+      },
+      "items_2xx_without_any_flag": 3,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 2,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "B",
+      "transport_calls": 8,
+      "watched": false
+    },
+    "ve_efecto_cocuyo": {
+      "access_classes_observed": {},
+      "body_characters_median": 2667,
+      "candidates_first_listed_in_the_intake": {},
+      "channels": {
+        "ve_efecto_cocuyo:ch:rss_main": {
+          "candidates_first_listed": {},
+          "documents_read": 1,
+          "documents_unavailable": 0,
+          "entries_listed": 10,
+          "items_2xx": 3,
+          "items_requested": 3,
+          "polls": 1
+        }
+      },
+      "country_id": "ve",
+      "flags": {},
+      "held": null,
+      "item_statuses": {
+        "200": 3
+      },
+      "items": [
+        {
+          "body_characters": 2627,
+          "candidate_id": "ve_efecto_cocuyo:cand:fbdaf3a3e952a962",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "fetch_id": "ft1:bb3cddc8a8e5d4786e801ab0085034d8cc33c0d75725a0f1bad01119a269c77f",
+          "final_url": "https://efectococuyo.com/la-humanidad/foro-penal-registra-que-aun-hay-322-presos-politicos-en-venezuela/",
+          "first_listed_at": "2026-10-09T22:42:11.155021Z",
+          "flags": [],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-10-09T21:40:05+00:00",
+          "requested_at": "2026-10-10T08:25:05.134981Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://efectococuyo.com/la-humanidad/foro-penal-registra-que-aun-hay-322-presos-politicos-en-venezuela/"
+        },
+        {
+          "body_characters": 3088,
+          "candidate_id": "ve_efecto_cocuyo:cand:ae256e0ee23a6ea2",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "fetch_id": "ft1:54a84b9c21b039e081efe1d0f184d47bad32fc2e705911929c0c07a72d72185f",
+          "final_url": "https://efectococuyo.com/internacionales/cruce-de-acusaciones-entre-petro-y-dirigentes-chavistas-marca-foro-socialista-en-mexico/",
+          "first_listed_at": "2026-10-09T22:42:11.155021Z",
+          "flags": [],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-10-09T21:08:22+00:00",
+          "requested_at": "2026-10-10T08:31:05.103861Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://efectococuyo.com/internacionales/cruce-de-acusaciones-entre-petro-y-dirigentes-chavistas-marca-foro-socialista-en-mexico/"
+        },
+        {
+          "body_characters": 2667,
+          "candidate_id": "ve_efecto_cocuyo:cand:3fb572bfa6d1a344",
+          "channel_id": "ve_efecto_cocuyo:ch:rss_main",
+          "fetch_id": "ft1:6c432961a1feb166649ba04175c52597f4a84d53884c4da2390efc6d93dd79a8",
+          "final_url": "https://efectococuyo.com/la-humanidad/metro-de-caracas-aumenta-la-tarifa-del-pasaje-a-160-bolivares/",
+          "first_listed_at": "2026-10-09T22:42:11.155021Z",
+          "flags": [],
+          "novelty": "known_before_intake",
+          "published_hint_utc": "2026-10-09T19:56:54+00:00",
+          "requested_at": "2026-10-10T08:41:02.867502Z",
+          "status": 200,
+          "technical_status": "TECHNICALLY_USABLE",
+          "url": "https://efectococuyo.com/la-humanidad/metro-de-caracas-aumenta-la-tarifa-del-pasaje-a-160-bolivares/"
+        }
+      ],
+      "items_2xx": 3,
+      "items_2xx_by_novelty": {
+        "known_before_intake": 3
+      },
+      "items_2xx_without_any_flag": 3,
+      "items_requested": 3,
+      "refused_or_failed": {},
+      "requests_answered": {
+        "channel_document:200": 1,
+        "item:200": 3
+      },
+      "seconds_from_publication_hint_to_request_median": null,
+      "technically_usable": 3,
+      "tier": "A",
+      "transport_calls": 5,
+      "watched": false
+    }
+  },
+  "schema": "coprepan-intake-measurement/v1",
+  "started_at_utc": "2026-10-10T08:20:47.030693Z",
+  "totals": {
+    "candidates_first_listed_in_the_intake": {
+      "older_than_window": 327
+    },
+    "flags": {
+      "duplicate_body_of_other_document": 3,
+      "very_short_text": 3
+    },
+    "items_2xx": 18,
+    "items_requested": 18,
+    "new_dated_in_window_2xx": 0,
+    "new_undated_later_poll_2xx": 0,
+    "outlets": 6,
+    "outlets_with_2xx_items": 6,
+    "technically_usable": 18,
+    "transport_calls": 40
+  }
+}

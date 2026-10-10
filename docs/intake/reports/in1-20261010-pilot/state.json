@@ -1,0 +1,94 @@
+{
+  "baseline": {
+    "authorization": {
+      "authorization_id": "DIA-2026-10-10-1",
+      "intake_id": "in1-20261010-pilot",
+      "issued_by": "Felix Tacke (operator)",
+      "issued_to": "Claude Code (commissioned agent)",
+      "mode": "DELEGATED_INTAKE_AUTHORIZATION",
+      "record": "config/intake/authorizations/2026-10-10_pilot.json",
+      "record_sha256": "2da46df7f7328f0cf56dae00412efaef0e790a23ff65e52b8bab0b40bb7b6d7f"
+    },
+    "file": "docs/intake/BASELINE_FROZEN_2026-10-10_in1-20261010-pilot.json",
+    "manifest_sha256": "e5c9b55834c4a91806fbde1fb2e9a1d1973d0192d56583460b2206d75a2b2495",
+    "pinned_commit": "8d858ac78c9e8529ed6ce6100ab68b9d92025faa",
+    "plan": "config/intake/plans/in1-20261010-pilot.json",
+    "preflight": "READY",
+    "tests_passed": 1569
+  },
+  "channel_last_poll": {
+    "ar_el_tribuno:ch:rss_r001": "2026-10-10T08:20:49.591285Z",
+    "ar_el_tribuno:ch:rss_r002": "2026-10-10T08:20:49.591285Z",
+    "cr_la_nacion:ch:rss_001": "2026-10-10T08:20:49.591285Z",
+    "cr_la_nacion:ch:sitemap_001": "2026-10-10T08:20:49.591285Z",
+    "cu_havanatimes:ch:rss_003": "2026-10-10T08:20:49.591285Z",
+    "cu_havanatimes:ch:sitemap_index_001": "2026-10-10T08:20:49.591285Z",
+    "hn_criterio:ch:rss_r001": "2026-10-10T08:20:49.591285Z",
+    "hn_criterio:ch:section_page_r001": "2026-10-10T08:20:49.591285Z",
+    "uy_montevideo_portal:ch:rss_r001": "2026-10-10T08:20:49.591285Z",
+    "uy_montevideo_portal:ch:rss_r002": "2026-10-10T08:20:49.591285Z",
+    "ve_efecto_cocuyo:ch:rss_main": "2026-10-10T08:20:49.591285Z"
+  },
+  "controller": "intake-controller/1",
+  "cycle": 3,
+  "cycle_started_at": "2026-10-10T08:40:49.592502Z",
+  "deadline_at_local": "2026-10-10T10:50:47+02:00",
+  "deadline_at_utc": "2026-10-10T08:50:47.030693Z",
+  "disarmed": {
+    "at": "2026-10-10T08:50:06Z",
+    "clean": true,
+    "problems": []
+  },
+  "errors": [],
+  "finalized": {
+    "at": "2026-10-10T08:50:03.386291Z",
+    "outcome": "COMPLETED",
+    "verification": "PASS"
+  },
+  "first_poll_done": {
+    "ar_el_tribuno:ch:rss_r001": "2026-10-10T08:21:20.196244Z",
+    "ar_el_tribuno:ch:rss_r002": "2026-10-10T08:21:20.196244Z",
+    "cr_la_nacion:ch:rss_001": "2026-10-10T08:22:10.802284Z",
+    "cr_la_nacion:ch:sitemap_001": "2026-10-10T08:22:10.802284Z",
+    "cu_havanatimes:ch:rss_003": "2026-10-10T08:23:12.742947Z",
+    "cu_havanatimes:ch:sitemap_index_001": "2026-10-10T08:23:12.742947Z",
+    "hn_criterio:ch:rss_r001": "2026-10-10T08:24:03.957651Z",
+    "hn_criterio:ch:section_page_r001": "2026-10-10T08:24:03.957651Z",
+    "uy_montevideo_portal:ch:rss_r001": "2026-10-10T08:24:44.741002Z",
+    "uy_montevideo_portal:ch:rss_r002": "2026-10-10T08:24:44.741002Z",
+    "ve_efecto_cocuyo:ch:rss_main": "2026-10-10T08:25:15.372766Z"
+  },
+  "holds": {},
+  "intake_id": "in1-20261010-pilot",
+  "item_pages_2xx": 18,
+  "items_by_outlet": {
+    "ar_el_tribuno": 3,
+    "cr_la_nacion": 3,
+    "cu_havanatimes": 3,
+    "hn_criterio": 3,
+    "uy_montevideo_portal": 6,
+    "ve_efecto_cocuyo": 3
+  },
+  "last_checkpoint_at": "2026-10-10T08:41:04.919522Z",
+  "outlets_done_in_cycle": [
+    "cu_havanatimes",
+    "hn_criterio",
+    "uy_montevideo_portal",
+    "ve_efecto_cocuyo",
+    "ar_el_tribuno",
+    "cr_la_nacion"
+  ],
+  "plan_sha256": "4d7b8cfbfe295032fe6c52f50e3b4c306c721c4e589bb392eaae6ffdc9a9c14e",
+  "preservation": "nothing pending",
+  "requests_total": 46,
+  "restarts": 0,
+  "run_ids": [
+    "acq1-20261010T082049591285Z-290b00876fd6",
+    "acq1-20261010T083049592023Z-5d21b59e0000",
+    "acq1-20261010T084049592502Z-f2436c5d24ed"
+  ],
+  "schema": "coprepan-intake-state/v1",
+  "started_at_local": "2026-10-10T10:20:47+02:00",
+  "started_at_utc": "2026-10-10T08:20:47.030693Z",
+  "status": "COMPLETED"
+}

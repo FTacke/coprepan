@@ -1,0 +1,84 @@
+{
+  "baseline": {
+    "authorization": {
+      "authorization_id": "DIA-2026-10-10-1",
+      "intake_id": "in1-20261010-pilot",
+      "issued_by": "Felix Tacke (operator)",
+      "issued_to": "Claude Code (commissioned agent)",
+      "mode": "DELEGATED_INTAKE_AUTHORIZATION",
+      "record": "config/intake/authorizations/2026-10-10_pilot.json",
+      "record_sha256": "2da46df7f7328f0cf56dae00412efaef0e790a23ff65e52b8bab0b40bb7b6d7f"
+    },
+    "file": "docs/intake/BASELINE_FROZEN_2026-10-10_in1-20261010-pilot.json",
+    "manifest_sha256": "e5c9b55834c4a91806fbde1fb2e9a1d1973d0192d56583460b2206d75a2b2495",
+    "pinned_commit": "8d858ac78c9e8529ed6ce6100ab68b9d92025faa",
+    "plan": "config/intake/plans/in1-20261010-pilot.json",
+    "preflight": "READY",
+    "tests_passed": 1569
+  },
+  "controller": "intake-controller/1",
+  "cycles": 3,
+  "deadline_at_utc": "2026-10-10T08:50:47.030693Z",
+  "errors": 0,
+  "fetch_records": 40,
+  "finalized_at_utc": "2026-10-10T08:50:03.386291Z",
+  "holds_that_arose": {},
+  "intake_id": "in1-20261010-pilot",
+  "item_pages_2xx": 18,
+  "outcome": "COMPLETED",
+  "outlets_with_item_pages": 6,
+  "plan_sha256": "4d7b8cfbfe295032fe6c52f50e3b4c306c721c4e589bb392eaae6ffdc9a9c14e",
+  "requests": {
+    "item": 21,
+    "other": 25,
+    "total": 46
+  },
+  "response_classes": {
+    "200": 40
+  },
+  "restarts": 0,
+  "runs": 3,
+  "schema": "coprepan-intake-receipt/v1",
+  "started_at_utc": "2026-10-10T08:20:47.030693Z",
+  "stopped_because": null,
+  "verification": {
+    "checks": [
+      {
+        "check": "nothing_left_open",
+        "detail": "0 open packs with content",
+        "status": "PASS"
+      },
+      {
+        "check": "every_answer_is_raw_preserved",
+        "detail": "40 RAW_PRESERVED of 40 answers with a body",
+        "status": "PASS"
+      },
+      {
+        "check": "preservation_readback_and_fixity",
+        "detail": "40 bodies read back from the preservation root; all verify",
+        "status": "PASS"
+      },
+      {
+        "check": "raw_preserved_matches_verified_bytes",
+        "detail": "40 of 40 RAW_PRESERVED answers have verified preserved bytes",
+        "status": "PASS"
+      },
+      {
+        "check": "recovery_diagnosis",
+        "detail": "CLEAN; identity CORRECT",
+        "status": "PASS"
+      },
+      {
+        "check": "budget_respected",
+        "detail": "46 requests of 150; the most for one outlet 6 of 8",
+        "status": "PASS"
+      },
+      {
+        "check": "no_request_after_the_deadline",
+        "detail": "0 requests started at or after 2026-10-10T08:50:47.030693Z",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  }
+}

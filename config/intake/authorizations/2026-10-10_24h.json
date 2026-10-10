@@ -1,0 +1,51 @@
+{
+  "authorization_id": "DIA-2026-10-10-2",
+  "conditions": [
+    "one start; the deadline is fixed at the start and is not moved by a restart",
+    "every gate of scripts/intake_operator.py start, none switched off",
+    "no request to a held origin or URL; no control is worked around or probed",
+    "ceilings are not targets: nothing is repeated to use a budget up",
+    "the switch is disabled again when the intake ends, whatever its outcome",
+    "the short integrated canary of the controller (DIA-2026-10-10-1) ran first, and what it showed was repaired and requalified"
+  ],
+  "intake": {
+    "ceilings": {
+      "duration_seconds": 86400,
+      "item_requests_per_origin": 150,
+      "item_requests_per_outlet": 120,
+      "item_requests_per_outlet_hour": 10,
+      "total_requests": 12000
+    },
+    "excluded_outlets": [
+      "co_el_tiempo",
+      "es_el_pais",
+      "mx_la_jornada"
+    ],
+    "intake_id": "in1-20261010-24h",
+    "plan": "config/intake/plans/in1-20261010-24h.json",
+    "plan_sha256": "dc313e20ecf2ce2a2de46dbe4dca0d9b4aa8197d34d975eba0f6ed508ec94cc0"
+  },
+  "issued_by": "Felix Tacke (operator)",
+  "issued_on": "2026-10-10",
+  "issued_to": "Claude Code (commissioned agent)",
+  "kind": "DELEGATED_INTAKE_AUTHORIZATION",
+  "policy_versions": [
+    "canary/2026-10-10.1"
+  ],
+  "schema": "coprepan-intake-authorization/v1",
+  "source": {
+    "clauses": [
+      "„Dieser Auftrag autorisiert ausdrücklich den Start eines auf 24 Stunden begrenzten Forschungs-Intakes innerhalb der nachfolgend definierten Grenzen.“",
+      "„Wenn alle Gates erfüllt sind: tatsächlich starten, nicht nur vorbereiten.“",
+      "„maximal 120 Item-Requests je Outlet innerhalb der 24 Stunden“; „maximal 12.000 HTTP-Transportrequests insgesamt, einschließlich Discovery und Redirects“",
+      "„Ein Prozessneustart darf weder die 24-Stunden-Frist verlängern noch Budgets zurücksetzen.“",
+      "„El País Spanien bleibt ausgeschlossen“",
+      "„Keine automatische Erweiterung des autorisierten Scopes.“",
+      "„Keine automatische Wiederholung, nur um Budgets auszuschöpfen.“"
+    ],
+    "commission": "CO.PRE.PAN 3.0 – Governance Closure & Autonomous 24-Hour Intake",
+    "received": "2026-10-10",
+    "what_this_record_is": "the versioned authorisation of the one 24-hour intake the brief commissions. The ceilings are the brief's; the plan stays at or below each. It adds no permission to the commission"
+  },
+  "valid_until": "2026-10-11"
+}
