@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-10 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Applied to an intake (2026-10-10) | [CPD-0028](CPD-0028_confirmation-of-the-open-points-of-cpd-0025-to-cpd-0027.md) §3 and [CPD-0029](CPD-0029_the-bounded-timed-intake.md): the rule holds for a bounded intake as for a canary; `es_el_pais` stays excluded, `ve_efecto_cocuyo` by its feed only, every hold kept |
 | Decided by | the operator, in the brief "CO.PRE.PAN 3.0 – Evidence-Based Access Policy Liberalisation & Source Recovery" of 2026-10-09/10: "So offen wie fachlich, rechtlich und technisch vertretbar; so restriktiv wie tatsächlich erforderlich"; "Eine gewöhnliche HTTP-4xx-Antwort ausschließlich auf /robots.txt führt nicht automatisch zu einem dauerhaften Hold aller anderen Ressourcen desselben Origins"; "Holds möglichst präzise nach Origin, Pfad und Ursache führen"; "Bei fachlich ausreichend klaren technischen Fragen selbstständig entscheiden und implementieren". The scope table and the mechanisms are the run's technical choices, subject to the operator's review |
 | Kind | policy · access control · robots |
 | Scope | what an observed access control holds; how the answer to a robots address is read; nothing about what may lawfully be used |

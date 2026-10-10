@@ -20,7 +20,9 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
-**State after the access-policy run of 2026-10-10 (§5f; this paragraph is the current one, the others are history):** an observed access control now holds what was asked — an origin, or one URL of a channel — and a plain 401/403 for a robots address is a robots file that is not available (CPD-0027, policy `canary/2026-10-10.1`). 114 outlets are registered; **86 have verified acquisition, 85 of them usable, in all 20 countries; none is operationally stable**; ten origins and nine single URLs are held. An intake-readiness file of 87 outlets exists and starts nothing. Nothing is activated and the switch is `disabled`.
+**State after the governance closure of 2026-10-10 (§5g; this paragraph is the current one, the others are history):** the three points CPD-0025 to CPD-0027 left to the operator are confirmed forward-only (CPD-0028), and a controller for a bounded, timed intake exists (CPD-0029): plan, budgets enforced at the transport, a deadline fixed at the start, restart, finalizer, report, disarming — **qualified offline only; §5g says what has run for real.** The outlet numbers are those of §5f. Acquisition is not activated: the switch is `disabled` except between the arming and the disarming of a bounded, separately authorised run.
+
+**State after the access-policy run of 2026-10-10 (§5f; history):** an observed access control now holds what was asked — an origin, or one URL of a channel — and a plain 401/403 for a robots address is a robots file that is not available (CPD-0027, policy `canary/2026-10-10.1`). 114 outlets are registered; **86 have verified acquisition, 85 of them usable, in all 20 countries; none is operationally stable**; ten origins and nine single URLs are held. An intake-readiness file of 87 outlets exists and starts nothing. Nothing is activated and the switch is `disabled`.
 
 **State after the qualification run of 2026-10-09 (§5e; history):** the whole known stock of 145 outlet hypotheses is registered and tested or deferred with its reason: 114 outlets are registered, **83 have verified acquisition, in all 20 countries; none is operationally stable**; 18 origins are held behind an access control. An intake-readiness configuration exists and starts nothing. Nothing is activated and the switch is `disabled`.
 
@@ -394,6 +396,23 @@ Report: [`2026-10-10`](agent-runs/2026-10-10_access-policy-liberalisation-and-so
 - **Open, not technical:** El País (the publisher's CAPTCHA; a page that declares itself not free was served in full; the publisher's stance on
   automated collection) — the operator's and the institution's.
 
+
+### 5g. Governance closure and the bounded intake (2026-10-10, CPD-0028, CPD-0029)
+
+Report: [`2026-10-10`](agent-runs/2026-10-10_governance-closure-and-autonomous-24-hour-intake.md).
+
+- **Confirmed (CPD-0028):** three verified item pages are a minimal technical proof of acquisition and nothing more; the adoption of the
+  rebuilt identity tables stands, its eight conditions checked read-only (`docs/identity/identity_adoption_review_2026-10-10.json`); the
+  scoped access policy applies to an intake, with `es_el_pais` excluded, `ve_efecto_cocuyo` by its feed only and every hold kept. No typed
+  confirmation exists for any of the three and none is claimed.
+- **Built (CPD-0029):** `src/coprepan/intake.py`, `src/coprepan/intake_report.py`, `scripts/intake_operator.py` — an intake plan, an
+  authorisation record of its own, ceilings enforced at the transport and counted from the fetch records, a deadline that a restart does not
+  move, what is new asked first and no page fetched twice, a state file, a scheduled task that resumes and finalizes without a session,
+  verification, measurement, anomaly flags, a review package, a disarming that commits one file and forces nothing.
+- **Validated:** offline, against a loopback outlet, a clock that does not wait and a temporary git repository
+  (`tests/test_intake.py`, `tests/test_intake_operator.py`). What has run against real servers is stated below, and only there.
+- **Run for real:** nothing yet at the time of this entry.
+
 ## 6. Validation debt
 
 Everything scientific. No extraction, annotation, enrichment or release has been validated. The
@@ -706,3 +725,6 @@ run report that carries the evidence.
   Radio Progreso yield articles; El País yields five full articles and then answers with a CAPTCHA and is held; La Jornada's articles are behind
   a challenge. Verified outlets 83 → 86 (85 usable); intake-readiness file of 87 outlets. The switch is `disabled`.
   Run report: [`docs/agent-runs/2026-10-10_access-policy-liberalisation-and-source-recovery.md`](agent-runs/2026-10-10_access-policy-liberalisation-and-source-recovery.md).
+- 2026-10-10 — **governance closure; the bounded, timed intake built** (CPD-0028, CPD-0029). The open points of CPD-0025 to CPD-0027
+  confirmed forward-only; an intake controller with its own authorisation record, budgets, binding deadline, restart, finalizer and
+  disarming, qualified offline. Run report: [`docs/agent-runs/2026-10-10_governance-closure-and-autonomous-24-hour-intake.md`](agent-runs/2026-10-10_governance-closure-and-autonomous-24-hour-intake.md).

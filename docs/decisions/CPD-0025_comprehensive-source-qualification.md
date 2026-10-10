@@ -4,6 +4,7 @@
 |---|---|
 | Date | 2026-10-09 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Confirmed (2026-10-10) | [CPD-0028](CPD-0028_confirmation-of-the-open-points-of-cpd-0025-to-cpd-0027.md) §1: the operator confirms the floor of three item pages as a minimal technical proof — not as evidence of stability, extraction quality, coverage or suitability for a release |
 | Decided by | the operator, in the brief "CO.PRE.PAN 3.0 – Comprehensive Source Qualification, Registry Expansion & Intake Readiness" of 2026-10-09 ("Dieser Auftrag autorisiert einen zeitlich auf diesen Run begrenzten, technisch kontrollierten Qualifizierungsbetrieb für sämtliche bereits im Repository dokumentierten Outlet-Kandidaten"; the budgets of four item requests and eight other requests per outlet and 1 800 requests in all). The rules, the mechanisms and the repairs are the run's technical choices, subject to the operator's review |
 | Kind | governance · registry · discovery |
 | Scope | how an outlet hypothesis becomes a registered outlet for qualification; how a registration is amended; the URL key for a nameless query; the scope of an allow rule; the URL that is requested; the size of an authorised wave |

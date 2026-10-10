@@ -57,3 +57,7 @@ test_block_heredocs_hook.py  # the hook of AGENTS.md section 5: heredocs and her
 test_canary_operator.py      # order and commits of the steps, tests on the arming commit and on the disarmed tree, the digest shown first, no confirmation passable, disarmed after any failure, --disarm-only
 test_delegated_operator.py   # the authorisation record and its check (CPD-0023); the delegated mode end to end without a prompt, written-once record, exact scope, a wave used once, disarmed after any failure, no force option; the interactive mode unchanged
 test_source_qualification.py # the inventory after qualification, the intake-readiness configuration and the access-restriction review are what their builder gives; a stage claims no more than the evidence; no held origin is in an intake (CPD-0025, CPD-0026)
+
+# The bounded, timed intake (CPD-0029)
+test_intake.py               # the intake controller offline: the plan, hourly polls, what is asked first, every budget, the binding deadline, restart, stop, permission withdrawn, target away, holds, the finalizer
+test_intake_operator.py      # the intake authorisation and its check, what a restart re-checks, disarming of the one switch without forcing, a whole tick against a temporary repository, the anomaly flags

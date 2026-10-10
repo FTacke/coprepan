@@ -1,0 +1,44 @@
+{
+  "authorization_id": "DIA-2026-10-10-1",
+  "conditions": [
+    "one start; a second needs a new record",
+    "every gate of scripts/intake_operator.py start, none switched off",
+    "no request to a held origin or URL; nothing is worked around",
+    "the switch is disabled again when it ends, whatever its outcome"
+  ],
+  "intake": {
+    "ceilings": {
+      "duration_seconds": 1800,
+      "item_requests_per_origin": 10,
+      "item_requests_per_outlet": 8,
+      "item_requests_per_outlet_hour": 8,
+      "total_requests": 150
+    },
+    "excluded_outlets": [
+      "co_el_tiempo",
+      "es_el_pais",
+      "mx_la_jornada"
+    ],
+    "intake_id": "in1-20261010-pilot",
+    "plan": "config/intake/plans/in1-20261010-pilot.json",
+    "plan_sha256": "4d7b8cfbfe295032fe6c52f50e3b4c306c721c4e589bb392eaae6ffdc9a9c14e"
+  },
+  "issued_by": "Felix Tacke (operator)",
+  "issued_on": "2026-10-10",
+  "issued_to": "Claude Code (commissioned agent)",
+  "kind": "DELEGATED_INTAKE_AUTHORIZATION",
+  "policy_versions": [
+    "canary/2026-10-10.1"
+  ],
+  "schema": "coprepan-intake-authorization/v1",
+  "source": {
+    "clauses": [
+      "Phase H, Schritt 9: „Einen kurzen integrierten Canary des neuen Controllers durchführen.“",
+      "Phase H, Schritt 10–11: „Preservation, Replay und Resume prüfen.“ „Fehler gegebenenfalls reparieren und erneut qualifizieren.“"
+    ],
+    "commission": "CO.PRE.PAN 3.0 – Governance Closure & Autonomous 24-Hour Intake",
+    "received": "2026-10-10",
+    "what_this_record_is": "the short integrated canary of the new controller that the brief orders before the 24-hour intake: six outlets, half an hour, far below every ceiling of the intake. It adds no permission to the commission and is not the intake"
+  },
+  "valid_until": "2026-10-11"
+}

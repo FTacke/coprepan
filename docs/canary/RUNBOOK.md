@@ -239,3 +239,35 @@ python scripts/canary_operator.py --authorization config/operator_authorizations
   <authorization_id> (DELEGATED_OPERATOR_AUTHORIZATION; issued by <issued_by>)" --only … --write`, tests, commit, push.
 - After a killed run: `python scripts/canary_operator.py --disarm-only`, as in §9.
 - A person can still run §9 at any time; an interactive baseline never pins a record.
+
+## 12. A bounded, timed intake (2026-10-10, CPD-0029)
+
+An intake polls the qualified outlets again and again until a deadline fixed at its start, and ends by itself. One at a time.
+
+```text
+python scripts/intake_operator.py plan --readiness config/intake/intake_readiness_<v>.json --intake-id <id> --out config/intake/plans/<id>.json
+python scripts/intake_operator.py start --authorization config/intake/authorizations/<record>.json
+python scripts/intake_operator.py status [--intake <id>]
+python scripts/intake_operator.py stop --intake <id>
+python scripts/intake_operator.py import-report --intake <id>
+```
+
+- **Plan and record first, committed once each and pushed.** The plan is derived from the readiness file; the record
+  (`coprepan-intake-authorization/v1`) names the plan by path and digest, the ceilings, the excluded outlets, the policy versions and its days.
+- **`start`** needs a clean tree at `origin/main`, the switch `disabled`, no unfinished intake, an empty spool and a `CLEAN` workspace. It arms,
+  runs the full suite on the arming commit, freezes a baseline under `docs/intake/`, runs the preflight, writes the state — **the clock starts
+  there** — and registers the scheduled task `coprepan-intake-<id>`. It returns when the task runs. A failure before that disarms.
+- **The task** runs `intake_operator.py tick --intake <id>` every five minutes: the controller while the intake runs (a second one leaves at
+  once), then the finalizer, the report, the disarming, and its own removal. It needs no session. Its log is `tick.log`, the controller's
+  `controller.log`, both beside the state file in `<RUNTIME>/intake/<id>/`.
+- **State**: `<RUNTIME>/intake/<id>/state.json` — status (`RUNNING`, `FINALIZING`, `STOPPED`, `FAILED`, `BLOCKED`, `COMPLETED`), start and
+  deadline in UTC and local time, cycle, requests, holds, errors, preservation, last checkpoint. `status` prints it with the remaining time.
+- **To stop early**: `stop` (the controller ends after the request it is making; the next tick finalizes and disarms). **The kill switch**:
+  set `"external_acquisition": "disabled"` in `config/acquisition_policy.json` — it is read before every request.
+- **After a reboot or a killed process** nothing is to be done: the task starts the controller again; the deadline and the budgets are the
+  same. If the task itself is gone: `python scripts/intake_operator.py tick --intake <id>` by hand does what the task did.
+- **The report** is in `<RUNTIME>/intake/<id>/report/` (`FINAL_REPORT.md`, `receipt.json`, `measurement.json`, `review_package.json`).
+  `import-report` copies it to `docs/intake/reports/<id>/` and commits nothing; committing it is a person's step.
+- **If the disarming could not push** (someone else pushed in between): the switch is `disabled` in the file and in the local commit; pull
+  or rebase by hand and push. Nothing is forced by the tool.
+

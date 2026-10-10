@@ -547,3 +547,20 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | **new outlet** (term, registry) | an outlet that was never in the legacy system: registered only by an applied proposal; no legacy alias, no legacy row | CPD-0020 §6 |
 | coverage field (added) | `turned_away_newer_than_oldest_newly_kept` (replaces, as the measure of an ordering loss, `…_oldest_kept`) | CPD-0020 §1 |
 | schema ids minted | `coprepan-discovery-coverage/v2`, `coprepan-candidate-budget-replay/v1`, `coprepan-source-qualification-overview/v1`, `coprepan-registry-registration-review/v1`; received: `coprepan-prediscovery-external-research/v1` (the operator's supplement) | the modules, scripts and files named in CPD-0020 |
+
+## 22. Additions of 2026-10-10 (CPD-0029)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **intake** (term) | a bounded run that polls the channels of a frozen plan again and again until a deadline fixed at its start, requests what is new, and ends by itself; one at a time; not a production schedule | CPD-0029 |
+| **intake plan** (term) | the outlets, channels, poll intervals and budgets of one intake, derived from an intake-readiness file; a tracked file, committed once | CPD-0029 §1, `intake.build_plan` |
+| intake id | `in1-<YYYYMMDD>-<label>` (`in1-20261010-24h`); also the name of its state directory `<RUNTIME>/intake/<id>/` and of its scheduled task `coprepan-intake-<id>` | `scripts/intake_operator.py` |
+| intake status | `RUNNING`, `FINALIZING`, `STOPPED`, `FAILED`, `BLOCKED`, `COMPLETED`; receipt outcome also `PARTIAL` (completed, verification not `PASS`) | `intake.py` |
+| poll class of a channel | `feed`, `sitemap`, `large_sitemap`, `sitemap_index`, `listing`, `bulk` | CPD-0029 §2, `intake.channel_class` |
+| **novelty class** of a candidate (term) | `known_before_intake`, `first_poll_undated`, `new_dated_in_window`, `new_undated_later_poll`, `older_than_window`: what a candidate is to an intake. Only the third and the fourth say *new* | CPD-0029 §5, `intake.novelty` |
+| refusal reasons (added, on the request log) | `intake_budget_exhausted`, `intake_deadline_reached`, `intake_permission_withdrawn` (decision `DENY`; no request was made) | `intake.IntakeFetcher` |
+| authorisation kind (added) | `DELEGATED_INTAKE_AUTHORIZATION`; ids `DIA-<date>-<n>`; records under `config/intake/authorizations/` | CPD-0029 §10 |
+| **anomaly flag** (term) | a mechanical hint about a fetched page from its URL and the extraction's own measurements (`intake-anomaly-flags/1`); a reason to look, never a label a person gave, never a filter | CPD-0029 §15, `intake_report.flags_of` |
+| component versions | `intake-controller/1`, `intake-anomaly-flags/1` | `intake.py`, `intake_report.py` |
+| schema ids minted | `coprepan-intake-plan/v1`, `coprepan-intake-state/v1`, `coprepan-intake-receipt/v1`, `coprepan-intake-authorization/v1`, `coprepan-intake-measurement/v1`, `coprepan-intake-review-package/v1`, `coprepan-identity-adoption-review/v1` (CPD-0028) | the same |
+

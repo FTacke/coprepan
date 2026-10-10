@@ -159,8 +159,20 @@ def run_http_acquisition(
     clock: Callable[[], datetime],
     candidate_rules: Mapping[str, Mapping[str, Any]] | None = None,
     use_robots_sitemaps: bool = False,
+    select_due: Callable[[Sequence[schedule.CandidateState], Any], Sequence[schedule.CandidateState]] | None = None,
+    tables: discovery.DiscoveryTables | None = None,
 ) -> dict[str, Any]:
     """Discover through the given channels of one registered outlet and fetch what is due.
+
+    ``select_due``: which of the due candidates are requested, and in which order — given every due
+    candidate and the discovery tables, it returns the ones to ask for; at most ``max_item_fetches``
+    of them are. Without it the planner's own order holds (oldest due first). It chooses among what
+    the planner says is due and what the filter qualified; it can add nothing.
+
+    ``tables``: the discovery tables of this workspace as the caller has loaded them — for a caller
+    that makes many calls in one process and is the workspace's only writer (the intake controller).
+    They were authenticated when they were loaded, and every row this call adds is added to them.
+    Without it they are read, and authenticated, at every call.
 
     Resumable: a second call with the same run completes what the first left undone. Returns a
     summary; everything it says is also on record in the workspace.
@@ -179,14 +191,13 @@ def run_http_acquisition(
         raise acquisition.AcquisitionError(f"an HTTP acquisition needs a run of kind http_fetch, not {run.kind}")
     # The evidence this run adds to must authenticate before the first request is made.
     request_rows(workspace)
-    discovery_tables(workspace)
+    tables = discovery_tables(workspace) if tables is None else tables
     acquisition.open_run(workspace.root, run)
     ledger = workspace.ledger()
     packs: dict[str, pack.OpenPack] = {}
     log = request_log_path(workspace)
     finals: Counter[str] = Counter()
     recorded: Counter[str] = Counter()
-    tables = discovery_tables(workspace)
 
     def record(outlet_of: str, exchange: acquisition.RecordedExchange) -> str:
         fetch_record, status = record_exchange(workspace, ledger, packs, run, outlet_of, exchange)
@@ -325,7 +336,11 @@ def run_http_acquisition(
 
     # Schedule: which qualified candidates are due now.
     due, _ = schedule.plan(qualified, request_rows(workspace), schedule_policy, now=clock(),
-                           current_policy_version=fetcher.gate.policy["policy_version"], limit=max_item_fetches)
+                           current_policy_version=fetcher.gate.policy["policy_version"],
+                           limit=max_item_fetches if select_due is None else len(qualified))
+    if select_due is not None:
+        allowed = {state.candidate_id for state in due}
+        due = [state for state in select_due(due, tables) if state.candidate_id in allowed][:max_item_fetches]
     for item in due:
         candidate = tables.candidates[item.candidate_id]
         # A candidate first seen through the robots source has no registered channel to be gated under.

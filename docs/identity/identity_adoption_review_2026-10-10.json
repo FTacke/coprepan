@@ -1,0 +1,152 @@
+{
+ "schema": "coprepan-identity-adoption-review/v1",
+ "reviewed_on": "2026-10-10",
+ "what_this_is": "an independent read-only comparison of the identity tables moved aside on 2026-10-09 (identity.replaced-0) with the tables in force; nothing was changed by it",
+ "old_tables": {
+  "documents.jsonl": {
+   "present": true,
+   "rows": 461,
+   "sha256": "b2efef734a7ef74ddf094a4ae85807d6badbb846a1f84a630fc1232e5d50b1da"
+  },
+  "observations.jsonl": {
+   "present": true,
+   "rows": 461,
+   "sha256": "dc489bfb92e8323fac6ac7a3e180fe28397dadc4aadd1341c50f7098ffe85665"
+  },
+  "versions.jsonl": {
+   "present": true,
+   "rows": 460,
+   "sha256": "ae0d21069fa283b3db183cea472de183f0b348c4e69e4475dab31964794eba85"
+  },
+  "relations.jsonl": {
+   "present": true,
+   "rows": 13,
+   "sha256": "8647be4bf639cd2eb9d175b000e487b9df32e3d85cc34275fb81a266edfb10cf"
+  }
+ },
+ "tables_in_force": {
+  "documents.jsonl": {
+   "rows": 488
+  },
+  "observations.jsonl": {
+   "rows": 488
+  },
+  "versions.jsonl": {
+   "rows": 487
+  },
+  "relations.jsonl": {
+   "rows": 13
+  }
+ },
+ "differences_for_the_fetches_the_old_tables_knew": {
+  "documents": {
+   "rows_only_in_the_old_tables": 1,
+   "rows_only_in_the_tables_in_force_for_the_same_fetches": 1,
+   "pairs": [
+    {
+     "key": {
+      "document_id": "uy_montevideo_portal:doc:8e17cb0341c65980"
+     },
+     "fields_that_differ": [
+      "outlet_url_rules_version"
+     ],
+     "old": {
+      "outlet_url_rules_version": "uy_montevideo_portal-url-rules/v1"
+     },
+     "new": {
+      "outlet_url_rules_version": "uy_montevideo_portal-url-rules/v2"
+     }
+    }
+   ]
+  },
+  "observations": {
+   "rows_only_in_the_old_tables": 1,
+   "rows_only_in_the_tables_in_force_for_the_same_fetches": 1,
+   "pairs": [
+    {
+     "key": {
+      "fetch_id": "ft1:806d9b448256b5a4e8d2f4bfc34a2e1c5745f2096f0b8d08eddf2f116f628d67"
+     },
+     "fields_that_differ": [
+      "outlet_url_rules_version",
+      "requested_url_key"
+     ],
+     "old": {
+      "outlet_url_rules_version": "uy_montevideo_portal-url-rules/v1",
+      "requested_url_key": "https://www.montevideo.com.uy/auc.aspx"
+     },
+     "new": {
+      "outlet_url_rules_version": "uy_montevideo_portal-url-rules/v2",
+      "requested_url_key": "https://www.montevideo.com.uy/auc.aspx?978027"
+     }
+    }
+   ]
+  },
+  "versions": {
+   "rows_only_in_the_old_tables": 0,
+   "rows_only_in_the_tables_in_force_for_the_same_fetches": 0,
+   "pairs": []
+  },
+  "relations": {
+   "rows_only_in_the_old_tables": 0,
+   "rows_only_in_the_tables_in_force_for_the_same_fetches": 0,
+   "pairs": []
+  }
+ },
+ "criteria": {
+  "1_old_and_new_tables_present": true,
+  "2_difference_exact": {
+   "documents": [
+    1,
+    1
+   ],
+   "observations": [
+    1,
+    1
+   ],
+   "versions": [
+    0,
+    0
+   ],
+   "relations": [
+    0,
+    0
+   ]
+  },
+  "3_no_document_or_observation_lost": {
+   "documents_missing_now": [],
+   "observations_missing_now": [],
+   "versions_missing_now": []
+  },
+  "4_no_documents_merged": {
+   "fetches_whose_document_changed": [],
+   "documents_whose_url_key_changed": []
+  },
+  "5_no_identity_reassigned": {
+   "document_ids_equal_for_every_old_fetch": true,
+   "version_ids_equal_for_every_old_fetch": true
+  },
+  "6_preservation_and_replay": {
+   "workspace_diagnosis": "CLEAN",
+   "ledger": {
+    "FETCH_FAILED": 11,
+    "RAW_PRESERVED": 847
+   },
+   "preserved_but_master_does_not_verify": 0
+  },
+  "7_rebuild_reproducible": {
+   "status": "CORRECT",
+   "exact": false,
+   "fetches_assigned": 488,
+   "differences": {
+    "missing_from_existing": {},
+    "not_supported_by_evidence": {}
+   }
+  },
+  "8_rollback_possible": {
+   "old_directory": "identity.replaced-0",
+   "kept": true,
+   "how": "move identity aside and identity.replaced-0 back; the rebuild then reports the two rows again as it did on 2026-10-09"
+  }
+ }
+}
