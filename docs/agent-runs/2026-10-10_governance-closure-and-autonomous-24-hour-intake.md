@@ -96,3 +96,50 @@ What it showed:
 
 Report of the pilot: `docs/intake/reports/in1-20261010-pilot/` (imported by `import-report`).
 
+## 6. Launch of the 24-hour intake (`in1-20261010-24h`)
+
+| | |
+|---|---|
+| intake id | `in1-20261010-24h` |
+| authorisation | `DIA-2026-10-10-2`, `config/intake/authorizations/2026-10-10_24h.json` (`DELEGATED_INTAKE_AUTHORIZATION`; no typed confirmation) |
+| plan | `config/intake/plans/in1-20261010-24h.json`, SHA-256 `dc313e20ecf2ce2a2de46dbe4dca0d9b4aa8197d34d975eba0f6ed508ec94cc0` |
+| scope | 87 outlets (85 tier A, 2 tier B), 121 channels, 20 countries; `es_el_pais`, `co_el_tiempo`, `mx_la_jornada` not in it; no held origin or URL in it |
+| arming commit (pinned) | `c1bba1b`; full suite on it: 1569 passed |
+| baseline | `docs/intake/BASELINE_FROZEN_2026-10-10_in1-20261010-24h.json`, digest `4d7816d9477c9c8afdc4c640cfa08efc049dbb8bd201ffe58294c063cdb486da`, commit `284b99d` |
+| preflight | `READY` |
+| **started** | **2026-10-10T08:59:45Z — 10:59:45 Europe/Berlin** |
+| **deadline** | **2026-10-11T08:59:45Z — 10:59:45 Europe/Berlin**; no request is decided after 08:58:15Z |
+| status at launch | `RUNNING`; the scheduled task `coprepan-intake-in1-20261010-24h` started the controller at 08:59:48Z |
+
+Budgets (ceilings, enforced at the transport, counted from the fetch records): 120 item requests per outlet, 10 per outlet in any
+hour, 150 per origin, 12 000 requests in all — redirects, robots files and channel documents included. Per cycle an outlet is asked
+for at most three pages, at most one of them stock. Polls: feeds and news sitemaps hourly, listings every 2 h, sitemap indexes and
+large sitemaps every 6 h, the three archive-sized only channels (`cu_juventud_rebelde`, `pe_elperuano`, `py_ultima_hora`) every 12 h.
+
+## 7. What runs without this session, and where to look
+
+- **The task** `coprepan-intake-in1-20261010-24h` (Task Scheduler, the logged-in user, every five minutes) is the controller while the
+  intake runs and, after the deadline, the finalizer: preserve, verify, receipt, measurement, anomaly flags, review package, report,
+  disarm (one commit of `config/acquisition_policy.json`, a plain push), remove itself.
+- **State and logs:** `<RUNTIME>/intake/in1-20261010-24h/state.json`, `controller.log`, `tick.log`.
+  `python scripts/intake_operator.py status --intake in1-20261010-24h` prints the state with the remaining time.
+- **The final report** will be in `<RUNTIME>/intake/in1-20261010-24h/report/` (`FINAL_REPORT.md`, `receipt.json`, `measurement.json`,
+  `review_package.json`). `python scripts/intake_operator.py import-report --intake in1-20261010-24h` copies it to
+  `docs/intake/reports/in1-20261010-24h/`; committing it is a person's step.
+- **To stop early:** `python scripts/intake_operator.py stop --intake in1-20261010-24h`, or set the switch to `disabled` in the
+  policy file — it is read before every request.
+
+## 8. Known limits at launch
+
+- **The task runs in the logged-in user's session.** A locked screen is fine; a log-off or a shutdown pauses the intake. The deadline
+  still binds: after it nothing is requested, and the finalizer and the disarming run at the next log-on. **Until then the switch stays
+  `enabled` in the repository** — if the machine is to be off at the deadline, run `stop` first.
+- **The repository is armed for 24 hours**: `external_acquisition` is `enabled` in HEAD and on `origin/main` from `c1bba1b` until the
+  finalizer's disarming commit. Commits of documents are possible meanwhile; a change under `src`, `scripts` or `config` blocks the
+  intake at the next start of its controller, and a change of a pinned file at its next request.
+- **If someone pushes between now and the end**, the disarming commit is made locally and its push may be refused; the tool does not
+  force. The file on disk is `disabled` either way; `tick.log` and the final report say what happened.
+- **A cycle takes about as long as its interval** (§5): "hourly" means once per cycle.
+- **A killed controller** was not tested on a real run (§5).
+- The pilot's six outlets were polled an hour before the start; what they listed then counts as known before the intake.
+
