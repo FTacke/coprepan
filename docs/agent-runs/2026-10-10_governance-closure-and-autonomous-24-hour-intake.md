@@ -53,3 +53,10 @@ withdrawn; the preservation target away and back; an outlet that becomes held; t
 damaged preserved pack; the authorisation and its ceilings; a record and a plan committed exactly once; what a restart
 re-checks; the disarming (one file, nothing else, no force, a refused push reported, off `main`); a start refused before
 arming; a whole tick; a tick on changed code; the anomaly flags.
+
+## 4a. A commit with the wrong message
+
+Commit `227d2d0` holds everything of §2 to §4 (21 files) and was pushed under a message that belongs to an older commit
+("Operator's research supplement of 2026-10-09 …"): the message file of this commit could not be written over a file of the same
+name left by an earlier run, and the stale file was used. The content of the commit is right; only its message is wrong. A pushed
+commit is not rewritten here (no forced push); the commit that adds this section carries the message `227d2d0` should have had.
