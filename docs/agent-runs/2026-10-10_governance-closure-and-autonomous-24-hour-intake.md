@@ -179,3 +179,40 @@ Not claimed: that these 3 681 pages are what the 87 outlets published in that da
 review package say where to look), or that any outlet is operationally stable. The review package
 (`docs/intake/reports/in1-20261010-24h/review_package.json`) is prepared and every human field is empty.
 
+## 10. Debts named after the intake (the operator, 2026-10-11)
+
+Three things the 24 hours showed are to be worked on and are recorded here as open debts. None is started, none changes a rule or a
+file; each needs its own run and, where it makes requests, its own authorisation.
+
+**D1 — The extractors must get better, Mexico first and everywhere.**
+The baseline extractor is experimental and its numbers are its own. Mexico is the clearest case and an important country: its only
+outlet in the intake, `mx_el_universal`, answered 34 of 34 pages with 200 and yielded 902 words in all (median 174 characters; all
+`very_short_text`), i.e. nearly nothing of the article text was recognised. Beside it: `pa_diaadia` (30 pages, all `empty_extraction`),
+`ve_eluniversal` (13, all empty), `hn_el_heraldo` (18 of 24 empty), `pa_metro_libre` (66 pages, median 32 characters, all
+duplicate-body), `hn_criterio` (median 349). Overall 71 pages are empty, 223 very short, 131 duplicate-body.
+- To do: look at the preserved pages of these outlets (no new request: the bytes are on the preservation root) and find out whether the
+  text is in another place of the markup, in an embedded JSON, or behind a script; compare the extractor candidates of CPD-0018 on them;
+  decide per outlet whether a rule or a better general extractor is the answer. The word counts of the intake are the baseline against
+  which any improvement is measured (`measurement.json`; per outlet in the labels).
+- Replay re-derives the extraction from preserved bytes without a network, so an improved extractor re-reads the 24 hours at no cost.
+
+**D2 — More newspapers must be discovered, Mexico first.**
+The intake covered 85 outlets with pages in 20 countries, but unevenly: Mexico has one outlet in the intake (five of the registry's
+hypotheses are held or deferred, `mx_la_jornada` behind a challenge), Honduras, Cuba and Nicaragua few pages, and 17 outlets
+delivered only stock because their channels state no date. 31 hypotheses of the registry are not registered at all, 22 are only
+registered, and 17 outlets have nothing usable because of an access control (CPD-0027).
+- To do: a new discovery round per country, starting with the countries that have the fewest outlets or the least text per day (Mexico, the
+  small Central American countries, Cuba); for outlets whose channels carry no dates, find a channel that does (a feed or a news sitemap);
+  register what is found by the ordinary route (proposal, review, qualification wave) and not around it.
+- Outlets with an observed access control stay held; nothing in this debt asks for a request to one.
+
+**D3 — A criterion for the age of an article in regular intakes is to be discussed before there is one.**
+The 24-hour intake asked first for what its channel dated into the window and for at most one older page per outlet and cycle; 2 572 of
+3 681 pages (70 %) were dated into the window, 577 were found in the intake but dated older, 466 were known before, 48 are new without a
+date, 107 cannot be placed. The age is the channel's statement, not the page's: a wrong date in a feed passes unnoticed.
+- To discuss: whether a regular intake should fetch by publication age at all (only articles from the last n days, with or without a small
+  allowance for older ones), how an undated candidate is treated, whether the age is read from the page when the channel has none, and
+  whether old material is the business of a separate, bounded backfill with its own authorisation. The brief names historical backfills as
+  a non-goal of this intake; this debt is about what the regular intake should do.
+- Until it is decided, the selection of CPD-0029 §5 stands as it is: new and dated first, new and undated next, a small share of the rest.
+
