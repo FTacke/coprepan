@@ -143,3 +143,39 @@ large sitemaps every 6 h, the three archive-sized only channels (`cu_juventud_re
 - **A killed controller** was not tested on a real run (§5).
 - The pilot's six outlets were polled an hour before the start; what they listed then counts as known before the intake.
 
+## 9. Result of the 24-hour intake (`in1-20261010-24h`)
+
+Evaluated on 2026-10-11 from `docs/intake/reports/in1-20261010-24h/` (imported with `import-report`; the numbers are the finalizer's).
+
+| | |
+|---|---|
+| outcome | `COMPLETED`; verification `PASS` (seven checks); finalized 09:12:44Z, 13 minutes after the deadline, by the scheduled task; disarmed in `48446d3` (`disabled` in the file, HEAD and `origin/main`); the task removed itself |
+| cycles, runs, restarts, outlet errors | 24, 24, 0, 0 |
+| requests | 7 173 of 12 000 (3 822 item, 3 351 other); the most for one outlet 120 of 120; none at or after the deadline |
+| answers | 6 490 with a body, all `RAW_PRESERVED`; 6 530 bodies read back from the preservation root and their digests compared |
+| item pages | 3 691 requested, 3 681 answered 2xx, 3 610 technically usable under the experimental extractor |
+| new by the intake's own measure | **2 572** 2xx pages first listed during the intake and dated inside its window; 48 first listed in a later poll without a date; the rest is stock or older |
+| coverage | 85 of 87 outlets with at least one 2xx item page, in all 20 countries |
+| recovery diagnosis after the run | `CLEAN`, identity `CORRECT` |
+| failures | 10 timeouts, 16 `body_limit_exceeded`, 1 redirect limit, 6 × 404, 1 × 403, 1 × 504 — each on record, none retried to use a budget |
+
+What was seen, as findings and not as judgements:
+
+- **`ve_efecto_cocuyo`:** its feed answered 15 times; the sixteenth request was a challenge. The URL `https://efectococuyo.com/rss` is held
+  (`bot_challenge`) from then on and was not asked again; 17 articles were fetched before. The held URL is in the state and the report.
+- **`pe_elperuano`:** robots address unreachable at every poll (CPD-0027 §3: `unreachable`): no channel document and no item was requested.
+  `hn_radio_progreso`: its feed lists the same ten articles at every one of 24 polls, all fetched in the recovery wave: no new page.
+- **Extraction flags, the known cases first:** `pa_diaadia` (30 pages, all `empty_extraction`), `ve_eluniversal` (13, all empty),
+  `hn_el_heraldo` (18 of 24 empty), `pa_metro_libre` (66 pages, median 32 characters, all `duplicate_body_of_other_document`),
+  `mx_el_universal` (34, all `very_short_text`, median 174), `hn_criterio` (11, median 349). These measure the experimental extractor and
+  the pages' markup; no page was removed or relabelled. Totals: 71 empty, 223 very short, 131 duplicate-body, 21 author-page URLs, 43
+  front-page URLs, 11 gallery/video, 2 sponsored.
+- **Stock outlets:** `cu_juventud_rebelde`, `pa_el_siglo`, `py_ultima_hora`, `hn_la_prensa`, `ar_pagina12`, `cl_biobiochile` and others got
+  only their one stock page per cycle (24 each) and no new page: their channels (sitemaps) state no date or only old ones. That is the
+  measurement, not necessarily the outlet.
+- **Pace:** 24 cycles in 24 hours: a cycle took about an hour, as predicted in §8.
+
+Not claimed: that these 3 681 pages are what the 87 outlets published in that day, that the 2 572 are articles (the flags and the
+review package say where to look), or that any outlet is operationally stable. The review package
+(`docs/intake/reports/in1-20261010-24h/review_package.json`) is prepared and every human field is empty.
+

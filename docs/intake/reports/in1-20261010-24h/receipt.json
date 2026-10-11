@@ -1,0 +1,93 @@
+{
+  "baseline": {
+    "authorization": {
+      "authorization_id": "DIA-2026-10-10-2",
+      "intake_id": "in1-20261010-24h",
+      "issued_by": "Felix Tacke (operator)",
+      "issued_to": "Claude Code (commissioned agent)",
+      "mode": "DELEGATED_INTAKE_AUTHORIZATION",
+      "record": "config/intake/authorizations/2026-10-10_24h.json",
+      "record_sha256": "916fc8eb0c1d4642009aceb74b149756f3653ac5c7c40297a15b3224de934601"
+    },
+    "file": "docs/intake/BASELINE_FROZEN_2026-10-10_in1-20261010-24h.json",
+    "manifest_sha256": "4d7816d9477c9c8afdc4c640cfa08efc049dbb8bd201ffe58294c063cdb486da",
+    "pinned_commit": "c1bba1b1c77b2419fdaedfba8a4fc11f3e0c9ac3",
+    "plan": "config/intake/plans/in1-20261010-24h.json",
+    "preflight": "READY",
+    "tests_passed": 1569
+  },
+  "controller": "intake-controller/1",
+  "cycles": 24,
+  "deadline_at_utc": "2026-10-11T08:59:45.209544Z",
+  "errors": 0,
+  "fetch_records": 6517,
+  "finalized_at_utc": "2026-10-11T09:12:44.268660Z",
+  "holds_that_arose": {
+    "https://efectococuyo.com/rss": "bot_challenge"
+  },
+  "intake_id": "in1-20261010-24h",
+  "item_pages_2xx": 3681,
+  "outcome": "COMPLETED",
+  "outlets_with_item_pages": 85,
+  "plan_sha256": "dc313e20ecf2ce2a2de46dbe4dca0d9b4aa8197d34d975eba0f6ed508ec94cc0",
+  "requests": {
+    "item": 3822,
+    "other": 3351,
+    "total": 7173
+  },
+  "response_classes": {
+    "200": 6473,
+    "301": 9,
+    "403": 1,
+    "404": 6,
+    "504": 1,
+    "failed:body_limit_exceeded": 16,
+    "failed:redirect_limit_exceeded": 1,
+    "failed:timeout": 10
+  },
+  "restarts": 0,
+  "runs": 24,
+  "schema": "coprepan-intake-receipt/v1",
+  "started_at_utc": "2026-10-10T08:59:45.209544Z",
+  "stopped_because": null,
+  "verification": {
+    "checks": [
+      {
+        "check": "nothing_left_open",
+        "detail": "0 open packs with content",
+        "status": "PASS"
+      },
+      {
+        "check": "every_answer_is_raw_preserved",
+        "detail": "6490 RAW_PRESERVED of 6490 answers with a body",
+        "status": "PASS"
+      },
+      {
+        "check": "preservation_readback_and_fixity",
+        "detail": "6530 bodies read back from the preservation root; all verify",
+        "status": "PASS"
+      },
+      {
+        "check": "raw_preserved_matches_verified_bytes",
+        "detail": "6490 of 6490 RAW_PRESERVED answers have verified preserved bytes",
+        "status": "PASS"
+      },
+      {
+        "check": "recovery_diagnosis",
+        "detail": "CLEAN; identity CORRECT",
+        "status": "PASS"
+      },
+      {
+        "check": "budget_respected",
+        "detail": "7173 requests of 12000; the most for one outlet 120 of 120",
+        "status": "PASS"
+      },
+      {
+        "check": "no_request_after_the_deadline",
+        "detail": "0 requests started at or after 2026-10-11T08:59:45.209544Z",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  }
+}
