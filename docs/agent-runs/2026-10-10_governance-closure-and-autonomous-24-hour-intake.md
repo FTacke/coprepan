@@ -197,8 +197,8 @@ duplicate-body), `hn_criterio` (median 349). Overall 71 pages are empty, 223 ver
 - Replay re-derives the extraction from preserved bytes without a network, so an improved extractor re-reads the 24 hours at no cost.
 
 **D2 — More newspapers must be discovered, Mexico first.**
-The intake covered 85 outlets with pages in 20 countries, but unevenly: Mexico has one outlet in the intake (five of the registry's
-hypotheses are held or deferred, `mx_la_jornada` behind a challenge), Honduras, Cuba and Nicaragua few pages, and 17 outlets
+The intake covered 85 outlets with pages in 20 countries, but unevenly: Mexico has one outlet in the intake (six of the registry's
+seven hypotheses are not usable: three held behind a challenge, one with error answers on every channel, two deferred; §11), Honduras, Cuba and Nicaragua few pages, and 17 outlets
 delivered only stock because their channels state no date. 31 hypotheses of the registry are not registered at all, 22 are only
 registered, and 17 outlets have nothing usable because of an access control (CPD-0027).
 - To do: a new discovery round per country, starting with the countries that have the fewest outlets or the least text per day (Mexico, the
@@ -215,4 +215,86 @@ date, 107 cannot be placed. The age is the channel's statement, not the page's: 
   whether old material is the business of a separate, bounded backfill with its own authorisation. The brief names historical backfills as
   a non-goal of this intake; this debt is about what the regular intake should do.
 - Until it is decided, the selection of CPD-0029 §5 stands as it is: new and dated first, new and undated next, a small share of the rest.
+
+## 11. Offline findings on D1 to D3 (2026-10-11)
+
+Made on the preserved bytes of the 24 hours and on tracked files; **no request was made, nothing in `src`, `config` or the tests changed, no
+extractor was adopted.** The scripts were throw-away (they name local paths, which the repository does not hold); what evidences the
+comparison is tracked: `docs/intake/analysis/extraction_density_experiment_2026-10-11.txt`. An observation about what a page contains is
+not a measure of an extractor's quality — that needs the gold sample of the validation gates.
+
+### D1 — why the baseline extractor loses text, and what could be done
+
+1. **Stored bodies are compressed as the server sent them** (CPD-0006 §1). Anything that reads them must decode first; a reader that
+   did not saw "no text" on every page (this investigation made that mistake once and caught it).
+2. **The baseline's rule** (`extraction._Parser.blocks`): the container is the *first of `article`, `main`, `body` that exists anywhere on the
+   page*; a block counts as body text only inside it and not below `nav`, `aside`, `footer`, `header`, `form`, `figure`.
+3. **Two failures of that rule explain the known cases:**
+   - *A decoy `<article>`.* The page has a small `<article>` (a teaser tile, a related story) and the real text lies in `div`/`section`
+     elsewhere: the container is the decoy and the text is outside it. `mx_el_universal` (a ~1 MB Arc page: 954 words in `<p>`, 49 in its `<article>`),
+     `pa_metro_libre`, `hn_el_heraldo`, `hn_criterio`, `hn_contracorriente`, `cu_14ymedio`, `ni_confidencial`, `co_semana`, `ar_la_nacion`.
+   - *Text under a `header`.* `pa_diaadia` puts the article's paragraphs in `<header>` elements inside its `<article>` (428 words in `<p>`,
+     none counted).
+4. **A paragraph-density rule recovers them — and loses elsewhere.** Tried as a throw-away (nearest container holding most paragraph
+   characters, outside navigation and boilerplate lines), 4 pages per outlet, all 87 outlets, compared with the baseline's own count:
+
+   | | words, baseline | words, density rule |
+   |---|---|---|
+   | `mx_el_universal` (4 of 34 pages) | 118 | 2 044 |
+   | `pa_diaadia` | 0 | 1 188 |
+   | `pa_metro_libre` | 20 | 666 |
+   | `hn_criterio` / `hn_contracorriente` | 218 / 254 | 8 312 / 8 449 |
+   | `ni_confidencial`, `cu_14ymedio`, `co_semana` | 489, 459, 745 | 3 566, 2 248, 2 232 |
+   | all 87 outlets, 4 pages each | 212 680 | 186 049 |
+
+   It is **better on 13 outlets and worse on about 34** (`co_elpais` 2 926 → 305, `pa_laestrelladepanama`, `pa_el_siglo`, `ar_clarin`, `gt_emisoras_unidas`
+   and others): where the text is not in `<p>` elements (line breaks in a `div`), or is split over several containers, the density rule
+   finds a fragment while the baseline's container is right. **Taking the larger of the two per outlet would give about 15 % more words
+   than the baseline on the sample (243 569 against 212 680)** — the two rules fail on different pages, which says the answer is a choice
+   per page (or per outlet rule), not one new general heuristic.
+5. **What a density rule also takes:** a tail of related-story titles, a "join our WhatsApp channel" line, a signature stub ("dcs"), bylines
+   and credit lines. Counting words on its output without a boilerplate rule overstates. `hn_criterio`'s 873 words on one page are real article text.
+6. **Some "empty" pages are not articles at all.** `ve_eluniversal` (13 of 13 pages): section pages whose markup is an 8.7 KB shell that submits
+   a form with JavaScript; its sitemap lists 375 one-segment section URLs and 75 others. `hn_el_heraldo`: login and service pages
+   (`/iniciar-sesion` and the like). By URL shape alone, about 160 of the 3 681 pages are not articles (113 account/service-type, 50
+   one-word section paths; an upper bound, the pattern is crude), 34 of them with an empty extraction. **For these the defect is not the
+   extractor but the candidate qualification:** an outlet-specific allow or deny rule (as `hn_criterio` and `pr_noticel` have) or a generic
+   non-article rule would keep them out of the 120-page budget.
+7. **Dates.** Of 28 sampled pages without a publication date, 15 carry a visible Spanish date (`pa_diaadia`, `pa_el_siglo`,
+   `pa_laestrelladepanama`, `cu_juventud_rebelde`), 6 a `<time datetime>`, 3 JSON-LD `datePublished`; 10 have none (login and section pages). The
+   baseline reads the metadata fields it knows and misses the others: an easy gain, and it would move pages from "undated" to "dated".
+8. **Not found:** no page of the problem outlets hid its text behind a script or a paywall; `mx_el_universal` shows 241 mentions of
+   subscription wording in its markup, which this investigation did not resolve into a meter or a mere banner (open).
+
+*Suggested order for the work itself (D1, for a later run with a decision):* (a) fix candidate qualification for the non-article URL shapes
+and `ve_eluniversal`/`hn_el_heraldo`; (b) a fallback inside a candidate extractor: when the container yields little text, try the
+densest paragraph container, with a boilerplate list; (c) read the further date fields; (d) measure each change on a frozen gold sample, per
+outlet, with the 24-hour word counts as the baseline; replay re-reads the preserved bytes at no request.
+
+### D2 — what the registry says about Mexico and the other countries
+
+- **Mexico: seven hypotheses, one usable.** `mx_el_universal` verified; `mx_milenio`, `mx_la_jornada`, `mx_el_siglo_de_torreon` held behind a challenge
+  (CPD-0027); `mx_animal_politico` registered, every channel answered with an error; `mx_el_sol_de_mexico` (no channel found) and
+  `mx_expansion` (no origin) deferred. So Mexico's text in the corpus rests on one outlet whose extraction is itself poor (D1): the discovery
+  work has two parts there — **new outlets** (the registry has none beyond these seven) and **channels** for the two deferred and the
+  error-only one. The held three are not part of it.
+- **By country, hypotheses not yet usable** (not registered, registered only or technically qualified): Bolivia 6 of 8, Costa Rica 5 of 6, Cuba
+  5 of 9, Puerto Rico 3 of 6, El Salvador 4 of 6, Uruguay 5 of 7, Guatemala 4 of 9, Mexico 6 of 7. Argentina, Spain, Chile, Colombia,
+  Ecuador, Panama, Peru, Venezuela, Honduras and the Dominican Republic have 4 to 8 usable outlets each.
+- The intake's 17 outlets that gave only stock (their channels state no date) are a discovery question as well: a second channel with
+  dates (feed or news sitemap) per outlet.
+
+### D3 — the age of what was fetched, as a basis for the criterion
+
+- **New in the window** (2 582 pages with a date): fetched a **median 0.7 hours** after the channel's publication time, 10 % within 0.2 h,
+  90 % within 6.0 h, the latest at 22.7 h. Outlets with the longest median delay: `co_diario_del_huila` 7.5 h, `do_diario_libre` 5.4 h,
+  `pr_el_nuevo_dia` 3.6 h, `ve_analitica` 3.5 h: the hourly cycle plus the three-page-per-cycle cap, not the outlet.
+- **Dated older than the window** (1 020 pages): 492 under one day old, 383 from 1 to 7 days, 26 from 7 to 30, 38 from 30 days to a year,
+  **81 older than a year**. The first two groups (875) are the day before the intake began and what a feed still lists; the 145 older ones are the
+  stock share, taken at most one per outlet and cycle.
+- 89 pages had no date in the channel at all (2.4 %).
+- **Reading for the discussion:** of the 3 681 pages, 3 359 were dated less than 48 hours before the request, 88 two to seven days, 145 more than seven days, and
+  89 not at all; so a rule "published within the last 2 days" would have kept 3 359 and left out 322; a criterion by age is cheap to state and to enforce at selection. The open questions of D3
+  stand: the channel's date is the only basis, undated pages need a rule, and whether old material is wanted at all is for the backfill
+  discussion, not for this intake's selection.
 

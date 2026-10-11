@@ -422,7 +422,7 @@ Report: [`2026-10-10`](agent-runs/2026-10-10_governance-closure-and-autonomous-2
 
 ## 6. Validation debt
 
-**Named after the 24-hour intake of 2026-10-10/11** ([run report §10](agent-runs/2026-10-10_governance-closure-and-autonomous-24-hour-intake.md)): (D1) the extractors must improve, Mexico first and everywhere; (D2) more newspapers must be discovered, Mexico first; (D3) a criterion for the age of an article in regular intakes is to be discussed. None is started.
+**Named after the 24-hour intake of 2026-10-10/11** ([run report §10](agent-runs/2026-10-10_governance-closure-and-autonomous-24-hour-intake.md)): (D1) the extractors must improve, Mexico first and everywhere; (D2) more newspapers must be discovered, Mexico first; (D3) a criterion for the age of an article in regular intakes is to be discussed. None is started; offline findings on all three are in the run report §11.
 
 Everything scientific. No extraction, annotation, enrichment or release has been validated. The
 first validations are defined by the gates of Phases 1–4 (master plan §11).
