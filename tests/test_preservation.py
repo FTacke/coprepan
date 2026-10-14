@@ -245,6 +245,7 @@ def test_the_only_removals_elsewhere_are_the_named_ones():
         "ledger.py": [("quarantine_torn_tail", "truncate")],                   # torn bytes moved to a sidecar first
         "pack.py": [("quarantine_torn_tail", "truncate")],                     # same, open packs in the workspace only
         "preservation_target.py": [("_remove_probe", "rmdir"), ("_remove_probe", "unlink")],  # its own probe files only
+        "preservation_migration.py": [("_discard_own_temporary", "unlink")],   # its own unpublished temporary file only (CPD-0030)
     }
     found = {path.name: sorted(deleting_calls(path.name)) for path in sorted(SRC.glob("*.py"))}
     assert {name: calls for name, calls in found.items() if calls} == expected

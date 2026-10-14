@@ -148,7 +148,8 @@ def test_storage_targets_hold_only_environment_references():
         for line in read(".env.example").splitlines()
         if line and not line.startswith("#")
     )
-    assert sorted(example) == sorted(variables)
+    # the roots, plus the one identity (not a path) the PRESERVATION root is checked against (CPD-0030)
+    assert sorted(example) == sorted(variables + ["COPREPAN_PRESERVATION_TARGET_ID"])
     assert set(example.values()) == {""}, ".env.example must not carry a real path"
 
 

@@ -61,6 +61,22 @@ class StorageRootReadOnly(StorageRefusal):
     """The configured root is reachable but cannot be written to."""
 
 
+class StorageTargetIdentityMismatch(StorageRootUnusable):
+    """``TARGET_IDENTITY_MISMATCH`` (``crosscorpus-storage/v1`` §6 T2; CPD-0030): the PRESERVATION root answers but is not
+    the primary the workstation expects -- another identity, none where one is expected, an unreadable marker, the sister
+    corpus's primary or a BACKUP root."""
+
+
+# The expected identity of the PRESERVATION primary: a target id, not a path (CPD-0030). Set at cutover together with
+# COPREPAN_PRESERVATION_ROOT; unset means "not recorded" and leaves a marker-less root usable, as before.
+EXPECTED_IDENTITY_VARIABLE = "COPREPAN_PRESERVATION_TARGET_ID"
+# Markers that never stand at the root of a CO.PRE.PAN primary.
+FOREIGN_MARKERS = {
+    "corapan_preservation_target.json": "the primary of the sister corpus CO.RA.PAN (contract S4)",
+    "BACKUP_ROOT.json": "a BACKUP root (contract §9): a secondary copy is never a primary",
+}
+
+
 @dataclass(frozen=True)
 class StorageTarget:
     role: str
@@ -284,9 +300,37 @@ def resolve_root(
     root = require_usable_root(value, f"{role} ({target.variable})")
     if not probe(root).reachable:
         raise StorageRootUnreachable(f"{role}: {target.variable} does not name a reachable directory")
+    if role == "PRESERVATION":
+        identity = preservation_identity(root, expected=env.get(EXPECTED_IDENTITY_VARIABLE, "").strip() or None)
+        if identity["state"] == "TARGET_IDENTITY_MISMATCH":
+            raise StorageTargetIdentityMismatch(f"PRESERVATION: TARGET_IDENTITY_MISMATCH ({identity['detail']}); nothing is read or written")
     if writable and not _writable(root):
         raise StorageRootReadOnly(f"{role}: {target.variable} is not writable")
     return root
+
+
+def preservation_identity(root: Path, *, expected: str | None) -> dict[str, str | None]:
+    """T1/T2 of a PRESERVATION root, as data: ``IDENTITY_OK`` | ``IDENTITY_UNRECORDED`` | ``TARGET_IDENTITY_MISMATCH``.
+    Measured at the time of the call (T4); reads the root, writes nothing."""
+    from . import preservation_target  # the marker's owner; imported here because it imports this module
+
+    for name, what in FOREIGN_MARKERS.items():
+        if (Path(root) / name).exists():
+            return {"state": "TARGET_IDENTITY_MISMATCH", "detail": f"the root carries {name}: {what}", "target_id": None}
+    try:
+        marker = preservation_target.read_target(Path(root))
+    except preservation_target.TargetError as error:
+        return {"state": "TARGET_IDENTITY_MISMATCH", "detail": str(error), "target_id": None}
+    if marker is None:
+        if expected:
+            return {"state": "TARGET_IDENTITY_MISMATCH", "target_id": None,
+                    "detail": f"identity {expected!r} is expected and the root carries no {preservation_target.MARKER_NAME}"}
+        return {"state": "IDENTITY_UNRECORDED", "detail": "no marker and no expected identity", "target_id": None}
+    if expected and marker["target_id"] != expected:
+        return {"state": "TARGET_IDENTITY_MISMATCH", "target_id": marker["target_id"],
+                "detail": f"the root is {marker['target_id']!r}, the workstation expects {expected!r}"}
+    return {"state": "IDENTITY_OK", "detail": "the marker matches" + (" the expected identity" if expected else ""),
+            "target_id": marker["target_id"]}
 
 
 def require_usable_root(value: str, what: str) -> Path:

@@ -52,7 +52,9 @@ def test_the_tracked_files_hold_no_machine_location():
     the repository contract covers `src/`, `config/`, `scripts/` and `tests/`; this adds the examples).
     """
     example = (REPO / ".env.example").read_text(encoding="utf-8")
-    assert {line.split("=")[0] for line in example.splitlines() if line and not line.startswith("#")} == set(ENV_NAMES.values())
+    # the roots, plus the PRESERVATION root's expected identity -- a target id, not a location (CPD-0030)
+    assert {line.split("=")[0] for line in example.splitlines() if line and not line.startswith("#")} == \
+        set(ENV_NAMES.values()) | {"COPREPAN_PRESERVATION_TARGET_ID"}
     assert all(line.endswith("=") for line in example.splitlines() if line and not line.startswith("#"))
 
 
