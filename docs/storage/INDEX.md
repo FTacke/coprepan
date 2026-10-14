@@ -588,3 +588,36 @@ promote; readiness is `preservation_target.check_readiness` on the new root; qua
 `COPREPAN_PRESERVATION_ROOT`; the replay is `drain_spooled_packs` and a read-back of every preserved pack. The
 copy, the cutover and the later backup are operator-ordered acts in no tool here. **A result from `D:` (local
 NTFS) is not a qualification of a network file system.**
+
+### 20.5 NEW_FS: the new root, the identity check and the verified pre-copy (CPD-0030, 2026-10-14)
+
+Dated addendum; the tables above are not rewritten. **No cutover:** the interim primary on `D:` stays the primary.
+
+| Holding · role | Root | State |
+|---|---|---|
+| PRODUCTION · `PRESERVATION` (in force) | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | `INTERIM_PRIMARY`, unchanged, still `SOLE_COPY` |
+| PRODUCTION · future primary | `\\dfs.hrz.uni-marburg.de\PROJEKTE\FB10\TACKE_FORSCHUNGSDATEN\projects\panhispanic_media_corpora\coprepan` | PRESENT · **not configured**; marker `coprepan-preservation-newfs`; **`PRE_COPY_NOT_PRIMARY`** |
+| PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | PLANNED (Phase D: produced from the new primary, verified against it) |
+
+- **T2** (contract §6): `storage_roots.resolve_root("PRESERVATION")` compares the root's marker with `COPREPAN_PRESERVATION_TARGET_ID`
+  (`.env`; an identity, not a path) and refuses `TARGET_IDENTITY_MISMATCH` for reading and writing; a CO.RA.PAN marker or a
+  `BACKUP_ROOT.json` at the root is a mismatch in every case.
+- **The copy step has a tool now** (amends §20.4): `python scripts/preservation_migration.py {init-target, plan, copy, verify, receipt,
+  sweep-temp}`; journal, plan copies, run documents and the receipt under `<new root>/_migration/<id>/`.
+- **Pre-copy of 2026-10-14:** baseline 8,816 objects / 395,018,230 B, tree SHA-256 `f4bb0c9c…a1a2c`; copied (first run interrupted at
+  17:03 by a reset SMB session, resumed: 5,762 + 3,054); verified by an unbuffered re-read of every object (0 problems, 0 extra, 0
+  temporary files); journal 8,816 rows, 0 torn, 0 duplicate; a second baseline of the interim primary after the copy has the same tree
+  SHA-256 (the closing delta is empty -- no writer, acquisition disabled); `check_readiness` on the new root `READY` (fixity of 100
+  objects against their manifests). Evidence: [`migration/2026-10-14_newfs-phase-b/`](migration/2026-10-14_newfs-phase-b/).
+- **The share** (measured from this workstation over the VPN): writes ≈ 3.7–5.1 MiB/s, ≈ 260 ms per small file; a file rename never
+  replaces an existing name; **a directory renamed right after its files were written fails intermittently (`PermissionError`, ~1 s)**.
+  The PRESERVATION paths of this repository rename files only. **RUNTIME on the share is not qualified:** the layer store and the identity
+  rebuild rename directories without a retry, and the crash and concurrency suites with every root on the share time out (child timeouts
+  tuned for a local disk). The preservation-path suites (`test_storage_contract`, `test_preservation`, `test_preservation_migration`,
+  `test_storage_roots`, `test_readiness`) with `--basetemp` on the share: 241 passed, 1 failed -- that one is the layer store's directory
+  rename again (the test's workspace was on the share as well). RUNTIME stays on `C:`; the Phase-1 core gate and the process-kill tests "on the long-term target" are therefore
+  still owed for a configuration with only PRESERVATION on the share.
+
+**Cutover gates (Phase C):** the writer lock held; a closing baseline of the interim primary equal to the pre-copy's (tree SHA-256);
+`.env`: `COPREPAN_PRESERVATION_ROOT`, `COPREPAN_PRESERVATION_TARGET_ID=coprepan-preservation-newfs`; `check_readiness` `READY`; the drain
+and a read-back of every pack. Then Phase D: the BACKUP on `D:`.

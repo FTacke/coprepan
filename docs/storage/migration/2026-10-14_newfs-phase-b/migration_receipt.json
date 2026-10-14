@@ -1,0 +1,34 @@
+{
+ "schema": "coprepan-preservation-migration/v1",
+ "kind": "receipt",
+ "written_at": "2026-10-14T16:40:07Z",
+ "state": "PRE_COPY_NOT_PRIMARY",
+ "destination_target_id": "coprepan-preservation-newfs",
+ "source_target_id": "coprepan-preservation-interim-d",
+ "plan_sha256": "505ec95bee17ab36f543b59613838851d8be93f5a30c83cbc6ac924648ad1a2c",
+ "tree_sha256": "f4bb0c9ca71a9615383dec29da57b940ffe43aabf8f4f9a748932333a284da0e",
+ "objects": 8816,
+ "bytes": 395018230,
+ "verification": {
+  "schema": "coprepan-preservation-migration/v1",
+  "kind": "verification",
+  "verified_at": "2026-10-14T16:37:04Z",
+  "reread": "uncached",
+  "objects": 8816,
+  "bytes": 395018230,
+  "problems": 0,
+  "extra": 0,
+  "temporary_files": 0,
+  "equal": true,
+  "plan_sha256": "505ec95bee17ab36f543b59613838851d8be93f5a30c83cbc6ac924648ad1a2c"
+ },
+ "verification_sha256": "913f622255ea4ea26b884da824f28bca1a13214caca336f9bd273af0641524ee",
+ "journal_audit": {
+  "rows": 8816,
+  "torn_rows": 0,
+  "duplicate_rows": 0,
+  "copied_more_than_once": 0,
+  "ok": true
+ },
+ "not_claimed": "not the primary and not a backup: the destination becomes the primary only by the cutover (the workstation's COPREPAN_PRESERVATION_ROOT and COPREPAN_PRESERVATION_TARGET_ID), never by this receipt"
+}
