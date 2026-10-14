@@ -135,6 +135,104 @@ def test_a_broken_journal_handle_is_reopened_and_a_torn_row_is_skipped(roots) ->
     assert journal.reopened == 1 and sorted(M.load_journal(roots["dest"], "m9")) == ["a", "b"]
 
 
+class _FailingAfter:
+    """Writes ``n`` bytes of a row to the real file, then fails as a reset SMB session does (``None``: the whole row)."""
+
+    def __init__(self, path, n):
+        self.path, self.n = path, n
+
+    def write(self, data):
+        with open(self.path, "ab") as handle:
+            handle.write(data if self.n is None else data[:self.n])
+        raise OSError(22, "Invalid argument")
+
+    def flush(self):
+        pass
+
+    def close(self):
+        raise OSError(22, "Invalid argument")
+
+
+def _row(path):
+    return json.dumps({"path": path, "status": M.COPIED, "sha256": "f" * 64}) + "\n"
+
+
+@pytest.mark.parametrize("written", [None, 9, 0])
+def test_a_journal_row_lost_with_its_acknowledgement_is_written_exactly_once(roots, written) -> None:
+    path = M.journal_path(roots["dest"], "mj")
+    path.parent.mkdir(parents=True)
+    journal = M._Journal(path, sleep=lambda s: None)
+    journal.write(_row("a"))
+    journal.handle = _FailingAfter(path, written)
+    journal.write(_row("b"))
+    journal.write(_row("c"))
+    journal.close()
+    assert path.read_bytes() == (_row("a") + _row("b") + _row("c")).encode()
+    assert M.journal_audit(roots["dest"], "mj") == {"rows": 3, "torn_rows": 0, "duplicate_rows": 0, "copied_more_than_once": 0, "ok": True}
+
+
+def test_a_foreign_torn_tail_is_isolated_never_glued_to_a_row(roots) -> None:
+    path = M.journal_path(roots["dest"], "mt")
+    path.parent.mkdir(parents=True)
+    path.write_bytes(_row("a").encode() + b'{"path": "kil')
+    journal = M._Journal(path, sleep=lambda s: None)
+    journal.write(_row("b"))
+    journal.close()
+    assert sorted(M.load_journal(roots["dest"], "mt")) == ["a", "b"] and journal.foreign_tails_isolated == 1
+
+
+def test_a_retry_after_a_lost_publish_acknowledgement_finds_the_object(roots, monkeypatch) -> None:
+    base = M.baseline(roots["source"])
+    real, lost = M._publish, []
+
+    def publish_then_lose(temporary, final, digest):
+        status = real(temporary, final, digest)
+        if not lost:
+            lost.append(final)
+            raise OSError(64, "The specified network name is no longer available")
+        return status
+
+    monkeypatch.setattr(M, "_publish", publish_then_lose)
+    result = M.copy(roots["source"], roots["dest"], base["objects"], migration_id="ma", active_root=roots["source"], workers=1,
+                    retry_pause=0, sleep=lambda s: None)
+    assert result["counts"] == {M.PRESENT: 1, M.COPIED: 3} and not result["problems"]
+    assert M.verify(roots["dest"], base["objects"])["equal"] and M.journal_audit(roots["dest"], "ma")["ok"]
+
+
+@pytest.mark.parametrize("same", [True, False])
+def test_an_object_published_by_another_writer_during_the_copy_is_never_replaced(roots, monkeypatch, same) -> None:
+    """Race regression (the CO.RA.PAN copier moved a concurrent writer's object aside, 2026-10-14): here every object is write-once,
+    so an object that appears between write and publish is ALREADY_PRESENT or CONFLICT -- never replaced."""
+    base = M.baseline(roots["source"])
+    entry = base["objects"][0]
+    target = roots["dest"].joinpath(*entry["path"].split("/"))
+    real = M.sha256_uncached
+
+    def racing(path):
+        if M.TEMP_TAG in str(path) and not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((roots["source"] / entry["path"]).read_bytes() if same else b"another writer")
+        return real(path)
+
+    monkeypatch.setattr(M, "sha256_uncached", racing)
+    result = M.migrate_one(roots["source"], roots["dest"], entry, None, run_id="r", rate=M._Rate(None))
+    assert result["status"] == (M.PRESENT if same else M.CONFLICT)
+    assert target.read_bytes() == ((roots["source"] / entry["path"]).read_bytes() if same else b"another writer")
+    assert not list(target.parent.glob("*" + M.TEMP_TAG + "*"))
+
+
+def test_two_concurrent_copies_publish_every_object_once(roots) -> None:
+    import threading
+    base = M.baseline(roots["source"])
+    results = []
+    threads = [threading.Thread(target=lambda: results.append(run(roots, base["objects"]))) for _ in range(2)]
+    [t.start() for t in threads]
+    [t.join() for t in threads]
+    copied = sum(r["counts"].get(M.COPIED, 0) for r in results)
+    assert copied == 4 and not any(r["problems"] for r in results)
+    assert M.verify(roots["dest"], base["objects"])["equal"] and M.journal_audit(roots["dest"], "m1")["copied_more_than_once"] == 0
+
+
 def test_a_lost_transport_stops_the_run_cleanly_and_it_resumes(roots, monkeypatch) -> None:
     base = M.baseline(roots["source"])
     monkeypatch.setattr(M, "migrate_one", lambda *a, **k: {"path": a[2]["path"], "status": M.FAILED, "error": "OSError: gone"})

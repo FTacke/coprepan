@@ -145,15 +145,49 @@ class _Journal:
     is reopened and the row written again, with a growing pause. One ``write`` per row."""
 
     def __init__(self, path: Path, *, attempts: int = 8, pause: float = 5.0, sleep: Callable[[float], None] = time.sleep):
-        self.path, self.attempts, self.pause, self.sleep, self.handle, self.reopened = path, attempts, pause, sleep, None, 0
+        self.path, self.attempts, self.pause, self.sleep, self.handle, self.reopened = Path(path), attempts, pause, sleep, None, 0
+        self.completed_after_loss = 0
+        self.foreign_tails_isolated = 0
+
+    def _remaining(self, row: bytes) -> bytes:
+        """What of ``row`` is still to be written, judged from the file's tail after a (re)open: a row that reached the server
+        although the acknowledgement was lost is not written twice, a fragment of it is completed byte for byte, a foreign torn
+        tail is put on a line of its own and never glued to the row."""
+        try:
+            size = self.path.stat().st_size
+        except FileNotFoundError:
+            return row
+        if size == 0:
+            return row
+        window = len(row) + 65536
+        with open(self.path, "rb") as handle:
+            handle.seek(max(0, size - window))
+            tail = handle.read()
+        complete = (b"\n" + row) in tail or (size <= window and tail.startswith(row))
+        if tail.endswith(b"\n"):
+            return b"" if complete else row
+        if complete:
+            return b"\n"
+        fragment = tail.rsplit(b"\n", 1)[-1]
+        if row.startswith(fragment):
+            return row[len(fragment):]
+        self.foreign_tails_isolated += 1
+        return b"\n" + row
 
     def write(self, text: str) -> None:
+        row = text.encode("utf-8")
         for attempt in range(self.attempts):
             try:
                 if self.handle is None:
-                    self.handle = open(self.path, "a", encoding="utf-8", newline="\n")
-                self.handle.write(text)
-                self.handle.flush()
+                    pending = self._remaining(row)
+                    if attempt and pending != row:
+                        self.completed_after_loss += 1
+                    self.handle = open(self.path, "ab")
+                else:
+                    pending = row
+                if pending:
+                    self.handle.write(pending)
+                    self.handle.flush()
                 return
             except OSError:
                 self.close()
@@ -169,6 +203,29 @@ class _Journal:
             except OSError:
                 pass
             self.handle = None
+
+
+def journal_audit(dest: Path, migration_id: str) -> dict[str, Any]:
+    """The journal's integrity for the receipt: rows, torn rows, byte-identical duplicates, paths reported COPIED more than once."""
+    path = Path(_long(journal_path(dest, migration_id)))
+    rows, torn, duplicates, seen, copied = 0, 0, 0, set(), {}
+    if path.is_file():
+        for line in path.read_bytes().split(b"\n"):
+            if not line.strip():
+                continue
+            rows += 1
+            duplicates += line in seen
+            seen.add(line)
+            try:
+                row = json.loads(line)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                torn += 1
+                continue
+            if row.get("status") == COPIED:
+                copied[row.get("path")] = copied.get(row.get("path"), 0) + 1
+    twice = sorted(path for path, count in copied.items() if count > 1)
+    return {"rows": rows, "torn_rows": torn, "duplicate_rows": duplicates, "copied_more_than_once": len(twice),
+            "ok": not torn and not duplicates and not twice}
 
 
 def _transient(result: Mapping[str, Any]) -> bool:

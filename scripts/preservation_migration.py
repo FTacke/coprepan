@@ -131,6 +131,7 @@ def main(argv: list[str] | None = None) -> int:
                    "objects": plan["files"], "bytes": plan["bytes"],
                    "verification": {k: (v if not isinstance(v, list) else len(v)) for k, v in verification.items()},
                    "verification_sha256": hashlib.sha256(verification_raw).hexdigest(),
+                   "journal_audit": M.journal_audit(args.dest, args.migration_id),
                    "not_claimed": "not the primary and not a backup: the destination becomes the primary only by the cutover (the "
                                   "workstation's COPREPAN_PRESERVATION_ROOT and COPREPAN_PRESERVATION_TARGET_ID), never by this receipt"}
         path = Path(M._long(args.dest / M.STATE_DIRECTORY / args.migration_id / "migration_receipt.json"))
