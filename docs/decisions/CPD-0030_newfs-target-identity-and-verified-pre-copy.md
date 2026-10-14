@@ -3,7 +3,8 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-14 |
-| Status | `ACTIVE` for the identity check and the tool; the pre-copy is executed; **the cutover is not** (NEW_FS Phase C, a separate operator release) |
+| Status | `ACTIVE` |
+| Execution | the identity check and the tool are in force; the pre-copy is executed and verified; **the cutover is not** (NEW_FS Phase C, a separate operator release) |
 | Decided by | the operator, in the brief "NEW_FS Phase B — Implementation, Qualification & Verified Pre-Copy" of 2026-10-14 (run from the CO.RA.PAN repository with write scope over both sister repositories): target layout, the interim primary on `D:` as the source, no change of any configured root |
 | Kind | policy · architecture · operation |
 | Scope | the identity check of the PRESERVATION root; the copy of the primary to its future root; the NEW_FS root of CO.PRE.PAN |
@@ -39,6 +40,21 @@ the migration had no tool (storage index §20.4).
 4. **The pre-copy is executed** from the interim primary to the new root and verified there; its receipt says `PRE_COPY_NOT_PRIMARY`.
    The interim primary stays the primary; with acquisition disabled no writer changes it, so the closing reconciliation at the cutover is
    expected to be empty — it is still a gate.
+
+## Alternatives considered
+
+- **`robocopy` or a plain copy, then `migration-verify`.** Rejected: no per-object digest at the moment of the copy, no journal of what
+  was published, overwrite semantics that depend on flags, and a buffered re-read that the SMB client cache answers.
+- **Server-side SMB copy from the old location** (CO.RA.PAN's add-on test, 2026-10-14). Not applicable: the institutional share is
+  served by another server than the faculty share and than `D:`; the payload crosses the workstation either way.
+- **Renaming the interim primary into the future BACKUP.** Excluded by CPD-0014 §6: a former primary is never renamed into a backup.
+- **Requiring a marker at every PRESERVATION root without an expected identity.** Rejected for now: every test root would need one and
+  the interim primary has one anyway; the strict check applies where the identity is recorded (the cutover sets it).
+
+## Not decided here
+
+The cutover and its window; the BACKUP on `D:` (Phase D); the durable home of the workspace's evidence tables; RUNTIME on the share (not
+qualified: the layer store's directory renames); DISTRIBUTION, EXCHANGE and access groups.
 
 ## Cutover gates (Phase C) and after
 
