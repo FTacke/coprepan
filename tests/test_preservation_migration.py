@@ -113,6 +113,39 @@ def test_sweep_removes_only_this_tools_own_temporary_files(roots) -> None:
     assert removed == [own.relative_to(roots["dest"]).as_posix()] and foreign.exists() and not own.exists()
 
 
+def test_a_broken_journal_handle_is_reopened_and_a_torn_row_is_skipped(roots) -> None:
+    """Regression (NEW_FS, 2026-10-14 17:03): a reset SMB session invalidated the open journal handle and killed the copy."""
+    path = M.journal_path(roots["dest"], "m9")
+    path.parent.mkdir(parents=True)
+    journal = M._Journal(path, sleep=lambda s: None)
+    journal.write(json.dumps({"path": "a", "status": M.COPIED, "sha256": "x"}) + "\n")
+
+    class Broken:
+        def write(self, text):
+            raise OSError(22, "Invalid argument")
+
+        def close(self):
+            raise OSError(22, "Invalid argument")
+
+    journal.handle = Broken()
+    journal.write(json.dumps({"path": "b", "status": M.COPIED, "sha256": "y"}) + "\n")
+    journal.close()
+    with open(path, "a", encoding="utf-8") as handle:
+        handle.write('{"path": "c", "sta')
+    assert journal.reopened == 1 and sorted(M.load_journal(roots["dest"], "m9")) == ["a", "b"]
+
+
+def test_a_lost_transport_stops_the_run_cleanly_and_it_resumes(roots, monkeypatch) -> None:
+    base = M.baseline(roots["source"])
+    monkeypatch.setattr(M, "migrate_one", lambda *a, **k: {"path": a[2]["path"], "status": M.FAILED, "error": "OSError: gone"})
+    result = M.copy(roots["source"], roots["dest"], base["objects"], migration_id="m2", active_root=roots["source"], workers=1,
+                    retries=1, retry_pause=0, network_failure_limit=2, sleep=lambda s: None)
+    assert result["stopped"] and result["stop_reason"] == "NETWORK_UNAVAILABLE" and result["processed"] < 4
+    monkeypatch.undo()
+    again = M.copy(roots["source"], roots["dest"], base["objects"], migration_id="m2", active_root=roots["source"], workers=1)
+    assert again["counts"] == {M.COPIED: 4}
+
+
 def test_the_unbuffered_re_read_gives_the_digest_of_the_bytes(tmp_path) -> None:
     import hashlib
     f = tmp_path / "x.bin"

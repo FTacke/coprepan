@@ -129,12 +129,51 @@ def load_journal(dest: Path, migration_id: str) -> dict[str, dict[str, Any]]:
     path = Path(_long(journal_path(dest, migration_id)))
     out: dict[str, dict[str, Any]] = {}
     if path.is_file():
-        for line in path.read_text(encoding="utf-8").splitlines():
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
             if line.strip():
-                row = json.loads(line)
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue                          # a row torn by a broken handle: the object is re-recognised by digest
                 if row.get("status") in DONE:
                     out[row["path"]] = row
     return out
+
+
+class _Journal:
+    """Append rows robustly: after an I/O error (a reset SMB session invalidates an open handle -- measured 2026-10-14) the handle
+    is reopened and the row written again, with a growing pause. One ``write`` per row."""
+
+    def __init__(self, path: Path, *, attempts: int = 8, pause: float = 5.0, sleep: Callable[[float], None] = time.sleep):
+        self.path, self.attempts, self.pause, self.sleep, self.handle, self.reopened = path, attempts, pause, sleep, None, 0
+
+    def write(self, text: str) -> None:
+        for attempt in range(self.attempts):
+            try:
+                if self.handle is None:
+                    self.handle = open(self.path, "a", encoding="utf-8", newline="\n")
+                self.handle.write(text)
+                self.handle.flush()
+                return
+            except OSError:
+                self.close()
+                if attempt == self.attempts - 1:
+                    raise
+                self.reopened += 1
+                self.sleep(min(300.0, self.pause * 2 ** attempt))
+
+    def close(self) -> None:
+        if self.handle is not None:
+            try:
+                self.handle.close()
+            except OSError:
+                pass
+            self.handle = None
+
+
+def _transient(result: Mapping[str, Any]) -> bool:
+    return result.get("status") == FAILED and str(result.get("error", "")).split(":", 1)[0] in (
+        "OSError", "PermissionError", "ConnectionError", "TimeoutError", "BrokenPipeError", "FileNotFoundError")
 
 
 def require_destination(dest: Path, *, active_root: Path | str | None) -> dict[str, Any]:
@@ -228,7 +267,10 @@ def migrate_one(source: Path, dest: Path, entry: Mapping[str, Any], known: Mappi
 
 def copy(source: Path, dest: Path, entries: Iterable[Mapping[str, Any]], *, migration_id: str, active_root: Path | str | None,
          workers: int = 3, max_bytes_per_second: float | None = None, stop_file: Path | None = None,
-         progress: Callable[[str], None] | None = None) -> dict[str, Any]:
+         progress: Callable[[str], None] | None = None, retries: int = 3, retry_pause: float = 20.0,
+         network_failure_limit: int = 12, sleep: Callable[[float], None] = time.sleep) -> dict[str, Any]:
+    """Step 3. An object interrupted by the transport is retried with a growing pause; ``network_failure_limit`` such failures in a
+    row stop the run cleanly (``stop_reason NETWORK_UNAVAILABLE``), resumable from the journal."""
     require_destination(dest, active_root=active_root)
     if os.path.normcase(os.path.abspath(source)) == os.path.normcase(os.path.abspath(dest)):
         raise MigrationError("source and destination are the same root")
@@ -242,18 +284,31 @@ def copy(source: Path, dest: Path, entries: Iterable[Mapping[str, Any]], *, migr
     state = {"done": 0, "bytes": 0, "stopped": False}
     entries = list(entries)
     started = time.monotonic()
-    with open(journal, "a", encoding="utf-8", newline="\n") as handle:
+    handle = _Journal(journal)
+    state["stop_reason"], in_a_row = None, [0]
+    try:
         def work(entry):
             if state["stopped"] or (stop_file is not None and Path(stop_file).exists()):
                 state["stopped"] = True
+                state["stop_reason"] = state["stop_reason"] or "STOP_FILE"
                 return
-            result = migrate_one(source, dest, entry, known.get(entry["path"]), run_id=run_id, rate=rate)
+            for attempt in range(retries + 1):
+                result = migrate_one(source, dest, entry, known.get(entry["path"]), run_id=run_id, rate=rate)
+                if not _transient(result) or state["stopped"]:
+                    break
+                with lock:
+                    in_a_row[0] += 1
+                    if in_a_row[0] >= network_failure_limit:
+                        state["stopped"], state["stop_reason"] = True, "NETWORK_UNAVAILABLE"
+                if attempt < retries and not state["stopped"]:
+                    sleep(retry_pause * 2 ** attempt)
             with lock:
+                if not _transient(result):
+                    in_a_row[0] = 0
                 counts[result["status"]] = counts.get(result["status"], 0) + 1
                 state["done"] += 1
                 if result["status"] != SKIPPED:
                     handle.write(json.dumps({**result, "at": _now()}, sort_keys=True) + "\n")
-                    handle.flush()
                 if result["status"] == COPIED:
                     state["bytes"] += result["size"]
                 if result["status"] in PROBLEMS or result.get("mtime_kept") is False:
@@ -263,9 +318,11 @@ def copy(source: Path, dest: Path, entries: Iterable[Mapping[str, Any]], *, migr
 
         with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
             list(pool.map(work, entries))
+    finally:
+        handle.close()
     return {"schema": SCHEMA, "kind": "run", "migration_id": migration_id, "run_id": run_id, "objects": len(entries), "processed": state["done"],
             "counts": counts, "copied_bytes": state["bytes"], "seconds": round(time.monotonic() - started, 1),
-            "stopped": state["stopped"], "problems": problems}
+            "stopped": state["stopped"], "stop_reason": state["stop_reason"], "journal_reopened": handle.reopened, "problems": problems}
 
 
 def verify(dest: Path, entries: Iterable[Mapping[str, Any]], *, workers: int = 4) -> dict[str, Any]:
