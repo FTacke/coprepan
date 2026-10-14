@@ -212,5 +212,7 @@ def test_a_target_that_stops_verifying_closes_the_gate(ready, tmp_path):
     repository, arguments = ready
     (tmp_path / "preservation" / PT.MARKER_NAME).write_text("{broken", encoding="utf-8")
     report = CN.preflight(**arguments)
-    assert "preservation_target_ready" in failed(report) and "target_identity" in next(
-        c["detail"] for c in report["checks"] if c["check"] == "preservation_target_ready")
+    # Since CPD-0030 the resolver itself refuses an unreadable marker (TARGET_IDENTITY_MISMATCH) before readiness is asked: the
+    # gate closes earlier, for the same reason.
+    detail = next(c["detail"] for c in report["checks"] if c["check"] == "preservation_target_ready")
+    assert "preservation_target_ready" in failed(report) and ("target_identity" in detail or "TARGET_IDENTITY_MISMATCH" in detail)
