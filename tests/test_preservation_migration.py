@@ -168,7 +168,23 @@ def test_a_journal_row_lost_with_its_acknowledgement_is_written_exactly_once(roo
     journal.write(_row("c"))
     journal.close()
     assert path.read_bytes() == (_row("a") + _row("b") + _row("c")).encode()
-    assert M.journal_audit(roots["dest"], "mj") == {"rows": 3, "torn_rows": 0, "duplicate_rows": 0, "copied_more_than_once": 0, "ok": True}
+    assert M.journal_audit(roots["dest"], "mj") == {"rows": 3, "torn_rows": 0, "duplicate_rows": 0, "copied_more_than_once": 0,
+                                                    "nul_holes": 0, "nul_hole_bytes": 0, "ok": True}
+
+
+def test_a_row_behind_a_nul_hole_is_not_written_again_and_the_hole_is_reported(roots) -> None:
+    """Regression of the sister corpus's copier (NEW_FS, 2026-10-15 01:49Z): an acknowledged write the server never received left
+    zeros; the next row landed behind them and its retry wrote it again."""
+    path = M.journal_path(roots["dest"], "mn")
+    path.parent.mkdir(parents=True)
+    path.write_bytes(_row("a").encode() + b"\x00" * 780 + _row("b").encode())
+    journal = M._Journal(path, sleep=lambda s: None)
+    journal.write(_row("b"))
+    journal.close()
+    assert path.read_bytes().count(_row("b").encode()) == 1 and sorted(M.load_journal(roots["dest"], "mn")) == ["a", "b"]
+    audit = M.journal_audit(roots["dest"], "mn")
+    assert audit["nul_holes"] == 1 and audit["nul_hole_bytes"] == 780 and not audit["ok"]
+    assert M._transient({"status": M.FAILED, "error": "FileExistsError: [WinError 183]"})
 
 
 def test_a_foreign_torn_tail_is_isolated_never_glued_to_a_row(roots) -> None:

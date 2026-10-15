@@ -130,6 +130,7 @@ def load_journal(dest: Path, migration_id: str) -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
     if path.is_file():
         for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            line = line.lstrip("\x00")                        # a NUL hole before a row is not part of it
             if line.strip():
                 try:
                     row = json.loads(line)
@@ -163,13 +164,14 @@ class _Journal:
         with open(self.path, "rb") as handle:
             handle.seek(max(0, size - window))
             tail = handle.read()
-        complete = (b"\n" + row) in tail or (size <= window and tail.startswith(row))
+        # a row behind a hole of NUL bytes is present too (a write the SMB client acknowledged and the server never received)
+        complete = (b"\n" + row) in tail or (b"\x00" + row) in tail or (size <= window and tail.startswith(row))
         if tail.endswith(b"\n"):
             return b"" if complete else row
         if complete:
             return b"\n"
         fragment = tail.rsplit(b"\n", 1)[-1]
-        if row.startswith(fragment):
+        if fragment.strip(b"\x00") and row.startswith(fragment):
             return row[len(fragment):]
         self.foreign_tails_isolated += 1
         return b"\n" + row
@@ -188,6 +190,7 @@ class _Journal:
                 if pending:
                     self.handle.write(pending)
                     self.handle.flush()
+                    os.fsync(self.handle.fileno())     # on the server, not in the client's write-behind cache
                 return
             except OSError:
                 self.close()
@@ -208,9 +211,12 @@ class _Journal:
 def journal_audit(dest: Path, migration_id: str) -> dict[str, Any]:
     """The journal's integrity for the receipt: rows, torn rows, byte-identical duplicates, paths reported COPIED more than once."""
     path = Path(_long(journal_path(dest, migration_id)))
-    rows, torn, duplicates, seen, copied = 0, 0, 0, set(), {}
+    rows, torn, duplicates, seen, copied, holes, hole_bytes = 0, 0, 0, set(), {}, 0, 0
     if path.is_file():
-        for line in path.read_bytes().split(b"\n"):
+        for raw in path.read_bytes().split(b"\n"):
+            line = raw.lstrip(b"\x00")
+            if len(line) != len(raw):
+                holes, hole_bytes = holes + 1, hole_bytes + len(raw) - len(line)
             if not line.strip():
                 continue
             rows += 1
@@ -225,12 +231,25 @@ def journal_audit(dest: Path, migration_id: str) -> dict[str, Any]:
                 copied[row.get("path")] = copied.get(row.get("path"), 0) + 1
     twice = sorted(path for path, count in copied.items() if count > 1)
     return {"rows": rows, "torn_rows": torn, "duplicate_rows": duplicates, "copied_more_than_once": len(twice),
-            "ok": not torn and not duplicates and not twice}
+            "nul_holes": holes, "nul_hole_bytes": hole_bytes, "ok": not torn and not duplicates and not twice and not holes}
 
 
 def _transient(result: Mapping[str, Any]) -> bool:
+    # FileExistsError: a directory another worker is creating can make mkdir(exist_ok=True) raise it on the share
     return result.get("status") == FAILED and str(result.get("error", "")).split(":", 1)[0] in (
-        "OSError", "PermissionError", "ConnectionError", "TimeoutError", "BrokenPipeError", "FileNotFoundError")
+        "OSError", "PermissionError", "ConnectionError", "TimeoutError", "BrokenPipeError", "FileNotFoundError", "FileExistsError")
+
+
+def _ensure_directory(directory: Path, *, attempts: int = 6, pause: float = 0.5) -> None:
+    """``mkdir(parents=True, exist_ok=True)`` tolerant of the share's late visibility of a directory another worker just made."""
+    for attempt in range(attempts):
+        try:
+            directory.mkdir(parents=True, exist_ok=True)
+            return
+        except FileExistsError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(pause * (attempt + 1))
 
 
 def require_destination(dest: Path, *, active_root: Path | str | None) -> dict[str, Any]:
@@ -294,7 +313,7 @@ def migrate_one(source: Path, dest: Path, entry: Mapping[str, Any], known: Mappi
                 return {**row, "status": SKIPPED}
         if dst.is_file():
             return {**row, "status": PRESENT if sha256_uncached(dst)[0] == entry["sha256"] else CONFLICT}
-        dst.parent.mkdir(parents=True, exist_ok=True)
+        _ensure_directory(dst.parent)
         temporary = dst.with_name(f"{dst.name}{TEMP_TAG}{uuid.uuid4().hex[:8]}")
         try:
             digest = hashlib.sha256()
