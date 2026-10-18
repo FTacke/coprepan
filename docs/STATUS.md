@@ -90,6 +90,15 @@ still the primary and still a sole copy. A verified **pre-copy** of it exists on
 it becomes the primary only at the cutover (Phase C), and the BACKUP on `D:` follows it (Phase D). The PRESERVATION root's identity is
 checked at every resolution (T2). Storage index §20.5.
 
+*Update 2026-10-18 (CPD-0030, Phase C): **the institutional share is the PRESERVATION primary**
+(`COPREPAN_PRESERVATION_ROOT` = `…\projects\panhispanic_media_corpora\coprepan`, `COPREPAN_PRESERVATION_TARGET_ID=coprepan-preservation-newfs`,
+since 2026-10-18 15:29:20 +02:00). Closing reconciliation: a fresh plan of the interim primary (every object re-hashed) has the pre-copy's
+tree (8,816 objects / 395,018,230 B), the copy pass skipped all 8,816, an unbuffered re-read of every object on the new root found 0
+problems, 0 extra; the writer lock was free and unchanged tree confirmed under it; readiness `READY` on the new root. The interim primary
+on `D:` is retained unchanged as a protected fallback -- **not a backup** (never renamed into one); no BACKUP exists yet (Phase D).
+No production write has happened on the new root (acquisition `disabled`): technically qualified, production proof pending.
+Storage index §20.6.*
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates

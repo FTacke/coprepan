@@ -4,7 +4,7 @@
 |---|---|
 | Date | 2026-10-14 |
 | Status | `ACTIVE` |
-| Execution | the identity check and the tool are in force; the pre-copy is executed and verified; **the cutover is not** (NEW_FS Phase C, a separate operator release) |
+| Execution | the identity check and the tool are in force; the pre-copy is executed and verified; **the cutover is executed (Phase C, 2026-10-18 15:29:20 +02:00): the institutional share is the PRESERVATION primary** -- see "Phase C (2026-10-18)" below |
 | Decided by | the operator, in the brief "NEW_FS Phase B — Implementation, Qualification & Verified Pre-Copy" of 2026-10-14 (run from the CO.RA.PAN repository with write scope over both sister repositories): target layout, the interim primary on `D:` as the source, no change of any configured root |
 | Kind | policy · architecture · operation |
 | Scope | the identity check of the PRESERVATION root; the copy of the primary to its future root; the NEW_FS root of CO.PRE.PAN |
@@ -63,3 +63,17 @@ journal: nothing new, nothing changed); `.env`: `COPREPAN_PRESERVATION_ROOT` and
 new root; the drain and a read-back of every preserved pack. Afterwards (Phase D): `COPREPAN_BACKUP_ROOT` on `D:` with a copy produced from
 the new primary and verified against it; the interim primary retained, never renamed into a backup. The durable home of the workspace's
 evidence tables stays a separate decision.
+
+## Phase C (2026-10-18)
+
+Executed under the operator brief "NEW_FS Phase C: Final Reconciliation, Production Cutover und Rollback-Qualifikation" of 2026-10-18
+(run from the CO.RA.PAN repository). Every gate above, with its evidence in
+[`docs/storage/migration/2026-10-18_newfs-phase-c/`](../storage/migration/2026-10-18_newfs-phase-c/) and storage index §20.6: the closing
+baseline (a fresh plan of the interim primary, every object re-hashed) has the pre-copy's tree; the copy pass skipped all 8,816 objects;
+an unbuffered re-read of every object on the new root found 0 problems and 0 extra objects; the spool was empty; the writer lock was free
+and the interim tree unchanged under it; `.env` names the new root and `COPREPAN_PRESERVATION_TARGET_ID=coprepan-preservation-newfs`
+(2026-10-18 15:29:20 +02:00); `check_readiness` `READY` on the new root. The code of this decision was integrated by a fast-forward of
+`main` to `881ae58`. **The institutional share is the PRESERVATION primary.** The interim primary is retained unchanged (a protected
+fallback, not a backup). Not shown yet: a production write (acquisition stays `disabled`), the Phase-1 core gate with only PRESERVATION on
+the share, the BACKUP (Phase D). Joint report: CO.RA.PAN `docs/agent-runs/2026-10-18_newfs-phase-c-final-reconciliation-cutover.md`;
+this repository's run report: [`../agent-runs/2026-10-18_newfs-phase-c-cutover.md`](../agent-runs/2026-10-18_newfs-phase-c-cutover.md).

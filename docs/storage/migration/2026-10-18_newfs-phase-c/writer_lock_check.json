@@ -1,0 +1,8 @@
+{
+ "lock_taken_utc": "2026-10-18T13:33:53+00:00",
+ "released_utc": "2026-10-18T13:33:57+00:00",
+ "interim_tree_sha256": "f4bb0c9ca71a9615383dec29da57b940ffe43aabf8f4f9a748932333a284da0e",
+ "interim_files": 8816,
+ "configured_root": "\\\\dfs.hrz.uni-marburg.de\\PROJEKTE\\FB10\\TACKE_FORSCHUNGSDATEN\\projects\\panhispanic_media_corpora\\coprepan",
+ "expected_target_id": "coprepan-preservation-newfs"
+}

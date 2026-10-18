@@ -621,3 +621,28 @@ Dated addendum; the tables above are not rewritten. **No cutover:** the interim 
 **Cutover gates (Phase C):** the writer lock held; a closing baseline of the interim primary equal to the pre-copy's (tree SHA-256);
 `.env`: `COPREPAN_PRESERVATION_ROOT`, `COPREPAN_PRESERVATION_TARGET_ID=coprepan-preservation-newfs`; `check_readiness` `READY`; the drain
 and a read-back of every pack. Then Phase D: the BACKUP on `D:`.
+
+### 20.6 Phase C: the institutional share is the primary (CPD-0030, 2026-10-18)
+
+Dated addendum; §20.5 is not rewritten.
+
+| Holding · role | Root | State |
+|---|---|---|
+| PRODUCTION · `PRESERVATION` (in force since 2026-10-18) | `\\dfs.hrz.uni-marburg.de\PROJEKTE\FB10\TACKE_FORSCHUNGSDATEN\projects\panhispanic_media_corpora\coprepan` | **PRIMARY**, identity `coprepan-preservation-newfs` (T2 enforced: `COPREPAN_PRESERVATION_TARGET_ID`), readiness `READY` |
+| former primary | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | retained unchanged as a protected fallback; not configured, **not a backup** |
+| PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | PLANNED (Phase D) |
+
+Gates, each with its evidence ([`migration/2026-10-18_newfs-phase-c/`](migration/2026-10-18_newfs-phase-c/)): **closing baseline** = a fresh
+plan of the interim primary with every object re-hashed: 8,816 objects / 395,018,230 B, tree SHA-256 `f4bb0c9c…a1a2c` = the pre-copy's;
+**copy pass** with the same migration id: 8,816 `SKIPPED_JOURNALLED`, 0 bytes; **unbuffered re-read of every object** on the new root
+against the fresh plan: 0 problems, 0 extra, 0 temporary files (`verification_final.json`); **spool** empty (nothing to drain);
+**writer lock** taken (free: no other writer), the interim tree re-planned under it: unchanged (`writer_lock_check.json`); **`.env`**:
+`COPREPAN_PRESERVATION_ROOT` and `COPREPAN_PRESERVATION_TARGET_ID` set; **`check_readiness`** on the new root `READY` (fixity of 100
+objects, no probe artefact left); `storage_contract.py status`: PRESERVATION `AVAILABLE`, separation `SEPARATED`. Test suite on the
+integrated code: 1,597 passed, 14 skipped.
+
+Not yet shown: a production write on the new root (`external_acquisition` stays `disabled`; the first armed canary or intake is the
+production proof); the Phase-1 core gate and the process-kill tests with only PRESERVATION on the share (§20.5); the BACKUP (Phase D).
+Rollback (no write has happened on the new root): restore the two `.env` lines (`COPREPAN_PRESERVATION_ROOT=D:\…\preservation_interim`,
+`COPREPAN_PRESERVATION_TARGET_ID` unset); after a first write on the new root, its new objects are carried back first (CO.RA.PAN's
+`newfs_cutover_v1.py rollback-*` procedure, D111).

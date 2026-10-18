@@ -1,0 +1,13 @@
+{
+ "schema": "coprepan-preservation-migration/v1",
+ "kind": "verification",
+ "verified_at": "2026-10-18T13:17:33Z",
+ "reread": "uncached",
+ "objects": 8816,
+ "bytes": 395018230,
+ "problems": [],
+ "extra": [],
+ "temporary_files": [],
+ "equal": true,
+ "plan_sha256": "6327256a59f660fca707e50c61882d5bc08584b4145fd8f6b3fada53564668e6"
+}

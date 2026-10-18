@@ -1,0 +1,48 @@
+{
+ "contract": "crosscorpus-storage/v1",
+ "bundle_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+ "pin_status": "IN_FORCE",
+ "bundle_problems": [],
+ "corpus": "coprepan",
+ "holding": "PRODUCTION",
+ "roles": {
+  "BACKUP": {
+   "state": "NOT_CONFIGURED",
+   "contract_role": "BACKUP"
+  },
+  "DISTRIBUTION": {
+   "state": "NOT_CONFIGURED",
+   "contract_role": "DISTRIBUTION"
+  },
+  "EXCHANGE": {
+   "state": "NOT_CONFIGURED",
+   "contract_role": "EXCHANGE"
+  },
+  "PRESERVATION": {
+   "state": "AVAILABLE",
+   "contract_role": "PRESERVATION"
+  },
+  "REPOSITORY": {
+   "state": "AVAILABLE",
+   "contract_role": "REPO"
+  },
+  "RUNTIME": {
+   "state": "AVAILABLE",
+   "contract_role": "RUNTIME"
+  },
+  "SPOOL": {
+   "state": "AVAILABLE",
+   "contract_role": "SPOOL"
+  }
+ },
+ "separation": "SEPARATED",
+ "pending_in_the_spool": {
+  "pending_records": 0,
+  "spooled_bytes": 0,
+  "oldest_pending_at": null
+ },
+ "backup_of_the_preservation_primary": "NOT_CONFIGURED",
+ "note": "a copy counts as a backup only when produced from the primary and verified against it; this command verifies no copy",
+ "historic_holding": "no root is configured or present for the HISTORIC holding; planned, see docs/storage/INDEX.md",
+ "checked_at": "2026-10-18T13:32:38Z"
+}

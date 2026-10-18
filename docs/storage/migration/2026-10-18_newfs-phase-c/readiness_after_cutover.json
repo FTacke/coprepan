@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-10-18T13:31:15.516925Z",
+  "checks": [
+    {
+      "check": "usable_root",
+      "detail": "absolute, not a filesystem root, not inside the checkout",
+      "status": "PASS"
+    },
+    {
+      "check": "reachable",
+      "detail": "is a directory",
+      "status": "PASS"
+    },
+    {
+      "check": "target_identity",
+      "detail": "coprepan-preservation-newfs",
+      "status": "PASS"
+    },
+    {
+      "check": "free_space",
+      "detail": "2687663865856 bytes free, 107374182400 required",
+      "status": "PASS"
+    },
+    {
+      "check": "writable",
+      "detail": "a file was created and flushed",
+      "status": "PASS"
+    },
+    {
+      "check": "atomic_promotion",
+      "detail": "staged, hashed, renamed and re-read with the same digest",
+      "status": "PASS"
+    },
+    {
+      "check": "no_silent_overwrite",
+      "detail": "an exclusive create refuses an existing name",
+      "status": "PASS"
+    },
+    {
+      "check": "case_sensitivity",
+      "detail": "case-insensitive names",
+      "status": "INFO"
+    },
+    {
+      "check": "long_names",
+      "detail": "a 190-character file name can be created",
+      "status": "PASS"
+    },
+    {
+      "check": "fixity",
+      "detail": "100 object(s) verified",
+      "status": "PASS"
+    }
+  ],
+  "free_bytes": 2687663865856,
+  "probe_artefacts_left": [],
+  "required_free_bytes": 107374182400,
+  "schema": "coprepan-preservation-readiness/v1",
+  "status": "READY",
+  "target_id": "coprepan-preservation-newfs",
+  "total_bytes": 2999996907520
+}

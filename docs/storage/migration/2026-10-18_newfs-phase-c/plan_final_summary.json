@@ -1,0 +1,8 @@
+{
+ "plan_sha256": "6327256a59f660fca707e50c61882d5bc08584b4145fd8f6b3fada53564668e6",
+ "files": 8816,
+ "bytes": 395018230,
+ "tree_sha256": "f4bb0c9ca71a9615383dec29da57b940ffe43aabf8f4f9a748932333a284da0e",
+ "source_target_id": "coprepan-preservation-interim-d",
+ "note": "fresh plan of the current primary at the cutover (every object re-hashed); full plan kept in coprepan_workspace/work/preservation_migration/2026-10-18_phase-c/plan_final.json"
+}
