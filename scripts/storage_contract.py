@@ -91,16 +91,21 @@ def status(sister: Path | None = None) -> dict[str, Any]:
             return storage_roots.volume_of(roots[role]) if role in roots else None
         except storage_roots.StorageRefusal:
             return None
+    # Phase D: the facts come from the backup root's receipt (coprepan.primary_backup), bound to the primary's identity
+    from coprepan import primary_backup
+    facts = primary_backup.receipt_status(roots.get("BACKUP"), roots.get("PRESERVATION"))
     backup = storage_contract.backup_status(
-        configured="BACKUP" in roots, copy_exists=False, produced_from_primary=False, verified_against_primary=False,
+        configured="BACKUP" in roots, copy_exists=facts["copy_exists"], produced_from_primary=facts["produced_from_primary"],
+        verified_against_primary=facts["verified_against_primary"],
         primary_volume=volume("PRESERVATION"), backup_volume=volume("BACKUP"))
     return {"contract": storage_contract.CONTRACT, "bundle_sha256": storage_contract.read_pin()["bundle_sha256"],
             "pin_status": storage_contract.read_pin()["status"], "bundle_problems": storage_contract.bundle_problems(),
             "corpus": "coprepan", "holding": "PRODUCTION",
             "roles": {role: {"state": state, "contract_role": storage_contract.CONTRACT_ROLE[role]} for role, state in sorted(states.items())},
             "separation": separation, "pending_in_the_spool": pending,
-            "backup_of_the_preservation_primary": backup,
-            "note": "a copy counts as a backup only when produced from the primary and verified against it; this command verifies no copy",
+            "backup_of_the_preservation_primary": backup, "backup_receipt": facts["receipt"],
+            "note": "a copy counts as a backup only when produced from the primary and verified against it; this command reads the "
+                    "backup root's receipt and verifies no copy itself",
             "historic_holding": "no root is configured or present for the HISTORIC holding; planned, see docs/storage/INDEX.md",
             "checked_at": _now()}
 
