@@ -573,6 +573,7 @@ shows the pending count and the oldest pending record.
 | PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | **PLANNED** · NOT_CONFIGURED, not created | NONE | no copy | BACKUP (secondary of the new primary) | the new primary is in service; a copy produced from it and verified against it |
 | PRODUCTION · `DISTRIBUTION`, `EXCHANGE` | — | NOT_CONFIGURED | NONE | — | — | separate decisions |
 | HISTORIC · any role | — (the contract's namespace: `…\projects\panhispanic_media_corpora\historic\coprepan`) | **NOT PRESENT**, not configured, not planned by CPD-0015 | NONE | — | — | an operator decision that a historic holding exists |
+| LEGACY · any role (added 2026-10-19, contract revision 2, CPD-0031) | — (the contract's namespace: `…\projects\panhispanic_media_corpora\legacy\coprepan`) | **NOT_PLANNED**: available under the contract, not configured, nothing created; the local `legacy\coprepan` tree keeps its D: secondary (2026-10-15) | NONE | — | — | an operator decision that CO.PRE.PAN archives its legacy trees (then PLANNED; contract §2.3 A1-A9, the BACKUP produced from that primary) |
 
 No root of CO.PRE.PAN lies in, contains or equals a root of CO.RA.PAN (joint check, 2026-10-08), and none is
 below CO.RA.PAN's share.

@@ -27,8 +27,16 @@ _CHECKOUT = Path(__file__).resolve().parents[2]
 # The contract's role names and this repository's (CPD-0014 §2). Only REPO differs.
 CONTRACT_ROLE = {"REPOSITORY": "REPO", "RUNTIME": "RUNTIME", "SPOOL": "SPOOL", "PRESERVATION": "PRESERVATION",
                  "BACKUP": "BACKUP", "DISTRIBUTION": "DISTRIBUTION", "EXCHANGE": "EXCHANGE"}
-HOLDINGS = ("PRODUCTION", "HISTORIC")
+HOLDINGS = ("PRODUCTION", "HISTORIC", "LEGACY")
 _NAMESPACE = ("projects", "panhispanic_media_corpora")
+# Revision 2 (CPD-0031): the segment of each holding below the project namespace, and the segments no corpus id may be.
+_HOLDING_SEGMENT = {"PRODUCTION": (), "HISTORIC": ("historic",), "LEGACY": ("legacy",)}
+_RESERVED = frozenset(("historic", "legacy"))
+ARCHIVE_MANIFEST_NAME = "ARCHIVE_MANIFEST.json"
+ARCHIVE_MANIFEST_SCHEMA = "crosscorpus-storage/v1/archive-manifest"
+ARCHIVE_CODES = ("TARGET_IDENTITY_MISMATCH", "NOT_LEGACY_HOLDING", "TREE_NAME_INVALID", "MANIFEST_MISSING", "MANIFEST_INVALID",
+                 "PATH_INVALID", "PATH_COLLISION", "FILE_MISSING", "FILE_DIFFERS", "FILE_UNLISTED", "TREE_DIGEST_MISMATCH",
+                 "TREE_EXISTS_DIFFERENT")
 _NEVER_CO_LOCATED = frozenset(("PRESERVATION", "BACKUP", "SPOOL"))
 
 STATE_NOT_DECLARED = "NOT_DECLARED"
@@ -112,12 +120,25 @@ def role_separation(
 # --- §5.2 namespace ---------------------------------------------------------------------------------
 
 
+class NamespaceRefused(ValueError):
+    """§5.2 refuses: ``code`` is ``HOLDING_INVALID`` (not a holding of §13) or ``CORPUS_ID_INVALID``
+    (a reserved segment, or more than one segment)."""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(f"{code}: {message}")
+        self.code = code
+
+
 def namespace(provided_root: Sequence[str], corpus: str, holding: str = "PRODUCTION") -> list[str]:
-    """The segments of a corpus root below an administratively provided root: the institutional
-    namespace joined without repeating what the provided root already ends with (§5.2)."""
+    """The segments of a holding's corpus root below an administratively provided root: the
+    institutional namespace joined without repeating what the provided root already ends with
+    (§5.2). ``historic`` and ``legacy`` are reserved; a corpus id is one segment."""
     if holding not in HOLDINGS:
-        raise ValueError(f"not a holding: {holding!r}")
-    tail = list(_NAMESPACE) + (["historic"] if holding == "HISTORIC" else []) + [corpus]
+        raise NamespaceRefused("HOLDING_INVALID", f"not a holding: {holding!r}")
+    text = str(corpus or "")
+    if not text or "/" in text or "\\" in text or ":" in text or text.casefold() in _RESERVED:
+        raise NamespaceRefused("CORPUS_ID_INVALID", f"not a corpus id: {corpus!r}")
+    tail = list(_NAMESPACE) + list(_HOLDING_SEGMENT[holding]) + [corpus]
     head = list(provided_root)
     shared = 0
     for length in range(1, min(len(head), len(tail)) + 1):
@@ -229,6 +250,107 @@ def backup_status(
     if not produced_from_primary or not verified_against_primary:
         return "COPY_UNVERIFIED"
     return "BACKUP_VERIFIED"
+
+
+# --- §2.3 an archived tree of the LEGACY holding (revision 2) ---------------------------------------------
+
+
+def _segment_ok(name: Any) -> bool:
+    if not isinstance(name, str) or not name or name in (".", "..") or name == ARCHIVE_MANIFEST_NAME:
+        return False
+    return not any(mark in name for mark in ("/", "\\", ":"))
+
+
+def _tree_path_ok(path: Any) -> bool:
+    """A3: relative POSIX — no leading ``/``, no ``\\``, no ``:``, no empty / ``.`` / ``..`` segment,
+    never the manifest's own name."""
+    if not isinstance(path, str) or not path or path == ARCHIVE_MANIFEST_NAME:
+        return False
+    if path.startswith("/") or "\\" in path or ":" in path:
+        return False
+    return all(segment not in ("", ".", "..") for segment in path.split("/"))
+
+
+def _manifest_ok(manifest: Any, corpus: str, tree: str) -> bool:
+    """A3: the required fields with their types and values."""
+    if not isinstance(manifest, Mapping):
+        return False
+    expected = {"schema": ARCHIVE_MANIFEST_SCHEMA, "corpus": corpus, "holding": "LEGACY", "tree": tree}
+    if any(manifest.get(key) != value for key, value in expected.items()):
+        return False
+    for key in ("source", "decision", "created_utc"):
+        value = manifest.get(key)
+        if not isinstance(value, str) or not value.strip():
+            return False
+    if not release_contract.is_sha256(manifest.get("tree_sha256")):
+        return False
+    files = manifest.get("files")
+    if not isinstance(files, list):
+        return False
+    for entry in files:
+        if not isinstance(entry, Mapping) or not isinstance(entry.get("path"), str):
+            return False
+        size = entry.get("size")
+        if type(size) is not int or size < 0 or not release_contract.is_sha256(entry.get("sha256")):
+            return False
+    supersedes = manifest.get("supersedes")
+    if supersedes is None:
+        return True
+    return _segment_ok(supersedes) and supersedes != tree
+
+
+def archive_tree(
+    *,
+    corpus: str,
+    holding: str,
+    tree: str,
+    target_identity_ok: bool,
+    manifest: Mapping[str, Any] | None,
+    observed: Iterable[Mapping[str, Any]],
+    existing_manifest: Mapping[str, Any] | None = None,
+) -> list[str]:
+    """The codes of one archived tree of the LEGACY holding (A2–A5), sorted, each once; empty means
+    the tree is complete. ``observed`` are the files re-read from the primary (path, size, sha256);
+    ``existing_manifest`` is the manifest the tree had before this write (A4: write-once)."""
+    found = set()
+    if not target_identity_ok:
+        found.add("TARGET_IDENTITY_MISMATCH")
+    if holding != "LEGACY":
+        found.add("NOT_LEGACY_HOLDING")
+    if not _segment_ok(tree):
+        found.add("TREE_NAME_INVALID")
+    if manifest is None:
+        found.add("MANIFEST_MISSING")
+        return sorted(found)
+    if not _manifest_ok(manifest, corpus, tree):
+        found.add("MANIFEST_INVALID")
+        return sorted(found)
+    wanted: dict[str, Mapping[str, Any]] = {}
+    case_folded: set[str] = set()
+    for entry in manifest["files"]:
+        if not _tree_path_ok(entry["path"]):
+            found.add("PATH_INVALID")
+            continue
+        folded = entry["path"].casefold()
+        if folded in case_folded:
+            found.add("PATH_COLLISION")
+        case_folded.add(folded)
+        wanted[entry["path"]] = entry
+    present = {entry.get("path"): entry for entry in observed if _tree_path_ok(entry.get("path"))}
+    for path, entry in wanted.items():
+        there = present.get(path)
+        if there is None:
+            found.add("FILE_MISSING")
+        elif there.get("size") != entry["size"] or there.get("sha256") != entry["sha256"]:
+            found.add("FILE_DIFFERS")
+    if any(path not in wanted for path in present):
+        found.add("FILE_UNLISTED")
+    listing = [{"path": entry["path"], "sha256": entry["sha256"], "size": entry["size"]} for entry in manifest["files"]]
+    if release_contract.record_set_digest(listing) != manifest["tree_sha256"]:
+        found.add("TREE_DIGEST_MISMATCH")
+    if existing_manifest is not None and dict(existing_manifest) != dict(manifest):
+        found.add("TREE_EXISTS_DIFFERENT")
+    return sorted(found)
 
 
 # --- the bundle and its pin (§12) -------------------------------------------------------------------------

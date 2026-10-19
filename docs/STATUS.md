@@ -105,6 +105,10 @@ Storage index §20.6.*
 `storage_contract.py status` reports it. Daily task `COPREPAN_PreservationBackup` (05:45). Independence beyond another volume is not
 determined (B3).*
 
+*Update 2026-10-19 (CPD-0031): the joint storage contract is in **revision 2** (bundle `49a3ca88…afb036`, the same in both
+repositories): a third, optional holding `LEGACY` for archived originals of superseded systems (contract §2.3). This repository
+implements its decision functions and reproduces every case; it has **no LEGACY holding** (not planned).*
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates

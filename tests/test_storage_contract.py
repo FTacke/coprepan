@@ -80,7 +80,18 @@ def test_role_separation_case(case):
 
 @pytest.mark.parametrize("case", CASES["namespace"], ids=[case["id"] for case in CASES["namespace"]])
 def test_namespace_case(case):
-    assert SC.namespace(case["provided_root"], case["corpus"], case["holding"]) == case["expect"]
+    if "expect_error" in case:
+        with pytest.raises(SC.NamespaceRefused) as refused:
+            SC.namespace(case["provided_root"], case["corpus"], case["holding"])
+        assert refused.value.code == case["expect_error"]
+    else:
+        assert SC.namespace(case["provided_root"], case["corpus"], case["holding"]) == case["expect"]
+
+
+@pytest.mark.parametrize("case", CASES["archive_tree"], ids=[case["id"] for case in CASES["archive_tree"]])
+def test_archive_tree_case(case):
+    names = ("corpus", "holding", "tree", "target_identity_ok", "manifest", "observed", "existing_manifest")
+    assert SC.archive_tree(**{name: case[name] for name in names}) == case["expect"]
 
 
 @pytest.mark.parametrize("case", CASES["configuration_state"], ids=[case["id"] for case in CASES["configuration_state"]])
@@ -111,6 +122,9 @@ def test_the_vocabularies_are_the_contracts():
     assert {case["expect"] for case in CASES["configuration_state"]} == set(SC.CONFIGURATION_STATES)
     assert {case["expect"] for case in CASES["backup_status"]} == set(SC.BACKUP_STATES)
     assert set(SC.CONTRACT_ROLE) == set(S.ROLES)
+    # revision 2 (CPD-0031): the LEGACY holding and the archive table
+    assert {case["holding"] for case in CASES["namespace"] if "expect" in case} == set(SC.HOLDINGS)
+    assert {code for case in CASES["archive_tree"] for code in case["expect"]} == set(SC.ARCHIVE_CODES)
 
 
 # --- the real resolver uses the contract's decision -----------------------------------------------------

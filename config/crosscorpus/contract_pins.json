@@ -16,10 +16,15 @@
       "status": "IN_FORCE",
       "canonical_home": "corapan",
       "path": "contracts/crosscorpus-storage-v1",
-      "bundle_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3",
+      "bundle_sha256": "49a3ca88c084eee26e40caa1dd987155bf8062c99c81d8cb734a7990a8afb036",
+      "revision": 2,
+      "taken_from_commit": "003ec84d524ec6e4791b3a248800850908e80434",
+      "previous_revisions": [
+        {"revision": 1, "bundle_sha256": "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3", "local_decision": "CPD-0015"}
+      ],
       "files": 2,
       "local_implementation": "src/coprepan/storage_contract.py",
-      "local_decision": "CPD-0015"
+      "local_decision": "CPD-0015, CPD-0031 (revision 2: the archive holding LEGACY)"
     }
   }
 }

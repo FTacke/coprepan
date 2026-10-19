@@ -5,6 +5,10 @@ pass (§12).** It governs how CO.RA.PAN (spoken radio) and CO.PRE.PAN (written p
 separate, write, protect and move their storage. It decides no location, quota, licence or
 scientific question, and it activates nothing.
 
+**Revision 2 (2026-10-19)** adds the archive holding `LEGACY` (§2.3), its namespace (§5.2), the
+reference table `archive_tree` and the vocabulary for both (§13). No state, code or invariant of
+revision 1 changes its meaning (§12); every case of revision 1 is unchanged.
+
 This directory is the **contract bundle**: `CONTRACT.md` and `conformance/CASES.json`. It is
 identified by one digest — the tree digest of `crosscorpus-release/v1` §4.5 (the record-set digest
 of `{path, sha256, size}` of every file) — and is read byte-identically by both repositories. All
@@ -20,7 +24,8 @@ repository's storage documentation and run reports, against the vocabulary of §
 
 ## 1. Scope
 
-- the **roles** a storage root can have, and the two **holdings** of each corpus (§2);
+- the **roles** a storage root can have, and the **holdings** of each corpus, including the archive
+  holding `LEGACY` (§2);
 - **authority**, temporary roles and planned changes of role (§3);
 - **configuration**: how a root is resolved, what an unconfigured or unreachable target means (§4);
 - **separation**: roots, nesting, volumes, the administrative umbrella, the institutional namespace
@@ -60,18 +65,65 @@ such; it is not silently mapped onto another.
 
 ### 2.2 Holdings
 
-Each corpus has two **holdings**. A holding is an inventory and storage division inside one corpus:
+Each corpus has the two **holdings** `PRODUCTION` and `HISTORIC`, and **may** have the archive holding
+`LEGACY` (§2.3). A holding is an inventory and storage division inside one corpus:
 
 | Holding | Content |
 |---|---|
 | `PRODUCTION` | the continuously acquired material and everything derived from it |
 | `HISTORIC` | retrospectively acquired or inherited material (CO.RA.PAN: the historical pre-AI stream; CO.PRE.PAN: the legacy press corpus and retrospective acquisitions) |
+| `LEGACY` | archived originals of superseded systems and closed work of the corpus: former repositories with their data and runtime trees, earlier corpus versions, closed research evidence -- kept for provenance and for the reproducibility of history (§2.3) |
 
 A holding is **not a corpus**. It creates no new `corpus_id`, no new family of release ids and no
 separate identity scheme; objects keep the identifiers of their corpus. Each holding has its own
 `PRESERVATION` primary and, when one exists, its own `BACKUP`; the roles, states and rules of this
 contract apply to each holding separately. Two holdings of one corpus may share one primary root
-only when that is declared (§3.2, `SHARED_WITH_HOLDING`).
+only when that is declared (§3.2, `SHARED_WITH_HOLDING`); `LEGACY` never shares one.
+
+Corpus **source material** belongs to `PRODUCTION` or `HISTORIC`, also when it was inherited from an
+earlier system: a recording or document that a holding processes or releases is never only in
+`LEGACY`. `LEGACY` holds what that material came from and what was done with it before.
+
+### 2.3 The archive holding `LEGACY`
+
+- **A1 — a holding like the others.** `LEGACY` has a `PRESERVATION` primary of its own and, when one
+  exists, a `BACKUP` of its own. Every rule of this contract applies to it: S1–S4 (§5.1), T1–T4 (§6),
+  P1–P9 (§7), R1–R5 (§8), B1–B6 (§9), D1–D4 (§10), §11. It is not a new role and not a parallel
+  procedure.
+- **A2 — trees.** The primary holds **archived trees**, each a direct sub-directory named by one
+  segment `<tree>` (normally the name of the source root it was taken from). Tree names are unique in
+  the primary under the comparison of §5.1.
+- **A3 — the archive manifest.** Every tree carries `ARCHIVE_MANIFEST.json` in its own root, written
+  **last**. It names: `schema` (`crosscorpus-storage/v1/archive-manifest`), `corpus`, `holding`
+  (`LEGACY`), `tree`, `source` (where the tree was taken from, as a named root plus relative path or
+  as a recorded original location -- provenance, never an identifier, D1), `decision` (the recorded
+  decision that ordered the archiving), `created_utc`, `files` (every file of the tree except the
+  manifest: relative POSIX `path`, `size`, `sha256`), `tree_sha256` (the record-set digest of `files`,
+  `crosscorpus-release/v1` §4.5) and `supersedes` (`null`, or the `<tree>` it revises). A tree without
+  a readable manifest is incomplete. A `path` is relative POSIX: no leading `/`, no `\`, no `:`, no
+  empty, `.` or `..` segment, never the manifest's own name; two paths that differ only by case are a
+  collision. A `<tree>` is one segment under the same rules.
+- **A4 — write-once.** An archived tree is written once and never modified, extended, replaced or
+  renamed. A revision is a **new** tree under a new name whose manifest names the tree it supersedes;
+  both remain. Archiving the same tree again is idempotent only when its manifest is byte-identical;
+  anything else is refused (`TREE_EXISTS_DIFFERENT`).
+- **A5 — preserved means verified.** A tree is `PRESERVED` (P2) only when its manifest exists, every
+  listed file was re-read **from the primary** and equals path, size and digest, no other file is in
+  the tree, and `tree_sha256` is the digest of `files`. The decision table is
+  `conformance/CASES.json`, `archive_tree`.
+- **A6 — never a pipeline input.** No processing step of `PRODUCTION` or `HISTORIC` reads `LEGACY` as
+  a source, and no writer of those holdings writes into it. Readers of history may read it, read-only.
+- **A7 — no release by registration.** That an original is archived does not by itself release the
+  local original (R1, R3). Its removal needs: the tree `PRESERVED` (A5); a `BACKUP_VERIFIED` copy of it
+  (B1: produced **from the `LEGACY` primary** and verified against it -- a copy made earlier from the
+  local original is not that backup); a read-back from that backup; the readers of the original moved
+  to the archive; and a recorded deletion decision.
+- **A8 — access.** A `LEGACY` root is not a `DISTRIBUTION` or `EXCHANGE` root. Its content is
+  project-internal: it is not published from there, and material that is not openly licensed leaves
+  it only through a release under `crosscorpus-release/v1`. Access control itself is the
+  institution's (§14).
+- **A9 — optional per corpus.** A corpus that has no `LEGACY` holding states so in its topology
+  record (§3.2, `NOT_PLANNED` or `PLANNED`); nothing in the contract requires one.
 
 ## 3. Authority, temporary roles, planned changes
 
@@ -182,10 +234,13 @@ layout.
   `<corpus>_workspace` (`RUNTIME`), `<corpus>_storage` (`SPOOL`).
 - **Institutional namespace.** On an administratively provided root, per corpus:
   `projects/panhispanic_media_corpora/<corpus>`; for the historic holding
-  `projects/panhispanic_media_corpora/historic/<corpus>`. The namespace is **joined without
-  duplication**: leading segments of the namespace that the provided root already ends with are
-  not repeated. A provided root that already ends in `projects` gets no second `projects`.
-  (`conformance/CASES.json`, `namespace`.)
+  `projects/panhispanic_media_corpora/historic/<corpus>`; for the archive holding
+  `projects/panhispanic_media_corpora/legacy/<corpus>`, whose archived trees are
+  `projects/panhispanic_media_corpora/legacy/<corpus>/<tree>` (§2.3). The namespace is **joined
+  without duplication**: leading segments of the namespace that the provided root already ends with
+  are not repeated. A provided root that already ends in `projects` gets no second `projects`.
+  `historic` and `legacy` are **reserved**: they are never a corpus id, and a corpus id is one
+  segment. (`conformance/CASES.json`, `namespace`.)
 - A sub-root of a corpus under the namespace (for example a primary and, on another volume, a
   backup) is named by the repository; the two are different roots of different roles and are
   subject to S1–S3.
@@ -371,8 +426,8 @@ step 8, or a backup before step 9.
   recomputes the digest of its copy and fails on any difference. This check needs no neighbouring
   checkout.
 - **Each repository implements the decision functions itself** (`role_separation`, `namespace`,
-  `configuration_state`, `preservation_outcome`, `cleanup`, `backup_status`) and reproduces every
-  case of `conformance/CASES.json`; and each has tests that exercise **its real code paths**
+  `configuration_state`, `preservation_outcome`, `cleanup`, `backup_status`, `archive_tree`) and
+  reproduces every case of `conformance/CASES.json`; and each has tests that exercise **its real code paths**
   against the invariants (an outage through the real pipeline entry, drain and read-back, the
   interruption points, sole-copy protection, a root change). The decision functions are used by
   the real resolvers and status outputs, not kept beside them.
@@ -382,12 +437,18 @@ step 8, or a backup before step 9.
   suites pass, and each project has a decision record quoting the digest. A change to the bundle
   is made in the canonical home, changes the digest, and is taken by the other repository in one
   commit that runs its suite.
-- A later version that changes the meaning of a state, a code or an invariant is `v2`.
+- A later version that changes the meaning of a state, a code or an invariant is `v2`. A revision that
+  only adds (a holding, a table, codes for it) keeps `v1`, changes the digest and is taken by both
+  repositories as above; each pin file records the revisions it has held.
 
 ## 13. Closed vocabularies
 
 Roles: `REPO` `RUNTIME` `SPOOL` `PRESERVATION` `BACKUP` `DISTRIBUTION` `EXCHANGE`.
-Holdings: `PRODUCTION` `HISTORIC`.
+Holdings: `PRODUCTION` `HISTORIC` `LEGACY`.
+Reserved namespace segments: `historic` `legacy`.
+Archive tree codes: `TARGET_IDENTITY_MISMATCH` `NOT_LEGACY_HOLDING` `TREE_NAME_INVALID` `MANIFEST_MISSING`
+`MANIFEST_INVALID` `PATH_INVALID` `PATH_COLLISION` `FILE_MISSING` `FILE_DIFFERS` `FILE_UNLISTED`
+`TREE_DIGEST_MISMATCH` `TREE_EXISTS_DIFFERENT` (none: the tree is complete and `PRESERVED` under A5).
 Configuration states: `NOT_DECLARED` `NOT_CONFIGURED` `DEFAULTED` `UNUSABLE` `UNREACHABLE` `READ_ONLY` `AVAILABLE`.
 Separation codes: `ROLE_SHARED` `ROLE_NESTED` `BACKUP_NOT_INDEPENDENT` `VOLUME_UNKNOWN` `FOREIGN_CORPUS_OVERLAP`.
 Object states: `PRESERVED` `PENDING` `REFUSED`.
@@ -399,4 +460,5 @@ Backup states: `NOT_CONFIGURED` `CONFIGURED_NO_COPY` `COPY_UNVERIFIED` `NOT_INDE
 
 The location, quota and backup semantics of the institutional file system; distribution and
 exchange roots; licences and access; retention periods; the cold-archive question; any scientific
-population or release. Each is named in the repositories' own open-decision lists.
+population or release; which source roots a corpus archives as `LEGACY` trees, and when a local
+original is released after A7. Each is named in the repositories' own open-decision lists.
