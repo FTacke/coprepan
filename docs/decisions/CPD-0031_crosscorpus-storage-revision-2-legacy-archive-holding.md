@@ -2,8 +2,11 @@
 
 | Field | Value |
 |---|---|
-| Status | **ACCEPTED, IN FORCE**: this repository pins revision 2 (bundle `49a3ca88c084eee26e40caa1dd987155bf8062c99c81d8cb734a7990a8afb036`, a verbatim copy of CO.RA.PAN's canonical home, commit `003ec84d524ec6e4791b3a248800850908e80434`) and its conformance suite reproduces every case |
-| Execution | the contract and its decision functions are in force; **CO.PRE.PAN has no LEGACY holding**: none is configured, planned or created (topology `NOT_PLANNED`, storage index §20.3) |
+| Date | 2026-10-19 |
+| Status | `ACTIVE` |
+| Execution | in force: this repository pins revision 2 (bundle `49a3ca88c084eee26e40caa1dd987155bf8062c99c81d8cb734a7990a8afb036`, a verbatim copy of CO.RA.PAN's canonical home, commit `003ec84d524ec6e4791b3a248800850908e80434`) and its conformance suite reproduces every case; **CO.PRE.PAN has no LEGACY holding**: none is configured, planned or created (topology `NOT_PLANNED`, storage index §20.3) |
+| Builds on / amends / supersedes | builds on CPD-0015 (revision 1 of the joint contract, still quoted for revision 1); supersedes nothing |
+| Does not change | any root, identity, object, pack, index or manifest; the PRODUCTION primary and its BACKUP; the acquisition policy (`disabled`). The frozen canary and intake baselines of 2026-10-08 to 2026-10-10 keep the revision-1 digest they recorded; a new canary or intake run freezes a new baseline (the driver refuses a baseline whose storage digest is not the current one) |
 | Decided by | the operator, in the brief "Cross-Corpus Storage — LEGACY-Archiv-Holding verbindlich einführen" of 2026-10-19 (run from the CO.RA.PAN repository with write scope over both): the holding is introduced for both corpora; CO.RA.PAN uses it, CO.PRE.PAN may later, without activation now |
 | Sister decision | CO.RA.PAN D127 |
 | Run report | CO.RA.PAN `docs/agent-runs/2026-10-19_crosscorpus-legacy-archive-contract-adoption.md` (joint) |
@@ -23,6 +26,14 @@ superseded system (the legacy repository) and asked for an amendment that both c
 3. **No activation.** The press corpus's own legacy material (`legacy\coprepan` on the workstation, with its verified D: secondary of
    2026-10-15) stays where it is. CO.PRE.PAN's HISTORIC holding stays the place for the legacy press corpus as source material
    (contract §2.2); LEGACY would hold the superseded system around it.
+
+## Alternatives considered
+
+- **A separate contract `v2`.** Rejected: nothing of revision 1 changes meaning; a new major version would force both repositories to
+  re-qualify unchanged decisions.
+- **A local LEGACY role in CO.RA.PAN only.** Rejected by the contract itself (§12: one bundle, both repositories) and because CO.PRE.PAN
+  has the same kind of material.
+- **Storing CO.PRE.PAN's legacy press corpus as LEGACY.** Rejected: corpus source material belongs to PRODUCTION or HISTORIC (§2.2).
 
 ## Not decided here
 

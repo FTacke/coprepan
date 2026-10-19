@@ -420,7 +420,10 @@ def test_the_canary_pin_needs_a_target_identity_and_has_no_disk_in_it(tmp_path, 
     PT.initialise_target(drive.root, "coprepan-preservation-test", operator="test", now=T0)
     pin = D.canary_pin(SMALL, drive.registry, [OUTLET], [], drive.root, P.loopback_test_policy(), repository=site_checkout(tmp_path))
     assert pin["storage_target"]["target_id"] == "coprepan-preservation-test" and str(drive.root) not in json.dumps(pin)
-    assert pin["storage_contract_sha256"] == "8d17fc214076b21e47774d228e016dfe36484b29ce0ecad693456c07f9018fb3"
+    # the CURRENT pin (revision 2 since CPD-0031); a frozen baseline keeps the digest it recorded
+    from coprepan import storage_contract
+    assert pin["storage_contract_sha256"] == storage_contract.read_pin()["bundle_sha256"] == \
+        "49a3ca88c084eee26e40caa1dd987155bf8062c99c81d8cb734a7990a8afb036"
     assert set(pin["outlets"][OUTLET]) == {"record_sha256", "url_rules"}
 
 
