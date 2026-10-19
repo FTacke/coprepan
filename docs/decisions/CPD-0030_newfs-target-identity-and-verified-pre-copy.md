@@ -77,3 +77,14 @@ and the interim tree unchanged under it; `.env` names the new root and `COPREPAN
 fallback, not a backup). Not shown yet: a production write (acquisition stays `disabled`), the Phase-1 core gate with only PRESERVATION on
 the share, the BACKUP (Phase D). Joint report: CO.RA.PAN `docs/agent-runs/2026-10-18_newfs-phase-c-final-reconciliation-cutover.md`;
 this repository's run report: [`../agent-runs/2026-10-18_newfs-phase-c-cutover.md`](../agent-runs/2026-10-18_newfs-phase-c-cutover.md).
+
+## Phase D (2026-10-19)
+
+Executed under the operator brief "NEW_FS Phase D + C:-Speicherentlastung" of 2026-10-18. **A BACKUP of the PRESERVATION primary
+exists**: `COPREPAN_BACKUP_ROOT` = `D:\projects\panhispanic_media_corpora\coprepan\backup` (initialised BACKUP root, another volume),
+produced from the primary (`coprepan.primary_backup`, `scripts/preservation_backup.py`): baseline 8,816 objects / 395,018,230 B with
+the Phase C tree `f4bb0c9c…`, 8,816 copied, unbuffered verification 0 problems, restore test 25/25 from the backup only, receipt
+2026-10-19T01:14:57Z (evidence [`docs/storage/migration/2026-10-19_newfs-phase-d/`](../storage/migration/2026-10-19_newfs-phase-d/)).
+Recurring: daily task `COPREPAN_PreservationBackup` (05:45). The interim primary on `D:` stays a protected fallback (not this
+backup). Not claimed: offsite or 3-2-1 independence (B3). Run report:
+[`../agent-runs/2026-10-19_newfs-phase-d-backup.md`](../agent-runs/2026-10-19_newfs-phase-d-backup.md).

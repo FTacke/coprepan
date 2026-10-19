@@ -99,6 +99,12 @@ on `D:` is retained unchanged as a protected fallback -- **not a backup** (never
 No production write has happened on the new root (acquisition `disabled`): technically qualified, production proof pending.
 Storage index §20.6.*
 
+*Update 2026-10-19 (CPD-0030, Phase D): **a BACKUP of the PRESERVATION primary exists** on `D:`
+(`COPREPAN_BACKUP_ROOT` = `D:\projects\panhispanic_media_corpora\coprepan\backup`), produced from and verified against the primary:
+8,816 objects / 395,018,230 B (tree = Phase C), unbuffered verification 0 problems, restore test 25/25, receipt 2026-10-19T01:14:57Z;
+`storage_contract.py status` reports it. Daily task `COPREPAN_PreservationBackup` (05:45). Independence beyond another volume is not
+determined (B3).*
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates

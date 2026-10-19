@@ -1,0 +1,12 @@
+{
+ "copy_exists": true,
+ "produced_from_primary": true,
+ "receipt": {
+  "bytes": 395018230,
+  "objects": 8816,
+  "primary_target_id": "coprepan-preservation-newfs",
+  "tree_sha256": "f4bb0c9ca71a9615383dec29da57b940ffe43aabf8f4f9a748932333a284da0e",
+  "written_at": "2026-10-19T01:14:57Z"
+ },
+ "verified_against_primary": true
+}

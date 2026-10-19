@@ -1,0 +1,174 @@
+{
+ "baseline_taken_at": "2026-10-19T01:06:08Z",
+ "bytes": 395018230,
+ "copy_problems": [],
+ "copy_run": {
+  "counts": {
+   "COPIED": 8816
+  },
+  "objects": 8816,
+  "ok": true,
+  "problem_count": 0,
+  "run_id": "bk20261019T010608Z-27b085"
+ },
+ "corpus": "coprepan",
+ "holding": "PRODUCTION",
+ "independence": "different volume; further independence not determined (contract B3)",
+ "not_claimed": "completeness holds for the baseline named here; objects the primary gains later are the next run's",
+ "objects": 8816,
+ "of": "the PRESERVATION primary",
+ "primary_root_label": "coprepan",
+ "primary_target_id": "coprepan-preservation-newfs",
+ "produced_from_primary": true,
+ "restore_cases": [
+  {
+   "bytes": 548,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-do_hoy-20261011-002.json"
+  },
+  {
+   "bytes": 30986,
+   "ok": true,
+   "path": "preservation/raw/pa/pa_laestrelladepanama/pk1-pa_laestrelladepanama-20261011-002.warc.gz"
+  },
+  {
+   "bytes": 1095,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-ec_el_universo-20261010-011.json"
+  },
+  {
+   "bytes": 564,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-pr_noticel-20261010-001.json"
+  },
+  {
+   "bytes": 1078,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-pa_el_siglo-20261010-007.json"
+  },
+  {
+   "bytes": 2666,
+   "ok": true,
+   "path": "preservation/raw_index/gt/gt_prensa_libre/pk1-gt_prensa_libre-20261010-010.index.jsonl"
+  },
+  {
+   "bytes": 1070,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-ar_perfil-20261010-009.json"
+  },
+  {
+   "bytes": 180221,
+   "ok": true,
+   "path": "preservation/raw/es/es_la_vanguardia/pk1-es_la_vanguardia-20261010-008.warc.gz"
+  },
+  {
+   "bytes": 5257,
+   "ok": true,
+   "path": "preservation/raw_index/pr/pr_el_nuevo_dia/pk1-pr_el_nuevo_dia-20261009-000.index.jsonl"
+  },
+  {
+   "bytes": 580,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-ve_eluniversal-20261010-012.json"
+  },
+  {
+   "bytes": 580,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-hn_hondudiario-20261011-001.json"
+  },
+  {
+   "bytes": 581,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-pa_metro_libre-20261011-003.json"
+  },
+  {
+   "bytes": 573,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-gt_publinews-20261011-006.json"
+  },
+  {
+   "bytes": 1100,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-py_noticias_cde-20261009-000.json"
+  },
+  {
+   "bytes": 515682,
+   "ok": true,
+   "path": "preservation/raw/es/es_eldiario_es/pk1-es_eldiario_es-20261010-006.warc.gz"
+  },
+  {
+   "bytes": 23035,
+   "ok": true,
+   "path": "preservation/raw/pe/pe_la_republica/pk1-pe_la_republica-20261010-014.warc.gz"
+  },
+  {
+   "bytes": 190718,
+   "ok": true,
+   "path": "preservation/raw/ar/ar_pagina12/pk1-ar_pagina12-20261010-014.warc.gz"
+  },
+  {
+   "bytes": 2638,
+   "ok": true,
+   "path": "preservation/raw_index/co/co_semana/pk1-co_semana-20261010-008.index.jsonl"
+  },
+  {
+   "bytes": 1085,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-cr_la_nacion-20261011-003.json"
+  },
+  {
+   "bytes": 581,
+   "ok": true,
+   "path": "preservation/manifests/raw_index/pk1-ec_el_mercurio-20261010-003.json"
+  },
+  {
+   "bytes": 133373,
+   "ok": true,
+   "path": "preservation/raw/pa/pa_panama_america/pk1-pa_panama_america-20261010-004.warc.gz"
+  },
+  {
+   "bytes": 1085,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-cr_la_nacion-20261010-011.json"
+  },
+  {
+   "bytes": 505931,
+   "ok": true,
+   "path": "preservation/raw/ar/ar_la_nacion/pk1-ar_la_nacion-20261010-011.warc.gz"
+  },
+  {
+   "bytes": 2506,
+   "ok": true,
+   "path": "preservation/raw_index/pa/pa_midiario/pk1-pa_midiario-20261010-011.index.jsonl"
+  },
+  {
+   "bytes": 1078,
+   "ok": true,
+   "path": "preservation/manifests/raw/pk1-cu_14ymedio-20261011-001.json"
+  }
+ ],
+ "restore_test": {
+  "all_ok": true,
+  "bytes": 1604611,
+  "ok_count": 25,
+  "read_from": "BACKUP root",
+  "samples": 25,
+  "tested_at": "2026-10-19T01:14:57Z"
+ },
+ "role": "BACKUP",
+ "tree_sha256": "f4bb0c9ca71a9615383dec29da57b940ffe43aabf8f4f9a748932333a284da0e",
+ "verification": {
+  "bytes": 395018230,
+  "objects": 8816,
+  "ok": true,
+  "only_in_backup": [],
+  "only_in_backup_count": 0,
+  "problem_count": 0,
+  "problems": [],
+  "reread": "uncached",
+  "temporary_files": [],
+  "verified_at": "2026-10-19T01:14:56Z"
+ },
+ "verified_against_primary": true,
+ "written_at": "2026-10-19T01:14:57Z"
+}
