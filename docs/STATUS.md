@@ -109,6 +109,11 @@ determined (B3).*
 repositories): a third, optional holding `LEGACY` for archived originals of superseded systems (contract §2.3). This repository
 implements its decision functions and reproduces every case; it has **no LEGACY holding** (not planned).*
 
+*Update 2026-10-20 (CPD-0032): the LEGACY holding is **PRESENT** — primary `…\legacy\coprepan` on NEW_FS (identity
+`coprepan-archive-newfs-legacy`) with the one tree `coprepan` (the frozen legacy repository, PRESERVED) and its B1 backup on D:
+(`storage/INDEX.md` §20.7). The legacy press corpus stays `legacy_frozen`: not production, never a pipeline input. The contract and
+the PRODUCTION roots are unchanged.*
+
 What exists beyond documents: the complete path channel → discovery → candidate → policy gate →
 HTTP fetch → fetch record → sealed pack → preservation → document identity → extraction →
 document version → admission label → replay, and a second and later visit of the same candidates
@@ -233,7 +238,7 @@ defects (§5a).
 | Write-once layer store | implemented and unit-tested; its durable location (role) is undecided | `src/coprepan/layer_store.py`, `tests/test_layer_store.py` |
 | Release gate suite | scaffold; **contains no test**. It gates software changes of a pipeline that does not exist yet; the release-contract conformance tests are in `foundation_contract` (handoff gate PG2) | `tests/suites/release_gate.txt` |
 | Git | initialised 2026-10-07 on operator brief: branch `main`, remote `origin` = `https://github.com/FTacke/coprepan.git`; no history taken over from the legacy repository | [closure run report](agent-runs/2026-10-07_coprepan-repository-migration-closure.md) |
-| Legacy freeze `coprepan-legacy-2026-06` | **manifest built and verified 2026-10-07** (`MANIFEST_ONLY`): 32,235 files, 18,782,593,808 bytes; release scope 3,256 files, 17,370,148,925 bytes (measured). **No preserved copy, no restore check** (need O-3) | `docs/legacy/freeze/coprepan-legacy-2026-06/`, `src/coprepan/legacy_freeze.py`, `docs/legacy/INDEX.md` §5 |
+| Legacy freeze `coprepan-legacy-2026-06` | **manifest built and verified 2026-10-07** (`MANIFEST_ONLY`): 32,235 files, 18,782,593,808 bytes; release scope 3,256 files, 17,370,148,925 bytes (measured). **2026-10-20 (CPD-0032): preserved copy and restore check done** — the frozen legacy repository is the LEGACY tree `legacy/coprepan/coprepan` (PRESERVED, 3,583 files, 17,635,313,888 B; all 3,256 release-scope files identical to the listing) with a verified B1 backup (read-back 45/45, restore 40/40); a study loader reading the copy is still open | `docs/legacy/freeze/coprepan-legacy-2026-06/`, `src/coprepan/legacy_freeze.py`, `docs/legacy/INDEX.md` §5, `docs/storage/INDEX.md` §20.7 |
 
 ## 4. Production stack
 
@@ -485,7 +490,7 @@ Named debts of CPD-0005, CPD-0006 and CPD-0007 (`ACTIVE_WITH_VALIDATION_DEBT`):
 | Channel-health states on real channels; thresholds | after the canary |
 | Technical admission labels on real pages; every content-level label | Phase 3 |
 | The evaluation harness on real pages with a human reference; the metrics as diagnostics checked against reviewers | Phase 3, gold sample |
-| Legacy freeze: preserved copy, restore check, a study loader reading the copy | Phase 0 closure; needs O-3 |
+| Legacy freeze: a study loader reading the archived copy (preserved copy and restore check done 2026-10-20, CPD-0032) | Phase 0 closure |
 | The analysis contract on real material: a COPREPAN export of annotated corpus text; a CO.RA.PAN adapter and export; adoption | after the canary and Phase 3 / 4 here; a separate run in CO.RA.PAN |
 | Annotation equivalence of the two instrument paths on shared written text | Phase 4 (design: contract §11) |
 | `tense-v3` (press) against `tense-v4` (radio) on the same text; legacy labels against the verbal-complex layer | bridge sample (design: contract §12) |

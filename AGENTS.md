@@ -43,10 +43,10 @@ On the operator's workstation, since the path migration of 2026-10-07 (this repo
 
 | Path | Role |
 |---|---|
-| `C:\dev\panhispanic_media_corpora\legacy\coprepan` | **Legacy COPREPAN**: legacy system and legacy corpus, archived unchanged (formerly `C:\dev\coprepan`). Behaviour and data reference. |
+| `C:\dev\panhispanic_media_corpora\legacy\coprepan` | **Legacy COPREPAN**: legacy system and legacy corpus, archived unchanged (formerly `C:\dev\coprepan`). Behaviour and data reference. **Frozen since 2026-10-20** (entry point `FROZEN.md`, tag `frozen-2026-10`); archived as the LEGACY tree `legacy/coprepan/coprepan` with a B1 backup ([CPD-0032](docs/decisions/CPD-0032_legacy-holding-activated-legacy-system-and-frozen-press-corpus.md)). |
 | `C:\dev\panhispanic_media_corpora\corapan` | **CO.RA.PAN 3.0** (repository name `corapan_playground`, formerly `C:\dev\corapan_playground`): the technical and methodological reference; source of the shared NLP instrument contract. |
-| `C:\dev\panhispanic_media_corpora\legacy\corapan_coprepan_studies` | Cross-corpus studies, archived unchanged (formerly `C:\dev\corapan_coprepan_studies`): evidence of what interfaces real studies need. |
-| `C:\dev\corapan` | CO.RA.PAN 1.0 (legacy radio system), referenced by the two above. Not moved. |
+| `C:\dev\panhispanic_media_corpora\legacy\corapan_coprepan_studies` | Cross-corpus studies, archived unchanged (formerly `C:\dev\corapan_coprepan_studies`): evidence of what interfaces real studies need. **Frozen since 2026-10-20** (`FROZEN.md`); archived as the LEGACY tree `legacy/corapan/corapan_coprepan_studies` of CO.RA.PAN (its decision D131). |
+| `C:\dev\corapan` | CO.RA.PAN 1.0 (legacy radio system), referenced by the two above. *(2026-10-20: the legacy CO.RA.PAN repository lies at `C:\dev\panhispanic_media_corpora\legacy\corapan` since 2026-10-08, per CO.RA.PAN's `AGENTS.md`; what a directory `C:\dev\corapan` holds today was not examined.)* |
 
 - **All four, and the corpus data they reference, are read-only.** Do not modify, delete, move,
   rename, normalise, migrate, re-annotate or overwrite anything there. The single exception is a

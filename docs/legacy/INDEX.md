@@ -83,7 +83,15 @@ size of that effect may be made until the re-fetch canary (§7) has measured it.
 
 Definitions: [naming](../architecture/TERMINOLOGY_AND_NAMING.md) §5.6.
 
-## 5. The frozen legacy release (MANIFEST BUILT; RELEASE INCOMPLETE)
+## 5. The frozen legacy release (MANIFEST BUILT; PRESERVED COPY AND RESTORE CHECK DONE 2026-10-20; STEP 4 OPEN)
+
+> **2026-10-20 (CPD-0032).** The legacy repository is frozen (tag `frozen-2026-10`, its `FROZEN.md`) and archived as the LEGACY
+> tree `legacy/coprepan/coprepan` on the NEW_FS share (PRESERVED, 3,583 files) with a verified B1 backup on D:. **Step 2 done**:
+> all 3,256 files of the release scope below are in the archived tree with the SHA-256 of the 2026-10-07 listing (comparison: 3,572
+> identical, 2 freeze notices changed, 9 freeze additions, only development artefacts excluded, 0 missing). **Step 3 done**:
+> read-back from the backup 45/45 (one annotated file per country, both SQLite databases with WAL and SHM) plus the tool's restore
+> test 40/40. The checkpointed copies of the two databases are in the tree's `_derived/` (made on an isolated copy; originals never
+> opened). **Step 4 (a study loader reads the frozen copy) is still open.** The listing below is unchanged.
 
 Target: **`coprepan-legacy-2026-06`** — the legacy corpus exactly as the studies read it, as one
 named, hash-manifested release.
@@ -194,3 +202,7 @@ place.
   1). The legacy tree was read only; its commit and `git status` are unchanged. No copy was made:
   steps 2–4 need a preservation target (O-3).
   Run report: [`docs/agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md`](../agent-runs/2026-10-07_pre-canary-completion-legacy-freeze-phase3-readiness.md).
+- 2026-10-20 — **legacy repository frozen and archived** (CPD-0032, operator brief of the day): local freeze commit `7632cd4`
+  and tag `frozen-2026-10` in the legacy repository (its `FROZEN.md` is the entry point; no push); LEGACY tree `coprepan` on NEW_FS
+  PRESERVED, B1 backup verified; §5 steps 2 and 3 done, step 4 open. The legacy tree on C: and its 2026-10-15 secondary are
+  unchanged. Run report: [`docs/agent-runs/2026-10-20_legacy-holding-activation-and-archive.md`](../agent-runs/2026-10-20_legacy-holding-activation-and-archive.md).

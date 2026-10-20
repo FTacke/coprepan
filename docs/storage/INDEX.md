@@ -573,7 +573,7 @@ shows the pending count and the oldest pending record.
 | PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | **PLANNED** · NOT_CONFIGURED, not created | NONE | no copy | BACKUP (secondary of the new primary) | the new primary is in service; a copy produced from it and verified against it |
 | PRODUCTION · `DISTRIBUTION`, `EXCHANGE` | — | NOT_CONFIGURED | NONE | — | — | separate decisions |
 | HISTORIC · any role | — (the contract's namespace: `…\projects\panhispanic_media_corpora\historic\coprepan`) | **NOT PRESENT**, not configured, not planned by CPD-0015 | NONE | — | — | an operator decision that a historic holding exists |
-| LEGACY · any role (added 2026-10-19, contract revision 2, CPD-0031) | — (the contract's namespace: `…\projects\panhispanic_media_corpora\legacy\coprepan`) | **NOT_PLANNED**: available under the contract, not configured, nothing created; the local `legacy\coprepan` tree keeps its D: secondary (2026-10-15) | NONE | — | — | an operator decision that CO.PRE.PAN archives its legacy trees (then PLANNED; contract §2.3 A1-A9, the BACKUP produced from that primary) |
+| LEGACY · any role (added 2026-10-19, contract revision 2, CPD-0031) | — (the contract's namespace: `…\projects\panhispanic_media_corpora\legacy\coprepan`) | **NOT_PLANNED**: available under the contract, not configured, nothing created; the local `legacy\coprepan` tree keeps its D: secondary (2026-10-15) | NONE | — | — | an operator decision that CO.PRE.PAN archives its legacy trees (then PLANNED; contract §2.3 A1-A9, the BACKUP produced from that primary) — **superseded 2026-10-20 by CPD-0032: PRESENT, see §20.7** |
 
 No root of CO.PRE.PAN lies in, contains or equals a root of CO.RA.PAN (joint check, 2026-10-08), and none is
 below CO.RA.PAN's share.
@@ -647,3 +647,14 @@ production proof); the Phase-1 core gate and the process-kill tests with only PR
 Rollback (no write has happened on the new root): restore the two `.env` lines (`COPREPAN_PRESERVATION_ROOT=D:\…\preservation_interim`,
 `COPREPAN_PRESERVATION_TARGET_ID` unset); after a first write on the new root, its new objects are carried back first (CO.RA.PAN's
 `newfs_cutover_v1.py rollback-*` procedure, D111).
+
+### 20.7 The LEGACY holding is PRESENT (CPD-0032, 2026-10-20)
+
+| Holding · role | Root | Existence · configuration | Role today · authority | Copies | Evidence |
+|---|---|---|---|---|---|
+| LEGACY · `PRESERVATION` | `\\dfs.hrz.uni-marburg.de\PROJEKTE\FB10\TACKE_FORSCHUNGSDATEN\projects\panhispanic_media_corpora\legacy\coprepan` | PRESENT · per process (`COPREPAN_LEGACY_ARCHIVE_ROOT`, `COPREPAN_LEGACY_ARCHIVE_TARGET_ID`; not in `.env`, no stage reads it) | PRESERVATION · PRIMARY of LEGACY; identity `coprepan-archive-newfs-legacy` (`IDENTITY_OK`) | one tree `coprepan`: 3,583 files, 17,635,313,888 B, `tree_sha256 b97105bd…`, manifest SHA-256 `c536fdd5…`; **PRESERVED** (unbuffered re-read, `archive_tree` no code) | legacy repository `docs/agent-runs/2026-10-20_legacy-freeze-and-archive.md` |
+| LEGACY · `BACKUP` | `D:\projects\panhispanic_media_corpora\legacy\coprepan\preservation_backup` | PRESENT · per process (`COPREPAN_LEGACY_BACKUP_ROOT`) | BACKUP · SECONDARY; marker holding `LEGACY` | receipt 2026-10-20T16:04:51Z: produced from and verified against `coprepan-archive-newfs-legacy`, 3,584/3,584 objects re-read unbuffered, restore 40/40; read-back 45/45 incl. every country and the SQLite files with WAL/SHM | as above; `scripts/preservation_backup.py --holding LEGACY run` |
+
+`shares_root_with: NONE`. Never a pipeline input (A6); not a DISTRIBUTION or EXCHANGE root (A8; the share's ACL: two explicit
+principals). The 2026-10-15 secondary `coprepan\archive\protected_secondary\legacy_coprepan` is not this backup and stays
+`KEEP_REQUIRED`; the local legacy tree on C: stays complete (no A7 release).
