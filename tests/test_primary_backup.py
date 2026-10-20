@@ -116,6 +116,62 @@ def test_a_receipt_of_another_primary_is_no_backup_of_this_one(roots, tmp_path) 
     assert B.receipt_status(None, primary)["copy_exists"] is False
 
 
+def test_a_legacy_backup_root_names_its_holding_and_is_refused_for_another(roots, tmp_path) -> None:
+    primary, backup = roots
+    marker = B.init_root(backup, primary=primary, operator="test", holding="LEGACY")
+    assert (marker["role"], marker["corpus"], marker["holding"]) == ("BACKUP", "coprepan", "LEGACY")
+    assert B.require_root(backup, primary=primary, holding="LEGACY")["holding"] == "LEGACY"
+    with pytest.raises(B.BackupError, match="role isolation"):
+        B.copy(primary, backup, M.baseline(primary))                      # the default holding is PRODUCTION
+    copied = B.copy(primary, backup, M.baseline(primary), holding="LEGACY")
+    assert copied["ok"] and copied["counts"] == {M.COPIED: 3}
+
+
+def test_a_production_backup_root_is_refused_for_the_legacy_holding(roots) -> None:
+    primary, backup = roots
+    B.init_root(backup, primary=primary, operator="test")
+    with pytest.raises(B.BackupError, match="role isolation"):
+        B.copy(primary, backup, M.baseline(primary), holding="LEGACY")
+    with pytest.raises(B.BackupError, match="not a holding"):
+        B.init_root(backup.parent / "other", primary=primary, operator="test", holding="HISTORIC")
+
+
+def _cli():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("preservation_backup_cli", Path(__file__).resolve().parents[1] / "scripts" /
+                                                  "preservation_backup.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_the_cli_backs_up_the_legacy_archive_root_by_its_own_variables(roots, tmp_path, monkeypatch, capsys) -> None:
+    primary, backup = roots
+    cli = _cli()
+    for name in ("COPREPAN_PRESERVATION_ROOT", "COPREPAN_BACKUP_ROOT"):
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("COPREPAN_LEGACY_ARCHIVE_ROOT", str(primary))
+    monkeypatch.setenv("COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "coprepan-test-primary")
+    monkeypatch.setenv("COPREPAN_LEGACY_BACKUP_ROOT", str(backup))
+    checkout = tmp_path / "checkout-without-env"
+    checkout.mkdir()
+    assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "init-root", "--root", str(backup),
+                     "--operator", "test"]) == 0
+    assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run", "--samples", "2",
+                     "--evidence-dir", str(tmp_path / "evidence")]) == 0
+    receipt = json.loads((backup / B.STATE / B.RECEIPT).read_text(encoding="utf-8"))
+    assert receipt["holding"] == "LEGACY" and receipt["verified_against_primary"] is True
+    assert receipt["primary_target_id"] == "coprepan-test-primary"
+    capsys.readouterr()
+    monkeypatch.setenv("COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "another-identity")
+    with pytest.raises(SystemExit, match="TARGET_IDENTITY_MISMATCH"):
+        cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run"])
+    monkeypatch.delenv("COPREPAN_LEGACY_ARCHIVE_TARGET_ID")
+    with pytest.raises(SystemExit, match="must both be set"):
+        cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run"])
+
+
 def test_the_restore_cleanup_refuses_anything_outside_its_scratch_directory(tmp_path) -> None:
     (tmp_path / "keep.txt").write_text("x")
     with pytest.raises(ValueError):

@@ -6,7 +6,10 @@
     status                                         the receipt's state as the contract status reads it
 
 Both roots come from the workstation's ``.env`` (``COPREPAN_PRESERVATION_ROOT`` with ``COPREPAN_PRESERVATION_TARGET_ID``, checked
-(T2); ``COPREPAN_BACKUP_ROOT``). Nothing here writes to the primary, deletes an object or touches the network beyond the two roots.
+(T2); ``COPREPAN_BACKUP_ROOT``). With ``--holding LEGACY`` (CPD-0032) the primary is the LEGACY archive root
+``COPREPAN_LEGACY_ARCHIVE_ROOT``, whose identity must be ``COPREPAN_LEGACY_ARCHIVE_TARGET_ID`` (T2, required), and the backup root
+is ``COPREPAN_LEGACY_BACKUP_ROOT``; a backup root names its holding and is refused for another one. Nothing here writes to the
+primary, deletes an object or touches the network beyond the two roots.
 """
 
 from __future__ import annotations
@@ -25,12 +28,33 @@ from coprepan import primary_backup as B  # noqa: E402
 from coprepan import storage_roots  # noqa: E402
 
 
-def _roots(checkout: Path, *, need_backup: bool = True) -> tuple[Path, Path | None]:
+#: per holding: the variable of the backup root (the PRODUCTION primary resolves through storage_roots; LEGACY below)
+BACKUP_VARIABLE = {"PRODUCTION": "COPREPAN_BACKUP_ROOT", "LEGACY": "COPREPAN_LEGACY_BACKUP_ROOT"}
+
+
+def _legacy_primary(env) -> Path:
+    """The LEGACY archive root (CPD-0032): set, usable, reachable, and carrying the expected identity (T1/T2) -- never guessed."""
+    value = env.get("COPREPAN_LEGACY_ARCHIVE_ROOT", "").strip()
+    expected = env.get("COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "").strip()
+    if not value or not expected:
+        raise SystemExit("COPREPAN_LEGACY_ARCHIVE_ROOT and COPREPAN_LEGACY_ARCHIVE_TARGET_ID must both be set for --holding LEGACY")
+    root = storage_roots.require_usable_root(value, "LEGACY archive (COPREPAN_LEGACY_ARCHIVE_ROOT)")
+    identity = storage_roots.preservation_identity(root, expected=expected)
+    if identity["state"] != "IDENTITY_OK":
+        raise SystemExit(f"LEGACY archive root: {identity['state']} ({identity['detail']}); nothing is read or written")
+    return Path(root)
+
+
+def _roots(checkout: Path, *, need_backup: bool = True, holding: str = "PRODUCTION") -> tuple[Path, Path | None]:
     env = storage_roots.workstation_environment(checkout)
-    primary = storage_roots.resolve_root("PRESERVATION", env=env, writable=False)      # T2: the identity is checked here
-    value = env.get("COPREPAN_BACKUP_ROOT", "").strip()
+    if holding == "LEGACY":
+        primary = _legacy_primary(env)
+    else:
+        primary = storage_roots.resolve_root("PRESERVATION", env=env, writable=False)  # T2: the identity is checked here
+    variable = BACKUP_VARIABLE[holding]
+    value = env.get(variable, "").strip()
     if need_backup and not value:
-        raise SystemExit("COPREPAN_BACKUP_ROOT is not set: make the root (init-root) and set it in .env")
+        raise SystemExit(f"{variable} is not set: make the root (init-root) and set it in .env")
     return Path(primary), (Path(value) if value else None)
 
 
@@ -41,18 +65,18 @@ def _write(path: Path | None, doc) -> None:
 
 
 def cmd_init_root(args) -> int:
-    primary, _ = _roots(args.workstation_checkout, need_backup=False)
-    print(json.dumps(B.init_root(Path(args.root), primary=primary, operator=args.operator), indent=1))
+    primary, _ = _roots(args.workstation_checkout, need_backup=False, holding=args.holding)
+    print(json.dumps(B.init_root(Path(args.root), primary=primary, operator=args.operator, holding=args.holding), indent=1))
     return 0
 
 
 def cmd_run(args) -> int:
-    primary, backup = _roots(args.workstation_checkout)
-    B.require_root(backup, primary=primary)
+    primary, backup = _roots(args.workstation_checkout, holding=args.holding)
+    B.require_root(backup, primary=primary, holding=args.holding)
     evidence = Path(args.evidence_dir) if args.evidence_dir else None
     base = M.baseline(primary)
     print(json.dumps({k: base[k] for k in ("taken_at", "source_target_id", "files", "bytes", "tree_sha256")}), flush=True)
-    copied = B.copy(primary, backup, base, workers=args.workers, progress=lambda m: print(m, flush=True))
+    copied = B.copy(primary, backup, base, workers=args.workers, progress=lambda m: print(m, flush=True), holding=args.holding)
     print(json.dumps({k: v for k, v in copied.items() if k != "problems"}), flush=True)
     verification = B.verify(backup, base, workers=args.workers)
     print(json.dumps({k: v for k, v in verification.items() if k not in ("problems",)}), flush=True)
@@ -60,7 +84,8 @@ def cmd_run(args) -> int:
         restore = B.restore_test(backup, base, Path(scratch) / "restore", samples=args.samples)
     print(json.dumps({k: v for k, v in restore.items() if k != "cases"}), flush=True)
     ok = copied["ok"] and verification["ok"] and restore["all_ok"]
-    doc = {"written_at": B._now(), "role": "BACKUP", "of": "the PRESERVATION primary", "corpus": "coprepan", "holding": "PRODUCTION",
+    doc = {"written_at": B._now(), "role": "BACKUP", "of": f"the PRESERVATION primary of the {args.holding} holding",
+           "corpus": "coprepan", "holding": args.holding,
            "primary_target_id": base["source_target_id"], "primary_root_label": base["source_label"],
            "baseline_taken_at": base["taken_at"], "objects": base["files"], "bytes": base["bytes"], "tree_sha256": base["tree_sha256"],
            "copy_run": {k: v for k, v in copied.items() if k != "problems"}, "copy_problems": copied["problems"],
@@ -79,7 +104,7 @@ def cmd_run(args) -> int:
 
 
 def cmd_status(args) -> int:
-    primary, backup = _roots(args.workstation_checkout, need_backup=False)
+    primary, backup = _roots(args.workstation_checkout, need_backup=False, holding=args.holding)
     print(json.dumps(B.receipt_status(backup, primary), indent=1))
     return 0
 
@@ -87,6 +112,8 @@ def cmd_status(args) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--workstation-checkout", type=Path, default=REPO)
+    parser.add_argument("--holding", choices=B.HOLDINGS, default="PRODUCTION",
+                        help="PRODUCTION (default): the PRESERVATION primary; LEGACY: the LEGACY archive root (CPD-0032)")
     sub = parser.add_subparsers(dest="command", required=True)
     c = sub.add_parser("init-root")
     c.add_argument("--root", required=True)

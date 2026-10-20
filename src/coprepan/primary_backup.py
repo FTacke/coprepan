@@ -35,6 +35,9 @@ MARKER = "BACKUP_ROOT.json"
 STATE = "_backup"
 RECEIPT = "backup_receipt.json"
 JOURNAL = "journal.jsonl"
+#: the holdings whose primary this tool backs up (contract §2.2): PRODUCTION, and LEGACY since CPD-0032. A backup root names its
+#: holding in its marker and is never used for another holding's primary (role isolation).
+HOLDINGS = ("PRODUCTION", "LEGACY")
 
 
 class BackupError(RuntimeError):
@@ -49,8 +52,11 @@ def _excluded(path: str) -> bool:
     return path == MARKER or path.split("/", 1)[0] == STATE
 
 
-def init_root(root: Path, *, primary: Path, operator: str) -> dict[str, Any]:
-    """Make ``root`` a BACKUP root (once): it must be new or empty, and on another volume than the primary (B2)."""
+def init_root(root: Path, *, primary: Path, operator: str, holding: str = "PRODUCTION") -> dict[str, Any]:
+    """Make ``root`` a BACKUP root of ``holding``'s primary (once): it must be new or empty, and on another volume than the
+    primary (B2)."""
+    if holding not in HOLDINGS:
+        raise BackupError(f"not a holding this tool backs up: {holding!r}")
     root = Path(root)
     marker = root / MARKER
     if marker.is_file():
@@ -60,23 +66,25 @@ def init_root(root: Path, *, primary: Path, operator: str) -> dict[str, Any]:
     root.mkdir(parents=True, exist_ok=True)
     if storage_roots.volume_of(root) == storage_roots.volume_of(Path(primary)):
         raise BackupError(f"{root} is on the primary's volume: two directories of one volume are one copy (B2)")
-    doc = {"schema": SCHEMA + "/root", "role": "BACKUP", "corpus": "coprepan", "holding": "PRODUCTION",
+    doc = {"schema": SCHEMA + "/root", "role": "BACKUP", "corpus": "coprepan", "holding": holding,
            "contract": "crosscorpus-storage/v1 §9", "created_at": _now(), "operator": operator,
-           "statement": "a secondary copy produced from the PRESERVATION primary and verified against it; never a primary, never a "
-                        "pipeline dependency; nothing in it is deleted by a tool",
+           "statement": f"a secondary copy produced from the PRESERVATION primary of the {holding} holding and verified against it; "
+                        "never a primary, never a pipeline dependency; nothing in it is deleted by a tool",
            "independence": "different volume; further independence not determined (contract B3)"}
     with open(marker, "x", encoding="utf-8", newline="\n") as handle:
         handle.write(json.dumps(doc, indent=1, sort_keys=True) + "\n")
     return doc
 
 
-def require_root(root: Path, *, primary: Path) -> dict[str, Any]:
+def require_root(root: Path, *, primary: Path, holding: str = "PRODUCTION") -> dict[str, Any]:
     marker = Path(root) / MARKER
     if not marker.is_file():
         raise BackupError(f"{root} carries no {MARKER}: it was not made a backup root (init-root); refusing to write into it")
     doc = json.loads(marker.read_text(encoding="utf-8"))
     if doc.get("role") != "BACKUP" or doc.get("corpus") != "coprepan":
         raise BackupError(f"{marker} is not a CO.PRE.PAN BACKUP root marker")
+    if doc.get("holding", "PRODUCTION") != holding:
+        raise BackupError(f"{marker} is the backup of the {doc.get('holding')} holding, not of {holding} (role isolation)")
     if storage_roots.volume_of(Path(root)) == storage_roots.volume_of(Path(primary)):
         raise BackupError(f"{root} is on the primary's volume (B2)")
     if preservation_target.read_target(Path(root)) is not None:
@@ -101,9 +109,9 @@ def load_journal(root: Path) -> dict[str, dict[str, Any]]:
 
 
 def copy(primary: Path, root: Path, base: Mapping[str, Any], *, workers: int = 3,
-         progress: Callable[[str], None] | None = None) -> dict[str, Any]:
+         progress: Callable[[str], None] | None = None, holding: str = "PRODUCTION") -> dict[str, Any]:
     """Copy the baseline objects of ``primary`` to the backup ``root`` (write-once, journalled, resumable)."""
-    require_root(root, primary=primary)
+    require_root(root, primary=primary, holding=holding)
     from concurrent.futures import ThreadPoolExecutor
     import threading
 
@@ -228,5 +236,5 @@ def receipt_status(root: Path | None, primary: Path | None) -> dict[str, Any]:
             "receipt": {k: doc.get(k) for k in ("written_at", "primary_target_id", "objects", "bytes", "tree_sha256")}}
 
 
-__all__ = ["BackupError", "MARKER", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root", "load_journal", "receipt_status", "require_root",
+__all__ = ["BackupError", "HOLDINGS", "MARKER", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root", "load_journal", "receipt_status", "require_root",
            "restore_test", "verify", "write_receipt"]
