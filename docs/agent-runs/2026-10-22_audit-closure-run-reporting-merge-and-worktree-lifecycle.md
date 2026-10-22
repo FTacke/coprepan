@@ -146,6 +146,13 @@ message and can be checked with `git log`, `git worktree list`):
 4. from the main checkout: `python scripts/worktree_closure.py remove C:/dev/panhispanic_media_corpora/worktrees/coprepan/full-audit-2026-10-22 --report docs/agent-runs/2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md --min-idle-minutes 0`
    — the finished owning session; every other check applies. If any check fails, the worktree stays and the reason is reported.
 
+**As executed (note added after steps 1–3):** step 1 was **refused** by the publisher — the first merge (`5d6dafb`) had already
+brought this report's in-progress draft onto `main`, and the publisher does not replace a report with other bytes without
+`--update` (the protection worked as designed). The command chain went on: the merge of step 2 brought the final report onto
+`main` as part of the branch, without its index row; step 3 pushed `e7a953b`. Then this note was committed, published with
+`--update` (report and its `INDEX.md` row) and merged again, and the branch pushed again. Lesson for the procedure: publish a
+report on `main` only from its final state onward, or merge the branch before the report is final only with `--update` planned.
+
 The scratch space of the session holds helper probes and test outputs only; every statement here rests on the repository or on
 the measured runs above.
 
