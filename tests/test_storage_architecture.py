@@ -52,9 +52,11 @@ def test_the_tracked_files_hold_no_machine_location():
     the repository contract covers `src/`, `config/`, `scripts/` and `tests/`; this adds the examples).
     """
     example = (REPO / ".env.example").read_text(encoding="utf-8")
-    # the roots, plus the PRESERVATION root's expected identity -- a target id, not a location (CPD-0030)
+    # the roots, plus the PRESERVATION root's expected identity -- a target id, not a location (CPD-0030),
+    # plus the LEGACY holding's per-process names, which are not roles (CPD-0032 §1)
     assert {line.split("=")[0] for line in example.splitlines() if line and not line.startswith("#")} == \
-        set(ENV_NAMES.values()) | {"COPREPAN_PRESERVATION_TARGET_ID"}
+        set(ENV_NAMES.values()) | {"COPREPAN_PRESERVATION_TARGET_ID"} | \
+        {"COPREPAN_LEGACY_ARCHIVE_ROOT", "COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "COPREPAN_LEGACY_BACKUP_ROOT"}
     assert all(line.endswith("=") for line in example.splitlines() if line and not line.startswith("#"))
 
 

@@ -79,6 +79,20 @@ def test_promotion_lands_a_verified_master_and_a_manifest(root, pack):
     assert pack.exists()  # the source is copied, never moved
 
 
+def test_the_preserved_state_rests_on_a_read_past_the_client_cache(root, pack, monkeypatch):
+    # audit 2026-10-22: the landed and the published bytes were re-hashed with a buffered read, which
+    # over a share is served by the local cache (contract P2: the bytes *on the primary*; CPD-0030)
+    from coprepan import preservation_migration as M
+
+    real, read = M.sha256_uncached, []
+    monkeypatch.setattr(M, "sha256_uncached", lambda path: read.append(Path(path).name) or real(path))
+    promote(pack, root)
+    assert any(".part-" in name for name in read)                                         # the landed staging file
+    assert P.verify_master(root, AREA, "pack-a") and read[-1] == MASTER.name               # the master on the target
+    monkeypatch.setattr(M, "sha256_uncached", lambda path: ("0" * 64, real(path)[1]))       # the server holds other bytes
+    assert not P.verify_master(root, AREA, "pack-a")                                        # whatever a cache would say
+
+
 def test_a_completed_promotion_is_idempotent_and_writes_nothing(root, pack):
     promote(pack, root)
     before = {name: (root / name).stat().st_mtime_ns for name in tree(root)}

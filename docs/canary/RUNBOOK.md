@@ -6,7 +6,9 @@ run `acq1-20261008T203414628095Z-ed630d8e8a14`, 27 requests, `COMPLETE`, verific
 [the run report](../agent-runs/2026-10-08_real-canary-evaluation-o4-phase3-pilot.md). **Do not run §4 again as it
 stands**: a second canary needs the defects repaired first, then a new arming commit, new tests and a newly frozen
 baseline (§1–§3 from the start, with a new file name for the baseline). The paragraphs below are kept as the record
-of how the first one was reached.
+of how the first one was reached. *Note 2026-10-22: this status is that of 2026-10-08. The defects were repaired (CPD-0019) and
+later canaries and waves ran by §8–§11 of this runbook (`docs/STATUS.md` §5d–§5f); the "do not run" refers to §4 as written
+for the first canary.*
 
 *Before the run:* the driver ([CPD-0016](../decisions/CPD-0016_canary-driver-budgets-and-canary-baseline.md))
 was built and qualified offline; twice the permission layer of the

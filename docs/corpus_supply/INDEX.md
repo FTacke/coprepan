@@ -8,6 +8,14 @@ acquired material exist. Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §5.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
+*Status note 2026-10-22 (consistency audit): the paragraph above is the state of 2026-10-08.* Since 2026-10-09 the registry holds
+126 outlets, 114 of them registered by record (92 by rule for a bounded qualification, CPD-0025) and 12 proposed, in 20
+countries; the whole known stock of 145 outlet hypotheses has one disposition each
+(`config/source_discovery/qualification_dispositions_2026-10-09.json`); an intake-readiness file of 87 outlets exists
+(`config/intake/intake_readiness_2026-10-10.1.json`); and real material of the canaries and intakes is preserved
+(`docs/STATUS.md` §5d–§5g). Still none: a supply snapshot, a target population per cell, a section-capture policy. This index
+stops at CPD-0020 (§20).
+
 Corpus supply answers: which outlets, in which countries, over which time, with which mix — and
 how that is monitored. Its aim is **coverage by design**: a transparent, controlled and
 documentable supply. It is *not* statistical representativeness of "the press of a country", which

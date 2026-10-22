@@ -18,4 +18,6 @@ The rules most often broken, in one place:
   the edit/write tools or a script file; commit messages via `git commit -F <file>`.
 - Commit only when asked, with explicit pathspecs; never `git add -A`.
 - Never invent a number; never guess an open operator or institutional decision.
-- Give every run exactly one dated report under `docs/agent-runs/`.
+- Give every run exactly one dated report under `docs/agent-runs/`, **published on `main`** with
+  `scripts/publish_run_report.py` even when the code stays on a branch; a report on `main` is not a merge.
+- Close your own worktree last, with `scripts/worktree_closure.py remove` (never `git worktree remove --force`).

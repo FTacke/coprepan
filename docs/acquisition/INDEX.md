@@ -13,6 +13,18 @@ Governing decisions: [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md
 [CPD-0007](../decisions/CPD-0007_refetch-qualification-admission-labels-and-evaluation-instruments.md) §2–§7, §11.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
+*Status note 2026-10-22 (consistency audit): the bold paragraph above is the state before the first real canary.* Since
+2026-10-08 the code has requested real pages over TLS in bounded, separately armed and disarmed runs: the canaries and waves
+of 2026-10-08/09/10 and the intakes of 2026-10-10/11 (`docs/STATUS.md` §5a, §5d–§5g); the switch is `disabled` again. This
+index stops at CPD-0020 (§14). What came after is governed by
+[CPD-0021](../decisions/CPD-0021_operator-workflow-hardening.md) to
+[CPD-0029](../decisions/CPD-0029_the-bounded-timed-intake.md) and stated in `docs/STATUS.md` §3–§5g. In particular, the
+tracked policy is `canary/2026-10-10.1` (schema `v3`; §6 below names `canary/2026-10-08.1`), access controls hold by scope
+(`access-control/4`, `access-hold-scope/1`, `robots-decision/3`, CPD-0027; a 429 for a robots address is unreachable, not
+absent), outlet rules exist for two outlets, `Crawl-delay` binds, and the bounded intake is `src/coprepan/intake.py`
+(CPD-0029). Modules not in §1: `access_control.py`, `canary_driver.py`, `canary_evidence.py`, `delegation.py`, `intake.py`,
+`intake_report.py`.
+
 Entry point for: the acquisition run, discovery, the fetcher, the policy gate, robots evidence,
 crawler identity, the fetch record, the pack. Storage roles, promotion, readiness and capacity:
 [`docs/storage/INDEX.md`](../storage/INDEX.md).

@@ -1,7 +1,7 @@
 # Legacy COPREPAN — component index
 
-**Status: NORMATIVE (rules in force now).** The freeze described in §5 is **PLANNED, not
-executed**. Governing decision:
+**Status: NORMATIVE (rules in force now).** The freeze described in §5 is **executed up to step 3**
+(2026-10-20, CPD-0032); step 4 is open (corrected 2026-10-22; this line said "PLANNED, not executed"). Governing decision:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §2.
 
 Figures in this document are the audit's measurements of 2026-10-06 (audit §2, §4, §13) and were
@@ -102,17 +102,19 @@ Scope of the manifest: `json_annotated/`, `json_raw/`, `json_raw_extended/`, bot
 Procedure (reading only; nothing is written into the legacy tree):
 
 1. hash manifest written outside the legacy repository — **done 2026-10-07** (below);
-2. verified copy on a preservation target — open, needs O-3;
-3. restore check — open, needs step 2;
+2. verified copy on a preservation target — open, needs O-3; **done 2026-10-20 (CPD-0032; box above)**;
+3. restore check — open, needs step 2; **done 2026-10-20 (CPD-0032; box above)**;
 4. gate: manifest verified against the live tree, and a study loader reads the frozen copy with
    identical results on a sample.
 
 Why it matters now: the freeze is also the only backup the legacy corpus would have. Whether any
 copy exists outside the legacy working copy is unknown (master plan §13, O-9). No study pins its
-corpus input today; after the freeze a study can pin a hash.
+corpus input today; after the freeze a study can pin a hash. *Note 2026-10-22: copies outside the working copy now exist — a D:
+secondary of 2026-10-15 and the LEGACY tree with its B1 backup (CPD-0032 Context and Decision 1); whether O-9 counts as answered is the
+operator's to record.*
 
 **Step 1, executed 2026-10-07 on the operator's go-ahead (O-10 `PASS`).** The release is
-complete only with steps 2–4; the preservation target is undecided (O-3). See master plan §11,
+complete only with steps 2–4; the preservation target is undecided (O-3) *(state of 2026-10-07; steps 2–3 done 2026-10-20)*. See master plan §11,
 Phase 0.
 
 | | |

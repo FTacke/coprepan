@@ -224,7 +224,7 @@ required before scientific use · **O** optional optimisation · **R** future re
 | Open deliverables | legacy freeze `coprepan-legacy-2026-06`: hash manifest, preserved copy, restore check [F]; preservation target and capacity decision [C]; acquisition policy statement — robots and opt-out handling, crawler identity and contact, retention of raw copies [C]; complete legacy-slug → `outlet_id` mapping (delivered with the Phase-1 registry import) [F] |
 | Gate | manifest verified against the live legacy tree; a study loader reads the frozen copy with identical results on a sample |
 | Blocked by | O-3 (preservation target) for the preserved copy; O-10 (go-ahead) for the manifest |
-| Status 2026-10-07 | **hash manifest built and verified against the live legacy tree** (O-10 given; legacy index §5): 32,235 files, 18,782,593,808 bytes (measured). **Phase 0 stays open**: the preserved copy, the restore check and the study-loader half of the gate need O-3 |
+| Status 2026-10-07 | **hash manifest built and verified against the live legacy tree** (O-10 given; legacy index §5): 32,235 files, 18,782,593,808 bytes (measured). **Phase 0 stays open**: the preserved copy, the restore check and the study-loader half of the gate need O-3. *Status 2026-10-20 (CPD-0032; noted 2026-10-22): preserved copy and restore check done (LEGACY tree `coprepan`, B1 backup); the study-loader half is open* |
 
 ### Phase 1 — Core infrastructure
 
@@ -444,6 +444,15 @@ per real fetched page) does not; O-11 a review package is delivered.
 (`config/schedule_policy.json`, `NOT_DECIDED`) and whether `Crawl-delay` binds; O-10 is answered;
 O-11 additionally carries, per outlet, any candidate-qualification rule and whether the outlet's
 robots sitemaps are read — both optional, neither needed for registration.
+
+*Added 2026-10-22 (consistency audit; facts only, no question answered here — `docs/STATUS.md` §5 has the gate states):*
+O-3 — the institutional share was chosen and initialised (CPD-0030) and is the PRESERVATION primary since 2026-10-18, with a
+verified BACKUP on `D:` since 2026-10-19 (a new BACKUP root, not the renamed interim primary, which is kept as a protected
+fallback); a production write on it and the Phase-1 gate with only PRESERVATION on the share are still owed. O-9 — copies
+outside the legacy working copy now exist (a D: secondary of 2026-10-15; the LEGACY tree with its B1 backup, CPD-0032); whether
+that answers the question is the operator's to record. O-11 — 114 outlets are registered by record (92 of them by rule for a
+bounded qualification, CPD-0025) and 12 are proposed; the human review of the id convention and the remaining cases is open.
+§12 has no item after 2026-10-08; the later runs are listed in `docs/STATUS.md` §8.
 
 ## 14. Validation still owed
 

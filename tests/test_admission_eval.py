@@ -356,3 +356,15 @@ def test_decisions_become_a_reference_only_when_a_reviewer_made_them(tmp_path):
 def test_visible_text_of_an_undecodable_source_says_so():
     assert EV.visible_text(b"\x1f\x8b broken", "gzip") == "[source could not be decoded: undecodable_content_encoding]"
     assert EV.visible_text(b"<p>Uno</p><script>x()</script><div>Dos <b>tres</b></div>") == "Uno\nDos tres"
+
+
+def test_visible_text_is_decoded_like_the_arms_and_not_always_as_utf8():
+    # audit 2026-10-22: the neutral side decoded every page as UTF-8, so a reviewer of a page that is
+    # not UTF-8 saw replacement characters where every arm had the right letters
+    latin = "<p>Año de la información</p>".encode("iso-8859-1")
+    assert EV.visible_text(latin, declared_charset="iso-8859-1") == "Año de la información"
+    meta = b'<meta charset="iso-8859-1"><p>' + "Peñalolén".encode("iso-8859-1") + b"</p>"
+    assert EV.visible_text(meta) == "Peñalolén"                                              # the <meta> charset, as for the arms
+    record = E.extract(latin, body_sha256=hashlib.sha256(latin).hexdigest(), content_type="text/html",
+                       declared_charset="iso-8859-1").record
+    assert "Año de la información" in json.dumps(record, ensure_ascii=False)                    # the arm reads it the same way

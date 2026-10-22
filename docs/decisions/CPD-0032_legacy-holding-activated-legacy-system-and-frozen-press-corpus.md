@@ -52,6 +52,14 @@ LEGACY holding without activating it.
 6. **Local original.** The local legacy tree on C: stays complete; no A7 release. The CO.RA.PAN tools that read
    `COPREPAN_JSON_ANNOTATED` keep reading the local tree; nothing is switched to the archive.
 
+## Alternatives considered
+
+*Formal addition of 2026-10-22, authorised by the operator in the brief "CO.PRE.PAN — Audit Closure, Canonical Run Reporting,
+Safe Merge & Worktree Lifecycle" (finding F-02 of the consistency audit of 2026-10-22). It completes the section the record
+format requires; it changes nothing that was decided, and its date, status and text above stay as they are.* None was
+recorded at the time of the decision. Point 4 above discusses HISTORIC, the holding the contract names for source material;
+the state the decision replaces is CPD-0031 decision 3 ("no activation").
+
 ## Not decided here
 
 The release of the local original or of the 2026-10-15 secondary; a HISTORIC import or a `legacy_refetched` backfill; any change

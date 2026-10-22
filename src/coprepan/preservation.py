@@ -246,7 +246,7 @@ def _land(source: Path, destination: Path, sha256: str, size: int, object_id: st
             shutil.copyfileobj(reader, writer, _COPY_CHUNK)
             writer.flush()
             os.fsync(writer.fileno())
-        landed, landed_size = sha256_file(staging)
+        landed, landed_size = _sha256_on_the_target(staging)
         if landed != sha256 or landed_size != size:
             raise HashMismatch(f"{object_id}: landed bytes hash to {landed}, expected {sha256}")
         if replace:
@@ -264,7 +264,19 @@ def _land(source: Path, destination: Path, sha256: str, size: int, object_id: st
 def _holds(path: Path, sha256: str, size: int) -> bool:
     if not path.is_file() or path.stat().st_size != size:
         return False
-    return sha256_file(path)[0] == sha256
+    return _sha256_on_the_target(path)[0] == sha256
+
+
+def _sha256_on_the_target(path: Path) -> tuple[str, int]:
+    """The digest of the bytes the preservation target holds, read past the local client cache.
+
+    ``crosscorpus-storage/v1`` P2 asks for the bytes *on the primary*; a re-read straight after a
+    write to a share is otherwise served by the local cache (measured 2026-10-14, CPD-0030). The
+    reader lives with the migration tool, which imports this module's neighbours, hence the import here.
+    """
+    from .preservation_migration import sha256_uncached
+
+    return sha256_uncached(path)
 
 
 def _manifest(object_id, area, relative_path, sha256, size, details, now) -> dict[str, Any]:

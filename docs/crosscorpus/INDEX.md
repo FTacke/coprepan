@@ -28,8 +28,24 @@ implementation of the checks.
 | Thing | Where | Status |
 |---|---|---|
 | The bundle: text, schemas, fixtures for both corpora, vectors | [`contracts/crosscorpus-release-v1/`](../../contracts/crosscorpus-release-v1/CONTRACT.md) | `DRAFT` in its canonical home; **adopted by CO.PRE.PAN** (CPD-0012); not adopted by CO.RA.PAN; not jointly frozen |
-| Pin | `config/crosscorpus/contract_pins.json` — bundle digest `4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0` | equals CO.RA.PAN's pin (read 2026-10-08) |
-| CO.PRE.PAN's implementation and native export object | [`docs/release/INDEX.md`](../release/INDEX.md) | conformant with every digest and all 52 cases of the vectors |
+| Pin | `config/crosscorpus/contract_pins.json` — bundle digest `4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0` (draft revision 1, CO.RA.PAN commit `0a5f41dec`) | equalled CO.RA.PAN's pin when read on 2026-10-08 (morning). **No longer equal (found 2026-10-22):** CO.RA.PAN pins draft revision 2 (`429f55eb1992be7adf230b501e9ecf80ba944478b3a91a31943f3cfef9442255`, its commit `374d2e44e` of 2026-10-08, "not yet taken by CO.PRE.PAN"); see below |
+| CO.PRE.PAN's implementation and native export object | [`docs/release/INDEX.md`](../release/INDEX.md) | conformant with every digest and all 52 cases of revision 1; revision 2 (93 cases, 30 pattern vectors) not run here |
+
+**The two revisions (dated note 2026-10-22, consistency audit).** Revision 2 keeps the fixtures and the 52 cases of revision 1
+and adds 41 cases, 30 pattern vectors and rules on points the two implementations read differently (among them a freeze
+record beside a provisional export, sums over no documents, release-forbidden suffixes checked by the check itself, the
+portable pattern subset). Its §17 says a local adoption that quotes an earlier digest does not carry over. CPD-0012 quotes
+revision 1. So the joint check "same digest on both sides" does not hold, and the readings of this repository's checker at
+those points are those of revision 1. Taking revision 2 over (copy, pin, the new cases, a renewed local adoption) is a
+decision that has not been taken; the audit changed neither the copy nor the pin. Evidence: CO.RA.PAN
+`config/crosscorpus/contract_pins.json` (`draft_revision: 2`, `other_side.pinned_revision: 1`); digests recomputed with this
+repository's tree-listing algorithm (audit report §E).
+
+**The analysis contract and the radio side (dated note 2026-10-22).** CO.RA.PAN's D116 (2026-10-16) retired speech mode from
+its regular processing and made the communicative situation type (`PRESENTATIONAL` / `INTERACTIONAL` / `UNDETERMINED`, over
+professional-speaker core turns) its main annotation; its D101 reads a stored `prerecorded` as `unknown`. The shared field
+`production_mode` of this contract (§4.2 of the contract) takes its spoken values from speech mode. The contract text is
+unchanged; whether and how it is versioned is a joint decision (O-6), recorded as a debt in `docs/STATUS.md` §6.
 
 How the two contracts relate: the release contract defines a release, its exports, freeze,
 coverage, study populations and packages; the analysis contract defines the tables a study reads.

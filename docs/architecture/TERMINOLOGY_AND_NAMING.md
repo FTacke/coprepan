@@ -564,3 +564,22 @@ They refine "release" of §3.1; nothing of §5.4 changes.
 | component versions | `intake-controller/1`, `intake-anomaly-flags/1` | `intake.py`, `intake_report.py` |
 | schema ids minted | `coprepan-intake-plan/v1`, `coprepan-intake-state/v1`, `coprepan-intake-receipt/v1`, `coprepan-intake-authorization/v1`, `coprepan-intake-measurement/v1`, `coprepan-intake-review-package/v1`, `coprepan-identity-adoption-review/v1` (CPD-0028) | the same |
 
+## 23. Additions recorded 2026-10-22 (CPD-0023, CPD-0030, CPD-0031, CPD-0032)
+
+*Recorded by the consistency audit of 2026-10-22: the runs that introduced these terms did not add them here (AGENTS §12). Each
+row restates its defining record; nothing is defined anew.*
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| authorisation kind | `DELEGATED_OPERATOR_AUTHORIZATION`; ids `DOA-<date>-<n>`; records under `config/operator_authorizations/`, schema `coprepan-operator-authorization/v1` | CPD-0023 §2 |
+| **NEW_FS** (term) | the institutional file system (the HRZ project share) and CO.PRE.PAN's root on it; the PRESERVATION primary since 2026-10-18 | CPD-0030 §1, Phase C |
+| target ids | `coprepan-preservation-newfs` (PRODUCTION · PRESERVATION on NEW_FS), `coprepan-archive-newfs-legacy` (LEGACY · PRESERVATION on NEW_FS); the marker's schema `coprepan-preservation-target/v1` | CPD-0030 §1, CPD-0032 §1 |
+| identity check of the PRESERVATION root | T1/T2 (contract §6); refusal `TARGET_IDENTITY_MISMATCH` (`StorageTargetIdentityMismatch`); unset expected identity and no marker: `IDENTITY_UNRECORDED` | CPD-0030 §2 |
+| environment names (identities and per-process roots, not roles) | `COPREPAN_PRESERVATION_TARGET_ID`; `COPREPAN_LEGACY_ARCHIVE_ROOT`, `COPREPAN_LEGACY_ARCHIVE_TARGET_ID`, `COPREPAN_LEGACY_BACKUP_ROOT` | CPD-0030 §2, CPD-0032 §1 |
+| pre-copy outcomes | `COPIED`, `SKIPPED_JOURNALLED`, `ALREADY_PRESENT`, `CONFLICT`, `SOURCE_CHANGED`, `FAILED`; receipt state `PRE_COPY_NOT_PRIMARY` | CPD-0030 §3–§4, `preservation_migration.py` |
+| **protected fallback** (term) | the former interim primary on `D:`: kept unchanged, not configured, never renamed into a backup | CPD-0030 Phase C |
+| holding (added value) | `LEGACY`: archived originals of superseded systems, beside `PRODUCTION` and `HISTORIC` (§18) | contract §2.3, CPD-0031 |
+| reference table | `archive_tree` (the checks A2–A5 of an archived tree) | contract §12–§13, CPD-0031 |
+| archive tree | `coprepan`: the frozen legacy repository as one tree of CO.PRE.PAN's LEGACY holding | CPD-0032 §2 |
+| standing of the legacy press corpus | `legacy_frozen`: a frozen legacy research holding; not `native_v3`, not production, never a pipeline input | CPD-0032 §3 |
+

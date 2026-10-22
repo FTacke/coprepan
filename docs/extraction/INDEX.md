@@ -73,7 +73,13 @@ parsed, converted or substituted; no default language; no "cleaned" title.
 
 **What is not known about it:** how well it finds the article body on any real page. It has seen
 four synthetic pages. Its container rule is the simplest possible and will be wrong on real
-templates. It exists to exercise the contract.
+templates. It exists to exercise the contract. *Note 2026-10-22 (consistency audit): it has since run on the thirteen pages of
+the first canary and on the about 3,700 real pages of the intakes (`docs/STATUS.md` §6, D1); still no gold and no quality
+measurement. Read on synthetic probes by the audit: the first `article`/`main`/`body` anywhere on the page is the container and
+the first `h1` anywhere the title. A teaser `article` before the story makes the site's logo heading the title and the story
+itself `non_body`; on a page without `article`/`main`, menu items and a cookie banner become body blocks, with no diagnostic in
+either case. Its whitespace collapsing (one
+space for a run of white space, `<br>` a space) is part of the extractor contract, not a recorded normalisation operation.*
 
 ## 5. Rules
 
