@@ -1,7 +1,7 @@
 # COPREPAN 3.0 -- logical storage targets.
 #
-# STATUS: read by src/coprepan/storage_roots.py (fail-closed resolver). No root is configured
-# (docs/STATUS.md). The reader accepts exactly the shape below: a `schema` line and, under
+# STATUS: read by src/coprepan/storage_roots.py (fail-closed resolver). Which roots are configured
+# is workstation state (docs/STATUS.md §3, "Storage roles and roots"). The reader accepts exactly the shape below: a `schema` line and, under
 # `targets:`, one block per role with `root`, `purpose`, `authoritative`. Anything else is refused.
 #
 # This file holds logical roles and ${ENVIRONMENT_VARIABLE} references only. A concrete local or

@@ -22,22 +22,25 @@ its area.
 
 | Subsystem | Entry point | Implementation state |
 |---|---|---|
-| Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | root resolution, promotion, spool, ledger, layer store; packs promoted in tests only; no configured root |
-| Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | registry schema; 82 outlets *proposed* by the legacy import; none registered |
-| Identity (id serialisation, canonical URL key, identity tables) | [`docs/identity/INDEX.md`](../identity/INDEX.md) | serialisation, URL key, document and version assignment — on recorded exchanges only |
-| Acquisition (run, discovery, fetcher, policy gate, crawler identity, fetch record, pack) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | built and tested offline (loopback server, synthetic documents), including re-fetching; externally not activatable as committed |
+| Storage, preservation, provenance | [`docs/storage/INDEX.md`](../storage/INDEX.md) | root resolution with the identity check (T2), promotion, spool, ledger, layer store, pre-copy and backup tools; PRESERVATION primary on the institutional share since 2026-10-18 with a verified BACKUP (2026-10-19); LEGACY holding PRESENT (2026-10-20); no production write on the new primary yet |
+| Corpus supply (registry attributes, cohorts, targets, monitoring) | [`docs/corpus_supply/INDEX.md`](../corpus_supply/INDEX.md) | registry schema; 126 outlets: 114 registered by record, 12 proposed (`docs/STATUS.md` §3) |
+| Identity (id serialisation, canonical URL key, identity tables) | [`docs/identity/INDEX.md`](../identity/INDEX.md) | serialisation, URL key, document and version assignment; identity tables of the real material of the canaries and intakes in the runtime workspace (CPD-0028 §2); no alias rule, no syndication cluster |
+| Acquisition (run, discovery, fetcher, policy gate, crawler identity, fetch record, pack; bounded intake) | [`docs/acquisition/INDEX.md`](../acquisition/INDEX.md) | built and tested offline; used against real outlets in bounded canaries, waves and intakes 2026-10-08 to 2026-10-11 (`docs/STATUS.md` §5a–§5g); not activated (`external_acquisition` `disabled` outside an armed run) |
 | Extraction (record, blocks, metadata, replay) | [`docs/extraction/INDEX.md`](../extraction/INDEX.md) | contract, a baseline extractor (`EXPERIMENTAL`), an evaluation harness and a gold-sample design; no gold; nothing validated or adopted |
 | Admission labels | [`docs/admission/INDEX.md`](../admission/INDEX.md) | the technical label only, offline; no content-level label |
 | NLP, enrichment, LLM policy | [`docs/nlp/INDEX.md`](../nlp/INDEX.md) | not started |
 | Cross-corpus analysis contract | [`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md) | a technical proposal with a validator, COPREPAN's adapter and synthetic fixtures; not adopted by CO.RA.PAN |
 | Release (native export object, release manifest and freeze, package, study population) | [`docs/release/INDEX.md`](../release/INDEX.md) | export object and release mechanics built and tested offline on synthetic pages; no corpus export can be built (no adopted extractor); no release exists |
-| Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze manifest built and verified (O-10); no preserved copy |
+| Legacy system and legacy corpus | [`docs/legacy/INDEX.md`](../legacy/INDEX.md) | rules in force; freeze manifest built and verified (O-10); preserved copy (LEGACY tree `coprepan`) and restore check done 2026-10-20 (CPD-0032); study loader open |
 
 Normalisation has no component index yet: until its first implementation run it is specified in the target
 architecture (§1). The run that starts implementing it creates its `docs/<component>/INDEX.md`
 and adds it here.
 
-**A contract this repository does not own:** [`contracts/crosscorpus-release-v1/`](../../contracts/crosscorpus-release-v1/CONTRACT.md)
+**Contracts this repository does not own.** [`contracts/crosscorpus-storage-v1/`](../../contracts/crosscorpus-storage-v1/CONTRACT.md)
+is a verbatim, digest-pinned copy of the joint storage contract (revision 2), whose canonical home is the CO.RA.PAN repository;
+it is in force here by CPD-0015 and CPD-0031 and is never edited here.
+[`contracts/crosscorpus-release-v1/`](../../contracts/crosscorpus-release-v1/CONTRACT.md)
 is a verbatim, digest-pinned copy of the joint release contract, whose canonical home is the
 CO.RA.PAN repository. It is normative here by CPD-0012 and is never edited here.
 
@@ -88,6 +91,9 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0027](../decisions/CPD-0027_access-holds-have-a-scope-and-a-refused-robots-address-is-not-a-refused-origin.md) | Scoped access holds (`access_control.hold_scope`), the robots address by RFC 9309 §2.3.1, holds re-derived in both directions, the block-page class; policy `canary/2026-10-10.1` | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0028](../decisions/CPD-0028_confirmation-of-the-open-points-of-cpd-0025-to-cpd-0027.md) | Forward-only confirmation of the open points of CPD-0025 (threshold), CPD-0026 (identity adoption; review in `docs/identity/identity_adoption_review_2026-10-10.json`) and CPD-0027 (access policy in an intake; El País excluded) | `ACTIVE` |
 | [CPD-0029](../decisions/CPD-0029_the-bounded-timed-intake.md) | The bounded, timed intake: `src/coprepan/intake.py` (plan, budgeted fetcher, selection, controller, finalizer), `src/coprepan/intake_report.py` (measurement, anomaly flags, review package), `scripts/intake_operator.py` (plan, start, tick, status, stop, import-report); records in `config/intake/` | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0030](../decisions/CPD-0030_newfs-target-identity-and-verified-pre-copy.md) | NEW_FS: the PRESERVATION root's identity is checked at every resolution (T2), the pre-copy tool, the verified pre-copy to the institutional share; cutover 2026-10-18 (Phase C), BACKUP 2026-10-19 (Phase D) | `ACTIVE`; amends CPD-0014 §6/§8 |
+| [CPD-0031](../decisions/CPD-0031_crosscorpus-storage-revision-2-legacy-archive-holding.md) | `crosscorpus-storage/v1` revision 2 taken over: the archive holding LEGACY | `ACTIVE`; decision 3 superseded by CPD-0032 |
+| [CPD-0032](../decisions/CPD-0032_legacy-holding-activated-legacy-system-and-frozen-press-corpus.md) | CO.PRE.PAN's LEGACY holding activated: the legacy system and its frozen press corpus archived as tree `coprepan` | `ACTIVE`; supersedes CPD-0031 decision 3 |
 
 ## 3. Component specifications — active
 
@@ -113,7 +119,7 @@ Machine-checked contracts:
 | Document identity tables and relations (CPD-0005 §4) | `src/coprepan/document_identity.py`, `src/coprepan/jsonl.py` | `tests/test_core_pipeline.py` |
 | Extraction record; baseline extractor (CPD-0005 §5) | `src/coprepan/extraction.py` | `tests/test_extraction.py` |
 | Stage order and gates of the core section; replay | `src/coprepan/core_pipeline.py` | `tests/test_core_pipeline.py` |
-| No deletion call outside the six named places, over every module | — | `tests/test_preservation.py` |
+| No deletion call outside the named places (eight modules, each its own temporary, probe, staging or torn-tail file), over every module of `src/` | — | `tests/test_preservation.py` |
 | Discovery: parsers, events, candidates, budgets (CPD-0006 §2) | `src/coprepan/discovery.py` | `tests/test_discovery.py` |
 | Policy gate: nothing allowed by default; the tracked canary policy is decided and denies everything until armed; a binding `Crawl-delay` | `src/coprepan/policy.py`, `config/acquisition_policy.json` | `tests/test_policy.py`, `tests/test_fetcher.py` |
 | Every registered outlet has a registration record and agrees with it | `config/outlet_registry.json`, `config/registry_review/*_registration_*.json` | `tests/test_registry.py` |
@@ -125,7 +131,7 @@ Machine-checked contracts:
 | Preservation-target readiness; capacity model; baseline manifest (`PRE_FREEZE` as committed) | `src/coprepan/preservation_target.py`, `capacity.py`, `freeze.py` | `tests/test_readiness.py` |
 | Registry review package equals what the generator produces from the tracked registry | `src/coprepan/registry_review.py`, `config/registry_review/outlet_review_package.json`, `docs/corpus_supply/REGISTRY_REVIEW_PACKAGE.md` | `tests/test_readiness.py` |
 | Tests reach at most a literal loopback address | `tests/conftest.py` | `tests/test_test_guards.py` |
-| Tracked registry proposal agrees with its review report; nothing registered | `config/outlet_registry.json`, `config/registry_review/` | `tests/test_registry.py` |
+| Tracked registry proposal agrees with its review report | `config/outlet_registry.json`, `config/registry_review/` | `tests/test_registry.py` |
 | Legacy freeze manifest: builder, verifier; the tracked manifest is self-consistent | `src/coprepan/legacy_freeze.py`, `docs/legacy/freeze/coprepan-legacy-2026-06/` | `tests/test_legacy_freeze.py` |
 | Candidate qualification; candidate lifecycle and fetch plan; the tracked schedule policy plans nothing | `src/coprepan/candidate_filter.py`, `src/coprepan/schedule.py`, `config/candidate_rules.json`, `config/schedule_policy.json` | `tests/test_schedule.py` |
 | Channel health as a derived report | `src/coprepan/channel_health.py` | `tests/test_schedule.py` |
@@ -150,6 +156,12 @@ Machine-checked contracts:
 | The qualification overview is the join of its inputs; an outlet new to the registry enters only by an applied proposal and never by collision; the operator's workflow accepts a confirmation from a terminal only | `config/source_discovery/source_qualification_overview_*.json`, `config/registry_review/wave_c_proposal_2026-10-09.json`, `scripts/consolidate_source_discovery.py`, `scripts/apply_registration_proposal.py`, `scripts/canary_operator.py` | `tests/test_source_expansion.py` |
 | No heredoc or here-string in a shell command (AGENTS §5), enforced by a hook | `scripts/hooks/block_heredocs.py`, `.claude/settings.json` | `tests/test_block_heredocs_hook.py` |
 | The research-TDM layer of the policy gate; access controls as observed evidence | `src/coprepan/policy.py`, `src/coprepan/access_control.py`, `src/coprepan/fetcher.py` | `tests/test_research_tdm_policy.py` |
+| Joint storage contract `crosscorpus-storage/v1`: the copy is the pinned bundle; the decision functions against the shared reference cases (CPD-0015, CPD-0031) | `contracts/crosscorpus-storage-v1/`, `config/crosscorpus/contract_pins.json`, `src/coprepan/storage_contract.py` | `tests/test_storage_contract.py` |
+| The pre-copy of the PRESERVATION primary and the identity check of the PRESERVATION root (T1/T2; CPD-0030) | `src/coprepan/preservation_migration.py`, `src/coprepan/storage_roots.py` | `tests/test_preservation_migration.py` |
+| The BACKUP of the PRESERVATION primary: produced from the primary, write-once, verified, restorable, on another volume (CPD-0030 Phase D, CPD-0032 for LEGACY) | `src/coprepan/primary_backup.py`, `scripts/preservation_backup.py` | `tests/test_primary_backup.py` |
+| Delegated operator authorisation: the record, its check, the operator tool's delegated mode (CPD-0023) | `src/coprepan/delegation.py`, `scripts/canary_operator.py` | `tests/test_delegated_operator.py` |
+| Source inventory after qualification, intake readiness, access-restriction review are what their builder gives from the tracked evidence (CPD-0025, CPD-0026) | `config/source_discovery/`, `config/intake/` | `tests/test_source_qualification.py` |
+| The bounded intake: controller, budgets, deadline, restart, finalizer; the operator tool and its disarming (CPD-0029) | `src/coprepan/intake.py`, `src/coprepan/intake_report.py`, `scripts/intake_operator.py` | `tests/test_intake.py`, `tests/test_intake_operator.py` |
 
 ## 4. Open decisions and gates
 

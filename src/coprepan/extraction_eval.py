@@ -353,18 +353,22 @@ class _VisibleText(HTMLParser):
             self.parts.append(data)
 
 
-def visible_text(body: bytes, content_encoding: str = extraction.IDENTITY) -> str:
+def visible_text(body: bytes, content_encoding: str = extraction.IDENTITY, *,
+                 declared_charset: str = extraction.UNKNOWN) -> str:
     """Every text node of the page in document order, scripts and styles left out.
 
     The neutral side of a review case: not an extraction, no body decision, nothing removed for
-    being navigation. A reviewer compares the arms against *this*, not against each other.
+    being navigation. A reviewer compares the arms against *this*, not against each other. It is
+    decoded by the same rule as the arms (byte-order mark, HTTP charset, ``<meta>`` charset, UTF-8),
+    so a page that is not UTF-8 does not reach the reviewer as replacement characters.
     """
     try:
         data = extraction.decode_content(body, content_encoding)
     except extraction.ContentDecodingError as error:
         return f"[source could not be decoded: {error.reason}]"
+    text, _ = extraction._decode(data, declared_charset)
     parser = _VisibleText()
-    parser.feed(data.decode("utf-8", errors="replace"))
+    parser.feed(text)
     parser.close()
     lines = [" ".join(line.split()) for line in "".join(parser.parts).split("\n")]
     return "\n".join(line for line in lines if line)
@@ -412,7 +416,8 @@ def review_package(
             "sample_sha256": manifest["sample_sha256"],
             "source": {"fetch_id": case["fetch_id"], "body_sha256": case["body_sha256"], "pack_id": case["pack_id"],
                        "outlet_id": case["outlet_id"]},
-            "visible_text": visible_text(body_of(case), case["content_encoding"]),
+            "visible_text": visible_text(body_of(case), case["content_encoding"],
+                                         declared_charset=case["declared_charset"]),
             "candidates": candidates,
             "decision": {"state": None, "allowed_states": list(REFERENCE_STATES), "title": None, "body": None,
                          "metadata": {field: None for field in extraction.METADATA_FIELDS},

@@ -148,8 +148,10 @@ def test_storage_targets_hold_only_environment_references():
         for line in read(".env.example").splitlines()
         if line and not line.startswith("#")
     )
-    # the roots, plus the one identity (not a path) the PRESERVATION root is checked against (CPD-0030)
-    assert sorted(example) == sorted(variables + ["COPREPAN_PRESERVATION_TARGET_ID"])
+    # the roots, plus the one identity (not a path) the PRESERVATION root is checked against (CPD-0030),
+    # plus the LEGACY holding's per-process names (CPD-0032 §1: a holding, not a role of storage_targets.yml)
+    legacy = ["COPREPAN_LEGACY_ARCHIVE_ROOT", "COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "COPREPAN_LEGACY_BACKUP_ROOT"]
+    assert sorted(example) == sorted(variables + ["COPREPAN_PRESERVATION_TARGET_ID"] + legacy)
     assert set(example.values()) == {""}, ".env.example must not carry a real path"
 
 
@@ -170,6 +172,21 @@ def test_decision_registry_and_files_agree():
     file_ids = [path.name[:8] for path in decision_files()]
     assert len(set(file_ids)) == len(file_ids), "a decision number is used twice"
     assert registry_ids == file_ids
+
+
+@pytest.mark.parametrize("path", decision_files(), ids=lambda path: path.name[:8])
+def test_decision_registry_row_is_complete_and_agrees_with_its_record(path):
+    """Registry rules 1 and 5: a row has the registry's six columns, links its record, carries the record's status,
+    and the decision is in the architecture index §2 (audit 2026-10-22: five rows had lost columns and links, three
+    decisions were missing from the index, and nothing noticed)."""
+    identifier = path.name[:8]
+    row = next(line for line in read("docs/decisions/README.md").splitlines() if line.startswith(f"| {identifier} |"))
+    cells = [cell.strip() for cell in row.strip().strip("|").split(" | ")]
+    assert len(cells) == 6, f"{identifier}: {len(cells)} registry columns, not 6"
+    assert f"]({path.name})" in cells[5], f"{identifier}: the record column does not link the record"
+    header = re.search(r"^\| Status \| `(\w+)` \|$", path.read_text(encoding="utf-8"), re.MULTILINE).group(1)
+    assert cells[3].startswith(f"`{header}`"), f"{identifier}: registry status {cells[3]!r}, record header `{header}`"
+    assert f"(../decisions/{path.name})" in read("docs/architecture/INDEX.md"), f"{identifier} is not in the architecture index"
 
 
 @pytest.mark.parametrize("path", decision_files(), ids=lambda path: path.name[:8])

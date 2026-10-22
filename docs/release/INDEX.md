@@ -14,6 +14,10 @@ is, packages and study populations. The contract itself is the bundle
 [`contracts/crosscorpus-release-v1/CONTRACT.md`](../../contracts/crosscorpus-release-v1/CONTRACT.md)
 ("contract §n"); the cross-corpus side is in [`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md).
 
+*Note 2026-10-22 (consistency audit):* the bundle here is draft revision 1 (`4fb72acf…6dbbe0`). The canonical home pins draft
+revision 2 (`429f55eb…442255`) since 2026-10-08; this repository has not taken it over. Everything this index says about
+conformance is conformance with revision 1 ([`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md) §1a).
+
 ---
 
 ## 1. Words that are not the same thing

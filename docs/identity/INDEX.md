@@ -10,6 +10,15 @@ corpus material.** Governing decisions:
 [CPD-0005](../decisions/CPD-0005_core-pipeline-contracts.md) §4 (identity policy).
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
+*Note 2026-10-22 (consistency audit): the status above is that of the synthetic phase.* Since the canaries, identity tables of
+real material exist in the runtime workspace; after a rebuild they were adopted as the canonical identity state
+([CPD-0026](../decisions/CPD-0026_identity-rebuild-after-url-rules-v2-classifier-3-and-origin-amendments.md),
+[CPD-0028](../decisions/CPD-0028_confirmation-of-the-open-points-of-cpd-0025-to-cpd-0027.md) §2). The URL key gained one rule
+by [CPD-0025](../decisions/CPD-0025_comprehensive-source-qualification.md): a nameless query can be declared significant in an
+outlet's URL rules (the rule-set id unchanged, as decided there; §3 below does not mention it). `duplicate_of` compares the
+body digest across every outlet of a workspace, not only "another URL of the outlet" (§7); the alias rule of CPD-0003 §8
+(an old key kept as an alias after a rule change) is not implemented.
+
 Entry point for: how an id is serialised, how a canonical URL key is computed, and what the
 identity stage still has to build. Terms and forms:
 [`TERMINOLOGY_AND_NAMING.md`](../architecture/TERMINOLOGY_AND_NAMING.md) §5. Design of the stage:

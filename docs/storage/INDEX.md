@@ -10,6 +10,12 @@ for the corpus; nothing has run against a real target.** Governing decisions:
 [CPD-0001](../decisions/CPD-0001_strategy-c-greenfield-core-and-foundation-principles.md) §3.
 Current state: [`docs/STATUS.md`](../STATUS.md).
 
+*Status note 2026-10-22 (consistency audit): the bold sentence above is the state of 2026-10-08.* Since then the roots of this
+workstation are configured (§19), the PRESERVATION primary is the institutional share (2026-10-18, §20.6) with a verified BACKUP on
+`D:` (2026-10-19, §20.8), packs of the real canaries and intakes are preserved on it, and the LEGACY holding is PRESENT (2026-10-20,
+§20.7). The joint contract is in revision 2 (`49a3ca88…afb036`, CPD-0031; §20 still quotes revision 1's digest as the state of
+2026-10-08). No fixity schedule and no reconciliation schedule exist.
+
 This is the single entry point for: what a preservable source object is, how it is contained and
 promoted, the preservation state machine, storage roles and classes, retention, fixity, backup,
 capacity, and the provenance chain.
@@ -658,3 +664,21 @@ Rollback (no write has happened on the new root): restore the two `.env` lines (
 `shares_root_with: NONE`. Never a pipeline input (A6); not a DISTRIBUTION or EXCHANGE root (A8; the share's ACL: two explicit
 principals). The 2026-10-15 secondary `coprepan\archive\protected_secondary\legacy_coprepan` is not this backup and stays
 `KEEP_REQUIRED`; the local legacy tree on C: stays complete (no A7 release).
+
+### 20.8 Phase D: the BACKUP of the PRESERVATION primary (CPD-0030, 2026-10-19)
+
+Dated addendum, written by the consistency audit of 2026-10-22 from the evidence of 2026-10-19; §20.6 is not rewritten (its BACKUP
+row "PLANNED (Phase D)" is the state of 2026-10-18).
+
+| Holding · role | Root | State |
+|---|---|---|
+| PRODUCTION · `PRESERVATION` | the institutional share (§20.6) | PRIMARY; copies `VERIFIED_SECONDARY_EXISTS` (the BACKUP below) |
+| PRODUCTION · `BACKUP` | `D:\projects\panhispanic_media_corpora\coprepan\backup` | PRESENT · AVAILABLE; `BACKUP_VERIFIED` — produced from `coprepan-preservation-newfs` and verified against it; "different volume; further independence not determined" (contract B3) |
+| former primary | `D:\projects\panhispanic_media_corpora\coprepan\preservation_interim` | unchanged; protected fallback; not configured; **not a backup** |
+
+Evidence ([`migration/2026-10-19_newfs-phase-d/`](migration/2026-10-19_newfs-phase-d/), `backup_status_after_first_run.json`): receipt
+2026-10-19T01:14:57Z, 8,816 objects / 395,018,230 B, tree SHA-256 `f4bb0c9c…a284da0e` (= Phase C); unbuffered verification 0 problems;
+restore test 25/25 (`docs/STATUS.md`, update of 2026-10-19). The daily task `COPREPAN_PreservationBackup` (05:45) runs the same tool; its
+later receipts are runtime evidence and are not versioned. **The status today:** PRESERVATION on the share (since 2026-10-18), BACKUP on
+`D:` (since 2026-10-19), LEGACY PRESENT (§20.7), HISTORIC not present; the statements of the header, §5, §11, §15 and §20.1 that say
+otherwise are dated by their place and are superseded by §20.5–§20.8.

@@ -6,6 +6,11 @@ LABEL EXISTS.** No corpus material has been labelled. Governing decision:
 Current state: [`docs/STATUS.md`](../STATUS.md). Design background:
 [`TARGET_ARCHITECTURE.md`](../architecture/TARGET_ARCHITECTURE.md) §3.
 
+*Note 2026-10-22 (consistency audit): "no corpus material has been labelled" is the state before the intakes.* The intakes of
+2026-10-10/11 wrote technical labels for their real pages (24-hour intake: 3,610 of 3,681 item pages `TECHNICALLY_USABLE`,
+`docs/intake/reports/in1-20261010-24h/FINAL_REPORT.md`). A technical label says the extraction produced usable text under an
+`EXPERIMENTAL` extractor; it says nothing about whether a page is an article. Still no content-level label.
+
 ---
 
 ## 1. What exists

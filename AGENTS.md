@@ -85,7 +85,7 @@ On the operator's workstation, since the path migration of 2026-10-07 (this repo
 
 ## 4. Git and working-tree hygiene
 
-The bootstrap run created no git metadata; the operator initialises git. From then on:
+The bootstrap run created no git metadata; the operator initialised git on 2026-10-07 (`docs/STATUS.md` §3). From then on:
 
 - **Commit or push only when the operator asks.** Never rewrite history, force-push, or change
   remotes on your own initiative.
