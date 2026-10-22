@@ -360,3 +360,60 @@ decisions first, not a run.
 5. **Files:** listed above; nothing moved, deleted or overwritten; no decision record, contract bundle or evidence changed.
 6. **Untouched:** CO.RA.PAN (read-only; its foreign working-tree changes left as found), the legacy repository, the studies
    repository, the main checkout's working tree, every storage root. No network, no external API, no publisher request.
+
+## Closing note (added 2026-10-22, at the audit's closure)
+
+*Added by the closure run of the same day; the text above is unchanged.* What happened to this audit's repairs, its branch
+and its worktree after it ended — the formal addition to CPD-0032 (F-02), the repair of the qualification tool (F-22), the
+publication of this report on `main`, the merge and the worktree — is recorded in the closure report
+`docs/agent-runs/2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md`. Read the status line above as the
+state at the audit's end.
+
+## Appendix: evidence of the sub-audits (consolidated 2026-10-22, at closure)
+
+The five sub-audits' detail reports existed only in the session's scratch space. The locations their findings rest on are
+consolidated here so that §F can be followed from this file alone. Line numbers are of `e9e291d` unless marked; ✔ = re-read
+by the audit or its closure at the source; the rest is as the sub-audit reported it and was not re-read.
+
+| Finding | Locations (CO.PRE.PAN unless named) |
+|---|---|
+| F-01 | `tests/test_repository_contract.py:152`, `tests/test_storage_architecture.py:56-57` vs `.env.example:16-18` (commit `dad33b5`) ✔ |
+| F-02 | `docs/decisions/CPD-0032_…md` (no `## Alternatives considered`); `tests/test_repository_contract.py:182-183` ✔ |
+| F-03 | `docs/decisions/CPD-0031_…md:7` ("CO.PRE.PAN has no LEGACY holding", no pointer to CPD-0032) ✔; CPD-0030 header `:7` names Phase C only ✔ |
+| F-04 | `docs/decisions/README.md:47-51` (four columns, no record link) ✔; `tests/test_repository_contract.py:168-172` (ids only) ✔ |
+| F-05 | CO.RA.PAN `config/crosscorpus/contract_pins.json` (`draft_revision: 2`, `429f55eb…`, `other_side.pinned_revision: 1`) ✔; CO.RA.PAN `git log -- contracts/crosscorpus-release-v1` = `0a5f41dec`, `374d2e44e` ✔; revision 2 `CONTRACT.md:806-810` (§17) ✔; `src/coprepan/release_contract.py:815` (provisional export skips freeze, T16), `:566-574` (`stateful_sum`, T19), `:93` (`FORBIDDEN_SUFFIXES`, T20), `:347-355` (`_pattern`, T13) |
+| F-06 | no release-bundle sister check in `scripts/` of either repository; CO.PRE.PAN pin without `revision`/`other_side` (`config/crosscorpus/contract_pins.json`) ✔ |
+| F-07 | CO.RA.PAN `docs/decisions/2026-10-16_D116_communicative_situation_type_replaces_speech_mode.md:1` ✔, D116 §1.6, §7; D101; `src/coprepan/analysis_contract.py:60` (`PRODUCTION_MODES`), `:82-83` (`REGISTER_GROUPS`); `docs/crosscorpus/ANALYSIS_CONTRACT.md` §1, §4.2, §9 |
+| F-08 | `config/outlet_registry.json` (`gt_emisoras_unidas`, `hn_radio_progreso`, registered) and CO.RA.PAN `config/radio_registry.json:703, 803`; `src/coprepan/analysis_contract.py:522-532` (`check_disjoint`) |
+| F-09 | press 20 countries with `pr`, radio 20 with `us`, 19 shared (computed by the sub-audit from both registries at HEAD) |
+| F-10 | `pyproject.toml` `[tool.coprepan.nlp]` (`PLANNED`) vs CO.RA.PAN `pyproject.toml:47-55`; no equivalence or bridge run in either repository |
+| F-12 | `src/coprepan/preservation.py:249, 264-267` (buffered `sha256_file`) ✔; `src/coprepan/preservation_migration.py:66-68` (the measurement of 2026-10-14) ✔; contract `CONTRACT.md:288-289` (P2) ✔; callers `core_pipeline.py:215-220`, `outage_spool.py:265` ✔ |
+| F-13 | `src/coprepan/extraction_eval.py:356-370, 415` ✔ (probe before/after in §Commands) |
+| F-14 | the stale statements are listed with their replacements in §D; e.g. `docs/STATUS.md:185, 195, 197, 199, 200, 202, 214, 218, 236, 237, 248` (of `e9e291d`) ✔ |
+| F-15 | `docs/architecture/TERMINOLOGY_AND_NAMING.md:91, 101` (document = article); `docs/extraction/REVIEW_CODEBOOK_v1.md` §2; `src/coprepan/intake_report.py:34-40, 59-80` (URL patterns, 500-character threshold as flags); examples of non-articles among verified outlets: run report 2026-10-10 §11 D1.6 |
+| F-16 | section channels in `config/outlet_registry.json` (`do_diario_libre` `rss_opinion`, `rss_deportes`; elpais.com.co, abc.com.py, eluniversal.mx); `config/candidate_rules.json` (`pr_noticel` `^/ultima-hora/`); `docs/corpus_supply/INDEX.md` §1; coverage figures from `docs/intake/reports/in1-20261010-24h/measurement.json` |
+| F-17 | `src/coprepan/extraction.py:124-129` (version digest over all blocks); `src/coprepan/document_identity.py:279-303` (`duplicate_of`, body digest, every outlet) ✔; `src/coprepan/identity_rebuild.py:74-95, 125-134` |
+| F-18 | `src/coprepan/extraction.py:66-67, 432-450` (container and title rule; confirmed by the audit's probe ✔), `:309-330` (`iso-8859-1` as Latin-1) |
+| F-19 | `docs/extraction/GOLD_SAMPLE_DESIGN.md` (no development/fresh split); methodology §5; `src/coprepan/extraction_eval.py:417, 443-459` (one decision per case), `:307-325` (pooled summary); `docs/intake/analysis/extraction_density_experiment_2026-10-11.txt` (no `ft1:` id) |
+| F-20 | `scripts/storage_contract.py:81-85, 94-111`; `src/coprepan/primary_backup.py:222-239`; `scripts/preservation_backup.py:107-112`; contract §9 B3 (`CONTRACT.md:341-345`) ✔ |
+| F-21 | `src/coprepan/storage_roots.py:313-334` (unset expected identity accepts any marker); `scripts/preservation_backup.py:39-50` |
+| F-22 | `scripts/qualify_storage_roots.py:73` (`preservation_root.parent / _qualification`), `:108-115` (removal, `rmdir` of the parent) ✔ |
+| F-23 | `src/coprepan/fetcher.py:222-236` (robots evidence cached per fetcher); `src/coprepan/intake.py:320, 424`, `src/coprepan/schedule.py:130-131, 251-256` (refusals as `DENY`, 7-day recheck); `measurement.json`: `pe_elperuano` `robots_unreachable` 2 + 24, `ec_el_universo` `intake_budget_exhausted` 10, `uy_montevideo_portal` 8 |
+| F-24 | `src/coprepan/access_control.py:77, 115` (length of the coded body); `src/coprepan/fetcher.py:336` (`Accept-Encoding: gzip`) |
+| F-25 | template channel URLs of `mx_milenio`, `pa_la_prensa`, `pe_elperuano`, `pe_peru21` (truncated), `hn_el_heraldo`, `hn_la_prensa`, `pr_metro_puerto_rico`, `py_ultima_hora`, `uy_el_observador` in `config/outlet_registry.json`; `src/coprepan/registry.py` (non-empty check only) |
+| F-26 | `src/coprepan/analysis_export.py:92-99` vs `src/coprepan/release_export.py:143-146` (`require_active`) |
+| F-27 | `src/coprepan/discovery.py:490-511` (`hint_instant`, `entry_instant`); `src/coprepan/intake.py:403-414`; `src/coprepan/intake_report.py:137-157`; `docs/corpus_supply/INDEX.md` §3 |
+| F-28 | `src/coprepan/intake.py:713-716` (`budget_respected`), `:350-365, 593` (`IntakeStopped`), `scripts/intake_operator.py:423-424` (`BLOCKED` outside the lock), `src/coprepan/fetcher.py:274` (`fetch_started_at`), `src/coprepan/intake_report.py:122` (7 077 vs 7 173) |
+| F-29 | `AGENTS.md:147-155` (§7) vs CPD-0016, CPD-0023, CPD-0029 and `docs/STATUS.md` §5 (O-1 `PASS` for the canary scope) ✔ |
+| F-30 | `docs/architecture/TERMINOLOGY_AND_NAMING.md:288`; `docs/nlp/INDEX.md` §6, `:134`; `docs/architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md` §7; `src/coprepan/analysis_contract.py:82-83, 588-590`; studies `2026-06-14_generalized_register_axis_results.md:29` |
+| F-31 | CPD-0003 §8–§9; CPD-0026 §2; `src/coprepan/identity.py:305-401` |
+| F-32 | `src/coprepan/extractor_candidates.py:43-46, 116-120, 143, 177, 199`; CPD-0018 §4; TARGET_ARCHITECTURE §7 |
+| F-33 | CO.RA.PAN `pyproject.toml:25-37, 47-58`, `nlp/canonical_stage.py:43`, `docs/nlp/INDEX.md` (no shared contract named) |
+| F-34 | `src/coprepan/crawler_identity.py:30` (`http-fetcher/1`); `src/coprepan/robots.py:139-141`, `src/coprepan/canary_driver.py:73` (`max_redirects=3`) |
+| F-35 | three `elnuevodia.com` channel URLs shared by `pr_el_nuevo_dia` (registered) and `pr_primera_hora` (proposed), `config/outlet_registry.json` |
+| F-36 | legacy repository `docs/agent-runs/2026-10-20_freeze_evidence/` (seal 3,583 files, tree `b97105bd…547c6`, manifest `c536fdd5…617b`; B1 3,584 objects, 17,635,967,524 B); no CPD-0031 run report in `docs/agent-runs/` ✔ |
+| F-37 | run report 2026-10-10 §10 D3 (577 + 466 + 48 + 107 … = 3 770) and §11 D3 (2 582 incl. 301 and 404) against `measurement.json` (2 572 2xx) |
+| Storage digests | `contracts/crosscorpus-storage-v1/CONTRACT.md` 30,774 B `2d09cd81…19ec6`, `conformance/CASES.json` 55,234 B `226c6515…045ec`, bundle `49a3ca88…afb036` in both repositories; release revision 2 `429f55eb…442255` at CO.RA.PAN `374d2e44e` and HEAD |
+
+Scratch files of the audit that remain in the session scratch space (`agent_docs/`, `agent_storage/`, `agent_xc/`,
+`agent_text/` — helper scripts and probes only) are not the basis of any statement above beyond what this table holds.

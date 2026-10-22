@@ -226,7 +226,7 @@ def test_relative_links_resolve():
 
 
 def test_run_reports_are_dated():
-    reports = [p.name for p in (REPO / "docs" / "agent-runs").glob("*.md") if p.name != "README.md"]
+    reports = [p.name for p in (REPO / "docs" / "agent-runs").glob("*.md") if p.name not in ("README.md", "INDEX.md")]
     bad = [name for name in reports if not re.fullmatch(r"\d{4}-\d{2}-\d{2}_[a-z0-9]+(?:-[a-z0-9]+)*\.md", name)]
     assert bad == []
 

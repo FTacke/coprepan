@@ -105,6 +105,16 @@ The bootstrap run created no git metadata; the operator initialised git on 2026-
   checkout. What is versioned is a compact, hash-bound evidence record of a finished run — never
   raw runtime trees, never `*.log`.
 - Never delete scientific output, evidence or an unknown file to make a status look clean.
+- **Worktree lifecycle (since 2026-10-22).** A run that works beside parallel sessions works in its own worktree under
+  `C:\dev\panhispanic_media_corpora\worktrees\coprepan\<name>` on its own branch, never inside the checkout. It closes
+  its worktree itself, as the last act, with `python scripts/worktree_closure.py remove <path> --report <its report>`:
+  the tool removes it with `git worktree remove` (never `--force`) only when the worktree is clean, holds no ignored
+  file but caches, is not locked or mid-operation, its HEAD is in `main` and in a remote-tracking ref, the run's report
+  is on `main`, and nothing in it changed for the idle time (the owning session, finished, may pass
+  `--min-idle-minutes 0`). Any check not proven keeps the worktree; the tool says why. The branch is never deleted.
+  Another session's worktree is never removed without an operator brief, and then one at a time by the same tool;
+  `python scripts/worktree_closure.py status` classifies them all and changes nothing. No background or scheduled
+  cleanup, and never by age alone.
 
 ## 5. Shell tooling: no heredocs (hard rule)
 
@@ -289,6 +299,16 @@ introduces it.
 - **One dated run report per run**: `docs/agent-runs/YYYY-MM-DD_short-descriptive-title.md`,
   updated while working, not only at the end. Convention and skeleton:
   [`docs/agent-runs/README.md`](docs/agent-runs/README.md).
+- **The report is delivered on `main` (hard rule, since 2026-10-22).** One consolidated canonical report per
+  coherent run — sub-agent and intermediate reports are folded into it, not published beside it. It is written and
+  committed on the run's branch and published with `python scripts/publish_run_report.py publish <report> --status
+  <its Status:>`: a documentation-only commit on `main` (the report and its row in the generated
+  `docs/agent-runs/INDEX.md`, nothing else of the branch). It is published even when the run's code stays on its
+  branch, and again (`--update`) when its final state differs. A report that exists only on a branch or in a
+  worktree is not delivered. **Five closing states are different facts and each report states each one:** report
+  published on `main`; changes committed (on which branch); changes merged into `main`; `main` or the branch pushed;
+  worktree removed. A report on `main` is not a merge of the code, and a local merge is not a push. Pushing `main`
+  publishes every local commit of `main`, so it is done only when each of them may be published.
 - **Decisions** go to `docs/decisions/` only when actually made, under the `CPD-<nnnn>` namespace.
   Do not manufacture a decision from an open planning note.
 - **Layering** — link to the authoritative layer instead of copying its narrative:

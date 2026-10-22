@@ -813,3 +813,9 @@ top and §5, not this list.*
 - 2026-10-22 — full repository, pipeline, documentation, scientific and cross-corpus consistency audit (diagnosis with bounded
   repairs; no stage state changed, no gate closed, no request to any publisher). Run report:
   [`2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md`](agent-runs/2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md).
+- 2026-10-22 — audit closure (implementation; no stage state changed, no gate closed): run reports are published on `main`
+  docs-only (`scripts/publish_run_report.py`, generated `docs/agent-runs/INDEX.md`); a run's worktree is removed only when
+  nothing can be lost (`scripts/worktree_closure.py`); CPD-0032 got its formal "Alternatives considered" section on the
+  operator's authorisation; `scripts/qualify_storage_roots.py spool-failover` writes only inside this corpus's own
+  directory and refuses on the current primary, whose parent is the shared umbrella. Run report:
+  [`2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md`](agent-runs/2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md).

@@ -43,3 +43,21 @@ Record what a later reader needs to reproduce and trust the run:
 - working-tree classification at the end;
 - exactly one recommended next run;
 - the operator report.
+
+## Delivery on `main` (since 2026-10-22)
+
+The report is written and committed on the run's branch and **published on `main`** with
+`python scripts/publish_run_report.py publish docs/agent-runs/<file>.md --status <PASS|PARTIAL|FAIL|BLOCKED|IN_PROGRESS>`
+(AGENTS §16). The publication is a documentation-only commit (trailer `Published-By: publish_run_report`) that adds
+the report as committed on the branch and its row in the generated `docs/agent-runs/INDEX.md`; `--status` must equal the
+report's own `Status:` line, and the report must carry its `EXTERNAL_API_USAGE` statement. Publishing the same bytes
+again changes nothing; a report already on `main` with other bytes is replaced only with `--update`; a change in the
+main checkout at either path, or a `main` that moved meanwhile, refuses the publication. `check` lists reports of a
+branch that `main` lacks or holds differently.
+
+One run, one consolidated report: detail reports of sub-agents and scratch notes stay in the session's scratch space
+and are folded into the canonical report with the evidence its statements rest on (file and line, digests, counts).
+A scratch file is kept, or its content moved into the report, as long as it is the only basis of a statement.
+
+The report states, as separate facts: published on `main`; committed (branch, commit); merged into `main`; pushed
+(`main`, branch); worktree removed or kept (and why).

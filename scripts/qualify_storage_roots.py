@@ -12,16 +12,24 @@ The failover test never writes an object into the real preservation root (preser
 path): it runs against a probe target made for the purpose beside it, on the same file system, with the real
 spool root's file system as spool, and removes exactly the directories it created. Nothing here touches the
 network or an outlet.
+
+"Beside it" is allowed only inside this corpus's own directory (``crosscorpus-storage/v1`` §5.2): the root's
+parent must be the ``coprepan`` directory of the namespace, outside a reserved segment, and the probe area must
+not lie in, contain or equal a configured root. Otherwise the command refuses before it writes anything. Since
+the cutover of 2026-10-18 the PRESERVATION root is itself ``…/panhispanic_media_corpora/coprepan`` and its parent
+is the umbrella both corpora share, so ``spool-failover`` refuses there (consistency audit 2026-10-22, F-22).
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Mapping
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
@@ -30,6 +38,31 @@ from coprepan import outage_spool, preservation, preservation_target, storage_ro
 from coprepan.canonical import sha256_bytes  # noqa: E402
 
 QUALIFICATION = "_qualification"
+CORPUS_DIRECTORY = "coprepan"                 # this corpus's segment of the namespace (contract §5.2)
+RESERVED_SEGMENTS = {"historic", "legacy"}    # never a corpus's own directory (contract §5.2)
+
+
+class QualificationRefused(RuntimeError):
+    """The probe area would leave this corpus's own directory or touch a configured root; nothing was written."""
+
+
+def qualification_area(preservation_root: Path, configured: Mapping[str, Path | None], stamp: str) -> Path:
+    """Where the failover probe may write: a new directory under ``<corpus directory>/_qualification/``, beside the
+    PRESERVATION root and never in the umbrella, a reserved segment or a configured root."""
+    parent = Path(os.path.abspath(preservation_root)).parent
+    if parent.name.lower() != CORPUS_DIRECTORY:
+        raise QualificationRefused(f"the PRESERVATION root's parent {parent} is not this corpus's own directory "
+                                   f"('{CORPUS_DIRECTORY}'); it may be the umbrella both corpora share: nothing written")
+    if any(part.lower() in RESERVED_SEGMENTS for part in parent.parts):
+        raise QualificationRefused(f"{parent} lies under a reserved namespace segment: nothing written")
+    container = parent / QUALIFICATION
+    for role, root in configured.items():
+        if root is None:
+            continue
+        root = Path(os.path.abspath(root))
+        if root == container or root in container.parents or container in root.parents:
+            raise QualificationRefused(f"the probe area {container} would lie in, contain or equal the {role} root: nothing written")
+    return container / f"qualification-{stamp}"
 
 
 def _now() -> datetime:
@@ -65,12 +98,13 @@ def _remove_own(directory: Path) -> None:
     shutil.rmtree(directory)
 
 
-def spool_failover() -> dict:
-    environment = storage_roots.workstation_environment()
+def spool_failover(environment: Mapping[str, str] | None = None) -> dict:
+    environment = storage_roots.workstation_environment() if environment is None else environment
     preservation_root = storage_roots.resolve_root("PRESERVATION", env=environment)
     spool_root = storage_roots.resolve_root("SPOOL", env=environment)
     stamp = _now().strftime("%Y%m%dT%H%M%SZ")
-    area = preservation_root.parent / QUALIFICATION / f"qualification-{stamp}"       # beside the real root, same file system
+    configured = storage_roots.resolve_configured_roles(env=environment)
+    area = qualification_area(preservation_root, configured, stamp)                  # beside the real root, same file system
     spool = spool_root / QUALIFICATION / f"qualification-{stamp}"                    # on the real spool root's file system
     target = area / "preservation_probe"
     steps = []
@@ -134,7 +168,11 @@ def main(argv: list[str] | None = None) -> int:
     elif arguments.command == "readiness":
         result = readiness(arguments.required_free_bytes)
     else:
-        result = spool_failover()
+        try:
+            result = spool_failover()
+        except QualificationRefused as refusal:
+            print(json.dumps({"status": "REFUSED", "reason": str(refusal)}, indent=2, ensure_ascii=False))
+            return 2
     print(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False))
     return 0 if result.get("status") in (None, "PASS", "READY") else 1
 
