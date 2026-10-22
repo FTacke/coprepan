@@ -8,4 +8,5 @@ nothing about whether the run's code is merged (see the report itself).
 |---|---|---|---|---|
 <!-- runs:begin -->
 | [2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md](2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md) | Full repository, pipeline, documentation, scientific and cross-corpus consistency audit — 2026-10-22 | PARTIAL | `audit/2026-10-22-full-consistency` @ `836ca6e03` | 2026-10-22 08:04 |
+| [2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md](2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md) | Audit closure: canonical run reporting, safe merge and worktree lifecycle — 2026-10-22 | PASS | `audit/2026-10-22-full-consistency` @ `20f308778` | 2026-10-22 08:14 |
 <!-- runs:end -->
