@@ -1,0 +1,42 @@
+{
+  "_draft": "NOT AN AUTHORIZATION. A template for the operator: fill the four OPERATOR fields, remove this key, save it ONCE under config/intake/authorizations/<date>_in2-canary.json and commit it once. scripts/intake_operator.py start refuses this file as it is (unknown key, empty dates, not under config/intake/authorizations/).",
+  "authorization_id": "DIA-OPERATOR-FILLS-IN",
+  "conditions": [
+    "one start; a second needs a new record",
+    "every gate of scripts/intake_operator.py start, none switched off",
+    "no request to a held origin or URL; nothing is worked around",
+    "the switch is disabled again when it ends, whatever its outcome",
+    "the intake runs on a weekday, after scripts/preservation_backup.py seed-cache, with CO.RA.PAN's observation NORMAL at the start",
+    "the abort criteria of docs/intake/canary/in2-20261114-canary_PREPARATION.md §5 apply"
+  ],
+  "intake": {
+    "ceilings": {
+      "duration_seconds": 10800,
+      "item_requests_per_origin": 20,
+      "item_requests_per_outlet": 15,
+      "item_requests_per_outlet_hour": 6,
+      "total_requests": 300
+    },
+    "excluded_outlets": [],
+    "intake_id": "in2-20261114-canary",
+    "plan": "config/intake/plans/in2-20261114-canary.json",
+    "plan_sha256": "b39ae894057395f20905d3af9c21f75aa6a8e2e04f7d9c250c63d81e1639dc3f"
+  },
+  "issued_by": "OPERATOR FILLS IN",
+  "issued_on": "",
+  "issued_to": "OPERATOR FILLS IN",
+  "kind": "DELEGATED_INTAKE_AUTHORIZATION",
+  "policy_versions": [
+    "canary/2026-10-10.1"
+  ],
+  "schema": "coprepan-intake-authorization/v1",
+  "source": {
+    "clauses": [
+      "OPERATOR FILLS IN: the words of the brief that authorise this intake"
+    ],
+    "commission": "OPERATOR FILLS IN",
+    "received": "",
+    "what_this_record_is": "the first bounded intake under intake-controller/2: seven outlets, three hours, at most 300 requests; the first production write on the PRESERVATION share since 2026-10-18. It authorises nothing beyond this plan and no recurring acquisition"
+  },
+  "valid_until": ""
+}

@@ -37,12 +37,29 @@ import threading
 from pathlib import Path
 from typing import Any, Mapping
 
-from . import preservation, preservation_target
+from . import preservation, preservation_target, storage_roots
 from .canonical import record_json, sha256_file, write_bytes_atomic
 
 CACHE_DIRECTORY = "cache/preservation_manifests"
 _MEMORY: dict[str, dict[str, dict[str, str]]] = {}
 _LOCK = threading.Lock()
+#: the most manifests one promotion reads from the root to bring the cache up (CPD-0035): ~52 s at 260 ms each
+PROMOTION_DELTA_READS = 200
+
+
+class CacheIncomplete(storage_roots.StorageRootUnreachable):
+    """The content check cannot be answered without reading many manifests from the share now: the promotion is deferred
+    (the pipeline's outage path keeps the pack honestly pending, contract P4/P5) instead of a burst of reads."""
+
+
+def warm(cache: "ManifestCache", root: Path, areas: Any, *, max_reads: int) -> dict[str, Any]:
+    """Bring the cache up by at most ``max_reads`` manifest reads in all (the intake's bounded warm-up, once per decision point)."""
+    out: dict[str, Any] = {"read": 0, "missing": 0}
+    for area in areas:
+        done = cache.refresh(root, area, max_reads=max(0, max_reads - out["read"]))
+        out["read"] += done["read"]
+        out["missing"] += done["missing"]
+    return out
 
 
 class ManifestCache:
@@ -117,27 +134,40 @@ class ManifestCache:
 
     # --- the content check of a promotion ----------------------------------------------------------------------
 
-    def refresh(self, root: Path, area: str) -> dict[str, int]:
+    def refresh(self, root: Path, area: str, *, max_reads: int | None = None, all_or_nothing: bool = False) -> dict[str, int]:
         """Bring the copies of ``area`` up to the root: one listing of its manifest directory, then a read of each manifest
-        not held yet. Returns what it did."""
+        not held yet -- at most ``max_reads`` of them (CPD-0035). ``all_or_nothing``: when more than ``max_reads`` are missing,
+        read none (a promotion never warms a cold cache from the share; the bounded warm-up does). Returns what it did and
+        how many are still ``missing``."""
         directory = (Path(root) / preservation.manifest_relative_path(area, "x")).parent
         if not directory.is_dir():
-            return {"listed": 0, "read": 0}
+            return {"listed": 0, "read": 0, "missing": 0}
         with os.scandir(directory) as entries:
             names = [entry.name[:-5] for entry in entries if entry.name.endswith(".json") and entry.is_file()]
         table = self._digests(area)
+        wanted = sorted(set(names) - set(table))
+        if max_reads is not None and len(wanted) > max_reads:
+            wanted = [] if all_or_nothing else wanted[:max_reads]
         read = 0
-        for object_id in sorted(set(names) - set(table)):
+        for object_id in wanted:
             manifest = preservation.read_manifest(Path(root), area, object_id)
             if manifest is not None:
                 self.store(manifest)
                 read += 1
-        return {"listed": len(names), "read": read}
+        return {"listed": len(names), "read": read, "missing": len(set(names) - set(self._digests(area)))}
 
     def find_by_content(self, root: Path, area: str, sha256: str) -> dict[str, Any] | None:
         """``preservation.find_by_content`` answered from the copies, after :meth:`refresh`: the same answer (the first
-        manifest in name order whose digest is ``sha256``), for a listing and the new manifests instead of every manifest."""
-        self.refresh(root, area)
+        manifest in name order whose digest is ``sha256``), for a listing and the new manifests instead of every manifest.
+
+        A promotion reads at most :data:`PROMOTION_DELTA_READS` manifests from the root (the ones that are new since the cache was
+        last brought up). With more missing -- a cold cache, about 260 ms per manifest on the share -- it reads none and raises
+        :class:`CacheIncomplete`: the pack stays honestly pending, and the bounded warm-up of the intake (or the seeding from the
+        verified backup) fills the cache. An incomplete table never answers: a duplicate it would miss is a wrong answer."""
+        done = self.refresh(root, area, max_reads=PROMOTION_DELTA_READS, all_or_nothing=True)
+        if done["missing"]:
+            raise CacheIncomplete(f"the manifest cache of {self.target_id}/{area} lacks {done['missing']} of {done['listed']} manifests; "
+                                  "a promotion does not read them from the share (bounded warm-up or seed-cache)")
         table = self._digests(area)
         for object_id in sorted(name for name, digest in table.items() if digest == sha256):
             manifest = self.get(root, area, object_id)
@@ -171,4 +201,4 @@ def reset_memory() -> None:
         _MEMORY.clear()
 
 
-__all__ = ["CACHE_DIRECTORY", "ManifestCache", "reset_memory", "verified_local_copy"]
+__all__ = ["CACHE_DIRECTORY", "CacheIncomplete", "ManifestCache", "PROMOTION_DELTA_READS", "reset_memory", "verified_local_copy", "warm"]

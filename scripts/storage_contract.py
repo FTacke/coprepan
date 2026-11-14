@@ -136,15 +136,76 @@ def _health(roots, runtime, policy, gate, environment) -> dict[str, Any]:
         waiting = {subject for subject, state in ledger.states().items() if state == "PRESERVATION_PENDING"}
         times = [record.at for record in ledger.records() if record.subject in waiting and record.new_state == "PRESERVATION_PENDING"] if waiting else []
         pending = {"fetches_pending": len(waiting), "oldest_pending_since": min(times) if times else None}
-    backup = primary_backup.backup_health(roots.get("BACKUP"), now=now, warning_hours=policy.backup["receipt_warning_hours"],
+    backup = primary_backup.backup_health(roots.get("BACKUP"), now=now, calendar=policy.calendar,
                                           failure_hours=policy.backup["receipt_failure_hours"])
     floors = {role: resource_policy.free_space_refusal(role, roots.get(role), policy) for role in ("RUNTIME", "SPOOL", "BACKUP")}
-    return {"resource_policy": policy.version, "backup": backup, "share_gate": gate.status() if gate is not None else "RUNTIME not available",
-            "paused": resource_policy.paused(runtime), "sibling_advisory": resource_policy.sibling_advisory(
-                environment, now, max_age_seconds=policy.sibling_signal_max_age_seconds),
+    advice = resource_policy.sibling_advisory(environment, now, max_age_seconds=policy.sibling_signal_max_age_seconds)
+    hold = resource_policy.maintenance_hold(policy, runtime, now, environment)
+    gate_status = gate.status() if gate is not None else None
+    acquisition = _acquisition(runtime)
+    actions = list(backup.get("operator_action") or []) + [f"free space: {reason}" for reason in floors.values() if reason]
+    actions += acquisition.pop("operator_action")
+    return {"operations": {
+                "acquisition": acquisition["state"], "acquisition_detail": acquisition,
+                "pending_preservation": pending, "free_space_floors": {role: reason or "OK" for role, reason in floors.items()},
+                "share_gate": "OPEN" if gate_status and not gate_status["closed_because"] else (gate_status or {}).get("closed_because") or "RUNTIME not available",
+                "new_transfers": "PERMITTED" if gate_status and not gate_status["transfers_held_because"] else (gate_status or {}).get("transfers_held_because"),
+                "corapan_advisory": advice["state"],
+                "backup": {"level": backup["level"], "last_verified_at": backup.get("last_verified_at"),
+                           "age_hours": backup.get("last_verified_age_hours"), "missed_weekday_slots": backup.get("missed_weekday_slots"),
+                           "last_attempt": (backup.get("last_attempt") or {}).get("outcome"), "next_scheduled_start": backup.get("next_scheduled_start")},
+                "maintenance_now": f"{hold[0]}: {hold[1]}" if hold else "permitted",
+                "operator_action": actions or ["none"]},
+            "resource_policy": policy.version, "backup": backup, "share_gate": gate_status or "RUNTIME not available",
+            "paused": resource_policy.paused(runtime), "sibling_advisory": advice,
             "free_space_floors": {role: reason or "OK" for role, reason in floors.items()},
             "pending_in_the_workspace": pending,
             "maintenance_now": resource_policy.maintenance_refusal(policy, runtime, now, environment) or "permitted"}
+
+
+def _acquisition(runtime: Path | None) -> dict[str, Any]:
+    """The acquisition's state from local files only (CPD-0035 §6): the switch in the tracked policy, the qualified stock of the
+    newest readiness file, the intakes' state files and the time of the last recorded request. ``DISABLED`` (switch off, nothing
+    running) · ``READY`` (switch on, nothing running) · ``RUNNING`` · ``PAUSED`` (PAUSE_IO) · ``DEGRADED`` (running, requests
+    held by a local bound: the share away beyond the pending bounds, a floor) · ``BLOCKED`` (an intake stopped by a pin, a
+    switch, a systemic fault)."""
+    out: dict[str, Any] = {"operator_action": []}
+    switch = json.loads((REPO / "config" / "acquisition_policy.json").read_text(encoding="utf-8")).get("external_acquisition")
+    out["switch"] = switch
+    readiness = sorted((REPO / "config" / "intake").glob("intake_readiness_*.json"))
+    if readiness:
+        doc = json.loads(readiness[-1].read_text(encoding="utf-8"))
+        out["qualified_stock"] = {"readiness_version": doc.get("readiness_version"), "outlets": len(doc.get("outlets") or []),
+                                  "channels": sum(len(o.get("channels") or []) for o in doc.get("outlets") or [])}
+    intakes = []
+    if runtime is not None and (runtime / "intake").is_dir():
+        for path in sorted((runtime / "intake").glob("*/state.json")):
+            try:
+                state = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                intakes.append({"intake_id": path.parent.name, "status": "UNREADABLE"})
+                continue
+            intakes.append({k: state.get(k) for k in ("intake_id", "status", "held_because", "stopped_because", "last_checkpoint_at", "requests_total")}
+                           | {"finalized": bool(state.get("finalized"))})
+    out["intakes"] = intakes
+    requests = runtime / "requests" / "requests.jsonl" if runtime is not None else None
+    out["last_request_recorded_at"] = (datetime.fromtimestamp(requests.stat().st_mtime, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                                       if requests is not None and requests.is_file() else None)
+    running = [i for i in intakes if i.get("status") == "RUNNING"]
+    blocked = [i for i in intakes if i.get("status") in ("BLOCKED", "FAILED") and not i.get("finalized")]
+    if blocked:
+        state = "BLOCKED"
+        out["operator_action"].append(f"intake {blocked[0]['intake_id']} is {blocked[0]['status']}: {blocked[0].get('stopped_because')}")
+    elif running and "PAUSE_IO" in str(running[0].get("held_because") or ""):
+        state = "PAUSED"
+    elif running and running[0].get("held_because"):
+        state = "DEGRADED"
+    elif running:
+        state = "RUNNING"
+    else:
+        state = "READY" if str(switch).lower() == "enabled" else "DISABLED"
+    out["state"] = state
+    return out
 
 
 def compare_sister(sister: Path) -> list[str]:

@@ -269,35 +269,84 @@ def receipt_status(root: Path | None, primary: Path | None) -> dict[str, Any]:
                                                  "last_full_verification_at")}}
 
 
-def backup_health(root: Path | None, *, now: datetime, warning_hours: int, failure_hours: int) -> dict[str, Any]:
-    """How current the backup is, from local files of the BACKUP root only (CPD-0033): the receipt's age against the policy's
-    thresholds, the last attempt (also a deferral or a stop), and the fixity rotation's oldest verification. ``OK`` ·
-    ``WARNING`` (receipt older than ``warning_hours``, or the fixity cycle overdue) · ``FAILURE`` (older than ``failure_hours``,
-    a last run with problems, or no receipt). Never reports a backup the receipt does not establish."""
+_LEVELS = ("OK", "WARNING", "FAILURE")
+
+
+def _worse(level: str, other: str) -> str:
+    return max(level, other, key=_LEVELS.index)
+
+
+def _parse_instant(text: Any) -> datetime | None:
+    try:
+        value = datetime.fromisoformat(str(text).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+
+
+def backup_health(root: Path | None, *, now: datetime, calendar: Any, failure_hours: int) -> dict[str, Any]:
+    """How current the backup is, from local files of the BACKUP root only (CPD-0033, CPD-0035). Four facts, kept apart:
+    the **last verified backup** (the receipt) and its real age; the **last attempt** (``_backup/last_run.json``: also a
+    planned pause, a deferral or a stop) and the recent attempts; the **fixity** rotation's oldest verification; the
+    **restore** evidence of the receipt.
+
+    The level counts **missed weekday slots**: scheduled starts of the maintenance calendar (Monday to Friday) that passed,
+    plus the run's grace, without a newer verified receipt. A weekend has no slot, so Friday's backup is not late on Monday
+    morning; two weekdays without a backup are, whatever the reason -- a deferral for CO.RA.PAN is visible as such, but the
+    risk of an old backup is real either way. ``OK`` · ``WARNING`` (``warning_missed_slots`` missed, or the fixity cycle overdue) ·
+    ``FAILURE`` (``failure_missed_slots`` missed, a receipt older than ``failure_hours`` whatever the calendar says, no receipt,
+    a last run that failed, or one that needs the operator's FULL order). Never reports a backup the receipt does not establish."""
     receipt = read_receipt(root) if root is not None else None
     last = read_last_run(root)
-    out: dict[str, Any] = {"receipt_written_at": receipt.get("written_at") if receipt else None, "last_run": last}
+    out: dict[str, Any] = {"last_verified_at": receipt.get("written_at") if receipt else None,
+                           "last_verified_mode": receipt.get("mode") if receipt else None, "last_attempt": last,
+                           "next_scheduled_start": None, "operator_action": []}
+    nxt = calendar.next_slot(now)
+    out["next_scheduled_start"] = nxt.strftime("%Y-%m-%dT%H:%M:%SZ") if nxt else None
     reasons: list[str] = []
     level = "OK"
+    written = _parse_instant(receipt.get("written_at")) if receipt else None
     if receipt is None:
         level, reasons = "FAILURE", ["no backup receipt"]
+        out["operator_action"].append("no verified backup exists: the first one is a FULL run on the operator's order (run --full)")
     else:
-        try:
-            age = (now - datetime.fromisoformat(str(receipt["written_at"]).replace("Z", "+00:00"))).total_seconds() / 3600
-        except (KeyError, ValueError):
-            age = float("inf")
-        out["receipt_age_hours"] = round(age, 1)
+        age = (now - written).total_seconds() / 3600 if written else float("inf")
+        out["last_verified_age_hours"] = round(age, 1)
+        missed = calendar.missed(written, now) if written else []
+        out["missed_weekday_slots"] = len(missed)
+        out["missed_slot_starts"] = [m.strftime("%Y-%m-%dT%H:%M:%SZ") for m in missed[-5:]]
+        if len(missed) >= calendar.failure_missed_slots:
+            level = "FAILURE"
+            reasons.append(f"{len(missed)} weekday slots passed without a verified backup (failure from {calendar.failure_missed_slots})")
+        elif len(missed) >= calendar.warning_missed_slots:
+            level = "WARNING"
+            reasons.append(f"{len(missed)} weekday slots passed without a verified backup (warning from {calendar.warning_missed_slots})")
         if age > failure_hours:
-            level, reasons = "FAILURE", [f"the receipt is {age:.0f} h old (failure above {failure_hours} h)"]
-        elif age > warning_hours:
-            level, reasons = "WARNING", [f"the receipt is {age:.0f} h old (warning above {warning_hours} h)"]
-        fixity = (last or {}).get("fixity") or {}
+            level = "FAILURE"
+            reasons.append(f"the last verified backup is {age:.0f} h old (failure above {failure_hours} h, whatever the calendar)")
+        fixity = (last or {}).get("fixity") or ((receipt.get("run") or {}).get("fixity") or {})
+        out["fixity"] = {k: fixity.get(k) for k in ("oldest_verification_at", "oldest_verification_age_days", "cycle_max_days", "cycle_overdue", "checked")}
         if fixity.get("cycle_overdue"):
-            level = "WARNING" if level == "OK" else level
+            level = _worse(level, "WARNING")
             reasons.append(f"the oldest fixity verification is {fixity.get('oldest_verification_age_days')} days old")
-    if last and last.get("outcome") == "NOT_VERIFIED":
+        restore = receipt.get("restore_test") or (receipt.get("run") or {}).get("restore_test") or {}
+        out["restore_evidence"] = {k: restore.get(k) for k in ("tested_at", "samples", "ok_count", "all_ok")}
+    recent = [r for r in (last or {}).get("recent") or [] if isinstance(r, Mapping)]
+    since = [r for r in recent if written is None or (_parse_instant(r.get("at")) or now) > written]
+    out["attempts_since_verified"] = dict(Counter(str(r.get("outcome")) for r in since))
+    outcome = (last or {}).get("outcome")
+    if outcome in ("FAILED", "NOT_VERIFIED"):
         level = "FAILURE"
         reasons.append(f"the last run found {last.get('problem_count')} problem(s): {last.get('first_problems')}")
+        out["operator_action"].append("the last backup run found problems: read _backup/last_run.json and the run evidence")
+    elif outcome == "NEEDS_FULL_AUTHORIZATION":
+        level = "FAILURE"
+        reasons.append(f"the incremental basis is not trustworthy: {last.get('reason')}")
+        out["operator_action"].append("an incremental run has no trustworthy basis: a FULL run (run --full) is the operator's order")
+    elif level != "OK" and outcome:
+        reasons.append(f"the last attempt was {outcome}: {last.get('reason') or last.get('stop_reason')}")
+    if level == "FAILURE" and not out["operator_action"]:
+        out["operator_action"].append("the backup is overdue: read the attempts since the last verified backup")
     out.update(level=level, reasons=reasons)
     return out
 
@@ -317,6 +366,14 @@ RESTAMPED = "RESTAMPED"
 EVIDENCE = (M.COPIED, M.PRESENT, RESTAMPED)
 FIXITY_LOG = "fixity.jsonl"
 LAST_RUN = "last_run.json"
+RECENT_ATTEMPTS = 20
+
+
+class NeedsFullAuthorization(BackupError):
+    """An incremental run has no trustworthy basis (CPD-0035): no verified receipt of this primary, a journal that covers
+    fewer objects than the receipt verified, or more changed timestamps than one run's fixity slice. Reading the whole
+    primary to rebuild the basis is a FULL run, and a FULL run on the shared link is the operator's order -- never a
+    surprise of a scheduled run. Raised before any object of the primary is read."""
 _PROBE_PREFIX = ".coprepan_write_probe-"          # storage_roots' transient writability probe in the root: not an object
 
 
@@ -410,8 +467,11 @@ def write_last_run(root: Path, doc: Mapping[str, Any]) -> None:
 
     if root is None or not (Path(root) / MARKER).is_file():
         return                                    # only into a root that was made a BACKUP root: never creates state elsewhere
+    previous = read_last_run(root) or {}
+    recent = [r for r in previous.get("recent") or [] if isinstance(r, Mapping)][-(RECENT_ATTEMPTS - 1):]
+    recent.append({"at": doc.get("at"), "outcome": doc.get("outcome")})
     try:
-        write_bytes_atomic(Path(root) / STATE / LAST_RUN, record_json({"schema": SCHEMA + "/last-run", **dict(doc)}))
+        write_bytes_atomic(Path(root) / STATE / LAST_RUN, record_json({"schema": SCHEMA + "/last-run", **dict(doc), "recent": recent}))
     except OSError:
         pass                                      # a record of an attempt; its absence shows as an old last run in the status
 
@@ -438,7 +498,7 @@ def run_incremental(primary: Path, root: Path, *, scratch: Path, limits: Mapping
     if not target_id:
         raise BackupError("the primary carries no identity marker: no evidence of an earlier run can be its evidence")
     if previous is None or previous.get("primary_target_id") != target_id or not previous.get("verified_against_primary"):
-        raise BackupError("no verified receipt produced from this primary: an incremental run builds on one; run --full first")
+        raise NeedsFullAuthorization("no verified receipt produced from this primary: an incremental run builds on one; run --full first")
     started, begun = clock(), monotonic()
     run_id = "bi" + started.strftime("%Y%m%dT%H%M%SZ") + "-" + os.urandom(3).hex()
     rate = M._Rate(float(limits["max_bytes_per_second"]) or None)
@@ -453,6 +513,9 @@ def run_incremental(primary: Path, root: Path, *, scratch: Path, limits: Mapping
         return bool(stop_reason)
 
     evidence = load_evidence(root)
+    if len(evidence) < int(previous.get("objects") or 0):
+        raise NeedsFullAuthorization(f"the backup journal holds evidence for {len(evidence)} objects, the verified receipt for "
+                                     f"{previous.get('objects')}: the basis is damaged; run --full on the operator's order")
     listed, primary_temporaries = list_tree(primary, _primary_excluded)
     on_backup, backup_temporaries = list_tree(root, _excluded)
     swept = _sweep_own_temporaries(root, backup_temporaries)
@@ -476,6 +539,10 @@ def run_incremental(primary: Path, root: Path, *, scratch: Path, limits: Mapping
         else:
             inventory[path] = (row["sha256"], size)
             counts["REUSED_EVIDENCE"] += 1
+    if len(changed) > limits["fixity_objects_per_run"]:
+        raise NeedsFullAuthorization(f"{len(changed)} objects of a write-once primary show another size or timestamp than their "
+                                     "evidence: a systemic change (a copy, a migration, a restore by others), not a day's work; "
+                                     "re-hashing them is a FULL run on the operator's order")
     for path in sorted(set(evidence) - set(listed)):
         problems.append({"path": path, "problem": "MISSING_ON_PRIMARY", "detail": "the journal holds it, the primary's listing does not; nothing is removed"})
     journal = M._Journal(root / STATE / JOURNAL)
@@ -611,6 +678,59 @@ def _restore_rotation(root: Path, inventory: Mapping[str, tuple[str, int]], scra
         "tested_at": _now(), "read_from": "BACKUP root", "samples": 0, "ok_count": 0, "bytes": 0, "all_ok": False, "cases": []}
 
 
-__all__ = ["BackupError", "EVIDENCE", "HOLDINGS", "backup_health", "MARKER", "MODE_FULL", "MODE_INCREMENTAL", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root",
+_MANIFEST_PREFIX = "preservation/manifests/"
+
+
+def seed_manifest_cache(root: Path, cache: Any, *, stop: Callable[[], str | None] | None = None) -> dict[str, Any]:
+    """Fill the RUNTIME manifest cache of the primary (``preserved_index.ManifestCache``, CPD-0033) from the BACKUP root,
+    without any contact with the share (CPD-0035 §4).
+
+    A copy is taken only from a backup whose verified receipt names the cache's target, and only when the backup file's bytes
+    hash to the journal's digest -- the digest the bytes on the primary were read with when they were copied and re-read
+    unbuffered. A bound manifest never changes (``preservation.promote`` refuses any other content), so such a copy is the
+    primary's manifest. Copies the cache holds are not read again; a promotion still lists the area on the root and reads
+    whatever is newer, and still verifies on the root any master it binds to. Local reads only; resumable."""
+    from . import preservation
+
+    receipt = read_receipt(root)
+    if not receipt or not receipt.get("verified_against_primary") or receipt.get("primary_target_id") != cache.target_id:
+        raise BackupError(f"no verified receipt of target {cache.target_id!r} on {root}: the cache is not seeded from it")
+    counts: Counter[str] = Counter()
+    halted = None
+    for path, row in sorted(load_evidence(root).items()):
+        if not path.startswith(_MANIFEST_PREFIX) or not path.endswith(".json"):
+            continue
+        area, _, name = path[len(_MANIFEST_PREFIX):].rpartition("/")
+        object_id = name[:-5]
+        if not area or "/" in area or cache._read_copy(cache._path(area, object_id), area, object_id) is not None:
+            counts["HELD"] += 1
+            continue
+        if stop is not None and counts["SEEDED"] % 100 == 0:          # asked every hundred copies: local files, but not per file
+            halted = stop()
+            if halted:
+                break
+        try:
+            data = Path(M._long(Path(root).joinpath(*path.split("/")))).read_bytes()
+        except OSError:
+            counts["UNREADABLE"] += 1
+            continue
+        if (hashlib.sha256(data).hexdigest(), len(data)) != (row["sha256"], row["size"]):
+            counts["DIFFERS_FROM_EVIDENCE"] += 1
+            continue
+        try:
+            manifest = json.loads(data.decode("utf-8"))
+        except ValueError:
+            counts["NOT_A_MANIFEST"] += 1
+            continue
+        if (not isinstance(manifest, Mapping) or manifest.get("schema") != preservation.MANIFEST_SCHEMA
+                or manifest.get("area") != area or manifest.get("object_id") != object_id):
+            counts["NOT_A_MANIFEST"] += 1
+            continue
+        cache.store(manifest)
+        counts["SEEDED"] += 1
+    return {"target_id": cache.target_id, "from_receipt": receipt.get("written_at"), "counts": dict(counts), "stopped": halted}
+
+
+__all__ = ["BackupError", "EVIDENCE", "NeedsFullAuthorization", "seed_manifest_cache", "HOLDINGS", "backup_health", "MARKER", "MODE_FULL", "MODE_INCREMENTAL", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root",
            "list_tree", "load_evidence", "load_fixity", "load_journal", "read_last_run", "read_receipt", "receipt_status", "require_root",
            "restore_test", "run_incremental", "verify", "write_last_run", "write_receipt"]

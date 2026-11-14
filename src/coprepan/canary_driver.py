@@ -378,6 +378,26 @@ def packs_holding(workspace: core_pipeline.Workspace, fetch_ids: set[str]) -> li
     return held
 
 
+def pending_pack_ids(workspace: core_pipeline.Workspace) -> list[str]:
+    """The sealed packs that hold a fetch still ``PRESERVATION_PENDING``, from the ledger alone (CPD-0035): the transition to
+    that state names its pack (``details.pack_id``). Only a pending fetch whose transition names none -- a ledger older
+    than that detail -- costs a scan, and then only of the packs. Before, every decision point of an intake read every
+    pack of the workspace end to end while anything was pending (2,204 packs, 388 MB, on 2026-11-14)."""
+    ledger = workspace.ledger()
+    pending = {subject for subject, held in ledger.states().items() if held == "PRESERVATION_PENDING"}
+    if not pending:
+        return []
+    named: dict[str, str] = {}
+    for record in ledger.records():
+        if record.subject in pending and record.new_state == "PRESERVATION_PENDING" and isinstance(record.details.get("pack_id"), str):
+            named[record.subject] = record.details["pack_id"]
+    found = set(named.values())
+    unnamed = pending - set(named)
+    if unnamed:
+        found |= set(packs_holding(workspace, unnamed))
+    return sorted(identifier for identifier in found if (workspace.packs / f"{identifier}.warc.gz").exists())
+
+
 def transport_calls(record: Mapping[str, Any]) -> int:
     """The real requests behind one fetch record: the first request plus one per redirect followed."""
     return 1 + len(record["response"]["redirect_chain"])

@@ -9,6 +9,10 @@
                                                    the operator-ordered FULL run: fresh baseline of the primary (every object
                                                    re-hashed) -> copy -> unbuffered verification of every object -> restore -> receipt
     status                                         the receipt's state as the contract status reads it, and the backup's health
+    schedule                                       the registered task COPREPAN_PreservationBackup against the policy's calendar
+                                                   (read-only; Windows)
+    seed-cache [--ignore-windows]                  fill the RUNTIME manifest cache of the primary from the verified BACKUP root:
+                                                   local reads only, no contact with the share (CPD-0035)
 
 Both roots come from the workstation's ``.env`` (``COPREPAN_PRESERVATION_ROOT`` with ``COPREPAN_PRESERVATION_TARGET_ID``, checked
 (T2); ``COPREPAN_BACKUP_ROOT``). With ``--holding LEGACY`` (CPD-0032) the primary is the LEGACY archive root
@@ -16,19 +20,32 @@ Both roots come from the workstation's ``.env`` (``COPREPAN_PRESERVATION_ROOT`` 
 is ``COPREPAN_LEGACY_BACKUP_ROOT``; a backup root names its holding and is refused for another one. Nothing here writes to the
 primary, deletes an object or touches the network beyond the two roots.
 
-Yielding (CPD-0033, ``config/resource_policy.json``): a run does not start, and a running one stops at its next object, in a quiet
-window of CO.RA.PAN, while the operator's ``<RUNTIME>/state/PAUSE_IO`` exists, while CO.RA.PAN's fresh observation says the share
-is degraded or slow, while the share gate is backing off, or when the BACKUP volume is under its floor. Such a run ends
-``DEFERRED`` or ``STOPPED`` (exit 0: an expected state; ``_backup/last_run.json`` records it and the status shows the receipt's
-age). A run that finds a problem ends ``NOT_VERIFIED`` (exit 1). A refusal of a root or a role is exit 2.
+When a run runs (CPD-0033, CPD-0035, ``config/resource_policy.json``). Outcomes, recorded in ``_backup/last_run.json``:
+
+* ``SCHEDULED_PAUSE`` (exit 0): not a day of the maintenance calendar -- Saturday and Sunday, in Europe/Berlin. Planned, not a
+  failure; whatever started the process (a task that fires late after a weekday was missed) starts nothing then.
+* ``DEFERRED_RESOURCE_PRIORITY`` (exit 0): a quiet window of CO.RA.PAN, CO.RA.PAN's fresh observation that the share is slow or
+  recovering, the operator's ``<RUNTIME>/state/PAUSE_IO``, the BACKUP volume under its floor, or another run on the root.
+* ``DEFERRED_SHARE_UNAVAILABLE`` (exit 0): the share is away -- refused, degraded in CO.RA.PAN's observation, or the share gate
+  backing off after a failed contact. No logon is retried.
+* ``STOPPED`` (exit 0): the time budget ended the run; resumable, no receipt.
+* ``NEEDS_FULL_AUTHORIZATION`` (exit 1): there is no trustworthy basis for an incremental run (no verified receipt of this primary,
+  a journal that covers less than the receipt, a mass of changed timestamps). A scheduled run never turns itself into a FULL
+  run on the shared link: that is ``run --full``, on the operator's order.
+* ``FAILED`` (exit 1): the run found a problem; no receipt. ``BACKUP_VERIFIED`` (exit 0): the receipt is written.
+
+A refusal of a root or a role is exit 2. ``--ignore-windows`` is the operator's explicit order to run outside the calendar and the
+quiet windows; the pause file, CO.RA.PAN's observation, the share gate and the floor still hold.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -43,6 +60,7 @@ from coprepan import storage_roots  # noqa: E402
 
 #: per holding: the variable of the backup root (the PRODUCTION primary resolves through storage_roots; LEGACY below)
 BACKUP_VARIABLE = {"PRODUCTION": "COPREPAN_BACKUP_ROOT", "LEGACY": "COPREPAN_LEGACY_BACKUP_ROOT"}
+TASK_NAME = "COPREPAN_PreservationBackup"
 
 
 def _legacy_primary(env) -> Path:
@@ -92,6 +110,10 @@ def _runtime(env) -> Path | None:
     return Path(value) if value and Path(value).is_dir() else None
 
 
+def _policy() -> R.ResourcePolicy:
+    return R.load_policy(R.default_policy_path(REPO))          # tracked configuration of this code, not workstation state
+
+
 def cmd_init_root(args) -> int:
     primary, _ = _roots(args.workstation_checkout, need_backup=False, holding=args.holding)
     print(json.dumps(B.init_root(Path(args.root), primary=primary, operator=args.operator, holding=args.holding), indent=1))
@@ -135,6 +157,7 @@ def _incremental(args, primary: Path, backup: Path, evidence: Path | None, polic
            "bytes": run["bytes"], "tree_sha256": run["tree_sha256"], "run": {k: v for k, v in run.items() if k not in ("problems",)},
            "problems": run["problems"], "produced_from_primary": run["ok"], "verified_against_primary": run["ok"],
            "last_full_verification_at": run["last_full_verification_at"], "resource_policy": policy.version,
+           "restore_test": {k: v for k, v in run["restore_test"].items() if k != "cases"},
            "verification_basis": ("every object of the primary's listing is on the backup root: new ones copied and re-read unbuffered against "
                                   "the digest read from the primary in this run; the others by journal evidence of such a verification, reused "
                                   "only for the same target, the same size and mtime_ns, and a backup file of that size; a budgeted slice re-hashed "
@@ -147,7 +170,7 @@ def _incremental(args, primary: Path, backup: Path, evidence: Path | None, polic
 
 
 def _incremental_basis(primary: Path, backup: Path) -> bool:
-    """An incremental run builds on a verified receipt that names this primary's identity; without one the run is FULL."""
+    """An incremental run builds on a verified receipt that names this primary's identity."""
     from coprepan import preservation_target
 
     receipt = B.read_receipt(backup)
@@ -157,30 +180,36 @@ def _incremental_basis(primary: Path, backup: Path) -> bool:
 
 def cmd_run(args) -> int:
     env = storage_roots.workstation_environment(args.workstation_checkout)
-    policy = R.load_policy(R.default_policy_path(REPO))          # tracked configuration of this code, not workstation state
+    policy = _policy()
     runtime = _runtime(env)
     backup = _backup_root(env, args.holding)
     gate = R.ShareGate(runtime, policy, env=env) if runtime is not None else None
 
-    def refusal() -> str | None:
-        reason = None if args.ignore_windows else R.maintenance_refusal(policy, runtime, _now(), env)
-        reason = reason or (gate.closed_because() if gate is not None else None)
-        return reason or R.free_space_refusal("BACKUP", backup, policy)
+    def refusal() -> tuple[str, str] | None:
+        hold = R.maintenance_hold(policy, runtime, _now(), env, calendar=not args.ignore_windows)
+        if hold:
+            return hold
+        closed = gate.closed_because() if gate is not None else None
+        if closed:
+            return R.DEFERRED_SHARE_UNAVAILABLE, closed
+        floor = R.free_space_refusal("BACKUP", backup, policy)
+        return (R.DEFERRED_RESOURCE_PRIORITY, floor) if floor else None
 
     evidence = Path(args.evidence_dir) if args.evidence_dir else None
     started = B._now()
+    mode = "FULL" if args.full else "INCREMENTAL"
     held = refusal()
     if held:
-        B.write_last_run(backup, {"at": started, "outcome": "DEFERRED", "reason": held, "mode": "FULL" if args.full else "INCREMENTAL"})
-        print(f"DEFERRED: {held}")
+        B.write_last_run(backup, {"at": started, "outcome": held[0], "reason": held[1], "mode": mode})
+        print(f"{held[0]}: {held[1]}")
         return 0
     try:
         primary = _primary(env, args.holding)
     except storage_roots.StorageRootUnreachable as error:
         if gate is not None:
             gate.failed(f"backup: {error}")
-        B.write_last_run(backup, {"at": started, "outcome": "DEFERRED", "reason": f"primary unreachable: {error}"})
-        print(f"DEFERRED: the primary is unreachable ({error}); the share gate backs off")
+        B.write_last_run(backup, {"at": started, "outcome": R.DEFERRED_SHARE_UNAVAILABLE, "reason": f"primary unreachable: {error}", "mode": mode})
+        print(f"{R.DEFERRED_SHARE_UNAVAILABLE}: the primary is unreachable ({error}); the share gate backs off")
         return 0
     if gate is not None:
         gate.succeeded()
@@ -191,34 +220,52 @@ def cmd_run(args) -> int:
         with exclusive(backup / B.STATE, "backup run"):          # one backup run per root; released when the process ends
             return _locked_run(args, env, policy, primary, backup, gate, evidence, started, refusal)
     except WorkspaceBusy:
-        print("DEFERRED: another backup run holds this backup root")
+        print(f"{R.DEFERRED_RESOURCE_PRIORITY}: another backup run holds this backup root")
         return 0
 
 
 def _locked_run(args, env, policy, primary, backup, gate, evidence, started, refusal) -> int:
-    full = args.full or not _incremental_basis(primary, backup)
-    if full and not args.full:
-        print("FULL: no verified receipt produced from this primary to build on; this run re-hashes every object (once)", flush=True)
-    doc, ok = (_full(args, primary, backup, evidence) if full else _incremental(args, primary, backup, evidence, policy, refusal))
+    seen: list[tuple[str, str]] = []
+
+    def stop() -> str | None:
+        hold = refusal()
+        if hold:
+            seen.append(hold)
+        return hold[1] if hold else None
+
+    if not args.full and not _incremental_basis(primary, backup):
+        return _needs_full(backup, started, "no verified receipt produced from this primary to build on")
+    try:
+        doc, ok = (_full(args, primary, backup, evidence) if args.full else _incremental(args, primary, backup, evidence, policy, stop))
+    except B.NeedsFullAuthorization as error:
+        return _needs_full(backup, started, str(error))
     run = doc.get("run") or {}
-    if run.get("stop_reason", "") and str(run.get("stop_reason")).startswith("SHARE_FAILED") and gate is not None:
-        gate.failed(f"backup: {run['stop_reason']}")
+    stop_reason = str(run.get("stop_reason") or "")
+    if stop_reason.startswith("SHARE_FAILED") and gate is not None:
+        gate.failed(f"backup: {stop_reason}")
     if ok:
         receipt = B.write_receipt(backup, doc)
-        outcome = "BACKUP_VERIFIED"
-        print(f"BACKUP_VERIFIED -> {receipt}")
+        outcome = R.BACKUP_VERIFIED
+        print(f"{R.BACKUP_VERIFIED} -> {receipt}")
     elif run.get("stopped") and not run.get("problem_count"):
-        outcome = "STOPPED"
-        print(f"STOPPED: {run.get('stop_reason')}; resumable, no receipt written")
+        outcome = (R.DEFERRED_SHARE_UNAVAILABLE if stop_reason.startswith("SHARE_FAILED") else
+                   R.STOPPED if stop_reason.startswith("TIME_BUDGET") else (seen[-1][0] if seen else R.STOPPED))
+        print(f"{outcome}: {stop_reason}; resumable, no receipt written")
     else:
-        outcome = "NOT_VERIFIED"
-        print("NOT VERIFIED: no receipt written")
+        outcome = R.FAILED
+        print(f"{R.FAILED} (not verified): no receipt written")
     problems = doc.get("problems") or doc.get("copy_problems") or []
     B.write_last_run(backup, {"at": started, "finished_at": B._now(), "outcome": outcome, "mode": doc["mode"], "objects": doc.get("objects"),
                               "stop_reason": run.get("stop_reason"), "problem_count": run.get("problem_count", len(problems)),
                               "first_problems": problems[:5], "fixity": {k: v for k, v in (run.get("fixity") or {}).items() if k != "problems"},
-                              "seconds": run.get("seconds")})
-    return 0 if outcome in ("BACKUP_VERIFIED", "STOPPED") else 1
+                              "seconds": run.get("seconds"), "counts": run.get("counts")})
+    return 1 if outcome == R.FAILED else 0
+
+
+def _needs_full(backup: Path, started: str, reason: str) -> int:
+    B.write_last_run(backup, {"at": started, "outcome": R.NEEDS_FULL_AUTHORIZATION, "reason": reason, "mode": "INCREMENTAL"})
+    print(f"{R.NEEDS_FULL_AUTHORIZATION}: {reason}. Nothing of the primary was read beyond its listing; a FULL run (run --full) is the operator's order.")
+    return 1
 
 
 def cmd_status(args) -> int:
@@ -228,10 +275,91 @@ def cmd_status(args) -> int:
         primary = _primary(env, args.holding)
     except storage_roots.StorageRefusal:
         primary = None
-    policy = R.load_policy(R.default_policy_path(REPO))
+    policy = _policy()
     print(json.dumps({**B.receipt_status(backup, primary),
-                      "health": B.backup_health(backup, now=_now(), warning_hours=policy.backup["receipt_warning_hours"],
+                      "health": B.backup_health(backup, now=_now(), calendar=policy.calendar,
                                                 failure_hours=policy.backup["receipt_failure_hours"])}, indent=1, default=str))
+    return 0
+
+
+# --- the scheduled task against the calendar (read-only) ----------------------------------------------------------
+
+_TASK_NS = {"t": "http://schemas.microsoft.com/windows/2004/02/mit/task"}
+_TASK_DAYS = {"Monday": "mon", "Tuesday": "tue", "Wednesday": "wed", "Thursday": "thu", "Friday": "fri", "Saturday": "sat", "Sunday": "sun"}
+
+
+def task_triggers(xml_text: str) -> list[dict]:
+    """The triggers of a task definition (``schtasks /query /xml``): kind, days, local start time, enabled."""
+    root = ET.fromstring(xml_text)
+    out = []
+    found = root.find("t:Triggers", _TASK_NS)
+    for trigger in (list(found) if found is not None else []):
+        kind = trigger.tag.split("}", 1)[-1]
+        start = (trigger.findtext("t:StartBoundary", default="", namespaces=_TASK_NS) or "")[11:16]
+        enabled = (trigger.findtext("t:Enabled", default="true", namespaces=_TASK_NS) or "true").lower() == "true"
+        days: list[str] = []
+        if trigger.find("t:ScheduleByDay", _TASK_NS) is not None:
+            days = list(R.DAYS)
+        week = trigger.find("t:ScheduleByWeek/t:DaysOfWeek", _TASK_NS)
+        if week is not None:
+            days = [_TASK_DAYS[d.tag.split("}", 1)[-1]] for d in week]
+        out.append({"kind": kind, "days": days, "start_local": start, "enabled": enabled})
+    return out
+
+
+def schedule_check(triggers: list[dict], policy: R.ResourcePolicy) -> dict:
+    """Whether the task starts on the calendar's days at its scheduled time, and on no other day."""
+    active = [t for t in triggers if t["enabled"]]
+    days = sorted({d for t in active for d in t["days"]}, key=R.DAYS.index)
+    starts = sorted({t["start_local"] for t in active})
+    problems = []
+    if set(days) != set(policy.calendar.days):
+        problems.append(f"the task starts on {days}, the calendar's days are {list(policy.calendar.days)}")
+    if starts != [f"{policy.calendar.start:%H:%M}"]:
+        problems.append(f"the task starts at {starts}, the calendar's scheduled start is {policy.calendar.start:%H:%M}")
+    return {"triggers": triggers, "consistent": not problems, "problems": problems,
+            "note": "the code refuses maintenance outside the calendar whatever the task does; a mismatch only wastes starts or misses slots"}
+
+
+def cmd_schedule(args) -> int:
+    policy = _policy()
+    try:
+        raw = subprocess.run(["schtasks", "/query", "/tn", TASK_NAME, "/xml"], capture_output=True, check=True).stdout
+        # schtasks declares UTF-16 but writes the console code page when its output is piped: decode by what is there
+        text = raw.decode("utf-16") if raw[:2] in (b"\xff\xfe", b"\xfe\xff") else raw.decode("utf-8", errors="replace")
+    except (OSError, subprocess.CalledProcessError) as error:
+        print(json.dumps({"task": TASK_NAME, "registered": False, "detail": f"{type(error).__name__}"}, indent=1))
+        return 1
+    if text.startswith("﻿"):
+        text = text[1:]
+    text = text.replace('encoding="UTF-16"', "")
+    report = {"task": TASK_NAME, "registered": True, **schedule_check(task_triggers(text), policy),
+              "calendar": {"days": list(policy.calendar.days), "scheduled_start": f"{policy.calendar.start:%H:%M}", "timezone": R.TIMEZONE}}
+    print(json.dumps(report, indent=1))
+    return 0 if report["consistent"] else 1
+
+
+def cmd_seed_cache(args) -> int:
+    from coprepan import preserved_index
+
+    env = storage_roots.workstation_environment(args.workstation_checkout)
+    policy = _policy()
+    runtime = _runtime(env)
+    backup = _backup_root(env, "PRODUCTION")
+    target_id = env.get("COPREPAN_PRESERVATION_TARGET_ID", "").strip()
+    if runtime is None or not target_id:
+        raise SystemExit("COPREPAN_WORKSPACE_ROOT and COPREPAN_PRESERVATION_TARGET_ID must be set: the cache belongs to a workspace and a target")
+
+    def stop() -> str | None:
+        hold = R.maintenance_hold(policy, runtime, _now(), env, calendar=not args.ignore_windows)
+        return hold[1] if hold else (R.free_space_refusal("RUNTIME", runtime, policy))
+
+    held = stop()
+    if held:
+        print(f"DEFERRED: {held}")
+        return 0
+    cache = preserved_index.ManifestCache(Path(runtime) / preserved_index.CACHE_DIRECTORY / target_id, target_id)
+    print(json.dumps(B.seed_manifest_cache(backup, cache, stop=stop), indent=1))
     return 0
 
 
@@ -249,11 +377,16 @@ def main(argv: list[str] | None = None) -> int:
     c.add_argument("--workers", type=int, default=3, help="full run only")
     c.add_argument("--samples", type=int, default=25, help="full run only")
     c.add_argument("--evidence-dir", default=None)
-    c.add_argument("--ignore-windows", action="store_true", help="an operator's explicit order: run inside a quiet window or a pause")
+    c.add_argument("--ignore-windows", action="store_true",
+                   help="an operator's explicit order: run outside the calendar and the quiet windows (the pause file, CO.RA.PAN's observation and the share gate still hold)")
     sub.add_parser("status")
+    sub.add_parser("schedule")
+    c = sub.add_parser("seed-cache")
+    c.add_argument("--ignore-windows", action="store_true", help="an operator's explicit order: outside the calendar and the quiet windows")
     args = parser.parse_args(argv)
     try:
-        return {"init-root": cmd_init_root, "run": cmd_run, "status": cmd_status}[args.command](args)
+        return {"init-root": cmd_init_root, "run": cmd_run, "status": cmd_status, "schedule": cmd_schedule,
+                "seed-cache": cmd_seed_cache}[args.command](args)
     except (B.BackupError, storage_roots.StorageRefusal, R.ResourcePolicyError) as error:
         print(f"REFUSED: {type(error).__name__}: {error}")
         return 2

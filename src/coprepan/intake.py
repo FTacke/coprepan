@@ -25,6 +25,7 @@ received is in the workspace's own evidence, and the budgets are counted from it
 from __future__ import annotations
 
 import json
+import os
 import time
 from collections import Counter
 from dataclasses import dataclass
@@ -474,8 +475,17 @@ def initial_state(plan: Mapping[str, Any], *, started_at: datetime, baseline: Ma
             "preservation": "nothing pending", "last_checkpoint_at": format_instant(started_at), "finalized": None}
 
 
+LOG_MAX_BYTES = 4 * 1024 * 1024      # CPD-0035: the controller log is kept to this size and one previous generation (``controller.log.1``)
+
+
 def _log(state_dir: Path, message: str) -> None:
-    with open(Path(state_dir) / LOG_FILE, "a", encoding="utf-8", newline="\n") as handle:
+    path = Path(state_dir) / LOG_FILE
+    try:
+        if path.stat().st_size > LOG_MAX_BYTES:
+            os.replace(path, path.with_name(LOG_FILE + ".1"))         # the controller's own log: the older generation is replaced
+    except OSError:
+        pass
+    with open(path, "a", encoding="utf-8", newline="\n") as handle:
         handle.write(f"{format_instant(datetime.now(timezone.utc))} {message}\n")
 
 
@@ -595,16 +605,20 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
             refusal = env.still_permitted() if env.still_permitted is not None else None
             if refusal is not None:                                 # the switch was turned off, or what the baseline pins has changed
                 return _stop(state_dir, state, BLOCKED, refusal)
-            pending = _finish_open_packs(env, [o["outlet_id"] for o in plan["outlets"]], sealed_pending=True)
-            waiting = {identifier for identifier, result in pending.items() if result != preservation.STATE_PRESERVED}
+            if env.resource_policy is None:                         # intake-controller/1 behaviour: every pending pack, every time
+                pending = _finish_open_packs(env, [o["outlet_id"] for o in plan["outlets"]], sealed_pending=True)
+                waiting = {identifier for identifier, result in pending.items() if result != preservation.STATE_PRESERVED}
+            else:
+                waiting = _catch_up(env, state, [o["outlet_id"] for o in plan["outlets"]], cycle_started)
             state["preservation"] = _pending_text(waiting)
             hold = pending_refusal(env, sorted(waiting), cycle_started) or io_refusal(env)
             if hold is not None:
                 # What was received is not safe enough to receive more (the target is away beyond the local bounds), or the
                 # operator paused shared I/O, or the local disk is low: nothing more is asked for until that changes.
+                if state.get("held_because") != hold:                # an expected, lasting hold is logged once, not every five minutes
+                    _log(state_dir, f"no request: {hold}")
                 state["held_because"] = hold
                 write_state(state_dir, state)
-                _log(state_dir, f"no request: {hold}")
                 env.sleep(min(300.0, max(1.0, (fetcher.last_decision_at - env.clock()).total_seconds())))
                 continue
             state["held_because"] = None
@@ -686,6 +700,83 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
         return state
 
 
+def _hourly(state: dict[str, Any], key: str, now: datetime, limit: int) -> int:
+    """What is left of an hourly budget kept in the state file (so a restart does not refill it)."""
+    hour = now.strftime("%Y-%m-%dT%H")
+    bucket = state.get(key) or {}
+    if bucket.get("hour") != hour:
+        bucket = {"hour": hour, "used": 0}
+    state[key] = bucket
+    return max(0, limit - int(bucket.get("used") or 0))
+
+
+def _spend(state: dict[str, Any], key: str, amount: int) -> None:
+    state[key]["used"] = int(state[key].get("used") or 0) + amount
+
+
+def _warm_cache(env: Environment, state: dict[str, Any], now: datetime) -> None:
+    """The bounded warm-up of the manifest cache (CPD-0035): while the cache of the target lacks manifests, at most the policy's
+    reads per hour, only when a transfer would be permitted. Once a check finds it complete it is not listed again for it
+    (this process stores every manifest it binds). Any refusal of the root is left for the preservation step to meet."""
+    known = state.get("manifest_cache") or {}
+    if known.get("missing") == 0:
+        return
+    budget = _hourly(state, "cache_warm_hour", now, env.resource_policy.cache_warm_reads_per_hour)
+    if budget == 0:
+        return
+    from . import preserved_index
+    from .storage_roots import StorageRefusal
+
+    try:
+        root = env.preservation_root()
+        cache = core_pipeline.content_index(env.workspace, root)
+        if cache is None:
+            return
+        done = preserved_index.warm(cache, root, (core_pipeline.AREA_PACKS, core_pipeline.AREA_INDEXES), max_reads=budget)
+    except (StorageRefusal, OSError) as error:
+        from . import resource_policy as R
+
+        if isinstance(error, OSError):
+            R.report_failure(env.preservation_root, f"manifest cache warm-up: {type(error).__name__}")
+        return
+    _spend(state, "cache_warm_hour", done["read"])
+    state["manifest_cache"] = {"missing": done["missing"], "checked_at": format_instant(now), "read_this_hour": state["cache_warm_hour"]["used"]}
+
+
+def _catch_up(env: Environment, state: dict[str, Any], outlet_ids: Sequence[str], now: datetime) -> set[str]:
+    """Seal what is open, then preserve a **bounded** part of the backlog (CPD-0035), oldest first; returns the packs still pending.
+
+    * nothing is attempted while the root's gate holds new transfers (CO.RA.PAN degraded, slow or recovering, a back-off, the
+      operator's pause): one local check, no contact, no attempt per pack;
+    * at most ``catch_up_packs_per_hour`` packs (counted in the state file, so a restart after a long outage does not burst);
+    * the first pack that stays pending ends the batch: the share went away again, or the manifest cache is still warming.
+    """
+    from . import resource_policy as R
+
+    wanted = set(outlet_ids)
+    opened = _finish_open_packs(env, outlet_ids)                           # the open packs: sealed, and preserved or spooled
+    backlog = [p for p in canary_driver.pending_pack_ids(env.workspace) if pack.pack_outlet(p) in wanted]
+    waiting = {p for p, result in opened.items() if result != preservation.STATE_PRESERVED} | set(backlog)
+    held = R.transfer_held(env.preservation_root)
+    info: dict[str, Any] = {"backlog": len(backlog), "attempted": 0, "preserved": 0, "held_because": held, "at": format_instant(now)}
+    if backlog and held is None:
+        _warm_cache(env, state, now)
+        budget = _hourly(state, "catch_up_hour", now, env.resource_policy.catch_up_packs_per_hour)
+        for identifier in sorted(backlog, key=lambda p: (p.rsplit("-", 2)[-2], p.rsplit("-", 2)[-1], p))[:budget]:
+            preserved = canary_driver._preserve(env.workspace, [identifier], env.preservation_root, env.spool_root, env.spool_policy, env.clock)
+            canary_driver._derive(env.workspace, env.registry, env.preservation_root, preserved, extraction.BASELINE, env.clock)
+            info["attempted"] += 1
+            _spend(state, "catch_up_hour", 1)
+            if preserved[identifier]["state"] != preservation.STATE_PRESERVED:
+                info["stopped_because"] = preserved[identifier].get("reason")
+                break
+            waiting.discard(identifier)
+            info["preserved"] += 1
+        info["budget_left_this_hour"] = max(0, budget - info["attempted"])
+    state["catch_up"] = info
+    return waiting
+
+
 def _pending_text(waiting: set[str]) -> str:
     """What the state file says about preservation: ``nothing pending``, or the pending packs (named up to ten)."""
     if not waiting:
@@ -714,15 +805,26 @@ def _finish_open_packs(env: Environment, outlet_ids: Sequence[str], *, sealed_pe
     wanted = set(outlet_ids)
     identifiers = {path.name[: -len(".warc.gz.open")] for path in env.workspace.packs.glob("*.warc.gz.open") if path.stat().st_size}
     if sealed_pending:
-        waiting = {subject for subject, held in env.workspace.ledger().states().items() if held == "PRESERVATION_PENDING"}
-        if waiting:
-            identifiers |= set(canary_driver.packs_holding(env.workspace, waiting))
+        identifiers |= set(canary_driver.pending_pack_ids(env.workspace))
     for identifier in sorted(identifiers):
         if pack.pack_outlet(identifier) in wanted:
             preserved = canary_driver._preserve(env.workspace, [identifier], env.preservation_root, env.spool_root, env.spool_policy, env.clock)
             canary_driver._derive(env.workspace, env.registry, env.preservation_root, preserved, extraction.BASELINE, env.clock)
             done[identifier] = preserved[identifier]["state"]
     return done
+
+
+def drain(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> int:
+    """After the deadline, before the finalization (CPD-0035): one bounded catch-up step of the pending backlog -- the same
+    budget per hour and the same gate as in the controller, so the end of an intake after an outage is no burst either.
+    Makes no request. Returns how many packs are still pending (0: the finalizer may run)."""
+    state_dir, env = Path(state_dir), environment
+    with exclusive(state_dir, "intake drain"):
+        state = read_state(state_dir)
+        waiting = _catch_up(env, state, [o["outlet_id"] for o in plan["outlets"]], env.clock())
+        state["preservation"] = _pending_text(waiting)
+        write_state(state_dir, state)
+        return len(waiting)
 
 
 # --- the end ---------------------------------------------------------------------------------------------
@@ -826,7 +928,8 @@ def status_line(state: Mapping[str, Any], now: datetime) -> dict[str, Any]:
             "remaining_seconds": max(0, int((deadline - now).total_seconds())), "cycle": state["cycle"], "outlets_done_in_cycle": len(state["outlets_done_in_cycle"]),
             "requests_total": state["requests_total"], "item_requests": sum(state["items_by_outlet"].values()), "outlets_with_item_requests": len(state["items_by_outlet"]),
             "preservation": state["preservation"], "held_because": state.get("held_because"), "holds": state["holds"], "errors": len(state["errors"]), "restarts": state["restarts"],
-            "last_checkpoint_at": state["last_checkpoint_at"], "finalized": state["finalized"]}
+            "last_checkpoint_at": state["last_checkpoint_at"], "finalized": state["finalized"],
+            "catch_up": state.get("catch_up"), "manifest_cache": state.get("manifest_cache"), "finalization_waits": state.get("finalization_waits")}
 
 
 __all__ = ["IntakeBudget", "IntakeFetcher", "IntakeStopped", "Environment", "build_plan", "validate_plan", "run", "finalize", "initial_state", "read_state",

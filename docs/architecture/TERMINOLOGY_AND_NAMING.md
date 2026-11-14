@@ -600,3 +600,16 @@ row restates its defining record; nothing is defined anew.*
 | backup health levels | `OK`, `WARNING`, `FAILURE` | CPD-0033 §7 |
 | intake state field (added) | `held_because`: why no request is made now (pending beyond its bounds, the pause file, a floor) | CPD-0033 §5 |
 | component versions | `intake-controller/2` (supersedes `/1` for new plans) | CPD-0033 §5, `intake.py` |
+
+## 25. Additions of 2026-11-14 (CPD-0035)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **maintenance calendar** (term) | the days and the scheduled start of CO.PRE.PAN's automatic maintenance on shared storage: `maintenance_calendar` of the resource policy; Monday–Friday, 08:00, zone `Europe/Berlin` (EU rule, `resource_policy.local_time`) | CPD-0035 §1 |
+| **missed weekday slot** (term) | a scheduled start of the calendar, plus its grace, that passed without a newer verified backup receipt; the unit of the backup's health | CPD-0035 §2 |
+| backup run outcomes (supersede the list of §24) | `BACKUP_VERIFIED`, `SCHEDULED_PAUSE`, `DEFERRED_RESOURCE_PRIORITY`, `DEFERRED_SHARE_UNAVAILABLE`, `STOPPED`, `NEEDS_FULL_AUTHORIZATION`, `FAILED` (was `NOT_VERIFIED`; still read in an old `last_run.json`) | CPD-0035 §2–§3 |
+| backup modes (amends §24) | `FULL` only on the operator's order (`run --full`); no longer automatic without a receipt | CPD-0035 §3 |
+| share gate purpose | `transfer`: a new preservation transfer; also held while the sibling advisory is `SHARE_SLOW` or `SHARE_RECOVERING`, or `PAUSE_IO` exists | CPD-0035 §4 |
+| intake state fields (added) | `catch_up` (backlog, attempted, preserved, held_because), `catch_up_hour` / `cache_warm_hour` (hourly budgets), `manifest_cache` (missing, checked_at), `finalization_waits` | CPD-0035 §4–§5 |
+| refusal | `CacheIncomplete`: a promotion that would read more than 200 manifests from the share is deferred (an unreachable root to the pipeline) | CPD-0035 §5, `preserved_index.py` |
+| acquisition operations states | `DISABLED`, `READY`, `RUNNING`, `PAUSED`, `DEGRADED`, `BLOCKED` (`storage_contract.py status` → `operations.acquisition`) | CPD-0035, `scripts/storage_contract.py` |

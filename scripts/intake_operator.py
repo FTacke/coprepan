@@ -100,12 +100,14 @@ def load_environment(repository: Path, *, need_preservation: bool = False):
     # CPD-0033: every resolution of the share goes through the persisted back-off; after a failed contact the share is not
     # contacted again before the back-off ends (and not while CO.RA.PAN's fresh observation says it is degraded).
     gate = resource_policy.ShareGate(roles["RUNTIME"], resources, env=workstation)
+    # CPD-0035: the controller resolves the root to write new preservation, so the gate's transfer purpose holds it also while
+    # CO.RA.PAN's fresh observation says the share is slow or recovering, and while PAUSE_IO exists; the packs stay pending.
     environment = intake.Environment(
         workspace=core_pipeline.Workspace(roles["RUNTIME"]), registry=registry.load_registry(repository / "config" / "outlet_registry.json"),
         policy=policy.load_policy(repository / "config" / "acquisition_policy.json"), identity=crawler_identity.load_identity(repository / "config" / "crawler_identity.json"),
         schedule_policy=schedule.load_schedule_policy(repository / "config" / "schedule_policy.json"),
         candidate_rules=candidate_filter.load_rules(repository / "config" / "candidate_rules.json"),
-        preservation_root=gate.guard(lambda: storage_roots.resolve_root("PRESERVATION", env=storage_roots.workstation_environment())),
+        preservation_root=gate.guard(lambda: storage_roots.resolve_root("PRESERVATION", env=storage_roots.workstation_environment()), transfer=True),
         spool_root=(lambda: roles["SPOOL"]) if roles.get("SPOOL") is not None else None, spool_policy=canary_driver.CANARY_SPOOL,
         resource_policy=resources)
     return environment, roles
@@ -457,6 +459,29 @@ def command_tick(arguments, repository: Path, run, unregister=remove_task, loade
                     intake.write_state(state_dir, fallen)
         state = intake.read_state(state_dir)
         if state["status"] == intake.RUNNING:
+            return 0
+        from coprepan import resource_policy
+
+        waits = resource_policy.transfer_held(environment.preservation_root)
+        if waits is None and state.get("finalized") is None and environment.resource_policy is not None:
+            try:
+                remaining = intake.drain(plan, state_dir, environment)        # the backlog first, bounded per hour (CPD-0035)
+            except WorkspaceBusy:
+                return 0
+            state = intake.read_state(state_dir)
+            if remaining:
+                waits = f"{remaining} packs still pending: preserved at most {environment.resource_policy.catch_up_packs_per_hour} per hour before the finalization"
+        if waits is not None and state.get("finalized") is None:
+            # CPD-0035: the finalizer preserves what is open and reads back from the share; while the gate holds transfers it
+            # waits without a contact and without a traceback per tick. The requests ended with the deadline; disarm now.
+            if not state.get("disarmed") or not (state["disarmed"] is True or state["disarmed"].get("clean")):
+                problems = disarm(run, repository, arguments.intake)
+                state = intake.read_state(state_dir)
+                state["disarmed"] = {"at": stamp(), "clean": not problems, "problems": problems}
+            if state.get("finalization_waits") != waits:
+                print(f"{stamp()} the finalization waits: {waits}")
+            state["finalization_waits"] = waits
+            intake.write_state(state_dir, state)
             return 0
         if state.get("finalized") is None or not (state_dir / "report" / "FINAL_REPORT.md").exists():
             print(f"{stamp()} finalizing ({state['status']})")

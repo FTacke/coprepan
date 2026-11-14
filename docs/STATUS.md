@@ -32,6 +32,15 @@ the PRESERVATION share refused this workstation's logons for most of the run (CO
 2026-11-14T06:57Z to 08:03Z; afterwards it caught up on the share and CO.PRE.PAN left it alone), so nothing of it has run against the share, and the coexistence with CO.RA.PAN's load is constructed and simulated,
 not measured. **The joint release contract is no longer split:** this repository pins draft revision 2 (`429f55eb…442255`) like CO.RA.PAN, its own checks reproduce all 93 cases and 30 pattern vectors (CPD-0034); the bundle stays `DRAFT` and not jointly adopted. Report:
 [`2026-11-14`](agent-runs/2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md).
+**Since the follow-up of the same day (CPD-0035):** automatic maintenance on shared storage runs Monday–Friday only, from 08:00
+Europe/Berlin (after CO.RA.PAN's night window), enforced in code; the scheduled task `COPREPAN_PreservationBackup` is re-timed to
+weekdays 08:00; the backup's health counts missed weekday slots and separates a planned pause, a deferral and a failure; a scheduled
+run never turns itself into a FULL run (`NEEDS_FULL_AUTHORIZATION`); new preservation transfers wait while CO.RA.PAN is degraded,
+slow or recovering, local acquisition goes on within the pending bounds, and the backlog is caught up at most 200 packs an hour; the
+manifest cache is never warmed by a burst. A first bounded intake (`in2-20261114-canary`, seven outlets, three hours) is
+**prepared, not authorized** ([preparation](intake/canary/in2-20261114-canary_PREPARATION.md)). Still offline-qualified only; the
+first real evidence is the scheduled backup of 2026-11-16 08:00. Report:
+[`2026-11-14 follow-up`](agent-runs/2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md).
 
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
@@ -850,3 +859,9 @@ top and §5, not this list.*
   `374d2e44e`) and pinned after this repository's own checks, changed to the revision's rules, reproduced all 93 cases and 30
   pattern vectors; local adoption renewed, CPD-0012 superseded in part. Still `DRAFT`, not jointly adopted; no stage state
   changed, no gate closed, no request to any publisher.
+- 2026-11-14 — backup calendar and acquisition-readiness closure (CPD-0035; no stage state changed, no gate closed, no request to any
+  publisher): maintenance Monday–Friday from 08:00 Europe/Berlin, enforced in code, the task re-timed (before: daily 04:45); health
+  by missed weekday slots; `NEEDS_FULL_AUTHORIZATION` instead of an automatic FULL run; new transfers held while CO.RA.PAN is slow or
+  recovering; pending packs from the ledger; bounded catch-up, drain and cache warm-up; `seed-cache` from the verified backup;
+  an operations block in `storage_contract.py status`; the first `intake-controller/2` intake prepared (not authorized). Run report:
+  [`2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md`](agent-runs/2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md).

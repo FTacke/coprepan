@@ -53,11 +53,110 @@ def test_the_tracked_policy_is_decided_and_parses():
     (datetime(2026, 11, 18, 8, 0), False),
     (datetime(2026, 11, 15, 5, 0), True),       # Sunday 05:00: CO.RA.PAN's historic backup
     (datetime(2026, 11, 16, 3, 40), True),      # every day 03:15-04:30: CO.RA.PAN's local storage maintenance
-    (datetime(2026, 11, 16, 4, 45), False),     # Monday 04:45: CO.PRE.PAN's own task time is free
+    (datetime(2026, 11, 16, 4, 45), True),      # Monday 04:45: a reconcile that is continued or overdue runs in any night window (CPD-0035)
+    (datetime(2026, 11, 16, 8, 0), False),      # Monday 08:00: CO.PRE.PAN's scheduled start is free
+    (datetime(2026, 7, 15, 7, 50), False),      # summer time: the wall clock of Europe/Berlin, not UTC
+    (datetime(2026, 7, 15, 7, 40), True),
 ])
-def test_quiet_windows_are_local_time(local, quiet):
-    moment = local.astimezone()                 # interpreted in the workstation's zone, as the policy says
+def test_quiet_windows_are_on_the_wall_clock_of_europe_berlin(local, quiet):
+    moment = R.from_local(local.date(), local.time())
     assert (policy().quiet_window(moment) is not None) == quiet
+
+
+# --- the maintenance calendar (CPD-0035) ---------------------------------------------------------------------------
+
+
+def test_the_local_time_follows_the_eu_summer_time_rule_and_agrees_with_the_time_zone_database():
+    assert R.local_time(datetime(2026, 3, 29, 0, 59, tzinfo=timezone.utc)).utcoffset() == timedelta(hours=1)
+    assert R.local_time(datetime(2026, 3, 29, 1, 0, tzinfo=timezone.utc)).utcoffset() == timedelta(hours=2)
+    assert R.local_time(datetime(2026, 10, 25, 0, 59, tzinfo=timezone.utc)).utcoffset() == timedelta(hours=2)
+    assert R.local_time(datetime(2026, 10, 25, 1, 0, tzinfo=timezone.utc)).utcoffset() == timedelta(hours=1)
+    zoneinfo = pytest.importorskip("zoneinfo")
+    try:
+        berlin = zoneinfo.ZoneInfo("Europe/Berlin")
+    except Exception:                                                  # no time-zone data on this machine: the rule stands alone
+        pytest.skip("no time-zone database to compare with")
+    moment = datetime(2025, 1, 1, tzinfo=timezone.utc)
+    while moment < datetime(2029, 1, 1, tzinfo=timezone.utc):
+        assert R.local_time(moment).utcoffset() == moment.astimezone(berlin).utcoffset(), moment
+        moment += timedelta(hours=7)
+    for day in (datetime(2026, 3, 30).date(), datetime(2026, 10, 26).date(), datetime(2026, 11, 16).date()):
+        assert R.from_local(day, datetime(2000, 1, 1, 8, 0).time()).astimezone(berlin).strftime("%H:%M") == "08:00"
+
+
+@pytest.mark.parametrize("local, outcome", [
+    (datetime(2026, 11, 14, 8, 0), R.SCHEDULED_PAUSE),           # Saturday
+    (datetime(2026, 11, 15, 12, 0), R.SCHEDULED_PAUSE),          # Sunday noon: outside every window, still the weekend
+    (datetime(2026, 11, 14, 0, 30), R.SCHEDULED_PAUSE),          # Saturday 00:30 local is Friday 23:30 UTC: the local day decides
+    (datetime(2026, 3, 28, 23, 59), R.SCHEDULED_PAUSE),          # the night of the spring switch
+    (datetime(2026, 11, 16, 8, 0), None),                        # Monday, the scheduled start
+    (datetime(2026, 11, 20, 23, 59), None),                      # Friday late evening
+    (datetime(2026, 11, 18, 3, 0), R.DEFERRED_RESOURCE_PRIORITY),  # Wednesday, CO.RA.PAN's night window
+])
+def test_no_automatic_maintenance_at_the_weekend_whatever_starts_the_process(tmp_path, local, outcome):
+    hold = R.maintenance_hold(policy(), tmp_path, R.from_local(local.date(), local.time()), {})
+    assert (hold[0] if hold else None) == outcome
+    # the operator's explicit order overrides the calendar and the windows -- never the pause file or CO.RA.PAN's observation
+    assert R.maintenance_hold(policy(), tmp_path, R.from_local(local.date(), local.time()), {}, calendar=False) is None
+    slow = sibling(tmp_path, share_slow=True, last_probe_utc=R.from_local(local.date(), local.time()).isoformat())
+    assert R.maintenance_hold(policy(), tmp_path, R.from_local(local.date(), local.time()), slow, calendar=False)[0] == R.DEFERRED_RESOURCE_PRIORITY
+
+
+def test_the_calendar_counts_weekday_slots_and_none_at_the_weekend():
+    calendar = policy().calendar
+    friday = R.from_local(datetime(2026, 11, 20).date(), datetime(2000, 1, 1, 8, 5).time())          # Friday's backup at 08:05
+    monday_morning = R.from_local(datetime(2026, 11, 23).date(), datetime(2000, 1, 1, 9, 0).time())
+    assert calendar.missed(friday, monday_morning) == []          # 73 h later, and no slot is missed: Monday's run is not yet late
+    tuesday_noon = R.from_local(datetime(2026, 11, 24).date(), datetime(2000, 1, 1, 12, 0).time())
+    assert len(calendar.missed(friday, tuesday_noon)) == 2        # Monday's and Tuesday's slots passed without a backup
+    assert calendar.next_slot(R.from_local(datetime(2026, 11, 21).date(), datetime(2000, 1, 1, 9, 0).time())) == \
+        R.from_local(datetime(2026, 11, 23).date(), datetime(2000, 1, 1, 8, 0).time())
+
+
+# --- CO.RA.PAN's priority for new preservation transfers (CPD-0035) ----------------------------------------------------
+
+
+@pytest.mark.parametrize("fields, transfers_held, contact_held", [
+    ({"mode": "RECOVERING", "verdict": {"owed": 171}}, True, False),
+    ({"share_slow": True}, True, False),
+    ({"reachable": False, "mode": "DEGRADED_LOCAL", "last_error_class": "AUTH_REFUSED"}, True, True),
+    ({}, False, False),                                                           # NORMAL: within CO.PRE.PAN's own limits
+])
+def test_corapan_slow_or_recovering_holds_new_transfers_without_a_contact(tmp_path, fields, transfers_held, contact_held):
+    env = sibling(tmp_path, **fields)
+    if "verdict" in fields:
+        fields["verdict"]["at"] = NOON.isoformat()
+    gate = R.ShareGate(tmp_path / "rt", policy(), env=env, clock=Clock(NOON))
+    contacts = []
+    guarded = gate.guard(lambda: contacts.append(1) or tmp_path, transfer=True)
+    assert (guarded.held() is not None) == transfers_held
+    assert (gate.closed_because() is not None) == contact_held                    # reads (a finalizer's read-back) are another purpose
+    if transfers_held:
+        with pytest.raises(R.ShareBackingOff):
+            guarded()
+        assert contacts == []
+    else:
+        assert guarded() == tmp_path and contacts == [1]
+
+
+@pytest.mark.parametrize("variable", ["", "absent.json", "garbage.json", "stale"])
+def test_a_missing_unreadable_or_stale_signal_never_permits_more_than_the_policy(tmp_path, variable):
+    env = {}
+    if variable == "absent.json":
+        env = {R.SIBLING_SIGNAL_VARIABLE: str(tmp_path / "absent.json")}
+    elif variable == "garbage.json":
+        (tmp_path / "garbage.json").write_text("{not json", encoding="utf-8")
+        env = {R.SIBLING_SIGNAL_VARIABLE: str(tmp_path / "garbage.json")}
+    elif variable == "stale":
+        env = sibling(tmp_path, last_probe_utc=(NOON - timedelta(hours=3)).isoformat())
+    gate = R.ShareGate(tmp_path / "rt", policy(), env=env, clock=Clock(NOON))
+    # no signal is not "idle": the answer is the policy's own -- here, a Monday noon, transfers within the bounds, maintenance permitted
+    assert gate.closed_because(transfer=True) is None
+    saturday = NOON - timedelta(days=2)
+    assert R.maintenance_hold(policy(), tmp_path, saturday, env)[0] == R.SCHEDULED_PAUSE
+    R.pause_path(tmp_path / "rt").parent.mkdir(parents=True, exist_ok=True)
+    R.pause_path(tmp_path / "rt").write_text("operator", encoding="utf-8")
+    assert "PAUSE_IO" in gate.closed_because(transfer=True)
 
 
 # --- the sibling advisory --------------------------------------------------------------------------------------
@@ -400,14 +499,118 @@ def test_an_incremental_run_needs_a_verified_receipt_of_this_primary(backup_root
         incremental(primary, backup, tmp_path, "x")
 
 
-def test_the_backup_health_shows_age_and_the_last_attempt(backup_roots):
+def _health(backup, now):
+    return B.backup_health(backup, now=now, calendar=policy().calendar, failure_hours=336)
+
+
+def test_the_backup_health_counts_missed_weekday_slots_and_keeps_its_facts_apart(backup_roots):
     _, backup = backup_roots
-    health = B.backup_health(backup, now=datetime(2026, 11, 14, 5, 0, tzinfo=timezone.utc), warning_hours=72, failure_hours=336)
-    assert health["level"] == "OK"
-    late = B.backup_health(backup, now=datetime(2026, 11, 18, 5, 0, tzinfo=timezone.utc), warning_hours=72, failure_hours=336)
-    assert late["level"] == "WARNING"
-    B.write_last_run(backup, {"at": "2026-11-14T03:45:00Z", "outcome": "NOT_VERIFIED", "problem_count": 1, "first_problems": [{"problem": "X"}]})
-    assert B.backup_health(backup, now=datetime(2026, 11, 14, 5, 0, tzinfo=timezone.utc), warning_hours=72, failure_hours=336)["level"] == "FAILURE"
+    # the fixture's receipt (Friday 05:04Z, 06:04 local) predates Friday's 08:00 slot: that slot would count as missed. The
+    # backup of Friday's scheduled run:
+    B.write_receipt(backup, {**B.read_receipt(backup), "written_at": "2026-11-13T07:30:00Z"})
+    monday = R.from_local(datetime(2026, 11, 16).date(), datetime(2000, 1, 1, 9, 0).time())
+    B.write_last_run(backup, {"at": "2026-11-14T07:00:00Z", "outcome": R.SCHEDULED_PAUSE, "reason": "sat"})
+    B.write_last_run(backup, {"at": "2026-11-15T07:00:00Z", "outcome": R.SCHEDULED_PAUSE, "reason": "sun"})
+    weekend = _health(backup, monday)
+    assert weekend["level"] == "OK" and weekend["missed_weekday_slots"] == 0     # a weekend pause is not a failure
+    assert weekend["last_verified_age_hours"] > 72                                # and the real age stays visible
+    assert weekend["attempts_since_verified"] == {R.SCHEDULED_PAUSE: 2}
+    assert weekend["next_scheduled_start"] == "2026-11-17T07:00:00Z"              # Tuesday 08:00 CET (Monday's slot passed at 07:00Z)
+    assert weekend["restore_evidence"] is not None and weekend["last_verified_mode"] == B.MODE_FULL
+    B.write_last_run(backup, {"at": "2026-11-16T07:00:00Z", "outcome": R.DEFERRED_RESOURCE_PRIORITY, "reason": "sibling advisory: slow"})
+    one = _health(backup, monday + timedelta(hours=2))
+    assert one["level"] == "OK" and one["missed_weekday_slots"] == 1               # one deferral for CO.RA.PAN: visible, no alarm
+    B.write_last_run(backup, {"at": "2026-11-17T07:00:00Z", "outcome": R.DEFERRED_SHARE_UNAVAILABLE, "reason": "refused"})
+    two = _health(backup, monday + timedelta(days=1, hours=2))
+    assert two["level"] == "WARNING" and two["missed_weekday_slots"] == 2 and "DEFERRED_SHARE_UNAVAILABLE" in " ".join(two["reasons"])
+    week = _health(backup, monday + timedelta(days=4, hours=2))
+    assert week["level"] == "FAILURE" and week["operator_action"]               # a working week without a backup is a real risk
+    B.write_last_run(backup, {"at": "2026-11-16T07:00:00Z", "outcome": R.FAILED, "problem_count": 1, "first_problems": [{"problem": "X"}]})
+    assert _health(backup, monday)["level"] == "FAILURE"
+    B.write_last_run(backup, {"at": "2026-11-16T07:00:00Z", "outcome": R.NEEDS_FULL_AUTHORIZATION, "reason": "journal damaged"})
+    needs = _health(backup, monday)
+    assert needs["level"] == "FAILURE" and any("--full" in a for a in needs["operator_action"])
+
+
+def test_a_damaged_basis_or_a_mass_of_changed_timestamps_needs_the_operators_full_order(backup_roots, tmp_path, monkeypatch):
+    primary, backup = backup_roots
+    reads = Reads(monkeypatch, primary)
+    for n in range(4):                                                   # more changed timestamps than one run's fixity slice (2)
+        p = primary / "preservation" / "raw" / f"o{n}.bin"
+        os.utime(p, ns=(p.stat().st_atime_ns, p.stat().st_mtime_ns + 10_000_000_000))
+    with pytest.raises(B.NeedsFullAuthorization, match="operator"):
+        incremental(primary, backup, tmp_path, "mass")
+    assert reads.source == [] and reads.uncached == []                    # nothing of the primary was read beyond its listing
+    journal = backup / B.STATE / B.JOURNAL
+    lines = journal.read_text(encoding="utf-8").splitlines()
+    os.chmod(journal, 0o666)
+    journal.write_text("\n".join(lines[:2]) + "\n", encoding="utf-8")     # the test's own fixture journal, truncated: a damaged basis
+    with pytest.raises(B.NeedsFullAuthorization, match="damaged"):
+        incremental(primary, backup, tmp_path, "torn")
+    assert reads.source == [] and reads.uncached == []
+
+
+def test_the_manifest_cache_is_seeded_from_the_verified_backup_without_the_share(tmp_path, monkeypatch):
+    from coprepan.canonical import sha256_bytes
+
+    primary, backup = tmp_path / "newfs" / "coprepan", tmp_path / "d" / "backup"
+    primary.mkdir(parents=True)
+    preservation_target.initialise_target(primary, "coprepan-test-primary", operator="test", now=NOON)
+    for n in range(5):
+        source = tmp_path / f"s{n}"
+        source.write_bytes(f"object {n}".encode())
+        preservation.promote(source, root=primary, area="raw", object_id=f"o{n:03d}", relative_path=f"x/o{n:03d}.bin",
+                             declared_sha256=sha256_bytes(source.read_bytes()), now=NOON)
+    monkeypatch.setattr(storage_roots, "volume_of", lambda root: 1 if "newfs" in str(root) else 2)
+    B.init_root(backup, primary=primary, operator="test")
+    base = M.baseline(primary)
+    assert B.copy(primary, backup, base)["ok"] and B.verify(backup, base)["ok"]
+    B.write_receipt(backup, {"written_at": "2026-11-13T05:04:18Z", "mode": B.MODE_FULL, "primary_target_id": "coprepan-test-primary",
+                             "objects": base["files"], "verified_against_primary": True, "produced_from_primary": True})
+    tampered = backup / "preservation" / "manifests" / "raw" / "o004.json"
+    os.chmod(tampered, 0o666)
+    tampered.write_text(tampered.read_text(encoding="utf-8").replace("o004", "o004 "), encoding="utf-8")   # not the verified bytes
+    cache = preserved_index.ManifestCache(tmp_path / "runtime" / preserved_index.CACHE_DIRECTORY / "coprepan-test-primary", "coprepan-test-primary")
+    seeded = B.seed_manifest_cache(backup, cache)
+    assert seeded["counts"] == {"SEEDED": 4, "DIFFERS_FROM_EVIDENCE": 1}
+    assert B.seed_manifest_cache(backup, cache)["counts"] == {"HELD": 4, "DIFFERS_FROM_EVIDENCE": 1}     # resumable: nothing read twice
+    # with the seeded cache a promotion reads only what the seed could not give (one manifest), not the area
+    reads = []
+    real = preservation.read_manifest
+    monkeypatch.setattr(preservation, "read_manifest", lambda r, a, o: reads.append(o) or real(r, a, o))
+    new = tmp_path / "new"
+    new.write_bytes(b"a new object")
+    preserved_index.reset_memory()
+    index = preserved_index.ManifestCache.for_root(tmp_path / "runtime", primary)
+    assert preservation.promote(new, root=primary, area="raw", object_id="n001", relative_path="x/n001.bin",
+                                declared_sha256=sha256_bytes(b"a new object"), now=NOON, content_index=index).action == preservation.ACTION_PROMOTED
+    assert sorted(reads) == ["n001", "o004"], reads
+    other = preserved_index.ManifestCache(tmp_path / "rt2", "another-target")
+    with pytest.raises(B.BackupError):
+        B.seed_manifest_cache(backup, other)                                   # a backup of another target seeds nothing
+
+
+def test_a_promotion_never_warms_a_cold_cache_from_the_share_and_the_warm_up_is_bounded(tmp_path, monkeypatch):
+    root = _target(tmp_path)
+    for n in range(12):
+        source = tmp_path / f"s{n}"
+        source.write_bytes(f"object {n}".encode())
+        _promote(root, source, f"o{n:03d}", None)
+    monkeypatch.setattr(preserved_index, "PROMOTION_DELTA_READS", 5)
+    reads = []
+    real = preservation.read_manifest
+    monkeypatch.setattr(preservation, "read_manifest", lambda r, a, o: reads.append(o) or real(r, a, o))
+    index = preserved_index.ManifestCache.for_root(tmp_path / "runtime", root)
+    new = tmp_path / "new"
+    new.write_bytes(b"a new object")
+    with pytest.raises(preserved_index.CacheIncomplete):
+        _promote(root, new, "n001", index)
+    assert reads == ["n001"]                                                    # its own manifest only; no burst over the area
+    assert not (root / "x" / "n001.bin").exists()                               # nothing landed: the pack stays honestly pending
+    assert preserved_index.warm(index, root, ["raw"], max_reads=8) == {"read": 8, "missing": 4}
+    assert preserved_index.warm(index, root, ["raw"], max_reads=8) == {"read": 4, "missing": 0}
+    reads.clear()
+    assert _promote(root, new, "n001", index).action == preservation.ACTION_PROMOTED and len(reads) <= 2
 
 
 def test_the_cli_defers_in_a_quiet_window_and_while_paused_and_one_run_holds_the_root(backup_roots, tmp_path, monkeypatch, capsys):
@@ -426,9 +629,12 @@ def test_the_cli_defers_in_a_quiet_window_and_while_paused_and_one_run_holds_the
     checkout = tmp_path / "checkout-without-env"
     checkout.mkdir()
     argv = ["--workstation-checkout", str(checkout), "run"]
-    monkeypatch.setattr(cli, "_now", lambda: datetime(2026, 11, 18, 2, 0).astimezone())       # Wednesday 02:00 local
-    assert cli.main(argv) == 0 and "DEFERRED: quiet window" in capsys.readouterr().out
-    assert B.read_last_run(backup)["outcome"] == "DEFERRED"
+    monkeypatch.setattr(cli, "_now", lambda: R.from_local(datetime(2026, 11, 18).date(), datetime(2000, 1, 1, 2, 0).time()))   # Wednesday 02:00
+    assert cli.main(argv) == 0 and "DEFERRED_RESOURCE_PRIORITY: quiet window" in capsys.readouterr().out
+    assert B.read_last_run(backup)["outcome"] == R.DEFERRED_RESOURCE_PRIORITY
+    monkeypatch.setattr(cli, "_now", lambda: NOON - timedelta(days=2))                     # Saturday noon: the calendar's pause
+    assert cli.main(argv) == 0 and "SCHEDULED_PAUSE" in capsys.readouterr().out
+    assert B.read_last_run(backup)["outcome"] == R.SCHEDULED_PAUSE and B.read_receipt(backup)["mode"] == B.MODE_FULL   # nothing ran
     monkeypatch.setattr(cli, "_now", lambda: NOON)
     R.pause_path(runtime).parent.mkdir(parents=True, exist_ok=True)
     R.pause_path(runtime).write_text("CO.RA.PAN release night", encoding="utf-8")
@@ -457,6 +663,46 @@ def test_the_cli_defers_in_a_quiet_window_and_while_paused_and_one_run_holds_the
     finally:
         release.write_text("x", encoding="utf-8")
         holder.wait(timeout=60)
+
+
+def test_without_a_verified_receipt_a_scheduled_run_asks_for_the_full_order_and_reads_nothing(backup_roots, tmp_path, monkeypatch, capsys):
+    import importlib.util
+
+    primary, backup = backup_roots
+    spec = importlib.util.spec_from_file_location("preservation_backup_cli_full", REPO / "scripts" / "preservation_backup.py")
+    cli = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli)
+    runtime = tmp_path / "runtime"
+    runtime.mkdir()
+    for name, value in (("COPREPAN_PRESERVATION_ROOT", primary), ("COPREPAN_PRESERVATION_TARGET_ID", "coprepan-test-primary"),
+                        ("COPREPAN_BACKUP_ROOT", backup), ("COPREPAN_WORKSPACE_ROOT", runtime)):
+        monkeypatch.setenv(name, str(value))
+    checkout = tmp_path / "checkout-without-env"
+    checkout.mkdir()
+    monkeypatch.setattr(cli, "_now", lambda: NOON)
+    (backup / B.STATE / B.RECEIPT).rename(backup / B.STATE / "moved_aside.json")    # the test's own fixture receipt
+    reads = Reads(monkeypatch, primary)
+    full = []
+    monkeypatch.setattr(cli, "_full", lambda *a, **k: full.append(1))
+    assert cli.main(["--workstation-checkout", str(checkout), "run"]) == 1
+    assert R.NEEDS_FULL_AUTHORIZATION in capsys.readouterr().out and full == [] and reads.source == [] and reads.uncached == []
+    assert B.read_last_run(backup)["outcome"] == R.NEEDS_FULL_AUTHORIZATION
+
+
+def test_the_task_check_reads_the_scheduler_definition_against_the_calendar():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("preservation_backup_cli_task", REPO / "scripts" / "preservation_backup.py")
+    cli = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cli)
+    ns = 'xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task"'
+    daily = (f'<Task {ns}><Triggers><CalendarTrigger><StartBoundary>2026-10-19T04:45:00+01:00</StartBoundary><Enabled>true</Enabled>'
+             '<ScheduleByDay><DaysInterval>1</DaysInterval></ScheduleByDay></CalendarTrigger></Triggers></Task>')
+    weekly = (f'<Task {ns}><Triggers><CalendarTrigger><StartBoundary>2026-11-16T08:00:00</StartBoundary><Enabled>true</Enabled>'
+              '<ScheduleByWeek><DaysOfWeek><Monday /><Tuesday /><Wednesday /><Thursday /><Friday /></DaysOfWeek><WeeksInterval>1</WeeksInterval>'
+              '</ScheduleByWeek></CalendarTrigger></Triggers></Task>')
+    assert not cli.schedule_check(cli.task_triggers(daily), policy())["consistent"]
+    assert cli.schedule_check(cli.task_triggers(weekly), policy()) ["consistent"]
 
 
 # --- the intake under the resource policy -------------------------------------------------------------------------------
@@ -519,6 +765,85 @@ def test_beyond_its_pending_bound_or_while_paused_an_intake_asks_nothing(tmp_pat
     paused.before_sleep = resume
     final = paused.run()
     assert len(site.requests) > before and final["held_because"] is None
+
+
+def test_while_corapan_recovers_an_intake_acquires_locally_and_afterwards_catches_up_bounded(tmp_path, site):
+    """CPD-0035: RECOVERING holds every new transfer (no contact), the intake goes on locally within its bounds; back to NORMAL,
+    the backlog is preserved at most ``catch_up_packs_per_hour`` per hour -- in the controller, across a restart, and in the
+    bounded drain before the finalizer -- never in one burst."""
+    from test_intake import T0, Bench, serve
+
+    serve(site, [[(f"/n{n}", T0 + timedelta(minutes=n)) for n in range(1, 31)]])
+    bench = Bench(tmp_path, site)
+    resources = policy(pending__catch_up_packs_per_hour=1)
+    bench.environment.resource_policy = resources
+    signal, mode = tmp_path / "corapan_state.json", ["RECOVERING"]
+
+    def observe(b):
+        signal.write_text(json.dumps({"schema": R.SIBLING_SCHEMA, "reachable": True, "mode": mode[0], "share_slow": False,
+                                      "last_probe_utc": b.clock().isoformat(), "verdict": {"at": b.clock().isoformat(), "owed": 9}}), encoding="utf-8")
+    observe(bench)
+    contacts = []
+    gate = R.ShareGate(bench.workspace.root, resources, env={R.SIBLING_SIGNAL_VARIABLE: str(signal)}, clock=bench.clock)
+    bench.environment.preservation_root = gate.guard(lambda: contacts.append(bench.clock()) or bench.preservation_root(), transfer=True)
+    bench.start()
+    seen = []
+
+    def step(b):
+        if b.clock.now > T0 + timedelta(hours=2, minutes=30):
+            mode[0] = "NORMAL"
+        observe(b)
+        state = json.loads((b.state_dir / "state.json").read_text(encoding="utf-8"))
+        seen.append((b.clock(), mode[0], state.get("catch_up"), len(contacts)))
+    bench.before_sleep = step
+    state = bench.run()
+    recovering = [s for s in seen if s[1] == "RECOVERING"]
+    assert recovering and recovering[-1][3] == 0, "no contact with the share while CO.RA.PAN catches up"
+    asked_while_recovering = [r for r in bench.records() if r["fetch_kind"] == "item"
+                              and datetime.fromisoformat(r["fetch_started_at"].replace("Z", "+00:00")) < T0 + timedelta(hours=2, minutes=30)]
+    assert asked_while_recovering, "local acquisition went on within the pending bounds"
+    held = [s[2] for s in recovering if s[2] and s[2]["backlog"]]
+    assert held and all(c["attempted"] == 0 and "transfers wait" in (c["held_because"] or "") for c in held)
+    after = [s[2] for s in seen if s[1] == "NORMAL" and s[2]]
+    assert after and all(c["attempted"] <= 1 for c in after)                      # never more than the hourly budget at once
+    pending = canary_driver_pending(bench)
+    assert state["status"] == "FINALIZING"
+    # the drain before the finalizer: the same hourly budget, spent per hour, kept in the state file across processes
+    from coprepan import intake as I
+
+    drained = []
+    while pending:
+        before = len(pending)
+        left = I.drain(bench.plan, bench.state_dir, bench.environment)
+        again = I.drain(bench.plan, bench.state_dir, bench.environment)          # a second tick in the same hour: the budget is spent
+        assert again == left and before - left <= 1
+        drained.append(before - left)
+        bench.clock.sleep(3600)
+        pending = canary_driver_pending(bench)
+        assert len(drained) < 50
+    assert bench.finalize()["verification"]["status"] == "PASS"
+
+
+def canary_driver_pending(bench):
+    from coprepan import canary_driver
+
+    return canary_driver.pending_pack_ids(bench.workspace)
+
+
+def test_the_pending_packs_come_from_the_ledger_without_reading_every_pack(tmp_path, monkeypatch):
+    from test_core_pipeline import Canary
+    from coprepan import canary_driver, pack
+
+    canary = Canary(tmp_path / "c")
+    canary.acquire()
+    identifier = canary.pack_id
+    gate = R.ShareGate(canary.workspace.root, policy(), clock=Clock(NOON))
+    gate.failed("simulated outage")
+    C.preserve_pack(canary.workspace, identifier, preservation_root=gate.guard(lambda: canary.root), now=NOON)
+    scans = []
+    real = pack.scan
+    monkeypatch.setattr(pack, "scan", lambda path, expected: scans.append(expected) or real(path, expected))
+    assert canary_driver.pending_pack_ids(canary.workspace) == [identifier] and scans == []
 
 
 def test_a_full_runtime_volume_stops_the_requests_before_corapan_would_notice(tmp_path, site, monkeypatch):

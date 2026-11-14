@@ -690,6 +690,13 @@ time §20.8 names), **04:45 local since 2026-10-25**. It was installed by CO.RA.
 CO.RA.PAN on 2026-11-14). Its command line is `scripts/preservation_backup.py run --evidence-dir <RUNTIME>\work\preservation_backup_runs`;
 since CPD-0033 the same command runs the incremental backup (§21.5).
 
+**Since 2026-11-14 (CPD-0035)** the task's only trigger is weekly, Monday–Friday, start boundary `2026-11-16T08:00:00` **without a
+zone offset**: the scheduler keeps it at 08:00 on the local wall clock in summer and winter (the old boundary carried `+01:00`, which
+pins one UTC instant — hence 05:45 in summer). Changed by the commissioned agent with `Set-ScheduledTask` (trigger only; the action,
+account, `IgnoreNew`, `PT6H` and `StartWhenAvailable` unchanged; CO.RA.PAN's installer script untouched); `preservation_backup.py
+schedule` reports a drift from the calendar. The task runs only while the account is logged on (logon type `Interactive`); a weekday
+slot missed while logged off is started on logon (`StartWhenAvailable`) and, if that is a weekend, ends `SCHEDULED_PAUSE`.
+
 ## 21. Shared resources: CO.RA.PAN has priority (CPD-0033, 2026-11-14)
 
 **What is shared** (read 2026-11-14): the institutional share (one DFS server and namespace; in practice one Windows account, so a
@@ -750,15 +757,29 @@ windows. Every value is a scenario assumption whose basis the file names; it is 
 - **Test runs** on this workstation put their temporary directories on `C:` (`python -m pytest --basetemp <a directory on C:> tests`),
   not on `D:`: on 2026-11-14 a full run with its temporary directories on `D:` stalled for ten minutes while CO.RA.PAN's production worked
   on that device — and added load to the device that carries both projects' backups.
+- **The calendar** (CPD-0035): automatic maintenance (backup, fixity, restore, audit, `seed-cache`) only Monday–Friday, Europe/Berlin
+  wall clock, scheduled start 08:00 — after CO.RA.PAN's night window (its reconcile runs, continued or overdue, in any night 01:30–07:30;
+  the quiet window is now every night 01:15–07:45). Saturday and Sunday: `SCHEDULED_PAUSE`, whatever started the process.
+  `--ignore-windows` overrides the calendar and the windows only.
+- **Four kinds of I/O** (CPD-0035): local fetching and spooling — the pending bounds and the RUNTIME floor; a **new transfer** to the
+  share — also held (no contact) while CO.RA.PAN is degraded, slow or recovering, and while `PAUSE_IO` exists; maintenance — all of
+  that and the calendar and windows. The backlog is preserved oldest first, at most 200 packs an hour (in the intake's state file), also
+  after the deadline (`intake.drain`) before the finalizer; a promotion reads at most 200 new manifests and otherwise defers; the cache
+  is warmed at most 1,200 reads an hour or seeded from the verified backup (`preservation_backup.py seed-cache`, local reads only).
 
 ### 21.5 The backup (amends §20.8)
 
 `scripts/preservation_backup.py run` is `INCREMENTAL` (CPD-0033 decision 6; mechanics in `src/coprepan/primary_backup.py`): one
 enumeration of each root; evidence reused only as §21.3 says; new objects copied with the qualified `migrate_one`; a fixity slice;
 a rotating restore of 10 objects; the receipt names its mode, basis, slice and the last full run, and its `tree_sha256` is the full
-inventory's (an unchanged primary must give the previous digest). Outcomes: `BACKUP_VERIFIED` · `DEFERRED` (window, pause, gate, floor,
-another run holds the root; exit 0) · `STOPPED` (budget or refusal; resumable; exit 0) · `NOT_VERIFIED` (a problem; exit 1). Every
-attempt is in `_backup/last_run.json`. `run --full` is the Phase-D run of §20.8, for an explicit order.
+inventory's (an unchanged primary must give the previous digest). Outcomes (CPD-0035; before: `DEFERRED` and `NOT_VERIFIED`):
+`BACKUP_VERIFIED` · `SCHEDULED_PAUSE` (not a calendar day) · `DEFERRED_RESOURCE_PRIORITY` (window, CO.RA.PAN slow or recovering, pause,
+floor, another run) · `DEFERRED_SHARE_UNAVAILABLE` (refused, degraded, gate) · `STOPPED` (time budget; resumable) — exit 0 — and
+`NEEDS_FULL_AUTHORIZATION` (no verified receipt, a journal that covers less than the receipt, more changed timestamps than one fixity
+slice: nothing of the primary read beyond its listing) · `FAILED` (a problem) — exit 1. The last attempt and the last 20 outcomes are
+in `_backup/last_run.json`; the health counts missed weekday slots (`WARNING` from 2, `FAILURE` from 5 or above 336 h). `run --full`
+is the Phase-D run of §20.8, only on an explicit order; a scheduled run never becomes one. The task `COPREPAN_PreservationBackup`
+runs Monday–Friday 08:00 since 2026-11-14 (before: daily 04:45); `preservation_backup.py schedule` compares it with the calendar.
 
 Measured on 2026-11-14 (isolated benchmark, local NTFS, a synthetic tree of 8,816 objects of 1 KiB): a repeated `FULL` run read 8,817
 files of the primary, an `INCREMENTAL` run of the unchanged tree 300 (its fixity slice) and, with 10 new objects, 320. The times on local
