@@ -589,7 +589,7 @@ row restates its defining record; nothing is defined anew.*
 |---|---|---|
 | **resource policy** (term) | the tracked limits of CO.PRE.PAN's shared I/O: `config/resource_policy.json`, schema `coprepan-resource-policy/v1`, versions `YYYY-MM-DD.n` | CPD-0033 §1 |
 | **share gate** (term) | the persisted back-off in front of every resolution of the PRESERVATION root; state `<RUNTIME>/state/share_gate.json`, schema `coprepan-share-gate-state/v1`; its refusal `ShareBackingOff` is an unreachable root | CPD-0033 §2 |
-| **sibling advisory** (term) | CO.RA.PAN's observation of the share (`corapan-preservation-mode/v1`), named by `COPREPAN_SIBLING_PRESERVATION_STATE`; states `NO_SIGNAL`, `UNREADABLE`, `UNRECOGNISED`, `STALE`, `SHARE_DEGRADED`, `SHARE_SLOW`, `SHARE_NORMAL`; only the degraded and the slow state change anything, and only towards caution | CPD-0033 §3 |
+| **sibling advisory** (term) | CO.RA.PAN's observation of the share (`corapan-preservation-mode/v1`), named by `COPREPAN_SIBLING_PRESERVATION_STATE`; states `NO_SIGNAL`, `UNREADABLE`, `UNRECOGNISED`, `STALE`, `SHARE_DEGRADED`, `SHARE_SLOW`, `SHARE_RECOVERING`, `SHARE_NORMAL`; only the degraded, the slow and the recovering state change anything, and only towards caution | CPD-0033 §3 |
 | pause file | `<RUNTIME>/state/PAUSE_IO`: stops new shared I/O of every CO.PRE.PAN process at its next decision point | CPD-0033 §5 |
 | **quiet window** (term) | a weekly local-time interval of the resource policy in which no CO.PRE.PAN maintenance on shared storage starts or continues | CPD-0033 §1 |
 | **manifest index** (term) | the local, rebuildable copy of a target's preservation manifests: `<RUNTIME>/cache/preservation_manifests/<target id>/<area>/<object id>.json` | CPD-0033 §4, `preserved_index.py` |

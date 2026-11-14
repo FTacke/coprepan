@@ -4,7 +4,7 @@
 |---|---|
 | Date | 2026-11-14 |
 | Status | `ACTIVE_WITH_VALIDATION_DEBT` |
-| Execution | implemented and tested offline (`tests/test_resource_isolation.py` and the existing suites); in force for the next scheduled backup run and for every intake planned under `intake-controller/2`. **Nothing of it has run against the institutional share yet**: the share refused logons for this workstation's account during the whole run (CO.RA.PAN's own observation `AUTH_REFUSED` since 2026-11-14T06:57Z), and acquisition stays `disabled` |
+| Execution | implemented and tested offline (`tests/test_resource_isolation.py` and the existing suites); in force for the next scheduled backup run and for every intake planned under `intake-controller/2`. **Nothing of it has run against the institutional share yet**: the share refused logons for this workstation's account from 06:57Z to 08:03Z (CO.RA.PAN's own observation `AUTH_REFUSED`), and afterwards CO.RA.PAN caught up on it, and acquisition stays `disabled` |
 | Builds on / amends / supersedes | builds on CPD-0015 (joint storage contract, P2/P4/P5/B1), CPD-0029 (the bounded intake), CPD-0030 (the share as primary, Phase D backup), CPD-0009 (writer lock), CPD-0010 (identity rebuild); amends CPD-0029 in three points (decision 5) and the Phase-D backup procedure of CPD-0030 (decision 6); supersedes nothing |
 | Does not change | the joint storage contract (bundle `49a3ca88…afb036`) or any of its invariants; P2 (every `RAW_PRESERVED` still needs the bytes re-read on the primary past the client cache); any root, identity marker, object, pack, index or manifest; the acquisition policy (`external_acquisition: disabled`); any gate of `docs/STATUS.md` §5; the scheduled task `COPREPAN_PreservationBackup` (its command line is unchanged; the code it runs changes) |
 | Decided by | the operator's brief of 2026-11-14 ("CO.PRE.PAN_v3 – Umfassender Architektur-, Storage-, Contract- und Acquisition-Readiness-Run"), which authorises the technical repairs and requires that CO.PRE.PAN does not impair CO.RA.PAN, which has priority on shared storage, network and I/O; the values are the commissioned agent's, stated as scenario assumptions |
@@ -52,7 +52,8 @@ Windows account), the external USB device `D:` that holds both projects' BACKUP 
 3. **The sibling advisory -- caution only.** CO.RA.PAN's own observation of the share (`corapan-preservation-mode/v1`, the file named by
    `COPREPAN_SIBLING_PRESERVATION_STATE` in the workstation's `.env`) is **not a declared interface** of CO.RA.PAN. It is therefore used
    in one direction only: a fresh (≤ 30 min) observation that the share is degraded closes the gate until CO.RA.PAN's own next probe; a
-   fresh observation that it is slow defers maintenance. A missing, stale, unreadable, unrecognised or normal observation **permits
+   fresh observation that it is slow, or that CO.RA.PAN is `RECOVERING` (catching up its owed writes after an outage; added the same day,
+   when the outage of 2026-11-14 ended and the first version read that state as normal), defers maintenance. A missing, stale, unreadable, unrecognised or normal observation **permits
    nothing** the policy does not permit by itself; missing information is never read as idle.
 4. **The content check of a promotion from a local index; the verified local read right after preservation.**
    `src/coprepan/preserved_index.py`: a copy of each preservation manifest under `<RUNTIME>/cache/preservation_manifests/<target id>/`,

@@ -51,7 +51,8 @@ DAYS = ("mon", "tue", "wed", "thu", "fri", "sat", "sun")
 # sibling advisory states
 NO_SIGNAL, STALE, UNREADABLE, UNRECOGNISED = "NO_SIGNAL", "STALE", "UNREADABLE", "UNRECOGNISED"
 SHARE_DEGRADED, SHARE_SLOW, SHARE_NORMAL = "SHARE_DEGRADED", "SHARE_SLOW", "SHARE_NORMAL"
-CAUTION = (SHARE_DEGRADED, SHARE_SLOW)
+SHARE_RECOVERING = "SHARE_RECOVERING"        # the share answers again and CO.RA.PAN is catching up its owed writes: it has priority
+CAUTION = (SHARE_DEGRADED, SHARE_SLOW, SHARE_RECOVERING)
 
 
 class ResourcePolicyError(ValueError):
@@ -223,7 +224,9 @@ def sibling_advisory(env: Mapping[str, str], now: datetime, *, max_age_seconds: 
 
     ``state``: ``NO_SIGNAL`` (not configured, or no file) · ``UNREADABLE`` · ``UNRECOGNISED`` (another schema) · ``STALE``
     (older than ``max_age_seconds``) · ``SHARE_DEGRADED`` (fresh: not reachable, or a degraded mode) · ``SHARE_SLOW`` ·
-    ``SHARE_NORMAL``. Only the two of :data:`CAUTION` change behaviour; ``hold_until`` is the sibling's own next probe.
+    ``SHARE_RECOVERING`` (reachable again, CO.RA.PAN catching up; added after the outage of 2026-11-14 showed it) · ``SHARE_NORMAL``.
+    Only the states of :data:`CAUTION` change behaviour (all three defer maintenance; the degraded one also closes the share gate);
+    ``hold_until`` is the sibling's own next probe.
     """
     value = (env.get(SIBLING_SIGNAL_VARIABLE) or "").strip()
     if not value:
@@ -253,6 +256,10 @@ def sibling_advisory(env: Mapping[str, str], now: datetime, *, max_age_seconds: 
                 "detail": f"CO.RA.PAN observes the share as {doc.get('mode')} ({doc.get('last_error_class')})"}
     if doc.get("share_slow") is True:
         return {"state": SHARE_SLOW, **base, "detail": "CO.RA.PAN observes the share as slow"}
+    if str(doc.get("mode") or "") == "RECOVERING":
+        owed = (doc.get("verdict") or {}).get("owed") if isinstance(doc.get("verdict"), Mapping) else None
+        return {"state": SHARE_RECOVERING, **base, "owed": owed,
+                "detail": f"CO.RA.PAN is catching up after an outage ({owed} owed); maintenance waits until it is done"}
     return {"state": SHARE_NORMAL, **base, "detail": "CO.RA.PAN observes the share as normal (this permits nothing by itself)"}
 
 

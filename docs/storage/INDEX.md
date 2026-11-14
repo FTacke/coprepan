@@ -739,7 +739,8 @@ windows. Every value is a scenario assumption whose basis the file names; it is 
 - **Share gate** (`<RUNTIME>/state/share_gate.json`): after a failed contact, no contact for 5, 10, 20, 40, 60, 60 … minutes, across
   restarts. A closed gate is an unreachable root (I2), and the pipeline keeps the pack pending (P5).
 - **Sibling advisory** (`COPREPAN_SIBLING_PRESERVATION_STATE` in `.env`, CO.RA.PAN's `preservation_mode_state.json`): **caution only**.
-  Fresh and degraded → the gate is closed until CO.RA.PAN's own next probe; fresh and slow → maintenance waits. No, stale, unreadable or
+  Fresh and degraded → the gate is closed until CO.RA.PAN's own next probe; fresh and slow, or `RECOVERING` (CO.RA.PAN catching up
+  after an outage) → maintenance waits. No, stale, unreadable or
   normal information permits nothing.
 - **`<RUNTIME>/state/PAUSE_IO`**: an intake asks nothing more and a backup or audit does not start, or stops at its next object; its text is
   shown in the status; removing it resumes. Use it for a CO.RA.PAN release night or a migration.

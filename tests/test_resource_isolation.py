@@ -81,6 +81,11 @@ def test_the_sibling_signal_only_ever_makes_coprepan_more_careful(tmp_path):
     assert R.sibling_advisory(degraded, NOON, max_age_seconds=age)["state"] == R.SHARE_DEGRADED
     assert R.sibling_advisory(degraded, NOON + timedelta(hours=2), max_age_seconds=age)["state"] == R.STALE   # old news is no news
     assert R.sibling_advisory(sibling(tmp_path, share_slow=True), NOON, max_age_seconds=age)["state"] == R.SHARE_SLOW
+    # as observed on 2026-11-14 after the outage: reachable again, CO.RA.PAN catching up -> maintenance waits, the gate stays open
+    recovering = sibling(tmp_path, mode="RECOVERING", verdict={"at": NOON.isoformat(), "owed": 171})
+    assert R.sibling_advisory(recovering, NOON, max_age_seconds=age)["state"] == R.SHARE_RECOVERING
+    assert "catching up" in R.maintenance_refusal(policy(), tmp_path, NOON, recovering)
+    assert R.ShareGate(tmp_path / "rt", policy(), env=recovering, clock=Clock(NOON)).closed_because() is None
     (tmp_path / "preservation_mode_state.json").write_text('{"schema": "something-else/v9"}', encoding="utf-8")
     assert R.sibling_advisory(degraded, NOON, max_age_seconds=age)["state"] == R.UNRECOGNISED
     # what permits maintenance is the policy alone: no signal, a stale one or a normal one are the same answer
