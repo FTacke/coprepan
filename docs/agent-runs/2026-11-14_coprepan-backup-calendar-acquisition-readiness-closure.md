@@ -203,6 +203,12 @@ valid and was not repeated. No benchmark ran on the share or on `D:`.
   new code. No backup was started by this run (a Saturday — the calendar's pause applies to its author too). The real basis is intact
   (§1), so that run will be incremental.
 - **New acquisition or preservation events:** none since 2026-10-18 (preservation) and 2026-10-11 (acquisition).
+- **The new operations block on the real workstation** (`storage_contract.py status` on `main` after the merge, ~14:50 local):
+  acquisition `DISABLED` (switch `disabled`, both October intakes `COMPLETED` and finalized, last request 2026-10-11T08:52:16Z), 0 fetches
+  pending, floors `OK`, share gate `OPEN`, new transfers `PERMITTED`, CO.RA.PAN `SHARE_NORMAL`, backup `OK` (last verified
+  2026-11-13T05:04:18Z, 31.4 h; **1 missed weekday slot** — Friday's receipt of 06:04 local precedes the new 08:00 slot of that day, so
+  the new calendar counts Friday's slot as passed; if Monday's run does not verify, Monday 10:00 shows 2 and `WARNING`, as intended),
+  next start 2026-11-16T07:00:00Z (08:00 local), maintenance now `SCHEDULED_PAUSE`, operator action `none`.
 
 ## 10. Real production evidence still owed
 
@@ -224,7 +230,12 @@ valid and was not repeated. No benchmark ran on the share or on `D:`.
 
 ## 12. Commits, merge, push
 
-[[GIT]]
+- Branch `readiness/2026-11-14-backup-calendar`: `4e5e668` (code, tests, policy, plan, CPD-0035, docs, this report), then the commit
+  that completed this section; merged into `main` with `--no-ff` (`51e39cd`, and the merge of the completion), `main` was
+  `origin/main` (`965e31a`) at the merge — no foreign work in between.
+- Pushed: `main` and the branch, fast-forward, no force. This report is published on `main` with `scripts/publish_run_report.py`.
+- The worktree is closed last with `scripts/worktree_closure.py remove`; the branch is kept. The four older worktrees are untouched.
+- Outside git: the scheduled task (§4); the workstation's `.env` unchanged in this run.
 
 ## 13. Processes
 
