@@ -1,14 +1,17 @@
 {
   "schema": "coprepan-resource-policy/v1",
-  "version": "2026-11-14.1",
+  "version": "2026-11-14.2",
   "status": "DECIDED",
-  "decision": "CPD-0033",
+  "decision": "CPD-0035",
+  "previous_version": "2026-11-14.1 (CPD-0033)",
   "note": "How much shared I/O CO.PRE.PAN may use and when it yields (src/coprepan/resource_policy.py). CO.RA.PAN has priority on the shared institutional share, on the shared D: device and on the C: umbrella. Every number here is a scenario assumption chosen on 2026-11-14 from the measurements named in `basis`; none is a measured optimum. A value is changed by a new version of this file, never by a run.",
   "basis": {
     "share_write_mib_s": "3.7-5.1 MiB/s from this workstation over the VPN, ~260 ms per small file (measured 2026-10-14, docs/storage/INDEX.md 20.5); CO.RA.PAN measured 3.7 MiB/s regardless of 1, 2 or 4 streams (its STORAGE_TARGETS_AND_PRESERVATION.md 19.6, read 2026-11-14)",
     "full_baseline_minutes": "the daily full re-hash of the primary took 78 min for 8,816 objects / 395,018,230 B (task start 2026-11-13T03:45Z, baseline taken 05:03:09Z; runtime evidence of preservation_backup_runs)",
     "sibling_capacity_levels": "CO.RA.PAN stops local production below 20 GiB free and warns below 50 GiB on C: and on its D: volume (read 2026-11-14); CO.PRE.PAN's floor is above its warning level",
-    "sibling_windows": "CO.RA.PAN tasks as registered on 2026-11-14 (local time): LocalStorageMaintenance daily 03:30; HistoricBackup Sunday 04:15; incremental backup reconcile Wednesday 01:30-07:30"
+    "sibling_windows": "CO.RA.PAN tasks as registered on 2026-11-14 (local time): LocalStorageMaintenance daily 03:30; HistoricBackup and RepositoryHealth Sunday 04:15 / 02:30; the backup reconcile (its backup_reconcile.py: scheduled Wednesday 02:00, but a run in progress or overdue continues in ANY night window 01:30-07:30; observed in its log: an OVERDUE run 2026-11-07 01:18Z-06:28Z continued 2026-11-08 until 03:48Z, 6.56 GB copied); live waves every 2 minutes around the clock",
+    "sibling_weekend": "operator statement of 2026-11-14: CO.RA.PAN often processes large holdings at the weekend",
+    "pack_production": "the 24-hour intake of 2026-10-10 left 1,301 packs with day 20261010 in the workspace (local count 2026-11-14); 2,204 sealed packs hold 387,591,311 B (176 KiB on average, 4.2 MiB the largest)"
   },
   "share": {
     "backoff_initial_seconds": 300,
@@ -24,7 +27,9 @@
   "pending": {
     "max_packs": 5000,
     "max_bytes": 5368709120,
-    "max_age_hours": 72
+    "max_age_hours": 72,
+    "catch_up_packs_per_hour": 200,
+    "cache_warm_reads_per_hour": 1200
   },
   "backup": {
     "workers": 1,
@@ -34,12 +39,20 @@
     "fixity_bytes_per_run": 268435456,
     "fixity_cycle_max_days": 90,
     "restore_samples": 10,
-    "receipt_warning_hours": 72,
     "receipt_failure_hours": 336
   },
+  "maintenance_calendar": {
+    "timezone": "Europe/Berlin",
+    "days": ["mon", "tue", "wed", "thu", "fri"],
+    "scheduled_start": "08:00",
+    "missed_slot_grace_minutes": 120,
+    "warning_missed_slots": 2,
+    "failure_missed_slots": 5,
+    "why": "no CO.PRE.PAN maintenance at the weekend, when CO.RA.PAN processes its large holdings; on weekdays after CO.RA.PAN's night window (01:30-07:30)"
+  },
   "maintenance_quiet_windows": [
+    {"days": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "from": "01:15", "to": "07:45", "why": "CO.RA.PAN backup reconcile night window (01:30-07:30; scheduled Wednesday, continued or overdue on any night)"},
     {"days": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "from": "03:15", "to": "04:30", "why": "CO.RA.PAN LocalStorageMaintenance (daily 03:30)"},
-    {"days": ["sun"], "from": "04:00", "to": "07:00", "why": "CO.RA.PAN HistoricBackup (Sunday 04:15)"},
-    {"days": ["wed"], "from": "01:15", "to": "07:45", "why": "CO.RA.PAN incremental backup reconcile (Wednesday 01:30-07:30)"}
+    {"days": ["sun"], "from": "02:15", "to": "07:00", "why": "CO.RA.PAN RepositoryHealth (Sunday 02:30) and HistoricBackup (Sunday 04:15)"}
   ]
 }

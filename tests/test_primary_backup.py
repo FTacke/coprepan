@@ -160,7 +160,10 @@ def test_the_cli_backs_up_the_legacy_archive_root_by_its_own_variables(roots, tm
     checkout.mkdir()
     assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "init-root", "--root", str(backup),
                      "--operator", "test"]) == 0
-    assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run", "--samples", "2",
+    # without a verified receipt a scheduled run does not turn itself into a FULL run (CPD-0035): it asks for the order
+    assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run"]) == 1
+    assert "NEEDS_FULL_AUTHORIZATION" in capsys.readouterr().out
+    assert cli.main(["--workstation-checkout", str(checkout), "--holding", "LEGACY", "run", "--full", "--samples", "2",
                      "--evidence-dir", str(tmp_path / "evidence")]) == 0
     receipt = json.loads((backup / B.STATE / B.RECEIPT).read_text(encoding="utf-8"))
     assert receipt["holding"] == "LEGACY" and receipt["verified_against_primary"] is True

@@ -1,0 +1,214 @@
+{
+  "budget": {
+    "backlog_items_per_outlet_cycle": 1,
+    "cycle_seconds": 3600,
+    "discovery_max_bytes": 4194304,
+    "discovery_max_candidates": 200,
+    "discovery_max_depth": 2,
+    "discovery_max_documents": 4,
+    "duration_seconds": 10800,
+    "item_requests_per_origin": 20,
+    "item_requests_per_outlet": 15,
+    "item_requests_per_outlet_hour": 6,
+    "items_per_outlet_cycle": 5,
+    "total_requests": 300
+  },
+  "controller": "intake-controller/2",
+  "derived_from": {
+    "readiness_sha256": "fd1512a03e0a7542a034632509c038a74f3ac8f33c139940dfa28613184a787e",
+    "readiness_version": "2026-10-10.1",
+    "registry_sha256": "7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8"
+  },
+  "intake_id": "in2-20261114-canary",
+  "left_out": {},
+  "outlets": [
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "cl_cooperativa:ch:rss_r001",
+          "entries_last": 15,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml"
+        }
+      ],
+      "country_id": "cl",
+      "outlet_id": "cl_cooperativa",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://www.cooperativa.cl"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "co_el_espectador:ch:sitemap_003",
+          "entries_last": 100,
+          "kind": "sitemap",
+          "poll_class": "sitemap",
+          "poll_seconds": 3600,
+          "url": "https://www.elespectador.com/arc/outboundfeeds/image-sitemap/?outputType=xml"
+        },
+        {
+          "channel_id": "co_el_espectador:ch:rss_001",
+          "entries_last": 20,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://www.elespectador.com/arc/outboundfeeds/discover/?outputType=xml"
+        }
+      ],
+      "country_id": "co",
+      "outlet_id": "co_el_espectador",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://www.elespectador.com"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "ec_primicias:ch:sitemap_001",
+          "entries_last": 156,
+          "kind": "sitemap",
+          "poll_class": "sitemap",
+          "poll_seconds": 3600,
+          "url": "https://www.primicias.ec/sitemap-google-news.xml"
+        }
+      ],
+      "country_id": "ec",
+      "outlet_id": "ec_primicias",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://www.primicias.ec"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "es_el_mundo:ch:rss_r001",
+          "entries_last": 28,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml"
+        }
+      ],
+      "country_id": "es",
+      "outlet_id": "es_el_mundo",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://www.elmundo.es"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": "pr_noticel-candidate-rules/v1",
+      "channels": [
+        {
+          "channel_id": "pr_noticel:ch:section_page_r001",
+          "entries_last": 700,
+          "kind": "section_page",
+          "poll_class": "listing",
+          "poll_seconds": 7200,
+          "url": "https://noticel.com/category/ultima-hora/"
+        }
+      ],
+      "country_id": "pr",
+      "outlet_id": "pr_noticel",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://noticel.com"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "uy_ladiaria:ch:rss_001",
+          "entries_last": 328,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://ladiaria.com.uy/feeds/articulos/"
+        },
+        {
+          "channel_id": "uy_ladiaria:ch:sitemap_index_001",
+          "entries_last": 2416,
+          "kind": "sitemap_index",
+          "poll_class": "sitemap_index",
+          "poll_seconds": 21600,
+          "url": "https://ladiaria.com.uy/sitemap.xml"
+        }
+      ],
+      "country_id": "uy",
+      "outlet_id": "uy_ladiaria",
+      "robots_crawl_delay_seconds_observed": null,
+      "tier": "A",
+      "web_origins": [
+        "https://ladiaria.com.uy"
+      ]
+    },
+    {
+      "bulk_channels_not_polled": [],
+      "candidate_rule": null,
+      "channels": [
+        {
+          "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+          "entries_last": 10,
+          "kind": "rss",
+          "poll_class": "feed",
+          "poll_seconds": 3600,
+          "url": "https://correodelcaroni.com/feed"
+        }
+      ],
+      "country_id": "ve",
+      "outlet_id": "ve_correo_del_caroni",
+      "robots_crawl_delay_seconds_observed": 20.0,
+      "tier": "A",
+      "web_origins": [
+        "https://correodelcaroni.com"
+      ]
+    }
+  ],
+  "policy_version": "canary/2026-10-10.1",
+  "poll_seconds_by_class": {
+    "bulk": 43200,
+    "feed": 3600,
+    "large_sitemap": 21600,
+    "listing": 7200,
+    "sitemap": 3600,
+    "sitemap_index": 21600
+  },
+  "schema": "coprepan-intake-plan/v1",
+  "totals": {
+    "channels": 9,
+    "countries": [
+      "cl",
+      "co",
+      "ec",
+      "es",
+      "pr",
+      "uy",
+      "ve"
+    ],
+    "outlets": 7,
+    "tier_a": 7,
+    "tier_b": 0
+  }
+}
