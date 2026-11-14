@@ -7,6 +7,7 @@ nothing about whether the run's code is merged (see the report itself).
 | Report | Title | Status | Source (branch @ commit) | Published (UTC) |
 |---|---|---|---|---|
 <!-- runs:begin -->
+| [2026-11-14_coprepan-source-health-and-24h-wave-preparation.md](2026-11-14_coprepan-source-health-and-24h-wave-preparation.md) | 2026-11-14 — CO.PRE.PAN source health and 24-hour-wave preparation (the live qualification BLOCKED until a weekday) | PARTIAL | `main` @ `f67731035` | 2026-11-14 13:40 |
 | [2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md](2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md) | 2026-11-14 — CO.PRE.PAN backup calendar, CO.RA.PAN priority and acquisition-readiness closure | PARTIAL | `main` @ `e7029510c` | 2026-11-14 12:29 |
 | [2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md](2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md) | 2026-11-14 — CO.PRE.PAN architecture, storage, contract and acquisition-readiness run | PARTIAL | `readiness/2026-11-14-acquisition-readiness` @ `8d06905c2` | 2026-11-14 08:25 |
 | [2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md](2026-10-22_full-repository-pipeline-documentation-scientific-crosscorpus-audit.md) | Full repository, pipeline, documentation, scientific and cross-corpus consistency audit — 2026-10-22 | PARTIAL | `audit/2026-10-22-full-consistency` @ `836ca6e03` | 2026-10-22 08:04 |
