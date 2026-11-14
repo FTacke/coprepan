@@ -1,0 +1,86 @@
+{
+  "fetch_records": 114,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 5295442,
+  "received_body_bytes": 9479349,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 20.083268,
+    "median": 9.866366,
+    "n": 114,
+    "p90": 10.641007
+  },
+  "requests": {
+    "by_outlet": {
+      "hn_radio_progreso": {
+        "item": 6,
+        "other": 5
+      },
+      "mx_animal_politico": {
+        "item": 0,
+        "other": 3
+      },
+      "mx_el_universal": {
+        "item": 6,
+        "other": 3
+      },
+      "pa_diaadia": {
+        "item": 6,
+        "other": 3
+      },
+      "pa_el_siglo": {
+        "item": 6,
+        "other": 6
+      },
+      "pa_laestrelladepanama": {
+        "item": 6,
+        "other": 6
+      },
+      "pa_metro_libre": {
+        "item": 6,
+        "other": 6
+      },
+      "pa_panama_24_horas": {
+        "item": 0,
+        "other": 1
+      },
+      "pe_el_comercio": {
+        "item": 0,
+        "other": 6
+      },
+      "pe_elperuano": {
+        "item": 6,
+        "other": 3
+      },
+      "py_noticias_cde": {
+        "item": 6,
+        "other": 3
+      },
+      "py_ultima_hora": {
+        "item": 6,
+        "other": 8
+      },
+      "sv_diario_el_mundo": {
+        "item": 0,
+        "other": 4
+      },
+      "ve_eluniversal": {
+        "item": 6,
+        "other": 2
+      }
+    },
+    "item": 60,
+    "other": 59,
+    "total": 119
+  },
+  "response_classes": {
+    "200": 108,
+    "202": 1,
+    "504": 1,
+    "failed:body_limit_exceeded": 4
+  },
+  "run_id": "acq1-20261114T222008470120Z-bf7150d8be63",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
