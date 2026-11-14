@@ -63,6 +63,7 @@ test_canary_operator.py      # order and commits of the steps, tests on the armi
 test_delegated_operator.py   # the authorisation record and its check (CPD-0023); the delegated mode end to end without a prompt, written-once record, exact scope, a wave used once, disarmed after any failure, no force option; the interactive mode unchanged
 test_deferred_preservation.py # a canary whose preservation is deferred (CPD-0036): no target contact, honest PRESERVATION_PENDING in the workspace, local verification, the deferring wave pinned, O-3 by the local report for a canary only, the later promotion behind every gate of shared storage
 test_channel_selection.py     # channel-selection/2 (CPD-0036): kind order kept, a news-declared channel first within its kind, no URL pattern with a placeholder, deterministic
+test_qualification_wave.py    # canary-driver/7 (CPD-0036, amended after wave wq-1): stage B reads every selected channel; a qualification wave requests the newest pages its own channels list (item-selection/1); the weekend evaluation keeps its four dimensions apart
 test_source_qualification.py # the inventory after qualification, the intake-readiness configuration and the access-restriction review are what their builder gives; a stage claims no more than the evidence; no held origin is in an intake (CPD-0025, CPD-0026)
 
 # The bounded, timed intake (CPD-0029)

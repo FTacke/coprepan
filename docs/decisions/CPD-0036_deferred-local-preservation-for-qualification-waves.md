@@ -40,6 +40,15 @@ once removed an empty probe file on the share and on `D:` each time — recorded
    windows and without a fresh observation of a degraded, slow or recovering share; the backup health `OK`; the share gate's transfer
    purpose open. Then at most `catch_up_packs_per_hour` packs, oldest first, each preserved (P2) and derived like any pack; the first
    pack that stays pending ends the step. Repeatable. It is authorised for the packs of the qualification waves only.
+6. **Amended the same day, after the first wave (`wq-1`), `canary-driver/7`.** (a) Stage B reads every selected channel after
+   the first. `canary-driver/6` selected up to four and read only the second: in `wq-1` the third channel of every outlet was
+   selected and never requested (no request was made beyond the budget; the defect lost coverage, not control). (b) A wave with
+   deferred preservation, a qualification, requests its items in the order `item-selection/1`: only pages never fetched before;
+   first those this run's channel documents listed with a date, newest first; then those listed undated in this run; then the
+   rest, the most recently listed first. The planner's own order (oldest due first), which a direct canary keeps, had sent `wq-1`
+   to pages first listed in October 2026 and earlier (biobiochile pages of July 2025, pagina12 pages of 2022). The selection
+   chooses only among what the planner says is due; it adds nothing and raises no limit. Waves `wq-1` and `wq-2` ran under
+   `canary-driver/6`; their baselines pin it.
 
 ## Alternatives considered
 

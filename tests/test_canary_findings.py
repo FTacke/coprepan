@@ -529,7 +529,7 @@ def test_a_feed_that_redirects_to_an_html_page_is_a_listing_and_what_it_links_wa
     assert [r for r in D.fetch_records(run.workspace) if r["fetch_kind"] == "item"] == [] and run.receipt()["counts"]["items_fetched"] == 0
     assert decisions["/ok"] == ("DEFERRED", [candidate_filter.LISTING_NEEDS_RULE]) and len(decisions) == 3, decisions
     assert {decision for decision, _ in decisions.values()} == {"DEFERRED"}
-    assert D.DRIVER_VERSION == "canary-driver/6"
+    assert D.DRIVER_VERSION == "canary-driver/7"
 
 
 def test_a_feed_served_as_xml_still_yields_its_items_after_an_html_answer_of_another_channel(tmp_path, site):

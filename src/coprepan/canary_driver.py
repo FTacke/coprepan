@@ -55,7 +55,12 @@ from .storage_roots import CHECKOUT
 #     /4 (CPD-0020): listing channels are read without an allow rule and their candidates wait for one.
 #     /5 (wave B, F9): a candidate first listed by an HTML document waits for an allow rule whatever kind its channel
 #     is registered as; baselines pin a delegated operator authorisation where there is one (CPD-0023).
-DRIVER_VERSION = "canary-driver/6"            # 6 (2026-11-14, CPD-0036): a wave may defer preservation; 5 otherwise unchanged
+#     /6 (2026-11-14, CPD-0036): a wave may defer preservation and read up to four channels.
+#     /7 (2026-11-14, wave wq-1): stage B reads every selected channel after the first (/6 read the second only, so a third
+#     channel was selected and never requested); a qualification wave (deferred preservation) requests the newest pages its
+#     own channels list (item-selection/1) instead of the planner's oldest-due-first order.
+DRIVER_VERSION = "canary-driver/7"
+ITEM_SELECTION = "item-selection/1"
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
 MAX_OUTLETS_OF_A_WAVE = 24          # CPD-0025: at four item requests per outlet, 24 outlets are what the ceiling leaves
@@ -220,6 +225,9 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
                              "section_page, then more of those kinds; within a kind a channel whose path declares news first, then "
                              "registry order; never a disabled channel or a URL pattern with a placeholder; what a listing channel "
                              "(archive, section_page) lists is requested only under an outlet allow rule",
+        "item_selection": f"{ITEM_SELECTION}: in a wave with deferred preservation (a qualification), only pages never fetched "
+                          "before; first those this run's channels listed with a date (newest first), then those listed undated in "
+                          "this run, then the rest (most recently listed first). Otherwise the planner's order (oldest due first)",
         "candidate_budget_order": discovery.BUDGET_ORDER, "numbered_pagination": discovery.NUMBERED_PAGINATION,
         "expansion_order": discovery.EXPANSION_ORDER,
         "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of "
@@ -583,6 +591,41 @@ def _checkpoint(workspace: core_pipeline.Workspace, label: str, checkpoints: lis
         raise CanaryStopped(f"after {label}: the workspace is {diagnosis['classification']}")
 
 
+def qualification_selector(run_id: str) -> Callable[[Sequence[schedule.CandidateState], Any], list[schedule.CandidateState]]:
+    """The order of a qualification wave's item requests (``item-selection/1``): a small sample of *current* pages.
+
+    Only pages never fetched before. First the candidates this run's channel documents listed with a date, newest first;
+    then those listed in this run without a date (in the order they were listed); then every other due candidate, the most
+    recently listed first. It chooses among what the planner says is due; it adds nothing (``run_http_acquisition``).
+    """
+    def select(due: Sequence[schedule.CandidateState], tables: Any) -> list[schedule.CandidateState]:
+        seen: dict[str, tuple[float | None, int]] = {}
+        for order, event in enumerate(tables.events.values()):
+            identifier = event.get("candidate_id")
+            if identifier is None or event.get("run_id") != run_id:
+                continue
+            instant = discovery.entry_instant(event.get("hints") or {})
+            stamp = instant.timestamp() if instant else None
+            before = seen.get(identifier)
+            if before is None or (stamp is not None and (before[0] is None or stamp > before[0])):
+                seen[identifier] = (stamp, before[1] if before else order)
+        dated, undated, rest = [], [], []
+        for state in due:
+            if state.state != schedule.NEVER_FETCHED:
+                continue
+            here = seen.get(state.candidate_id)
+            if here is not None and here[0] is not None:
+                dated.append((-here[0], state.candidate_id, state))
+            elif here is not None:
+                undated.append((here[1], state.candidate_id, state))
+            else:
+                rest.append((tables.candidates[state.candidate_id].get("first_listed_at") or "", state.candidate_id, state))
+        rest.sort(key=lambda row: row[:2], reverse=True)
+        return [row[-1] for row in sorted(dated, key=lambda row: row[:2])] + [row[-1] for row in sorted(undated, key=lambda row: row[:2])] \
+            + [row[-1] for row in rest]
+    return select
+
+
 def run_canary(
     workspace: core_pipeline.Workspace,
     registry_: registry.Registry,
@@ -598,9 +641,12 @@ def run_canary(
     disabled_channels: Sequence[str] = (),
     extractor: extraction.Extractor = extraction.BASELINE,
     candidate_rules: Mapping[str, Mapping[str, Any]] | None = None,
+    qualification: bool = False,
 ) -> dict[str, Any]:
     """Run the stages for the given outlets and return what happened. Resumable: stages whose work is
     already on record for this run are not repeated, and the budgets are those of the evidence.
+
+    ``qualification``: the items are chosen by :func:`qualification_selector` (a wave with deferred preservation).
     """
     budget = fetcher.budget
     if len(set(outlet_ids)) != budget.outlets or any(o not in run.outlet_ids for o in outlet_ids):
@@ -617,25 +663,31 @@ def run_canary(
         return any(row["event"] == http_acquisition.EVENT_FINISHED and row["run_id"] == run.run_id and row["fetch_kind"] == "channel_document"
                    and row["url"] == _channel_url(registry_, outlet_id, channel_id) for row in http_acquisition.request_rows(workspace))
 
+    select_due = qualification_selector(run.run_id) if qualification else None
+
     def acquire(outlet_id: str, channels: Sequence[str], items: int) -> dict[str, Any]:
         summary = http_acquisition.run_http_acquisition(
             workspace, registry_, run, outlet_id, fetcher=fetcher, channel_ids=list(channels), budget=budget.discovery,
-            max_item_fetches=items, schedule_policy=schedule_policy, clock=clock, candidate_rules=candidate_rules)
+            max_item_fetches=items, schedule_policy=schedule_policy, clock=clock, candidate_rules=candidate_rules,
+            select_due=select_due)
         packs_of[outlet_id].update(summary["open_pack_ids"])
         return summary
 
     # A and B go over all outlets before C starts: the first contact with every outlet is the smallest one.
-    for stage, index in (("A_probe", 0), ("B_discovery", 1)):
+    # A reads the first selected channel, B every further one (canary-driver/7).
+    for stage, indices in (("A_probe", (0,)), ("B_discovery", tuple(range(1, budget.channels_per_outlet)))):
         for outlet_id in outlet_ids:
             result = results[outlet_id]
-            if index >= len(result.channels):
+            wanted = [result.channels[i] for i in indices if i < len(result.channels)]
+            if not wanted:
                 result.stages[stage] = "no channel selected"
                 continue
-            channel_id = result.channels[index]
-            if channel_documents_done(outlet_id, channel_id):
+            todo = [c for c in wanted if not channel_documents_done(outlet_id, c)]
+            if not todo:
                 result.stages[stage] = "already on record"
                 continue
-            result.stages[stage] = acquire(outlet_id, [channel_id], 0)
+            summaries = [acquire(outlet_id, [c], 0) for c in todo]
+            result.stages[stage] = summaries[0] if len(summaries) == 1 else {"channels": summaries}
         _checkpoint(workspace, stage, checkpoints)
 
     for outlet_id in outlet_ids:                            # C, D, E per outlet, with a checkpoint after each
@@ -1146,7 +1198,8 @@ def main(argv: list[str] | None = None) -> int:
     outcome = run_canary(workspace, registered, run, outlet_ids=arguments.outlet, fetcher=fetcher, schedule_policy=schedule_policy, clock=clock,
                          preservation_root=deferred_root if deferred else resolve("PRESERVATION"),
                          spool_root=None if deferred else resolve("SPOOL"), spool_policy=None if deferred else CANARY_SPOOL,
-                         disabled_channels=acquisition_policy["disabled_channels"], candidate_rules=candidate_rules)
+                         disabled_channels=acquisition_policy["disabled_channels"], candidate_rules=candidate_rules,
+                         qualification=deferred)
     receipt = build_receipt(
         workspace, run=run, commit=arguments.pinned_commit, baseline_id=baseline["manifest_sha256"], policy_record=acquisition_policy,
         schedule_policy=schedule_policy, identity=identity, storage_contract_sha256=baseline["canary"]["storage_contract_sha256"],
