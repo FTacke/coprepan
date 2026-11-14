@@ -4,6 +4,9 @@ The expected digests and verdicts are those of the pinned bundle's ``conformance
 the same file CO.RA.PAN's implementation is held to. Passing shows that two implementations
 written separately agree on the mechanics, on synthetic data. It validates nothing scientific and
 says nothing about any real export.
+
+Since 2026-11-14 the pinned bundle is draft revision 2 (CPD-0034): 93 cases (revision 1's 52
+unchanged, 41 added), 30 pattern vectors, and the operations ``set_json`` and ``refreeze``.
 """
 
 from __future__ import annotations
@@ -16,8 +19,8 @@ import pytest
 from coprepan import naming
 from coprepan import release_contract as R
 from coprepan.canonical import canonical_json, record_json, sha256_bytes
-from support_release import (BUNDLE, CASES, PINS, REPO, VECTORS, change_document, change_release, fixtures_copy, mutate,
-                             records_of, refreeze, releases_of, run_case, set_records)
+from support_release import (BUNDLE, CASES, OPERATIONS, PATTERNS, PINS, REPO, VECTORS, change_document, change_release,
+                             fixtures_copy, mutate, records_of, refreeze, releases_of, run_case, set_records)
 
 
 @pytest.fixture(scope="module")
@@ -58,6 +61,22 @@ def test_the_pin_does_not_claim_a_joint_adoption():
     assert pin["status"] == "DRAFT" and pin["canonical_home"] == "corapan"
     if "local_adoption" in pin:
         assert list((REPO / "docs" / "decisions").glob(f"{pin['local_adoption']}_*.md"))
+
+
+def test_the_pin_records_its_draft_revisions():
+    """Contract §17: a draft revision is identified by its bundle digest, which the pin records; an
+    earlier revision stays recorded with the local decision that quoted it (as the storage pin does).
+    A local adoption quoting an earlier digest does not carry over, so the current one is another record.
+    """
+    pin = R.read_pin(PINS)
+    earlier = pin["previous_revisions"]
+    assert pin["revision"] == len(earlier) + 1 and [entry["revision"] for entry in earlier] == list(range(1, pin["revision"]))
+    assert all(R.is_sha256(entry["bundle_sha256"]) and entry["bundle_sha256"] != pin["bundle_sha256"] for entry in earlier)
+    assert pin["local_adoption"] not in {entry["local_decision"] for entry in earlier}
+    for entry in earlier:
+        assert list((REPO / "docs" / "decisions").glob(f"{entry['local_decision']}_*.md"))
+    contract_text = (BUNDLE / "CONTRACT.md").read_text(encoding="utf-8")
+    assert all(entry["bundle_sha256"] in contract_text for entry in earlier)  # the §17 table names them
 
 
 @pytest.mark.parametrize("drift", ["byte_changed", "line_endings", "file_added", "file_deleted", "schema_missing"])
@@ -156,6 +175,75 @@ def test_coverage_of_the_fixtures_is_what_the_documents_imply():
 def test_the_vectors_use_only_codes_of_the_contract():
     assert {code for case in CASES for code in case["expect"]} <= set(R.CODES)
     assert len({case["id"] for case in CASES}) == len(CASES)
+
+
+def test_the_vectors_are_those_of_draft_revision_2():
+    """Revision 2 (contract §17): 93 cases, 30 pattern vectors, and every operation a case declares
+    is one the vectors' note describes and this suite executes.
+    """
+    assert (len(CASES), len(PATTERNS)) == (93, 30)
+    used = {mutation["op"] for case in CASES for mutation in case["mutations"]}
+    assert used <= set(OPERATIONS) and {"set_json", "refreeze"} <= used
+    assert all(operation in VECTORS["note"] for operation in OPERATIONS)
+
+
+def test_set_json_and_refreeze_as_the_vectors_describe_them(root):
+    """`set_json` adds the last key when absent and the stored form carries nothing; `refreeze`
+    names the manifest as it is at that point of the list."""
+    release = root / "coprepan" / "package" / "release"
+    mutate(root, {"op": "set_json", "path": "coprepan/package/release/RELEASE_MANIFEST.json", "pointer": "/release_id",
+                  "value": "coprepan-2026.1"})
+    mutate(root, {"op": "set_json", "path": "coprepan/package/release/RELEASE_MANIFEST.json", "pointer": "/totals/new~1key",
+                  "value": 1})
+    manifest = R.parse_strict((release / R.RELEASE_MANIFEST).read_bytes())
+    assert manifest["release_id"] == "coprepan-2026.1" and manifest["totals"]["new/key"] == 1
+    mutate(root, {"op": "refreeze", "path": "coprepan/package/release/RELEASE_FREEZE.json",
+                  "manifest": "coprepan/package/release/RELEASE_MANIFEST.json"})
+    freeze = R.parse_strict((release / R.RELEASE_FREEZE).read_bytes())
+    assert (freeze["corpus_id"], freeze["release_id"], freeze["release_manifest_sha256"]) == (
+        "coprepan", "coprepan-2026.1", R.release_manifest_digest(release))
+
+
+# --- PG2: the pattern vectors and the portable pattern subset (§12, revision 2) --------------------
+
+
+@pytest.mark.parametrize("vector", PATTERNS, ids=lambda vector: f"{vector['pattern'][:16]}~{ascii(vector['value'])[:20]}")
+def test_pattern_vector(vector):
+    assert R.pattern_matches(vector["pattern"], vector["value"]) is vector["matches"]
+
+
+def test_white_space_is_exactly_the_25_unicode_white_space_code_points():
+    """`\\s` is neither Python's (adds U+001C–U+001F) nor ECMA-262's (adds U+FEFF, omits U+0085)."""
+    import sys
+    listed = {0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x20, 0x85, 0xA0, 0x1680, *range(0x2000, 0x200B), 0x2028, 0x2029, 0x202F, 0x205F, 0x3000}
+    assert R.WHITE_SPACE == listed and len(listed) == 25
+    for point in range(sys.maxunicode + 1):
+        if 0xD800 <= point <= 0xDFFF:
+            continue
+        char = chr(point)
+        assert R.pattern_matches(r"^\s$", char) is (point in listed)
+        assert R.pattern_matches(r"^\S$", char) is (point not in listed)
+        assert R.pattern_matches(r"^[^\s]$", char) is (point not in listed)
+
+
+@pytest.mark.parametrize("pattern, value, matches", [
+    ("^a$", "a\n", False), ("a$", "ba", True), ("^a", "ab", True), ("b", "abc", True),   # a search, `$` the very end
+    (r"^\.$", "x", False), (r"^\.$", ".", True), ("^[.-]$", "-", True), ("^[.-]$", "x", False),
+    ("^[-a]$", "-", True), ("^a{2,3}$", "aaaa", False), ("^a{2}$", "aa", True), (r"^\$$", "$", True),
+    (r"^[\s\]]+$", "] \u0085", True), ("^(?:ab|c)+$", "abcab", True), ("^[^a-c]$", "d", True), ("^[^a-c]$", "b", False),
+])
+def test_patterns_have_the_subset_meaning(pattern, value, matches):
+    assert R.pattern_matches(pattern, value) is matches
+
+
+@pytest.mark.parametrize("pattern", [
+    ".", r"\d", r"\w", r"\b", r"\n", "(?=a)", "(?!a)", "(?<=a)", "(?i)a", r"(a)\1", "a{2,}", "a{3,2}", "a*?", "a**", "*a",
+    "[]", "[^]", "[a", "(a", "a)", "]", "}", "{2}", "[a-]b-c]", "[b-a]", r"[\s-a]", r"[\d]", "[[a]", "a{,2}",
+])
+def test_a_pattern_outside_the_subset_is_refused(pattern):
+    with pytest.raises(R.PatternRefused):
+        R.translate_pattern(pattern)
+    assert R.schema_subset_problems({"type": "string", "pattern": pattern}) != []
 
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case["id"])
@@ -340,6 +428,72 @@ def test_a_provisional_export_has_no_freeze_record_and_needs_none(root, contract
                     lambda m: m.update(release_id="coprepan-2027.1", release_kind="provisional_export", fixture=False))
     (release_of(root) / R.RELEASE_FREEZE).unlink()
     assert check(root, contract).conformant
+
+
+def test_a_freeze_record_beside_a_provisional_export_is_refused_by_its_existence(root, contract):
+    """§9.1 (revision 2): the record is not read — not even an empty or unparsable one is accepted."""
+    change_document(release_of(root) / R.RELEASE_MANIFEST,
+                    lambda m: m.update(release_id="coprepan-2027.1", release_kind="provisional_export", fixture=False))
+    (release_of(root) / R.RELEASE_FREEZE).write_bytes(b"not json")
+    assert codes(check(root, contract)) == ["FREEZE_MISMATCH"]
+
+
+def test_an_undated_document_has_its_dates_state_as_cohort_state(root, contract):
+    """§7.2 (revision 2): the cohort is derived from the date in both directions."""
+    release = release_of(root)
+    documents = records_of(release / R.DOCUMENTS)
+    undated = next(document for document in documents if document["date_state"] != "known")
+    other = "not_available" if undated["date_state"] != "not_available" else "unknown"
+    changed = [{**document, "cohort_state": other} if document is undated else document for document in documents]
+    set_records(release, "documents", R.DOCUMENTS, changed)
+    refreeze(release)
+    assert codes(check(root, contract)) == ["DOCUMENT_INCONSISTENT"]
+
+
+def test_the_sum_over_no_documents():
+    """§7.3 (revision 2): known zero, unless the release cannot have that count at all."""
+    written = {"modality": "written", "token_denominator_state": "not_available"}
+    spoken = {"modality": "spoken", "token_denominator_state": "known"}
+    assert R.stateful_sum([], "tokens_counted", written) == (None, "not_available")
+    assert R.stateful_sum([], "audio_ms", written) == (None, "not_applicable")
+    assert R.stateful_sum([], "tokens_counted", spoken) == (0, "known")
+    assert R.stateful_sum([], "audio_ms", spoken) == (0, "known")
+    assert R.stateful_sum([], "tokens_counted", {**spoken, "token_denominator_state": "undecided"}) == (None, "undecided")
+    assert R.stateful_sum([], "n") == (0, "known")
+
+
+def test_a_record_set_of_another_schema_is_read_with_its_set(root, contract):
+    """§13.1 (revision 2): the record schema a pin names is checked when the set is read (phase 2),
+    and the first failing step is the objection of that set — not also its pin mismatch."""
+    change_release(release_of(root), lambda m: m["coverage"].update(schema="crosscorpus-release-coverage/v2"))
+    assert codes(check(root, contract)) == ["CONTRACT_VERSION_UNSUPPORTED"]
+
+
+def test_a_named_release_is_identified_first_and_checked_second(root, contract):
+    """§13.1 (revision 2): a manifest that cannot be read reports its own code; a readable manifest of
+    another corpus, id or digest is RELEASE_PIN_MISMATCH and nothing else."""
+    study, releases = root / "coprepan" / "study", releases_of(root)
+    manifest = release_of(root) / R.RELEASE_MANIFEST
+    original = manifest.read_bytes()
+    manifest.write_bytes(original.replace(b'"exports": 2', b'"exports": 2.0', 1))
+    assert codes(R.verify_study(study, releases, contract=contract)) == ["NON_CANONICAL_VALUE"]
+    manifest.write_bytes(original)
+    change_document(manifest, lambda m: m.update(unexpected=1))
+    assert codes(R.verify_study(study, releases, contract=contract)) == ["SCHEMA_VIOLATION"]
+    manifest.write_bytes(original)
+    change_document(manifest, lambda m: m.update(created_at="2026-10-09T00:00:00Z"))   # another digest; the release is also unfrozen
+    assert codes(R.verify_study(study, releases, contract=contract)) == ["RELEASE_PIN_MISMATCH"]
+    manifest.write_bytes(original)
+    assert R.verify_study(study, releases, contract=contract).conformant
+
+
+def test_fetched_pages_are_refused_by_the_check_as_by_the_builder():
+    """§11.3 (revision 2): one list, refused after full case folding; the builder uses the contract's."""
+    from coprepan import release_export
+    assert set(R.SOURCE_PAGE_SUFFIXES) <= set(R.FORBIDDEN_SUFFIXES) and set(R.SOURCE_MEDIA_SUFFIXES) <= set(R.FORBIDDEN_SUFFIXES)
+    assert release_export.SOURCE_PAGE_SUFFIXES == R.SOURCE_PAGE_SUFFIXES
+    assert "pages/CAPTURE.WARC.GZ".casefold().endswith(R.FORBIDDEN_SUFFIXES)
+    assert R.case_collisions(["a/STRASSE.txt", "a/straße.txt"]) == ["a/straße.txt"]   # full folding, not lower()
 
 
 def test_anchors_of_the_other_modality_are_refused(root, contract):

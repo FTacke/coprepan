@@ -142,7 +142,9 @@ def build_manifest(
         "crawler_identity": {**_hashed(config / "crawler_identity.json"), "state": identity_state, "identity": identity_record},
         "schedule_policy": {**_hashed(config / "schedule_policy.json"), "version": schedule_state},
         "candidate_rules": _hashed(config / "candidate_rules.json"),
-        "configuration": [_hashed(config / name) for name in ("storage_targets.yml", "legacy_country_codes.json")],
+        # resource_policy.json since CPD-0033: what an intake yields to and how long it may hold received bytes pending
+        "configuration": [_hashed(config / name) for name in ("storage_targets.yml", "legacy_country_codes.json", "resource_policy.json")
+                          if name != "resource_policy.json" or (config / name).is_file()],
         "decisions": {match.group(1): _hashed(path)["sha256"] for path in sorted((repository / "docs" / "decisions").glob("CPD-*.md"))
                       if (match := _CPD.fullmatch(path.name))},
         "schemas": schema_ids(),

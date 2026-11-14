@@ -78,19 +78,36 @@ def state_directory(runtime: Path, intake_id: str) -> Path:
 # --- the environment of a controller ---------------------------------------------------------------------------
 
 
-def load_environment(repository: Path):
-    """Everything a controller or a finalizer runs against, as this checkout and this workstation configure it."""
+def load_environment(repository: Path, *, need_preservation: bool = False):
+    """Everything a controller or a finalizer runs against, as this checkout and this workstation configure it.
+
+    ``need_preservation``: resolve the PRESERVATION root now (a start checks the target's readiness). Otherwise (every tick of a
+    running intake) it is **not** resolved here: the controller resolves it through the share gate when it preserves, so a share
+    that is away is neither contacted at every tick nor a reason for the tick to fail (CPD-0033); ``roles["PRESERVATION"]`` is
+    then ``None``, a statement, never a default."""
     from coprepan import candidate_filter, core_pipeline, crawler_identity, intake, policy, registry, schedule, storage_roots
     from coprepan import canary_driver
 
-    roles = storage_roots.resolve_configured_roles(env=storage_roots.workstation_environment())
+    from coprepan import resource_policy
+
+    workstation = storage_roots.workstation_environment()
+    if need_preservation:
+        roles = storage_roots.resolve_configured_roles(env=workstation)
+    else:
+        shared = ("COPREPAN_PRESERVATION_ROOT", "COPREPAN_BACKUP_ROOT")     # the share, and the backup whose volume check needs it
+        roles = storage_roots.resolve_configured_roles(env={k: v for k, v in workstation.items() if k not in shared})
+    resources = resource_policy.load_policy(resource_policy.default_policy_path(repository))
+    # CPD-0033: every resolution of the share goes through the persisted back-off; after a failed contact the share is not
+    # contacted again before the back-off ends (and not while CO.RA.PAN's fresh observation says it is degraded).
+    gate = resource_policy.ShareGate(roles["RUNTIME"], resources, env=workstation)
     environment = intake.Environment(
         workspace=core_pipeline.Workspace(roles["RUNTIME"]), registry=registry.load_registry(repository / "config" / "outlet_registry.json"),
         policy=policy.load_policy(repository / "config" / "acquisition_policy.json"), identity=crawler_identity.load_identity(repository / "config" / "crawler_identity.json"),
         schedule_policy=schedule.load_schedule_policy(repository / "config" / "schedule_policy.json"),
         candidate_rules=candidate_filter.load_rules(repository / "config" / "candidate_rules.json"),
-        preservation_root=lambda: storage_roots.resolve_root("PRESERVATION", env=storage_roots.workstation_environment()),
-        spool_root=(lambda: roles["SPOOL"]) if roles.get("SPOOL") is not None else None, spool_policy=canary_driver.CANARY_SPOOL)
+        preservation_root=gate.guard(lambda: storage_roots.resolve_root("PRESERVATION", env=storage_roots.workstation_environment())),
+        spool_root=(lambda: roles["SPOOL"]) if roles.get("SPOOL") is not None else None, spool_policy=canary_driver.CANARY_SPOOL,
+        resource_policy=resources)
     return environment, roles
 
 
@@ -331,7 +348,7 @@ def command_start(arguments, repository: Path, run, today=None, register=registe
         # §2 — the full suite on the arming commit;  §3 — baseline, freeze, commit, push
         print("Running the full test suite on the arming commit …", flush=True)
         passed = O.test_summary(run(sys.executable, "-m", "pytest", "-p", "no:cacheprovider", "-q", capture=True))
-        environment, roles = load_environment(repository)                                   # the policy as armed
+        environment, roles = load_environment(repository, need_preservation=True)           # the policy as armed; the target must be there
         now = datetime.now(timezone.utc)
         readiness = preservation_target.check_readiness(roles["PRESERVATION"], required_free_bytes=REQUIRED_FREE_BYTES, now=now)
         manifest = freeze.build_manifest(

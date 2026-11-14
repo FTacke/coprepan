@@ -1,0 +1,45 @@
+{
+  "schema": "coprepan-resource-policy/v1",
+  "version": "2026-11-14.1",
+  "status": "DECIDED",
+  "decision": "CPD-0033",
+  "note": "How much shared I/O CO.PRE.PAN may use and when it yields (src/coprepan/resource_policy.py). CO.RA.PAN has priority on the shared institutional share, on the shared D: device and on the C: umbrella. Every number here is a scenario assumption chosen on 2026-11-14 from the measurements named in `basis`; none is a measured optimum. A value is changed by a new version of this file, never by a run.",
+  "basis": {
+    "share_write_mib_s": "3.7-5.1 MiB/s from this workstation over the VPN, ~260 ms per small file (measured 2026-10-14, docs/storage/INDEX.md 20.5); CO.RA.PAN measured 3.7 MiB/s regardless of 1, 2 or 4 streams (its STORAGE_TARGETS_AND_PRESERVATION.md 19.6, read 2026-11-14)",
+    "full_baseline_minutes": "the daily full re-hash of the primary took 78 min for 8,816 objects / 395,018,230 B (task start 2026-11-13T03:45Z, baseline taken 05:03:09Z; runtime evidence of preservation_backup_runs)",
+    "sibling_capacity_levels": "CO.RA.PAN stops local production below 20 GiB free and warns below 50 GiB on C: and on its D: volume (read 2026-11-14); CO.PRE.PAN's floor is above its warning level",
+    "sibling_windows": "CO.RA.PAN tasks as registered on 2026-11-14 (local time): LocalStorageMaintenance daily 03:30; HistoricBackup Sunday 04:15; incremental backup reconcile Wednesday 01:30-07:30"
+  },
+  "share": {
+    "backoff_initial_seconds": 300,
+    "backoff_factor": 2,
+    "backoff_max_seconds": 3600,
+    "sibling_signal_max_age_seconds": 1800
+  },
+  "free_space_floor_gib": {
+    "RUNTIME": 60,
+    "SPOOL": 60,
+    "BACKUP": 60
+  },
+  "pending": {
+    "max_packs": 5000,
+    "max_bytes": 5368709120,
+    "max_age_hours": 72
+  },
+  "backup": {
+    "workers": 1,
+    "max_bytes_per_second": 2097152,
+    "max_minutes": 90,
+    "fixity_objects_per_run": 300,
+    "fixity_bytes_per_run": 268435456,
+    "fixity_cycle_max_days": 90,
+    "restore_samples": 10,
+    "receipt_warning_hours": 72,
+    "receipt_failure_hours": 336
+  },
+  "maintenance_quiet_windows": [
+    {"days": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], "from": "03:15", "to": "04:30", "why": "CO.RA.PAN LocalStorageMaintenance (daily 03:30)"},
+    {"days": ["sun"], "from": "04:00", "to": "07:00", "why": "CO.RA.PAN HistoricBackup (Sunday 04:15)"},
+    {"days": ["wed"], "from": "01:15", "to": "07:45", "why": "CO.RA.PAN incremental backup reconcile (Wednesday 01:30-07:30)"}
+  ]
+}

@@ -151,7 +151,9 @@ def test_storage_targets_hold_only_environment_references():
     # the roots, plus the one identity (not a path) the PRESERVATION root is checked against (CPD-0030),
     # plus the LEGACY holding's per-process names (CPD-0032 §1: a holding, not a role of storage_targets.yml)
     legacy = ["COPREPAN_LEGACY_ARCHIVE_ROOT", "COPREPAN_LEGACY_ARCHIVE_TARGET_ID", "COPREPAN_LEGACY_BACKUP_ROOT"]
-    assert sorted(example) == sorted(variables + ["COPREPAN_PRESERVATION_TARGET_ID"] + legacy)
+    # plus the sister corpus's share observation, read as caution-only advice (CPD-0033 §3; not a root, not a role)
+    sibling = ["COPREPAN_SIBLING_PRESERVATION_STATE"]
+    assert sorted(example) == sorted(variables + ["COPREPAN_PRESERVATION_TARGET_ID"] + legacy + sibling)
     assert set(example.values()) == {""}, ".env.example must not carry a real path"
 
 

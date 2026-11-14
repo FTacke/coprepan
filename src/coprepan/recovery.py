@@ -51,12 +51,17 @@ def _pack_ids(directory: Path) -> list[str]:
 
 
 def diagnose(workspace_root: Path, preservation_root: Path | None = None, registry: Any = None,
-             extractor: extraction.Extractor = extraction.BASELINE) -> dict[str, Any]:
+             extractor: extraction.Extractor = extraction.BASELINE, *, master_scope: set[str] | None = None) -> dict[str, Any]:
     """What an interrupted (or healthy) workspace holds. Read-only; takes no lock.
 
     With ``registry`` and ``preservation_root`` the identity tables are also held against a rebuild
     from the preserved evidence (:mod:`coprepan.identity_rebuild`); without them they are checked
     for self-consistency only.
+
+    ``master_scope`` (CPD-0033): the packs whose masters are re-hashed **on the preservation root** for the relation
+    "ledger against the root"; ``None`` is every pack the ledger relates (a full fixity read of the root -- an explicit,
+    operator-ordered check, never a regular cycle). A finalizer names the packs of its own run. Packs outside the scope
+    are reported as ``masters_not_checked``, never as verified.
     """
     workspace = Workspace(Path(workspace_root))
     root = workspace.root
@@ -131,16 +136,26 @@ def diagnose(workspace_root: Path, preservation_root: Path | None = None, regist
                     verified[identifier] = False
             return verified[identifier]
 
+        not_checked: set[str] = set()
+
+        def in_scope(identifier: str) -> bool:
+            if master_scope is None or identifier in master_scope:
+                return True
+            not_checked.add(identifier)
+            return False
+
         for fetch_id, state in sorted(book.states().items()):
             held = in_pack.get(fetch_id)
             if state == "FETCH_PLANNED":
                 relation["in_pack_ledger_planned" if held else "planned_without_bytes"].append(fetch_id)
             elif state in _HELD and held is None and not torn_packs:
                 relation["ledger_claims_bytes_no_pack_has"].append(fetch_id)
-            elif state == "PRESERVATION_PENDING" and held and master_ok(held[0]):
+            elif state == "PRESERVATION_PENDING" and held and in_scope(held[0]) and master_ok(held[0]):
                 relation["pending_and_master_verifies"].append(fetch_id)
-            elif state == "RAW_PRESERVED" and preservation_root is not None and held and not master_ok(held[0]):
+            elif state == "RAW_PRESERVED" and preservation_root is not None and held and in_scope(held[0]) and not master_ok(held[0]):
                 relation["preserved_but_master_does_not_verify"].append(fetch_id)
+        out["masters_checked_on_root"] = len(verified)
+        out["masters_not_checked"] = len(not_checked)
         if relation["in_pack_ledger_planned"]:
             resumable.append("fetches are in a pack while the ledger says FETCH_PLANNED; sealing reconciles them")
         if relation["planned_without_bytes"]:

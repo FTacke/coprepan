@@ -4,7 +4,9 @@ The contract is one byte-identical bundle that both corpora read
 (``contracts/crosscorpus-release-v1/``; its canonical home is the CO.RA.PAN repository). This
 module is the **second, independent implementation** of its checks: it was written from the
 bundle's text, schemas, fixtures and vectors, shares no code with CO.RA.PAN's, and is held to it
-only by ``conformance/VECTORS.json`` (contract §14.2). Decisions: CPD-0011, CPD-0012.
+only by ``conformance/VECTORS.json`` (contract §14.2). Decisions: CPD-0011, CPD-0012; since 2026-11-14 the pinned
+bundle is draft revision 2 and the checks follow its rules (CPD-0034: the portable pattern subset of §12, the order of
+§13.1, §7.2, §7.3, §9.1, §10.3, §11.3).
 
 What is here: canonical values and the two digests (§4), contract paths and the tree digest
 (§4.4–§4.5), the schema subset (§12), and the three checks of §13 — release, study population,
@@ -89,8 +91,12 @@ ANCHORS = {
                 "unit_kinds": ("title", "heading", "paragraph", "list_item", "quote_block", "caption", "unstructured_text"),
                 "producer_kinds": ()},
 }
-# Suffixes a package of this contract version refuses (§11.3).
-FORBIDDEN_SUFFIXES = (".wav", ".flac", ".mp3", ".m4a", ".mp4", ".ogg", ".opus", ".aac", ".wma", ".aif", ".aiff", ".webm")
+# Suffixes a package of this contract version refuses (§11.3), compared after full case folding
+# (§4.4): source media, and — since draft revision 2 — containers of fetched pages. Both are the
+# source of a corpus and are refused by the same rule and the same code.
+SOURCE_MEDIA_SUFFIXES = (".wav", ".flac", ".mp3", ".m4a", ".mp4", ".ogg", ".opus", ".aac", ".wma", ".aif", ".aiff", ".webm")
+SOURCE_PAGE_SUFFIXES = (".warc", ".warc.gz", ".arc", ".arc.gz", ".cdx", ".cdxj")
+FORBIDDEN_SUFFIXES = SOURCE_MEDIA_SUFFIXES + SOURCE_PAGE_SUFFIXES
 RELEASE_FILE_ROLES = {
     f"release/{RELEASE_MANIFEST}": "release_manifest", f"release/{RELEASE_FREEZE}": "release_freeze",
     f"release/{MEMBERS}": "release_members", f"release/{DOCUMENTS}": "release_documents",
@@ -258,7 +264,9 @@ def is_contract_path(path: Any) -> bool:
 
 
 def case_collisions(paths: Iterable[str]) -> list[str]:
-    """Paths that differ from another one of the same tree only by letter case."""
+    """Paths that differ from another one of the same tree or file list only by letter case —
+    compared after Unicode full case folding (§4.4: ``str.casefold``, not ``str.lower``).
+    """
     seen: dict[str, str] = {}
     collisions = []
     for path in paths:
@@ -336,6 +344,11 @@ def schema_subset_problems(schema: Any, where: str = "#") -> list[str]:
             problems.append(f"{where}: a reference is local, #/$defs/<name>")
         elif keyword == "type" and not all(name in _TYPES for name in ([value] if isinstance(value, str) else value)):
             problems.append(f"{where}: type {value!r} is outside the subset")
+        elif keyword == "pattern":
+            try:
+                _pattern(value)
+            except PatternRefused as refusal:
+                problems.append(f"{where}: pattern {value!r} leaves the pattern subset: {refusal}")
         elif keyword in ("properties", "$defs"):
             for name, sub in value.items():
                 problems += schema_subset_problems(sub, f"{where}/{keyword}/{name}")
@@ -344,15 +357,160 @@ def schema_subset_problems(schema: Any, where: str = "#") -> list[str]:
     return problems
 
 
-def _pattern(text: str) -> re.Pattern[str]:
-    """A schema pattern is an unanchored ECMA-262 search. In Python a final ``$`` would also match
-    before a trailing line feed; ``\\Z`` restores the meaning the schema has.
+class PatternRefused(ValueError):
+    """A schema pattern that leaves the portable pattern subset of §12."""
+
+
+# §12: `\s` is exactly the 25 code points with the Unicode property White_Space — not Python's `\s`
+# (which adds U+001C–U+001F) and not ECMA-262's (which adds U+FEFF and omits U+0085).
+WHITE_SPACE = frozenset((*range(0x09, 0x0E), 0x20, 0x85, 0xA0, 0x1680, *range(0x2000, 0x200B), 0x2028, 0x2029, 0x202F,
+                         0x205F, 0x3000))
+assert len(WHITE_SPACE) == 25
+_PATTERN_ESCAPES = frozenset("\\.-/[](){}*+?|^$")
+_BOUNDS = re.compile(r"\{([0-9]+)(?:,([0-9]+))?\}")
+
+
+def _code_point(char: str | int) -> str:
+    """One code point, written so that no regular-expression dialect reads anything into it."""
+    return f"\\U{char if isinstance(char, int) else ord(char):08x}"
+
+
+_WHITE_SPACE_ITEMS = "".join(_code_point(point) for point in sorted(WHITE_SPACE))
+
+
+def _pattern_class(text: str, start: int) -> tuple[str, int]:
+    """Translate the class ``[…]`` or ``[^…]`` that begins at ``start``; return it and the index
+    after it. Members: literals, ranges of literals, ``\\s``, the escapes of §12.
     """
+    index, negated = start + 1, text.startswith("^", start + 1)
+    index += negated
+    members: list[tuple[str, int]] = []  # ("literal", code point) | ("space", 0) | ("dash", 0)
+    while True:
+        if index >= len(text):
+            raise PatternRefused("a character class is not closed")
+        char = text[index]
+        if char == "]":
+            index += 1
+            break
+        if char == "[":
+            raise PatternRefused("an unescaped [ inside a character class")
+        if char == "\\":
+            escaped = text[index + 1:index + 2]
+            if escaped == "s":
+                members.append(("space", 0))
+            elif escaped and escaped in _PATTERN_ESCAPES:
+                members.append(("literal", ord(escaped)))
+            else:
+                raise PatternRefused(f"the escape \\{escaped} is not in the subset")
+            index += 2
+            continue
+        members.append(("dash", 0) if char == "-" else ("literal", ord(char)))
+        index += 1
+    if not members:
+        raise PatternRefused("an empty character class")
+    items, position = [], 0
+    while position < len(members):
+        kind, point = members[position]
+        if kind == "dash" and 0 < position < len(members) - 1:
+            raise PatternRefused("a range needs a literal on both sides")
+        following = members[position + 1:position + 3]
+        if kind == "literal" and len(following) == 2 and following[0][0] == "dash":
+            if following[1][0] != "literal" or following[1][1] < point:
+                raise PatternRefused("a range runs from a literal to a literal not below it")
+            items.append(f"{_code_point(point)}-{_code_point(following[1][1])}")
+            position += 3
+            continue
+        items.append(_WHITE_SPACE_ITEMS if kind == "space" else _code_point(ord("-") if kind == "dash" else point))
+        position += 1
+    return "[" + ("^" if negated else "") + "".join(items) + "]", index
+
+
+def translate_pattern(text: str) -> str:
+    """The Python regular expression that means what the schema pattern ``text`` means under §12,
+    or :class:`PatternRefused`. ``^`` and ``$`` become ``\\A`` and ``\\Z`` (no trailing line feed),
+    ``\\s`` and ``\\S`` become explicit classes of the 25 White_Space code points, every literal
+    becomes a code-point escape. Anything outside the subset — ``.``, ``\\d``, ``\\w``, ``\\b``,
+    look-around, back-references, flags, lazy quantifiers — is refused, never passed through.
+    """
+    if not isinstance(text, str):
+        raise PatternRefused("a pattern is a string")
+    out: list[str] = []
+    index, depth, quantifiable = 0, 0, False
+    while index < len(text):
+        char = text[index]
+        if char == "\\":
+            escaped = text[index + 1:index + 2]
+            if escaped == "s":
+                out.append(f"[{_WHITE_SPACE_ITEMS}]")
+            elif escaped == "S":
+                out.append(f"[^{_WHITE_SPACE_ITEMS}]")
+            elif escaped and escaped in _PATTERN_ESCAPES:
+                out.append(_code_point(escaped))
+            else:
+                raise PatternRefused(f"the escape \\{escaped} is not in the subset")
+            index, quantifiable = index + 2, True
+        elif char == "[":
+            translated, index = _pattern_class(text, index)
+            out.append(translated)
+            quantifiable = True
+        elif char == "(":
+            if text.startswith("(?:", index):
+                out.append("(?:")
+                index += 3
+            elif text.startswith("(?", index):
+                raise PatternRefused("look-around, named groups and flags are not in the subset")
+            else:
+                out.append("(")
+                index += 1
+            depth, quantifiable = depth + 1, False
+        elif char == ")":
+            if depth == 0:
+                raise PatternRefused("an unbalanced )")
+            out.append(")")
+            index, depth, quantifiable = index + 1, depth - 1, True
+        elif char == "|":
+            out.append("|")
+            index, quantifiable = index + 1, False
+        elif char in "*+?":
+            if not quantifiable:
+                raise PatternRefused(f"{char} quantifies nothing (or a quantifier)")
+            out.append(char)
+            index, quantifiable = index + 1, False
+        elif char == "{":
+            bounds = _BOUNDS.match(text, index)
+            if bounds is None or not quantifiable:
+                raise PatternRefused("{ is a quantifier {m} or {m,n} after an atom, or is escaped")
+            if bounds.group(2) is not None and int(bounds.group(2)) < int(bounds.group(1)):
+                raise PatternRefused("a quantifier {m,n} with n below m")
+            out.append(bounds.group(0))
+            index, quantifiable = bounds.end(), False
+        elif char == "^":
+            out.append(r"\A")
+            index, quantifiable = index + 1, False
+        elif char == "$":
+            out.append(r"\Z")
+            index, quantifiable = index + 1, False
+        elif char in ".]}":
+            raise PatternRefused(f"an unescaped {char} is not in the subset")
+        else:
+            out.append(_code_point(char))
+            index, quantifiable = index + 1, True
+    if depth:
+        raise PatternRefused("an unclosed (")
+    return "".join(out)
+
+
+def _pattern(text: str) -> re.Pattern[str]:
+    """A schema pattern, compiled from its translation into the subset's own meaning (§12)."""
     compiled = _PATTERNS.get(text)
     if compiled is None:
-        source = text[:-1] + r"\Z" if text.endswith("$") and not text.endswith(r"\$") else text
-        compiled = _PATTERNS[text] = re.compile(source)
+        compiled = _PATTERNS[text] = re.compile(translate_pattern(text))
     return compiled
+
+
+def pattern_matches(pattern: str, value: str) -> bool:
+    """Whether a schema pattern is found in ``value`` (a search, not implicitly anchored; §12)."""
+    return _pattern(pattern).search(value) is not None
 
 
 def _same(left: Any, right: Any) -> bool:
@@ -518,18 +676,26 @@ def _document(path: Path, schema_id: str, contract: Contract, where: str) -> tup
 
 
 def _record_set(path: Path, pin: Mapping[str, Any], schema_id: str, contract: Contract, where: str) -> tuple[list[Any] | None, list[Objection]]:
-    """One pinned record set: present, strictly parsed, schema-valid, and exactly the pinned set."""
+    """One pinned record set (§13.1): it exists, parses strictly, its pin names this contract's
+    record schema, every record satisfies the schema, and it is the pinned set by count and digest.
+    The first of these that fails is the objection of the set (every record's, for the schema).
+    """
     if not path.is_file():
         return None, [Objection("REFERENCE_MISSING", where, "the pinned record set does not exist")]
     try:
         records = parse_records(path.read_bytes())
     except NonCanonical as error:
         return None, [Objection("NON_CANONICAL_VALUE", where, str(error))]
+    objections = _pin_schema(pin, schema_id, where)
+    if objections:
+        return None, objections
     objections = [Objection("SCHEMA_VIOLATION", f"{where}[{index}]", problem)
                   for index, record in enumerate(records) for problem in contract.problems(schema_id, record)]
+    if objections:
+        return None, objections
     if len(records) != pin["records"] or record_set_digest(records) != pin["sha256"]:
-        objections.append(Objection("PIN_MISMATCH", where, "the records are not the set the manifest pins"))
-    return (None if objections else records), objections
+        return None, [Objection("PIN_MISMATCH", where, "the records are not the set the manifest pins")]
+    return records, []
 
 
 def _pin_schema(pin: Mapping[str, Any], schema_id: str, where: str) -> list[Objection]:
@@ -563,15 +729,32 @@ def _duplicates(values: Iterable[Any]) -> list[Any]:
     return sorted({value for value in values if value in seen or seen.add(value)})  # type: ignore[func-returns-value]
 
 
-def stateful_sum(rows: Sequence[Mapping[str, Any]], name: str) -> tuple[int | None, str]:
+def stateful_sum(rows: Sequence[Mapping[str, Any]], name: str, manifest: Mapping[str, Any] | None = None) -> tuple[int | None, str]:
     """The sum of a stateful count over documents (§7.3): known with the sum if every value is
     known; otherwise null with the documents' common state, or ``not_available`` if they share none.
-    A partial sum is never a total.
+    A partial sum is never a total. Over **no** documents it is the sum of :func:`sum_over_nothing`
+    for the release ``manifest`` (known zero when no manifest is given).
     """
+    if not rows:
+        return sum_over_nothing(manifest, name)
     states = {row[f"{name}_state"] for row in rows}
     if states <= {KNOWN}:
         return sum(row[name] for row in rows), KNOWN
     return None, states.pop() if len(states) == 1 else NOT_AVAILABLE
+
+
+def sum_over_nothing(manifest: Mapping[str, Any] | None, name: str) -> tuple[int | None, str]:
+    """The sum of a count over no documents (§7.3, revision 2): known and zero — unless the release
+    cannot have that count at all: ``tokens_counted`` without a known denominator takes the
+    denominator's state, ``audio_ms`` in a written release is ``not_applicable``. An empty set never
+    turns a count that does not exist into a zero.
+    """
+    if manifest is not None:
+        if name == "tokens_counted" and manifest["token_denominator_state"] != KNOWN:
+            return None, manifest["token_denominator_state"]
+        if name == "audio_ms" and manifest["modality"] == "written":
+            return None, NOT_APPLICABLE
+    return 0, KNOWN
 
 
 def derive_coverage(documents: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
@@ -612,8 +795,7 @@ class _Release:
 def _manifest_rules(manifest: Mapping[str, Any]) -> list[Objection]:
     """§5.2 and §5.4: what the schema subset cannot state about a release manifest."""
     where = RELEASE_MANIFEST
-    objections = [o for name, schema_id in (("members", MEMBER_SCHEMA), ("documents", DOCUMENT_SCHEMA), ("coverage", COVERAGE_SCHEMA))
-                  for o in _pin_schema(manifest[name], schema_id, f"{where}.{name}")]
+    objections: list[Objection] = []  # the record schema a pin names is read with its set (phase 2, §13.1)
     problems = _state_problems(manifest, "$")
     kind, modality, anchors = manifest["release_kind"], manifest["modality"], manifest["anchors"]
     if manifest["fixture"] != (kind == "fixture"):
@@ -720,8 +902,12 @@ def _document_rules(manifest: Mapping[str, Any], members: Sequence[Mapping[str, 
                 quarter = cohort_of(document["date"])
             except ValueError:
                 problems.append(f"{name}: {document['date']!r} is not a calendar date")
-        if document["cohort_state"] == KNOWN and (not dated or document["cohort"] != quarter):
-            problems.append(f"{name}: a cohort is known only with its date and contains it")
+        # §7.2 (revision 2): the cohort is derived from the date in both directions — known exactly
+        # when the date is, and then its quarter; otherwise in the date's own state.
+        if dated and (document["cohort_state"] != KNOWN or document["cohort"] != quarter):
+            problems.append(f"{name}: a known date has its known cohort, the quarter that contains it")
+        if not dated and document["cohort_state"] != document["date_state"]:
+            problems.append(f"{name}: a cohort without a known date has the date's state")
         if (document["audio_ms_state"] == NOT_APPLICABLE) != written:
             problems.append(f"{name}: audio_ms is not_applicable for a written document, and only for one")
         if document["tokens_counted_state"] == KNOWN and manifest["token_denominator_state"] != KNOWN:
@@ -730,8 +916,8 @@ def _document_rules(manifest: Mapping[str, Any], members: Sequence[Mapping[str, 
 
 
 def _totals(manifest: Mapping[str, Any], members: Sequence[Any], documents: Sequence[Mapping[str, Any]]) -> list[Objection]:
-    tokens, tokens_state = stateful_sum(documents, "tokens_counted")
-    audio, audio_state = stateful_sum(documents, "audio_ms")
+    tokens, tokens_state = stateful_sum(documents, "tokens_counted", manifest)
+    audio, audio_state = stateful_sum(documents, "audio_ms", manifest)
     derived = {"exports": len(members), "documents": len(documents), "tokens_counted": tokens,
                "tokens_counted_state": tokens_state, "audio_ms": audio, "audio_ms_state": audio_state}
     if not _same(derived, manifest["totals"]):
@@ -812,7 +998,14 @@ def _check_release(directory: Path, contract: Contract, *, exports_root: Path | 
         if objections:
             return None, objections
 
-    if manifest["release_kind"] != "provisional_export":                                               # phase 5
+    if manifest["release_kind"] == "provisional_export":                                               # phase 5
+        # §9.1 (revision 2): a freeze record beside a provisional export claims a release that does
+        # not exist. Its existence is the objection; it is not read, so not even a record that names
+        # exactly this manifest is accepted.
+        freeze = directory / RELEASE_FREEZE
+        if freeze.exists() or freeze.is_symlink():
+            return None, [Objection("FREEZE_MISMATCH", RELEASE_FREEZE, "a provisional export has no freeze record")]
+    else:
         objections = _freeze(directory, manifest, release.manifest_sha256, contract)
         if objections:
             return None, objections
@@ -834,21 +1027,23 @@ def release_manifest_digest(directory: Path) -> str:
     return document_digest(parse_strict((Path(directory) / RELEASE_MANIFEST).read_bytes()))
 
 
-def _pinned_release(directory: Path | None, release_id: str, digest: str, contract: Contract, *, exports_root: Path | None,
-                    where: str) -> tuple[_Release | None, list[Objection]]:
-    """A release a study or a package names by id and manifest digest: available, the named one,
-    and conformant. A release that is not the named one is reported as that and not examined
-    further: its own state is not the subject of the check.
+def _pinned_release(directory: Path | None, corpus_id: str, release_id: str, digest: str, contract: Contract, *,
+                    exports_root: Path | None, where: str) -> tuple[_Release | None, list[Objection]]:
+    """A release that something else names by corpus, id and manifest digest (§13.1): identified
+    first, checked second. (a) Its manifest is read as a document up to its schema; if that objects,
+    those codes are the result. (b) If corpus, id or digest differ from the pin, the result is
+    ``RELEASE_PIN_MISMATCH`` and nothing else: the state of another release is not the referrer's
+    matter. (c) Otherwise the release check runs and its codes are reported as they are — a release
+    with the pinned digest that does not verify is not a pin mismatch.
     """
     if directory is None or not (Path(directory) / RELEASE_MANIFEST).is_file():
         return None, [Objection("REFERENCE_MISSING", where, f"release {release_id} is not available")]
-    try:
-        manifest = parse_strict((Path(directory) / RELEASE_MANIFEST).read_bytes())
-        found = (manifest.get("release_id") if isinstance(manifest, dict) else None, document_digest(manifest))
-    except NonCanonical:
-        found = (None, "")
-    if found != (release_id, digest):
-        return None, [Objection("RELEASE_PIN_MISMATCH", where, f"the release at hand is not {release_id} with the pinned manifest digest")]
+    manifest, objections = _document(Path(directory) / RELEASE_MANIFEST, MANIFEST_SCHEMA, contract, f"{where}: {RELEASE_MANIFEST}")
+    if objections:
+        return None, objections
+    if (manifest["corpus_id"], manifest["release_id"], document_digest(manifest)) != (corpus_id, release_id, digest):
+        return None, [Objection("RELEASE_PIN_MISMATCH", where,
+                                f"the release at hand is not {corpus_id} {release_id} with the pinned manifest digest")]
     return _check_release(Path(directory), contract, exports_root=exports_root, require_exports=exports_root is not None,
                           previous_directory=None)
 
@@ -858,7 +1053,6 @@ def _pinned_release(directory: Path | None, release_id: str, digest: str, contra
 
 def _study_rules(study: Mapping[str, Any]) -> list[Objection]:
     where = STUDY_POPULATION
-    objections = [o for name in ("selected", "excluded") for o in _pin_schema(study[name], SELECTION_SCHEMA, f"{where}.{name}")]
     problems = _state_problems(study, "$")
     corpora = [entry["corpus_id"] for entry in study["inputs"]]
     if _duplicates(corpora):
@@ -876,8 +1070,11 @@ def _study_rules(study: Mapping[str, Any]) -> list[Objection]:
     if selection["kind"] == "declarative_filter":
         if selection["filter_language"] != FILTER_LANGUAGE:
             problems.append(f"$.selection: a declarative selection is written in {FILTER_LANGUAGE}")
-        if _duplicates(entry["corpus_id"] for entry in selection["filters"]) or not {e["corpus_id"] for e in selection["filters"]} <= set(corpora):
-            problems.append("$.selection.filters: at most one filter per corpus of the inputs")
+        # §10.3 (revision 2): exactly one filter per input. An input without one would read as
+        # "every document" or as "none"; neither is assumed. Every document is `"all": []`, stated.
+        filtered = [entry["corpus_id"] for entry in selection["filters"]]
+        if _duplicates(filtered) or set(filtered) != set(corpora):
+            problems.append("$.selection.filters: exactly one filter per corpus of the inputs")
         for entry in selection["filters"]:
             for clause in entry["all"]:
                 operators = sorted(name for name in clause if name != "field")
@@ -886,7 +1083,7 @@ def _study_rules(study: Mapping[str, Any]) -> list[Objection]:
                     bool(operators) and set(operators) <= set(_FILTER_RANGE[name]) if name in _FILTER_RANGE else False)
                 if not fits:
                     problems.append(f"$.selection.filters: {name!r} with {operators} is not a clause of {FILTER_LANGUAGE}")
-    return objections + [Objection("SCHEMA_VIOLATION", where, problem) for problem in problems]
+    return [Objection("SCHEMA_VIOLATION", where, problem) for problem in problems]
 
 
 def _satisfies(document: Mapping[str, Any], clause: Mapping[str, Any]) -> bool:
@@ -905,14 +1102,17 @@ def filter_documents(documents: Sequence[Mapping[str, Any]], clauses: Sequence[M
     return sorted(document["document_id"] for document in documents if all(_satisfies(document, clause) for clause in clauses))
 
 
-def study_totals(corpus_id: str, selected: Sequence[Mapping[str, Any]], documents: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-    """The totals of one corpus in a study population, re-derived (§10.3)."""
+def study_totals(corpus_id: str, selected: Sequence[Mapping[str, Any]], documents: Sequence[Mapping[str, Any]],
+                 manifest: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """The totals of one corpus in a study population, re-derived (§10.3). ``manifest`` is the
+    pinned release's: a corpus from which nothing is selected has its sums over no documents (§7.3).
+    """
     own = [record for record in selected if record["corpus_id"] == corpus_id]
     ids = {record["document_id"] for record in own}
     if all(record["level"] == "document" for record in own):
         rows = [document for document in documents if document["document_id"] in ids]
-        tokens, tokens_state = stateful_sum(rows, "tokens_counted")
-        audio, audio_state = stateful_sum(rows, "audio_ms")
+        tokens, tokens_state = stateful_sum(rows, "tokens_counted", manifest)
+        audio, audio_state = stateful_sum(rows, "audio_ms", manifest)
     else:  # below the document the document records cannot give a count
         tokens = audio = None
         tokens_state = audio_state = NOT_AVAILABLE
@@ -936,12 +1136,11 @@ def verify_study(directory: Path, releases: Mapping[str, Path], *, contract: Con
 
     pinned: dict[str, _Release] = {}                                                                      # phase 2
     for entry in study["inputs"]:
-        release, trouble = _pinned_release(releases.get(entry["release_id"]), entry["release_id"], entry["release_manifest_sha256"],
-                                           contract, exports_root=None, where=f"inputs.{entry['corpus_id']}")
+        release, trouble = _pinned_release(releases.get(entry["release_id"]), entry["corpus_id"], entry["release_id"],
+                                           entry["release_manifest_sha256"], contract, exports_root=None,
+                                           where=f"inputs.{entry['corpus_id']}")
         objections += trouble
         if release is not None:
-            if release.manifest["corpus_id"] != entry["corpus_id"]:
-                objections.append(Objection("RELEASE_PIN_MISMATCH", f"inputs.{entry['corpus_id']}", "the release is of another corpus"))
             pinned[entry["corpus_id"]] = release
     sets = {}
     for name, file_name in (("selected", SELECTED), ("excluded", EXCLUDED)):
@@ -989,7 +1188,8 @@ def verify_study(directory: Path, releases: Mapping[str, Path], *, contract: Con
                 objections.append(Objection("POPULATION_SELECTION_MISMATCH", f"selection.{corpus_id}",
                                             "the declared filter, re-run on the pinned documents, does not give the frozen ids"))
     for stated in study["totals"]:
-        derived = study_totals(stated["corpus_id"], selected, pinned[stated["corpus_id"]].documents)
+        release = pinned[stated["corpus_id"]]
+        derived = study_totals(stated["corpus_id"], selected, release.documents, release.manifest)
         if not _same(derived, stated):
             objections.append(Objection("TOTALS_MISMATCH", f"totals.{stated['corpus_id']}", f"the records give {derived}"))
     return verdict(objections)
@@ -1000,7 +1200,6 @@ def verify_study(directory: Path, releases: Mapping[str, Path], *, contract: Con
 
 def _package_rules(package: Mapping[str, Any]) -> list[Objection]:
     where = PACKAGE_MANIFEST
-    objections = _pin_schema(package["files"], PACKAGE_FILE_SCHEMA, f"{where}.files")
     problems = _state_problems(package, "$")
     release = package["release"]
     if not release["release_id"].startswith(release["corpus_id"] + "-"):
@@ -1009,7 +1208,7 @@ def _package_rules(package: Mapping[str, Any]) -> list[Objection]:
         problems.append("$.exports: an archive package is self-contained")
     if package["metadata"]["version"] != release["release_id"]:
         problems.append("$.metadata.version: the version of a package is the release id")
-    return objections + [Objection("SCHEMA_VIOLATION", where, problem) for problem in problems]
+    return [Objection("SCHEMA_VIOLATION", where, problem) for problem in problems]
 
 
 def _listed_files(package: Mapping[str, Any], files: Sequence[Mapping[str, Any]]) -> list[Objection]:
@@ -1074,7 +1273,8 @@ def verify_package(directory: Path, *, exports_root: Path | None = None, contrac
 
     included = package["exports"] == "included"                                                             # phase 5
     root = directory / "exports" if included else exports_root
-    _, objections = _pinned_release(directory / "release", package["release"]["release_id"], package["release"]["release_manifest_sha256"],
+    named = package["release"]
+    _, objections = _pinned_release(directory / "release", named["corpus_id"], named["release_id"], named["release_manifest_sha256"],
                                     contract, exports_root=root, where="release")
     return verdict(objections, exports_checked=root is not None)
 

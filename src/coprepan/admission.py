@@ -170,13 +170,14 @@ def label_table(workspace: core_pipeline.Workspace) -> LabelTable:
 
 @writes_workspace("admission labels")
 def label_pack(workspace: core_pipeline.Workspace, *, preservation_root: Path, identifier: str,
-               results: list[Mapping[str, Any]], extractor: extraction.Extractor, labelled_at: str) -> list[dict[str, Any]]:
+               results: list[Mapping[str, Any]], extractor: extraction.Extractor, labelled_at: str,
+               trust_local_copy: bool = False) -> list[dict[str, Any]]:
     """Label every fetched item of a preserved pack from the stored records. Idempotent.
 
     Reads the preserved fetch records and the stored extractions; decides nothing that is not in
-    them.
+    them. ``trust_local_copy``: as for ``core_pipeline.open_preserved_pack`` (CPD-0033).
     """
-    preserved = core_pipeline.open_preserved_pack(preservation_root, identifier)
+    preserved = core_pipeline.open_preserved_pack(preservation_root, identifier, workspace=workspace, trust_local_copy=trust_local_copy)
     store, tables, table = workspace.layer_store(), IdentityTables(workspace.identity), label_table(workspace)
     by_fetch = {result["fetch_id"]: result for result in results}
     records = {fetch_id: preserved.fetch_record(fetch_id) for fetch_id, entry in preserved.entries.items() if entry.body_sha256 is not None}

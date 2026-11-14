@@ -1,10 +1,12 @@
 # Joint release contract `crosscorpus-release/v1`
 
-**Status: DRAFT. Not in force in either repository. Nothing validated scientifically, nothing
-activated.** No release of either corpus exists. What exists is this text, the schemas beside it,
-synthetic fixtures for both corpora, conformance vectors, and one implementation (CO.RA.PAN's). The
-contract stays a draft until it has been checked against both current implementations and both
-projects have recorded its adoption (§14.3).
+**Status: DRAFT, second revision (§17). Not jointly adopted. Nothing validated scientifically,
+nothing activated.** No release of either corpus exists. What exists is this text, the schemas
+beside it, synthetic fixtures for both corpora, conformance vectors, and two implementations written
+separately (CO.RA.PAN's and CO.PRE.PAN's). The second revision settles the points on which those two
+differed or which the first text left open; it must be taken and checked again by CO.PRE.PAN. The
+contract stays a draft until both implementations pass **this** bundle digest and both projects have
+recorded its adoption (§14.3).
 
 This directory is the **contract bundle**: `CONTRACT.md`, `schemas/`, `fixtures/`, `conformance/`.
 It is identified by one digest (§14) and is read byte-identically by both repositories.
@@ -127,7 +129,14 @@ belong to:
 - relative; segments separated by `/`; no leading `/`; no backslash; no colon;
 - no empty segment, no `.` and no `..`;
 - NFC; no control character; no segment that begins or ends with a space or ends with a dot;
-- within one tree no two paths that differ only by letter case.
+- within one tree — and within one file list (§11.2) — no two paths that differ only by letter
+  case.
+
+**Letter case** is compared, wherever this contract compares it (paths that differ only by case;
+the forbidden suffixes of §11.3), after Unicode **full case folding** (`CaseFolding.txt`, statuses C
+and F; Python `str.casefold()`), not after a language's "lower case": the two differ (`ß`, `ſ`, `K`).
+Nothing else in this contract is case-insensitive: ids, vocabulary values and states are compared
+code point by code point.
 
 A file or directory whose name cannot be written as a contract path makes the tree non-conformant
 (`PATH_INVALID`); it is not skipped. A symbolic link is not a file of a tree.
@@ -259,6 +268,15 @@ The **document** is the sampled unit of the corpus, as in the analysis contract 
 for press one document version (an article in one textual state). A document is delivered by
 exactly one member export of a release.
 
+**Membership is not a count of works.** Every `documents` number of this contract — in a member
+record, a coverage cell, the totals of a release or of a study — counts document records, that is
+*document versions* for press. Two versions of one article are two documents of a release, possibly
+in two exports, and are counted as two. The document index does not say that two records are the
+same article: that grouping lives in the corpus's native export and in the analysis tables. A count
+of articles (works) therefore **cannot be read from this index** and must not be reported from a
+`documents` field. Whether a release holds one version per article or several is decided by its
+selection policy (§16 Q6), not here; a grouping key in the index is open (§16 Q11).
+
 | Field | Content |
 |---|---|
 | `document_id` | the corpus's own id; opaque; the same string as in the analysis tables |
@@ -276,8 +294,12 @@ exactly one member export of a release.
 - `date_basis` is a value of the release's own closed vocabulary (`vocabularies.date_basis`),
   written as the corpus writes it. The contract does not rank or translate bases.
 - **A date and its basis are known together or not at all.**
-- `cohort` is the calendar quarter of `date`, `YYYY-Qn`. It is `known` only if `date` is, and then
-  contains it. A cohort is a property of the material (a *corpus cohort*), never of processing.
+- `cohort` is the calendar quarter of `date`, `YYYY-Qn`, and is **derived from it, in both
+  directions**: it is `known` exactly when `date` is, and then is the quarter that contains it; when
+  `date` is not known, `cohort` has the same state as `date`. A known date without its cohort is an
+  objection (`DOCUMENT_INCONSISTENT`) like a cohort without a date: otherwise a dated document would
+  sit in an "unknown cohort" cell and would satisfy a filter on its date but not on its quarter. A
+  cohort is a property of the material (a *corpus cohort*), never of processing.
 - A retrieval date, crawl date, ingest date, export date or file date **is never a `date`**. A
   document without a defensible date has `date_state` `unknown` (CO.RA.PAN: `UNDATED`) and belongs
   to no cohort; it is not assigned one by default.
@@ -293,6 +315,12 @@ counts and names the denominator.
 The **sum of a stateful count** over a set of documents is: `known` with the sum, if every
 document's value is known; otherwise `null` with the documents' common state if they share one,
 and with `not_available` if they do not. A partial sum is never reported as a total.
+
+The sum over **no documents** (a study population that selects nothing from a corpus; a release
+without documents) is `known` and `0` — unless the release cannot have that count at all, and then
+it is `null` with the state that says so: `tokens_counted` in a release whose
+`token_denominator_state` is not `known` takes that state; `audio_ms` in a written release is
+`not_applicable`. An empty set never turns a count that does not exist into a zero.
 
 Coverage — schema [`schemas/release-coverage.schema.json`](schemas/release-coverage.schema.json),
 stored as `COVERAGE.jsonl` — has one record per cell
@@ -346,7 +374,10 @@ Rules:
   `release_manifest_sha256`, `frozen_at`, `frozen_by`. It is written after the manifest, by an
   explicit act of a person, after a check with every export present has passed.
 - A `provisional_export` has no freeze record and is not a release. It exists so that a corpus
-  without release machinery can hand over a pinned state honestly.
+  without release machinery can hand over a pinned state honestly. A `RELEASE_FREEZE.json` beside a
+  provisional export claims a release that does not exist: a check objects (`FREEZE_MISMATCH`) to
+  its **existence**, whatever it says — the record is not read, so a record that names exactly this
+  manifest is refused like any other. It is neither ignored nor accepted.
 
 ### 9.2 Immutability
 
@@ -379,6 +410,28 @@ erratum is a new, dated note beside the release, never an edit of the release.
   adoption, any change that alters the meaning of a field, a digest or a verdict is `v2`; a
   release frozen under `v1` stays a `v1` release and stays checkable by a `v1` implementation.
 
+### 9.5 A freeze is an identity statement, not a completeness statement
+
+The **immutable identity** of a release and the **completeness of its annotation and analysis
+layers** are two different statements, and a freeze makes only the first.
+
+- A release — of any `release_kind` — **may be frozen while token counts are `not_available`**. The
+  state is then explicit at all three levels (`tokens_counted_state` in every document, in every
+  coverage cell and in `totals`), `token_denominator_state` is not `known`, and `analysis_layer` says
+  whether a projection exists.
+- From such a release **no token rate follows**, and it claims no readiness for token-based analysis:
+  a study over it has `not_available` token totals, and a cross-corpus rate needs `known` counts on
+  both sides.
+- A count never appears without its denominator (§5.2 rule 2), and a partial sum never appears as a
+  total (§7.3): a release in which only some documents are counted has `not_available` totals, not
+  the sum of the counted ones.
+- **Counts or annotations that arrive later make a new corpus state**: a later release (§9.3), with a
+  new `release_id`. A frozen manifest, record set or export is never completed or amended in place.
+
+Status of this subsection: it is the position both projects have recorded separately (CO.PRE.PAN:
+CPD-0012 §5, a recommendation; CO.RA.PAN: D93). It becomes joint
+with the adoption of the contract (§14.3) and is listed until then in §16 (Q1).
+
 ## 10. Study populations
 
 Schema: [`schemas/study-population.schema.json`](schemas/study-population.schema.json), stored as
@@ -398,8 +451,19 @@ Schema: [`schemas/study-population.schema.json`](schemas/study-population.schema
 | `analysis_code` | `repository`°, `commit`° of the analysis code |
 
 A study population is cited by `study_id`, `population_id` and the document digest of its manifest.
-Together with the release pins it identifies the analytical input completely:
-*release id + manifest digest + population digest (+ analysis code)*.
+
+**What a study pins — three things, three different digests, never mixed:**
+
+| Pin | Identifies | Where it is recorded |
+|---|---|---|
+| `release_id` + `release_manifest_sha256` — the *document digest of the release manifest* | the corpus state, per input corpus | `inputs[]` of the population manifest |
+| `study_id` + `population_id` + the *document digest of the population manifest* (which in turn pins `selected` and `excluded` by record-set digest) | exactly the ids the study used | by whatever cites the study: a paper, an analysis record |
+| `inputs[].analysis_layer.manifest_sha256` — the analysis bundle's *own seal* over its release record (`crosscorpus-analysis/v1`) | the analysis tables, **if and only if** the study reads them | `inputs[]` of the population manifest |
+
+`release_manifest_sha256` and the bundle's `manifest_sha256` are different digests of different
+documents; neither stands in for the other, and a study that reads analysis tables records both.
+A study that reads no analysis tables says so (`analysis_layer.state` other than `known`). The
+analysis code (`analysis_code`) is provenance beside these pins.
 
 ### 10.2 Selection records
 
@@ -408,6 +472,9 @@ Together with the release pins it identifies the analytical input completely:
 
 - `id_kind` is an anchor kind **the pinned release declares** (§8). A `turn` in a written release,
   a `paragraph` in a spoken one, is an objection (`ANCHOR_KIND_INVALID`).
+- `corpus_id` and `release_id` name a release the study pins (`inputs`). A record that names any
+  other release cannot be resolved against anything the study pinned (`POPULATION_NOT_RESTORABLE`);
+  it is not a pin mismatch, which is a statement about a release at hand (§13.1).
 - `document_id` is the document the id belongs to; it must be in the pinned release
   (`POPULATION_NOT_RESTORABLE`). At level `document`, `id` is the `document_id`.
 - Exactly an excluded record states a `reason`, from `exclusion_reasons`. An id is selected or
@@ -432,9 +499,15 @@ document record. `country_id`, `outlet_id`, `export_id`, `cohort`, `date_basis`:
 known**: an undated document is in no date range, by no default. A declarative filter selects
 documents only.
 
+A declarative selection states **exactly one filter per input corpus** (`SCHEMA_VIOLATION`
+otherwise). An input without a filter would have two defensible readings — every document, or none
+— and the contract assumes neither. Every document of a corpus is selected by the empty conjunction
+(`"all": []`), stated; a corpus from which nothing is to be drawn is not an input.
+
 `totals` are re-derived: the records and distinct documents always; `tokens_counted` and
 `audio_ms` when the corpus's selection is at document level — below the document they are
-`not_available`, because the document records cannot give them.
+`not_available`, because the document records cannot give them. A corpus from which no record is
+selected has the sums over no documents (§7.3).
 
 ## 11. Distribution and archive packages
 
@@ -470,12 +543,20 @@ different file is an objection (`PACKAGE_INCOMPLETE`). Roles: `release_manifest`
 (under `exports/`), `projection`, `documentation`, `schema`, `licence`. The release inside a
 package is checked as a release (§13.1) — with every export when they are included.
 
-### 11.3 No source media
+### 11.3 No source media, no fetched pages
 
 `contains_source_media` is `false` in v1, and a check objects (`PACKAGE_FORBIDDEN_CONTENT`) to any
-listed file with an audio or video suffix (`.wav`, `.flac`, `.mp3`, `.m4a`, `.mp4`, `.ogg`, `.opus`,
-`.aac`, `.wma`, `.aif`, `.aiff`, `.webm`). Publishing source audio needs a separate legal and
-repository decision and a new contract version. `metadata.source_media_statement` says, in prose,
+listed file whose path ends, after case folding (§4.4), in
+
+- an audio or video suffix: `.wav`, `.flac`, `.mp3`, `.m4a`, `.mp4`, `.ogg`, `.opus`, `.aac`, `.wma`,
+  `.aif`, `.aiff`, `.webm`;
+- a suffix of a container of fetched pages: `.warc`, `.warc.gz`, `.arc`, `.arc.gz`, `.cdx`, `.cdxj`.
+
+Both are the *source* of a corpus (§8: source audio and fetched pages are never part of a release),
+so both are refused by the same rule and the same code. The lists are a mechanical floor, not a
+definition of source material: a builder must not put source material into a package under any
+name. Publishing source audio or fetched pages needs a separate legal and repository decision and a
+new contract version. `metadata.source_media_statement` says, in prose,
 what the release derives from and that the source is not part of the package.
 
 A package must contain no absolute path, no credential and no transient operational state. Only
@@ -513,6 +594,24 @@ minimal one cannot disagree:
 `const`, `enum`, `pattern`, `required`, `properties`, `additionalProperties` (`false`), `items`,
 `minItems`, `minimum`, `minLength`.
 
+**`pattern` has one meaning, independent of the host's regular-expression library.** A pattern is
+searched in the value (it is not implicitly anchored) and is written in this subset only:
+
+- literal characters; the escapes `\\ \. \- \/ \[ \] \( \) \{ \} \* \+ \? \| \^ \$`;
+- character classes `[…]` and `[^…]` of literals, ranges and `\s`;
+- `\s`: exactly the 25 code points with the Unicode property White_Space — U+0009–U+000D, U+0020,
+  U+0085, U+00A0, U+1680, U+2000–U+200A, U+2028, U+2029, U+202F, U+205F, U+3000; `\S` (outside a
+  class): every other code point;
+- groups `(…)` and `(?:…)`, alternation `|`, quantifiers `*`, `+`, `?`, `{m}`, `{m,n}`;
+- `^`: the start of the string; `$`: **the end of the string — nothing may follow, not even one
+  line feed**.
+
+Nothing else exists: no `.`, `\d`, `\w`, `\b`, no look-around, no back-reference, no flag. An
+implementation refuses a schema whose pattern leaves the subset, and must not hand a pattern to a
+library whose `$` or `\s` differs (Python's `$` accepts a trailing line feed; ECMA-262's `\s`
+includes U+FEFF and omits U+0085; Python's includes U+001C–U+001F). `conformance/VECTORS.json`
+lists patterns with values and verdicts.
+
 An implementation refuses a schema that uses any other keyword. Every object is closed
 (`additionalProperties: false`): an unknown field is an objection, not an extension point. Rules a
 schema of this subset cannot state — a value is null exactly when its state is not `known`; sums;
@@ -522,37 +621,71 @@ references between records — are stated in this text and enforced by the check
 
 ### 13.1 Checks and their order
 
-A check reads and never repairs. It runs in ordered phases; **a phase that objects ends the
-check**, because later phases assume what earlier ones established. The verdict of a check is the
-set of codes it reports.
+A check reads and never repairs. It runs in ordered **phases**, and a phase in ordered **steps**
+(written a, b, c below). **A step that objects ends the check**, because later steps assume what
+earlier ones established; **within one step every objection is reported**, on every document and
+record the step looks at. The verdict of a check is the set of codes it reports.
+
+**Reading one document** (a manifest, a freeze record, a pointer) is always the same four steps:
+(a) it exists (`REFERENCE_MISSING`) and parses strictly (`NON_CANONICAL_VALUE`); (b) it names this
+contract and its schema (`CONTRACT_VERSION_UNSUPPORTED`) — a document of another version is not read
+any further, so none of its other defects is reported; (c) it satisfies its schema
+(`SCHEMA_VIOLATION`); (d) it satisfies the rules of this text that a schema cannot state
+(`SCHEMA_VIOLATION`; for a release manifest also §5.4, `RELEASE_ID_INVALID`).
+
+**Reading one pinned record set**, in one step per phase for all sets of that phase: it exists
+(`REFERENCE_MISSING`), parses strictly (`NON_CANONICAL_VALUE`), its pin names this contract's record
+schema (`CONTRACT_VERSION_UNSUPPORTED`), every record satisfies the schema (`SCHEMA_VIOLATION`), and
+the set is the pinned one by count and digest (`PIN_MISMATCH`). The first of these that fails is the
+objection of that set; the other sets of the phase are still read.
 
 **Release** (`release directory`, optionally `exports root`, optionally the previous release):
 
-1. the manifest parses strictly (`NON_CANONICAL_VALUE`), is of this contract and schema
-   (`CONTRACT_VERSION_UNSUPPORTED`), satisfies its schema and the rules of §5.2
-   (`SCHEMA_VIOLATION`) and §5.4 (`RELEASE_ID_INVALID`);
-2. the three pinned record sets exist (`REFERENCE_MISSING`), satisfy their schemas and are exactly
-   the pinned sets (`PIN_MISMATCH`);
-3. membership (§6.1, §9.3: `MEMBERSHIP_INCONSISTENT`, `PREVIOUS_RELEASE_MISMATCH`) and documents
-   (§7.1, §7.2: `DOCUMENT_INCONSISTENT`); if both hold, coverage (`COVERAGE_MISMATCH`) and totals
+1. the manifest, read as a document;
+2. the three pinned record sets (`MEMBERS`, `DOCUMENTS`, `COVERAGE`);
+3. (a) membership (§6.1, §9.3: `MEMBERSHIP_INCONSISTENT`, `PREVIOUS_RELEASE_MISMATCH`) and documents
+   (§7.1, §7.2: `DOCUMENT_INCONSISTENT`); (b) coverage (`COVERAGE_MISMATCH`) and totals
    (`TOTALS_MISMATCH`);
 4. if exports are required or supplied: every member export is present (`EXPORT_MISSING`), is a
    tree of contract paths (`PATH_INVALID`) and has the named tree digest, file count and size
    (`EXPORT_TREE_MISMATCH`);
-5. the freeze record — required unless the release is a `provisional_export` — exists
-   (`REFERENCE_MISSING`) and names this manifest (`FREEZE_MISMATCH`).
+5. the freeze: for a `provisional_export`, no freeze record exists (`FREEZE_MISMATCH`, §9.1; the
+   record is not read). Otherwise the freeze record is read as a document — it is required
+   (`REFERENCE_MISSING`) — and names this manifest by corpus, id and digest (`FREEZE_MISMATCH`).
 
-**Study population**: (1) the manifest as above; (2) every pinned release is available
-(`REFERENCE_MISSING`), passes the release check without exports and is the pinned one
-(`RELEASE_PIN_MISMATCH`); the two record sets are the pinned ones; (3) every record (§10.2:
-`POPULATION_NOT_RESTORABLE`, `ANCHOR_KIND_INVALID`, `POPULATION_SELECTION_MISMATCH`); (4) the
-declarative selection re-derived (`POPULATION_SELECTION_MISMATCH`) and the totals
-(`TOTALS_MISMATCH`).
+**A release that something else names** — a study input, the release of a package, a pointer —
+by `corpus_id`, `release_id` and `release_manifest_sha256` is checked in this order:
 
-**Package**: (1) the manifest; (2) the file list is the pinned one; (3) paths, forbidden content
-and roles (`PATH_INVALID`, `PACKAGE_FORBIDDEN_CONTENT`, `PACKAGE_INCOMPLETE`); (4) the files on
-disk are exactly the listed ones (`PACKAGE_INCOMPLETE`); (5) the release inside it, as above, and
-it is the named one (`RELEASE_PIN_MISMATCH`).
+- (a) its manifest is read as a document, steps (a)–(c); if that objects, **those codes** are the
+  result: its identity cannot be established;
+- (b) its `corpus_id`, `release_id` and document digest are compared with the pin. If they differ,
+  the result is `RELEASE_PIN_MISMATCH` **and nothing else**: what else is wrong with a release that
+  is not the named one is not the referrer's matter;
+- (c) if they agree, the release check runs (without exports for a study and a pointer; with them
+  for a package that includes them), and **its codes are reported as they are**. A release that has
+  the pinned digest and does not verify — a record set edited, the freeze record missing — is not a
+  pin mismatch, and is not reported as one.
+
+**Study population**:
+
+1. the manifest, read as a document;
+2. every input: its release is available (`REFERENCE_MISSING`) and is checked as a named release;
+   and the two pinned record sets (`SELECTED`, `EXCLUDED`);
+3. every record (§10.2: `POPULATION_NOT_RESTORABLE`, `ANCHOR_KIND_INVALID`,
+   `POPULATION_SELECTION_MISMATCH`). A record that names no pinned release is reported once
+   (`POPULATION_NOT_RESTORABLE`) and not examined further;
+4. the declarative selection re-derived (`POPULATION_SELECTION_MISMATCH`) and the totals
+   (`TOTALS_MISMATCH`).
+
+**Package**:
+
+1. the manifest, read as a document;
+2. the file list, read as a pinned record set;
+3. every listed path (`PATH_INVALID`, including two listed paths that differ only by letter case),
+   forbidden content (`PACKAGE_FORBIDDEN_CONTENT`) and roles (`PACKAGE_INCOMPLETE`);
+4. the files on disk are exactly the listed ones (`PACKAGE_INCOMPLETE`; a tree that cannot be
+   listed: `PATH_INVALID`);
+5. the release inside it, as a named release.
 
 The codes above are the closed vocabulary of this contract version.
 
@@ -565,9 +698,15 @@ exclusion; `fixtures/joint/` holds one population over both corpora below the do
 native export format.
 
 [`conformance/VECTORS.json`](conformance/VECTORS.json) holds what every implementation must
-reproduce: the canonical JSON and digests of fixed values; the digests of the fixtures; and a list
-of **cases** — a target, a check, a list of declared manipulations of a copy of `fixtures/`, and
-the exact set of codes the check must then report. The operations are described in the file.
+reproduce: the canonical JSON and digests of fixed values; the digests of the fixtures; schema
+**patterns** with values and whether each value matches (§12); and a list of **cases** — a target, a
+check, a list of declared manipulations of a copy of `fixtures/`, and the exact set of codes the
+check must then report. The operations are described in the file.
+
+The expected set of codes of a case, and the verdict of a pattern vector, are **written from this
+text**, not copied from the output of an implementation; the digests of the fixtures are computed,
+and are confirmed by the second implementation. The cases of an earlier draft revision are kept
+unchanged in later ones (§17).
 
 An implementation conforms to this bundle when, in its own repository's test suite, it reproduces
 every digest and every case verdict. Passing proves **reproducible identity and technical
@@ -627,6 +766,16 @@ Each is a decision of this draft, open to review until adoption; none is a scien
 | T10 | Coverage is derived from the document records and checked, not delivered independently | a coverage table that can disagree with the data is worse than none |
 | T11 | Schemas in a small JSON Schema subset, evaluated by each repository's own code | neither repository depends on a schema library (CO.PRE.PAN has no runtime dependency at all) |
 | T12 | The implementations share vectors, not code; the bundle has one canonical home and is pinned by digest | the operator's constraint: no shared package, no third repository; copies must not drift |
+| T13 | A schema `pattern` is written in a small portable subset with its own meaning of `$` and `\s` (§12) | the two implementations disagreed on a value with a trailing line feed (Python `$`); ECMA-262 and Python disagree on `\s`. A pattern that means two things is not a schema |
+| T14 | A named release is identified first and checked second; a release that is the named one reports its own codes; `RELEASE_PIN_MISMATCH` means only "not the named release" (§13.1) | the two implementations reported a pinned-but-broken release differently. A pin that matches is not a pin mismatch, and the release's own code says what is wrong |
+| T15 | A selection record that names no pinned release is `POPULATION_NOT_RESTORABLE` (§10.2) | it is a defect of the population, not of a release at hand; the first text already listed only the population codes for that phase |
+| T16 | A freeze record beside a `provisional_export` is an objection by its existence and is not read (§9.1) | "has no freeze record" is normative. Ignoring it would let a provisional state lie beside a document that says FROZEN; checking its content would treat it as a release |
+| T17 | A cohort is known exactly when its date is (§7.2) | a cohort is a pure function of the date; allowing a known date in an "unknown cohort" makes coverage cells and filters disagree between producers |
+| T18 | A declarative selection has exactly one filter per input (§10.3) | an input without a filter can be read as "all" or as "none"; neither is assumed |
+| T19 | The sum over no documents is known zero, or the state by which the release says the count cannot exist (§7.3) | the first text did not define it and the two implementations differed (`not_available` vs zero) |
+| T20 | Fetched-page containers are refused in packages like source media; letter case is full case folding (§4.4, §11.3) | fetched pages are the source of the press corpus as audio is of the radio corpus; `lower()` and `casefold()` are not the same function |
+| T21 | `documents` counts document versions; an article count is not derivable from the release index; no grouping key is added in this revision (§7.1, Q11) | the distinction is needed now; a grouping key needs CO.PRE.PAN's native identity model and is not invented from here |
+| T22 | A freeze is an identity statement; token counts may be `not_available` in a frozen release (§9.5) | both projects recorded this position; neither corpus can count under the shared denominator today |
 
 ## 16. Open — not decided here
 
@@ -634,13 +783,29 @@ Nothing below is guessed in this draft. Each item names who decides.
 
 | # | Item | Kind |
 |---|---|---|
-| Q1 | Whether a `release` (not a provisional export) may be frozen while `tokens_counted` is `not_available`. The draft allows it and makes the state explicit. CO.RA.PAN cannot count under the shared denominator today | joint, scientific |
-| Q2 | The analysis contract's sentence "a study records `release_id` and `manifest_sha256` — nothing else identifies its input" (§8 there) and its embedded `manifest_sha256` field. Under this contract a study pins the **release manifest digest** and, where it reads analysis tables, the digest of that bundle's release record. The wording there needs an amendment in CO.PRE.PAN (CPD-0008), which this run could not make | joint, editorial |
+| Q1 | Whether a release may be frozen while `tokens_counted` is `not_available`. **Stated in §9.5** (yes; identity and completeness are separate; no rate follows; later counts are a later release). Recorded separately by both projects; **joint only with the adoption of the contract** | joint — pending adoption |
+| Q2 | What a study pins. **Settled in the text (§10.1)** and in CO.PRE.PAN by CPD-0012 §2, which amends CPD-0008 §7 and the analysis contract §8: release id + release manifest digest; the population by the digest of its manifest; the analysis bundle's own `manifest_sha256` where its tables are read. Nothing further is open on the wording | closed in the draft — pending adoption |
 | Q3 | Producer anchors for press (author, byline): no id and no vocabulary exists in CO.PRE.PAN; `producer_kinds` is empty for `written` | CO.PRE.PAN |
-| Q4 | CO.PRE.PAN's native export object (granularity, `export_id`, schema id): its release layer is not built. The fixture uses an invented `coprepan-fixture-export/v1` | CO.PRE.PAN |
+| Q4 | CO.PRE.PAN's native export object: **decided there** (CPD-0011, `coprepan-export/v1`, one outlet's document versions, `export_id` `cpx1-…`). The fixture keeps the invented `coprepan-fixture-export/v1`; no real export exists yet. Open there: partitioning over time, the annotation layer, the date parser | CO.PRE.PAN — decided, not yet exercised on real material |
 | Q5 | Coverage below the document (`production_mode`, speaker, section): needs the analysis bundle; a second coverage table on that level is not specified | joint |
 | Q6 | The selection policy *document*: only its pin is specified. What a policy must contain, and the scientific population of the first release of either corpus (boundary, eligibility), are not specified | scientific, per corpus and joint |
 | Q7 | Licence, access level, publisher, identifier model (version DOIs, concept DOI, parent record) and the metadata template of LinguRep | institutional |
 | Q8 | Columnar storage (Parquet) of record sets and projections. The digests are defined on content and do not depend on it; a Parquet file's *byte* digest is not stable across writers and must not be used as identity | technical |
 | Q9 | A machine-readable notice for a release that must no longer be used (§9.3 specifies only that it is a dated note) | joint, technical |
 | Q10 | Whether the corpus ids of this contract ever grow beyond `corapan`, `coprepan` | joint |
+| Q11 | A grouping key in the document index for the versions of one work (press: the document a version belongs to), so that works can be counted at release level. Today the index counts versions only (§7.1). Needed before a press release holds several versions per document and a study counts articles from the index | CO.PRE.PAN proposes, joint |
+| Q12 | Whether a preserved copy of an export must be byte-identical to the export a release names, or whether a release may name the preserved form as its own object. Observed in CO.RA.PAN (2026-10-08): the preservation copy of every EXPORT_READY bundle differs from the workspace bundle in one file, so the two have different tree digests | CO.RA.PAN, technical |
+
+## 17. Draft revisions
+
+While the contract is a draft, a revision is identified by its bundle digest (§9.4), which the pin
+files and the run reports record; this text cannot contain its own (§4.3).
+
+| Revision | Canonical-home commit | Bundle digest | Content |
+|---|---|---|---|
+| 1 | CO.RA.PAN `0a5f41dec2399369488c29f7cef37b053de28bcd` (2026-10-08) | `4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0` | first draft: text, ten schemas, fixtures, 52 cases. Reproduced by CO.PRE.PAN's independent implementation (52 of 52) and adopted **locally** there (CPD-0012). Reconstructable from that commit |
+| 2 | the commit that introduces this section; digest in `config/crosscorpus/contract_pins.json` and in the run report of 2026-10-08 (contract reconciliation) | recorded by the referrers | settles the four readings on which the implementations differed (T13–T16) and the points the first text left open (T17–T21); states Q1 (§9.5) and Q2 (§10.1); refuses fetched-page containers. **Schemas:** the `text` pattern is rewritten into the portable subset (same strings accepted, except those the two regex dialects disagreed on). **Fixtures: unchanged**, with unchanged digests. **Vectors:** the 52 cases unchanged, 41 cases and 30 pattern vectors added, two operations added (`set_json`, `refreeze`) |
+
+A revision changes verdicts on documents that were conformant before only where §15 says so. A
+local adoption that quotes an earlier digest (CPD-0012 quotes revision 1) does not carry over: it is
+renewed against the digest of the revision then in force (§14.3).

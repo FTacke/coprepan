@@ -14,7 +14,9 @@ Stage order and gates enforced in code:
 * only a **registered** outlet is acquired for (``Registry.resolve``);
 * a fetch is ``FETCHED`` only after its bytes are in the pack and on disk;
 * identity and extraction read **only** fetches whose ledger state is ``RAW_PRESERVED``, and read
-  them from the preservation root, never from the workspace copy.
+  them from the preservation root -- or (CPD-0033), right after the caller preserved and re-read the pack on the root in
+  the same step, from the workspace copy **only when its bytes hash to the digests the root's manifests record**; never
+  an unverified workspace copy.
 """
 
 from __future__ import annotations
@@ -25,7 +27,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
-from . import __version__, acquisition, extraction, layer_store, outage_spool, pack, preservation, storage_contract
+from . import (__version__, acquisition, extraction, layer_store, outage_spool, pack, preservation, preservation_target, preserved_index,
+               resource_policy, storage_contract)
 from .acquisition import AcquisitionRun, RecordedExchange
 from .canonical import sha256_bytes
 from .document_identity import IdentityTables
@@ -276,11 +279,12 @@ def preserve_pack(
     objects = _pack_objects(workspace, identifier, manifest)
     try:
         root = preservation_root()
+        index = content_index(workspace, root)
         result = None
         for item in objects:
             promoted = preservation.promote(item["source"], root=root, area=item["area"], object_id=item["object_id"],
                                             relative_path=item["relative_path"], declared_sha256=item["declared_sha256"],
-                                            details=item["details"], now=now)
+                                            details=item["details"], now=now, content_index=index)
             result = result or promoted
         _confirm_preserved(ledger, identifier, fetch_ids, root, now)
         return PackPreservation(identifier, preservation.STATE_PRESERVED, ROUTE_DIRECT, promotion=result)
@@ -290,6 +294,7 @@ def preserve_pack(
         if not isinstance(error.__cause__, OSError):
             raise
         reason, primary = f"io_error: {type(error.__cause__).__name__}", storage_contract.STATE_UNREACHABLE
+        resource_policy.report_failure(preservation_root, f"promotion of {identifier} broke off: {reason}")   # the share gate waits before the next contact
     except StorageRefusal as error:
         reason, primary = f"target_unavailable: {type(error).__name__}", storage_contract.STATE_UNREACHABLE
 
@@ -380,15 +385,16 @@ def seal_and_preserve(
         if ledger.state(entry.fetch_id) == "RAW_VERIFIED":
             ledger.transition(entry.fetch_id, "PRESERVATION_PENDING", at=now, details={"pack_id": identifier})
 
+    index_cache = content_index(workspace, preservation_root)
     result = preservation.promote(
         workspace.packs / f"{identifier}.warc.gz", root=preservation_root, area=AREA_PACKS, object_id=identifier,
         relative_path=pack_relative_path(identifier, ".warc.gz"), declared_sha256=manifest["pack_sha256"],
-        details={"pack": manifest}, now=now,
+        details={"pack": manifest}, now=now, content_index=index_cache,
     )
     preservation.promote(
         workspace.packs / f"{identifier}.index.jsonl", root=preservation_root, area=AREA_INDEXES,
         object_id=identifier, relative_path=pack_relative_path(identifier, ".index.jsonl"),
-        declared_sha256=manifest["index_sha256"], details={"pack_id": identifier}, now=now,
+        declared_sha256=manifest["index_sha256"], details={"pack_id": identifier}, now=now, content_index=index_cache,
     )
     # RAW_PRESERVED is a claim about bytes on the preservation root: both masters are re-read
     # and hashed before any fetch is given that state.
@@ -402,14 +408,28 @@ def seal_and_preserve(
     return result
 
 
+def content_index(workspace: Workspace, preservation_root: Path) -> preserved_index.ManifestCache | None:
+    """The workspace's manifest cache of the target at ``preservation_root`` (CPD-0033), or ``None`` when it cannot be
+    named (no identity marker); then every caller reads the root as before."""
+    try:
+        return preserved_index.ManifestCache.for_root(workspace.root, Path(preservation_root))
+    except (OSError, preservation_target.TargetError):
+        return None
+
+
+READ_FROM_ROOT, READ_FROM_VERIFIED_LOCAL_COPY = "PRESERVATION_ROOT", "VERIFIED_LOCAL_COPY"
+
+
 @dataclass(frozen=True)
 class PreservedPack:
-    """A pack read from the preservation root, verified before anything is taken from it."""
+    """A preserved pack, verified before anything is taken from it: either its masters on the preservation root, or the
+    workspace's byte-identical copy whose bytes hash to the digests the root's manifests record (``read_from``)."""
 
     pack_id: str
     path: Path
     manifest: Mapping[str, Any]
     entries: Mapping[str, pack.PackEntry]
+    read_from: str = READ_FROM_ROOT
 
     def fetch_record(self, fetch_id: str) -> dict[str, Any]:
         return pack.read_fetch_record(self.path, self.entries[fetch_id])
@@ -418,26 +438,45 @@ class PreservedPack:
         return pack.read_body(self.path, self.entries[fetch_id])
 
 
-def open_preserved_pack(preservation_root: Path, identifier: str) -> PreservedPack:
+def open_preserved_pack(preservation_root: Path, identifier: str, *, workspace: Workspace | None = None,
+                        trust_local_copy: bool = False) -> PreservedPack:
     """Open a preserved pack: master and index must verify against their manifests, and the index
     must be the one the pack manifest names.
+
+    With ``workspace`` (CPD-0033) the manifests come from the workspace's manifest cache of this target (read from the
+    root and copied when not held). By default both masters are then re-hashed on the root and read from there, as
+    always: a pack whose master no longer verifies is not read. **Only** with ``trust_local_copy`` -- which a caller
+    passes for a pack whose masters it has itself just re-read on the root in the same step (the derivation right after
+    ``preserve_pack`` returned ``RAW_PRESERVED``) -- the workspace's sealed pack and index are read instead, and only when
+    they hash to the manifests' digests: they are the bytes that verification found on the root seconds before. A
+    missing manifest on the root is ``NotPreserved`` in every case.
     """
-    held = preservation.read_manifest(preservation_root, AREA_PACKS, identifier)
-    index = preservation.read_manifest(preservation_root, AREA_INDEXES, identifier)
+    cache = content_index(workspace, preservation_root) if workspace is not None else None
+    if cache is not None:
+        held, index = cache.get(preservation_root, AREA_PACKS, identifier), cache.get(preservation_root, AREA_INDEXES, identifier)
+    else:
+        held = preservation.read_manifest(preservation_root, AREA_PACKS, identifier)
+        index = preservation.read_manifest(preservation_root, AREA_INDEXES, identifier)
     if held is None or index is None:
         raise NotPreserved(f"{identifier} is not on the preservation root")
-    for area in (AREA_PACKS, AREA_INDEXES):
-        if not preservation.verify_master(preservation_root, area, identifier):
-            raise preservation.PreservationError(f"{identifier}: preserved {area} master does not verify")
     manifest = held["details"]["pack"]
     if index["sha256"] != manifest["index_sha256"] or held["sha256"] != manifest["pack_sha256"]:
         raise preservation.PreservationError(f"{identifier}: preserved index and pack do not belong together")
+    local = (preserved_index.verified_local_copy(workspace.packs, identifier, held, index)
+             if trust_local_copy and workspace is not None else None)
+    if local is not None:
+        pack_path, index_path, read_from = local[0], local[1], READ_FROM_VERIFIED_LOCAL_COPY
+    else:
+        for area in (AREA_PACKS, AREA_INDEXES):
+            if not preservation.verify_master(preservation_root, area, identifier):
+                raise preservation.PreservationError(f"{identifier}: preserved {area} master does not verify")
+        pack_path, index_path, read_from = preservation_root / held["relative_path"], preservation_root / index["relative_path"], READ_FROM_ROOT
     entries = {}
-    for line in (preservation_root / index["relative_path"]).read_bytes().split(b"\n")[:-1]:
+    for line in index_path.read_bytes().split(b"\n")[:-1]:
         row = json.loads(line.decode("utf-8"))
         row.pop("schema"), row.pop("pack_id")
         entries[row["fetch_id"]] = pack.PackEntry(**row)
-    return PreservedPack(identifier, preservation_root / held["relative_path"], manifest, entries)
+    return PreservedPack(identifier, pack_path, manifest, entries, read_from)
 
 
 # --- identity and extraction ----------------------------------------------------------------------
@@ -455,10 +494,13 @@ def identify_and_extract(
     identity_directory: Path | None = None,
     read_only_layers: bool = False,
     skip_unpreserved: bool = False,
+    trust_local_copy: bool = False,
 ) -> list[dict[str, Any]]:
     """Assign documents and versions for every fetched entry of a preserved pack.
 
-    Reads bodies from the preservation root only, and only for fetches the ledger records as
+    Reads preserved bodies only (``open_preserved_pack``: the masters on the preservation root, re-hashed there; or, with
+    ``trust_local_copy`` for a pack the caller has just preserved and verified on the root in the same step, CPD-0033,
+    the workspace's copy whose bytes hash to the root manifests' digests), and only for fetches the ledger records as
     ``RAW_PRESERVED``. Idempotent: a second call finds every extraction in the layer store and
     every assignment in the identity tables.
 
@@ -468,7 +510,7 @@ def identify_and_extract(
     ``skip_unpreserved``: a fetch the ledger does not (yet) record as ``RAW_PRESERVED`` is left out
     instead of refused — the rebuild covers what is preserved and says nothing about the rest.
     """
-    preserved = open_preserved_pack(preservation_root, identifier)
+    preserved = open_preserved_pack(preservation_root, identifier, workspace=workspace, trust_local_copy=trust_local_copy)
     ledger, tables = workspace.ledger(), IdentityTables(identity_directory or workspace.identity)
     store = (workspace.layer_store() if workspace.layers.is_dir() else None) if read_only_layers else workspace.layer_store()
     rules = registry.url_rules(pack.pack_outlet(identifier))
@@ -491,7 +533,7 @@ def identify_and_extract(
             # A 304 is the server's statement about a body. It is believed only for a body this
             # corpus actually holds: the revalidated fetch must be preserved, with that very hash.
             target = record["revalidates"]
-            if ledger.state(target["fetch_id"]) != "RAW_PRESERVED" or not _holds_body(ledger, preservation_root, target):
+            if ledger.state(target["fetch_id"]) != "RAW_PRESERVED" or not _holds_body(ledger, preservation_root, target, workspace):
                 results.append({**result, "identity": "revalidation_target_not_preserved", "document_id": None,
                                 "document_version_id": None})
                 continue
@@ -533,14 +575,14 @@ def identify_and_extract(
     return results
 
 
-def _holds_body(ledger: Ledger, preservation_root: Path, target: Mapping[str, Any]) -> bool:
+def _holds_body(ledger: Ledger, preservation_root: Path, target: Mapping[str, Any], workspace: Workspace | None = None) -> bool:
     """Whether the preservation root holds the fetch a 304 names, with the body hash it names."""
     held = next((record.details.get("pack_id") for record in ledger.records()
                  if record.subject == target["fetch_id"] and record.new_state == "RAW_PRESERVED"), None)
     if held is None:
         return False
     try:
-        entry = open_preserved_pack(preservation_root, held).entries.get(target["fetch_id"])
+        entry = open_preserved_pack(preservation_root, held, workspace=workspace).entries.get(target["fetch_id"])
     except (NotPreserved, preservation.PreservationError, pack.PackError):
         return False
     return entry is not None and entry.body_sha256 == target["body_sha256"]

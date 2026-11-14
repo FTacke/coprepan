@@ -68,10 +68,20 @@ def _sister_roots(sister: Path) -> list[str]:
 
 
 def status(sister: Path | None = None) -> dict[str, Any]:
+    from coprepan import resource_policy
+
     environment = storage_roots.workstation_environment()
     targets = storage_roots.load_storage_targets()
     states, roots = {"REPOSITORY": storage_contract.STATE_AVAILABLE}, {}
+    runtime_value = environment.get("COPREPAN_WORKSPACE_ROOT", "").strip()
+    runtime = Path(runtime_value) if runtime_value and Path(runtime_value).is_dir() else None
+    policy = resource_policy.load_policy(resource_policy.default_policy_path(storage_roots.CHECKOUT))
+    gate = resource_policy.ShareGate(runtime, policy, env=environment) if runtime is not None else None
+    closed = gate.closed_because() if gate is not None else None
     for role in sorted(targets):
+        if role == "PRESERVATION" and closed:
+            states[role] = storage_contract.STATE_UNREACHABLE        # CPD-0033: the share is not contacted while its gate is closed
+            continue
         states[role], root = _state(role, environment, targets)
         if root is not None:
             roots[role] = root
@@ -106,8 +116,35 @@ def status(sister: Path | None = None) -> dict[str, Any]:
             "backup_of_the_preservation_primary": backup, "backup_receipt": facts["receipt"],
             "note": "a copy counts as a backup only when produced from the primary and verified against it; this command reads the "
                     "backup root's receipt and verifies no copy itself",
-            "historic_holding": "no root is configured or present for the HISTORIC holding; planned, see docs/storage/INDEX.md",
+            "historic_holding": "no root is configured or present for the HISTORIC holding, and none is planned (docs/storage/INDEX.md §20.3)",
+            "health": _health(roots, runtime, policy, gate, environment),
             "checked_at": _now()}
+
+
+def _health(roots, runtime, policy, gate, environment) -> dict[str, Any]:
+    """CPD-0033: what an operator needs to see without reading logs -- whether the backup is current, whether CO.PRE.PAN is backing
+    off the share or paused, what CO.RA.PAN observes, and what is pending in the workspace with its age (contract P4). From local
+    files only."""
+    from datetime import datetime, timezone
+
+    from coprepan import core_pipeline, primary_backup, resource_policy
+
+    now = datetime.now(timezone.utc)
+    pending = None
+    if runtime is not None and (runtime / "ledgers" / "preservation.jsonl").is_file():
+        ledger = core_pipeline.Workspace(runtime).ledger()
+        waiting = {subject for subject, state in ledger.states().items() if state == "PRESERVATION_PENDING"}
+        times = [record.at for record in ledger.records() if record.subject in waiting and record.new_state == "PRESERVATION_PENDING"] if waiting else []
+        pending = {"fetches_pending": len(waiting), "oldest_pending_since": min(times) if times else None}
+    backup = primary_backup.backup_health(roots.get("BACKUP"), now=now, warning_hours=policy.backup["receipt_warning_hours"],
+                                          failure_hours=policy.backup["receipt_failure_hours"])
+    floors = {role: resource_policy.free_space_refusal(role, roots.get(role), policy) for role in ("RUNTIME", "SPOOL", "BACKUP")}
+    return {"resource_policy": policy.version, "backup": backup, "share_gate": gate.status() if gate is not None else "RUNTIME not available",
+            "paused": resource_policy.paused(runtime), "sibling_advisory": resource_policy.sibling_advisory(
+                environment, now, max_age_seconds=policy.sibling_signal_max_age_seconds),
+            "free_space_floors": {role: reason or "OK" for role, reason in floors.items()},
+            "pending_in_the_workspace": pending,
+            "maintenance_now": resource_policy.maintenance_refusal(policy, runtime, now, environment) or "permitted"}
 
 
 def compare_sister(sister: Path) -> list[str]:
