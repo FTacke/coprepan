@@ -26,6 +26,7 @@ class Response:
     delay_seconds: float = 0.0
     no_length: bool = False              # no Content-Length: the body ends when the connection closes
     etag: str | None = None              # answer 304 to a request whose If-None-Match equals this
+    drip_seconds: float = 0.0            # send the body in eight pieces, this long apart (a slow-drip server)
 
 
 class LocalSite:
@@ -77,6 +78,12 @@ class LocalSite:
                                 self.wfile.write(f"{len(part):x}\r\n".encode("ascii") + part + b"\r\n")
                         if not response.cut_chunked:
                             self.wfile.write(b"0\r\n\r\n")
+                    elif response.drip_seconds:
+                        step = max(1, -(-len(response.body) // 8))
+                        for start in range(0, len(response.body), step):
+                            self.wfile.write(response.body[start:start + step])
+                            self.wfile.flush()
+                            time.sleep(response.drip_seconds)
                     else:
                         self.wfile.write(response.body)
                     self.wfile.flush()

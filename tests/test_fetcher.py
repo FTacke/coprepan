@@ -267,6 +267,20 @@ def test_a_timeout_is_a_failed_fetch_and_is_retried(site):
     assert outcome.final == "FETCHED" and outcome.last.body == PAGE
 
 
+def test_a_slow_drip_answer_is_cut_by_the_total_deadline_not_held_open_by_the_socket_timeout(site):
+    """2026-11-14: each piece arrives inside the socket timeout (0.4 s), the request as a whole takes ~1.2 s. Without a total
+    bound it is fetched; with ``total_seconds`` it is a failed fetch (``timeout``), never a body."""
+    site.routes["/goteo"] = Response(200, HTML, PAGE, drip_seconds=0.15)
+    fetcher, _ = make_fetcher(site, limits=F.FetchLimits(0.4, 3, 200_000, 1, 1, 60))
+    assert get(fetcher, "/goteo").final == "FETCHED"
+    fetcher, _ = make_fetcher(site, limits=F.FetchLimits(0.4, 3, 200_000, 1, 1, 60, total_seconds=0.5))
+    outcome = get(fetcher, "/goteo")
+    assert outcome.final == "FETCH_FAILED" and outcome.last.failure_reason == "timeout" and "in all" in outcome.last.failure_detail
+    assert outcome.last.body is None
+    with pytest.raises(ValueError):
+        F.FetchLimits(1, 3, 1, 1, 1, 1, total_seconds=0.5)                 # a total below one socket operation is not a bound
+
+
 def test_a_refused_connection_is_a_failed_fetch(site):
     # Whether a closed loopback port answers "refused" at once or not at all depends on the
     # platform; both are a failed fetch with a named reason.

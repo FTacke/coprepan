@@ -532,6 +532,24 @@ def test_the_backup_health_counts_missed_weekday_slots_and_keeps_its_facts_apart
     assert needs["level"] == "FAILURE" and any("--full" in a for a in needs["operator_action"])
 
 
+def test_no_slot_before_the_calendar_existed_counts_and_a_real_missed_slot_still_does(backup_roots):
+    """The transition of 2026-11-14 (policy 2026-11-14.3): the real receipt of Friday 2026-11-13 05:04Z precedes Friday's 08:00
+    slot of a calendar that only came into force on Saturday; that slot was never scheduled and is not missed. Monday's is."""
+    _, backup = backup_roots                                       # the fixture's receipt: 2026-11-13T05:04:18Z, as on the real root
+    saturday = datetime(2026, 11, 14, 12, 28, tzinfo=timezone.utc)
+    assert _health(backup, saturday)["missed_weekday_slots"] == 0 and _health(backup, saturday)["last_verified_age_hours"] > 31
+    before_grace = R.from_local(datetime(2026, 11, 16).date(), datetime(2000, 1, 1, 9, 59).time())
+    after_grace = R.from_local(datetime(2026, 11, 16).date(), datetime(2000, 1, 1, 10, 1).time())
+    assert _health(backup, before_grace)["missed_weekday_slots"] == 0
+    late = _health(backup, after_grace)
+    assert late["missed_weekday_slots"] == 1 and late["missed_slot_starts"] == ["2026-11-16T07:00:00Z"] and late["level"] == "OK"
+    tuesday = _health(backup, after_grace + timedelta(days=1))
+    assert tuesday["missed_weekday_slots"] == 2 and tuesday["level"] == "WARNING"     # nothing real is suppressed
+    doc = json.loads((REPO / "config" / "resource_policy.json").read_text(encoding="utf-8"))
+    earlier = R.parse_policy({**doc, "maintenance_calendar": {**doc["maintenance_calendar"], "effective_from": "2026-11-01"}})
+    assert len(earlier.calendar.missed(datetime(2026, 11, 13, 5, 4, tzinfo=timezone.utc), saturday)) == 1   # an earlier start counts Friday
+
+
 def test_a_damaged_basis_or_a_mass_of_changed_timestamps_needs_the_operators_full_order(backup_roots, tmp_path, monkeypatch):
     primary, backup = backup_roots
     reads = Reads(monkeypatch, primary)

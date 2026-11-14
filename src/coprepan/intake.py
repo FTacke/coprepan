@@ -262,7 +262,7 @@ def intake_pin(plan: Mapping[str, Any], plan_path: str, authorization: Mapping[s
         "intake": {"controller": CONTROLLER_VERSION, "intake_id": plan["intake_id"], "plan": plan_path, "plan_sha256": sha256_bytes(record_json(dict(plan))),
                    "budget": dict(plan["budget"]), "totals": dict(plan["totals"]), "poll_seconds_by_class": dict(POLL_SECONDS),
                    "pace_margin_seconds": PACE_MARGIN_SECONDS, "retries_of_a_failed_candidate": RETRIES_OF_A_FAILED_CANDIDATE,
-                   "fetch_limits": {name: getattr(canary_driver.CANARY_LIMITS, name) for name in ("timeout_seconds", "max_redirects", "max_body_bytes", "max_attempts")},
+                   "fetch_limits": {name: getattr(canary_driver.CANARY_LIMITS, name) for name in ("timeout_seconds", "total_seconds", "max_redirects", "max_body_bytes", "max_attempts")},
                    "selection": "never a page fetched before; first what was first listed during the intake and is dated inside its window (newest first), "
                                 "then what a later poll listed first without a date, then at most backlog_items_per_outlet_cycle of the rest",
                    "extractor": extraction.BASELINE.stage_version},

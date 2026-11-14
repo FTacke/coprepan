@@ -114,6 +114,7 @@ class MaintenanceCalendar:
     warning_missed_slots: int
     failure_missed_slots: int
     why: str
+    effective_from: Any = None          # a date: the calendar's slots begin on it; a slot before it was never scheduled
 
     def pause(self, now: datetime) -> str | None:
         local = local_time(now)
@@ -127,6 +128,8 @@ class MaintenanceCalendar:
         if until <= after:
             return []
         day, last, out = local_time(after).date(), local_time(until).date(), []
+        if self.effective_from is not None and day < self.effective_from:
+            day = self.effective_from                  # no slot of this calendar before it was in force (CPD-0035 amendment)
         while day <= last:
             if DAYS[day.weekday()] in self.days:
                 slot = from_local(day, self.start)
@@ -204,12 +207,17 @@ class ResourcePolicy:
 _BACKUP_KEYS = ("workers", "max_bytes_per_second", "max_minutes", "fixity_objects_per_run", "fixity_bytes_per_run", "fixity_cycle_max_days",
                 "restore_samples", "receipt_failure_hours")
 _PENDING_KEYS = ("max_packs", "max_bytes", "max_age_hours", "catch_up_packs_per_hour", "cache_warm_reads_per_hour")
-_CALENDAR_KEYS = ("timezone", "days", "scheduled_start", "missed_slot_grace_minutes", "warning_missed_slots", "failure_missed_slots", "why")
+_CALENDAR_KEYS = ("timezone", "days", "scheduled_start", "missed_slot_grace_minutes", "warning_missed_slots", "failure_missed_slots", "why",
+                  "effective_from")
 
 
 def _calendar(doc: Any) -> MaintenanceCalendar:
     if not isinstance(doc, Mapping) or set(doc) != set(_CALENDAR_KEYS):
         raise ResourcePolicyError(f"maintenance_calendar has exactly the keys {list(_CALENDAR_KEYS)}")
+    try:
+        effective = datetime.strptime(str(doc["effective_from"]), "%Y-%m-%d").date()
+    except ValueError as error:
+        raise ResourcePolicyError(f"calendar effective_from is YYYY-MM-DD: {doc['effective_from']!r}") from error
     if doc["timezone"] != TIMEZONE:
         raise ResourcePolicyError(f"the calendar's zone is {TIMEZONE} (the EU rule is computed here); not {doc['timezone']!r}")
     days = tuple(doc["days"] or ())
@@ -218,7 +226,8 @@ def _calendar(doc: Any) -> MaintenanceCalendar:
     calendar = MaintenanceCalendar(days, _clock(doc["scheduled_start"], "calendar scheduled_start"),
                                    _count(doc["missed_slot_grace_minutes"], "calendar.missed_slot_grace_minutes"),
                                    _count(doc["warning_missed_slots"], "calendar.warning_missed_slots", minimum=1),
-                                   _count(doc["failure_missed_slots"], "calendar.failure_missed_slots", minimum=1), str(doc["why"] or ""))
+                                   _count(doc["failure_missed_slots"], "calendar.failure_missed_slots", minimum=1), str(doc["why"] or ""),
+                                   effective_from=effective)
     if calendar.failure_missed_slots < calendar.warning_missed_slots:
         raise ResourcePolicyError("the failure level of missed slots is at least the warning level")
     return calendar

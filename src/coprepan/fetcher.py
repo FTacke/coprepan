@@ -54,7 +54,13 @@ _READ_CHUNK = 64 * 1024
 
 @dataclass(frozen=True)
 class FetchLimits:
-    """Every limit of the transport. All are required: none has a built-in value."""
+    """Every limit of the transport. The first six are required: none has a built-in value.
+
+    ``timeout_seconds`` bounds each socket operation (connect, each read). ``total_seconds`` (2026-11-14) bounds one request
+    from the first byte sent to the last byte read: a server that drips a byte just inside the socket timeout can no
+    longer hold a request open for as long as the body limit allows. ``None`` sets no total bound (the behaviour before it
+    existed); every limit a canary or an intake uses sets it (``canary_driver.CANARY_LIMITS``). A request can overrun it
+    by at most one socket operation, since a read in progress is not interrupted."""
 
     timeout_seconds: float
     max_redirects: int
@@ -62,6 +68,7 @@ class FetchLimits:
     max_attempts: int
     backoff_base_seconds: float
     backoff_max_seconds: float
+    total_seconds: float | None = None
 
     def __post_init__(self) -> None:
         for name in ("timeout_seconds", "max_redirects", "max_body_bytes", "max_attempts",
@@ -71,6 +78,9 @@ class FetchLimits:
                 raise ValueError(f"{name} must be a non-negative number: {value!r}")
         if self.max_attempts < 1 or self.timeout_seconds <= 0:
             raise ValueError("max_attempts is at least 1 and timeout_seconds is positive")
+        if self.total_seconds is not None and (isinstance(self.total_seconds, bool) or not isinstance(self.total_seconds, (int, float))
+                                               or self.total_seconds < self.timeout_seconds):
+            raise ValueError("total_seconds is a number of at least timeout_seconds, or None")
 
     def backoff(self, attempt: int) -> float:
         """Seconds to wait after attempt ``n`` failed: base · 2^(n-1), capped. No jitter: one
@@ -353,6 +363,7 @@ class HttpFetcher:
         self.transport_calls += 1
         connection_class = http.client.HTTPSConnection if scheme == "https" else http.client.HTTPConnection
         connection = connection_class(host, port, timeout=self.limits.timeout_seconds)
+        deadline = time.monotonic() + self.limits.total_seconds if self.limits.total_seconds is not None else None
         try:
             path = (parts.path or "/") + (f"?{parts.query}" if parts.query else "")
             connection.putrequest("GET", path, skip_host=True, skip_accept_encoding=True)
@@ -372,6 +383,8 @@ class HttpFetcher:
                 if size > self.limits.max_body_bytes:
                     raise _TransportFailure("body_limit_exceeded", f"body exceeds {self.limits.max_body_bytes} bytes")
                 chunks.append(chunk)
+                if deadline is not None and time.monotonic() > deadline:
+                    raise _TransportFailure("timeout", f"the request took longer than {self.limits.total_seconds} s in all")
             if response.length:
                 # http.client does not raise on a short read with an explicit amount: a body that
                 # ends before its declared Content-Length is detected here.

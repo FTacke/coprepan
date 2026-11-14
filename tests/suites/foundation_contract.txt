@@ -65,5 +65,6 @@ test_source_qualification.py # the inventory after qualification, the intake-rea
 
 # The bounded, timed intake (CPD-0029)
 test_intake.py               # the intake controller offline: the plan, hourly polls, what is asked first, every budget, the binding deadline, restart, stop, permission withdrawn, target away, holds, the finalizer
+test_source_health.py        # the source-health matrix: every documented outlet, recommendations traceable to stored evidence (2026-11-14)
 test_resource_isolation.py   # CPD-0033: share gate and back-off, the sibling advisory only ever cautions, quiet windows, PAUSE_IO, free-space floors, bounded pending in an intake, the content index of a promotion, the verified local read after preservation, the incremental backup with evidence reuse, fixity rotation, restore, budget, lock
 test_intake_operator.py      # the intake authorisation and its check, what a restart re-checks, disarming of the one switch without forcing, a whole tick against a temporary repository, the anomaly flags

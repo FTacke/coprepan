@@ -71,7 +71,8 @@ GIB = 1024 ** 3
 # Transport limits of the canary. One attempt per call: a retry is the schedule's decision, a day
 # later or an hour later, never a loop inside a call. The numbers are choices, not measurements.
 CANARY_LIMITS = F.FetchLimits(timeout_seconds=30, max_redirects=3, max_body_bytes=8 * 1024 * 1024, max_attempts=1,
-                              backoff_base_seconds=60, backoff_max_seconds=3600)
+                              backoff_base_seconds=60, backoff_max_seconds=3600,
+                              total_seconds=120)        # 2026-11-14: one request in all (8 MiB at ~70 KiB/s); the October intake had 10 socket timeouts in 7,173 requests
 # Spool bounds for the canary. Chosen limits, not an estimate of anything.
 CANARY_SPOOL = outage_spool.SpoolPolicy(min_free_bytes=20 * GIB, max_spool_bytes=10 * GIB)
 
@@ -191,7 +192,8 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
     return {
         "driver": DRIVER_VERSION, "stages": list(STAGES), "budget": budget.as_record(),
         "fetch_limits": {name: getattr(CANARY_LIMITS, name) for name in ("timeout_seconds", "max_redirects", "max_body_bytes",
-                                                                         "max_attempts", "backoff_base_seconds", "backoff_max_seconds")},
+                                                                         "max_attempts", "backoff_base_seconds", "backoff_max_seconds",
+                                                                         "total_seconds")},
         "spool_policy": {"min_free_bytes": CANARY_SPOOL.min_free_bytes, "max_spool_bytes": CANARY_SPOOL.max_spool_bytes},
         "outlets": {outlet_id: select_channels(registry_.resolve(outlet_id), disabled, budget.channels_per_outlet, candidate_rules)
                     for outlet_id in sorted(outlet_ids)},
