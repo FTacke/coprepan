@@ -746,6 +746,9 @@ windows. Every value is a scenario assumption whose basis the file names; it is 
 - **Floors**: under 60 GiB free on the RUNTIME volume an intake asks nothing; on the BACKUP volume no backup runs.
 - **Bounded pending** (intake `/2`): through an outage an intake goes on while ≤ 5,000 packs / 5 GiB are pending and the oldest is ≤ 72 h
   old; beyond, it pauses (`held_because`). The pending packs are complete and verified in the workspace (and the spool when it has room).
+- **Test runs** on this workstation put their temporary directories on `C:` (`python -m pytest --basetemp <a directory on C:> tests`),
+  not on `D:`: on 2026-11-14 a full run with its temporary directories on `D:` stalled for ten minutes while CO.RA.PAN's production worked
+  on that device — and added load to the device that carries both projects' backups.
 
 ### 21.5 The backup (amends §20.8)
 
