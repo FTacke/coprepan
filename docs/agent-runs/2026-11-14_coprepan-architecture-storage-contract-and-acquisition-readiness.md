@@ -30,11 +30,12 @@
 - **Storage roots** (`.env`, root variables only): RUNTIME `C:\dev\panhispanic_media_corpora\coprepan_workspace`, SPOOL
   `C:\dev\panhispanic_media_corpora\coprepan_storage`, PRESERVATION `\\dfs.hrz.uni-marburg.de\PROJEKTE\FB10\TACKE_FORSCHUNGSDATEN\projects\panhispanic_media_corpora\coprepan`
   (identity `coprepan-preservation-newfs`), BACKUP `D:\projects\panhispanic_media_corpora\coprepan\backup`.
-- **The PRESERVATION primary was unreachable for the whole run.** One `isdir` of the root returned `False` at about 07:15Z; `net use`
+- **The PRESERVATION primary was unreachable for most of the run.** One `isdir` of the root returned `False` at about 07:15Z; `net use`
   listed no connection; the AnyConnect adapter was up. CO.RA.PAN's own observation (`corapan_workspace\controller\preservation_mode_state.json`,
   read-only): `mode DEGRADED_LOCAL`, `last_error_class AUTH_REFUSED` (WinError 1326) since 2026-11-14T06:57:12Z, next probe on a 30-minute
-  back-off. The share refuses this account's logons; CO.PRE.PAN made **no** further contact (each would be a logon attempt on the refused
-  account), changed no connection and reset nothing.
+  back-off. The share refused this account's logons; CO.PRE.PAN made **no** further contact (each would be a logon attempt on the refused
+  account), changed no connection and reset nothing. **The share answered again from 08:03:02Z** (CO.RA.PAN's `reconnected_utc`); at
+  the end of the run CO.RA.PAN was `RECOVERING` (171 owed writes, its last probe 62 s) — see §7 and §8.
 - **Free space** (measured 2026-11-14): `C:` 306.3 GiB free, `D:` 2,360.4 GiB free (one external USB SSD, label `RESEARCH_BACKUP`).
 
 ## 2. Sources read
@@ -122,7 +123,9 @@ restarts; the refusal (`ShareBackingOff`) is a `StorageRootUnreachable`, so `pre
 an I/O failure during a promotion closes the gate too (`resource_policy.report_failure`). Measured on a fixture: an intake retrying every
 minute for five hours makes at most 8 contacts instead of 300. The sibling advisory reads CO.RA.PAN's `preservation_mode_state.json`
 (named by `COPREPAN_SIBLING_PRESERVATION_STATE`, `.env`): fresh and degraded → no contact until CO.RA.PAN's own next probe; fresh and slow
-→ no maintenance; nothing in it ever permits anything.
+→ no maintenance; `RECOVERING` (CO.RA.PAN catching up after an outage) → no maintenance either — added at the end of the run, when the
+real file showed that state and the first version had read it as normal (a finding in this run's own code, repaired with a test);
+nothing in it ever permits anything.
 
 ### 5.3 The content index of a promotion
 
@@ -226,9 +229,11 @@ test, and it yields whenever CO.RA.PAN's own observation says the share is in tr
 | full suite after the storage and I/O work | 1,732 passed, 14 skipped (485.0 s) |
 | full suite on the integrated branch (both strands merged, `fcfc0da` + this report; temporary directories on `C:`) | 1,862 passed, **1 failed**, 14 skipped (479.3 s): `test_storage_architecture.py::test_the_tracked_files_hold_no_machine_location` — a second closed list of `.env.example` names that did not know `COPREPAN_SIBLING_PRESERVATION_STATE`; extended like the first (its "no location" check unchanged); the two contract files then 98 passed |
 | final full suite after that repair (the gate before integration; temporary directories on `C:`) | 1,863 passed, 14 skipped (490.2 s) |
+| the follow-up (`RECOVERING`): the files that use the advisory (`test_resource_isolation`, `test_primary_backup`, `test_storage_contract`, `test_repository_contract`) | 259 passed |
 | isolated backup benchmark | §5.6 |
 | the sibling advisory against CO.RA.PAN's real state file (local read, 2026-11-14 ~08:02Z) | `SHARE_DEGRADED` (`DEGRADED_LOCAL`, `AUTH_REFUSED`, observed 301 s earlier); maintenance decision: not permitted |
-| share latency probe (one listing and 20 manifest reads) | **not run**: the share was unreachable; no repetition (a logon attempt on the refused account) |
+| the advisory against the real file at the end of the run (~09:25 local) | `SHARE_RECOVERING` (171 owed): maintenance waits; the gate stays open |
+| share latency probe (one listing and 20 manifest reads) | **not run**: the share was unreachable until 08:03Z, and afterwards CO.RA.PAN was catching up on it — CO.RA.PAN has priority; the first scheduled incremental backup is the measurement |
 
 The tests write only under `tmp_path`. The first three runs used the session's temporary directory on `D:` (the shared USB device). The
 integrated run started there at about 08:52 local made almost no progress for ten minutes (7 s of CPU: waiting on I/O) while CO.RA.PAN's
@@ -238,7 +243,8 @@ storage root, the network beyond a literal loopback address, or a reference repo
 
 ## 8. Preservation, backup and recovery status (2026-11-14)
 
-- PRESERVATION primary: the share, identity `coprepan-preservation-newfs`, **unreachable** during the run (logons refused); content
+- PRESERVATION primary: the share, identity `coprepan-preservation-newfs`, **unreachable** until 08:03Z (logons refused), `AVAILABLE` again at the end of the run (`storage_contract.py status`, one
+  resolution; nothing read or written there); content
   unknown, not empty (I2). Last verified state: 8,816 objects / 395,018,230 B, tree `f4bb0c9c…a284da0e` (receipt 2026-11-13T05:04:18Z).
 - BACKUP: `D:\projects\panhispanic_media_corpora\coprepan\backup`, `BACKUP_VERIFIED` by the receipt of 2026-11-13 (FULL); its health on
   2026-11-14: `OK` (receipt age about 26 h). Independence beyond another volume not determined (B3).
@@ -258,7 +264,7 @@ storage root, the network beyond a literal loopback address, or a reference repo
 | Backup / Recovery | `PARTIAL` | incremental backup, fixity rotation, restore tested offline; the existing full backup verified on 2026-11-13; the first incremental run on the real roots is owed |
 | Resource isolation | `PARTIAL` | constructed and tested on simulated signals (§6); not measured under real CO.RA.PAN load |
 | Operational stability | `OPEN` | no outlet is `OPERATIONALLY_STABLE`; one 24-hour intake (2026-10-10/11) is the only long run; the Phase-1 core gate on the share is still owed (STATUS §5) |
-| Bounded canary | `BLOCKED` | not permitted in this run: the PRESERVATION target is unreachable (a canary must preserve on it), the gates O-1 (scheduled crawling), O-12 (a new frozen baseline) and the arming are the operator's, and the brief's condition "storage targets safe" does not hold today |
+| Bounded canary | `BLOCKED` | not permitted in this run: the PRESERVATION target was unreachable, and once it answered CO.RA.PAN was catching up on it (a canary must preserve on it), the gates O-1 (scheduled crawling), O-12 (a new frozen baseline) and the arming are the operator's, and the brief's condition "storage targets safe" does not hold today |
 | Continuous acquisition ready | `NOT_READY` | technical prerequisites on CO.PRE.PAN's side are built; open: the share's availability, a real intake under `/2` with a production write on the share, the first incremental backup on the real roots, O-1 for scheduled crawling, the operator's activation decision |
 
 Technical readiness, scientific validation and operational activation are three statements: none of this run's results validates a
@@ -268,9 +274,9 @@ architecture separates raw preservation from extraction (Phase-3 layer architect
 
 ## 10. Open decisions and proposals
 
-1. **Operator — the share.** The share refuses this workstation's account (`AUTH_REFUSED`, WinError 1326, since 06:57Z): a credential
-   or account matter of the institution, shared with CO.RA.PAN (its E-0 escalation draft of 2026-11-13 describes intermittent
-   degradation). Nothing in CO.PRE.PAN can or should repair it.
+1. **Operator — the share.** The share refused this workstation's account from 06:57Z to 08:03Z (`AUTH_REFUSED`, WinError 1326) and
+   answered again afterwards: an intermittent institutional matter shared with CO.RA.PAN (its E-0 escalation draft of 2026-11-13
+   describes intermittent degradation). Nothing in CO.PRE.PAN can or should repair it; CO.PRE.PAN now waits it out by itself.
 2. **Operator — set `COPREPAN_SIBLING_PRESERVATION_STATE`** in the workstation's `.env` to CO.RA.PAN's controller file (path in §1); until
    it is set, the advisory is `NO_SIGNAL` and CO.PRE.PAN relies on its own gate and windows. *Done by this run in the workstation's `.env` (gitignored; §12); deleting the line switches the advisory off.*
 3. **Proposal to CO.RA.PAN (a decision there, not here).** (a) Declare `preservation_mode_state.json` (schema `corapan-preservation-mode/v1`)
@@ -298,7 +304,8 @@ architecture separates raw preservation from extraction (Phase-3 layer architect
 ## 12. Commits, integration, push
 
 - **Commits** on `readiness/2026-11-14-acquisition-readiness`: `39c6636` (storage and I/O, CPD-0033), the merge `fcfc0da` of
-  `readiness/2026-11-14-release-rev2` (`67258dc`, CPD-0034), and the commit of this report.
+  `readiness/2026-11-14-release-rev2` (`67258dc`, CPD-0034), the commit of this report (`e82a68a`), and a follow-up (the advisory's
+  `RECOVERING` state, found on the real file after the first merge; its test and documentation), merged the same way.
 - **Report on `main`:** published with `scripts/publish_run_report.py publish … --status PARTIAL` (a documentation-only commit).
 - **Merged into `main`:** yes, after the integrated suite passed (no conflict with `main`, which had not moved since `417cd10`).
 - **Pushed:** `main` and both run branches to `origin`, fast-forward (`origin/main` was an ancestor). Pushing `main` also publishes the
@@ -315,9 +322,9 @@ touched nor measured beyond the process list and the task list. This run's two w
 
 ## 14. Next operator decision
 
-**Restore the share's access for this workstation's account** (an institutional credential matter, shared with CO.RA.PAN).
-Nothing else needs a person before that: the scheduled backup defers by itself while the share is refused and runs incrementally
-when it answers. After that, the one decision that moves acquisition forward is the operator's authorisation of **one bounded
+Nothing needs a person for storage: the scheduled backup defers by itself while the share is refused or CO.RA.PAN is catching up,
+and runs incrementally when it may (the first such run is the first real evidence of CPD-0033; read its `_backup/last_run.json`).
+The share's intermittent refusals are an institutional matter (§10.1). The one decision that moves acquisition forward is the operator's authorisation of **one bounded
 intake under `intake-controller/2`** (a new plan, a `DIA` record, the arming and a frozen baseline, CPD-0029's procedure) as the first
 production write on the share — and, on its evidence, the question of a recurring intake (O-1 for scheduled crawling).
 
