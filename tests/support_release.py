@@ -20,6 +20,7 @@ BUNDLE = REPO / R.BUNDLE_PATH
 PINS = REPO / R.PINS_PATH
 VECTORS = json.loads((BUNDLE / "conformance" / "VECTORS.json").read_text(encoding="utf-8"))
 CASES = VECTORS["cases"]
+PATTERNS = VECTORS["patterns"]  # since draft revision 2: schema patterns with values and verdicts (contract §12)
 
 
 def fixtures_copy(tmp_path: Path) -> Path:
@@ -51,14 +52,41 @@ def mutate(root: Path, mutation: Mapping[str, Any]) -> None:
         path.write_bytes(R.record_set_bytes(mutation["records"]))
         change_document(root / mutation["manifest"], lambda manifest: _at(manifest, mutation["pointer"]).update(
             records=len(mutation["records"]), sha256=R.record_set_digest(mutation["records"])))
+    elif operation == "set_json":  # revision 2: set the value at a JSON pointer, adding the last key when absent
+        change_document(path, lambda document: _set_at(document, mutation["pointer"], mutation["value"]))
+    elif operation == "refreeze":  # revision 2: the freeze record names the manifest as it is at this point
+        manifest = R.parse_strict((root / mutation["manifest"]).read_bytes())
+        digest = R.document_digest(manifest)
+        change_document(path, lambda freeze: freeze.update(corpus_id=manifest["corpus_id"], release_id=manifest["release_id"],
+                                                           release_manifest_sha256=digest))
     else:
         raise AssertionError(f"unknown operation {operation!r}")
 
 
+OPERATIONS = ("append_bytes", "delete", "write_file", "replace_bytes", "reverse_lines", "compact_json", "set_record_set",
+              "set_json", "refreeze")
+
+
+def _tokens(pointer: str) -> list[str]:
+    """The reference tokens of a JSON pointer (RFC 6901)."""
+    assert pointer.startswith("/"), f"not a JSON pointer: {pointer!r}"
+    return [part.replace("~1", "/").replace("~0", "~") for part in pointer[1:].split("/")]
+
+
 def _at(document: Any, pointer: str) -> Any:
-    for part in pointer.strip("/").split("/"):
+    for part in _tokens(pointer):
         document = document[int(part)] if isinstance(document, list) else document[part]
     return document
+
+
+def _set_at(document: Any, pointer: str, value: Any) -> None:
+    *parents, last = _tokens(pointer)
+    for part in parents:
+        document = document[int(part)] if isinstance(document, list) else document[part]
+    if isinstance(document, list):
+        document[int(last)] = value
+    else:
+        document[last] = value
 
 
 def change_document(path: Path, change: Callable[[dict], Any]) -> dict:

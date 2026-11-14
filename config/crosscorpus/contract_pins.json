@@ -1,16 +1,20 @@
 {
   "schema": "coprepan-crosscorpus-contract-pins/v1",
-  "note": "Which cross-corpus contract bundles this repository works against. A bundle is a verbatim copy of its canonical home; bundle_sha256 is the tree digest of the copy (contract section 14). For crosscorpus-storage/v1 it equals the digest the other repository pins; for crosscorpus-release/v1 it does not (since 2026-10-08 the canonical home pins draft revision 2, 429f55eb...442255; this pin is revision 1; found 2026-10-22, docs/crosscorpus/INDEX.md section 1a). The copy is never edited here. Checked by tests/test_release_contract.py; read by coprepan.release_contract.load_contract, which refuses a copy that is not the pinned one.",
+  "note": "Which cross-corpus contract bundles this repository works against. A bundle is a verbatim copy of its canonical home; bundle_sha256 is the tree digest of the copy (contract section 14). For crosscorpus-storage/v1 it equals the digest the other repository pins. For crosscorpus-release/v1 it did not from 2026-10-08 (the canonical home pinned draft revision 2, this pin revision 1; found 2026-10-22) until 2026-11-14, when this repository took revision 2 over (CPD-0034; docs/crosscorpus/INDEX.md section 1a): both now name draft revision 2, which stays DRAFT and is not jointly adopted. The copy is never edited here. Checked by tests/test_release_contract.py; read by coprepan.release_contract.load_contract, which refuses a copy that is not the pinned one.",
   "contracts": {
     "crosscorpus-release/v1": {
       "status": "DRAFT",
       "canonical_home": "corapan",
       "path": "contracts/crosscorpus-release-v1",
-      "bundle_sha256": "4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0",
-      "taken_from_commit": "0a5f41dec2399369488c29f7cef37b053de28bcd",
+      "bundle_sha256": "429f55eb1992be7adf230b501e9ecf80ba944478b3a91a31943f3cfef9442255",
+      "revision": 2,
+      "taken_from_commit": "374d2e44eaf78f51bbbd2261113bd03d8c1fcdd2",
+      "previous_revisions": [
+        {"revision": 1, "bundle_sha256": "4fb72acf27abf09b29dba9de22b241471d0eb5fde3c9e75cc638d646426dbbe0", "taken_from_commit": "0a5f41dec2399369488c29f7cef37b053de28bcd", "local_decision": "CPD-0012"}
+      ],
       "files": 49,
       "local_implementation": "src/coprepan/release_contract.py",
-      "local_adoption": "CPD-0012"
+      "local_adoption": "CPD-0034"
     },
     "crosscorpus-storage/v1": {
       "status": "IN_FORCE",

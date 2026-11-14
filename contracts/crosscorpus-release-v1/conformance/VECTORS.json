@@ -1312,6 +1312,2275 @@
       ],
       "note": "a turn is not a paragraph: a kind of one corpus is not an anchor of the other",
       "target": "joint/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "corapan-study-id-ends-with-a-line-feed",
+      "mutations": [
+        {
+          "find": "\"study_id\": \"fixture_study_corapan\"",
+          "op": "replace_bytes",
+          "path": "corapan/study/STUDY_POPULATION.json",
+          "replace": "\"study_id\": \"fixture_study_corapan\\n\""
+        }
+      ],
+      "note": "a pattern ending in $ does not accept a value with a trailing line feed",
+      "target": "corapan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "PIN_MISMATCH"
+      ],
+      "id": "corapan-study-pinned-release-record-set-edited",
+      "mutations": [
+        {
+          "hex": "",
+          "op": "write_file",
+          "path": "corapan/package/release/DOCUMENTS.jsonl"
+        }
+      ],
+      "note": "the release has the pinned manifest digest and does not verify: its own code, not a pin mismatch",
+      "target": "corapan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "REFERENCE_MISSING"
+      ],
+      "id": "corapan-study-pinned-release-not-frozen",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "the release has the pinned manifest digest and has no freeze record: its own code, not a pin mismatch",
+      "target": "corapan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "POPULATION_NOT_RESTORABLE"
+      ],
+      "id": "corapan-study-record-of-an-unpinned-release",
+      "mutations": [
+        {
+          "manifest": "corapan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "corapan/study/SELECTED.jsonl",
+          "pointer": "/selected",
+          "records": [
+            {
+              "corpus_id": "corapan",
+              "document_id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "id_kind": "recording",
+              "level": "document",
+              "reason": null,
+              "release_id": "corapan-0000-01"
+            },
+            {
+              "corpus_id": "corapan",
+              "document_id": "of-no-pinned-release",
+              "id": "of-no-pinned-release",
+              "id_kind": "recording",
+              "level": "document",
+              "reason": null,
+              "release_id": "corapan-0000-09"
+            }
+          ]
+        }
+      ],
+      "note": "a selection record names a release the study does not pin",
+      "target": "corapan/study"
+    },
+    {
+      "check": "release",
+      "expect": [],
+      "id": "corapan-provisional-export-without-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "corapan-2026-10"
+        },
+        {
+          "op": "delete",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "a provisional export is checked without a freeze record",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "FREEZE_MISMATCH"
+      ],
+      "id": "corapan-provisional-export-with-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "corapan-2026-10"
+        }
+      ],
+      "note": "a freeze record beside a provisional export claims a release that does not exist",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "FREEZE_MISMATCH"
+      ],
+      "id": "corapan-provisional-export-with-matching-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "corapan-2026-10"
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "the same when the record names exactly this manifest: its existence is the objection, its content is not read",
+      "target": "corapan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PACKAGE_FORBIDDEN_CONTENT"
+      ],
+      "id": "corapan-package-fetched-pages",
+      "mutations": [
+        {
+          "hex": "78",
+          "op": "write_file",
+          "path": "corapan/package/pages/capture.warc.gz"
+        },
+        {
+          "manifest": "corapan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "fc771ff5dde351a60e2847d597a7a6b90bfd3e25b7f08f07c28c2185ad155504",
+              "size": 151
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/speaker_turns.jsonl",
+              "role": "export_payload",
+              "sha256": "29e9048257cbb8ec992bda3b5f5f1cd08aa2b01026cd77d450ab04876738f5f6",
+              "size": 127
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "22ff736101ff59dfc69e21928989686a191eb029173dd1caa678458177a692d9",
+              "size": 62
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "3469f8886a25f2d1987548d2ae89dfd08d3d1010eb8711d19e4a2c827437d291",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "fc719c5bee97f09a7d403be1809bca65f53600a4d36ee69eb6af5b012ad9ee4f",
+              "size": 763
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "e3bfe77df9a7f6cc57803dc7f39fafa8de752a7282c9d777c1db66127e804d6a",
+              "size": 1537
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "a67ce53b382179f2cc02db3bc76756b4d1718b6cd46705799668973af23686fa",
+              "size": 428
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "58775881b0d67e55ac130c0a02b8ccbb573fcadd5b6ce1c43679e6380505f160",
+              "size": 332
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "fd58337c17febcf24373a8a6a9336ed10ef0d3794f69e7137ddc58dcea5d7135",
+              "size": 3108
+            },
+            {
+              "path": "pages/capture.warc.gz",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "a container of fetched pages / a media suffix in another letter case is refused like source audio",
+      "target": "corapan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PACKAGE_FORBIDDEN_CONTENT"
+      ],
+      "id": "corapan-package-source-media-upper-case",
+      "mutations": [
+        {
+          "hex": "78",
+          "op": "write_file",
+          "path": "corapan/package/media/SAMPLE.FLAC"
+        },
+        {
+          "manifest": "corapan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "fc771ff5dde351a60e2847d597a7a6b90bfd3e25b7f08f07c28c2185ad155504",
+              "size": 151
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/speaker_turns.jsonl",
+              "role": "export_payload",
+              "sha256": "29e9048257cbb8ec992bda3b5f5f1cd08aa2b01026cd77d450ab04876738f5f6",
+              "size": 127
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "22ff736101ff59dfc69e21928989686a191eb029173dd1caa678458177a692d9",
+              "size": 62
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "3469f8886a25f2d1987548d2ae89dfd08d3d1010eb8711d19e4a2c827437d291",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "fc719c5bee97f09a7d403be1809bca65f53600a4d36ee69eb6af5b012ad9ee4f",
+              "size": 763
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "e3bfe77df9a7f6cc57803dc7f39fafa8de752a7282c9d777c1db66127e804d6a",
+              "size": 1537
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "a67ce53b382179f2cc02db3bc76756b4d1718b6cd46705799668973af23686fa",
+              "size": 428
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "58775881b0d67e55ac130c0a02b8ccbb573fcadd5b6ce1c43679e6380505f160",
+              "size": 332
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "fd58337c17febcf24373a8a6a9336ed10ef0d3794f69e7137ddc58dcea5d7135",
+              "size": 3108
+            },
+            {
+              "path": "media/SAMPLE.FLAC",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "a container of fetched pages / a media suffix in another letter case is refused like source audio",
+      "target": "corapan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PATH_INVALID"
+      ],
+      "id": "corapan-package-listed-paths-differ-only-by-case",
+      "mutations": [
+        {
+          "manifest": "corapan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "fc771ff5dde351a60e2847d597a7a6b90bfd3e25b7f08f07c28c2185ad155504",
+              "size": 151
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000a1/speaker_turns.jsonl",
+              "role": "export_payload",
+              "sha256": "29e9048257cbb8ec992bda3b5f5f1cd08aa2b01026cd77d450ab04876738f5f6",
+              "size": 127
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/EXPORT_READY_MANIFEST.json",
+              "role": "export_payload",
+              "sha256": "41151d6c696818f638020f1aefb104d3a4e085cd560aee9149ad353f29f1760e",
+              "size": 84
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/PROMOTED",
+              "role": "export_payload",
+              "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+              "size": 8
+            },
+            {
+              "path": "exports/expr1-000000000000000000000000000000b2/recordings.jsonl",
+              "role": "export_payload",
+              "sha256": "22ff736101ff59dfc69e21928989686a191eb029173dd1caa678458177a692d9",
+              "size": 62
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "3469f8886a25f2d1987548d2ae89dfd08d3d1010eb8711d19e4a2c827437d291",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "fc719c5bee97f09a7d403be1809bca65f53600a4d36ee69eb6af5b012ad9ee4f",
+              "size": 763
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "e3bfe77df9a7f6cc57803dc7f39fafa8de752a7282c9d777c1db66127e804d6a",
+              "size": 1537
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "a67ce53b382179f2cc02db3bc76756b4d1718b6cd46705799668973af23686fa",
+              "size": 428
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "58775881b0d67e55ac130c0a02b8ccbb573fcadd5b6ce1c43679e6380505f160",
+              "size": 332
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "fd58337c17febcf24373a8a6a9336ed10ef0d3794f69e7137ddc58dcea5d7135",
+              "size": 3108
+            },
+            {
+              "path": "docs/Notes.txt",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            },
+            {
+              "path": "docs/notes.txt",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "two listed paths that differ only by letter case (no file is written: not every file system can hold both)",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "DOCUMENT_INCONSISTENT"
+      ],
+      "id": "corapan-dated-document-without-cohort",
+      "mutations": [
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": 600000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "BROADCAST_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "f380fe10586dc76c9e4a2768996f6585a8587a90de8a1af7bbdff90c9d8d9ae2",
+              "source_sha256_state": "known",
+              "tokens_counted": 12,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": 1800000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q4",
+              "cohort_state": "known",
+              "country_id": "ar",
+              "date": "2026-10-02",
+              "date_basis": "PUBLICATION_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "AR_RadioMuestra_Manana_2026-10-02_0700-0730_1b2c3d4e",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "ar_radio_muestra",
+              "source_sha256": "b566938039b8d89216e53953cac725b418d7fd0c3115662d3cb8635ef060bfa5",
+              "source_sha256_state": "known",
+              "tokens_counted": 20,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": 420000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "UY_RadioEjemplo_Tertulia_undated_2c3d4e5f",
+              "export_id": "expr1-000000000000000000000000000000b2",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "b935453c3b5d11d08f672df9aef76ae1b2369e0cb3f2314e0bb6bd84b431613e",
+              "source_sha256_state": "known",
+              "tokens_counted": 7,
+              "tokens_counted_state": "known"
+            }
+          ]
+        }
+      ],
+      "note": "a known date whose cohort is not known",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [],
+      "id": "corapan-frozen-without-token-counts",
+      "mutations": [
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": 600000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "BROADCAST_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "f380fe10586dc76c9e4a2768996f6585a8587a90de8a1af7bbdff90c9d8d9ae2",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 1800000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q4",
+              "cohort_state": "known",
+              "country_id": "ar",
+              "date": "2026-10-02",
+              "date_basis": "PUBLICATION_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "AR_RadioMuestra_Manana_2026-10-02_0700-0730_1b2c3d4e",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "ar_radio_muestra",
+              "source_sha256": "b566938039b8d89216e53953cac725b418d7fd0c3115662d3cb8635ef060bfa5",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 420000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "UY_RadioEjemplo_Tertulia_undated_2c3d4e5f",
+              "export_id": "expr1-000000000000000000000000000000b2",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "b935453c3b5d11d08f672df9aef76ae1b2369e0cb3f2314e0bb6bd84b431613e",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            }
+          ]
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/release/COVERAGE.jsonl",
+          "pointer": "/coverage",
+          "records": [
+            {
+              "audio_ms": 600000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "BROADCAST_DATE",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_radio_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 1800000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q4",
+              "cohort_state": "known",
+              "country_id": "ar",
+              "date_basis": "PUBLICATION_DATE",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "ar_radio_muestra",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 420000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "documents": 1,
+              "outlet_id": "uy_radio_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator_state",
+          "value": "not_available"
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted_state",
+          "value": "not_available"
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "token counts not_available at all three levels, stated: the release verifies and is frozen",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "corapan-token-count-without-denominator",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator_state",
+          "value": "not_available"
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "known token counts in a release that declares no denominator",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "TOTALS_MISMATCH"
+      ],
+      "id": "corapan-partial-token-sum-as-total",
+      "mutations": [
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": 600000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "BROADCAST_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "f380fe10586dc76c9e4a2768996f6585a8587a90de8a1af7bbdff90c9d8d9ae2",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 1800000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q4",
+              "cohort_state": "known",
+              "country_id": "ar",
+              "date": "2026-10-02",
+              "date_basis": "PUBLICATION_DATE",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "AR_RadioMuestra_Manana_2026-10-02_0700-0730_1b2c3d4e",
+              "export_id": "expr1-000000000000000000000000000000a1",
+              "outlet_id": "ar_radio_muestra",
+              "source_sha256": "b566938039b8d89216e53953cac725b418d7fd0c3115662d3cb8635ef060bfa5",
+              "source_sha256_state": "known",
+              "tokens_counted": 20,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": 420000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "UY_RadioEjemplo_Tertulia_undated_2c3d4e5f",
+              "export_id": "expr1-000000000000000000000000000000b2",
+              "outlet_id": "uy_radio_ejemplo",
+              "source_sha256": "b935453c3b5d11d08f672df9aef76ae1b2369e0cb3f2314e0bb6bd84b431613e",
+              "source_sha256_state": "known",
+              "tokens_counted": 7,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "corapan/package/release/COVERAGE.jsonl",
+          "pointer": "/coverage",
+          "records": [
+            {
+              "audio_ms": 600000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "BROADCAST_DATE",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_radio_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": 1800000,
+              "audio_ms_state": "known",
+              "cohort": "2026-Q4",
+              "cohort_state": "known",
+              "country_id": "ar",
+              "date_basis": "PUBLICATION_DATE",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "ar_radio_muestra",
+              "tokens_counted": 20,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": 420000,
+              "audio_ms_state": "known",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "documents": 1,
+              "outlet_id": "uy_radio_ejemplo",
+              "tokens_counted": 7,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted",
+          "value": 27
+        },
+        {
+          "manifest": "corapan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "corapan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "one document is not counted; the total states the sum of the others as known",
+      "target": "corapan/package"
+    },
+    {
+      "check": "study",
+      "expect": [],
+      "id": "corapan-study-everything-excluded",
+      "mutations": [
+        {
+          "manifest": "corapan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "corapan/study/SELECTED.jsonl",
+          "pointer": "/selected",
+          "records": []
+        },
+        {
+          "manifest": "corapan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "corapan/study/EXCLUDED.jsonl",
+          "pointer": "/excluded",
+          "records": [
+            {
+              "corpus_id": "corapan",
+              "document_id": "UY_RadioEjemplo_Tertulia_undated_2c3d4e5f",
+              "id": "UY_RadioEjemplo_Tertulia_undated_2c3d4e5f",
+              "id_kind": "recording",
+              "level": "document",
+              "reason": "no_defensible_date",
+              "release_id": "corapan-0000-01"
+            },
+            {
+              "corpus_id": "corapan",
+              "document_id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "id": "UY_RadioEjemplo_Informativo_2026-09-04_0800-0810_0a1b2c3d",
+              "id_kind": "recording",
+              "level": "document",
+              "reason": "no_defensible_date",
+              "release_id": "corapan-0000-01"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/study/STUDY_POPULATION.json",
+          "pointer": "/totals",
+          "value": [
+            {
+              "audio_ms": 0,
+              "audio_ms_state": "known",
+              "corpus_id": "corapan",
+              "documents": 0,
+              "selected_records": 0,
+              "tokens_counted": 0,
+              "tokens_counted_state": "known"
+            }
+          ]
+        }
+      ],
+      "note": "a population that selects nothing: the sums over no documents are known and zero (a duration in a written release: not_applicable)",
+      "target": "corapan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "corapan-study-input-without-a-filter",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/study/STUDY_POPULATION.json",
+          "pointer": "/inputs",
+          "value": [
+            {
+              "analysis_layer": {
+                "contract": null,
+                "manifest_sha256": null,
+                "state": "not_available"
+              },
+              "corpus_id": "corapan",
+              "release_id": "corapan-0000-01",
+              "release_manifest_sha256": "7b9bc9982c8fc83daee3a903ceaa6eafcb04bd7ff320eb7bf92d4812e40d5211"
+            },
+            {
+              "analysis_layer": {
+                "contract": null,
+                "manifest_sha256": null,
+                "state": "not_available"
+              },
+              "corpus_id": "coprepan",
+              "release_id": "coprepan-0000.1",
+              "release_manifest_sha256": "b595003c05ca40e61cc01bc5969328ba03d6485677da641552a9228ec990677d"
+            }
+          ]
+        }
+      ],
+      "note": "a declarative selection over two inputs with a filter for one: neither 'all' nor 'none' is assumed",
+      "target": "corapan/study"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "NON_CANONICAL_VALUE"
+      ],
+      "id": "corapan-other-version-and-a-fraction",
+      "mutations": [
+        {
+          "find": "\"contract\": \"crosscorpus-release/v1\"",
+          "op": "replace_bytes",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "replace": "\"contract\": \"crosscorpus-release/v2\""
+        },
+        {
+          "find": "\"exports\": 2",
+          "op": "replace_bytes",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "replace": "\"exports\": 2.0"
+        }
+      ],
+      "note": "strict parsing comes before the contract version",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "CONTRACT_VERSION_UNSUPPORTED"
+      ],
+      "id": "corapan-other-version-and-an-unknown-field",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/contract",
+          "value": "crosscorpus-release/v2"
+        },
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/unexpected",
+          "value": 1
+        }
+      ],
+      "note": "the contract version comes before the schema: a document of another version is not read",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "RELEASE_ID_INVALID",
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "corapan-two-objections-of-one-step",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "corapan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "release"
+        }
+      ],
+      "note": "a 'release' with fixture true and an unpinned selection policy: the rules of one step are all reported",
+      "target": "corapan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "PIN_MISMATCH",
+        "REFERENCE_MISSING"
+      ],
+      "id": "corapan-two-record-sets-objecting",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "corapan/package/release/MEMBERS.jsonl"
+        },
+        {
+          "hex": "",
+          "op": "write_file",
+          "path": "corapan/package/release/DOCUMENTS.jsonl"
+        }
+      ],
+      "note": "phase 2 reads all three record sets and reports every objection",
+      "target": "corapan/package"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "coprepan-study-id-ends-with-a-line-feed",
+      "mutations": [
+        {
+          "find": "\"study_id\": \"fixture_study_coprepan\"",
+          "op": "replace_bytes",
+          "path": "coprepan/study/STUDY_POPULATION.json",
+          "replace": "\"study_id\": \"fixture_study_coprepan\\n\""
+        }
+      ],
+      "note": "a pattern ending in $ does not accept a value with a trailing line feed",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "PIN_MISMATCH"
+      ],
+      "id": "coprepan-study-pinned-release-record-set-edited",
+      "mutations": [
+        {
+          "hex": "",
+          "op": "write_file",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl"
+        }
+      ],
+      "note": "the release has the pinned manifest digest and does not verify: its own code, not a pin mismatch",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "REFERENCE_MISSING"
+      ],
+      "id": "coprepan-study-pinned-release-not-frozen",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "the release has the pinned manifest digest and has no freeze record: its own code, not a pin mismatch",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "POPULATION_NOT_RESTORABLE"
+      ],
+      "id": "coprepan-study-record-of-an-unpinned-release",
+      "mutations": [
+        {
+          "manifest": "coprepan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "coprepan/study/SELECTED.jsonl",
+          "pointer": "/selected",
+          "records": [
+            {
+              "corpus_id": "coprepan",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "id_kind": "document_version",
+              "level": "document",
+              "reason": null,
+              "release_id": "coprepan-0000.1"
+            },
+            {
+              "corpus_id": "coprepan",
+              "document_id": "of-no-pinned-release",
+              "id": "of-no-pinned-release",
+              "id_kind": "document_version",
+              "level": "document",
+              "reason": null,
+              "release_id": "coprepan-0000.9"
+            }
+          ]
+        }
+      ],
+      "note": "a selection record names a release the study does not pin",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "release",
+      "expect": [],
+      "id": "coprepan-provisional-export-without-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "coprepan-2026.1"
+        },
+        {
+          "op": "delete",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "a provisional export is checked without a freeze record",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "FREEZE_MISMATCH"
+      ],
+      "id": "coprepan-provisional-export-with-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "coprepan-2026.1"
+        }
+      ],
+      "note": "a freeze record beside a provisional export claims a release that does not exist",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "FREEZE_MISMATCH"
+      ],
+      "id": "coprepan-provisional-export-with-matching-freeze-record",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "provisional_export"
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/fixture",
+          "value": false
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_id",
+          "value": "coprepan-2026.1"
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "the same when the record names exactly this manifest: its existence is the objection, its content is not read",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PACKAGE_FORBIDDEN_CONTENT"
+      ],
+      "id": "coprepan-package-fetched-pages",
+      "mutations": [
+        {
+          "hex": "78",
+          "op": "write_file",
+          "path": "coprepan/package/pages/capture.warc.gz"
+        },
+        {
+          "manifest": "coprepan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/cpx-fixture-0001/documents/es_otro_diario/2a3b4c5d6e7f8091.json",
+              "role": "export_payload",
+              "sha256": "f3a474a471d07a0044ee46d5eea68969998a8529afd9d3a6c5e8af0ac60d361f",
+              "size": 34
+            },
+            {
+              "path": "exports/cpx-fixture-0001/documents/uy_diario_ejemplo/1f0e9d8c7b6a5f4e.json",
+              "role": "export_payload",
+              "sha256": "4b669dd35882f9f8a4794aba9a1d97beb933fc5ed8db2f924af675ed9f29cd78",
+              "size": 80
+            },
+            {
+              "path": "exports/cpx-fixture-0001/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "exports/cpx-fixture-0002/documents/uy_diario_ejemplo/3b4c5d6e7f809102.json",
+              "role": "export_payload",
+              "sha256": "416612c9da2ddde9e26850f6af164784473945eb061ddff7ac6378c5dc087a39",
+              "size": 41
+            },
+            {
+              "path": "exports/cpx-fixture-0002/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "12e11ca5dc2369d5828782ec145ff3747e7d3a48d788a8e3d776bf87393d9c60",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "6940f01d3a8009f47e474164431c565cc195259734005f35a050d68083884d11",
+              "size": 769
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "f616b9ff9daed9088e033e4945820693e973a54a351cdf683acfadb78c3fa9f3",
+              "size": 1483
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "f1acc92fd5ad9bba09a25cab6bd3af4048e0c00f9fce6ac6ace9f00a5ab1bbdd",
+              "size": 390
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "bc2dd2c87dae8904666f0cef710119214cf31d7dfb9bc53ad0a1a563e21dbfc0",
+              "size": 333
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "4432231804fe4662410d0b2784ba670e459a894c34472eb3350215d764ccfb10",
+              "size": 2925
+            },
+            {
+              "path": "pages/capture.warc.gz",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "a container of fetched pages / a media suffix in another letter case is refused like source audio",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PACKAGE_FORBIDDEN_CONTENT"
+      ],
+      "id": "coprepan-package-source-media-upper-case",
+      "mutations": [
+        {
+          "hex": "78",
+          "op": "write_file",
+          "path": "coprepan/package/media/SAMPLE.FLAC"
+        },
+        {
+          "manifest": "coprepan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/cpx-fixture-0001/documents/es_otro_diario/2a3b4c5d6e7f8091.json",
+              "role": "export_payload",
+              "sha256": "f3a474a471d07a0044ee46d5eea68969998a8529afd9d3a6c5e8af0ac60d361f",
+              "size": 34
+            },
+            {
+              "path": "exports/cpx-fixture-0001/documents/uy_diario_ejemplo/1f0e9d8c7b6a5f4e.json",
+              "role": "export_payload",
+              "sha256": "4b669dd35882f9f8a4794aba9a1d97beb933fc5ed8db2f924af675ed9f29cd78",
+              "size": 80
+            },
+            {
+              "path": "exports/cpx-fixture-0001/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "exports/cpx-fixture-0002/documents/uy_diario_ejemplo/3b4c5d6e7f809102.json",
+              "role": "export_payload",
+              "sha256": "416612c9da2ddde9e26850f6af164784473945eb061ddff7ac6378c5dc087a39",
+              "size": 41
+            },
+            {
+              "path": "exports/cpx-fixture-0002/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "12e11ca5dc2369d5828782ec145ff3747e7d3a48d788a8e3d776bf87393d9c60",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "6940f01d3a8009f47e474164431c565cc195259734005f35a050d68083884d11",
+              "size": 769
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "f616b9ff9daed9088e033e4945820693e973a54a351cdf683acfadb78c3fa9f3",
+              "size": 1483
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "f1acc92fd5ad9bba09a25cab6bd3af4048e0c00f9fce6ac6ace9f00a5ab1bbdd",
+              "size": 390
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "bc2dd2c87dae8904666f0cef710119214cf31d7dfb9bc53ad0a1a563e21dbfc0",
+              "size": 333
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "4432231804fe4662410d0b2784ba670e459a894c34472eb3350215d764ccfb10",
+              "size": 2925
+            },
+            {
+              "path": "media/SAMPLE.FLAC",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "a container of fetched pages / a media suffix in another letter case is refused like source audio",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "package",
+      "expect": [
+        "PATH_INVALID"
+      ],
+      "id": "coprepan-package-listed-paths-differ-only-by-case",
+      "mutations": [
+        {
+          "manifest": "coprepan/package/PACKAGE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/PACKAGE_FILES.jsonl",
+          "pointer": "/files",
+          "records": [
+            {
+              "path": "exports/cpx-fixture-0001/documents/es_otro_diario/2a3b4c5d6e7f8091.json",
+              "role": "export_payload",
+              "sha256": "f3a474a471d07a0044ee46d5eea68969998a8529afd9d3a6c5e8af0ac60d361f",
+              "size": 34
+            },
+            {
+              "path": "exports/cpx-fixture-0001/documents/uy_diario_ejemplo/1f0e9d8c7b6a5f4e.json",
+              "role": "export_payload",
+              "sha256": "4b669dd35882f9f8a4794aba9a1d97beb933fc5ed8db2f924af675ed9f29cd78",
+              "size": 80
+            },
+            {
+              "path": "exports/cpx-fixture-0001/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "exports/cpx-fixture-0002/documents/uy_diario_ejemplo/3b4c5d6e7f809102.json",
+              "role": "export_payload",
+              "sha256": "416612c9da2ddde9e26850f6af164784473945eb061ddff7ac6378c5dc087a39",
+              "size": 41
+            },
+            {
+              "path": "exports/cpx-fixture-0002/export.json",
+              "role": "export_payload",
+              "sha256": "3e3b6bdadb68f1850e31a0155480f049a36a171eff32a4a2a994797b19d888cf",
+              "size": 102
+            },
+            {
+              "path": "README.md",
+              "role": "documentation",
+              "sha256": "12e11ca5dc2369d5828782ec145ff3747e7d3a48d788a8e3d776bf87393d9c60",
+              "size": 235
+            },
+            {
+              "path": "release/COVERAGE.jsonl",
+              "role": "release_coverage",
+              "sha256": "6940f01d3a8009f47e474164431c565cc195259734005f35a050d68083884d11",
+              "size": 769
+            },
+            {
+              "path": "release/DOCUMENTS.jsonl",
+              "role": "release_documents",
+              "sha256": "f616b9ff9daed9088e033e4945820693e973a54a351cdf683acfadb78c3fa9f3",
+              "size": 1483
+            },
+            {
+              "path": "release/MEMBERS.jsonl",
+              "role": "release_members",
+              "sha256": "f1acc92fd5ad9bba09a25cab6bd3af4048e0c00f9fce6ac6ace9f00a5ab1bbdd",
+              "size": 390
+            },
+            {
+              "path": "release/RELEASE_FREEZE.json",
+              "role": "release_freeze",
+              "sha256": "bc2dd2c87dae8904666f0cef710119214cf31d7dfb9bc53ad0a1a563e21dbfc0",
+              "size": 333
+            },
+            {
+              "path": "release/RELEASE_MANIFEST.json",
+              "role": "release_manifest",
+              "sha256": "4432231804fe4662410d0b2784ba670e459a894c34472eb3350215d764ccfb10",
+              "size": 2925
+            },
+            {
+              "path": "docs/Notes.txt",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            },
+            {
+              "path": "docs/notes.txt",
+              "role": "documentation",
+              "sha256": "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+              "size": 1
+            }
+          ]
+        }
+      ],
+      "note": "two listed paths that differ only by letter case (no file is written: not every file system can hold both)",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "DOCUMENT_INCONSISTENT"
+      ],
+      "id": "coprepan-dated-document-without-cohort",
+      "mutations": [
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "218d130485d096e2801da4cada16559a2f83adb59c25d3b89cf8c2cbed7535d7",
+              "source_sha256_state": "known",
+              "tokens_counted": 14,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "es_otro_diario:doc:2a3b4c5d6e7f8091:v:1b2c3d4e5f60",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "es_otro_diario",
+              "source_sha256": "15ed95cf14254313a2cbf75129d90ae700ee5c571a9c95ec22749817adbec707",
+              "source_sha256_state": "known",
+              "tokens_counted": 3,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-07-15",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "export_id": "cpx-fixture-0002",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "6311c92eb77b4dd9349a5465f4e5251d130fbd401dd03e90d0aa9fb770091521",
+              "source_sha256_state": "known",
+              "tokens_counted": 4,
+              "tokens_counted_state": "known"
+            }
+          ]
+        }
+      ],
+      "note": "a known date whose cohort is not known",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [],
+      "id": "coprepan-frozen-without-token-counts",
+      "mutations": [
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "218d130485d096e2801da4cada16559a2f83adb59c25d3b89cf8c2cbed7535d7",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "es_otro_diario:doc:2a3b4c5d6e7f8091:v:1b2c3d4e5f60",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "es_otro_diario",
+              "source_sha256": "15ed95cf14254313a2cbf75129d90ae700ee5c571a9c95ec22749817adbec707",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-07-15",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "export_id": "cpx-fixture-0002",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "6311c92eb77b4dd9349a5465f4e5251d130fbd401dd03e90d0aa9fb770091521",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            }
+          ]
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/COVERAGE.jsonl",
+          "pointer": "/coverage",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "documents": 1,
+              "outlet_id": "es_otro_diario",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator_state",
+          "value": "not_available"
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted_state",
+          "value": "not_available"
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "token counts not_available at all three levels, stated: the release verifies and is frozen",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "coprepan-token-count-without-denominator",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator",
+          "value": null
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/token_denominator_state",
+          "value": "not_available"
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "known token counts in a release that declares no denominator",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "TOTALS_MISMATCH"
+      ],
+      "id": "coprepan-partial-token-sum-as-total",
+      "mutations": [
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "218d130485d096e2801da4cada16559a2f83adb59c25d3b89cf8c2cbed7535d7",
+              "source_sha256_state": "known",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "es_otro_diario:doc:2a3b4c5d6e7f8091:v:1b2c3d4e5f60",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "es_otro_diario",
+              "source_sha256": "15ed95cf14254313a2cbf75129d90ae700ee5c571a9c95ec22749817adbec707",
+              "source_sha256_state": "known",
+              "tokens_counted": 3,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-07-15",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "export_id": "cpx-fixture-0002",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "6311c92eb77b4dd9349a5465f4e5251d130fbd401dd03e90d0aa9fb770091521",
+              "source_sha256_state": "known",
+              "tokens_counted": 4,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/COVERAGE.jsonl",
+          "pointer": "/coverage",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": null,
+              "tokens_counted_state": "not_available"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "documents": 1,
+              "outlet_id": "es_otro_diario",
+              "tokens_counted": 3,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": 4,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted",
+          "value": 7
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "one document is not counted; the total states the sum of the others as known",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "study",
+      "expect": [],
+      "id": "coprepan-study-everything-excluded",
+      "mutations": [
+        {
+          "manifest": "coprepan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "coprepan/study/SELECTED.jsonl",
+          "pointer": "/selected",
+          "records": []
+        },
+        {
+          "manifest": "coprepan/study/STUDY_POPULATION.json",
+          "op": "set_record_set",
+          "path": "coprepan/study/EXCLUDED.jsonl",
+          "pointer": "/excluded",
+          "records": [
+            {
+              "corpus_id": "coprepan",
+              "document_id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "id_kind": "document_version",
+              "level": "document",
+              "reason": "syndicated_copy",
+              "release_id": "coprepan-0000.1"
+            },
+            {
+              "corpus_id": "coprepan",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "id_kind": "document_version",
+              "level": "document",
+              "reason": "syndicated_copy",
+              "release_id": "coprepan-0000.1"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/study/STUDY_POPULATION.json",
+          "pointer": "/totals",
+          "value": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "corpus_id": "coprepan",
+              "documents": 0,
+              "selected_records": 0,
+              "tokens_counted": 0,
+              "tokens_counted_state": "known"
+            }
+          ]
+        }
+      ],
+      "note": "a population that selects nothing: the sums over no documents are known and zero (a duration in a written release: not_applicable)",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "study",
+      "expect": [
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "coprepan-study-input-without-a-filter",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/study/STUDY_POPULATION.json",
+          "pointer": "/inputs",
+          "value": [
+            {
+              "analysis_layer": {
+                "contract": null,
+                "manifest_sha256": null,
+                "state": "not_available"
+              },
+              "corpus_id": "coprepan",
+              "release_id": "coprepan-0000.1",
+              "release_manifest_sha256": "b595003c05ca40e61cc01bc5969328ba03d6485677da641552a9228ec990677d"
+            },
+            {
+              "analysis_layer": {
+                "contract": null,
+                "manifest_sha256": null,
+                "state": "not_available"
+              },
+              "corpus_id": "corapan",
+              "release_id": "corapan-0000-01",
+              "release_manifest_sha256": "7b9bc9982c8fc83daee3a903ceaa6eafcb04bd7ff320eb7bf92d4812e40d5211"
+            }
+          ]
+        }
+      ],
+      "note": "a declarative selection over two inputs with a filter for one: neither 'all' nor 'none' is assumed",
+      "target": "coprepan/study"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "NON_CANONICAL_VALUE"
+      ],
+      "id": "coprepan-other-version-and-a-fraction",
+      "mutations": [
+        {
+          "find": "\"contract\": \"crosscorpus-release/v1\"",
+          "op": "replace_bytes",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "replace": "\"contract\": \"crosscorpus-release/v2\""
+        },
+        {
+          "find": "\"exports\": 2",
+          "op": "replace_bytes",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "replace": "\"exports\": 2.0"
+        }
+      ],
+      "note": "strict parsing comes before the contract version",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "CONTRACT_VERSION_UNSUPPORTED"
+      ],
+      "id": "coprepan-other-version-and-an-unknown-field",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/contract",
+          "value": "crosscorpus-release/v2"
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/unexpected",
+          "value": 1
+        }
+      ],
+      "note": "the contract version comes before the schema: a document of another version is not read",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "RELEASE_ID_INVALID",
+        "SCHEMA_VIOLATION"
+      ],
+      "id": "coprepan-two-objections-of-one-step",
+      "mutations": [
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/release_kind",
+          "value": "release"
+        }
+      ],
+      "note": "a 'release' with fixture true and an unpinned selection policy: the rules of one step are all reported",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [
+        "PIN_MISMATCH",
+        "REFERENCE_MISSING"
+      ],
+      "id": "coprepan-two-record-sets-objecting",
+      "mutations": [
+        {
+          "op": "delete",
+          "path": "coprepan/package/release/MEMBERS.jsonl"
+        },
+        {
+          "hex": "",
+          "op": "write_file",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl"
+        }
+      ],
+      "note": "phase 2 reads all three record sets and reports every objection",
+      "target": "coprepan/package"
+    },
+    {
+      "check": "release",
+      "expect": [],
+      "id": "coprepan-two-versions-of-one-document",
+      "mutations": [
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/DOCUMENTS.jsonl",
+          "pointer": "/documents",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:0a1b2c3d4e5f",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "218d130485d096e2801da4cada16559a2f83adb59c25d3b89cf8c2cbed7535d7",
+              "source_sha256_state": "known",
+              "tokens_counted": 14,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date": null,
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "date_state": "unknown",
+              "document_id": "es_otro_diario:doc:2a3b4c5d6e7f8091:v:1b2c3d4e5f60",
+              "export_id": "cpx-fixture-0001",
+              "outlet_id": "es_otro_diario",
+              "source_sha256": "15ed95cf14254313a2cbf75129d90ae700ee5c571a9c95ec22749817adbec707",
+              "source_sha256_state": "known",
+              "tokens_counted": 3,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-07-15",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:3b4c5d6e7f809102:v:2c3d4e5f6071",
+              "export_id": "cpx-fixture-0002",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "6311c92eb77b4dd9349a5465f4e5251d130fbd401dd03e90d0aa9fb770091521",
+              "source_sha256_state": "known",
+              "tokens_counted": 4,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date": "2026-09-04",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "date_state": "known",
+              "document_id": "uy_diario_ejemplo:doc:1f0e9d8c7b6a5f4e:v:9f8e7d6c5b4a",
+              "export_id": "cpx-fixture-0002",
+              "outlet_id": "uy_diario_ejemplo",
+              "source_sha256": "bfa20847f4aba4f7d634ed5119f1f2e810d197a57f0af10ea560ceb403f757df",
+              "source_sha256_state": "known",
+              "tokens_counted": 15,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/MEMBERS.jsonl",
+          "pointer": "/members",
+          "records": [
+            {
+              "bytes": 216,
+              "documents": 2,
+              "export_id": "cpx-fixture-0001",
+              "export_schema": "coprepan-fixture-export/v1",
+              "files": 3,
+              "tree_sha256": "ee99775049ba603731ce816c90cf70c06a575ff25ab57c654aba31a9724fb383"
+            },
+            {
+              "bytes": 143,
+              "documents": 2,
+              "export_id": "cpx-fixture-0002",
+              "export_schema": "coprepan-fixture-export/v1",
+              "files": 2,
+              "tree_sha256": "c7cc291fd6ff7067cf6024ec47036f2ede829978627e58d99c8b627970ddb881"
+            }
+          ]
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "set_record_set",
+          "path": "coprepan/package/release/COVERAGE.jsonl",
+          "pointer": "/coverage",
+          "records": [
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "json_ld",
+              "date_basis_state": "known",
+              "documents": 2,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": 29,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": null,
+              "cohort_state": "unknown",
+              "country_id": "es",
+              "date_basis": null,
+              "date_basis_state": "unknown",
+              "documents": 1,
+              "outlet_id": "es_otro_diario",
+              "tokens_counted": 3,
+              "tokens_counted_state": "known"
+            },
+            {
+              "audio_ms": null,
+              "audio_ms_state": "not_applicable",
+              "cohort": "2026-Q3",
+              "cohort_state": "known",
+              "country_id": "uy",
+              "date_basis": "open_graph",
+              "date_basis_state": "known",
+              "documents": 1,
+              "outlet_id": "uy_diario_ejemplo",
+              "tokens_counted": 4,
+              "tokens_counted_state": "known"
+            }
+          ]
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/documents",
+          "value": 4
+        },
+        {
+          "op": "set_json",
+          "path": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "pointer": "/totals/tokens_counted",
+          "value": 36
+        },
+        {
+          "manifest": "coprepan/package/release/RELEASE_MANIFEST.json",
+          "op": "refreeze",
+          "path": "coprepan/package/release/RELEASE_FREEZE.json"
+        }
+      ],
+      "note": "two versions of one article, in two exports: two documents, counted as two. The release counts document versions, not articles",
+      "target": "coprepan/package"
     }
   ],
   "contract": "crosscorpus-release/v1",
@@ -1351,7 +3620,159 @@
       "study_selected_sha256": "352af91d0498a6358e87eb113e3941f44773b014953b27c45a95fd8b5a765822"
     }
   },
-  "note": "Every case runs on a copy of fixtures/ in a new directory; paths are relative to that copy. 'expect' is the exact set of codes. Operations: append_bytes, delete (file or tree), write_file, replace_bytes (exactly one occurrence), reverse_lines, compact_json, set_record_set (replace the record set and set records and sha256 at the JSON pointer of the named manifest; nothing else is changed).",
+  "note": "Every case runs on a copy of fixtures/ in a new directory; paths are relative to that copy. 'expect' is the exact set of codes. Operations: append_bytes, delete (file or tree), write_file, replace_bytes (exactly one occurrence), reverse_lines, compact_json, set_record_set (replace the record set and set records and sha256 at the JSON pointer of the named manifest; nothing else is changed), set_json (parse the document, set the value at the JSON pointer -- adding the last key when it is absent -- and write the document again; its stored form carries nothing), refreeze (set corpus_id, release_id and release_manifest_sha256 of the freeze record to those of the manifest named by 'manifest', as that manifest is at this point of the list). 'patterns' lists schema patterns with values and whether the value matches under CONTRACT section 12. The first 52 cases are those of the first draft revision, unchanged; the expected codes and pattern verdicts of the later ones are written by hand from the contract text; none is the output of an implementation.",
+  "patterns": [
+    {
+      "matches": true,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a"
+    },
+    {
+      "matches": true,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a b"
+    },
+    {
+      "matches": true,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a\nb"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": ""
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": " a"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a "
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a\n"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "\ta"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": " a"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a　"
+    },
+    {
+      "matches": false,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a "
+    },
+    {
+      "matches": true,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a﻿"
+    },
+    {
+      "matches": true,
+      "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$",
+      "value": "a\u001f"
+    },
+    {
+      "matches": true,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "value": "main"
+    },
+    {
+      "matches": false,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "value": "main\n"
+    },
+    {
+      "matches": false,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "value": "Main"
+    },
+    {
+      "matches": false,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "value": "ma\nin"
+    },
+    {
+      "matches": true,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "value": "m"
+    },
+    {
+      "matches": true,
+      "pattern": "^[0-9a-f]{64}$",
+      "value": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "matches": false,
+      "pattern": "^[0-9a-f]{64}$",
+      "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+    },
+    {
+      "matches": false,
+      "pattern": "^[0-9a-f]{64}$",
+      "value": "000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "matches": false,
+      "pattern": "^[0-9a-f]{64}$",
+      "value": "000000000000000000000000000000000000000000000000000000000000000G"
+    },
+    {
+      "matches": true,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "corapan-2026-10"
+    },
+    {
+      "matches": true,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "coprepan-2027.1"
+    },
+    {
+      "matches": true,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "coprepan-legacy-2026-06"
+    },
+    {
+      "matches": false,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "corapan-"
+    },
+    {
+      "matches": false,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "corapan-2026-10\n"
+    },
+    {
+      "matches": false,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "xcorapan-2026-10"
+    },
+    {
+      "matches": false,
+      "pattern": "^(corapan|coprepan)-[a-z0-9]+([.-][a-z0-9]+)*$",
+      "value": "corapan-2026--10"
+    }
+  ],
   "record_sets": [
     {
       "records": [],
