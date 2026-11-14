@@ -203,11 +203,13 @@ valid and was not repeated. No benchmark ran on the share or on `D:`.
   new code. No backup was started by this run (a Saturday — the calendar's pause applies to its author too). The real basis is intact
   (§1), so that run will be incremental.
 - **New acquisition or preservation events:** none since 2026-10-18 (preservation) and 2026-10-11 (acquisition).
-- **The new operations block on the real workstation** (`storage_contract.py status` on `main` after the merge, ~14:50 local):
+- **The new operations block on the real workstation** (`storage_contract.py status` on `main` after the merge, ~13:28 local — corrected on 2026-11-14 by the following run; this line first said ~14:50, which was not measured):
   acquisition `DISABLED` (switch `disabled`, both October intakes `COMPLETED` and finalized, last request 2026-10-11T08:52:16Z), 0 fetches
   pending, floors `OK`, share gate `OPEN`, new transfers `PERMITTED`, CO.RA.PAN `SHARE_NORMAL`, backup `OK` (last verified
   2026-11-13T05:04:18Z, 31.4 h; **1 missed weekday slot** — Friday's receipt of 06:04 local precedes the new 08:00 slot of that day, so
-  the new calendar counts Friday's slot as passed; if Monday's run does not verify, Monday 10:00 shows 2 and `WARNING`, as intended),
+  the new calendar counts Friday's slot as passed; if Monday's run does not verify, Monday 10:00 shows 2 and `WARNING`, as intended —
+  *corrected by the following run (policy `2026-11-14.3`, calendar `effective_from` 2026-11-14): a slot before the calendar existed is
+  not counted; Monday 10:00 without a verified backup shows 1, Tuesday 2*),
   next start 2026-11-16T07:00:00Z (08:00 local), maintenance now `SCHEDULED_PAUSE`, operator action `none`.
 
 ## 10. Real production evidence still owed

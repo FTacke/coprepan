@@ -1,13 +1,13 @@
 {
-  "_draft": "NOT AN AUTHORIZATION. A template for the operator: fill the four OPERATOR fields, remove this key, save it ONCE under config/intake/authorizations/<date>_in2-canary.json and commit it once. scripts/intake_operator.py start refuses this file as it is (unknown key, empty dates, not under config/intake/authorizations/).",
-  "authorization_id": "DIA-OPERATOR-FILLS-IN",
+  "_draft": "NOT YET AN AUTHORIZATION RECORD. The operator's brief of 2026-11-14 ('CO.PRE.PAN_v3 – Erste Realqualifikation von Backup und Intake ...') authorises exactly this intake; the brief names no end date. The run that executes it on a weekday, after BACKUP_VERIFIED and seed-cache, sets valid_until to that day (the narrowest validity the brief allows), removes this key, saves the record ONCE as config/intake/authorizations/<that day>_in2-canary.json and commits it once; scripts/intake_operator.py start refuses this file as it is (unknown key, empty valid_until, not under config/intake/authorizations/).",
+  "authorization_id": "DIA-2026-11-14-1",
   "conditions": [
     "one start; a second needs a new record",
     "every gate of scripts/intake_operator.py start, none switched off",
     "no request to a held origin or URL; nothing is worked around",
     "the switch is disabled again when it ends, whatever its outcome",
-    "the intake runs on a weekday, after scripts/preservation_backup.py seed-cache, with CO.RA.PAN's observation NORMAL at the start",
-    "the abort criteria of docs/intake/canary/in2-20261114-canary_PREPARATION.md §5 apply"
+    "a weekday; CO.RA.PAN's observation SHARE_NORMAL at the start; the backup BACKUP_VERIFIED; the manifest cache seeded (brief §4)",
+    "no second canary, no 24-hour wave, no recurring acquisition, no backfill, no lifting of an access hold"
   ],
   "intake": {
     "ceilings": {
@@ -22,9 +22,9 @@
     "plan": "config/intake/plans/in2-20261114-canary.json",
     "plan_sha256": "b39ae894057395f20905d3af9c21f75aa6a8e2e04f7d9c250c63d81e1639dc3f"
   },
-  "issued_by": "OPERATOR FILLS IN",
-  "issued_on": "",
-  "issued_to": "OPERATOR FILLS IN",
+  "issued_by": "Felix Tacke (operator)",
+  "issued_on": "2026-11-14",
+  "issued_to": "Claude Code (commissioned agent)",
   "kind": "DELEGATED_INTAKE_AUTHORIZATION",
   "policy_versions": [
     "canary/2026-10-10.1"
@@ -32,10 +32,12 @@
   "schema": "coprepan-intake-authorization/v1",
   "source": {
     "clauses": [
-      "OPERATOR FILLS IN: the words of the brief that authorise this intake"
+      "§0: „Explizite Operatorfreigabe dieses Auftrags: Ein einziger Intake mit ID in2-20261114-canary, genau den sieben bereits geplanten Outlets, höchstens drei Stunden und höchstens 300 HTTP-Requests.“",
+      "§0: „Keine Autorisierung für einen zweiten Canary, eine 24-Stunden-Welle, eine wiederkehrende Acquisition, einen allgemeinen Backfill oder die Aufhebung von Access-Holds.“",
+      "§4: „Der bestehende Plan ist unverändert zu nutzen, sofern seine aktuelle Validierung erfolgreich bleibt.“"
     ],
-    "commission": "OPERATOR FILLS IN",
-    "received": "",
+    "commission": "CO.PRE.PAN_v3 – Erste Realqualifikation von Backup und Intake; vollständige Source-Health-Prüfung und Vorbereitung der 24-Stunden-Welle",
+    "received": "2026-11-14",
     "what_this_record_is": "the first bounded intake under intake-controller/2: seven outlets, three hours, at most 300 requests; the first production write on the PRESERVATION share since 2026-10-18. It authorises nothing beyond this plan and no recurring acquisition"
   },
   "valid_until": ""

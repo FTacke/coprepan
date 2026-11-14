@@ -41,6 +41,15 @@ manifest cache is never warmed by a burst. A first bounded intake (`in2-20261114
 **prepared, not authorized** ([preparation](intake/canary/in2-20261114-canary_PREPARATION.md)). Still offline-qualified only; the
 first real evidence is the scheduled backup of 2026-11-16 08:00. Report:
 [`2026-11-14 follow-up`](agent-runs/2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md).
+**Since the source-health run of the same day:** the canary `in2-20261114-canary` is **authorized by the operator's brief of
+2026-11-14** (one intake, seven outlets, 3 h, 300 requests) and **not yet run** — its preconditions (a weekday, the first verified
+incremental backup, the cache seed) cannot hold before Monday 2026-11-16; the record is prepared. A
+[source-health matrix](intake/source_health/source_health_2026-11-14.md) of all 145 documented outlets from stored evidence: of the
+87 qualified, 59 `READY`, 8 `READY_WITH_LIMITATIONS`, 4 `REPAIR_REQUIRED` (extraction), 15 `REQUALIFICATION_REQUIRED` (no new article
+in 24 h: archive or section channels), 1 `HELD`; none `OPERATIONALLY_STABLE`. The October intake left 1,792 of 4,412 new articles
+unfetched (the per-outlet cycle allowance, and outlets served one after another). A 24-hour wave is
+[prepared, not authorized](intake/wave/in2-24h-wave_PREPARATION.md). Report:
+[`2026-11-14 source health`](agent-runs/2026-11-14_coprepan-source-health-and-24h-wave-preparation.md).
 
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
@@ -865,3 +874,9 @@ top and §5, not this list.*
   recovering; pending packs from the ledger; bounded catch-up, drain and cache warm-up; `seed-cache` from the verified backup;
   an operations block in `storage_contract.py status`; the first `intake-controller/2` intake prepared (not authorized). Run report:
   [`2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md`](agent-runs/2026-11-14_coprepan-backup-calendar-acquisition-readiness-closure.md).
+- 2026-11-14 — source health and 24-hour-wave preparation (no stage state changed, no gate closed, no request to any publisher; the
+  live part — first real backup, cache seed, the authorized canary — `BLOCKED` until a weekday): the source-health matrix of 145
+  outlets from stored evidence (`scripts/build_source_health.py`); the calendar's `effective_from` (policy `2026-11-14.3`); an
+  end-to-end request timeout (`FetchLimits.total_seconds`, 120 s); the canary's authorization record prepared from the brief; the
+  24-hour wave prepared (draft plan of 71 outlets, budgets, requalification request). Run report:
+  [`2026-11-14_coprepan-source-health-and-24h-wave-preparation.md`](agent-runs/2026-11-14_coprepan-source-health-and-24h-wave-preparation.md).

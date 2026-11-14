@@ -1,9 +1,9 @@
 {
   "schema": "coprepan-resource-policy/v1",
-  "version": "2026-11-14.2",
+  "version": "2026-11-14.3",
   "status": "DECIDED",
   "decision": "CPD-0035",
-  "previous_version": "2026-11-14.1 (CPD-0033)",
+  "previous_version": "2026-11-14.2 (CPD-0035; .3 adds the calendar's effective_from: no slot before the calendar existed is counted as missed)",
   "note": "How much shared I/O CO.PRE.PAN may use and when it yields (src/coprepan/resource_policy.py). CO.RA.PAN has priority on the shared institutional share, on the shared D: device and on the C: umbrella. Every number here is a scenario assumption chosen on 2026-11-14 from the measurements named in `basis`; none is a measured optimum. A value is changed by a new version of this file, never by a run.",
   "basis": {
     "share_write_mib_s": "3.7-5.1 MiB/s from this workstation over the VPN, ~260 ms per small file (measured 2026-10-14, docs/storage/INDEX.md 20.5); CO.RA.PAN measured 3.7 MiB/s regardless of 1, 2 or 4 streams (its STORAGE_TARGETS_AND_PRESERVATION.md 19.6, read 2026-11-14)",
@@ -48,6 +48,7 @@
     "missed_slot_grace_minutes": 120,
     "warning_missed_slots": 2,
     "failure_missed_slots": 5,
+    "effective_from": "2026-11-14",
     "why": "no CO.PRE.PAN maintenance at the weekend, when CO.RA.PAN processes its large holdings; on weekdays after CO.RA.PAN's night window (01:30-07:30)"
   },
   "maintenance_quiet_windows": [

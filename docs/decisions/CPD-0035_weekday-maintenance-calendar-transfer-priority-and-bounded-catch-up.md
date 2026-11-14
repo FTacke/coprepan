@@ -107,3 +107,14 @@ an overdue cycle, and the policy then needs a new version).
   CO.RA.PAN, and its catch-up afterwards.
 - Non-impairment of CO.RA.PAN under concurrent production load is **not measured**; it is constructed and tested offline.
 - `seed-cache` against the real BACKUP root (a weekday, local reads of about 4,400 manifests on `D:`).
+
+## Amendment of 2026-11-14 (the source-health run; resource policy `2026-11-14.3`)
+
+1. **The calendar's start.** `maintenance_calendar.effective_from` (2026-11-14): the calendar counts no slot before the day it came into
+   force. Found on the real roots: the last verified receipt (Friday 2026-11-13 05:04Z, 06:04 local, under the old daily 04:45 task)
+   precedes Friday's 08:00 slot of a calendar that did not exist then, and the status showed it as one missed weekday slot. The real
+   age of the backup is unchanged in the status; every real slot from 2026-11-16 on counts as before (tested: Monday 10:01 without a
+   verified backup is one missed slot, Tuesday two and `WARNING`).
+2. **The end-to-end request timeout.** `FetchLimits.total_seconds` bounds one request in all (120 s in `CANARY_LIMITS`, the limits of
+   every canary and intake) besides the 30 s per socket operation; pinned in the intake's baseline block with the other fetch limits.
+   A slow-drip server could before hold one request open for as long as the 8 MiB body limit allowed.

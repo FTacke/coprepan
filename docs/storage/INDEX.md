@@ -760,7 +760,8 @@ windows. Every value is a scenario assumption whose basis the file names; it is 
 - **The calendar** (CPD-0035): automatic maintenance (backup, fixity, restore, audit, `seed-cache`) only Monday–Friday, Europe/Berlin
   wall clock, scheduled start 08:00 — after CO.RA.PAN's night window (its reconcile runs, continued or overdue, in any night 01:30–07:30;
   the quiet window is now every night 01:15–07:45). Saturday and Sunday: `SCHEDULED_PAUSE`, whatever started the process.
-  `--ignore-windows` overrides the calendar and the windows only.
+  `--ignore-windows` overrides the calendar and the windows only. The calendar counts slots from its `effective_from` (2026-11-14,
+  policy `2026-11-14.3`): no slot before it existed is a missed slot.
 - **Four kinds of I/O** (CPD-0035): local fetching and spooling — the pending bounds and the RUNTIME floor; a **new transfer** to the
   share — also held (no contact) while CO.RA.PAN is degraded, slow or recovering, and while `PAUSE_IO` exists; maintenance — all of
   that and the calendar and windows. The backlog is preserved oldest first, at most 200 packs an hour (in the intake's state file), also
