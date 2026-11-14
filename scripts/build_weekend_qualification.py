@@ -40,6 +40,17 @@ SCREENING = {"recent_window_hours": 72, "stale_after_days": 7, "short_body_chara
              "short_share_limited": 0.2, "short_share_poor": 0.5, "raw_functional_min_pages": 3}
 
 
+def raw_of(answered, raw_lengths, access, requested):
+    """``RAW_ACQUISITION_FUNCTIONAL``. ``UNIFORM_SHELL``: at least the minimum number of distinct article URLs answered 2xx with
+    bodies of one and the same length -- a page frame (a script shell, an interstitial), not the articles; stored as received, but
+    not counted as functional. Whether it is an access signal is the access classifier's to say, not this screening's."""
+    if answered >= SCREENING["raw_functional_min_pages"] and len(set(raw_lengths)) == 1 and len(raw_lengths) == answered:
+        return "UNIFORM_SHELL"
+    if answered >= SCREENING["raw_functional_min_pages"]:
+        return "FUNCTIONAL"
+    return "PARTIAL" if answered else "ACCESS_SIGNAL" if access else "FAILED" if requested else "NOT_ATTEMPTED"
+
+
 def coverage_of(channels, started, weekend):
     """``NEW_ARTICLE_COVERAGE`` from the channels as they answered: ``CURRENT`` (an entry dated inside the window), ``UNDATED``
     (entries, none dated), ``STALE_CHANNEL`` (the newest dated entry older than ``stale_after_days``: the channel is not kept
@@ -158,12 +169,14 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
             statuses = Counter(str(r["response"]["status"]) if r["outcome"] == "FETCHED" else f"failed:{r['failure_reason']}" for r in items)
             robots = [r for r in mine if r["fetch_kind"] == "robots_txt"]
             bodies, as_is_l, a_l, b_l, titles, dated, short = [], [], [], [], 0, 0, 0
+            raw_lengths = []
             for r in ok_items:
                 if r["fetch_id"] not in locate:
                     continue
                 path, entry = locate[r["fetch_id"]]
                 stored = pack.read_fetch_record(path, entry)
                 body = pack.read_body(path, entry)
+                raw_lengths.append(len(body))
                 result = E.BASELINE.run(body, body_sha256=stored["body_sha256"], **core_pipeline._extraction_arguments(stored))
                 text = result.body_text if result.outcome == E.OUTCOME_EXTRACTED else ""
                 bodies.append(len(text))
@@ -183,8 +196,7 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
                          else "FAILED" if channels and any(c["status"] != "not requested" for c in channels) else "NOT_REACHED")
             coverage = coverage_of(channels, started, weekend)
             access = sorted(k for k in statuses if k in ("401", "403", "429") or "challenge" in k)
-            raw = ("FUNCTIONAL" if len(ok_items) >= SCREENING["raw_functional_min_pages"] else "PARTIAL" if ok_items
-                   else "ACCESS_SIGNAL" if access else "FAILED" if items else "NOT_ATTEMPTED")
+            raw = raw_of(len(ok_items), raw_lengths, access, bool(items))
             med = _median(bodies)
             share = short / len(bodies) if bodies else None
             quality = ("NOT_MEASURED" if not bodies else "POOR" if (med or 0) < SCREENING["short_body_characters"] or share > SCREENING["short_share_poor"]

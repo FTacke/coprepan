@@ -95,6 +95,15 @@ def test_the_coverage_dimension_tells_a_quiet_weekend_from_a_channel_months_behi
     assert q.coverage_of([channel(0, 0, None)], started, True) == "NO_ENTRIES"
 
 
+def test_pages_of_one_and_the_same_length_are_a_shell_not_a_functional_acquisition():
+    q = _evaluation()
+    assert q.raw_of(6, [9004] * 6, [], True) == "UNIFORM_SHELL"
+    assert q.raw_of(6, [9004, 120000, 80000, 9004, 70000, 65000], [], True) == "FUNCTIONAL"
+    assert q.raw_of(2, [9004, 9004], [], True) == "PARTIAL"
+    assert q.raw_of(0, [], ["403"], True) == "ACCESS_SIGNAL"
+    assert q.raw_of(0, [], [], False) == "NOT_ATTEMPTED"
+
+
 def test_the_driver_pins_the_item_selection():
     pin = D.driver_pin(D.CanaryBudget(outlets=1), make_registry(), [OUTLET], ())
     assert pin["item_selection"].startswith(D.ITEM_SELECTION) and D.DRIVER_VERSION == "canary-driver/7"
