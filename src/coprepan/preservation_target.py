@@ -78,6 +78,40 @@ def read_target(root: Path) -> dict[str, Any] | None:
     return marker
 
 
+DEFERRED_LOCAL = "DEFERRED_LOCAL"
+DEFERRED_READINESS_SCHEMA = naming.schema_id("preservation-deferred-readiness", 1)
+
+
+def deferred_readiness(runtime_root: Path | str, *, required_free_bytes: int, now: datetime) -> dict[str, Any]:
+    """CPD-0036: the O-3 report of a run whose preservation is **deferred**: the sealed packs stay ``PRESERVATION_PENDING`` in
+    the runtime workspace and are promoted later, by a separate gated step. The preservation target is **not contacted**: no
+    marker is read, no free space measured, nothing probed. What is checked is what the deferral relies on -- the local
+    workspace volume: usable, and with at least ``required_free_bytes`` free. ``DEFERRED_LOCAL`` is never ``READY``: it says
+    that nothing of the run will be ``RAW_PRESERVED`` by the run itself."""
+    checks: list[dict[str, str]] = []
+    report: dict[str, Any] = {"schema": DEFERRED_READINESS_SCHEMA, "checked_at": format_instant(now), "target_id": None,
+                              "mode": "deferred_local", "required_free_bytes": required_free_bytes, "free_bytes": "unknown",
+                              "checks": checks, "status": NOT_READY,
+                              "note": "the preservation target is not contacted; the packs stay PRESERVATION_PENDING in the runtime workspace"}
+    try:
+        path = require_usable_root(str(runtime_root), "runtime workspace")
+        checks.append({"check": "runtime_workspace_usable", "status": PASS, "detail": "absolute, not a filesystem root, not inside the checkout"})
+    except StorageRefusal as refusal:
+        checks.append({"check": "runtime_workspace_usable", "status": FAIL, "detail": str(refusal)})
+        return report
+    measured = probe(path)
+    if not measured.reachable:
+        checks.append({"check": "runtime_workspace_reachable", "status": FAIL, "detail": "not a reachable directory"})
+        return report
+    report["free_bytes"] = measured.free_bytes
+    enough = isinstance(measured.free_bytes, int) and measured.free_bytes >= required_free_bytes
+    checks.append({"check": "runtime_free_space", "status": PASS if enough else FAIL,
+                   "detail": f"{measured.free_bytes} bytes free, {required_free_bytes} required"})
+    checks.append({"check": "preservation_target_not_contacted", "status": INFO, "detail": "deferred: promotion is a later, separately gated step"})
+    report["status"] = DEFERRED_LOCAL if enough else NOT_READY
+    return report
+
+
 def check_readiness(root: Path | str, *, required_free_bytes: int, now: datetime, max_fixity_objects: int = 50) -> dict[str, Any]:
     """Check a target against the contract. Returns a report; never raises for a failing target."""
     checks: list[dict[str, str]] = []

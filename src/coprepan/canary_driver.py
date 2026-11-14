@@ -11,11 +11,11 @@ A  probe       per outlet: robots evidence and the first selected channel docume
 B  discovery   per outlet: the second selected channel document
 C  item fetch  per outlet: due candidates, within the item budget of the outlet and of the run
 D  preserve    per outlet: seal, preserve_pack (direct, or spooled when the target is away), drain
-E  derive      per outlet: identity, baseline extraction and technical admission — of RAW_PRESERVED input only
+E  derive      per outlet: identity, baseline extraction and technical admission â€” of RAW_PRESERVED input only
 ```
 
-**Budgets count real requests.** Every transport call is counted — a redirect hop, a robots file, a
-request that failed — by the fetcher itself, and the counts are re-derived from the fetch records
+**Budgets count real requests.** Every transport call is counted â€” a redirect hop, a robots file, a
+request that failed â€” by the fetcher itself, and the counts are re-derived from the fetch records
 when a run is resumed or a receipt is written. A fetch that cannot be finished inside its budget is
 not started (it is a recorded refusal); a call that would exceed a budget raises
 :class:`BudgetExceeded`, which is an integrity failure of the run, not an outcome.
@@ -29,6 +29,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -54,7 +55,7 @@ from .storage_roots import CHECKOUT
 #     /4 (CPD-0020): listing channels are read without an allow rule and their candidates wait for one.
 #     /5 (wave B, F9): a candidate first listed by an HTML document waits for an allow rule whatever kind its channel
 #     is registered as; baselines pin a delegated operator authorisation where there is one (CPD-0023).
-DRIVER_VERSION = "canary-driver/5"
+DRIVER_VERSION = "canary-driver/6"            # 6 (2026-11-14, CPD-0036): a wave may defer preservation; 5 otherwise unchanged
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
 MAX_OUTLETS_OF_A_WAVE = 24          # CPD-0025: at four item requests per outlet, 24 outlets are what the ceiling leaves
@@ -139,11 +140,11 @@ class CanaryBudget:
 def canary_budget(outlets: int, limits: Mapping[str, int] | None = None) -> CanaryBudget:
     """The budget of a canary of ``outlets`` outlets. Five outlets: the budget of CPD-0016. A wider
     canary (CPD-0019) keeps every per-outlet limit except the item budget, which is what the hard
-    ceiling of item requests leaves for each outlet — more outlets, fewer pages of each.
+    ceiling of item requests leaves for each outlet â€” more outlets, fewer pages of each.
 
     ``limits`` are those of a wave of a delegated operator authorisation (CPD-0024). They can only
     **lower** the budget: each limit of the canary is the smaller of the ordinary one and the wave's.
-    Under them a canary may also be smaller than five outlets — one to fifteen —, because a wave
+    Under them a canary may also be smaller than five outlets â€” one to fifteen â€”, because a wave
     names its outlets exactly and its limits bound what is asked of them.
     """
     default = CanaryBudget()
@@ -160,8 +161,17 @@ def canary_budget(outlets: int, limits: Mapping[str, int] | None = None) -> Cana
     per_outlet = min(ordinary, limits["item_requests_per_outlet"])
     total = min(per_outlet * outlets, limits["item_requests_total"], HARD_ITEM_REQUESTS)
     other = min(default.other_requests_per_outlet, limits["other_requests_per_outlet"])
-    return CanaryBudget(outlets=outlets, item_requests_total=total, item_requests_per_outlet=min(per_outlet, total), other_requests_per_outlet=other,
-                        expansion_requests_reserved_per_outlet=min(default.expansion_requests_reserved_per_outlet, other))
+    # CPD-0036: the one limit a wave may raise is the number of channels read, up to four; every request limit stays the smaller one.
+    channels = limits.get(delegation.CHANNELS_KEY, default.channels_per_outlet)
+    if not 1 <= channels <= delegation.MAX_CHANNELS_PER_OUTLET:
+        raise CanaryStopped(f"a wave reads one to {delegation.MAX_CHANNELS_PER_OUTLET} channels of an outlet")
+    return CanaryBudget(outlets=outlets, channels_per_outlet=channels, item_requests_total=total, item_requests_per_outlet=min(per_outlet, total),
+                        other_requests_per_outlet=other, expansion_requests_reserved_per_outlet=min(default.expansion_requests_reserved_per_outlet, other))
+
+
+CHANNEL_SELECTION = "channel-selection/2"
+_PLACEHOLDER = re.compile(r"[<>]")
+_NEWS_PATH = re.compile(r"(news|noticia|google|breaking|ultima|latest|portada)", re.IGNORECASE)
 
 
 def select_channels(outlet: Mapping[str, Any], disabled: Sequence[str], limit: int,
@@ -170,8 +180,17 @@ def select_channels(outlet: Mapping[str, Any], disabled: Sequence[str], limit: i
     order ``rss, atom, sitemap, sitemap_index, archive, section_page``, in the registry's own order,
     never a disabled one. Deterministic: the same registry gives the same selection.
     (``candidate_rules`` no longer decides the selection, CPD-0020; kept for callers.)
+
+    ``channel-selection/2`` (2026-11-14, CPD-0036): a channel whose URL holds a placeholder (``<tag>``, ``<id>-<slug>``: a URL
+    pattern of the legacy registry, not a document) is never selected -- three were requested in October and could only fail; and
+    within each kind, a channel whose path declares news (``news``, ``noticia``, ``google``, ``breaking``, ``ultima``, ``latest``,
+    ``portada``) comes before the others, which keep the registry's order -- a registered news sitemap was passed over for an archive
+    sitemap listed before it.
     """
-    usable = [c for c in outlet["channels"] if c["kind"] in KIND_ORDER and c["channel_id"] not in disabled]
+    def url(c: Mapping[str, Any]) -> str:
+        return str(((c.get("url_history") or [{}])[-1]).get("url") or "")
+    usable = [c for c in outlet["channels"] if c["kind"] in KIND_ORDER and c["channel_id"] not in disabled and not _PLACEHOLDER.search(url(c))]
+    usable.sort(key=lambda c: 0 if _NEWS_PATH.search(url(c).split("//", 1)[-1].partition("/")[2]) else 1)  # stable: registry order within
     picked: list[str] = []
     for kind in KIND_ORDER:
         for channel in usable:
@@ -197,9 +216,10 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
         "spool_policy": {"min_free_bytes": CANARY_SPOOL.min_free_bytes, "max_spool_bytes": CANARY_SPOOL.max_spool_bytes},
         "outlets": {outlet_id: select_channels(registry_.resolve(outlet_id), disabled, budget.channels_per_outlet, candidate_rules)
                     for outlet_id in sorted(outlet_ids)},
-        "channel_selection": "one channel of each kind in the order rss, atom, sitemap, sitemap_index, archive, section_page, then "
-                             "more of those kinds; registry order; never a disabled channel; what a listing channel (archive, "
-                             "section_page) lists is requested only under an outlet allow rule",
+        "channel_selection": f"{CHANNEL_SELECTION}: one channel of each kind in the order rss, atom, sitemap, sitemap_index, archive, "
+                             "section_page, then more of those kinds; within a kind a channel whose path declares news first, then "
+                             "registry order; never a disabled channel or a URL pattern with a placeholder; what a listing channel "
+                             "(archive, section_page) lists is requested only under an outlet allow rule",
         "candidate_budget_order": discovery.BUDGET_ORDER, "numbered_pagination": discovery.NUMBERED_PAGINATION,
         "expansion_order": discovery.EXPANSION_ORDER,
         "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of "
@@ -239,12 +259,17 @@ def canary_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
     identity is its marker.
 
     ``authorization`` is the block of a delegated operator authorisation (CPD-0023): present only in
-    a baseline that was built under one, and then pinned like everything else — the record's id, its
+    a baseline that was built under one, and then pinned like everything else â€” the record's id, its
     digest, the wave. A baseline without it is an interactive operator's.
     """
-    marker = preservation_target.read_target(preservation_root)
-    if marker is None:
-        raise CanaryStopped("the preservation target has no identity")
+    if delegation.deferred(authorization):
+        # CPD-0036: the run does not contact the target, so its identity is not read; promotion later verifies it.
+        storage_target = {"mode": delegation.PRESERVATION_DEFERRED_LOCAL, "target_id": None}
+    else:
+        marker = preservation_target.read_target(preservation_root)
+        if marker is None:
+            raise CanaryStopped("the preservation target has no identity")
+        storage_target = {"target_id": marker["target_id"], "marker_sha256": sha256_bytes(canonical_json(marker))}
     return {
         **({"authorization": dict(authorization)} if authorization is not None else {}),
         "driver": driver_pin(budget, registry_, outlet_ids, disabled, candidate_rules),
@@ -255,7 +280,7 @@ def canary_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
         "outlets": {outlet_id: {"record_sha256": sha256_bytes(canonical_json(registry_.resolve(outlet_id))),
                                 "url_rules": registry_.resolve(outlet_id)["url_rules"]} for outlet_id in sorted(outlet_ids)},
         "storage_contract_sha256": storage_contract.read_pin()["bundle_sha256"],
-        "storage_target": {"target_id": marker["target_id"], "marker_sha256": sha256_bytes(canonical_json(marker))},
+        "storage_target": storage_target,
         "schemas": freeze.schema_ids(),
     }
 
@@ -466,7 +491,7 @@ def policy_layer_statistics(records: Sequence[Mapping[str, Any]], rows: Sequence
             "answered_2xx_under_research_override": sum(1 for r in overridden if answered(r)),
             "access_classes_observed": dict(sorted(Counter(r["policy"]["access_class_observed"] for r in own).items())),
             # A general machine-readable reservation, as a response header. Recorded; it does not
-            # decide anything for scientific research (CPD-0017 §5).
+            # decide anything for scientific research (CPD-0017 Â§5).
             "general_tdm_reservation_observed": sum(1 for r in own if reserved(r)),
         }
     decisions = Counter(str(layers(row).get("acquisition_decision")) for row in rows)
@@ -522,7 +547,7 @@ def runs_of_baseline(workspace: core_pipeline.Workspace, baseline_id: str) -> se
 
 def tally_from_evidence(workspace: core_pipeline.Workspace, run_id: str | None = None, *,
                         baseline_id: str | None = None) -> Counter[tuple[str, str]]:
-    """``{(outlet, group): real requests}`` re-derived from the fetch records — of all runs, of one
+    """``{(outlet, group): real requests}`` re-derived from the fetch records â€” of all runs, of one
     run, or of every run started under one frozen baseline. A canary's budget is the budget of its
     baseline (CPD-0019): a canary that is started again does not get a second one, and a new
     canary, armed and frozen anew, does not inherit what an earlier one spent.
@@ -702,6 +727,7 @@ def build_receipt(
     started_at: str,
     finished_at: str,
     driver_version: str = DRIVER_VERSION,
+    preservation_mode: str = delegation.PRESERVATION_DIRECT,
 ) -> dict[str, Any]:
     """The run receipt, every count **re-derived from evidence**: the fetch records of the packs, the
     request log, the ledger, the preservation manifests and the spool. No in-memory counter is read.
@@ -774,7 +800,25 @@ def build_receipt(
                   "preserved_objects": preserved_bytes},
         "packs": packs_of_run,
     }
+    if preservation_mode != delegation.PRESERVATION_DIRECT:     # CPD-0036; a direct receipt is as it always was
+        receipt["preservation"] = preservation_mode
     return receipt
+
+
+class PreservationDeferred(storage_roots.StorageRefusal):
+    """CPD-0036: the run defers preservation -- raised in place of resolving the target, so a pack stays sealed and
+    ``PRESERVATION_PENDING`` in the runtime workspace and the target is never contacted by the run."""
+
+
+def deferred_root() -> Path:
+    raise PreservationDeferred("preservation is deferred for this run (CPD-0036): the target is not contacted")
+
+
+def deferred_complete(receipt: Mapping[str, Any]) -> bool:
+    """A deferred run is complete when every fetch with a body is pending in the workspace and nothing is spooled or preserved."""
+    counts = receipt["counts"]
+    return (counts["preserved"] == 0 and counts["spooled_objects_pending"] == 0
+            and counts["pending"] == counts["fetch_records"] - counts["failed"])
 
 
 # --- the command line ---------------------------------------------------------------------------------
@@ -806,8 +850,30 @@ def _after_the_run(arguments, environment, registered) -> int:
     from . import canary_evidence
 
     stored = json.loads(arguments.receipt.read_text(encoding="utf-8"))
-    roles = storage_roots.resolve_configured_roles(env=environment)
+    deferred = stored.get("preservation") == delegation.PRESERVATION_DEFERRED_LOCAL
+    # CPD-0036: the evidence of a deferred run is read in the workspace; the target and the backup root are not resolved.
+    roles = canary.local_roles(environment) if deferred else storage_roots.resolve_configured_roles(env=environment)
     workspace = core_pipeline.Workspace(roles["RUNTIME"])
+    if deferred:
+        if arguments.command == "measure":
+            result = canary_evidence.measure_deferred(workspace, run_id=stored["run_id"], stored_receipt=stored)
+        else:
+            identity = crawler_identity.load_identity()
+            run = SimpleNamespace(run_id=stored["run_id"])
+            policy_record = dict(policy.load_policy())
+            recorded_versions = {r["policy"]["policy_version"] for r in fetch_records(workspace) if r["run_id"] == stored["run_id"]}
+            if len(recorded_versions) == 1:
+                policy_record["policy_version"] = recorded_versions.pop()
+            rebuilt = build_receipt(
+                workspace, run=run, commit=stored["commit"], baseline_id=stored["baseline_id"], policy_record=policy_record,
+                schedule_policy=schedule.load_schedule_policy(), identity=identity, storage_contract_sha256=stored["storage_contract_sha256"],
+                outlet_ids=stored["outlets"], channels=stored["channels"], preservation_root=None, spool_root=roles["SPOOL"],
+                started_at=stored["started_at"], finished_at=stored["finished_at"], driver_version=stored["driver"],
+                preservation_mode=delegation.PRESERVATION_DEFERRED_LOCAL)
+            result = canary_evidence.verify_deferred(workspace, run=run, spool_root=roles["SPOOL"], stored_receipt=stored, rebuilt_receipt=rebuilt)
+        write_bytes_exclusive(arguments.out, record_json(result))
+        print(json.dumps({"status": result.get("status", "MEASURED"), "out": arguments.out.name}, indent=2))
+        return 0 if result.get("status", "PASS") == "PASS" else 1
     if arguments.command == "measure":
         result = canary_evidence.measure(
             workspace, run_id=stored["run_id"], preservation_root=roles["PRESERVATION"],
@@ -834,6 +900,66 @@ def _after_the_run(arguments, environment, registered) -> int:
     return 0 if result.get("status", "PASS") == "PASS" else 1
 
 
+DEFERRED_PRESERVATION_SCHEMA = naming.schema_id("canary-deferred-preservation", 1)
+
+
+def preserve_deferred(stored: Mapping[str, Any], *, environment: Mapping[str, str], now: datetime,
+                      max_packs: int | None = None, registry_: registry.Registry | None = None) -> dict[str, Any]:
+    """CPD-0036: the later, separately gated promotion of the packs a deferred canary left ``PRESERVATION_PENDING``. Makes no
+    request to any publisher. It starts only when every gate of shared storage permits it, checked before any contact, in this
+    order: the operator's pause file, a weekday of the maintenance calendar outside CO.RA.PAN's quiet windows and with no fresh
+    sibling observation of a degraded, slow or recovering share (:func:`resource_policy.maintenance_hold`); the backup of the
+    primary current (level ``OK``); the share gate's transfer purpose open. Then at most ``catch_up_packs_per_hour`` packs
+    (or ``max_packs``, the smaller), oldest first, each preserved and derived like any pack; the first that stays pending ends
+    the step. Repeatable: what is preserved is not preserved again."""
+    from . import primary_backup, resource_policy as R
+
+    if stored.get("preservation") != delegation.PRESERVATION_DEFERRED_LOCAL:
+        raise CanaryStopped("not the receipt of a canary whose preservation was deferred")
+    policy_ = R.load_policy(R.default_policy_path(CHECKOUT))
+    runtime = storage_roots.resolve_root("RUNTIME", env=environment)
+    out: dict[str, Any] = {"schema": DEFERRED_PRESERVATION_SCHEMA, "run_id": stored["run_id"], "at": format_instant(now),
+                           "resource_policy": policy_.version, "attempted": 0, "preserved": [], "still_pending": [], "held_because": None}
+    workspace = core_pipeline.Workspace(runtime)
+    waiting = sorted(set(pending_pack_ids(workspace)) & set(stored["packs"]))
+    out["pending_before"] = len(waiting)
+    if not waiting:
+        return out
+    hold = R.maintenance_hold(policy_, runtime, now, environment)
+    if hold:
+        out["held_because"] = f"{hold[0]}: {hold[1]}"
+        out["still_pending"] = waiting
+        return out
+    backup_value = environment.get("COPREPAN_BACKUP_ROOT", "").strip()
+    backup_root = storage_roots.resolve_root("BACKUP", env=environment, writable=False) if backup_value else None
+    backup = primary_backup.backup_health(backup_root, now=now, calendar=policy_.calendar, failure_hours=policy_.backup["receipt_failure_hours"])
+    out["backup_level"] = backup["level"]
+    if backup["level"] != "OK":
+        out["held_because"] = f"the backup of the primary is not current: {backup['level']}"
+        out["still_pending"] = waiting
+        return out
+    gate = R.ShareGate(runtime, policy_, env=environment)
+    root = gate.guard(lambda: storage_roots.resolve_root("PRESERVATION", env=environment), transfer=True)
+    held = R.transfer_held(root)
+    if held:
+        out["held_because"] = held
+        out["still_pending"] = waiting
+        return out
+    budget = policy_.catch_up_packs_per_hour if max_packs is None else min(max_packs, policy_.catch_up_packs_per_hour)
+    registered = registry_ or registry.load_registry(CHECKOUT / "config" / "outlet_registry.json")
+    clock = lambda: datetime.now(timezone.utc)  # noqa: E731
+    for identifier in sorted(waiting, key=lambda p: (p.rsplit("-", 2)[-2], p.rsplit("-", 2)[-1], p))[:budget]:
+        preserved = _preserve(workspace, [identifier], root, None, None, clock)
+        _derive(workspace, registered, root, preserved, extraction.BASELINE, clock)
+        out["attempted"] += 1
+        if preserved[identifier]["state"] != preservation.STATE_PRESERVED:
+            out["stopped_because"] = preserved[identifier].get("reason")
+            break
+        out["preserved"].append(identifier)
+    out["still_pending"] = sorted(set(pending_pack_ids(workspace)) & set(stored["packs"]))
+    return out
+
+
 def _authorization(path: Path, wave: str, budget: CanaryBudget, outlet_ids: Sequence[str], acquisition_policy: Mapping[str, Any], *,
                    except_manifest: str | None = None) -> dict[str, Any]:
     """The pinned block of a delegated operator authorisation, or a stop: the record must cover exactly this canary."""
@@ -855,7 +981,7 @@ def _wave_limits(path: Path, wave: str) -> dict[str, int]:
 
 def _operator_authorization(baseline: Mapping[str, Any]) -> dict[str, Any]:
     """Who armed and froze, as the start state and the receipt state it: the delegated record the baseline pins,
-    or the interactive operator the freeze names. Never a guess — it is read from the frozen baseline.
+    or the interactive operator the freeze names. Never a guess â€” it is read from the frozen baseline.
     """
     pinned = (baseline.get("canary") or {}).get("authorization")
     if pinned is not None:
@@ -896,9 +1022,21 @@ def main(argv: list[str] | None = None) -> int:
     run_.add_argument("--tests-passed", type=int, required=True)
     run_.add_argument("--required-free-bytes", type=int, required=True)
     run_.add_argument("--receipt-dir", type=Path, required=True, help="where the run receipt is written (once)")
+    later = commands.add_parser("preserve-deferred", help="CPD-0036: promote the pending packs of a deferred canary within the gates of shared "
+                                                          "storage (no request to any publisher)")
+    later.add_argument("--receipt", type=Path, required=True)
+    later.add_argument("--max-packs", type=int, default=None)
+    later.add_argument("--out", type=Path, required=True)
     arguments = parser.parse_args(argv)
 
     environment = storage_roots.workstation_environment()
+    if arguments.command == "preserve-deferred":
+        result = preserve_deferred(json.loads(arguments.receipt.read_text(encoding="utf-8")), environment=environment,
+                                   now=datetime.now(timezone.utc), max_packs=arguments.max_packs)
+        write_bytes_exclusive(arguments.out, record_json(result))
+        print(json.dumps({k: result[k] for k in ("pending_before", "attempted", "held_because")} | {"preserved": len(result["preserved"]),
+                                                                                                   "still_pending": len(result["still_pending"])}, indent=2))
+        return 0 if not result["still_pending"] else 1
     registered = registry.load_registry(CHECKOUT / "config" / "outlet_registry.json")
     acquisition_policy = policy.load_policy()
     candidate_rules = candidate_filter.load_rules()
@@ -916,8 +1054,14 @@ def main(argv: list[str] | None = None) -> int:
         budget = canary_budget(len(set(arguments.outlet)), None if arguments.authorization is None else _wave_limits(arguments.authorization, arguments.wave))
         authorization = None if arguments.authorization is None else _authorization(
             arguments.authorization, arguments.wave, budget, arguments.outlet, acquisition_policy)
-        root = storage_roots.resolve_root("PRESERVATION", env=environment)
-        readiness = preservation_target.check_readiness(root, required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
+        if delegation.deferred(authorization):
+            # CPD-0036: O-3 by the local workspace; the target is neither resolved (a write probe) nor read
+            root = None
+            readiness = preservation_target.deferred_readiness(canary.local_roles(environment)["RUNTIME"],
+                                                               required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
+        else:
+            root = storage_roots.resolve_root("PRESERVATION", env=environment)
+            readiness = preservation_target.check_readiness(root, required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc))
         manifest = freeze.build_manifest(
             code_commit=arguments.commit, created_at=datetime.now(timezone.utc), operator=arguments.operator,
             test_baseline={"suite": "python -m pytest", "passed": arguments.tests_passed}, storage_target=readiness,
@@ -934,14 +1078,17 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     # --- preconditions: all of them, before the first request ---
-    roles_now = storage_roots.resolve_configured_roles(env=environment)
     verify_checkout(arguments.pinned_commit)
     baseline = json.loads(arguments.approved_baseline.read_text(encoding="utf-8"))
     if baseline.get("state") != freeze.FROZEN or not freeze.verify_manifest(baseline):
         raise CanaryStopped("the approved baseline is not a frozen manifest that verifies")
+    # CPD-0036: a baseline that pins a deferring wave runs without the target: only the local roles are resolved.
+    deferred = delegation.deferred((baseline.get("canary") or {}).get("authorization"))
+    roles_now = canary.local_roles(environment) if deferred else storage_roots.resolve_configured_roles(env=environment)
     report = canary.preflight(outlet_ids=arguments.outlet, tests_passed=arguments.tests_passed, tests_commit=arguments.pinned_commit,
                               code_commit=arguments.pinned_commit, approved_baseline=baseline,
-                              required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc), environment=environment)
+                              required_free_bytes=arguments.required_free_bytes, now=datetime.now(timezone.utc), environment=environment,
+                              deferred_preservation=deferred)
     if report["status"] != canary.READY:
         print(json.dumps(report, indent=2))
         raise CanaryStopped("the preflight is not READY: no request is made")
@@ -954,7 +1101,7 @@ def main(argv: list[str] | None = None) -> int:
         CHECKOUT / str(pinned_authorization.get("record")), str(pinned_authorization.get("wave")), budget, arguments.outlet, acquisition_policy,
         except_manifest=baseline["manifest_sha256"])
     if baseline.get("scope") != freeze.SCOPE_CANARY or baseline.get("canary") != canary_pin(
-            budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], roles_now["PRESERVATION"], acquisition_policy,
+            budget, registered, arguments.outlet, acquisition_policy["disabled_channels"], roles_now.get("PRESERVATION"), acquisition_policy,
             candidate_rules=candidate_rules, authorization=authorization):
         raise CanaryStopped("the driver, its budgets, the outlets, the storage identity, the research-TDM policy, the "
                             "deployed crawler page or the operator authorisation differ from what the baseline pins")
@@ -966,7 +1113,7 @@ def main(argv: list[str] | None = None) -> int:
     clock = lambda: datetime.now(timezone.utc)  # noqa: E731
     started = clock()
     # The checkpoint immediately before the first real request: written once, before anything is asked.
-    pending_at_start = outage_spool.pending_records(roles["SPOOL"]) if roles["SPOOL"].is_dir() else []
+    pending_at_start = outage_spool.pending_records(roles["SPOOL"]) if roles.get("SPOOL") is not None and roles["SPOOL"].is_dir() else []
     start_state = {
         "schema": naming.schema_id("canary-start-state", 1), "driver": DRIVER_VERSION, "at": format_instant(started),
         "head": _git("rev-parse", "HEAD"), "origin_main_as_last_fetched": _git("rev-parse", "origin/main"),
@@ -995,23 +1142,30 @@ def main(argv: list[str] | None = None) -> int:
     fetcher = BudgetedFetcher(budget=budget, used=used, identity=identity, gate=gate, limits=CANARY_LIMITS, clock=clock, sleep=time.sleep,
                               access_holds=access_holds_from_evidence(workspace, reclassify=True))
     resolve = lambda role: (lambda: storage_roots.resolve_root(role, env=environment))  # noqa: E731
+    # CPD-0036, deferred: the pack is sealed and stays PRESERVATION_PENDING in the workspace -- no target, no spool.
     outcome = run_canary(workspace, registered, run, outlet_ids=arguments.outlet, fetcher=fetcher, schedule_policy=schedule_policy, clock=clock,
-                         preservation_root=resolve("PRESERVATION"), spool_root=resolve("SPOOL"), spool_policy=CANARY_SPOOL,
+                         preservation_root=deferred_root if deferred else resolve("PRESERVATION"),
+                         spool_root=None if deferred else resolve("SPOOL"), spool_policy=None if deferred else CANARY_SPOOL,
                          disabled_channels=acquisition_policy["disabled_channels"], candidate_rules=candidate_rules)
     receipt = build_receipt(
         workspace, run=run, commit=arguments.pinned_commit, baseline_id=baseline["manifest_sha256"], policy_record=acquisition_policy,
         schedule_policy=schedule_policy, identity=identity, storage_contract_sha256=baseline["canary"]["storage_contract_sha256"],
         outlet_ids=arguments.outlet, channels={o: r["channels"] for o, r in outcome["outlets"].items()},
-        preservation_root=roles["PRESERVATION"], spool_root=roles["SPOOL"], started_at=format_instant(started), finished_at=format_instant(clock()))
+        preservation_root=None if deferred else roles["PRESERVATION"], spool_root=roles.get("SPOOL"), started_at=format_instant(started),
+        finished_at=format_instant(clock()),
+        preservation_mode=delegation.PRESERVATION_DEFERRED_LOCAL if deferred else delegation.PRESERVATION_DIRECT)
     receipt["fetcher_transport_calls"] = fetcher.transport_calls
     receipt["operator_authorization"] = _operator_authorization(baseline)
     receipt["checkpoints"] = outcome["checkpoints"]
-    complete = receipt["counts"]["pending"] == 0 and receipt["counts"]["spooled_objects_pending"] == 0
+    if deferred:
+        complete = deferred_complete(receipt)
+    else:
+        complete = receipt["counts"]["pending"] == 0 and receipt["counts"]["spooled_objects_pending"] == 0
     if complete:
         acquisition.close_run(workspace.root, run, finished_at=clock(), status="COMPLETED",
                               counts={"requests": receipt["requests"]["total"], "fetch_records": receipt["counts"]["fetch_records"]},
                               pack_ids=receipt["packs"])
-    receipt["status"] = "COMPLETE" if complete else "INCOMPLETE_PENDING"
+    receipt["status"] = ("COMPLETE_PRESERVATION_DEFERRED" if complete else "INCOMPLETE_PENDING") if deferred else ("COMPLETE" if complete else "INCOMPLETE_PENDING")
     arguments.receipt_dir.mkdir(parents=True, exist_ok=True)
     write_bytes_exclusive(arguments.receipt_dir / f"canary-receipt-{run.run_id}.json", record_json(receipt))
     print(json.dumps({"status": receipt["status"], "requests": receipt["requests"]["total"], "counts": receipt["counts"]}, indent=2))

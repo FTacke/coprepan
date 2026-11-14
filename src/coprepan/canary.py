@@ -121,6 +121,25 @@ def plan_canary(registry_document: registry.Registry, *, outlets_wanted: int, se
     return plan
 
 
+class _Deferred(Exception):
+    """Internal: the O-3 target check is replaced by the local report of a deferred canary."""
+
+
+LOCAL_ROLES = ("RUNTIME", "SPOOL")
+
+
+def local_roles(environment: Mapping[str, str]) -> dict[str, Path | None]:
+    """CPD-0036: the roles a canary with deferred preservation uses -- the runtime workspace and the spool, both local -- resolved
+    without resolving any other: resolution probes a root with a write, and the preservation and backup roots are not touched."""
+    out: dict[str, Path | None] = {}
+    targets = storage_roots.load_storage_targets()
+    for role in LOCAL_ROLES:
+        target = targets.get(role)
+        out[role] = (storage_roots.resolve_root(role, env=environment, targets=targets)
+                     if target is not None and environment.get(target.variable, "").strip() else None)
+    return out
+
+
 def preflight(
     *,
     outlet_ids: Sequence[str],
@@ -132,17 +151,25 @@ def preflight(
     now: datetime,
     environment: Mapping[str, str] | None = None,
     repository: Path = CHECKOUT,
+    deferred_preservation: bool = False,
 ) -> dict[str, Any]:
     """May the real canary run? Every precondition checked against what is on disk; fail closed.
 
     ``approved_baseline`` is the baseline manifest the operator reviewed when approving the
     canary. The configuration on disk must still be the one it describes: any drift fails.
+
+    ``deferred_preservation`` (CPD-0036): the canary's packs stay pending in the runtime workspace; O-3 is then checked on the
+    workspace volume only, and the preservation target is neither resolved nor contacted.
     """
     checks: list[dict[str, str]] = []
 
     def check(name: str, gate: str, ok: bool, detail: str) -> None:
         checks.append({"check": name, "gate": gate, "status": PASS if ok else FAIL, "detail": detail})
 
+    from . import delegation
+
+    if isinstance(approved_baseline, Mapping) and delegation.deferred((approved_baseline.get("canary") or {}).get("authorization")):
+        deferred_preservation = True                         # the frozen baseline says so: never the other way round
     config = repository / "config"
     # O-11 — the chosen outlets are registered and complete enough to be acquired for.
     try:
@@ -184,6 +211,16 @@ def preflight(
     # O-3 — a preservation target is configured, taken into service and READY.
     target_report: dict[str, Any] | None = None
     try:
+        if deferred_preservation:
+            runtime = storage_roots.resolve_root("RUNTIME", env=os.environ if environment is None else environment)
+            if required_free_bytes is None:
+                check("preservation_deferred_local", "O-3", False, "no required free space was stated")
+            else:
+                target_report = preservation_target.deferred_readiness(runtime, required_free_bytes=required_free_bytes, now=now)
+                failed = [c["check"] for c in target_report["checks"] if c["status"] == preservation_target.FAIL]
+                check("preservation_deferred_local", "O-3", target_report["status"] == preservation_target.DEFERRED_LOCAL,
+                      f"deferred: {target_report['status']}; the target is not contacted" + (f" (failed: {', '.join(failed)})" if failed else ""))
+            raise _Deferred()
         root = storage_roots.resolve_root("PRESERVATION", env=os.environ if environment is None else environment)
         if required_free_bytes is None:
             check("preservation_target_ready", "O-3", False, "no required free space was stated")
@@ -192,17 +229,26 @@ def preflight(
             failed = [c["check"] for c in target_report["checks"] if c["status"] == preservation_target.FAIL]
             check("preservation_target_ready", "O-3", target_report["status"] == preservation_target.READY,
                   f"target {target_report['target_id']}: {target_report['status']}" + (f" (failed: {', '.join(failed)})" if failed else ""))
+    except _Deferred:
+        pass
     except storage_roots.StorageRefusal as refusal:
-        check("preservation_target_ready", "O-3", False, str(refusal))
+        check("preservation_deferred_local" if deferred_preservation else "preservation_target_ready", "O-3", False, str(refusal))
     try:
         storage_roots.resolve_root("RUNTIME", env=os.environ if environment is None else environment)
         check("runtime_workspace_configured", "O-3", True, "COPREPAN_WORKSPACE_ROOT resolves and is writable")
     except storage_roots.StorageRefusal as refusal:
         check("runtime_workspace_configured", "O-3", False, str(refusal))
     try:
-        roles = storage_roots.resolve_configured_roles(env=os.environ if environment is None else environment)
-        check("storage_roles_separate", "O-3", True, "configured: " + (", ".join(role for role, root in roles.items() if root is not None) or "none")
-              + "; no role shares or contains another; a backup, if any, is on another volume")
+        if deferred_preservation:
+            # Resolving a role probes it with a write: only the local roles the deferred canary uses are resolved (CPD-0036).
+            roles = local_roles(os.environ if environment is None else environment)
+            storage_roots.validate_role_separation({role: root for role, root in roles.items() if root is not None})
+            check("storage_roles_separate", "O-3", True, "local roles only (deferred): " + ", ".join(r for r, v in roles.items() if v is not None)
+                  + "; the preservation and backup roots are not resolved")
+        else:
+            roles = storage_roots.resolve_configured_roles(env=os.environ if environment is None else environment)
+            check("storage_roles_separate", "O-3", True, "configured: " + (", ".join(role for role, root in roles.items() if root is not None) or "none")
+                  + "; no role shares or contains another; a backup, if any, is on another volume")
     except storage_roots.StorageRefusal as refusal:
         check("storage_roles_separate", "O-3", False, str(refusal))
 

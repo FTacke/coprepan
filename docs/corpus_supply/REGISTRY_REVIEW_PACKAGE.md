@@ -2,7 +2,7 @@
 
 **Status: GENERATED — a recommendation for human review. It registers nothing.** Produced by
 `python -m coprepan.registry_review` from `config/outlet_registry.json`
-(SHA-256 `7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8`); a test fails if this page and the registry drift apart.
+(SHA-256 `ca36ae7d2de44dc883f90872770e91fcdf42e02d830fadf18c37bcc12e192ea4`); a test fails if this page and the registry drift apart.
 What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per outlet and channel:
 [`config/registry_review/outlet_review_package.json`](../../config/registry_review/outlet_review_package.json).
 
@@ -10,7 +10,7 @@ What the reviewer decides: [`INDEX.md`](INDEX.md) §16–§17. Full data per out
 
 | Quantity | Value |
 |---|---|
-| outlets / channels | 126 / 446 |
+| outlets / channels | 126 / 451 |
 | ids that change under the proposed convention | 23 |
 | cases that need a judgement | 1 |
 | action `CHECK_CHANNEL_ATTRIBUTION` | 6 |
@@ -137,7 +137,7 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `ar_pagina_12` | Página/12 | https://www.pagina12.com.ar | 1 rss, 2 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `ar_perfil` | Perfil | https://www.perfil.com | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `ar_rio_negro` | Río Negro | https://www.rionegro.com.ar | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `bo_brujula_digital` | Brújula Digital | https://brujuladigital.net | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `bo_brujula_digital` | Brújula Digital | https://brujuladigital.net | 1 rss, 1 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `bo_el_deber` | El Deber | https://eldeber.com.bo | 1 rss, 5 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `bo_el_diario` | El Diario | https://www.eldiario.net | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `id_spelling_differs_from_the_convention`<br>`no_channel` |
 | `bo_la_razon` | La Razón | https://www.la-razon.com<br>? larazon.bo | 4 rss, 3 sitemap_index | `CHECK_CHANNEL_ATTRIBUTION` | `no_channel_was_active_in_legacy`<br>`channels_on_hosts_that_are_not_the_outlet` |
@@ -154,10 +154,10 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `co_el_espectador` | El Espectador | https://www.elespectador.com | 1 rss, 5 sitemap, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `co_el_nuevo_siglo` | El Nuevo Siglo | https://www.elnuevosiglo.com.co | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `co_el_tiempo` | El Tiempo | https://www.eltiempo.com | none | `FIND_CHANNELS_OR_LEAVE_UNREGISTERED` | `no_channel` |
-| `co_el_colombiano` | El Colombiano | https://www.elcolombiano.com | 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
+| `co_el_colombiano` | El Colombiano | https://www.elcolombiano.com | 1 section_page, 1 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `co_el_pais` | El País | https://www.elpais.com.co | 16 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`legacy_code_is_not_ascii` |
 | `co_semana` | Semana | https://www.semana.com | 1 rss, 1 sitemap, 4 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `cr_crhoy` | CRHoy | https://www.crhoy.com<br>+ https://crhoy.com | 1 rss, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `cr_crhoy` | CRHoy | https://www.crhoy.com<br>https://crhoy.com | 1 rss, 1 sitemap, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `cr_diario_extra` | Diario Extra | https://www.diarioextra.com | 2 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `cr_la_nacion` | La Nación | https://www.nacion.com | 2 rss, 2 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `cu_14ymedio` | 14ymedio | https://www.14ymedio.com | 1 rss, 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
@@ -193,7 +193,7 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `gt_prensa_libre` | Prensa Libre | https://www.prensalibre.com | 5 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `gt_publinews` | Publinews | https://www.publinews.gt | 4 rss, 1 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
 | `hn_contracorriente` | Contracorriente | https://contracorriente.red | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `hn_criterio_hn` | Criterio.hn | https://criterio.hn | 1 rss, 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
+| `hn_criterio_hn` | Criterio.hn | https://criterio.hn | 1 rss, 1 section_page, 1 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `hn_diario_tiempo` | Diario Tiempo | https://tiempo.hn | 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `hn_el_heraldo` | El Heraldo | https://www.elheraldo.hn | 1 section_page, 2 sitemap, 1 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `hn_hondudiario` | Hondudiario | https://www.hondudiario.com | 5 rss, 2 sitemap_index | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` |  |
@@ -225,7 +225,7 @@ Id convention proposed: `{country_id}_{ASCII slug of the display name, words sep
 | `pe_diario_uno` | Diario UNO | https://diariouno.pe | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `pe_diario_correo` | Diario Correo | https://diariocorreo.pe | 9 rss, 9 sitemap, 1 sitemap_index, 1 unknown | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`channels_of_unknown_type` |
 | `pe_el_buho` | El Buho | https://elbuho.pe | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
-| `pe_el_comercio` | El Comercio | https://elcomercio.pe | 1 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
+| `pe_el_comercio` | El Comercio | https://elcomercio.pe | 1 section_page, 1 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `pe_el_peruano` | El Peruano | https://elperuano.pe | 1 section_page, 23 sitemap | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `id_spelling_differs_from_the_convention`<br>`no_channel_was_active_in_legacy` |
 | `pe_expreso` | Expreso | https://www.expreso.com.pe | 3 section_page | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |
 | `pe_la_republica` | La República | https://larepublica.pe | 1 rss | `CONFIRM_ID_AND_COMPLETE_ATTRIBUTES` | `no_channel_was_active_in_legacy` |

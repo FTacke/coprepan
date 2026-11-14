@@ -1,0 +1,2268 @@
+{
+ "waves": [
+  {
+   "label": "wq-1",
+   "outlets": [
+    "ar_la_nacion",
+    "ar_pagina12",
+    "bo_brujula_digital",
+    "bo_lostiempos",
+    "cl_biobiochile",
+    "co_elcolombiano",
+    "cr_crhoy",
+    "cu_5_de_septiembre",
+    "cu_juventud_rebelde",
+    "cu_periodico26",
+    "gt_elsiglo",
+    "hn_contracorriente",
+    "hn_criterio",
+    "hn_el_heraldo",
+    "hn_la_prensa"
+   ],
+   "ceiling": 210
+  },
+  {
+   "label": "wq-2",
+   "outlets": [
+    "hn_radio_progreso",
+    "mx_animal_politico",
+    "mx_el_universal",
+    "pa_diaadia",
+    "pa_el_siglo",
+    "pa_laestrelladepanama",
+    "pa_metro_libre",
+    "pa_panama_24_horas",
+    "pe_el_comercio",
+    "pe_elperuano",
+    "py_noticias_cde",
+    "py_ultima_hora",
+    "sv_diario_el_mundo",
+    "ve_eluniversal"
+   ],
+   "ceiling": 196
+  },
+  {
+   "label": "wq-3",
+   "outlets": [
+    "ar_clarin",
+    "ar_el_tribuno",
+    "ar_infobae",
+    "ar_perfil",
+    "ar_rio_negro",
+    "bo_el_deber",
+    "bo_opinion",
+    "cl_cooperativa",
+    "cl_la_discusion",
+    "cl_la_tercera",
+    "cl_the_clinic",
+    "co_diario_del_huila",
+    "co_el_espectador",
+    "co_el_nuevo_siglo"
+   ],
+   "ceiling": 196
+  },
+  {
+   "label": "wq-4",
+   "outlets": [
+    "co_elpais",
+    "co_semana",
+    "cr_la_nacion",
+    "cu_14ymedio",
+    "cu_havanatimes",
+    "cu_trabajadores",
+    "do_diario_libre",
+    "do_el_nacional",
+    "do_hoy",
+    "do_listin_diario",
+    "ec_el_comercio",
+    "ec_el_mercurio",
+    "ec_el_universo",
+    "ec_expreso"
+   ],
+   "ceiling": 196
+  },
+  {
+   "label": "wq-5",
+   "outlets": [
+    "ec_la_republica_ec",
+    "ec_primicias",
+    "es_abc",
+    "es_el_correo",
+    "es_el_mundo",
+    "es_eldiario_es",
+    "es_la_vanguardia",
+    "gt_emisoras_unidas",
+    "gt_lahora",
+    "gt_prensa_libre",
+    "gt_publinews",
+    "hn_hondudiario",
+    "ni_confidencial",
+    "ni_despacho_505"
+   ],
+   "ceiling": 196
+  },
+  {
+   "label": "wq-6",
+   "outlets": [
+    "ni_nicaragua_investiga",
+    "pa_critica",
+    "pa_la_prensa",
+    "pa_midiario",
+    "pa_panama_america",
+    "pe_diario_los_andes",
+    "pe_diario_uno",
+    "pe_diariocorreo",
+    "pe_el_buho",
+    "pe_la_republica",
+    "pr_el_nuevo_dia",
+    "pr_metro_puerto_rico",
+    "pr_noticel",
+    "py_abc_color"
+   ],
+   "ceiling": 196
+  },
+  {
+   "label": "wq-7",
+   "outlets": [
+    "py_la_nacion",
+    "sv_diario_co_latino",
+    "sv_el_diario_de_hoy",
+    "uy_el_observador",
+    "uy_ladiaria",
+    "uy_montevideo_portal",
+    "ve_analitica",
+    "ve_correo_del_caroni",
+    "ve_el_nacional",
+    "ve_eldiario",
+    "ve_ultimas_noticias",
+    "cr_diario_extra",
+    "hn_proceso_digital",
+    "uy_el_pais"
+   ],
+   "ceiling": 196
+  }
+ ],
+ "ceiling_total": 1386,
+ "excluded": [
+  {
+   "outlet_id": "bo_eldiario",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "bo_la_razon",
+   "why": "URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "bo_pagina_siete",
+   "why": "URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "cl_el_mercurio",
+   "why": "URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "co_el_tiempo",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "cu_cubanet",
+   "why": "origin held by evidence: ['https://www.cubanet.org'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "cu_granma",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "do_el_caribe",
+   "why": "origin held by evidence: ['https://www.elcaribe.com.do'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "es_el_pais",
+   "why": "origin held by evidence: ['https://elpais.com'] (captcha)"
+  },
+  {
+   "outlet_id": "gt_elperiodico",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "gt_nuestrodiario",
+   "why": "every selected channel is a held URL: ['https://www.nuestrodiario.com/tu-comunidad']"
+  },
+  {
+   "outlet_id": "hn_diariotiempo",
+   "why": "every selected channel is a held URL: ['https://tiempo.hn/']"
+  },
+  {
+   "outlet_id": "hn_latribuna",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "mx_el_siglo_de_torreon",
+   "why": "origin held by evidence: ['https://www.elsiglodetorreon.com.mx'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "mx_la_jornada",
+   "why": "origin held by evidence: ['https://www.jornada.com.mx'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "mx_milenio",
+   "why": "origin held by evidence: ['https://www.milenio.com'] (blocked)"
+  },
+  {
+   "outlet_id": "ni_articulo66",
+   "why": "origin held by evidence: ['https://www.articulo66.com'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "ni_el_19_digital",
+   "why": "every selected channel is a held URL: ['https://www.el19digital.com/']"
+  },
+  {
+   "outlet_id": "ni_la_prensa",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "pe_expreso",
+   "why": "origin held by evidence: ['https://www.expreso.com.pe'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "pe_peru21",
+   "why": "origin held by evidence: ['https://peru21.pe'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "pr_primera_hora",
+   "why": "URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "py_adn_digital",
+   "why": "every selected channel is a held URL: ['https://www.adndigital.com.py/feed']"
+  },
+  {
+   "outlet_id": "sv_la_prensa_grafica",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "uy_larepublica",
+   "why": "no channel; URL rules are a placeholder; no time zone (not registered complete enough for a live request)"
+  },
+  {
+   "outlet_id": "ve_el_impulso",
+   "why": "origin held by evidence: ['https://www.elimpulso.com'] (bot_challenge)"
+  },
+  {
+   "outlet_id": "ve_efecto_cocuyo",
+   "why": "CPD-0028 admits it by its feed only, and that feed is a held URL (2026-10-10): not asked"
+  }
+ ],
+ "rows": [
+  {
+   "outlet_id": "ar_la_nacion",
+   "country": "ar",
+   "priority": "A",
+   "recommendation": "REPAIR_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "ar_la_nacion:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_la_nacion:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.lanacion.com.ar/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_la_nacion:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.lanacion.com.ar/sitemap-index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_pagina12",
+   "country": "ar",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "ar_pagina12:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.pagina12.com.ar/rss/portada",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_pagina12:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.pagina12.com.ar/arc/outboundfeeds/breakingnews-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_pagina12:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.pagina12.com.ar/arc/outboundfeeds/breakingnews-short.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "bo_brujula_digital",
+   "country": "bo",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "bo_brujula_digital:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://brujuladigital.net/rss.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "bo_brujula_digital:ch:sitemap_q001",
+     "kind": "sitemap",
+     "url": "https://brujuladigital.net/sitemap-news.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "bo_lostiempos",
+   "country": "bo",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "bo_lostiempos:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.lostiempos.com/rss.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "bo_lostiempos:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://www.lostiempos.com/etiqueta/pagina-siete",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cl_biobiochile",
+   "country": "cl",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "cl_biobiochile:ch:rss_001",
+     "kind": "rss",
+     "url": "https://feeds.feedburner.com/radiobiobio/NNeJ",
+     "held_url": false
+    },
+    {
+     "channel_id": "cl_biobiochile:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.biobiochile.cl/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cl_biobiochile:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.biobiochile.cl/static/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_elcolombiano",
+   "country": "co",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "co_elcolombiano:ch:sitemap_q001",
+     "kind": "sitemap",
+     "url": "https://www.elcolombiano.com/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_elcolombiano:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://www.elcolombiano.com/medellin",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cr_crhoy",
+   "country": "cr",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "cr_crhoy:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.crhoy.com/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_crhoy:ch:sitemap_q001",
+     "kind": "sitemap",
+     "url": "https://crhoy.com/sitemaps/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_crhoy:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://crhoy.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_5_de_septiembre",
+   "country": "cu",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "cu_5_de_septiembre:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.5septiembre.cu/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_juventud_rebelde",
+   "country": "cu",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "cu_juventud_rebelde:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.juventudrebelde.cu/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_periodico26",
+   "country": "cu",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "cu_periodico26:ch:rss_001",
+     "kind": "rss",
+     "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_periodico26:ch:atom_001",
+     "kind": "atom",
+     "url": "http://www.periodico26.cu/index.php/es/?format=feed&type=atom",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "gt_elsiglo",
+   "country": "gt",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "gt_elsiglo:ch:rss_003",
+     "kind": "rss",
+     "url": "https://elsiglo.com.gt/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_elsiglo:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://elsiglo.com.gt/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_elsiglo:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elsiglo.com.gt/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_contracorriente",
+   "country": "hn",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "hn_contracorriente:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://contracorriente.red/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_criterio",
+   "country": "hn",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "hn_criterio:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://criterio.hn/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_criterio:ch:sitemap_q001",
+     "kind": "sitemap",
+     "url": "https://criterio.hn/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_criterio:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://criterio.hn/category/actualidad/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_el_heraldo",
+   "country": "hn",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "hn_el_heraldo:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.elheraldo.hn/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_el_heraldo:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elheraldo.hn/megasitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_el_heraldo:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.elheraldo.hn/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_la_prensa",
+   "country": "hn",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "hn_la_prensa:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.laprensa.hn/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_la_prensa:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.laprensa.hn/megasitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_la_prensa:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.laprensa.hn/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_radio_progreso",
+   "country": "hn",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "hn_radio_progreso:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://radioprogresohn.net/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "mx_animal_politico",
+   "country": "mx",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "mx_animal_politico:ch:rss_r001",
+     "kind": "rss",
+     "url": "http://www.animalpolitico.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "mx_el_universal",
+   "country": "mx",
+   "priority": "A",
+   "recommendation": "REPAIR_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "mx_el_universal:ch:rss_004",
+     "kind": "rss",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/deultima/",
+     "held_url": false
+    },
+    {
+     "channel_id": "mx_el_universal:ch:sitemap_014",
+     "kind": "sitemap",
+     "url": "https://www.eluniversal.com.mx/arc/outboundfeeds/news/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "mx_el_universal:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.eluniversal.com.mx/consultas/sitemapindex.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_diaadia",
+   "country": "pa",
+   "priority": "A",
+   "recommendation": "REPAIR_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pa_diaadia:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.diaadia.com.pa/rss.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_diaadia:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.diaadia.com.pa/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_el_siglo",
+   "country": "pa",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pa_el_siglo:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://elsiglo.com.pa/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_el_siglo:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://elsiglo.com.pa/megasitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_el_siglo:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://elsiglo.com.pa/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_laestrelladepanama",
+   "country": "pa",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pa_laestrelladepanama:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.laestrella.com.pa/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_laestrelladepanama:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.laestrella.com.pa/megasitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_laestrelladepanama:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.laestrella.com.pa/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_metro_libre",
+   "country": "pa",
+   "priority": "A",
+   "recommendation": "REPAIR_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pa_metro_libre:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.metrolibre.com/sitemapforgoogle.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_metro_libre:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.metrolibre.com/megasitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_metro_libre:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.metrolibre.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_panama_24_horas",
+   "country": "pa",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pa_panama_24_horas:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.panama24horas.com.pa/panama/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_el_comercio",
+   "country": "pe",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pe_el_comercio:ch:sitemap_q001",
+     "kind": "sitemap",
+     "url": "https://elcomercio.pe/sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pe_el_comercio:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://elcomercio.pe/archivo/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_elperuano",
+   "country": "pe",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "pe_elperuano:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://elperuano.pe/sitemap-noticias.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pe_elperuano:ch:sitemap_003",
+     "kind": "sitemap",
+     "url": "https://elperuano.pe/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pe_elperuano:ch:sitemap_004",
+     "kind": "sitemap",
+     "url": "https://elperuano.pe/sitemap/politica.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "py_noticias_cde",
+   "country": "py",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "py_noticias_cde:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://noticiascde.com.py/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "py_ultima_hora",
+   "country": "py",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "py_ultima_hora:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.ultimahora.com/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "py_ultima_hora:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.ultimahora.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "sv_diario_el_mundo",
+   "country": "sv",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "sv_diario_el_mundo:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://diario.elmundo.sv/nacionales",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_eluniversal",
+   "country": "ve",
+   "priority": "A",
+   "recommendation": "REQUALIFICATION_REQUIRED",
+   "selected_channels": [
+    {
+     "channel_id": "ve_eluniversal:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.eluniversal.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_clarin",
+   "country": "ar",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "ar_clarin:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.clarin.com/rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_clarin:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.clarin.com/sitemaps/sitemap_google_news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_clarin:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.clarin.com/sitemaps/index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_el_tribuno",
+   "country": "ar",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ar_el_tribuno:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.eltribuno.com/rss-new/portada.rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "ar_el_tribuno:ch:rss_r002",
+     "kind": "rss",
+     "url": "https://www.eltribuno.com/rss-new/salta.rss",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_infobae",
+   "country": "ar",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ar_infobae:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/america/mundo/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_perfil",
+   "country": "ar",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ar_perfil:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.perfil.com/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ar_rio_negro",
+   "country": "ar",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ar_rio_negro:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.rionegro.com.ar/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "bo_el_deber",
+   "country": "bo",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "bo_el_deber:ch:rss_main",
+     "kind": "rss",
+     "url": "https://eldeber.com.bo/feed",
+     "held_url": false
+    },
+    {
+     "channel_id": "bo_el_deber:ch:sitemap_news",
+     "kind": "sitemap",
+     "url": "https://eldeber.com.bo/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "bo_el_deber:ch:sitemap_main",
+     "kind": "sitemap",
+     "url": "https://eldeber.com.bo/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "bo_opinion",
+   "country": "bo",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "bo_opinion:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.opinion.com.bo/rss/",
+     "held_url": false
+    },
+    {
+     "channel_id": "bo_opinion:ch:rss_r002",
+     "kind": "rss",
+     "url": "https://www.opinion.com.bo/rss/cochabamba/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cl_cooperativa",
+   "country": "cl",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "cl_cooperativa:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cl_la_discusion",
+   "country": "cl",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "cl_la_discusion:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://ladiscusion.cl/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cl_la_tercera",
+   "country": "cl",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "cl_la_tercera:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.latercera.com/rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "cl_la_tercera:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.latercera.com/arc/outboundfeeds/sitemap?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cl_la_tercera:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.latercera.com/arc/outboundfeeds/news-sitemap-index?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cl_the_clinic",
+   "country": "cl",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "cl_the_clinic:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.theclinic.cl/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_diario_del_huila",
+   "country": "co",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "co_diario_del_huila:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://diariodelhuila.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_el_espectador",
+   "country": "co",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "co_el_espectador:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.elespectador.com/arc/outboundfeeds/discover/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_el_espectador:ch:sitemap_004",
+     "kind": "sitemap",
+     "url": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_el_espectador:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elespectador.com/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_el_nuevo_siglo",
+   "country": "co",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "co_el_nuevo_siglo:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.elnuevosiglo.com.co/rss.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_elpais",
+   "country": "co",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "co_elpais:ch:rss_002",
+     "kind": "rss",
+     "url": "https://www.elpais.com.co/arc/outboundfeeds/rss/category/cali/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_elpais:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.elpais.com.co/arc/outboundfeeds/sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_elpais:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elpais.com.co/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "co_semana",
+   "country": "co",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "co_semana:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.semana.com/arc/outboundfeeds/rss/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_semana:ch:sitemap_r001",
+     "kind": "sitemap",
+     "url": "https://www.semana.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "co_semana:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.semana.com/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cr_la_nacion",
+   "country": "cr",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "cr_la_nacion:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.nacion.com/rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_la_nacion:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.nacion.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_la_nacion:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.nacion.com/arc/outboundfeeds/sitemap/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_14ymedio",
+   "country": "cu",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "cu_14ymedio:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.14ymedio.com/rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_14ymedio:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://www.14ymedio.com/cuba",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_havanatimes",
+   "country": "cu",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "cu_havanatimes:ch:rss_003",
+     "kind": "rss",
+     "url": "https://havanatimesenespanol.org/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_havanatimes:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://havanatimesenespanol.org/sitemap_index.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_havanatimes:ch:rss_004",
+     "kind": "rss",
+     "url": "https://havanatimesenespanol.org/comments/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cu_trabajadores",
+   "country": "cu",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "cu_trabajadores:ch:rss_003",
+     "kind": "rss",
+     "url": "http://www.trabajadores.cu/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_trabajadores:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.trabajadores.cu/sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cu_trabajadores:ch:rss_004",
+     "kind": "rss",
+     "url": "https://www.trabajadores.cu/comments/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "do_diario_libre",
+   "country": "do",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "do_diario_libre:ch:rss_portada",
+     "kind": "rss",
+     "url": "https://www.diariolibre.com/rss/portada.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "do_diario_libre:ch:sitemap_sitemapnews",
+     "kind": "sitemap",
+     "url": "https://www.diariolibre.com/sitemapnews",
+     "held_url": false
+    },
+    {
+     "channel_id": "do_diario_libre:ch:sitemap_index_main",
+     "kind": "sitemap_index",
+     "url": "https://www.diariolibre.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "do_el_nacional",
+   "country": "do",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "do_el_nacional:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://elnacional.com.do/rss/home.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "do_hoy",
+   "country": "do",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "do_hoy:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://hoy.com.do/rss/home.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "do_listin_diario",
+   "country": "do",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "do_listin_diario:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://listindiario.com/rss/larepublica/",
+     "held_url": false
+    },
+    {
+     "channel_id": "do_listin_diario:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://listindiario.com/sitemap-google-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "do_listin_diario:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://listindiario.com/sitemap-index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_el_comercio",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ec_el_comercio:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.elcomercio.com/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ec_el_comercio:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.elcomercio.com/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ec_el_comercio:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elcomercio.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_el_mercurio",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "ec_el_mercurio:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://elmercurio.com.ec/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_el_universo",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ec_el_universo:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.eluniverso.com/arc/outboundfeeds/rss/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_expreso",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ec_expreso:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.expreso.ec/rss/home.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_la_republica_ec",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ec_la_republica_ec:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.larepublica.ec/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ec_primicias",
+   "country": "ec",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ec_primicias:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.primicias.ec/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ec_primicias:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.primicias.ec/sitemap-google-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ec_primicias:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.primicias.ec/sitemap-index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "es_abc",
+   "country": "es",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "es_abc:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.abc.es/rss/2.0/portada/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "es_el_correo",
+   "country": "es",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "es_el_correo:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.elcorreo.com/rss/2.0/portada",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "es_el_mundo",
+   "country": "es",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "es_el_mundo:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "es_eldiario_es",
+   "country": "es",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "es_eldiario_es:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.eldiario.es/rss",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "es_la_vanguardia",
+   "country": "es",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "es_la_vanguardia:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.lavanguardia.com/rss/home.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "es_la_vanguardia:ch:rss_r002",
+     "kind": "rss",
+     "url": "https://www.lavanguardia.com/rss/politica.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "gt_emisoras_unidas",
+   "country": "gt",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "gt_emisoras_unidas:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://emisorasunidas.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "gt_lahora",
+   "country": "gt",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "gt_lahora:ch:rss_003",
+     "kind": "rss",
+     "url": "https://lahora.gt/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_lahora:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://lahora.gt/sitemap_index.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_lahora:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://lahora.gt/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "gt_prensa_libre",
+   "country": "gt",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "gt_prensa_libre:ch:rss_003",
+     "kind": "rss",
+     "url": "https://www.prensalibre.com/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_prensa_libre:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.prensalibre.com/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_prensa_libre:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.prensalibre.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "gt_publinews",
+   "country": "gt",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "gt_publinews:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/google-news-feed/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_publinews:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/sitemap/latest/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "gt_publinews:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.publinews.gt/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_hondudiario",
+   "country": "hn",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "hn_hondudiario:ch:rss_005",
+     "kind": "rss",
+     "url": "https://www.hondudiario.com/noticias-de-honduras/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_hondudiario:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.hondudiario.com/sitemap_index.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_hondudiario:ch:rss_003",
+     "kind": "rss",
+     "url": "https://www.hondudiario.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ni_confidencial",
+   "country": "ni",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ni_confidencial:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://confidencial.digital/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ni_confidencial:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.confidencial.digital/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ni_confidencial:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.confidencial.digital/sitemap_index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ni_despacho_505",
+   "country": "ni",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ni_despacho_505:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://despacho505.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ni_nicaragua_investiga",
+   "country": "ni",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ni_nicaragua_investiga:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://nicaraguainvestiga.com/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_critica",
+   "country": "pa",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pa_critica:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.critica.com.pa/rss.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_critica:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.critica.com.pa/index_google.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_critica:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.critica.com.pa/sitemap_google_news.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_la_prensa",
+   "country": "pa",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pa_la_prensa:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.prensa.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_la_prensa:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.prensa.com/arc/outboundfeeds/sitemap?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_la_prensa:ch:sitemap_003",
+     "kind": "sitemap",
+     "url": "https://www.prensa.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_midiario",
+   "country": "pa",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pa_midiario:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.midiario.com/arc/outboundfeeds/news-sitemap/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pa_midiario:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.midiario.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pa_panama_america",
+   "country": "pa",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "pa_panama_america:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.panamaamerica.com.pa/rss/recent/index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_diario_los_andes",
+   "country": "pe",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pe_diario_los_andes:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://losandes.com.pe/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_diario_uno",
+   "country": "pe",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pe_diario_uno:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://diariouno.pe/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_diariocorreo",
+   "country": "pe",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pe_diariocorreo:ch:rss_001",
+     "kind": "rss",
+     "url": "https://diariocorreo.pe/arcio/google-news-feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "pe_diariocorreo:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://diariocorreo.pe/sitemap/news/deportes/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pe_diariocorreo:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://diariocorreo.pe/sitemap/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_el_buho",
+   "country": "pe",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pe_el_buho:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://elbuho.pe/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pe_la_republica",
+   "country": "pe",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pe_la_republica:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://larepublica.pe/rss/economia",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pr_el_nuevo_dia",
+   "country": "pr",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pr_el_nuevo_dia:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.elnuevodia.com/arc/outboundfeeds/news-sitemap-index?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pr_el_nuevo_dia:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elnuevodia.com/arc/outboundfeeds/sitemap-index?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pr_el_nuevo_dia:ch:sitemap_index_003",
+     "kind": "sitemap_index",
+     "url": "https://www.elnuevodia.com/sitemaps/sitemap-video-index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pr_metro_puerto_rico",
+   "country": "pr",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "pr_metro_puerto_rico:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.metro.pr/arc/outboundfeeds/google-news-feed/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pr_metro_puerto_rico:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.metro.pr/arc/outboundfeeds/sitemap/latest/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "pr_metro_puerto_rico:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.metro.pr/arc/outboundfeeds/sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "pr_noticel",
+   "country": "pr",
+   "priority": "B",
+   "recommendation": "READY_WITH_LIMITATIONS",
+   "selected_channels": [
+    {
+     "channel_id": "pr_noticel:ch:section_page_r001",
+     "kind": "section_page",
+     "url": "https://noticel.com/category/ultima-hora/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "py_abc_color",
+   "country": "py",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "py_abc_color:ch:rss_008",
+     "kind": "rss",
+     "url": "https://www.abc.com.py/arc/outboundfeeds/rss/noticias-del-dia/?outputType=xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "py_abc_color:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://api.diarioabc.com.py/storage/sitemaps/deportes-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "py_abc_color:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.abc.com.py/arc/outboundfeeds/news-sitemap-index/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "py_la_nacion",
+   "country": "py",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "py_la_nacion:ch:sitemap_arc_outboundfeeds_sitemap_outputtype_xml",
+     "kind": "sitemap",
+     "url": "https://www.lanacion.com.py/arc/outboundfeeds/sitemap/?outputType=xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "sv_diario_co_latino",
+   "country": "sv",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "sv_diario_co_latino:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.diariocolatino.com/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "sv_el_diario_de_hoy",
+   "country": "sv",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "sv_el_diario_de_hoy:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.elsalvador.com/rss.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.elsalvador.com/sitemap_index.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "sv_el_diario_de_hoy:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elsalvador.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "uy_el_observador",
+   "country": "uy",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "uy_el_observador:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.elobservador.com.uy/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "uy_el_observador:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.elobservador.com.uy/sitemap/news-full/sitemap-index.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "uy_el_observador:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elobservador.com.uy/sitemap/images-full/sitemap-index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "uy_ladiaria",
+   "country": "uy",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "uy_ladiaria:ch:rss_001",
+     "kind": "rss",
+     "url": "https://ladiaria.com.uy/feeds/articulos/",
+     "held_url": false
+    },
+    {
+     "channel_id": "uy_ladiaria:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://ladiaria.com.uy/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "uy_montevideo_portal",
+   "country": "uy",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "uy_montevideo_portal:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?59",
+     "held_url": false
+    },
+    {
+     "channel_id": "uy_montevideo_portal:ch:rss_r002",
+     "kind": "rss",
+     "url": "https://www.montevideo.com.uy/anxml.aspx?58",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_analitica",
+   "country": "ve",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ve_analitica:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://www.analitica.com/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_correo_del_caroni",
+   "country": "ve",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ve_correo_del_caroni:ch:rss_r001",
+     "kind": "rss",
+     "url": "https://correodelcaroni.com/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_el_nacional",
+   "country": "ve",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ve_el_nacional:ch:rss_003",
+     "kind": "rss",
+     "url": "https://www.elnacional.com/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_el_nacional:ch:sitemap_002",
+     "kind": "sitemap",
+     "url": "https://www.elnacional.com/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_el_nacional:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elnacional.com/sitemap_index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_eldiario",
+   "country": "ve",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ve_eldiario:ch:rss_003",
+     "kind": "rss",
+     "url": "https://eldiario.com/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_eldiario:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://eldiario.com/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_eldiario:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://eldiario.com/sitemap_index.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "ve_ultimas_noticias",
+   "country": "ve",
+   "priority": "B",
+   "recommendation": "READY",
+   "selected_channels": [
+    {
+     "channel_id": "ve_ultimas_noticias:ch:rss_003",
+     "kind": "rss",
+     "url": "https://ultimasnoticias.com.ve/feed/",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_ultimas_noticias:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://ultimasnoticias.com.ve/sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "ve_ultimas_noticias:ch:rss_004",
+     "kind": "rss",
+     "url": "https://ultimasnoticias.com.ve/comments/feed/",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "cr_diario_extra",
+   "country": "cr",
+   "priority": "C",
+   "recommendation": "HELD",
+   "selected_channels": [
+    {
+     "channel_id": "cr_diario_extra:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.diarioextra.com/rss",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_diario_extra:ch:sitemap_001",
+     "kind": "sitemap",
+     "url": "https://www.diarioextra.com/sitemap-news.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "cr_diario_extra:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.diarioextra.com/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "hn_proceso_digital",
+   "country": "hn",
+   "priority": "C",
+   "recommendation": "HELD",
+   "selected_channels": [
+    {
+     "channel_id": "hn_proceso_digital:ch:rss_main",
+     "kind": "rss",
+     "url": "https://proceso.hn/rss",
+     "held_url": true
+    },
+    {
+     "channel_id": "hn_proceso_digital:ch:sitemap_index_main",
+     "kind": "sitemap_index",
+     "url": "https://proceso.hn/sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "hn_proceso_digital:ch:rss_main_2",
+     "kind": "rss",
+     "url": "https://proceso.hn/feed",
+     "held_url": false
+    }
+   ]
+  },
+  {
+   "outlet_id": "uy_el_pais",
+   "country": "uy",
+   "priority": "C",
+   "recommendation": "HELD",
+   "selected_channels": [
+    {
+     "channel_id": "uy_el_pais:ch:rss_001",
+     "kind": "rss",
+     "url": "https://www.elpais.com.uy/rss",
+     "held_url": true
+    },
+    {
+     "channel_id": "uy_el_pais:ch:sitemap_index_002",
+     "kind": "sitemap_index",
+     "url": "https://www.elpais.com.uy/news-sitemap.xml",
+     "held_url": false
+    },
+    {
+     "channel_id": "uy_el_pais:ch:sitemap_index_001",
+     "kind": "sitemap_index",
+     "url": "https://www.elpais.com.uy/sitemap.xml",
+     "held_url": false
+    }
+   ]
+  }
+ ]
+}

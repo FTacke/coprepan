@@ -292,3 +292,143 @@ def verify(
 
     ok = all(c["status"] == "PASS" for c in checks)
     return {"schema": VERIFICATION_SCHEMA, "run_id": run.run_id, "status": "PASS" if ok else "FAIL", "checks": checks}
+
+
+# --- a canary whose preservation is deferred (CPD-0036) ---------------------------------------------------
+
+
+DEFERRED_VERIFICATION_SCHEMA = naming.schema_id("canary-verification-deferred", 1)
+DEFERRED_MEASUREMENT_SCHEMA = naming.schema_id("canary-measurement-deferred", 1)
+
+
+def _local_fixity(workspace: core_pipeline.Workspace, identifiers: Sequence[str]) -> tuple[int, list[str], dict[str, str]]:
+    """Every sealed workspace pack re-verified against its seal manifest, and every body hashed against its index entry."""
+    bodies, problems, pack_of = 0, [], {}
+    for identifier in identifiers:
+        try:
+            pack.verify_sealed(workspace.packs, identifier)
+            path = workspace.packs / f"{identifier}.warc.gz"
+            for entry in pack.scan(path, identifier):
+                if entry.body_sha256 is None:
+                    continue
+                bodies += 1
+                if sha256_bytes(pack.read_body(path, entry)) != entry.body_sha256:
+                    problems.append(f"{entry.fetch_id}: body does not hash")
+                pack_of[entry.fetch_id] = identifier
+        except (pack.PackError, OSError, KeyError) as error:
+            problems.append(f"{identifier}: {type(error).__name__}")
+    return bodies, problems, pack_of
+
+
+def verify_deferred(
+    workspace: core_pipeline.Workspace,
+    *,
+    run: acquisition.AcquisitionRun,
+    spool_root: Path | None,
+    stored_receipt: Mapping[str, Any],
+    rebuilt_receipt: Mapping[str, Any],
+) -> dict[str, Any]:
+    """The checks at the end of a canary whose preservation is deferred. Reads the runtime workspace only: the target is not
+    contacted, so nothing here says anything about it. What it shows: the bytes received are sealed, verified and **honestly
+    pending** (nothing claimed ``RAW_PRESERVED``, nothing spooled), the baseline extraction of every item page is reproducible
+    from the local bytes with the network unavailable, the receipt re-derives, and the budget held. The checks a direct canary
+    makes on the target (read-back there, replay from there, the recovery diagnosis) are made after the later promotion."""
+    checks: list[dict[str, Any]] = []
+
+    def check(name: str, ok: bool, detail: str) -> bool:
+        checks.append({"check": name, "status": "PASS" if ok else "FAIL", "detail": detail})
+        return ok
+
+    try:
+        records = [r for r in D.fetch_records(workspace) if r["run_id"] == run.run_id]
+    except (pack.PackError, OSError) as error:                 # a pack that cannot even be read is a failed read-back, not a crash
+        check("workspace_readback_and_fixity", False, f"the packs of the workspace cannot be read: {type(error).__name__}: {error}")
+        return {"schema": DEFERRED_VERIFICATION_SCHEMA, "run_id": run.run_id, "status": "FAIL", "checks": checks}
+    run_fetches = {r["fetch_id"] for r in records}
+    states = workspace.ledger().states()
+    identifiers = D.packs_holding(workspace, run_fetches)
+    bodies, problems, pack_of = _local_fixity(workspace, identifiers)
+    check("workspace_readback_and_fixity", not problems and bodies > 0,
+          f"{bodies} bodies of {len(identifiers)} sealed packs re-read in the workspace; {problems or 'all verify'}")
+
+    with_body = {f for f in run_fetches if states.get(f) != "FETCH_FAILED"}
+    pending = {f for f in run_fetches if states.get(f) == "PRESERVATION_PENDING"}
+    claimed = {f for f in run_fetches if states.get(f) == "RAW_PRESERVED"}
+    check("pending_matches_received_bytes", not claimed and pending == with_body == (set(pack_of) & run_fetches),
+          f"{len(pending)} PRESERVATION_PENDING, {len(claimed)} RAW_PRESERVED, {len(with_body)} with a body, "
+          f"{len(set(pack_of) & run_fetches)} with verified local bytes")
+
+    items = [r for r in records if r["fetch_kind"] == acquisition.FETCH_KIND_ITEM and r["outcome"] == acquisition.OUTCOME_FETCHED
+             and r["response"]["status"] != 304]
+    reproduced, differing = 0, []
+    with network_unavailable():
+        for record in items:
+            identifier = pack_of.get(record["fetch_id"])
+            if identifier is None:
+                differing.append(record["fetch_id"])
+                continue
+            path = workspace.packs / f"{identifier}.warc.gz"
+            try:
+                entry = next(e for e in pack.scan(path, identifier) if e.fetch_id == record["fetch_id"])
+                body, stored = pack.read_body(path, entry), pack.read_fetch_record(path, entry)
+                arguments = core_pipeline._extraction_arguments(stored)
+                first = extraction.BASELINE.run(body, body_sha256=stored["body_sha256"], **arguments)
+                second = extraction.BASELINE.run(body, body_sha256=stored["body_sha256"], **arguments)
+            except (StopIteration, pack.PackError, extraction.ExtractionError, OSError, RuntimeError, KeyError):
+                differing.append(record["fetch_id"])
+                continue
+            reproduced += 1
+            if first.payload != second.payload:
+                differing.append(record["fetch_id"])
+    check("extraction_reproducible_from_local_bytes", not differing and (reproduced > 0 or not items),
+          f"{reproduced} baseline extractions run twice from the local bytes with the network unavailable; {len(differing)} differ or fail "
+          "(nothing is stored: the extraction of record is made after promotion)")
+
+    volatile = {"started_at", "finished_at", "fetcher_transport_calls", "checkpoints", "status", "operator_authorization"}
+    same = {k: v for k, v in stored_receipt.items() if k not in volatile} == {
+        k: v for k, v in rebuilt_receipt.items() if k not in volatile and k in stored_receipt}
+    check("receipt_rederived_from_evidence", same, "every count of the stored receipt equals the count derived from the packs, the log and the ledger")
+    check("receipt_request_count_equals_the_runs_own_counter",
+          stored_receipt.get("fetcher_transport_calls") == stored_receipt["requests"]["total"],
+          f"{stored_receipt.get('fetcher_transport_calls')} transport calls counted by the fetcher, {stored_receipt['requests']['total']} derived from fetch records")
+    spooled = outage_spool.pending_records(spool_root) if spool_root is not None and spool_root.is_dir() else []
+    check("nothing_spooled", not spooled, f"{len(spooled)} spooled records (a deferred run writes nothing to the spool)")
+    check("budget_respected", stored_receipt["requests"]["item"] <= D.HARD_ITEM_REQUESTS,
+          f"{stored_receipt['requests']['item']} item requests (ceiling {D.HARD_ITEM_REQUESTS}), {stored_receipt['requests']['total']} in all")
+    ok = all(c["status"] == "PASS" for c in checks)
+    return {"schema": DEFERRED_VERIFICATION_SCHEMA, "run_id": run.run_id, "status": "PASS" if ok else "FAIL", "checks": checks,
+            "preservation": "deferred_local: RAW_AVAILABLE in the workspace, PRESERVATION_PENDING; not RAW_PRESERVED",
+            "not_shown": ["anything about the preservation target", "replay from preserved bytes", "the recovery diagnosis on the target"]}
+
+
+def _percentile(values: Sequence[float], q: float) -> float | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    return ordered[min(len(ordered) - 1, int(round(q * (len(ordered) - 1))))]
+
+
+def measure_deferred(workspace: core_pipeline.Workspace, *, run_id: str, stored_receipt: Mapping[str, Any]) -> dict[str, Any]:
+    """The local measurement of a deferred canary: sizes of what is pending in the workspace and the duration of each request
+    as its fetch record states it (``fetch_started_at`` to ``fetch_finished_at``). Every value ``MEASURED``; no projection."""
+    from datetime import datetime
+
+    records = [r for r in D.fetch_records(workspace) if r["run_id"] == run_id]
+    identifiers = D.packs_holding(workspace, {r["fetch_id"] for r in records})
+    durations: list[float] = []
+    for record in records:
+        try:
+            start = datetime.fromisoformat(record["fetch_started_at"].replace("Z", "+00:00"))
+            end = datetime.fromisoformat(record["fetch_finished_at"].replace("Z", "+00:00"))
+            durations.append((end - start).total_seconds())
+        except (KeyError, TypeError, ValueError, AttributeError):
+            continue
+    pack_bytes = sum(_size(workspace.packs / f"{i}.warc.gz") + _size(workspace.packs / f"{i}.index.jsonl") for i in identifiers)
+    return {"schema": DEFERRED_MEASUREMENT_SCHEMA, "run_id": run_id, "label": MEASURED,
+            "requests": stored_receipt["requests"], "response_classes": stored_receipt["response_classes"],
+            "fetch_records": len(records), "received_body_bytes": sum(r["body_size_bytes"] for r in records if isinstance(r["body_size_bytes"], int)),
+            "packs_pending_in_the_workspace": len(identifiers), "pending_pack_and_index_bytes": pack_bytes,
+            "request_seconds": {"n": len(durations), "median": _percentile(durations, 0.5), "p90": _percentile(durations, 0.9),
+                                "max": max(durations) if durations else None,
+                                "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record"},
+            "note": "nothing here is a projection; the preservation target was not contacted"}

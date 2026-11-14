@@ -1,0 +1,150 @@
+{
+  "amendments": [
+    {
+      "add_channels": [
+        {
+          "channel_id": "bo_brujula_digital:ch:sitemap_q001",
+          "kind": "sitemap",
+          "url": "https://brujuladigital.net/sitemap-news.xml",
+          "valid_from": "2026-10-09"
+        }
+      ],
+      "add_web_origins": [],
+      "evidence": [
+        {
+          "claim": "https://brujuladigital.net/robots.txt names `Sitemap: https://brujuladigital.net/sitemap-news.xml`",
+          "how": "read offline from the robots.txt answer stored in the runtime workspace (pack pk1-bo_brujula_digital-20261009-000, fetch ft1:f0cc9c3907a87a7aceab19ed3e46309682353b9d059e862eb87f64ff47d3d77f, fetched 2026-10-09T17:50:48.707975Z); no request",
+          "source": "workspace pack pk1-bo_brujula_digital-20261009-000"
+        },
+        {
+          "claim": "the outlet's evidence in the source-health matrix of 2026-11-14 (recommendation REQUALIFICATION_REQUIRED or REPAIR_REQUIRED)",
+          "how": "read from docs/intake/source_health/source_health_2026-11-14.json",
+          "source": "docs/intake/source_health/source_health_2026-11-14.json"
+        }
+      ],
+      "outlet_id": "bo_brujula_digital",
+      "reason": "the registered channels list no current news (24-hour intake of 2026-10-10/11: nothing first listed and dated in the window, or no channel of the kind selected); the outlet's own robots.txt names this sitemap, whose name declares news",
+      "url_rules": null
+    },
+    {
+      "add_channels": [
+        {
+          "channel_id": "co_elcolombiano:ch:sitemap_q001",
+          "kind": "sitemap",
+          "url": "https://www.elcolombiano.com/sitemapforgoogle.xml",
+          "valid_from": "2026-10-09"
+        }
+      ],
+      "add_web_origins": [],
+      "evidence": [
+        {
+          "claim": "https://www.elcolombiano.com/robots.txt names `Sitemap: https://www.elcolombiano.com/sitemapforgoogle.xml`",
+          "how": "read offline from the robots.txt answer stored in the runtime workspace (pack pk1-co_elcolombiano-20261009-000, fetch ft1:f59ca729d5a3ddeaaf72e49a02a3bd7428cf91e232c87db7c8814f44c56be8ad, fetched 2026-10-09T17:53:18.071810Z); no request",
+          "source": "workspace pack pk1-co_elcolombiano-20261009-000"
+        },
+        {
+          "claim": "the outlet's evidence in the source-health matrix of 2026-11-14 (recommendation REQUALIFICATION_REQUIRED or REPAIR_REQUIRED)",
+          "how": "read from docs/intake/source_health/source_health_2026-11-14.json",
+          "source": "docs/intake/source_health/source_health_2026-11-14.json"
+        }
+      ],
+      "outlet_id": "co_elcolombiano",
+      "reason": "the registered channels list no current news (24-hour intake of 2026-10-10/11: nothing first listed and dated in the window, or no channel of the kind selected); the outlet's own robots.txt names this sitemap, whose name declares news",
+      "url_rules": null
+    },
+    {
+      "add_channels": [
+        {
+          "channel_id": "cr_crhoy:ch:sitemap_q001",
+          "kind": "sitemap",
+          "url": "https://crhoy.com/sitemaps/sitemap-news.xml",
+          "valid_from": "2026-10-09"
+        }
+      ],
+      "add_web_origins": [
+        "https://crhoy.com"
+      ],
+      "evidence": [
+        {
+          "claim": "https://crhoy.com/robots.txt names `Sitemap: https://crhoy.com/sitemaps/sitemap-news.xml`",
+          "how": "read offline from the robots.txt answer stored in the runtime workspace (pack pk1-cr_crhoy-20261009-000, fetch ft1:0b738938d2cb74de2a7d3cc4db2505b3066be6715d225f55e472df7c54f9a5c3, fetched 2026-10-09T17:54:03.667283Z); no request",
+          "source": "workspace pack pk1-cr_crhoy-20261009-000"
+        },
+        {
+          "claim": "the robots.txt of the registered origin https://www.crhoy.com names sitemaps on https://crhoy.com, and the registered sitemap index of the outlet already lies on https://crhoy.com",
+          "how": "read offline from the stored robots answers of both hosts and the registry; no request",
+          "source": "workspace pack pk1-cr_crhoy-20261009-000; config/outlet_registry.json"
+        },
+        {
+          "claim": "the outlet's evidence in the source-health matrix of 2026-11-14 (recommendation REQUALIFICATION_REQUIRED or REPAIR_REQUIRED)",
+          "how": "read from docs/intake/source_health/source_health_2026-11-14.json",
+          "source": "docs/intake/source_health/source_health_2026-11-14.json"
+        }
+      ],
+      "outlet_id": "cr_crhoy",
+      "reason": "the registered channels list no current news (24-hour intake of 2026-10-10/11: nothing first listed and dated in the window, or no channel of the kind selected); the outlet's own robots.txt names this sitemap, whose name declares news",
+      "url_rules": null
+    },
+    {
+      "add_channels": [
+        {
+          "channel_id": "hn_criterio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "url": "https://criterio.hn/news-sitemap.xml",
+          "valid_from": "2026-10-10"
+        }
+      ],
+      "add_web_origins": [],
+      "evidence": [
+        {
+          "claim": "https://criterio.hn/robots.txt names `Sitemap: https://criterio.hn/news-sitemap.xml`",
+          "how": "read offline from the robots.txt answer stored in the runtime workspace (pack pk1-hn_criterio-20261010-003, fetch ft1:a99e797a86e2e1d3efb16e20d94333b3eb6a91da5f7a21a6137cdd7d6593e817, fetched 2026-10-10T09:34:18.428528Z); no request",
+          "source": "workspace pack pk1-hn_criterio-20261010-003"
+        },
+        {
+          "claim": "the outlet's evidence in the source-health matrix of 2026-11-14 (recommendation REQUALIFICATION_REQUIRED or REPAIR_REQUIRED)",
+          "how": "read from docs/intake/source_health/source_health_2026-11-14.json",
+          "source": "docs/intake/source_health/source_health_2026-11-14.json"
+        }
+      ],
+      "outlet_id": "hn_criterio",
+      "reason": "the registered channels list no current news (24-hour intake of 2026-10-10/11: nothing first listed and dated in the window, or no channel of the kind selected); the outlet's own robots.txt names this sitemap, whose name declares news",
+      "url_rules": null
+    },
+    {
+      "add_channels": [
+        {
+          "channel_id": "pe_el_comercio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "url": "https://elcomercio.pe/sitemap/?outputType=xml",
+          "valid_from": "2026-10-09"
+        }
+      ],
+      "add_web_origins": [],
+      "evidence": [
+        {
+          "claim": "https://elcomercio.pe/robots.txt names `Sitemap: https://elcomercio.pe/sitemap/?outputType=xml`",
+          "how": "read offline from the robots.txt answer stored in the runtime workspace (pack pk1-pe_el_comercio-20261009-000, fetch ft1:2adfc80e612e71b21630a6d5d18a195ace81f449ac6e5e8948a0343e43fd5b8f, fetched 2026-10-09T19:38:27.260053Z); no request",
+          "source": "workspace pack pk1-pe_el_comercio-20261009-000"
+        },
+        {
+          "claim": "the outlet's evidence in the source-health matrix of 2026-11-14 (recommendation REQUALIFICATION_REQUIRED or REPAIR_REQUIRED)",
+          "how": "read from docs/intake/source_health/source_health_2026-11-14.json",
+          "source": "docs/intake/source_health/source_health_2026-11-14.json"
+        }
+      ],
+      "outlet_id": "pe_el_comercio",
+      "reason": "the registered channels list no current news (24-hour intake of 2026-10-10/11: nothing first listed and dated in the window, or no channel of the kind selected); the outlet's own robots.txt names this sitemap, whose name declares news",
+      "url_rules": null
+    }
+  ],
+  "authority": "reviewed and approved by Claude Code agent (Claude Opus 5.5), agent session of 2026-11-14 in this repository, under the operator's brief of 2026-11-14 'CO.PRE.PAN_v3 - Wochenend-Qualifikation aller zugaenglichen Pressequellen mit lokalem Spooling und autonomen Reparaturen' (it authorises evidence-based additive channel amendments of registered outlets; issued by Felix Tacke, operator of CO.PRE.PAN); to be confirmed by the operator; amendment 2026-11-14 prepared by an agent run (CPD-0025)",
+  "gate": "O-11",
+  "prepared_on": "2026-11-14",
+  "purpose": "additive news channels for registered outlets whose registered channels gave no current news, each named by the outlet's own robots.txt (weekend qualification of 2026-11-14/15); nothing is removed or reordered",
+  "record_stem": "weekend_news_channels",
+  "registry_sha256_after": "ca36ae7d2de44dc883f90872770e91fcdf42e02d830fadf18c37bcc12e192ea4",
+  "registry_sha256_before": "7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8",
+  "reviewed_on": "2026-11-14",
+  "schema": "coprepan-registry-amendment/v1"
+}

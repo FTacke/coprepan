@@ -31,6 +31,13 @@ RECORDS = "config/operator_authorizations"
 _KEYS = {"schema", "authorization_id", "kind", "issued_on", "issued_by", "issued_to", "source", "valid_until", "policy_versions",
          "actions_authorized", "not_authorized", "holds_in_force", "technical_gates", "stop_conditions", "disarming", "decisions", "waves"}
 _WAVE_KEYS = {"label", "outlets", "registration", "limits", "canaries", "note"}
+# CPD-0036: a wave may defer its preservation -- its packs stay PRESERVATION_PENDING in the runtime workspace and the target is not
+# contacted by the run. Optional; a wave without it preserves directly, as every wave before.
+PRESERVATION_DIRECT, PRESERVATION_DEFERRED_LOCAL = "direct", "deferred_local"
+_OPTIONAL_WAVE_KEYS = {"preservation"}
+# CPD-0036: a wave may read up to four registered channels of an outlet instead of two. It raises no request limit: the channel
+# documents still draw on the wave's other_requests_per_outlet, which is never raised.
+CHANNELS_KEY, MAX_CHANNELS_PER_OUTLET = "channels_per_outlet", 4
 _LIMIT_KEYS = ("item_requests_total", "item_requests_per_outlet", "other_requests_per_outlet", "total_requests_ceiling")
 
 
@@ -77,8 +84,10 @@ def validate(record: Any) -> None:
         raise AuthorizationError("an authorisation names at least one wave")
     labels = set()
     for wave in waves:
-        if not isinstance(wave, dict) or set(wave) != _WAVE_KEYS:
-            raise AuthorizationError(f"a wave has exactly the keys {sorted(_WAVE_KEYS)}")
+        if not isinstance(wave, dict) or not _WAVE_KEYS <= set(wave) <= _WAVE_KEYS | _OPTIONAL_WAVE_KEYS:
+            raise AuthorizationError(f"a wave has exactly the keys {sorted(_WAVE_KEYS)}, and optionally {sorted(_OPTIONAL_WAVE_KEYS)}")
+        if wave.get("preservation", PRESERVATION_DIRECT) not in (PRESERVATION_DIRECT, PRESERVATION_DEFERRED_LOCAL):
+            raise AuthorizationError(f"a wave's preservation is {PRESERVATION_DIRECT!r} or {PRESERVATION_DEFERRED_LOCAL!r}")
         if not isinstance(wave["label"], str) or wave["label"] in labels:
             raise AuthorizationError("wave labels are distinct strings")
         labels.add(wave["label"])
@@ -86,9 +95,12 @@ def validate(record: Any) -> None:
         if not isinstance(outlets, list) or not outlets or len(set(outlets)) != len(outlets) or not all(naming.is_outlet_id(o) for o in outlets):
             raise AuthorizationError(f"{wave['label']}: outlets is a non-empty list of distinct outlet ids")
         limits = wave["limits"]
-        if not isinstance(limits, dict) or set(limits) != set(_LIMIT_KEYS) or any(
+        if not isinstance(limits, dict) or not set(_LIMIT_KEYS) <= set(limits) <= set(_LIMIT_KEYS) | {CHANNELS_KEY} or any(
                 isinstance(limits[k], bool) or not isinstance(limits[k], int) or limits[k] < 0 for k in _LIMIT_KEYS):
-            raise AuthorizationError(f"{wave['label']}: limits states exactly {_LIMIT_KEYS} as non-negative integers")
+            raise AuthorizationError(f"{wave['label']}: limits states exactly {_LIMIT_KEYS} as non-negative integers (and optionally {CHANNELS_KEY})")
+        if CHANNELS_KEY in limits and (isinstance(limits[CHANNELS_KEY], bool) or not isinstance(limits[CHANNELS_KEY], int)
+                                       or not 1 <= limits[CHANNELS_KEY] <= MAX_CHANNELS_PER_OUTLET):
+            raise AuthorizationError(f"{wave['label']}: {CHANNELS_KEY} is 1 to {MAX_CHANNELS_PER_OUTLET}")
         if wave["canaries"] != 1:
             raise AuthorizationError(f"{wave['label']}: a wave is one canary; a second needs its own wave in a commission that grants it")
         if wave["registration"] is not None and (not isinstance(wave["registration"], dict) or set(wave["registration"]) != {"proposal", "proposal_sha256", "only"}):
@@ -125,8 +137,16 @@ def check(record: Mapping[str, Any], label: str, *, outlets: Sequence[str], budg
     over = {key: (asked[key], wave["limits"][key]) for key in _LIMIT_KEYS if asked[key] > wave["limits"][key]}
     if over:
         raise AuthorizationError(f"{label}: the canary's budget exceeds the authorised limits (asked, authorised): {over}")
-    return {"mode": MODE_DELEGATED, "authorization_id": record["authorization_id"], "authorization_sha256": record["_sha256"],
-            "wave": label, "issued_by": record["issued_by"], "issued_to": record["issued_to"]}
+    block = {"mode": MODE_DELEGATED, "authorization_id": record["authorization_id"], "authorization_sha256": record["_sha256"],
+             "wave": label, "issued_by": record["issued_by"], "issued_to": record["issued_to"]}
+    if wave.get("preservation", PRESERVATION_DIRECT) != PRESERVATION_DIRECT:      # a direct wave's block is as it always was
+        block["preservation"] = wave["preservation"]
+    return block
+
+
+def deferred(block: Mapping[str, Any] | None) -> bool:
+    """Whether a pinned authorisation block defers the preservation of its canary (CPD-0036)."""
+    return bool(block) and block.get("preservation") == PRESERVATION_DEFERRED_LOCAL
 
 
 def waves_used(baselines: Sequence[Mapping[str, Any]], authorization_id: str, *, except_manifest: str | None = None) -> list[str]:

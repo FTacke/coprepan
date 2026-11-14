@@ -119,7 +119,10 @@ def build_manifest(
     candidate_filter.load_rules(config / "candidate_rules.json")
     if identity_state != "configured":
         blocking.append("O-2: no crawler identity is configured")
-    if storage_target is None or storage_target.get("status") != preservation_target.READY:
+    # CPD-0036: a canary whose preservation is deferred passes O-3 by the local report of its workspace (no target contact);
+    # an acquisition baseline never does.
+    deferred = scope == SCOPE_CANARY and storage_target is not None and storage_target.get("status") == preservation_target.DEFERRED_LOCAL
+    if not deferred and (storage_target is None or storage_target.get("status") != preservation_target.READY):
         blocking.append("O-3: no preservation target has passed the readiness check")
     if scope not in (SCOPE_ACQUISITION, SCOPE_CANARY):
         raise ValueError(f"not a baseline scope: {scope!r}")

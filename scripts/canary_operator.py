@@ -294,7 +294,8 @@ def main(argv: list[str] | None = None, *, repository: Path = REPOSITORY, scratc
         if scratch is None:
             from coprepan import storage_roots
 
-            scratch = storage_roots.resolve_configured_roles(env=storage_roots.workstation_environment())["RUNTIME"] / "canary"
+            # Only the runtime workspace is needed here; resolving every role would probe the target with a write (CPD-0036)
+            scratch = storage_roots.resolve_root("RUNTIME", env=storage_roots.workstation_environment()) / "canary"
         scratch.mkdir(parents=True, exist_ok=True)
         manifest_path = scratch / f"baseline-{arguments.label}-{today}.json"
         if manifest_path.exists():

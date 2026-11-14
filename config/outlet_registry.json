@@ -884,6 +884,17 @@
               "valid_from": "unknown"
             }
           ]
+        },
+        {
+          "channel_id": "bo_brujula_digital:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://brujuladigital.net/sitemap-news.xml",
+              "valid_from": "2026-10-09"
+            }
+          ]
         }
       ],
       "city": "unknown",
@@ -3253,6 +3264,17 @@
               "valid_from": "unknown"
             }
           ]
+        },
+        {
+          "channel_id": "co_elcolombiano:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://www.elcolombiano.com/sitemapforgoogle.xml",
+              "valid_from": "2026-10-09"
+            }
+          ]
         }
       ],
       "city": "unknown",
@@ -4299,6 +4321,17 @@
               "valid_from": "unknown"
             }
           ]
+        },
+        {
+          "channel_id": "cr_crhoy:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://crhoy.com/sitemaps/sitemap-news.xml",
+              "valid_from": "2026-10-09"
+            }
+          ]
         }
       ],
       "city": "unknown",
@@ -4353,7 +4386,8 @@
         "version": "cr_crhoy-url-rules/v1"
       },
       "web_origins": [
-        "https://www.crhoy.com"
+        "https://www.crhoy.com",
+        "https://crhoy.com"
       ]
     },
     {
@@ -8675,6 +8709,17 @@
             {
               "url": "https://criterio.hn/category/actualidad/",
               "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "hn_criterio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://criterio.hn/news-sitemap.xml",
+              "valid_from": "2026-10-10"
             }
           ]
         }
@@ -13390,6 +13435,17 @@
             {
               "url": "https://elcomercio.pe/archivo/",
               "valid_from": "unknown"
+            }
+          ]
+        },
+        {
+          "channel_id": "pe_el_comercio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_observed": {},
+          "url_history": [
+            {
+              "url": "https://elcomercio.pe/sitemap/?outputType=xml",
+              "valid_from": "2026-10-09"
             }
           ]
         }

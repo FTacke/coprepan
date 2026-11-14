@@ -1140,12 +1140,13 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 1,
+      "channel_count": 2,
       "channel_kinds": {
-        "rss": 1
+        "rss": 1,
+        "sitemap": 1
       },
       "channel_legacy_statuses": {
-        "None": 1
+        "None": 2
       },
       "channels": [
         {
@@ -1159,6 +1160,18 @@
           "notes": [],
           "recommended_channel_id": "bo_brujula_digital:ch:rss_main",
           "url": "https://brujuladigital.net/rss.xml"
+        },
+        {
+          "channel_id": "bo_brujula_digital:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "bo_brujula_digital:ch:sitemap_news",
+          "url": "https://brujuladigital.net/sitemap-news.xml"
         }
       ],
       "country_id": "bo",
@@ -2544,12 +2557,13 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 1,
+      "channel_count": 2,
       "channel_kinds": {
-        "section_page": 1
+        "section_page": 1,
+        "sitemap": 1
       },
       "channel_legacy_statuses": {
-        "None": 1
+        "None": 2
       },
       "channels": [
         {
@@ -2563,6 +2577,18 @@
           "notes": [],
           "recommended_channel_id": "co_el_colombiano:ch:section_page_medellin",
           "url": "https://www.elcolombiano.com/medellin"
+        },
+        {
+          "channel_id": "co_elcolombiano:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "co_el_colombiano:ch:sitemap_sitemapforgoogle",
+          "url": "https://www.elcolombiano.com/sitemapforgoogle.xml"
         }
       ],
       "country_id": "co",
@@ -2992,15 +3018,15 @@
       ]
     },
     {
-      "additional_origin_candidates": [
-        "https://crhoy.com"
-      ],
-      "channel_count": 3,
+      "additional_origin_candidates": [],
+      "channel_count": 4,
       "channel_kinds": {
         "rss": 1,
+        "sitemap": 1,
         "sitemap_index": 2
       },
       "channel_legacy_statuses": {
+        "None": 1,
         "inactive": 3
       },
       "channels": [
@@ -3012,9 +3038,7 @@
           "legacy_is_active": 0,
           "legacy_last_fail_reason": "✗ INACTIVE (score=39); HTTP 200 OK",
           "legacy_status": "inactive",
-          "notes": [
-            "host_is_a_variant_of_the_outlet_origin"
-          ],
+          "notes": [],
           "recommended_channel_id": "cr_crhoy:ch:sitemap_index_main",
           "url": "https://crhoy.com/sitemap.xml"
         },
@@ -3041,6 +3065,18 @@
           "notes": [],
           "recommended_channel_id": "cr_crhoy:ch:rss_main",
           "url": "https://www.crhoy.com/feed/"
+        },
+        {
+          "channel_id": "cr_crhoy:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "cr_crhoy:ch:sitemap_sitemap_news",
+          "url": "https://crhoy.com/sitemaps/sitemap-news.xml"
         }
       ],
       "country_id": "cr",
@@ -3075,7 +3111,8 @@
         "no_channel_was_active_in_legacy"
       ],
       "web_origins": [
-        "https://www.crhoy.com"
+        "https://www.crhoy.com",
+        "https://crhoy.com"
       ]
     },
     {
@@ -5756,13 +5793,14 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 2,
+      "channel_count": 3,
       "channel_kinds": {
         "rss": 1,
-        "section_page": 1
+        "section_page": 1,
+        "sitemap": 1
       },
       "channel_legacy_statuses": {
-        "None": 2
+        "None": 3
       },
       "channels": [
         {
@@ -5788,6 +5826,18 @@
           "notes": [],
           "recommended_channel_id": "hn_criterio_hn:ch:section_page_category_actualidad",
           "url": "https://criterio.hn/category/actualidad/"
+        },
+        {
+          "channel_id": "hn_criterio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "hn_criterio_hn:ch:sitemap_news_sitemap",
+          "url": "https://criterio.hn/news-sitemap.xml"
         }
       ],
       "country_id": "hn",
@@ -8538,12 +8588,13 @@
     },
     {
       "additional_origin_candidates": [],
-      "channel_count": 1,
+      "channel_count": 2,
       "channel_kinds": {
-        "section_page": 1
+        "section_page": 1,
+        "sitemap": 1
       },
       "channel_legacy_statuses": {
-        "None": 1
+        "None": 2
       },
       "channels": [
         {
@@ -8557,6 +8608,18 @@
           "notes": [],
           "recommended_channel_id": "pe_el_comercio:ch:section_page_archivo",
           "url": "https://elcomercio.pe/archivo/"
+        },
+        {
+          "channel_id": "pe_el_comercio:ch:sitemap_q001",
+          "kind": "sitemap",
+          "legacy_discovered_by": null,
+          "legacy_feed_id": null,
+          "legacy_is_active": null,
+          "legacy_last_fail_reason": null,
+          "legacy_status": null,
+          "notes": [],
+          "recommended_channel_id": "pe_el_comercio:ch:sitemap_outputtype_xml",
+          "url": "https://elcomercio.pe/sitemap/?outputType=xml"
         }
       ],
       "country_id": "pe",
@@ -11597,7 +11660,7 @@
       ]
     }
   ],
-  "registry_sha256": "7470d5838c79ec0cf47bdea828d847e993f4455ab5a34ceeadcb0f85cb4b9bb8",
+  "registry_sha256": "ca36ae7d2de44dc883f90872770e91fcdf42e02d830fadf18c37bcc12e192ea4",
   "review_cases": [
     {
       "case": "channels_on_the_origin_of_another_outlet",
@@ -11627,7 +11690,7 @@
       "no_channel_was_active_in_legacy": 88,
       "origin_is_plain_http": 1
     },
-    "channels": 446,
+    "channels": 451,
     "ids_changed_by_the_convention": 23,
     "outlets": 126,
     "review_cases": 1
