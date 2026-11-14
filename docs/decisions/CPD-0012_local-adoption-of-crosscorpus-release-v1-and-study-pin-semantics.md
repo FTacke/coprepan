@@ -3,7 +3,8 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-08 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
+| Superseded in part by (2026-11-14) | status until 2026-11-14: `ACTIVE_WITH_VALIDATION_DEBT`. [CPD-0034](CPD-0034_local-adoption-of-crosscorpus-release-v1-revision-2.md): the **adoption record** below (draft revision 1, bundle `4fb72acf…dbbe0`, 52 cases) is no longer the adoption in force — this repository pins draft revision 2 (`429f55eb…2255`) and the local adoption is renewed there (contract §17: an adoption quoting an earlier digest does not carry over). It stays the record of the revision-1 adoption. §1–§5 of this decision stand unchanged |
 | Decided by | the operator, in the brief of the second-implementation run of `crosscorpus-release/v1` (2026-10-08), which ordered a CO.PRE.PAN adoption record once the bundle is verified, the independent implementation passes the shared vectors and the local questions are settled, and authorised the amendment of CPD-0008. Recorded by that run; subject to the operator's review. **It binds CO.PRE.PAN only** |
 | Kind | architecture |
 | Scope | the joint release contract as CO.PRE.PAN works against it; the pin semantics of a study; the terms of the release layer; a technical recommendation on contract §16 Q1 |

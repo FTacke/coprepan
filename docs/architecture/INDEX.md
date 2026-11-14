@@ -42,7 +42,8 @@ is a verbatim, digest-pinned copy of the joint storage contract (revision 2), wh
 it is in force here by CPD-0015 and CPD-0031 and is never edited here.
 [`contracts/crosscorpus-release-v1/`](../../contracts/crosscorpus-release-v1/CONTRACT.md)
 is a verbatim, digest-pinned copy of the joint release contract, whose canonical home is the
-CO.RA.PAN repository. It is normative here by CPD-0012 and is never edited here.
+CO.RA.PAN repository. It is normative here by CPD-0012 and is never edited here. *Since 2026-11-14 the
+copy is draft revision 2, locally adopted by CPD-0034 (still `DRAFT`, not jointly adopted).*
 
 ## 1. Core — authoritative
 
@@ -73,7 +74,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0009](../decisions/CPD-0009_single-writer-recovery-and-operation-semantics.md) | One writer per workspace; recovery after interruption; operation semantics (at-least-once requests, exactly-once evidence identity); chained ledger records; exclusive binding on the preservation root | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0010](../decisions/CPD-0010_evidence-classes-chained-evidence-and-rebuildable-identity.md) | Evidence classes: chained primary evidence with anchored heads; derived candidates and identity tables checked against and rebuildable from the evidence | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0011](../decisions/CPD-0011_native-export-object-and-release-layer-mapping.md) | The native export object `coprepan-export/v1` and its mapping into a release | `ACTIVE_WITH_VALIDATION_DEBT` |
-| [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `ACTIVE_WITH_VALIDATION_DEBT`; amends CPD-0008 §7 |
+| [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md) | CO.PRE.PAN's adoption of the joint release contract `crosscorpus-release/v1` (binds CO.PRE.PAN only; not jointly frozen); what a study pins | `PARTIALLY_SUPERSEDED` (2026-11-14: its adoption record of revision 1, by CPD-0034); amends CPD-0008 §7 |
 | [CPD-0013](../decisions/CPD-0013_canary-registration-and-canary-acquisition-policy.md) | Registration by record and the canary subset (O-11); acquisition and schedule policy of the first real canary (O-1); `Crawl-delay` may bind (policy schema `v2`) | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0014](../decisions/CPD-0014_crawler-identity-and-storage-roles-with-interim-preservation.md) | Crawler identity and its public page (O-2); storage roles shared with CO.RA.PAN, role separation, interim primary preservation root, planned move to the university file system | `ACTIVE_WITH_VALIDATION_DEBT` |
 | [CPD-0015](../decisions/CPD-0015_joint-storage-contract-and-outage-spool-in-the-acquisition-path.md) | Joint storage-management contract `crosscorpus-storage/v1` in force (pinned copy, own implementation, shared cases); the outage spool wired into the acquisition path | `ACTIVE_WITH_VALIDATION_DEBT` |
@@ -95,6 +96,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0031](../decisions/CPD-0031_crosscorpus-storage-revision-2-legacy-archive-holding.md) | `crosscorpus-storage/v1` revision 2 taken over: the archive holding LEGACY | `ACTIVE`; decision 3 superseded by CPD-0032 |
 | [CPD-0032](../decisions/CPD-0032_legacy-holding-activated-legacy-system-and-frozen-press-corpus.md) | CO.PRE.PAN's LEGACY holding activated: the legacy system and its frozen press corpus archived as tree `coprepan` | `ACTIVE`; supersedes CPD-0031 decision 3 |
 | [CPD-0033](../decisions/CPD-0033_bounded-shared-io-corapan-priority-and-incremental-backup.md) | Bounded shared I/O with CO.RA.PAN's priority: resource policy, share gate, sibling advisory (caution only), `PAUSE_IO`, floors; manifest index of a promotion; verified local read after preservation; `intake-controller/2`; the incremental backup with stated evidence reuse and fixity rotation | `ACTIVE_WITH_VALIDATION_DEBT` |
+| [CPD-0034](../decisions/CPD-0034_local-adoption-of-crosscorpus-release-v1-revision-2.md) | `crosscorpus-release/v1` draft revision 2 taken over and the local adoption renewed against it (93 cases, 30 pattern vectors reproduced); not a joint adoption | `ACTIVE_WITH_VALIDATION_DEBT`; supersedes in part CPD-0012 (its adoption record) |
 
 ## 3. Component specifications — active
 
@@ -145,7 +147,7 @@ Machine-checked contracts:
 | Chained primary evidence (request log, discovery inputs and events, qualifications, labels); heads at run close; candidates and identity tables derived and rebuildable | `src/coprepan/jsonl.py`, `evidence.py`, `identity_rebuild.py`, `recovery.py` | `tests/test_evidence_integrity.py` |
 | No false success: preserved, sealed, promoted, version, 304 and replay refuse when what they claim is broken | `src/coprepan/core_pipeline.py`, `recovery.py` | `tests/test_integrity_invariants.py` |
 | Cross-corpus analysis contract: schemas, value states, denominator, manifest, compatibility view; conformance of a press and a radio fixture; invalid bundles refused | `src/coprepan/analysis_contract.py`, `src/coprepan/analysis_export.py` | `tests/test_analysis_contract.py` |
-| Joint release contract `crosscorpus-release/v1`: the copy is the pinned bundle; a drifted copy is refused; the bundle's digests and all vector cases reproduced by this repository's own checks | `contracts/crosscorpus-release-v1/`, `config/crosscorpus/contract_pins.json`, `src/coprepan/release_contract.py` | `tests/test_release_contract.py` |
+| Joint release contract `crosscorpus-release/v1`: the copy is the pinned bundle; a drifted copy is refused; the bundle's digests, all vector cases and (revision 2) all pattern vectors reproduced by this repository's own checks | `contracts/crosscorpus-release-v1/`, `config/crosscorpus/contract_pins.json`, `src/coprepan/release_contract.py` | `tests/test_release_contract.py` |
 | Native export object `coprepan-export/v1`; export → release member → manifest → freeze → package → study population; no corpus export without an adopted extractor | `src/coprepan/release_export.py` | `tests/test_release_export.py` |
 | Storage roles stay apart (no shared or nested root, a backup never on the primary's volume), nothing falls back, a preservation root can be switched without a new identity | `src/coprepan/storage_roots.py`, `config/storage_targets.yml`, `.env.example` | `tests/test_storage_architecture.py`, `tests/test_storage_roots.py` |
 | Crawler identity is the decided one; the public crawler page in the repository says what the identity says | `config/crawler_identity.json`, `web/coprepan/` | `tests/test_policy.py` |

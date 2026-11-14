@@ -6,7 +6,9 @@ extractor is adopted, no selection policy exists, no exports root is configured.
 decisions: [CPD-0011](../decisions/CPD-0011_native-export-object-and-release-layer-mapping.md)
 (the native export object),
 [CPD-0012](../decisions/CPD-0012_local-adoption-of-crosscorpus-release-v1-and-study-pin-semantics.md)
-(the joint release contract as CO.PRE.PAN works against it). Current state:
+(the joint release contract as CO.PRE.PAN works against it; its adoption record of revision 1 superseded by)
+[CPD-0034](../decisions/CPD-0034_local-adoption-of-crosscorpus-release-v1-revision-2.md)
+(the local adoption renewed against draft revision 2). Current state:
 [`docs/STATUS.md`](../STATUS.md).
 
 Entry point for: what a CO.PRE.PAN export is, how a release names exports, what a release freeze
@@ -17,6 +19,16 @@ is, packages and study populations. The contract itself is the bundle
 *Note 2026-10-22 (consistency audit):* the bundle here is draft revision 1 (`4fb72acf…6dbbe0`). The canonical home pins draft
 revision 2 (`429f55eb…442255`) since 2026-10-08; this repository has not taken it over. Everything this index says about
 conformance is conformance with revision 1 ([`docs/crosscorpus/INDEX.md`](../crosscorpus/INDEX.md) §1a).
+
+*Note 2026-11-14 (release-contract revision 2 taken over; supersedes the note above for the current state):* the bundle here is
+**draft revision 2** (`429f55eb1992be7adf230b501e9ecf80ba944478b3a91a31943f3cfef9442255`, verbatim from CO.RA.PAN commit
+`374d2e44e`; recomputed here), and the pin names it. This repository's own checks reproduce every digest, **all 93 cases and
+all 30 pattern vectors** of that bundle; the local adoption is renewed by CPD-0034. The bundle stays `DRAFT` and is **not
+jointly adopted** (contract §14.3 step 3 is a separate joint act). What the checker now does differently, by the revision's
+rules (CPD-0034 §3): a schema pattern in the portable subset (§12), a named release identified before it is
+checked (§13.1), a freeze record beside a provisional export refused by its existence (§9.1), the cohort derived from the date
+in both directions (§7.2), exactly one filter per input (§10.3), the sum over no documents (§7.3), and fetched-page containers
+refused by the check itself (§11.3). Where this index says "the contract" below it now means revision 2.
 
 ---
 
@@ -74,7 +86,7 @@ Document record: `document_version_id`, `document_id`, `outlet_id`, `extracted_t
 | member and document records | `member_record`, `document_records` | the export verifies |
 | manifest and record sets | `build_release` | own id form (`coprepan-YYYY.n`; year `0000` exactly for a fixture); fixture exports only in a fixture release; one member per version; a `release` pins its selection policy; the written manifest passes the check with every export present |
 | **freeze** | `freeze_release` | the check with every export present passes; the person freezing states the manifest's digest; once |
-| package | `build_package` | a frozen release that verifies; never a fetched page or source media (the contract's suffix list, plus `.warc`, `.warc.gz`, `.arc`, `.arc.gz`, `.cdx`, `.cdxj`) |
+| package | `build_package` | a frozen release that verifies; never a fetched page or source media (the contract's suffix list, plus `.warc`, `.warc.gz`, `.arc`, `.arc.gz`, `.cdx`, `.cdxj`; *since revision 2, 2026-11-14, those six are on the contract's own list and the package check refuses them too*) |
 | study population | `build_study_population` | every id resolves against the pinned releases; an anchor kind the release declares |
 
 Mapping of fields: CPD-0011 §8. A date is never guessed; a retrieval date is never a date.
@@ -103,7 +115,7 @@ Mapping of fields: CPD-0011 §8. A date is never guessed; a retrieval date is ne
 | date parser; outlet time zone for a local calendar date | Phase 3; registry review (O-11) |
 | selection policy document; one version per document or all | scientific (contract §16 Q6) |
 | exports root and release storage on a real target; distribution | O-3; institutional |
-| the joint freeze of the contract; contract §16 Q1, Q3, Q5–Q10 | joint |
+| the joint freeze of the contract; contract §16 Q1, Q3, Q5–Q10 (*revision 2, 2026-11-14:* also Q11, a grouping key for the versions of one work, which CO.PRE.PAN is asked to propose, and Q12) | joint |
 | proposals to the canonical bundle | [run report](../agent-runs/2026-10-08_crosscorpus-release-v1-coprepan-second-implementation.md) §8 |
 
 ## 7. Milestones
@@ -112,3 +124,6 @@ Mapping of fields: CPD-0011 §8. A date is never guessed; a retrieval date is ne
   bundle's vectors; native export object decided (CPD-0011) and exercised on synthetic pages;
   local adoption recorded (CPD-0012). Stage 11 `PARTIAL`. No release built.
   Run report: [`docs/agent-runs/2026-10-08_crosscorpus-release-v1-coprepan-second-implementation.md`](../agent-runs/2026-10-08_crosscorpus-release-v1-coprepan-second-implementation.md).
+- 2026-11-14 — draft revision 2 taken over verbatim and pinned (`429f55eb…2255`); own checks changed to the revision's rules
+  and conformant with all 93 cases and 30 pattern vectors; local adoption renewed (CPD-0034; CPD-0012's adoption record
+  superseded in part). Still `DRAFT`, not jointly adopted. Stage 11 stays `PARTIAL`. No release built.

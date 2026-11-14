@@ -11,7 +11,7 @@
     "tokens_counted", "tokens_counted_state", "audio_ms", "audio_ms_state", "source_sha256", "source_sha256_state"
   ],
   "properties": {
-    "document_id": {"type": "string", "pattern": "^\\S(?:[\\s\\S]*\\S)?$"},
+    "document_id": {"type": "string", "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$"},
     "export_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
     "outlet_id": {"type": "string", "pattern": "^[a-z]{2}_[a-z0-9]+(_[a-z0-9]+)*$"},
     "country_id": {"type": "string", "pattern": "^[a-z]{2}$"},

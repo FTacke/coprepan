@@ -63,9 +63,10 @@ PIPELINE_ID = "coprepan-pipeline"
 OFFSET_REFERENCE = "code-point offsets, half-open, into the text of the token's unit"
 
 STORED, ALREADY_STORED = "STORED", "ALREADY_STORED"
-# Suffixes this builder never copies into a package, beyond the contract's list of source media:
-# a fetched page is the source of a press release as audio is of a radio one (contract §8).
-SOURCE_PAGE_SUFFIXES = (".warc", ".warc.gz", ".arc", ".arc.gz", ".cdx", ".cdxj")
+# Suffixes of containers of fetched pages: a fetched page is the source of a press release as audio
+# is of a radio one (contract §8). Since draft revision 2 this is the contract's own list (§11.3),
+# refused by the check as well as by this builder.
+SOURCE_PAGE_SUFFIXES = R.SOURCE_PAGE_SUFFIXES
 
 _EXPORT_ID = re.compile(rf"{EXPORT_ID_PREFIX}-[0-9a-f]{{{EXPORT_ID_HASH_LENGTH}}}")
 _COMMIT = re.compile(r"[0-9a-f]{40}")
@@ -429,8 +430,10 @@ def build_release(
         before = {member["export_id"] for member in R.parse_records((Path(previous_directory) / R.MEMBERS).read_bytes())}
     now = {member["export_id"] for member in members}
     accounted = {item["new"] for item in replaced}
-    tokens, tokens_state = R.stateful_sum(documents, "tokens_counted")
-    audio, audio_state = R.stateful_sum(documents, "audio_ms")
+    # What a sum over no documents is depends on what the release can count (contract §7.3).
+    can_count = {"token_denominator_state": R.NOT_AVAILABLE, "modality": "written"}
+    tokens, tokens_state = R.stateful_sum(documents, "tokens_counted", can_count)
+    audio, audio_state = R.stateful_sum(documents, "audio_ms", can_count)
     manifest = {
         "schema": R.MANIFEST_SCHEMA, "contract": R.CONTRACT, "corpus_id": naming.CORPUS_ID, "release_id": release_id,
         "release_kind": release_kind, "fixture": fixture, "modality": "written", "created_at": _instant(created_at),

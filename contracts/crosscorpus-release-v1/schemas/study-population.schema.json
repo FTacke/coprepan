@@ -116,7 +116,7 @@
     }
   },
   "$defs": {
-    "text": {"type": "string", "pattern": "^\\S(?:[\\s\\S]*\\S)?$"},
+    "text": {"type": "string", "pattern": "^\\S(?:(?:\\s|\\S)*\\S)?$"},
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "instant": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"},
     "state": {"enum": ["known", "unknown", "not_applicable", "undecided", "not_available"]},
