@@ -128,8 +128,14 @@ def promote(
     declared_sha256: str,
     details: Mapping[str, Any] | None = None,
     now: datetime | None = None,
+    content_index: Any = None,
 ) -> PromotionResult:
     """Promote one sealed file. ``root`` is an already resolved, writable preservation root.
+
+    ``content_index`` (a :class:`coprepan.preserved_index.ManifestCache` of this root's target, CPD-0033) answers the
+    content check from local copies of the manifests after one listing of the area, instead of reading every manifest on
+    the root; the manifest of ``object_id`` itself is always read from the root, and every verification of bytes on the
+    root is unchanged. Without it the behaviour is the same as before.
 
     Outcomes: ``promoted``; ``already_preserved`` (a completed promotion re-verifies and writes
     nothing); ``repaired`` (an interrupted or damaged promotion is completed and reported);
@@ -158,7 +164,7 @@ def promote(
                     f"{object_id}: already preserved with sha256 {existing['sha256']}, offered {declared}"
                 )
             if _holds(root / existing["relative_path"], declared, size):
-                return _result(existing, manifest_path, ACTION_ALREADY_PRESERVED)
+                return _remember(content_index, existing, _result(existing, manifest_path, ACTION_ALREADY_PRESERVED))
             if existing.get("duplicate_of"):
                 raise PreservationError(
                     f"{object_id}: recorded as a duplicate of {existing['duplicate_of']}, whose master does not verify"
@@ -169,11 +175,13 @@ def promote(
                 )
             action = ACTION_REPAIRED
         else:
-            holder = find_by_content(root, area, declared)
+            holder = (content_index.find_by_content(root, area, declared) if content_index is not None
+                      else find_by_content(root, area, declared))
             if holder is not None and _holds(root / holder["relative_path"], declared, size):
                 manifest = _manifest(object_id, area, holder["relative_path"], declared, size, details, now)
                 manifest["duplicate_of"] = holder.get("duplicate_of") or holder["object_id"]
-                return _bind(root, area, object_id, manifest_path, manifest, ACTION_DUPLICATE_RECORDED, new=True)
+                bound = _bind(root, area, object_id, manifest_path, manifest, ACTION_DUPLICATE_RECORDED, new=True)
+                return _remember(content_index, manifest if bound.action == ACTION_DUPLICATE_RECORDED else None, bound)
             action = ACTION_PROMOTED
 
         destination = root / target_relative
@@ -190,9 +198,22 @@ def promote(
             _land(source, destination, declared, size, object_id, replace=False)
 
         manifest = _manifest(object_id, area, target_relative, declared, size, details, now)
-        return _bind(root, area, object_id, manifest_path, manifest, action, new=existing is None)
+        bound = _bind(root, area, object_id, manifest_path, manifest, action, new=existing is None)
+        return _remember(content_index, manifest if bound.action == action else None, bound)
     except OSError as error:
         raise PreservationError(f"{object_id}: promotion failed on I/O") from error
+
+
+def _remember(content_index: Any, manifest: Mapping[str, Any] | None, result: PromotionResult) -> PromotionResult:
+    """Copy the manifest that binds the identity into the content index. Only a manifest this step wrote or read from the
+    root is copied (a race lost to another process is not: its manifest is read from the root next time). The copy is
+    derived state: a failure to write it is not a failure of the promotion."""
+    if content_index is not None and manifest is not None:
+        try:
+            content_index.store(manifest)
+        except (OSError, ValueError, KeyError):
+            pass
+    return result
 
 
 def _bind(root: Path, area: str, object_id: str, manifest_path: Path, manifest: dict[str, Any], action: str, *, new: bool) -> PromotionResult:

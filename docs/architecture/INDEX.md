@@ -94,6 +94,7 @@ Registry and rules: [`docs/decisions/README.md`](../decisions/README.md).
 | [CPD-0030](../decisions/CPD-0030_newfs-target-identity-and-verified-pre-copy.md) | NEW_FS: the PRESERVATION root's identity is checked at every resolution (T2), the pre-copy tool, the verified pre-copy to the institutional share; cutover 2026-10-18 (Phase C), BACKUP 2026-10-19 (Phase D) | `ACTIVE`; amends CPD-0014 §6/§8 |
 | [CPD-0031](../decisions/CPD-0031_crosscorpus-storage-revision-2-legacy-archive-holding.md) | `crosscorpus-storage/v1` revision 2 taken over: the archive holding LEGACY | `ACTIVE`; decision 3 superseded by CPD-0032 |
 | [CPD-0032](../decisions/CPD-0032_legacy-holding-activated-legacy-system-and-frozen-press-corpus.md) | CO.PRE.PAN's LEGACY holding activated: the legacy system and its frozen press corpus archived as tree `coprepan` | `ACTIVE`; supersedes CPD-0031 decision 3 |
+| [CPD-0033](../decisions/CPD-0033_bounded-shared-io-corapan-priority-and-incremental-backup.md) | Bounded shared I/O with CO.RA.PAN's priority: resource policy, share gate, sibling advisory (caution only), `PAUSE_IO`, floors; manifest index of a promotion; verified local read after preservation; `intake-controller/2`; the incremental backup with stated evidence reuse and fixity rotation | `ACTIVE_WITH_VALIDATION_DEBT` |
 
 ## 3. Component specifications — active
 
@@ -162,6 +163,7 @@ Machine-checked contracts:
 | Delegated operator authorisation: the record, its check, the operator tool's delegated mode (CPD-0023) | `src/coprepan/delegation.py`, `scripts/canary_operator.py` | `tests/test_delegated_operator.py` |
 | Source inventory after qualification, intake readiness, access-restriction review are what their builder gives from the tracked evidence (CPD-0025, CPD-0026) | `config/source_discovery/`, `config/intake/` | `tests/test_source_qualification.py` |
 | The bounded intake: controller, budgets, deadline, restart, finalizer; the operator tool and its disarming (CPD-0029) | `src/coprepan/intake.py`, `src/coprepan/intake_report.py`, `scripts/intake_operator.py` | `tests/test_intake.py`, `tests/test_intake_operator.py` |
+| Shared I/O is bounded and yields to CO.RA.PAN; no regular cycle reads the whole primary; the incremental backup reuses hash evidence only as stated (CPD-0033, storage index §21) | `config/resource_policy.json`, `src/coprepan/resource_policy.py`, `src/coprepan/preserved_index.py`, `src/coprepan/primary_backup.py`, `scripts/preservation_backup.py`, `scripts/preservation_audit.py` | `tests/test_resource_isolation.py` |
 
 ## 4. Open decisions and gates
 

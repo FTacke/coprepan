@@ -682,3 +682,81 @@ restore test 25/25 (`docs/STATUS.md`, update of 2026-10-19). The daily task `COP
 later receipts are runtime evidence and are not versioned. **The status today:** PRESERVATION on the share (since 2026-10-18), BACKUP on
 `D:` (since 2026-10-19), LEGACY PRESENT (§20.7), HISTORIC not present; the statements of the header, §5, §11, §15 and §20.1 that say
 otherwise are dated by their place and are superseded by §20.5–§20.8.
+
+### 20.9 The backup task's time (note of 2026-11-14)
+
+`COPREPAN_PreservationBackup` is registered with the start boundary `2026-10-19T04:45:00+01:00`: 05:45 local during summer time (the
+time §20.8 names), **04:45 local since 2026-10-25**. It was installed by CO.RA.PAN's `scripts/install_holding_backup_tasks.ps1` (read in
+CO.RA.PAN on 2026-11-14). Its command line is `scripts/preservation_backup.py run --evidence-dir <RUNTIME>\work\preservation_backup_runs`;
+since CPD-0033 the same command runs the incremental backup (§21.5).
+
+## 21. Shared resources: CO.RA.PAN has priority (CPD-0033, 2026-11-14)
+
+**What is shared** (read 2026-11-14): the institutional share (one DFS server and namespace; in practice one Windows account, so a
+refused logon or a back-off affects both projects); the external USB SSD `D:` (both projects' BACKUP copies and much of CO.RA.PAN's
+working storage); the `C:` umbrella (workspaces and spools; CO.RA.PAN stops its own production below 20 GiB free on `C:` and on its `D:`
+volume, warns below 50 GiB). Different drive letters are no evidence of physical separation: `C:` and `D:` are different devices; every
+NEW_FS root of both corpora is one server.
+
+### 21.1 The resource policy
+
+`config/resource_policy.json` (`coprepan-resource-policy/v1`, version `2026-11-14.1`, pinned by the acquisition baseline): backup and
+fixity limits, free-space floors (60 GiB per role volume), the bounds of pending preservation in an intake, the share back-off, the quiet
+windows. Every value is a scenario assumption whose basis the file names; it is changed by a new version, never by a run.
+
+### 21.2 Who touches the share, and when
+
+| Path | Share contact | Bounded by |
+|---|---|---|
+| promotion of a new pack (`preserve_pack`) | one resolution (probe, marker, write probe), the landing and the unbuffered re-read of pack and index (P2), **one listing per area** and the manifests not yet in the local index | the share gate (no contact while it backs off); the intake's own budgets |
+| derivation right after a promotion | none (the workspace copy that hashes to the masters just verified; manifests from the local index) | — |
+| every other derived read, replay, drain, the intake's own read-back | the masters re-hashed on the root, as always | the reader's scope (one pack, one intake) |
+| an intake's finalizer | its own packs' masters | its own packs |
+| the scheduled backup (`INCREMENTAL`) | one listing of the primary; the new objects (two reads each); a fixity slice of ≤ 300 objects / 256 MiB, unbuffered | 1 worker, 2 MiB/s, 90 min, the quiet windows, the gate, `PAUSE_IO`, the sibling advisory, the BACKUP floor, one run per root (lock) |
+| `run --full`, `scripts/preservation_audit.py` | every object (the operator's explicit order) | the same windows, gate and pause, unless `--ignore-windows` |
+| `scripts/storage_contract.py status` | one resolution of each role, none of PRESERVATION while the gate is closed | — |
+
+**No regular cycle lists, hashes or reads the whole primary.**
+
+### 21.3 When stored hash evidence is reused, and when a full re-read is required
+
+| Situation | Evidence reused? | What is read |
+|---|---|---|
+| promotion: is this object's identity already bound? | no | the object's own manifest on the root, always |
+| promotion: are these bytes already held under another identity? | the local copies of the manifests (digest per object id; a bound manifest never changes its digest) after one listing | the manifests not yet copied |
+| `RAW_PRESERVED` | **never** | the landed bytes on the primary, past the cache (P2) |
+| derivation in the step that preserved the pack | the verification of that step, seconds old | the workspace copy, hashed against the manifests' digests; a copy that does not hash is never used |
+| any later read of a preserved pack | no | both masters re-hashed on the root |
+| backup, object unchanged (same target identity, same size and `mtime_ns`, journal row of an unbuffered verification, backup file of that size) | yes | nothing — except the fixity slice |
+| backup, timestamp changed | no | re-hashed: equal → `RESTAMPED`; different → `SOURCE_CHANGED_SINCE_BACKUP`, never overwritten |
+| backup, new object / copy missing on the backup | no | hashed on the primary, copied, re-read unbuffered |
+| backup, another primary identity, no verified receipt, a torn journal row | no | a `FULL` run (automatic when there is no verified receipt of this primary) |
+| fixity | **never**: a stored digest never stands in for the re-read | a slice per run on both roots, oldest first; status warns when the oldest verification is older than 90 days |
+| after an incident, before a release | no | `run --full`, `scripts/preservation_audit.py` |
+
+### 21.4 Yielding and pausing
+
+- **Share gate** (`<RUNTIME>/state/share_gate.json`): after a failed contact, no contact for 5, 10, 20, 40, 60, 60 … minutes, across
+  restarts. A closed gate is an unreachable root (I2), and the pipeline keeps the pack pending (P5).
+- **Sibling advisory** (`COPREPAN_SIBLING_PRESERVATION_STATE` in `.env`, CO.RA.PAN's `preservation_mode_state.json`): **caution only**.
+  Fresh and degraded → the gate is closed until CO.RA.PAN's own next probe; fresh and slow → maintenance waits. No, stale, unreadable or
+  normal information permits nothing.
+- **`<RUNTIME>/state/PAUSE_IO`**: an intake asks nothing more and a backup or audit does not start, or stops at its next object; its text is
+  shown in the status; removing it resumes. Use it for a CO.RA.PAN release night or a migration.
+- **Floors**: under 60 GiB free on the RUNTIME volume an intake asks nothing; on the BACKUP volume no backup runs.
+- **Bounded pending** (intake `/2`): through an outage an intake goes on while ≤ 5,000 packs / 5 GiB are pending and the oldest is ≤ 72 h
+  old; beyond, it pauses (`held_because`). The pending packs are complete and verified in the workspace (and the spool when it has room).
+
+### 21.5 The backup (amends §20.8)
+
+`scripts/preservation_backup.py run` is `INCREMENTAL` (CPD-0033 decision 6; mechanics in `src/coprepan/primary_backup.py`): one
+enumeration of each root; evidence reused only as §21.3 says; new objects copied with the qualified `migrate_one`; a fixity slice;
+a rotating restore of 10 objects; the receipt names its mode, basis, slice and the last full run, and its `tree_sha256` is the full
+inventory's (an unchanged primary must give the previous digest). Outcomes: `BACKUP_VERIFIED` · `DEFERRED` (window, pause, gate, floor,
+another run holds the root; exit 0) · `STOPPED` (budget or refusal; resumable; exit 0) · `NOT_VERIFIED` (a problem; exit 1). Every
+attempt is in `_backup/last_run.json`. `run --full` is the Phase-D run of §20.8, for an explicit order.
+
+Measured on 2026-11-14 (isolated benchmark, local NTFS, a synthetic tree of 8,816 objects of 1 KiB): a repeated `FULL` run read 8,817
+files of the primary, an `INCREMENTAL` run of the unchanged tree 300 (its fixity slice) and, with 10 new objects, 320. The times on local
+disk (14.2 s and 1.2 s) say nothing about the share. **Projection, not a measurement:** at the measured 78 min for 8,816 objects over the
+share (0.53 s per object), the regular run's reads cost about 3 minutes instead of 78, independent of the corpus's size.

@@ -20,8 +20,21 @@ outlets is prepared and waits for the operator's arming; an extended canary of t
 system's own records with passive research of 2026-10-09: 1 outlet is `ACQUISITION_VERIFIED`, 2 are `QUALIFIED`, none is
 operationally stable. **No request was made to any publisher on 2026-10-09.**
 
-**Current state (as of the consistency audit of 2026-10-22; this paragraph is the current one, the dated paragraphs below are
-history; it only restates what §3, §5g and the dated updates below record):** the 24-hour intake `in1-20261010-24h` ran
+**Current state (as of the readiness run of 2026-11-14; this paragraph is the current one, the dated paragraphs below are history;
+it only restates what §3, §5 and storage index §21 record):** nothing has been requested from any publisher since the 24-hour intake
+of 2026-10-10/11 (§5g); the switch is `disabled`; no stage is validated or activated; every gate of §5 is as it was. Since CPD-0033
+CO.PRE.PAN's shared I/O is bounded and yields to CO.RA.PAN: a tracked resource policy, a persisted back-off in front of the share,
+CO.RA.PAN's observation of the share as caution-only advice, quiet windows, `PAUSE_IO`, free-space floors; the regular backup is
+incremental (one listing of each root, stated evidence reuse, a fixity slice on both roots) instead of re-hashing the whole primary
+every day; a promotion lists its area once instead of reading every manifest; the intake controller is `intake-controller/2` (bounded
+pending, pause, a finalizer scoped to its own packs, a tick that does not contact the share). **All of it is qualified offline only:**
+the PRESERVATION share refused this workstation's logons for the whole run (CO.RA.PAN observed `AUTH_REFUSED` from
+2026-11-14T06:57Z), so nothing of it has run against the share, and the coexistence with CO.RA.PAN's load is constructed and simulated,
+not measured. **The joint release contract is no longer split:** this repository pins draft revision 2 (`429f55eb…442255`) like CO.RA.PAN, its own checks reproduce all 93 cases and 30 pattern vectors (CPD-0034); the bundle stays `DRAFT` and not jointly adopted. Report:
+[`2026-11-14`](agent-runs/2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md).
+
+**State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
+record):** the 24-hour intake `in1-20261010-24h` ran
 2026-10-10/11 (`COMPLETED`, verification `PASS`, §5g) and nothing has been requested from any publisher since; the PRESERVATION
 primary is the institutional share since 2026-10-18 with a verified BACKUP on `D:` since 2026-10-19 (CPD-0030); the joint storage
 contract is in revision 2 (CPD-0031) and byte-identical in both repositories; the LEGACY holding is PRESENT since 2026-10-20
@@ -253,6 +266,7 @@ state of the table.
 | Test guards (no network, no storage root, suite membership) | implemented | `tests/conftest.py` |
 | Storage-target configuration and root resolution | fail-closed resolver implemented and unit-tested; roots configured on the workstation (`.env`; see the row "Storage roles and roots"); the PRESERVATION root's identity checked at every resolution since 2026-10-14 (T2, CPD-0030) (corrected 2026-10-22: this row said "no root configured") | `config/storage_targets.yml`, `src/coprepan/storage_roots.py`, `tests/test_storage_roots.py` |
 | Promotion semantics and outage spool | implemented; **the spool is in the acquisition path** (`core_pipeline.preserve_pack`, `drain_spooled_packs`; CPD-0015): outage → verified pending copy (spool, or workspace when no spool is usable) → drain verifies on the target before release; nothing deleted. Tested **on temporary directories only**, also on the interim primary's file system; the canary driver and the intake call it (the first real canary took the direct route, see above). Since 2026-10-22 the bytes on the target are re-read past the client cache before `RAW_PRESERVED` (contract P2; audit finding STO-2) | `src/coprepan/preservation.py`, `src/coprepan/outage_spool.py`, `src/coprepan/core_pipeline.py`, `tests/test_preservation.py`, `tests/test_storage_contract.py` |
+| **Bounded shared I/O; CO.RA.PAN has priority** (CPD-0033) | implemented and tested offline (`tests/test_resource_isolation.py`): resource policy (`config/resource_policy.json` `2026-11-14.1`), share gate with persisted back-off, sibling advisory (caution only), quiet windows, `PAUSE_IO`, free-space floors; a manifest index for the content check of a promotion (one listing, not every manifest); the verified local read right after preservation; `intake-controller/2` (bounded pending, pause, finalizer scoped to its own packs, a tick without a share contact); the backup `INCREMENTAL` (one listing, evidence reuse as storage index §21.3 states, a fixity slice on both roots, rotating restore), `FULL` on order; health in `storage_contract.py status`; whole-root audit `scripts/preservation_audit.py`. **Nothing of it has run against the share** (unreachable for this account during the run, 2026-11-14); coexistence under real CO.RA.PAN load not measured | `src/coprepan/resource_policy.py`, `src/coprepan/preserved_index.py`, `src/coprepan/primary_backup.py`, `src/coprepan/intake.py`, `scripts/preservation_backup.py`, storage index §21 |
 | Write-once layer store | implemented and unit-tested; its durable location (role) is undecided | `src/coprepan/layer_store.py`, `tests/test_layer_store.py` |
 | Release gate suite | scaffold; **contains no test**. It gates software changes of a pipeline that does not exist yet; the release-contract conformance tests are in `foundation_contract` (handoff gate PG2) | `tests/suites/release_gate.txt` |
 | Git | initialised 2026-10-07 on operator brief: branch `main`, remote `origin` = `https://github.com/FTacke/coprepan.git`; no history taken over from the legacy repository | [closure run report](agent-runs/2026-10-07_coprepan-repository-migration-closure.md) |
@@ -263,7 +277,7 @@ state of the table.
 None. No model, provider, crawler, extractor or annotator is active. The NLP pins in
 `pyproject.toml` `[tool.coprepan.nlp]` are marked `PLANNED`: they are not installed and not used.
 The package has no runtime dependency. `baseline_html/0.1.0`, `pack-writer/1`, `http-fetcher/1`,
-`channel-parser/6`, `robots-parser/3`, `robots-decision/3`, `access-control/4`, `access-hold-scope/1`, `canary-driver/5`, `intake-controller/1`, `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1`, `fetch-planner/1`, `candidate-filter-generic/3`,
+`channel-parser/6`, `robots-parser/3`, `robots-decision/3`, `access-control/4`, `access-hold-scope/1`, `canary-driver/5`, `intake-controller/2` (`/1` until 2026-11-14, CPD-0033), `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1`, `fetch-planner/1`, `candidate-filter-generic/3`,
 `admission-technical/1`, `channel-health/1`, `extraction-eval/1` and `legacy-freeze/1` are component versions recorded in artefacts; none is an
 adopted production component. (List brought to the versions in the code on 2026-10-22; it named `channel-parser/3`, `access-control/2`,
 `canary-driver/4` and `candidate-filter-generic/2`.) `warcio==1.7.5` is a test-only dependency (the independent WARC
@@ -532,7 +546,7 @@ run report that carries the evidence.
 ```json
 {
   "schema": "coprepan-status-assertions/v1",
-  "as_of": "2026-10-22",
+  "as_of": "2026-11-14",
   "production_pipeline_exists": false,
   "external_api_in_production_path": false,
   "git_initialised_by_bootstrap": false,
@@ -819,3 +833,8 @@ top and §5, not this list.*
   operator's authorisation; `scripts/qualify_storage_roots.py spool-failover` writes only inside this corpus's own
   directory and refuses on the current primary, whose parent is the shared umbrella. Run report:
   [`2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md`](agent-runs/2026-10-22_audit-closure-run-reporting-merge-and-worktree-lifecycle.md).
+- 2026-11-14 — architecture, storage, contract and acquisition-readiness run (diagnosis + implementation; no stage state changed, no gate
+  closed, no request to any publisher): CO.PRE.PAN's shared I/O bounded and yielding to CO.RA.PAN, the daily full re-hash of the primary
+  replaced by an incremental backup with stated evidence reuse and fixity rotation, the per-promotion manifest scan replaced by a local
+  index, `intake-controller/2` (CPD-0033); `crosscorpus-release/v1` draft revision 2 taken over (CPD-0034); qualified offline only (the share refused the account's logons). Run report:
+  [`2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md`](agent-runs/2026-11-14_coprepan-architecture-storage-contract-and-acquisition-readiness.md).

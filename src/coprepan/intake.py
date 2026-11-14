@@ -39,7 +39,9 @@ from .canonical import record_json, sha256_bytes, write_bytes_atomic
 from .exclusive import WorkspaceBusy, exclusive
 from .identity import format_instant
 
-CONTROLLER_VERSION = "intake-controller/1"
+#: /2 (CPD-0033): pending within the resource policy's bounds no longer stops the requests; PAUSE_IO and the RUNTIME floor
+#: pause them; the finalizer re-hashes only its own packs' masters on the root. A plan of /1 is history and is not run by /2.
+CONTROLLER_VERSION = "intake-controller/2"
 PLAN_SCHEMA = naming.schema_id("intake-plan", 1)
 STATE_SCHEMA = naming.schema_id("intake-state", 1)
 RECEIPT_SCHEMA = naming.schema_id("intake-receipt", 1)
@@ -498,6 +500,53 @@ class Environment:
     fetcher_options: Mapping[str, Any] | None = None       # tests: connect_override
     # Asked before every cycle: ``None``, or why no further request may be made (the switch is off, a pinned file changed).
     still_permitted: Callable[[], str | None] | None = None
+    # CPD-0033: the resource policy. With it, an intake goes on while what is pending stays inside the policy's bounds
+    # (count, bytes, age, and the RUNTIME free-space floor) and pauses beyond them; the operator's PAUSE_IO file pauses it.
+    # Without it (``None``) nothing more is asked while anything is pending -- the behaviour of intake-controller/1.
+    resource_policy: Any = None
+
+
+def pending_refusal(env: "Environment", waiting: Sequence[str], now: datetime) -> str | None:
+    """Why no further request may be made while ``waiting`` packs are pending (CPD-0033), or ``None``.
+
+    The received bytes of a pending pack are complete and verified in the workspace (and in the spool when it had room):
+    an honest ``PENDING`` (contract P4/P5). They are safe only within what the local disk guarantees, so the intake goes
+    on asking only while the pending packs are within the policy's bounds of count, bytes and age and the RUNTIME volume
+    is above its floor. Without a resource policy every pending pack stops the requests, as before.
+    """
+    if not waiting:
+        return None
+    policy = env.resource_policy
+    if policy is None:
+        return f"{len(waiting)} packs pending and no resource policy: nothing is asked until they are preserved"
+    if len(waiting) > policy.pending_max_packs:
+        return f"{len(waiting)} packs pending, more than the policy's {policy.pending_max_packs}"
+    size, oldest = 0, None
+    for identifier in waiting:
+        try:
+            stat = (env.workspace.packs / f"{identifier}.warc.gz").stat()
+        except OSError:
+            return f"{identifier}: pending, and its sealed pack cannot be read in the workspace"
+        size += stat.st_size
+        sealed = datetime.fromtimestamp(stat.st_mtime, timezone.utc)
+        oldest = sealed if oldest is None or sealed < oldest else oldest
+    if size > policy.pending_max_bytes:
+        return f"{size} bytes pending, more than the policy's {policy.pending_max_bytes}"
+    if oldest is not None and now - oldest > timedelta(hours=policy.pending_max_age_hours):
+        return f"the oldest pending pack was sealed {oldest.isoformat(timespec='seconds')}, more than {policy.pending_max_age_hours} h ago"
+    from . import resource_policy as R
+
+    return R.free_space_refusal("RUNTIME", env.workspace.root, policy)
+
+
+def io_refusal(env: "Environment") -> str | None:
+    """Why the intake must not make a request now for a reason of shared resources (CPD-0033): the operator's PAUSE_IO
+    file, or the RUNTIME volume below its floor. ``None`` without a resource policy."""
+    if env.resource_policy is None:
+        return None
+    from . import resource_policy as R
+
+    return R.paused(env.workspace.root) or R.free_space_refusal("RUNTIME", env.workspace.root, env.resource_policy)
 
 
 def _due_channels(outlet: Mapping[str, Any], state: Mapping[str, Any], now: datetime) -> list[str]:
@@ -547,14 +596,18 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
             if refusal is not None:                                 # the switch was turned off, or what the baseline pins has changed
                 return _stop(state_dir, state, BLOCKED, refusal)
             pending = _finish_open_packs(env, [o["outlet_id"] for o in plan["outlets"]], sealed_pending=True)
-            waiting = sorted(identifier for identifier, result in pending.items() if result != preservation.STATE_PRESERVED)
-            state["preservation"] = f"pending: {waiting}" if waiting else "nothing pending"
-            if waiting:
-                # What was received is not safe yet (the target is away): nothing more is asked for until it is.
+            waiting = {identifier for identifier, result in pending.items() if result != preservation.STATE_PRESERVED}
+            state["preservation"] = _pending_text(waiting)
+            hold = pending_refusal(env, sorted(waiting), cycle_started) or io_refusal(env)
+            if hold is not None:
+                # What was received is not safe enough to receive more (the target is away beyond the local bounds), or the
+                # operator paused shared I/O, or the local disk is low: nothing more is asked for until that changes.
+                state["held_because"] = hold
                 write_state(state_dir, state)
-                _log(state_dir, f"preservation pending for {len(waiting)} packs: no request until they are preserved")
+                _log(state_dir, f"no request: {hold}")
                 env.sleep(min(300.0, max(1.0, (fetcher.last_decision_at - env.clock()).total_seconds())))
                 continue
+            state["held_because"] = None
             state["cycle"] += 1
             state["cycle_started_at"], state["outlets_done_in_cycle"] = format_instant(cycle_started), []
             outlets = [o for o in plan["outlets"]]
@@ -567,8 +620,9 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
             write_state(state_dir, state)                           # the run is the intake's before it is opened: a restart finds it
             acquisition.open_run(env.workspace.root, run_)
             counts: Counter[str] = Counter()
+            blocked: str | None = None
             for outlet in outlets:
-                if env.clock() >= fetcher.last_decision_at or (state_dir / STOP_FILE).exists() or state["preservation"] != "nothing pending":
+                if env.clock() >= fetcher.last_decision_at or (state_dir / STOP_FILE).exists() or blocked is not None:
                     break
                 refusal = env.still_permitted() if env.still_permitted is not None else None
                 if refusal is not None:
@@ -586,8 +640,9 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
                         select_due=selector(started_at, state["first_poll_done"], budget.backlog_items_per_outlet_cycle))
                     preserved = canary_driver._preserve(env.workspace, summary["open_pack_ids"], env.preservation_root, env.spool_root, env.spool_policy, env.clock)
                     canary_driver._derive(env.workspace, env.registry, env.preservation_root, preserved, extraction.BASELINE, env.clock)
-                    pending = [identifier for identifier, result in preserved.items() if result["state"] != preservation.STATE_PRESERVED]
-                    state["preservation"] = f"pending: {pending}" if pending else "nothing pending"
+                    for identifier, result in preserved.items():
+                        (waiting.discard if result["state"] == preservation.STATE_PRESERVED else waiting.add)(identifier)
+                    state["preservation"] = _pending_text(waiting)
                     counts.update({f"requests_{key}": value for key, value in summary["requests"].items()})
                     counts["candidates_requested"] += summary["candidates_requested"]
                 except (acquisition.AcquisitionError, pack.PackError, preservation.PreservationError, discovery.DiscoveryError, OSError, ValueError, KeyError) as error:
@@ -607,6 +662,8 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
                 state["requests_total"], state["items_by_outlet"] = fetcher.total, dict(sorted(fetcher.items_by_outlet.items()))
                 state["holds"].update({key: value for key, value in fetcher.access_holds.items() if key not in holds})
                 state["last_checkpoint_at"] = format_instant(now)
+                blocked = pending_refusal(env, sorted(waiting), now) or io_refusal(env)
+                state["held_because"] = blocked
                 write_state(state_dir, state)
             acquisition.close_run(env.workspace.root, run_, finished_at=env.clock(), status="COMPLETED", counts=dict(counts),
                                   pack_ids=[], errors=[e["error"] for e in state["errors"] if e["cycle"] == state["cycle"]][:20])
@@ -619,7 +676,7 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
             _log(state_dir, f"cycle {state['cycle']} done: {fetcher.total} requests in all, {sum(fetcher.items_by_outlet.values())} item requests")
             write_state(state_dir, state)
             next_cycle = min(cycle_started + timedelta(seconds=budget.cycle_seconds), fetcher.last_decision_at)
-            while env.clock() < next_cycle and not (state_dir / STOP_FILE).exists() and state["preservation"] == "nothing pending":
+            while env.clock() < next_cycle and not (state_dir / STOP_FILE).exists() and blocked is None:
                 env.sleep(min(5.0, max(0.01, (next_cycle - env.clock()).total_seconds())))
         if (state_dir / STOP_FILE).exists() and env.clock() < fetcher.last_decision_at:
             return _stop(state_dir, state, STOPPED, "a stop was requested")
@@ -627,6 +684,14 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
         write_state(state_dir, state)
         _log(state_dir, f"no further request: the deadline is {state['deadline_at_utc']}")
         return state
+
+
+def _pending_text(waiting: set[str]) -> str:
+    """What the state file says about preservation: ``nothing pending``, or the pending packs (named up to ten)."""
+    if not waiting:
+        return "nothing pending"
+    names = sorted(waiting)
+    return f"pending: {names}" if len(names) <= 10 else f"pending: {len(names)} packs, the first {names[:10]}"
 
 
 class _RunRef:
@@ -707,8 +772,14 @@ def finalize(plan: Mapping[str, Any], state_dir: Path, environment: Environment,
                     problems.append(f"{identifier}: {type(error).__name__}")
             check("preservation_readback_and_fixity", not problems and (bodies > 0 or not expected), f"{bodies} bodies read back from the preservation root; {problems[:5] or 'all verify'}")
             check("raw_preserved_matches_verified_bytes", claimed <= verified, f"{len(claimed & verified)} of {len(claimed)} RAW_PRESERVED answers have verified preserved bytes")
-        diagnosis = recovery.diagnose(env.workspace.root, env.preservation_root(), env.registry)
-        check("recovery_diagnosis", diagnosis["classification"] == recovery.CLEAN, f"{diagnosis['classification']}; identity {diagnosis.get('identity_rebuild', {}).get('status')}")
+        # CPD-0033: the masters of this intake's own packs are re-hashed on the root, and the identity tables are checked for
+        # self-consistency; every other pack of the workspace is not read. A whole-root read (every master, the identity
+        # rebuild from every preserved pack) is the operator-ordered audit `scripts/preservation_audit.py`, never part of a
+        # regular finalizer -- with a growing corpus on a shared link it is what made a finalizer expensive.
+        diagnosis = recovery.diagnose(env.workspace.root, env.preservation_root(), master_scope=_packs_of(env.workspace, records))
+        check("recovery_diagnosis", diagnosis["classification"] == recovery.CLEAN,
+              f"{diagnosis['classification']}; masters of this intake re-hashed on the root: {diagnosis.get('masters_checked_on_root')}; "
+              "identity tables: self-consistency (the rebuild against the root is the separate audit)")
         used = used_from_evidence(env.workspace, state["run_ids"], env.clock())
         budget = IntakeBudget(**plan["budget"])
         within = (used["total"] <= budget.total_requests and all(v <= budget.item_requests_per_outlet for v in used["items_by_outlet"].values())
@@ -754,7 +825,7 @@ def status_line(state: Mapping[str, Any], now: datetime) -> dict[str, Any]:
     return {"intake_id": state["intake_id"], "status": state["status"], "started_at_local": state["started_at_local"], "deadline_at_local": state["deadline_at_local"],
             "remaining_seconds": max(0, int((deadline - now).total_seconds())), "cycle": state["cycle"], "outlets_done_in_cycle": len(state["outlets_done_in_cycle"]),
             "requests_total": state["requests_total"], "item_requests": sum(state["items_by_outlet"].values()), "outlets_with_item_requests": len(state["items_by_outlet"]),
-            "preservation": state["preservation"], "holds": state["holds"], "errors": len(state["errors"]), "restarts": state["restarts"],
+            "preservation": state["preservation"], "held_because": state.get("held_because"), "holds": state["holds"], "errors": len(state["errors"]), "restarts": state["restarts"],
             "last_checkpoint_at": state["last_checkpoint_at"], "finalized": state["finalized"]}
 
 

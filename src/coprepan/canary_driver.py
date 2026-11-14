@@ -636,16 +636,22 @@ def _preserve(workspace, identifiers, preservation_root, spool_root, spool_polic
 
 
 def _derive(workspace, registry_, preservation_root, preserved: Mapping[str, Any], extractor, clock) -> dict[str, Any]:
-    """Stage E, for RAW_PRESERVED packs only. A pack that is only pending is not read."""
+    """Stage E, for RAW_PRESERVED packs only. A pack that is only pending is not read.
+
+    ``preserved`` is what :func:`_preserve` returned in the same step: a ``RAW_PRESERVED`` pack's masters were re-read on the root
+    past the client cache seconds before (``core_pipeline._confirm_preserved``), so its workspace copy, when it hashes to the
+    manifests' digests, is read instead of reading the share again (CPD-0033). Every other reader re-verifies on the root."""
     out: dict[str, Any] = {}
+    root: Path | None = None
     for identifier, state in preserved.items():
         if state["state"] != preservation.STATE_PRESERVED:
             out[identifier] = {"skipped": "not RAW_PRESERVED: " + str(state["state"])}
             continue
-        results = core_pipeline.identify_and_extract(workspace, registry_, preservation_root=preservation_root(), identifier=identifier,
-                                                     extractor=extractor, now=clock())
-        labels = admission.label_pack(workspace, preservation_root=preservation_root(), identifier=identifier, results=results,
-                                      extractor=extractor, labelled_at=format_instant(clock()))
+        root = root or preservation_root()
+        results = core_pipeline.identify_and_extract(workspace, registry_, preservation_root=root, identifier=identifier,
+                                                     extractor=extractor, now=clock(), trust_local_copy=True)
+        labels = admission.label_pack(workspace, preservation_root=root, identifier=identifier, results=results,
+                                      extractor=extractor, labelled_at=format_instant(clock()), trust_local_copy=True)
         out[identifier] = {"documents": sum(1 for r in results if r.get("identity") == "assigned"),
                            "versions": sum(1 for r in results if r.get("document_version_id")),
                            "extracted": sum(1 for r in results if r.get("extraction_outcome") == "EXTRACTED"),

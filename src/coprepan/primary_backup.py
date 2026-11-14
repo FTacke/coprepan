@@ -16,6 +16,34 @@ makes one with the qualified mechanics of the pre-copy (:mod:`coprepan.preservat
 
 The receipt (``_backup/backup_receipt.json``) is what the contract status reports from. Nothing is deleted except this tool's own
 unpublished temporary files and the restore test's own restored files.
+
+**Two modes (CPD-0033).** The description above is the ``FULL`` run: every object of the primary re-hashed, every object of the
+backup re-read. It is kept for an operator's explicit order (after an incident, a migration, a periodic full check). The regular,
+scheduled run is ``INCREMENTAL`` (:func:`run_incremental`), because the full run re-reads the whole primary over the shared
+institutional link every day (78 min for 395 MB on 2026-11-13, growing with the corpus) while CO.RA.PAN has priority on it:
+
+* **inventory without reading.** One enumeration of the primary and one of the backup root give path, size and ``mtime_ns`` of
+  every object; no file is opened for that.
+* **when stored hash evidence is reused.** An object's digest is taken from the backup journal **only** when all of these hold:
+  the journal row was written by a copy that re-read the landed bytes unbuffered and found them equal to the digest it had read
+  from the primary (``COPIED`` / ``ALREADY_PRESENT``), or by a re-hash after a timestamp change (``RESTAMPED``); the primary
+  carries the identity the previous verified receipt names (same target, T1/T2); the object's size **and** ``mtime_ns`` on the
+  primary are those of the row (every object of this corpus is write-once, P8, and a rewrite changes the timestamp); and the
+  backup root holds a file of that size at that path. Anything else is read: a new object is hashed on the primary and copied
+  (two reads of the source, as in the full run); a changed timestamp is re-hashed and either confirmed (``RESTAMPED``) or reported
+  ``SOURCE_CHANGED_SINCE_BACKUP`` (never overwritten); a missing backup copy is copied again; an object the journal knows and the
+  primary no longer holds is ``MISSING_ON_PRIMARY`` -- a finding for a person, and nothing is removed.
+* **full revalidation stays required** for: a primary with another identity (a migration, §11), a journal row that is torn or
+  absent, any problem of a previous run, and the operator's ``--full``. And it is **spread over time**: every run re-hashes a
+  budgeted slice of objects on **both** roots, past the client cache, oldest verification first (``_backup/fixity.jsonl``); the
+  status reports the oldest verification and flags a cycle longer than the policy's maximum. A stored digest never stands in for
+  that re-read.
+* **bounded.** Sequential, throttled to the policy's bytes per second, a time budget, and a stop predicate (the operator's pause
+  file, a quiet window of CO.RA.PAN, the share gate). A run that stops is resumable: what it copied is journalled, nothing is
+  claimed, no receipt is written.
+* **the receipt** of an incremental run says so (``mode``), names the evidence basis, the slice re-verified today, the oldest
+  verification and the last full run; its ``tree_sha256`` is the digest of the full inventory, so an unchanged primary gives the
+  previous receipt's digest -- checked.
 """
 
 from __future__ import annotations
@@ -24,11 +52,13 @@ import hashlib
 import json
 import os
 import shutil
-from datetime import datetime, timezone
+import time
+from collections import Counter
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
-from . import naming, preservation_migration as M, preservation_target, storage_roots
+from . import naming, preservation_migration as M, preservation_target, release_contract, storage_roots
 
 SCHEMA = naming.schema_id("primary-backup", 1)
 MARKER = "BACKUP_ROOT.json"
@@ -187,14 +217,16 @@ def _discard_restored(scratch: Path, path: Path) -> None:
     path.unlink(missing_ok=True)
 
 
-def restore_test(root: Path, base: Mapping[str, Any], scratch: Path, *, samples: int = 25) -> dict[str, Any]:
+def restore_test(root: Path, base: Mapping[str, Any], scratch: Path, *, samples: int = 25, preordered: bool = False) -> dict[str, Any]:
     """Restore a deterministic sample from the backup root into an empty ``scratch`` directory and re-hash it; the restored files
-    (this test's own) are removed afterwards."""
+    (this test's own) are removed afterwards. ``preordered``: take the first ``samples`` objects in the order given (the
+    incremental run passes an order that changes with every run)."""
     scratch = Path(scratch)
     if scratch.exists() and any(scratch.iterdir()):
         raise BackupError(f"{scratch} is not empty: the restore test writes into an empty directory of its own")
     scratch.mkdir(parents=True, exist_ok=True)
-    order = sorted(base["objects"], key=lambda e: hashlib.sha256(("restore-test/v1:" + e["path"]).encode("utf-8")).hexdigest())
+    order = list(base["objects"]) if preordered else sorted(
+        base["objects"], key=lambda e: hashlib.sha256(("restore-test/v1:" + e["path"]).encode("utf-8")).hexdigest())
     cases = []
     for entry in order[:samples]:
         dst = scratch / Path(*entry["path"].split("/"))
@@ -233,8 +265,352 @@ def receipt_status(root: Path | None, primary: Path | None) -> dict[str, Any]:
     same = bool(marker) and marker.get("target_id") == doc.get("primary_target_id")
     return {"copy_exists": True, "produced_from_primary": same and doc.get("produced_from_primary") is True,
             "verified_against_primary": same and doc.get("verified_against_primary") is True,
-            "receipt": {k: doc.get(k) for k in ("written_at", "primary_target_id", "objects", "bytes", "tree_sha256")}}
+            "receipt": {k: doc.get(k) for k in ("written_at", "primary_target_id", "objects", "bytes", "tree_sha256", "mode",
+                                                 "last_full_verification_at")}}
 
 
-__all__ = ["BackupError", "HOLDINGS", "MARKER", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root", "load_journal", "receipt_status", "require_root",
-           "restore_test", "verify", "write_receipt"]
+def backup_health(root: Path | None, *, now: datetime, warning_hours: int, failure_hours: int) -> dict[str, Any]:
+    """How current the backup is, from local files of the BACKUP root only (CPD-0033): the receipt's age against the policy's
+    thresholds, the last attempt (also a deferral or a stop), and the fixity rotation's oldest verification. ``OK`` ·
+    ``WARNING`` (receipt older than ``warning_hours``, or the fixity cycle overdue) · ``FAILURE`` (older than ``failure_hours``,
+    a last run with problems, or no receipt). Never reports a backup the receipt does not establish."""
+    receipt = read_receipt(root) if root is not None else None
+    last = read_last_run(root)
+    out: dict[str, Any] = {"receipt_written_at": receipt.get("written_at") if receipt else None, "last_run": last}
+    reasons: list[str] = []
+    level = "OK"
+    if receipt is None:
+        level, reasons = "FAILURE", ["no backup receipt"]
+    else:
+        try:
+            age = (now - datetime.fromisoformat(str(receipt["written_at"]).replace("Z", "+00:00"))).total_seconds() / 3600
+        except (KeyError, ValueError):
+            age = float("inf")
+        out["receipt_age_hours"] = round(age, 1)
+        if age > failure_hours:
+            level, reasons = "FAILURE", [f"the receipt is {age:.0f} h old (failure above {failure_hours} h)"]
+        elif age > warning_hours:
+            level, reasons = "WARNING", [f"the receipt is {age:.0f} h old (warning above {warning_hours} h)"]
+        fixity = (last or {}).get("fixity") or {}
+        if fixity.get("cycle_overdue"):
+            level = "WARNING" if level == "OK" else level
+            reasons.append(f"the oldest fixity verification is {fixity.get('oldest_verification_age_days')} days old")
+    if last and last.get("outcome") == "NOT_VERIFIED":
+        level = "FAILURE"
+        reasons.append(f"the last run found {last.get('problem_count')} problem(s): {last.get('first_problems')}")
+    out.update(level=level, reasons=reasons)
+    return out
+
+
+def read_receipt(root: Path) -> dict[str, Any] | None:
+    path = Path(root) / STATE / RECEIPT
+    try:
+        return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+    except (OSError, ValueError):
+        return None
+
+
+# --- the incremental run (CPD-0033) ------------------------------------------------------------------------------
+
+MODE_FULL, MODE_INCREMENTAL = "FULL", "INCREMENTAL"
+RESTAMPED = "RESTAMPED"
+EVIDENCE = (M.COPIED, M.PRESENT, RESTAMPED)
+FIXITY_LOG = "fixity.jsonl"
+LAST_RUN = "last_run.json"
+_PROBE_PREFIX = ".coprepan_write_probe-"          # storage_roots' transient writability probe in the root: not an object
+
+
+def _primary_excluded(path: str) -> bool:
+    return M._excluded(path) or path.rsplit("/", 1)[-1].startswith(_PROBE_PREFIX)
+
+
+def load_evidence(root: Path) -> dict[str, dict[str, Any]]:
+    """The newest evidence row per path of the backup journal (``COPIED``, ``ALREADY_PRESENT``, ``RESTAMPED``). A torn row is no
+    evidence: its object is treated as unknown and read again."""
+    path = Path(root) / STATE / JOURNAL
+    out: dict[str, dict[str, Any]] = {}
+    if path.is_file():
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            line = line.lstrip("\x00")
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if row.get("status") in EVIDENCE and isinstance(row.get("sha256"), str) and isinstance(row.get("size"), int):
+                out[row["path"]] = row
+    return out
+
+
+def list_tree(root: Path, excluded: Callable[[str], bool]) -> tuple[dict[str, tuple[int, int]], list[str]]:
+    """``({path: (size, mtime_ns)}, temporary files)`` from one enumeration of ``root``; no file is opened."""
+    base = M._long(Path(root))
+    objects: dict[str, tuple[int, int]] = {}
+    temporaries: list[str] = []
+    stack = [base]
+    while stack:
+        directory = stack.pop()
+        with os.scandir(directory) as entries:
+            for entry in entries:
+                relative = Path(os.path.relpath(entry.path, base)).as_posix()
+                if entry.is_dir(follow_symlinks=False):
+                    if not excluded(relative + "/"):
+                        stack.append(entry.path)
+                    continue
+                if excluded(relative):
+                    continue
+                if M.TEMP_TAG in entry.name:
+                    temporaries.append(relative)
+                    continue
+                stat = entry.stat(follow_symlinks=False)
+                objects[relative] = (stat.st_size, stat.st_mtime_ns)
+    return objects, sorted(temporaries)
+
+
+def _hash_source(path: Path, rate: "M._Rate") -> tuple[str, int]:
+    digest, size = hashlib.sha256(), 0
+    with open(M._long(path), "rb") as handle:
+        for block in iter(lambda: handle.read(M.CHUNK), b""):
+            rate.take(len(block))
+            digest.update(block)
+            size += len(block)
+    return digest.hexdigest(), size
+
+
+def load_fixity(root: Path) -> dict[str, str]:
+    """``{path: newest time both copies were re-hashed past the cache and found equal}`` from ``_backup/fixity.jsonl``."""
+    path = Path(root) / STATE / FIXITY_LOG
+    out: dict[str, str] = {}
+    if path.is_file():
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                row = json.loads(line.lstrip("\x00"))
+            except json.JSONDecodeError:
+                continue
+            if row.get("ok") is True and isinstance(row.get("at"), str):
+                out[row["path"]] = max(out.get(row["path"], ""), row["at"])
+    return out
+
+
+def _sweep_own_temporaries(root: Path, temporaries: list[str]) -> list[str]:
+    """Remove this tool's own unpublished temporary files on the BACKUP root (a killed copy leaves them); any other name stays."""
+    removed = []
+    for relative in temporaries:
+        name = relative.rsplit("/", 1)[-1]
+        if M._OWN_TEMP.fullmatch(name):
+            M._discard_own_temporary(Path(M._long(Path(root).joinpath(*relative.split("/")))))
+            removed.append(relative)
+    return removed
+
+
+def write_last_run(root: Path, doc: Mapping[str, Any]) -> None:
+    """What the last scheduled attempt did -- also a deferral or a stop -- so a missed or deferred backup is visible."""
+    from .canonical import record_json, write_bytes_atomic
+
+    if root is None or not (Path(root) / MARKER).is_file():
+        return                                    # only into a root that was made a BACKUP root: never creates state elsewhere
+    try:
+        write_bytes_atomic(Path(root) / STATE / LAST_RUN, record_json({"schema": SCHEMA + "/last-run", **dict(doc)}))
+    except OSError:
+        pass                                      # a record of an attempt; its absence shows as an old last run in the status
+
+
+def read_last_run(root: Path | None) -> dict[str, Any] | None:
+    if root is None:
+        return None
+    try:
+        return json.loads((Path(root) / STATE / LAST_RUN).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def run_incremental(primary: Path, root: Path, *, scratch: Path, limits: Mapping[str, int], stop: Callable[[], str | None] | None = None,
+                    holding: str = "PRODUCTION", clock: Callable[[], datetime] = lambda: datetime.now(timezone.utc),
+                    monotonic: Callable[[], float] = time.monotonic, progress: Callable[[str], None] | None = None) -> dict[str, Any]:
+    """One incremental backup run (see the module's documentation). Returns the run document; ``doc["ok"]`` says whether a
+    receipt may be written from it. Writes only to the BACKUP root (objects, journal, fixity log) and ``scratch``."""
+    primary, root = Path(primary), Path(root)
+    require_root(root, primary=primary, holding=holding)
+    marker = preservation_target.read_target(primary)
+    target_id = marker.get("target_id") if marker else None
+    previous = read_receipt(root)
+    if not target_id:
+        raise BackupError("the primary carries no identity marker: no evidence of an earlier run can be its evidence")
+    if previous is None or previous.get("primary_target_id") != target_id or not previous.get("verified_against_primary"):
+        raise BackupError("no verified receipt produced from this primary: an incremental run builds on one; run --full first")
+    started, begun = clock(), monotonic()
+    run_id = "bi" + started.strftime("%Y%m%dT%H%M%SZ") + "-" + os.urandom(3).hex()
+    rate = M._Rate(float(limits["max_bytes_per_second"]) or None)
+    deadline = begun + 60 * limits["max_minutes"]
+    stop_reason: list[str] = []
+
+    def halted() -> bool:
+        if not stop_reason:
+            reason = (stop() if stop is not None else None) or ("TIME_BUDGET: the run's time budget is spent" if monotonic() >= deadline else None)
+            if reason:
+                stop_reason.append(reason)
+        return bool(stop_reason)
+
+    evidence = load_evidence(root)
+    listed, primary_temporaries = list_tree(primary, _primary_excluded)
+    on_backup, backup_temporaries = list_tree(root, _excluded)
+    swept = _sweep_own_temporaries(root, backup_temporaries)
+    counts: Counter[str] = Counter()
+    problems: list[dict[str, Any]] = []
+    inventory: dict[str, tuple[str, int]] = {}
+    new, changed, recopy = [], [], []
+    for path, (size, mtime_ns) in sorted(listed.items()):
+        if not release_contract.is_contract_path(path):
+            problems.append({"path": path, "problem": "PATH_INVALID"})
+            continue
+        row = evidence.get(path)
+        if row is None:
+            new.append(path)
+        elif row["size"] != size or row.get("mtime_ns") != mtime_ns:
+            changed.append(path)
+        elif path not in on_backup:
+            recopy.append(path)
+        elif on_backup[path][0] != size:
+            problems.append({"path": path, "problem": "DIFFERENT_ON_BACKUP", "detail": f"{on_backup[path][0]} bytes on the backup, {size} on the primary"})
+        else:
+            inventory[path] = (row["sha256"], size)
+            counts["REUSED_EVIDENCE"] += 1
+    for path in sorted(set(evidence) - set(listed)):
+        problems.append({"path": path, "problem": "MISSING_ON_PRIMARY", "detail": "the journal holds it, the primary's listing does not; nothing is removed"})
+    journal = M._Journal(root / STATE / JOURNAL)
+    copied_bytes = 0
+    try:
+        for path in changed:
+            if halted():
+                break
+            row = evidence[path]
+            try:
+                digest, size = _hash_source(primary.joinpath(*path.split("/")), rate)
+            except OSError as error:
+                stop_reason.append(f"SHARE_FAILED: {type(error).__name__} while reading the primary")
+                break
+            if (digest, size) == (row["sha256"], row["size"]):
+                mtime_ns = listed[path][1]
+                journal.write(json.dumps({"path": path, "status": RESTAMPED, "sha256": digest, "size": size, "mtime_ns": mtime_ns,
+                                          "previous_mtime_ns": row.get("mtime_ns"), "primary_target_id": target_id, "run_id": run_id,
+                                          "at": _now()}, sort_keys=True) + "\n")
+                counts[RESTAMPED] += 1
+                if path in on_backup and on_backup[path][0] == size:
+                    inventory[path] = (digest, size)
+                else:
+                    recopy.append(path)
+                    evidence[path] = {**row, "mtime_ns": mtime_ns}
+            else:
+                problems.append({"path": path, "problem": "SOURCE_CHANGED_SINCE_BACKUP",
+                                 "detail": "a write-once object has other bytes than when it was copied; the backup copy is kept"})
+        for path in new + recopy:
+            if halted():
+                break
+            size, mtime_ns = listed[path]
+            if path in evidence:
+                digest = evidence[path]["sha256"]
+            else:
+                try:
+                    digest, hashed = _hash_source(primary.joinpath(*path.split("/")), rate)
+                except OSError as error:
+                    stop_reason.append(f"SHARE_FAILED: {type(error).__name__} while reading the primary")
+                    break
+                if hashed != size:
+                    problems.append({"path": path, "problem": "SOURCE_CHANGED", "detail": "the size changed while the run read it"})
+                    continue
+            entry = {"path": path, "size": size, "sha256": digest, "mtime_ns": mtime_ns}
+            result = M.migrate_one(primary, root, entry, None, run_id=run_id, rate=rate)
+            if M._transient(result):
+                stop_reason.append(f"SHARE_FAILED: {result.get('error')}")
+                break
+            journal.write(json.dumps({**result, "primary_target_id": target_id, "at": _now()}, sort_keys=True) + "\n")
+            counts[result["status"]] += 1
+            if result["status"] in M.DONE:
+                inventory[path] = (digest, size)
+                copied_bytes += size if result["status"] == M.COPIED else 0
+            else:
+                problems.append(result)
+            if progress and sum(counts.values()) % 500 == 0:
+                progress(f"{dict(counts)}")
+    finally:
+        journal.close()
+    fixity = _fixity_rotation(primary, root, inventory, previous, limits, halted, rate, run_id)
+    problems += fixity.pop("problems")
+    restore = _restore_rotation(root, inventory, scratch, samples=limits["restore_samples"], salt=run_id)
+    complete = not stop_reason and len(inventory) == len(listed) and not problems
+    tree = release_contract.record_set_digest([{"path": p, "sha256": s, "size": z} for p, (s, z) in sorted(inventory.items())]) if complete else None
+    unchanged = not new and not changed and not recopy
+    if complete and unchanged and previous.get("tree_sha256") and tree != previous["tree_sha256"]:
+        problems.append({"problem": "TREE_DIGEST_DIVERGES", "detail": f"nothing new and the inventory digest {tree} is not the previous receipt's"})
+        complete = False
+    ok = complete and restore["all_ok"] and not problems
+    return {"run_id": run_id, "mode": MODE_INCREMENTAL, "started_at": started.strftime("%Y-%m-%dT%H:%M:%SZ"), "finished_at": _now(),
+            "seconds": round(monotonic() - begun, 1), "primary_target_id": target_id, "objects": len(listed),
+            "bytes": sum(size for size, _ in listed.values()), "tree_sha256": tree, "counts": dict(counts), "new": len(new),
+            "changed_timestamp": len(changed), "recopied": len(recopy), "copied_bytes": copied_bytes,
+            "stopped": bool(stop_reason), "stop_reason": stop_reason[0] if stop_reason else None,
+            "primary_temporary_files": primary_temporaries[:20], "own_temporaries_swept": swept, "fixity": fixity, "restore_test": restore,
+            "problems": problems[:50], "problem_count": len(problems), "previous_receipt_written_at": previous.get("written_at"),
+            "last_full_verification_at": previous.get("last_full_verification_at") or previous.get("written_at"),
+            "ok": ok}
+
+
+def _fixity_rotation(primary: Path, root: Path, inventory: Mapping[str, tuple[str, int]], previous: Mapping[str, Any],
+                     limits: Mapping[str, int], halted: Callable[[], bool], rate: "M._Rate", run_id: str) -> dict[str, Any]:
+    """Re-hash a budgeted slice of objects on both roots, past the client cache, oldest verification first. An object never
+    re-hashed since the last full run counts as verified at that run (the full run re-hashed every object on both roots)."""
+    baseline_at = previous.get("last_full_verification_at") or previous.get("written_at") or ""
+    log = load_fixity(root)
+    order = sorted(inventory, key=lambda p: (log.get(p, baseline_at), p))
+    checked, checked_bytes, problems = 0, 0, []
+    journal = M._Journal(root / STATE / FIXITY_LOG)
+    try:
+        for path in order:
+            sha, size = inventory[path]
+            if checked >= limits["fixity_objects_per_run"] or (checked and checked_bytes + size > limits["fixity_bytes_per_run"]) or halted():
+                break
+            rate.take(size)
+            try:
+                on_primary = M.sha256_uncached(primary.joinpath(*path.split("/")))
+            except OSError as error:
+                problems.append({"path": path, "problem": f"FIXITY_UNREADABLE_PRIMARY: {type(error).__name__}"})
+                break                                         # the share is in trouble: no more reads of it now
+            try:
+                on_backup = M.sha256_uncached(root.joinpath(*path.split("/")))
+            except OSError as error:
+                on_backup = (f"unreadable: {type(error).__name__}", -1)
+            ok = on_primary == (sha, size) and on_backup == (sha, size)
+            if on_primary != (sha, size):
+                problems.append({"path": path, "problem": "FIXITY_MISMATCH_PRIMARY"})
+            if on_backup != (sha, size):
+                problems.append({"path": path, "problem": "FIXITY_MISMATCH_BACKUP"})
+            journal.write(json.dumps({"path": path, "ok": ok, "at": _now(), "run_id": run_id, "reread": "uncached"}, sort_keys=True) + "\n")
+            checked, checked_bytes = checked + 1, checked_bytes + size
+            if ok:
+                log[path] = _now()
+    finally:
+        journal.close()
+    oldest = min((log.get(p, baseline_at) for p in inventory), default=None)
+    age_days = None
+    if oldest:
+        try:
+            age_days = round((datetime.now(timezone.utc) - datetime.fromisoformat(oldest.replace("Z", "+00:00"))).total_seconds() / 86400, 1)
+        except ValueError:
+            age_days = None
+    return {"checked": checked, "checked_bytes": checked_bytes, "reread": "uncached, both roots", "oldest_verification_at": oldest,
+            "oldest_verification_age_days": age_days, "cycle_max_days": limits["fixity_cycle_max_days"],
+            "cycle_overdue": age_days is not None and age_days > limits["fixity_cycle_max_days"], "problems": problems}
+
+
+def _restore_rotation(root: Path, inventory: Mapping[str, tuple[str, int]], scratch: Path, *, samples: int, salt: str) -> dict[str, Any]:
+    """Restore a sample that changes with every run from the BACKUP root into an empty scratch directory and re-hash it."""
+    base = {"objects": [{"path": p, "sha256": s, "size": z} for p, (s, z) in inventory.items()]}
+    ordered = sorted(base["objects"], key=lambda e: hashlib.sha256(f"restore-test/v2:{salt}:{e['path']}".encode("utf-8")).hexdigest())
+    return restore_test(root, {"objects": ordered}, scratch, samples=samples, preordered=True) if inventory else {
+        "tested_at": _now(), "read_from": "BACKUP root", "samples": 0, "ok_count": 0, "bytes": 0, "all_ok": False, "cases": []}
+
+
+__all__ = ["BackupError", "EVIDENCE", "HOLDINGS", "backup_health", "MARKER", "MODE_FULL", "MODE_INCREMENTAL", "RECEIPT", "SCHEMA", "STATE", "copy", "init_root",
+           "list_tree", "load_evidence", "load_fixity", "load_journal", "read_last_run", "read_receipt", "receipt_status", "require_root",
+           "restore_test", "run_incremental", "verify", "write_last_run", "write_receipt"]

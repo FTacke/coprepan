@@ -149,6 +149,8 @@ def _cli():
 def test_the_cli_backs_up_the_legacy_archive_root_by_its_own_variables(roots, tmp_path, monkeypatch, capsys) -> None:
     primary, backup = roots
     cli = _cli()
+    # outside every quiet window of the resource policy (CPD-0033): a Monday noon, so the run is never DEFERRED by the clock
+    monkeypatch.setattr(cli, "_now", lambda: datetime(2026, 11, 16, 12, 0, tzinfo=timezone.utc))
     for name in ("COPREPAN_PRESERVATION_ROOT", "COPREPAN_BACKUP_ROOT"):
         monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("COPREPAN_LEGACY_ARCHIVE_ROOT", str(primary))

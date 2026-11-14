@@ -583,3 +583,20 @@ row restates its defining record; nothing is defined anew.*
 | archive tree | `coprepan`: the frozen legacy repository as one tree of CO.PRE.PAN's LEGACY holding | CPD-0032 §2 |
 | standing of the legacy press corpus | `legacy_frozen`: a frozen legacy research holding; not `native_v3`, not production, never a pipeline input | CPD-0032 §3 |
 
+## 24. Additions of 2026-11-14 (CPD-0033)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **resource policy** (term) | the tracked limits of CO.PRE.PAN's shared I/O: `config/resource_policy.json`, schema `coprepan-resource-policy/v1`, versions `YYYY-MM-DD.n` | CPD-0033 §1 |
+| **share gate** (term) | the persisted back-off in front of every resolution of the PRESERVATION root; state `<RUNTIME>/state/share_gate.json`, schema `coprepan-share-gate-state/v1`; its refusal `ShareBackingOff` is an unreachable root | CPD-0033 §2 |
+| **sibling advisory** (term) | CO.RA.PAN's observation of the share (`corapan-preservation-mode/v1`), named by `COPREPAN_SIBLING_PRESERVATION_STATE`; states `NO_SIGNAL`, `UNREADABLE`, `UNRECOGNISED`, `STALE`, `SHARE_DEGRADED`, `SHARE_SLOW`, `SHARE_NORMAL`; only the degraded and the slow state change anything, and only towards caution | CPD-0033 §3 |
+| pause file | `<RUNTIME>/state/PAUSE_IO`: stops new shared I/O of every CO.PRE.PAN process at its next decision point | CPD-0033 §5 |
+| **quiet window** (term) | a weekly local-time interval of the resource policy in which no CO.PRE.PAN maintenance on shared storage starts or continues | CPD-0033 §1 |
+| **manifest index** (term) | the local, rebuildable copy of a target's preservation manifests: `<RUNTIME>/cache/preservation_manifests/<target id>/<area>/<object id>.json` | CPD-0033 §4, `preserved_index.py` |
+| read origin of a preserved pack | `PRESERVATION_ROOT`, `VERIFIED_LOCAL_COPY` (only right after the pack was preserved and verified in the same step) | CPD-0033 §4, `core_pipeline.open_preserved_pack` |
+| backup modes | `FULL` (every object re-hashed on both roots; on order, or when no verified receipt of this primary exists), `INCREMENTAL` (the regular run) | CPD-0033 §6 |
+| backup evidence outcomes (added) | `RESTAMPED` (a changed timestamp, same bytes), `REUSED_EVIDENCE` (a count, not a journal state); problems `SOURCE_CHANGED_SINCE_BACKUP`, `MISSING_ON_PRIMARY`, `DIFFERENT_ON_BACKUP`, `FIXITY_MISMATCH_PRIMARY`, `FIXITY_MISMATCH_BACKUP`, `TREE_DIGEST_DIVERGES` | CPD-0033 §6, `primary_backup.py` |
+| backup run outcomes | `BACKUP_VERIFIED`, `DEFERRED`, `STOPPED`, `NOT_VERIFIED`; recorded in `_backup/last_run.json` | CPD-0033 §6 |
+| backup health levels | `OK`, `WARNING`, `FAILURE` | CPD-0033 §7 |
+| intake state field (added) | `held_because`: why no request is made now (pending beyond its bounds, the pause file, a floor) | CPD-0033 §5 |
+| component versions | `intake-controller/2` (supersedes `/1` for new plans) | CPD-0033 §5, `intake.py` |
