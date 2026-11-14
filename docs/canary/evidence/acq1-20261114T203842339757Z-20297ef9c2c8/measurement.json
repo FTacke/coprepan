@@ -1,0 +1,92 @@
+{
+  "fetch_records": 109,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 15,
+  "pending_pack_and_index_bytes": 7901951,
+  "received_body_bytes": 8473628,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 31.083325,
+    "median": 9.810349,
+    "n": 109,
+    "p90": 13.884499
+  },
+  "requests": {
+    "by_outlet": {
+      "ar_la_nacion": {
+        "item": 6,
+        "other": 3
+      },
+      "ar_pagina12": {
+        "item": 6,
+        "other": 4
+      },
+      "bo_brujula_digital": {
+        "item": 6,
+        "other": 3
+      },
+      "bo_lostiempos": {
+        "item": 0,
+        "other": 3
+      },
+      "cl_biobiochile": {
+        "item": 6,
+        "other": 3
+      },
+      "co_elcolombiano": {
+        "item": 6,
+        "other": 3
+      },
+      "cr_crhoy": {
+        "item": 0,
+        "other": 5
+      },
+      "cu_5_de_septiembre": {
+        "item": 0,
+        "other": 3
+      },
+      "cu_juventud_rebelde": {
+        "item": 6,
+        "other": 5
+      },
+      "cu_periodico26": {
+        "item": 0,
+        "other": 3
+      },
+      "gt_elsiglo": {
+        "item": 6,
+        "other": 3
+      },
+      "hn_contracorriente": {
+        "item": 6,
+        "other": 2
+      },
+      "hn_criterio": {
+        "item": 6,
+        "other": 3
+      },
+      "hn_el_heraldo": {
+        "item": 6,
+        "other": 6
+      },
+      "hn_la_prensa": {
+        "item": 6,
+        "other": 6
+      }
+    },
+    "item": 66,
+    "other": 55,
+    "total": 121
+  },
+  "response_classes": {
+    "200": 92,
+    "301": 2,
+    "404": 3,
+    "500": 3,
+    "failed:body_limit_exceeded": 6,
+    "failed:timeout": 3
+  },
+  "run_id": "acq1-20261114T203842339757Z-20297ef9c2c8",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
