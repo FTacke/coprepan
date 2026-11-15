@@ -57,6 +57,25 @@ UNKNOWN = "unknown"
 BLOCK_KINDS = ("title", "heading", "paragraph", "list_item", "quote_block", "caption", "unstructured_text")
 ROLE_TITLE, ROLE_BODY, ROLE_NON_BODY = "title", "body", "non_body"
 ROLES = (ROLE_TITLE, ROLE_BODY, ROLE_NON_BODY)
+
+# ``extraction/2`` (CPD-0039): ``extraction/1`` plus one block kind and one optional block field.
+# * ``subtitle`` -- a subtitle, bajada or standfirst the publisher sets apart from the title and the running text. Its role is
+#   ``title``: it belongs to the headline apparatus (surface ``title``), never to the BODY, and it is not the title either --
+#   a reader of the title takes the block of kind ``title``.
+# * ``module`` -- set on a block that stands inside a page module the extractor recognised by its markup; the closed
+#   vocabulary is ``MODULES``. Such a block is never BODY. The field is absent when no module applies.
+# The digests are defined as in ``extraction/1`` (kind, role and text of every block): a page whose blocks keep kind, role
+# and text keeps its document version under either schema.
+EXTRACTION_SCHEMA_2 = naming.schema_id("extraction", 2)
+KIND_SUBTITLE = "subtitle"
+MODULE_AI_SUMMARY = "ai_summary"            # a summary the page declares as machine-made, shown beside the article
+MODULES = (MODULE_AI_SUMMARY,)
+# Every subtitle block names the evidence it rests on (``basis``): the page states the text as the article's secondary headline
+# or description, or the markup marks the element as a subtitle.
+SUBTITLE_STATED_BY_PAGE, SUBTITLE_BY_MARKUP = "stated_by_page", "subtitle_markup"
+SUBTITLE_BASES = (SUBTITLE_STATED_BY_PAGE, SUBTITLE_BY_MARKUP)
+SCHEMA_BLOCK_KINDS = {EXTRACTION_SCHEMA: BLOCK_KINDS, EXTRACTION_SCHEMA_2: BLOCK_KINDS + (KIND_SUBTITLE,)}
+EXTRACTION_SCHEMAS = tuple(SCHEMA_BLOCK_KINDS)
 METADATA_FIELDS = ("title", "author", "publication_date", "modification_date", "section", "language")
 BASES = ("json_ld", "open_graph", "html_meta", "html_title", "html_h1", "html_lang", UNKNOWN)
 
@@ -261,10 +280,19 @@ class Extractor:
     version: str
     function: Any
     lifecycle: str = LIFECYCLE_EXPERIMENTAL
+    # The record schema this extractor writes; a stored record is read only as that. ``None``: the package's current
+    # ``EXTRACTION_SCHEMA`` (``extraction/1``), looked up when asked.
+    record_schema: str | None = None
 
     def __post_init__(self) -> None:
         if self.lifecycle not in LIFECYCLES:
             raise ExtractionError(f"not an extractor lifecycle state: {self.lifecycle!r}")
+        if self.record_schema is not None and self.record_schema not in SCHEMA_BLOCK_KINDS:
+            raise ExtractionError(f"not an extraction schema: {self.record_schema!r}")
+
+    @property
+    def schema(self) -> str:
+        return self.record_schema or EXTRACTION_SCHEMA
 
     def require_active(self) -> None:
         """The gate in front of corpus extraction. Nothing passes it today."""
@@ -282,7 +310,27 @@ class Extractor:
                                declared_charset=declared_charset, content_encoding=content_encoding)
         if result.record["extractor"] != {"name": self.name, "version": self.version}:
             raise ExtractionError(f"{self.stage_version} returned a record signed {result.record['extractor']}")
+        problems = record_problems(result.record, self.schema)
+        if problems:
+            raise ExtractionError(f"{self.stage_version} returned a record that is not {self.schema}: {problems[0]}")
         return result
+
+
+def record_problems(record: Mapping[str, Any], schema: str) -> list[str]:
+    """What makes ``record`` not a record of ``schema`` (its closed block vocabulary, roles and the module field)."""
+    if record.get("schema") != schema or schema not in SCHEMA_BLOCK_KINDS:
+        return [f"schema is {record.get('schema')!r}"]
+    kinds, out = SCHEMA_BLOCK_KINDS[schema], []
+    for block in record.get("blocks", []):
+        if block.get("kind") not in kinds or block.get("role") not in ROLES:
+            out.append(f"block {block.get('index')}: kind {block.get('kind')!r} / role {block.get('role')!r}")
+        if block.get("kind") == KIND_SUBTITLE and (block.get("role") != ROLE_TITLE or block.get("basis") not in SUBTITLE_BASES):
+            out.append(f"block {block.get('index')}: a subtitle has the role {ROLE_TITLE} and a basis of {SUBTITLE_BASES}")
+        if "basis" in block and block.get("kind") != KIND_SUBTITLE:
+            out.append(f"block {block.get('index')}: only a subtitle carries a basis")
+        if "module" in block and (schema == EXTRACTION_SCHEMA or block["module"] not in MODULES or block.get("role") == ROLE_BODY):
+            out.append(f"block {block.get('index')}: module {block['module']!r} is not allowed here")
+    return out
 
 
 BASELINE = Extractor(EXTRACTOR_NAME, EXTRACTOR_VERSION, extract, LIFECYCLE_EXPERIMENTAL)
@@ -487,7 +535,7 @@ def _json_ld_values(documents: list[str]) -> dict[str, list[str]]:
 
 def _metadata(parser: _Parser) -> dict[str, dict[str, Any]]:
     json_ld = _json_ld_values(parser.json_ld)
-    h1 = [block["text"] for block in parser.blocks() if block["role"] == ROLE_TITLE]
+    h1 = [block["text"] for block in parser.blocks() if block["kind"] == "title"]   # the title, not a subtitle (extraction/2)
     metadata = {}
     for name, sources in _META_SOURCES.items():
         candidates = []

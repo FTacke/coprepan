@@ -64,6 +64,8 @@ SURFACES = ("primary", "title", "auxiliary")
 UNIT_KINDS = {
     "title": "editorial", "heading": "editorial", "paragraph": "editorial", "list_item": "editorial",
     "quote_block": "editorial", "caption": "editorial", "unstructured_text": "editorial",
+    # 2026-11-15 (CPD-0039): a subtitle, bajada or standfirst the publisher sets apart -- on the `title` surface, never counted
+    "subtitle": "editorial",
     "turn": "technical", "contribution_unit": "technical",
 }
 SEGMENTATION_NATURES = ("editorial", "technical")

@@ -631,9 +631,9 @@ def _extract_stored(store, extractor, record, body, now, *, read_only=False):
         # The fingerprint names the extractor version, not the record's schema. A stored answer
         # is used only as what it says it is: this schema, this extractor, this body.
         if (stored_record.get("schema"), stored_record.get("extractor"), (stored_record.get("input") or {}).get("body_sha256")) != (
-                extraction.EXTRACTION_SCHEMA, {"name": extractor.name, "version": extractor.version}, record["body_sha256"]):
+                extractor.schema, {"name": extractor.name, "version": extractor.version}, record["body_sha256"]):
             raise layer_store.LayerStoreError(
-                f"extraction {fingerprint[:16]}…: the stored record is not a {extraction.EXTRACTION_SCHEMA} record "
+                f"extraction {fingerprint[:16]}…: the stored record is not a {extractor.schema} record "
                 f"of {extractor.stage_version} for this body; it is not reinterpreted")
         return extraction.Extraction(stored_record), fingerprint, held
     extracted = extractor.run(body, body_sha256=record["body_sha256"], **_extraction_arguments(record))

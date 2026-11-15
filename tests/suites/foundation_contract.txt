@@ -76,3 +76,6 @@ test_intake_interleaved.py   # intake-controller/3 (CPD-0037): items interleaved
 # Checks that scale with what is new (CPD-0037), and content quality (CPD-0038)
 test_incremental_check.py    # the incremental workspace check: agreement with the full audit, restart, weekly full audit, damaged cache, a second writer, every fault after the verified point ends in the full audit's classification, the documented fixity boundary and the rotating audit
 test_content_quality.py      # article_html/0.1.0 (CANDIDATE) on the measured page structures, and content-quality/1 (CANDIDATE): one reason per rule, news language is not sponsorship, templates and duplicates in one outlet, agency copy across outlets kept, deterministic
+
+# Text surfaces, editorial metadata and provenance (CPD-0039)
+test_phase3_metadata.py      # extraction/2 and article_html/0.2.0 (subtitle, machine-summary module, BODY unchanged), IPTC extracts and section-map/1 (pinned, no invented code, no equality claimed), scope and genre kept apart, AI and agency statements by form and position (a mention is no label, unknown is not negative), text reuse, content-quality/3, CORE independent of metadata, write-once enrichment reused by fingerprint, the subtitle unit in the analysis contract and the joint release contract unchanged

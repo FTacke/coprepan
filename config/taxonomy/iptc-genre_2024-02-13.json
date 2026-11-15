@@ -1,0 +1,603 @@
+{
+  "attribution": "Contains IPTC NewsCodes, (c) IPTC, International Press Telecommunications Council (https://iptc.org), licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/). Reduced to identifiers, English and Spanish labels and the broader relation; no other change.",
+  "concepts": [
+    {
+      "broader": [],
+      "label_en": "Actuality",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Actuality",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Actuality"
+    },
+    {
+      "broader": [],
+      "label_en": "Advertiser Supplied",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Advertiser_Supplied",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Advertiser_Supplied"
+    },
+    {
+      "broader": [],
+      "label_en": "Advice",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Advice",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Advice"
+    },
+    {
+      "broader": [],
+      "label_en": "Advisory",
+      "label_es": null,
+      "modified": "2012-10-04T12:00:00+00:00",
+      "qcode": "genre:Advisory",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Advisory"
+    },
+    {
+      "broader": [],
+      "label_en": "Analysis",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Analysis",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Analysis"
+    },
+    {
+      "broader": [],
+      "label_en": "Anniversary",
+      "label_es": null,
+      "modified": "2019-07-30T12:00:00+00:00",
+      "qcode": "genre:Anniversary",
+      "retired": "2019-07-30T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Anniversary"
+    },
+    {
+      "broader": [],
+      "label_en": "Archival material",
+      "label_es": null,
+      "modified": "2020-05-10T12:00:00+00:00",
+      "qcode": "genre:Archive_material",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Archive_material"
+    },
+    {
+      "broader": [],
+      "label_en": "Background",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Background",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Background"
+    },
+    {
+      "broader": [],
+      "label_en": "Behind the Story",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Behind_the_Story",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Behind_the_Story"
+    },
+    {
+      "broader": [],
+      "label_en": "Biography",
+      "label_es": null,
+      "modified": "2012-10-04T12:00:00+00:00",
+      "qcode": "genre:Biography",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Biography"
+    },
+    {
+      "broader": [],
+      "label_en": "Birth Announcement",
+      "label_es": null,
+      "modified": "2019-07-30T12:00:00+00:00",
+      "qcode": "genre:Birth_Announcement",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Birth_Announcement"
+    },
+    {
+      "broader": [],
+      "label_en": "Current Events",
+      "label_es": null,
+      "modified": "2020-05-10T12:00:00+00:00",
+      "qcode": "genre:Current",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Current"
+    },
+    {
+      "broader": [],
+      "label_en": "Curtain Raiser",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Curtain_Raiser",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Curtain_Raiser"
+    },
+    {
+      "broader": [],
+      "label_en": "Planner",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Daybook",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Daybook"
+    },
+    {
+      "broader": [],
+      "label_en": "Exclusive",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Exclusive",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Exclusive"
+    },
+    {
+      "broader": [],
+      "label_en": "Fact Check",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Fact_Check",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Fact_Check"
+    },
+    {
+      "broader": [],
+      "label_en": "Feature",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Feature",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Feature"
+    },
+    {
+      "broader": [],
+      "label_en": "Fixture",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Fixture",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Fixture"
+    },
+    {
+      "broader": [],
+      "label_en": "Forecast",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Forecast",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Forecast"
+    },
+    {
+      "broader": [],
+      "label_en": "From the Scene",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:From_the_Scene",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/From_the_Scene"
+    },
+    {
+      "broader": [],
+      "label_en": "Help us to Report",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Help_Us_to_Report",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Help_Us_to_Report"
+    },
+    {
+      "broader": [],
+      "label_en": "History",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:History",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/History"
+    },
+    {
+      "broader": [],
+      "label_en": "Interview",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Interview",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Interview"
+    },
+    {
+      "broader": [],
+      "label_en": "Fact Box",
+      "label_es": null,
+      "modified": "2012-10-04T12:00:00+00:00",
+      "qcode": "genre:ListingOfFacts",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/ListingOfFacts"
+    },
+    {
+      "broader": [],
+      "label_en": "Live Coverage",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:LiveCoverage",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/LiveCoverage"
+    },
+    {
+      "broader": [],
+      "label_en": "Music",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Music",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Music"
+    },
+    {
+      "broader": [],
+      "label_en": "Obituary",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Obituary",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Obituary"
+    },
+    {
+      "broader": [],
+      "label_en": "Opinion",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Opinion",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Opinion"
+    },
+    {
+      "broader": [],
+      "label_en": "Polls and Surveys",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Polls_and_Surveys",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Polls_and_Surveys"
+    },
+    {
+      "broader": [],
+      "label_en": "Press-Digest",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Press-Digest",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Press-Digest"
+    },
+    {
+      "broader": [],
+      "label_en": "Press Release",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Press_Release",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Press_Release"
+    },
+    {
+      "broader": [],
+      "label_en": "Preview",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:Preview",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Preview"
+    },
+    {
+      "broader": [],
+      "label_en": "Profile",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Profile",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Profile"
+    },
+    {
+      "broader": [],
+      "label_en": "Program",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:Program",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Program"
+    },
+    {
+      "broader": [],
+      "label_en": "Question and Answer Session",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Question_and_Answer_Session",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Question_and_Answer_Session"
+    },
+    {
+      "broader": [],
+      "label_en": "Quote",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Quote",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Quote"
+    },
+    {
+      "broader": [],
+      "label_en": "Raw Sound",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Raw_Sound",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Raw_Sound"
+    },
+    {
+      "broader": [],
+      "label_en": "Response to a Question",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Response_to_a_Question",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Response_to_a_Question"
+    },
+    {
+      "broader": [],
+      "label_en": "Results Listings and Statistics",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Results_Listings_and_Statistics",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Results_Listings_and_Statistics"
+    },
+    {
+      "broader": [],
+      "label_en": "Retrospective",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Retrospective",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Retrospective"
+    },
+    {
+      "broader": [],
+      "label_en": "Review",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Review",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Review"
+    },
+    {
+      "broader": [],
+      "label_en": "Satire",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Satire",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Satire"
+    },
+    {
+      "broader": [],
+      "label_en": "Scener",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:Scener",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Scener"
+    },
+    {
+      "broader": [],
+      "label_en": "Side bar and Supporting Information",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:Side_bar_and_supporting_information",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Side_bar_and_supporting_information"
+    },
+    {
+      "broader": [],
+      "label_en": "Special Report",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Special_Report",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Special_Report"
+    },
+    {
+      "broader": [],
+      "label_en": "Sponsored",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Sponsored",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Sponsored"
+    },
+    {
+      "broader": [],
+      "label_en": "Briefing",
+      "label_es": null,
+      "modified": "2021-04-28T12:00:00+00:00",
+      "qcode": "genre:Summary",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Summary"
+    },
+    {
+      "broader": [],
+      "label_en": "Supported",
+      "label_es": null,
+      "modified": "2020-04-07T12:00:00+00:00",
+      "qcode": "genre:Supported",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Supported"
+    },
+    {
+      "broader": [],
+      "label_en": "Synopsis",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Synopsis",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Synopsis"
+    },
+    {
+      "broader": [],
+      "label_en": "Text only",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Text_only",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Text_only"
+    },
+    {
+      "broader": [],
+      "label_en": "Transcript and Verbatim",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Transcript_and_Verbatim",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Transcript_and_Verbatim"
+    },
+    {
+      "broader": [],
+      "label_en": "User Generated Content",
+      "label_es": null,
+      "modified": "2024-02-13T12:00:00+00:00",
+      "qcode": "genre:UGC",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/UGC"
+    },
+    {
+      "broader": [],
+      "label_en": "Update",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Update",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Update"
+    },
+    {
+      "broader": [],
+      "label_en": "Voicer",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Voicer",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/Voicer"
+    },
+    {
+      "broader": [],
+      "label_en": "Wrap",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Wrap",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Wrap"
+    },
+    {
+      "broader": [],
+      "label_en": "Wrapup",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:Wrapup",
+      "retired": "2021-04-28T12:00:00+00:00",
+      "uri": "http://cv.iptc.org/newscodes/genre/Wrapup"
+    },
+    {
+      "broader": [],
+      "label_en": "On This Day",
+      "label_es": null,
+      "modified": "2020-05-10T12:00:00+00:00",
+      "qcode": "genre:almanac",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/almanac"
+    },
+    {
+      "broader": [],
+      "label_en": "Horoscope",
+      "label_es": null,
+      "modified": "2010-12-15T22:10:01+00:00",
+      "qcode": "genre:horoscope",
+      "retired": null,
+      "uri": "http://cv.iptc.org/newscodes/genre/horoscope"
+    }
+  ],
+  "schema": "coprepan-iptc-extract/v1",
+  "scheme": {
+    "alias": "genre",
+    "copyright_holder": "IPTC, International Press Telecommunications Council - https://iptc.org",
+    "date_released": "2024-02-13T12:00:00+00:00",
+    "label": "Genre",
+    "licence": "http://creativecommons.org/licenses/by/4.0/",
+    "uri": "http://cv.iptc.org/newscodes/genre/"
+  },
+  "source": {
+    "bytes": 30256,
+    "format": "IPTC CV server JSON (format=json, lang=x-all)",
+    "retrieved_at": "2026-11-15T13:46:11+00:00",
+    "sha256": "8595892d4c17dcb04adf2c4c581e2fa629bf52fb1c3565119db0c1f5f086b64f",
+    "url": "https://cv.iptc.org/newscodes/genre/?format=json&lang=x-all"
+  },
+  "top_concepts": [
+    "genre:Actuality",
+    "genre:Advertiser_Supplied",
+    "genre:Advice",
+    "genre:Advisory",
+    "genre:Analysis",
+    "genre:Anniversary",
+    "genre:Archive_material",
+    "genre:Background",
+    "genre:Behind_the_Story",
+    "genre:Biography",
+    "genre:Birth_Announcement",
+    "genre:Current",
+    "genre:Curtain_Raiser",
+    "genre:Daybook",
+    "genre:Exclusive",
+    "genre:Fact_Check",
+    "genre:Feature",
+    "genre:Fixture",
+    "genre:Forecast",
+    "genre:From_the_Scene",
+    "genre:Help_Us_to_Report",
+    "genre:History",
+    "genre:Interview",
+    "genre:ListingOfFacts",
+    "genre:LiveCoverage",
+    "genre:Music",
+    "genre:Obituary",
+    "genre:Opinion",
+    "genre:Polls_and_Surveys",
+    "genre:Press-Digest",
+    "genre:Press_Release",
+    "genre:Preview",
+    "genre:Profile",
+    "genre:Program",
+    "genre:Question_and_Answer_Session",
+    "genre:Quote",
+    "genre:Raw_Sound",
+    "genre:Response_to_a_Question",
+    "genre:Results_Listings_and_Statistics",
+    "genre:Retrospective",
+    "genre:Review",
+    "genre:Satire",
+    "genre:Scener",
+    "genre:Side_bar_and_supporting_information",
+    "genre:Special_Report",
+    "genre:Sponsored",
+    "genre:Summary",
+    "genre:Supported",
+    "genre:Synopsis",
+    "genre:Text_only",
+    "genre:Transcript_and_Verbatim",
+    "genre:UGC",
+    "genre:Update",
+    "genre:Voicer",
+    "genre:Wrap",
+    "genre:Wrapup",
+    "genre:almanac",
+    "genre:horoscope"
+  ]
+}

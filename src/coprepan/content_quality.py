@@ -128,7 +128,7 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
     prose = [t for t, w in zip(texts, paragraph_words) if w >= 5]
     letters = sum(1 for c in body if c.isalpha())
     visible = sum(1 for c in body if not c.isspace())
-    title = next((b["text"] for b in record["blocks"] if b["role"] == E.ROLE_TITLE), None)
+    title = next((b["text"] for b in record["blocks"] if b["kind"] == "title"), None)    # the title, not a subtitle (extraction/2)
     meta_title = (record.get("metadata") or {}).get("title", {}).get("value")
     return {
         "version": FEATURES_VERSION,
@@ -170,6 +170,15 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
 # general form (machine-text disclosures, institutional pages, live pages by slug or title, sponsor marks anywhere in the
 # address); it is measured on a second control drawn after it was written.
 RULESET = "content-quality/2"
+# /3 (CPD-0039): the operator's decision of 2026-11-15 -- AI-made and agency texts are wanted corpus material. A declared AI
+# production is provenance (``coprepan.provenance``), not a quality defect: the ``machine_text`` rule is withdrawn, its
+# feature is kept as evidence. Every other rule and threshold is /2's, unchanged; /3 is read on the BODY of
+# ``article_html/0.2.0`` (subtitles and machine-summary modules are not BODY there). A page that offers only a summary still
+# fails -- on length or completeness, never because of how it was produced. /2 stays as it was (historical evidence).
+RULESET_3 = "content-quality/3"
+RULESETS = (RULESET, RULESET_3)
+PREFERRED = RULESET_3                      # the candidate the operator is asked to adopt (CPD-0039); not binding
+WITHDRAWN = {RULESET_3: frozenset({"machine_text"})}
 LIFECYCLE = E.LIFECYCLE_CANDIDATE          # not binding for admission or release until the operator decides (CPD-0038 §5)
 ACCEPT, REJECT = "ACCEPT", "REJECT"
 THRESHOLDS = {
@@ -204,8 +213,11 @@ REASONS = {
 
 
 def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = None,
-           thresholds: Mapping[str, Any] = THRESHOLDS) -> dict[str, Any]:
-    """The decision for one page from its features and its address (the cross-document rules are :func:`assess_corpus`'s)."""
+           thresholds: Mapping[str, Any] = THRESHOLDS, ruleset: str = RULESET) -> dict[str, Any]:
+    """The decision for one page from its features and its address (the cross-document rules are :func:`assess_corpus`'s).
+    It reads no provenance, section, genre or other metadata layer: CORE quality is decided by the text alone."""
+    if ruleset not in RULESETS:
+        raise ValueError(f"not a content-quality rule set: {ruleset!r}")
     t = thresholds
     reasons = []
     status = f.get("http_status")
@@ -238,13 +250,15 @@ def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = No
         reasons.append("incomplete_against_stated_body")
     if f.get("words") and (f["distinct_5gram_ratio"] < t["min_distinct_5gram_ratio"] or f["repeated_block_share"] > t["max_repeated_block_share"]):
         reasons.append("repetitive")
-    return {"ruleset": RULESET, "decision": REJECT if reasons else ACCEPT, "reasons": reasons,
+    reasons = [reason for reason in reasons if reason not in WITHDRAWN.get(ruleset, ())]
+    return {"ruleset": ruleset, "decision": REJECT if reasons else ACCEPT, "reasons": reasons,
             "evidence": {k: f.get(k) for k in ("words", "function_word_share", "body_characters", "stated_body_characters",
                                                 "distinct_5gram_ratio", "repeated_block_share", "frame_hits", "paywall_hits",
                                                 "machine_text_hits")}}
 
 
-def assess_corpus(pages: list[Mapping[str, Any]], *, thresholds: Mapping[str, Any] = THRESHOLDS) -> dict[str, dict[str, Any]]:
+def assess_corpus(pages: list[Mapping[str, Any]], *, thresholds: Mapping[str, Any] = THRESHOLDS,
+                  ruleset: str = RULESET) -> dict[str, dict[str, Any]]:
     """Decisions for a set of pages, each ``{"fetch_id", "outlet_id", "url", "fetched_at", "features", "extracted"}``.
 
     Adds the two rules a single page cannot know: a body that stands under ``template_urls`` or more distinct URLs of one
@@ -259,7 +273,7 @@ def assess_corpus(pages: list[Mapping[str, Any]], *, thresholds: Mapping[str, An
     out = {}
     for page in pages:
         f = page["features"] or {"words": 0}
-        decision = assess(f, extracted=page.get("extracted", True), url=page.get("url"), thresholds=thresholds)
+        decision = assess(f, extracted=page.get("extracted", True), url=page.get("url"), thresholds=thresholds, ruleset=ruleset)
         group = by_body.get((page["outlet_id"], f.get("body_text_sha256")), [])
         if len({p["url"] for p in group}) >= thresholds["template_urls"]:
             decision["reasons"].append("template_body")
@@ -271,4 +285,4 @@ def assess_corpus(pages: list[Mapping[str, Any]], *, thresholds: Mapping[str, An
 
 
 __all__ = ["features", "assess", "assess_corpus", "stated_body_characters", "FEATURES_VERSION", "FUNCTION_WORDS", "RULESET",
-           "THRESHOLDS", "REASONS", "ACCEPT", "REJECT", "LIFECYCLE"]
+           "RULESET_3", "RULESETS", "PREFERRED", "WITHDRAWN", "THRESHOLDS", "REASONS", "ACCEPT", "REJECT", "LIFECYCLE"]
