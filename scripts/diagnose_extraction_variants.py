@@ -1,5 +1,5 @@
 """Offline diagnostic of the weekend qualification (2026-11-14/15): body characters per extraction variant, measured on the
-local bytes of the waves of DOA-2026-11-14-2. Numbers only; no text is printed or written. No variant is chosen here (CPD-0018).
+local bytes of the waves of DOA-2026-11-14-2 and its confirmation record DOA-2026-11-15-1. Numbers only; no text is printed or written. No variant is chosen here (CPD-0018).
 
 Usage: python scripts/diagnose_extraction_variants.py <checkout> <evidence dir> <runtime workspace> <out.json>
 
@@ -98,7 +98,7 @@ def bodies_ld(obj, found):
 
 
 receipts = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(evidence.glob("*/canary-receipt-*.json"))]
-receipts = [r for r in receipts if (r.get("operator_authorization") or {}).get("authorization_id") == "DOA-2026-11-14-2"]
+receipts = [r for r in receipts if (r.get("operator_authorization") or {}).get("authorization_id") in ("DOA-2026-11-14-2", "DOA-2026-11-15-1")]
 ws = core_pipeline.Workspace(runtime)
 runs = {r["run_id"] for r in receipts}
 records = [r for r in D.fetch_records(ws) if r["run_id"] in runs and r["fetch_kind"] == "item" and r["outcome"] == "FETCHED"
