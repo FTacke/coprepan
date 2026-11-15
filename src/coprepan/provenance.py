@@ -404,6 +404,29 @@ def agency_credit_2(record: Mapping[str, Any], harvest: Mapping[str, Any]) -> di
                                      "a dateline or a text comparison"})
 
 
-__all__ = ["ai_disclosure", "ai_statements", "site_wide_statements", "agency_credit", "agency_credit_2", "agencies_in",
-           "quoted_agency_mentions", "AGENCIES", "AI_VALUES", "AI_COMPONENTS", "AGENCY_USES", "AGENCY_ROLES", "AGENCY_USE_DECLARED",
-           "LAYER_AI", "LAYER_AGENCY", "LAYER_AGENCY_2"]
+# --- agency-credit/3 (CPD-0041): /2 on records whose BODY was selected (``extraction/3``) -------------------------------------
+#
+# /2 reads a byline in any non-BODY block. Under ``article_html/0.4.0`` the teaser cards of other articles ("RELACIONADAS",
+# each with its own "Por EFE") leave the BODY as ``module_related`` -- and /2 would credit their agencies to this article
+# (measured: 10 pages of ``pr_el_nuevo_dia``). /3 is /2 that does not read a block the extraction excluded as part of a page
+# module that is not the article's own credit (related lists, share bars, newsletters, tags, embeds, promotions, controls,
+# captions, dates). Bylines, templates and notes are read as before. On a record without a selection /3 equals /2.
+
+LAYER_AGENCY_3 = "agency-credit/3"
+UNREAD_SELECTIONS = frozenset({"module_related", "module_share", "module_newsletter", "module_tags", "module_social_embed",
+                               "module_channel_promo", "module_advertising", "module_page_controls", "module_media_controls",
+                               "module_breadcrumb", "module_caption", "module_date", "form_control"})
+
+
+def agency_credit_3(record: Mapping[str, Any], harvest: Mapping[str, Any]) -> dict[str, Any]:
+    """``agency-credit/3``: ``agency-credit/2`` without the blocks the extraction excluded as foreign page modules."""
+    blocks = [b for b in record.get("blocks", []) if (b.get("selection") or {}).get("reason") not in UNREAD_SELECTIONS]
+    out = agency_credit_2({**record, "blocks": blocks}, harvest)
+    out["layer_id"] = LAYER_AGENCY_3
+    out["rule"] = {**out["rule"], "rule": LAYER_AGENCY_3, "unread_selections": sorted(UNREAD_SELECTIONS)}
+    return out
+
+
+__all__ = ["ai_disclosure", "ai_statements", "site_wide_statements", "agency_credit", "agency_credit_2", "agency_credit_3",
+           "agencies_in", "quoted_agency_mentions", "AGENCIES", "AI_VALUES", "AI_COMPONENTS", "AGENCY_USES", "AGENCY_ROLES",
+           "AGENCY_USE_DECLARED", "LAYER_AI", "LAYER_AGENCY", "LAYER_AGENCY_2", "LAYER_AGENCY_3", "UNREAD_SELECTIONS"]

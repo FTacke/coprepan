@@ -698,7 +698,7 @@ def extract_v3(body: bytes, *, body_sha256: str, content_type: str, declared_cha
 
 
 ARTICLE_3 = E.Extractor(NAME, VERSION_3, extract_v3, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_2)
-PREFERRED = ARTICLE_3      # the candidate the operator is asked to adopt (CPD-0040); not binding
+PREFERRED = ARTICLE_3      # CPD-0040's preferred candidate of this module; the preferred extractor is now extraction_body.ARTICLE_4 (CPD-0041)
 
 
 def subtitles(record: Any) -> list[str]:

@@ -74,7 +74,20 @@ MODULES = (MODULE_AI_SUMMARY,)
 # or description, or the markup marks the element as a subtitle.
 SUBTITLE_STATED_BY_PAGE, SUBTITLE_BY_MARKUP = "stated_by_page", "subtitle_markup"
 SUBTITLE_BASES = (SUBTITLE_STATED_BY_PAGE, SUBTITLE_BY_MARKUP)
-SCHEMA_BLOCK_KINDS = {EXTRACTION_SCHEMA: BLOCK_KINDS, EXTRACTION_SCHEMA_2: BLOCK_KINDS + (KIND_SUBTITLE,)}
+# ``extraction/3`` (CPD-0041): ``extraction/2`` plus one optional block field, ``selection``, on every block whose BODY
+# membership a selection rule decided against the container rule: ``{"rule": <rule version>, "decision": "excluded" |
+# "included", "reason": <SELECTION_REASONS>}``. An excluded block is ``non_body``, an included one ``body``; the block keeps its
+# position and its text verbatim, so the BODY before and after the selection can both be read from the record. Digests as in
+# ``extraction/1``.
+EXTRACTION_SCHEMA_3 = naming.schema_id("extraction", 3)
+SELECTION_EXCLUDED, SELECTION_INCLUDED = "excluded", "included"
+SELECTION_EXCLUDING = ("form_control", "no_text", "module_advertising", "module_share", "module_related", "module_newsletter",
+                       "module_breadcrumb", "module_tags", "module_byline", "module_caption", "module_date", "module_social_embed",
+                       "module_media_controls", "module_page_controls", "module_channel_promo", "provenance_ai_note",
+                       "provenance_agency_note", "duplicate_block", "trailing_heading", "outlet_template", "repeated_label")
+SELECTION_INCLUDING = ("lead_paragraph", "stated_article_body")
+SCHEMA_BLOCK_KINDS = {EXTRACTION_SCHEMA: BLOCK_KINDS, EXTRACTION_SCHEMA_2: BLOCK_KINDS + (KIND_SUBTITLE,),
+                      EXTRACTION_SCHEMA_3: BLOCK_KINDS + (KIND_SUBTITLE,)}
 EXTRACTION_SCHEMAS = tuple(SCHEMA_BLOCK_KINDS)
 METADATA_FIELDS = ("title", "author", "publication_date", "modification_date", "section", "language")
 BASES = ("json_ld", "open_graph", "html_meta", "html_title", "html_h1", "html_lang", UNKNOWN)
@@ -330,6 +343,16 @@ def record_problems(record: Mapping[str, Any], schema: str) -> list[str]:
             out.append(f"block {block.get('index')}: only a subtitle carries a basis")
         if "module" in block and (schema == EXTRACTION_SCHEMA or block["module"] not in MODULES or block.get("role") == ROLE_BODY):
             out.append(f"block {block.get('index')}: module {block['module']!r} is not allowed here")
+        if "selection" in block:
+            selection = block["selection"]
+            ok = schema == EXTRACTION_SCHEMA_3 and isinstance(selection, Mapping) and set(selection) == {"rule", "decision", "reason"} \
+                and isinstance(selection["rule"], str) and selection["rule"] and (
+                    (selection["decision"] == SELECTION_EXCLUDED and selection["reason"] in SELECTION_EXCLUDING
+                     and block.get("role") == ROLE_NON_BODY)
+                    or (selection["decision"] == SELECTION_INCLUDED and selection["reason"] in SELECTION_INCLUDING
+                        and block.get("role") == ROLE_BODY))
+            if not ok:
+                out.append(f"block {block.get('index')}: selection {selection!r} is not allowed here")
     return out
 
 
