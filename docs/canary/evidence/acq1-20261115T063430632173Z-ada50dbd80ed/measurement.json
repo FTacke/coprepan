@@ -1,0 +1,87 @@
+{
+  "fetch_records": 143,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 5689476,
+  "received_body_bytes": 5285708,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 40.400137,
+    "median": 9.788986,
+    "n": 143,
+    "p90": 12.596971
+  },
+  "requests": {
+    "by_outlet": {
+      "cr_diario_extra": {
+        "item": 6,
+        "other": 7
+      },
+      "hn_proceso_digital": {
+        "item": 1,
+        "other": 8
+      },
+      "py_la_nacion": {
+        "item": 6,
+        "other": 2
+      },
+      "sv_diario_co_latino": {
+        "item": 6,
+        "other": 3
+      },
+      "sv_el_diario_de_hoy": {
+        "item": 6,
+        "other": 8
+      },
+      "uy_el_observador": {
+        "item": 6,
+        "other": 8
+      },
+      "uy_el_pais": {
+        "item": 6,
+        "other": 8
+      },
+      "uy_ladiaria": {
+        "item": 6,
+        "other": 6
+      },
+      "uy_montevideo_portal": {
+        "item": 6,
+        "other": 3
+      },
+      "ve_analitica": {
+        "item": 0,
+        "other": 2
+      },
+      "ve_correo_del_caroni": {
+        "item": 6,
+        "other": 3
+      },
+      "ve_el_nacional": {
+        "item": 6,
+        "other": 8
+      },
+      "ve_eldiario": {
+        "item": 6,
+        "other": 7
+      },
+      "ve_ultimas_noticias": {
+        "item": 6,
+        "other": 7
+      }
+    },
+    "item": 73,
+    "other": 80,
+    "total": 153
+  },
+  "response_classes": {
+    "200": 137,
+    "301": 1,
+    "307": 1,
+    "403": 1,
+    "500": 3
+  },
+  "run_id": "acq1-20261115T063430632173Z-ada50dbd80ed",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
