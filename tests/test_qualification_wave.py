@@ -106,4 +106,4 @@ def test_pages_of_one_and_the_same_length_are_a_shell_not_a_functional_acquisiti
 
 def test_the_driver_pins_the_item_selection():
     pin = D.driver_pin(D.CanaryBudget(outlets=1), make_registry(), [OUTLET], ())
-    assert pin["item_selection"].startswith(D.ITEM_SELECTION) and D.DRIVER_VERSION == "canary-driver/7"
+    assert pin["item_selection"].startswith(D.ITEM_SELECTION) and D.DRIVER_VERSION == "canary-driver/8"

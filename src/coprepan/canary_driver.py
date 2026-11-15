@@ -40,8 +40,8 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
 from . import (access_control, acquisition, admission, canary, candidate_filter, core_pipeline, crawler_identity, delegation, discovery, extraction, fetcher as F,
-               freeze, http_acquisition, naming, outage_spool, pack, policy, preservation, preservation_target, recovery, registry,
-               schedule, storage_contract, storage_roots)
+               freeze, http_acquisition, incremental_check, naming, outage_spool, pack, policy, preservation, preservation_target,
+               recovery, registry, schedule, storage_contract, storage_roots)
 from .canonical import canonical_json, record_json, sha256_bytes, write_bytes_exclusive
 from .identity import format_instant
 from .storage_roots import CHECKOUT
@@ -59,7 +59,11 @@ from .storage_roots import CHECKOUT
 #     /7 (2026-11-14, wave wq-1): stage B reads every selected channel after the first (/6 read the second only, so a third
 #     channel was selected and never requested); a qualification wave (deferred preservation) requests the newest pages its
 #     own channels list (item-selection/1) instead of the planner's oldest-due-first order.
-DRIVER_VERSION = "canary-driver/7"
+#     /8 (2026-11-15, CPD-0037): the checks between stages are incremental (incremental_check: what is new since the last
+#     verified point, a rotating audit, the full audit when there is no valid state or it is a week old), and the
+#     discovery tables are read once per run (the driver is the workspace's only writer while it runs). /7 ran the
+#     whole-workspace recovery.diagnose 2 + 2 x outlets times a wave and read the discovery tables at every call.
+DRIVER_VERSION = "canary-driver/8"
 ITEM_SELECTION = "item-selection/1"
 RECEIPT_SCHEMA = naming.schema_id("canary-receipt", 1)
 HARD_ITEM_REQUESTS = 100            # the brief's ceiling; no budget may exceed it
@@ -230,6 +234,8 @@ def driver_pin(budget: CanaryBudget, registry_: registry.Registry, outlet_ids: S
                           "this run, then the rest (most recently listed first). Otherwise the planner's order (oldest due first)",
         "candidate_budget_order": discovery.BUDGET_ORDER, "numbered_pagination": discovery.NUMBERED_PAGINATION,
         "expansion_order": discovery.EXPANSION_ORDER,
+        "workspace_check": f"{incremental_check.CHECK_VERSION}: between stages, what is new since the last verified point and a "
+                           "rotating audit; the full recovery.diagnose without a valid check state, after any finding, and weekly",
         "budget_accounting": "per transport call; a redirect hop that no longer fits is not followed; the budget is that of "
                              "the frozen baseline",
         "extractor": extraction.BASELINE.stage_version, "extractor_lifecycle": extraction.BASELINE.lifecycle,
@@ -580,13 +586,19 @@ class OutletResult:
     stopped: str | None = None
 
 
-def _checkpoint(workspace: core_pipeline.Workspace, label: str, checkpoints: list[dict[str, Any]]) -> None:
-    """Recovery diagnosis between stages: continue on CLEAN or resumable; repair what repair supports; stop on damage."""
-    diagnosis = recovery.diagnose(workspace.root)
+def _checkpoint(workspace: core_pipeline.Workspace, label: str, checkpoints: list[dict[str, Any]],
+                check: dict[str, Any] | None = None) -> None:
+    """The check between stages (canary-driver/8: incremental, CPD-0037): continue on CLEAN or resumable; repair what repair
+    supports; stop on damage. ``check`` holds the check state of this run between its checkpoints."""
+    check = {} if check is None else check
+    started = time.monotonic()
+    diagnosis, check["state"] = incremental_check.checkpoint(workspace.root, check.get("state"))
     if diagnosis["classification"] == recovery.NEEDS_REPAIR:
         recovery.repair(workspace.root)
-        diagnosis = recovery.diagnose(workspace.root)
-    checkpoints.append({"after": label, "classification": diagnosis["classification"]})
+        diagnosis, check["state"] = incremental_check.checkpoint(workspace.root, None)
+    mode = (diagnosis.get("check") or {}).get("mode", "full")
+    checkpoints.append({"after": label, "classification": diagnosis["classification"], "check": mode,
+                        "seconds": round(time.monotonic() - started, 2)})
     if diagnosis["classification"] in (recovery.DAMAGED, recovery.NEEDS_REPAIR):
         raise CanaryStopped(f"after {label}: the workspace is {diagnosis['classification']}")
 
@@ -664,12 +676,19 @@ def run_canary(
                    and row["url"] == _channel_url(registry_, outlet_id, channel_id) for row in http_acquisition.request_rows(workspace))
 
     select_due = qualification_selector(run.run_id) if qualification else None
+    check: dict[str, Any] = {}
+    # canary-driver/8: read, and authenticated, once; every row a call adds is added to them (the driver is the only writer).
+    loaded: dict[str, Any] = {"tables": http_acquisition.discovery_tables(workspace)}
 
     def acquire(outlet_id: str, channels: Sequence[str], items: int) -> dict[str, Any]:
-        summary = http_acquisition.run_http_acquisition(
-            workspace, registry_, run, outlet_id, fetcher=fetcher, channel_ids=list(channels), budget=budget.discovery,
-            max_item_fetches=items, schedule_policy=schedule_policy, clock=clock, candidate_rules=candidate_rules,
-            select_due=select_due)
+        try:
+            summary = http_acquisition.run_http_acquisition(
+                workspace, registry_, run, outlet_id, fetcher=fetcher, channel_ids=list(channels), budget=budget.discovery,
+                max_item_fetches=items, schedule_policy=schedule_policy, clock=clock, candidate_rules=candidate_rules,
+                select_due=select_due, tables=loaded["tables"])
+        except Exception:
+            loaded["tables"] = http_acquisition.discovery_tables(workspace)   # as they are on disk, whatever the call left in memory
+            raise
         packs_of[outlet_id].update(summary["open_pack_ids"])
         return summary
 
@@ -688,17 +707,17 @@ def run_canary(
                 continue
             summaries = [acquire(outlet_id, [c], 0) for c in todo]
             result.stages[stage] = summaries[0] if len(summaries) == 1 else {"channels": summaries}
-        _checkpoint(workspace, stage, checkpoints)
+        _checkpoint(workspace, stage, checkpoints, check)
 
     for outlet_id in outlet_ids:                            # C, D, E per outlet, with a checkpoint after each
         result = results[outlet_id]
         result.stages["C_item_fetch"] = acquire(outlet_id, [], budget.item_requests_per_outlet)
-        _checkpoint(workspace, f"C_item_fetch:{outlet_id}", checkpoints)
+        _checkpoint(workspace, f"C_item_fetch:{outlet_id}", checkpoints, check)
         result.stages["D_preserve"] = _preserve(workspace, _outlet_packs(workspace, outlet_id),
                                                 preservation_root, spool_root, spool_policy, clock)
         result.stages["E_derive"] = _derive(workspace, registry_, preservation_root, result.stages["D_preserve"],
                                             extractor, clock)
-        _checkpoint(workspace, f"E_derive:{outlet_id}", checkpoints)
+        _checkpoint(workspace, f"E_derive:{outlet_id}", checkpoints, check)
 
     drained = (core_pipeline.drain_spooled_packs(workspace, spool_root=spool_root(), preservation_root=preservation_root, now=clock())
                if spool_root is not None and _spool_pending(spool_root) else {"drained": [], "packs_preserved": [], "packs_pending": []})
