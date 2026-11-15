@@ -1,0 +1,2137 @@
+{
+ "schema": "coprepan-phase3-repair-study/v1",
+ "date": "2026-11-15",
+ "decision": "CPD-0040",
+ "population": {
+  "pages": 4759,
+  "outlets": 91,
+  "countries": 20,
+  "what": "every stored 2xx item page of the workspace (the population of the CPD-0039 study), read from the local packs, offline"
+ },
+ "derivation": {
+  "pages": 4759,
+  "seconds": {
+   "extract_0_2_0": 49.4,
+   "extract_0_3_0": 49.8,
+   "metadata_1_on_0_2_0": 3.2,
+   "metadata_2_on_0_3_0": 4.1,
+   "text_reuse_1": 2.2,
+   "text_reuse_2": 3.5
+  },
+  "site_wide_ai_statements_0_2_0": {},
+  "site_wide_ai_statements_0_3_0": {},
+  "section_map": {
+   "mapping": "section-map/1",
+   "path": "config/taxonomy/section-map_1.json",
+   "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+   "taxonomy": {
+    "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+    "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+    "date_released": "2026-09-30T12:00:00+00:00",
+    "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+   }
+  },
+  "relations": [
+   547,
+   547
+  ]
+ },
+ "text_structure": {
+  "extractors": [
+   "article_html/0.2.0",
+   "article_html/0.3.0"
+  ],
+  "body_same": 4759,
+  "body_changed": 0,
+  "modules_same": 4759,
+  "extracted_text_changed": 294,
+  "title_changed": 246,
+  "title_changes": {
+   "other_h1|py_la_nacion": 81,
+   "other_h1|ec_primicias": 78,
+   "to_unknown|bo_opinion": 52,
+   "to_unknown|cu_juventud_rebelde": 31,
+   "other_h1|py_noticias_cde": 3,
+   "to_unknown|hn_el_heraldo": 1
+  },
+  "title_examples": [
+   {
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/economia/carros-ecuador-fabricas-pelean-mercado-dominado-china-134536/",
+    "fetch": "21b4fc98d06405da",
+    "0_2_0": "Primicias Ecuador 10 de octubre de 2026",
+    "0_3_0": "Los carros hechos en Ecuador pelean por quedarse con el 12% de las ventas en un mercado dominado por los vehículos chinos",
+    "metadata_title": "Los carros hechos en Ecuador pelean por quedarse con el 12% de las ventas en un mercado dominado por los vehículos chinos",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/seguridad/policia-ecuador-espana-desmantelan-red-narcotrafico-cocaina-espana-portugal-belgica-paises-bajos-134474/",
+    "fetch": "fbe7045ad85441c5",
+    "0_2_0": "Primicias Ecuador 9 de octubre de 2026",
+    "0_3_0": "Golpe a Los Lobos: Ecuador y España desmantelan red de narcotráfico, entre los 21 detenidos está el financista de alias 'Pipo'",
+    "metadata_title": "Golpe a Los Lobos: Ecuador y España desmantelan red de narcotráfico, entre los 21 detenidos está el financista de alias 'Pipo'",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "cu_juventud_rebelde",
+    "url": "https://www.juventudrebelde.cu/ciencia-tecnica/2008-10-17/concluye-hoy-conferencia-internacional-sobre-ciencia-y-tecnologia-de-los-alimentos",
+    "fetch": "219cc25cc8f3bf2f",
+    "0_2_0": "Juventud Rebelde - Diario de la Juventud Cubana",
+    "0_3_0": null,
+    "metadata_title": "Concluye hoy Conferencia Internacional sobre Ciencia y Tecnología de los Alimentos",
+    "metadata_title_basis": "open_graph"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/deportes/mas-deportes/max-verstappen-pole-position-gran-premio-singapur-formula1-134618/",
+    "fetch": "c0106871339bd4dc",
+    "0_2_0": "Primicias Ecuador 10 de octubre de 2026",
+    "0_3_0": "Max Verstappen se lleva la clasificación y saldrá primero en Singapur, por delante de los Ferrari y de Antonelli",
+    "metadata_title": "Max Verstappen se lleva la clasificación y saldrá primero en Singapur, por delante de los Ferrari y de Antonelli",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "bo_opinion",
+    "url": "https://www.opinion.com.bo/mundo/sorprendente-acuerdo-trump-rusia-hace-ver-creciente-presion-frenar-precios-combustible/20261010161959997444.html",
+    "fetch": "aefc3333d80bd80b",
+    "0_2_0": "Mundo",
+    "0_3_0": null,
+    "metadata_title": "Sorprendente acuerdo de Trump con Rusia hace ver la creciente presión para frenar los precios del combustible",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "bo_opinion",
+    "url": "https://www.opinion.com.bo/pais/reservas-internacionales-alcanzan-us-3932-8-millones-septiembre-bcb/20261009111239997403.html",
+    "fetch": "e0a02c2b74bf7022",
+    "0_2_0": "El País",
+    "0_3_0": null,
+    "metadata_title": "Reservas Internacionales alcanzan a $us 3.932,8 millones a septiembre, según el BCB",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_la_nacion",
+    "url": "https://www.lanacion.com.py/negocios/2026/10/10/verano-2027-cuanto-cuesta-viajar-a-las-playas-de-brasil-desde-paraguay/",
+    "fetch": "4431d5b963b95caa",
+    "0_2_0": "La Nación",
+    "0_3_0": "Verano 2027: cuánto cuesta viajar a las playas de Brasil desde Paraguay",
+    "metadata_title": "Verano 2027: cuánto cuesta viajar a las playas de Brasil desde Paraguay",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_la_nacion",
+    "url": "https://www.lanacion.com.py/columnistas/2026/10/11/el-bcp-ya-hablo/",
+    "fetch": "60a47eb1a35ba34b",
+    "0_2_0": "La Nación",
+    "0_3_0": "El BCP ya habló",
+    "metadata_title": "El BCP ya habló",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "cu_juventud_rebelde",
+    "url": "https://www.juventudrebelde.cu/cultura/2008-12-04/la-rabia-una-pelicula-rabiosamente-violenta",
+    "fetch": "ee97ace693b850b2",
+    "0_2_0": "Juventud Rebelde - Diario de la Juventud Cubana",
+    "0_3_0": null,
+    "metadata_title": "La rabia: una película rabiosamente violenta",
+    "metadata_title_basis": "open_graph"
+   },
+   {
+    "outlet_id": "cu_juventud_rebelde",
+    "url": "https://www.juventudrebelde.cu/deportes/2012-01-17/camagueey-sigue-en-racha-en-la-liga-superior-de-baloncesto",
+    "fetch": "e0c476a1f38c22dc",
+    "0_2_0": "Juventud Rebelde - Diario de la Juventud Cubana",
+    "0_3_0": null,
+    "metadata_title": "Camagüey sigue en racha en la Liga Superior de Baloncesto",
+    "metadata_title_basis": "open_graph"
+   },
+   {
+    "outlet_id": "bo_opinion",
+    "url": "https://www.opinion.com.bo/pais/ministerio-defensa-ff-aa-rinden-homenaje-excombatientes-nancahuazu-1967/20261009160010997430.html",
+    "fetch": "e5327be22012f802",
+    "0_2_0": "El País",
+    "0_3_0": null,
+    "metadata_title": "Ministerio de Defensa y las FFAA rinden homenaje a los excombatientes de Ñancahuazú de 1967",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_la_nacion",
+    "url": "https://www.lanacion.com.py/columnistas/2026/10/11/es-importante-orar/",
+    "fetch": "68d3b03a771606bb",
+    "0_2_0": "La Nación",
+    "0_3_0": "Es importante orar",
+    "metadata_title": "Es importante orar",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_noticias_cde",
+    "url": "https://noticiascde.com.py/discriminacion-ambicion-y-la-intromision-del-grupo-favero-en-el-caso-de-la-familia-schueroff/",
+    "fetch": "ab2fe6009275e8a5",
+    "0_2_0": "AMENAZA DE DESALOJO Y MANIPULACIÓN JUDICIAL",
+    "0_3_0": "DISCRIMINACIÓN, AMBICIÓN Y LA INTROMISIÓN DEL GRUPO FAVERO EN EL CASO DE LA FAMILIA SCHUEROFF",
+    "metadata_title": "DISCRIMINACIÓN, AMBICIÓN Y LA INTROMISIÓN DEL GRUPO FAVERO EN EL CASO DE LA FAMILIA SCHUEROFF",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_noticias_cde",
+    "url": "https://noticiascde.com.py/la-trampa-de-estar-siempre-ocupado/",
+    "fetch": "2991ec3ff9650164",
+    "0_2_0": "CUANDO EL TRABAJO ES SOLO UNA EXCUSA PARA NO SENTIR",
+    "0_3_0": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+    "metadata_title": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "py_noticias_cde",
+    "url": "https://noticiascde.com.py/la-trampa-de-estar-siempre-ocupado/",
+    "fetch": "e69967d81cbf82ae",
+    "0_2_0": "CUANDO EL TRABAJO ES SOLO UNA EXCUSA PARA NO SENTIR",
+    "0_3_0": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+    "metadata_title": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+    "metadata_title_basis": "json_ld"
+   },
+   {
+    "outlet_id": "hn_el_heraldo",
+    "url": "https://www.elheraldo.hn/lab-protec",
+    "fetch": "4f0d447bba576cfc",
+    "0_2_0": "El heraldo",
+    "0_3_0": null,
+    "metadata_title": "Lab-Protec",
+    "metadata_title_basis": "open_graph"
+   }
+  ],
+  "pages_without_title_block": {
+   "0_2_0": 174,
+   "0_3_0": 258
+  },
+  "pages_with_subtitle": {
+   "0_2_0": 2953,
+   "0_3_0": 3004
+  },
+  "subtitle_blocks_by_basis": {
+   "0_2_0": {
+    "stated_by_page": 2789,
+    "subtitle_markup": 249
+   },
+   "0_3_0": {
+    "stated_by_page": 2819,
+    "subtitle_markup": 232
+   }
+  },
+  "outlets_with_subtitle": {
+   "0_2_0": 66,
+   "0_3_0": 66
+  },
+  "subtitle_changes": {
+   "added|ec_primicias": 73,
+   "removed_all|cu_14ymedio": 15,
+   "removed_all|co_el_espectador": 5,
+   "fewer|co_el_espectador": 4,
+   "fewer|ar_rio_negro": 3,
+   "fewer|do_listin_diario": 3,
+   "fewer|pe_diariocorreo": 3,
+   "fewer|uy_el_observador": 3,
+   "fewer|ar_clarin": 2,
+   "fewer|es_abc": 2,
+   "fewer|pa_critica": 2,
+   "removed_all|pe_diario_los_andes": 2,
+   "fewer|co_el_nuevo_siglo": 1,
+   "fewer|co_semana": 1,
+   "fewer|ec_el_universo": 1,
+   "fewer|sv_el_diario_de_hoy": 1
+  },
+  "subtitle_change_pages": 121,
+  "subtitle_texts_removed": [
+   {
+    "outlet_id": "co_el_espectador",
+    "text": "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico.",
+    "pages": 8
+   },
+   {
+    "outlet_id": "pe_diario_los_andes",
+    "text": "El papa León XIV tenía planes de permanecer en...",
+    "pages": 2
+   },
+   {
+    "outlet_id": "ar_clarin",
+    "text": "La tercera edición de Semana Negra BA reunió a Juan Sasturain, Sylvia Iparraguirre y Carlo",
+    "pages": 1
+   },
+   {
+    "outlet_id": "ar_clarin",
+    "text": "Richard y Elizabeth Scudder pasaron más de cuatro décadas protegiendo su propiedad. Foto: ",
+    "pages": 1
+   },
+   {
+    "outlet_id": "co_el_espectador",
+    "text": "Conoce nuestra oferta de Newsletter e infórmate de una manera diferente desde tu correo el",
+    "pages": 1
+   },
+   {
+    "outlet_id": "co_semana",
+    "text": "Capturado alias Chichero, presunto reclutador de menores del frente Dagoberto Ramos de las",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Entrada: Gratuita, con estacionamiento sin costo.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Biblioteca Regional de Westchester, salón del segundo piso, 9445 Coral Way, Miami, ",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Taller d’Luis, Schlesische Straße 20, 10997, Berlín, Alemania.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Galería Renart, Centro Regional de Expresión Artística (CREA), avenida Guerrero 295",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Horario: De lunes a viernes, de 11:00 am a 6:00 pm.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Centro Contemporáneo del Mayab (CCM), calle 63, número 503-A, entre 64 y 66, Centro",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Explanada multiusos de Madrid Río, Los Pinos, distrito de Arganzuela, Madrid, Españ",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Artes de Cuba Gallery, 1700 A Lena Street, Santa Fe, Nuevo México, Estados Unidos.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: The Claire Shulman Theater, Queens Theatre, 14 United Nations Avenue South, Flushin",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Museo Municipal de Albacete, Plaza del Altozano, s/n, Albacete, Castilla-La Mancha,",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Horario: De martes a domingo, de 10:30 am a 1:30 pm y de 5:00 pm a 9:00 pm. Lunes cerrado.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Freedom Tower, Galería Wolfson, segundo piso, 600 Biscayne Boulevard, Miami, Florid",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Librería Tanco, Ourense, Galicia, España.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Sala Avellaneda del Teatro Nacional de Cuba, avenida Paseo esquina a 39, Plaza de l",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Teatro Martí, calle Dragones, esquina a Zulueta, La Habana Vieja, Cuba.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Casa Vitier García Marruz, calle San Ignacio 102, esquina a O’Reilly, La Habana Vie",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Cine Doré, Filmoteca Española, calle Santa Isabel 3, Madrid, España.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "text": "Lugar: Casa de América (Palacio de Linares), calle Marqués del Duero, 2, Madrid, España.",
+    "pages": 1
+   },
+   {
+    "outlet_id": "do_listin_diario",
+    "text": "El Centro de Operaciones de Emergencias (COE) emitió alerta verde para el Gran Santo Domin",
+    "pages": 1
+   },
+   {
+    "outlet_id": "do_listin_diario",
+    "text": "El huracán Isaías se debilitó y pasó a ser un ciclón postropical el sábado, después de toc",
+    "pages": 1
+   },
+   {
+    "outlet_id": "do_listin_diario",
+    "text": "El director general de la Policía Nacional, mayor general Ernesto Rodríguez García",
+    "pages": 1
+   },
+   {
+    "outlet_id": "es_abc",
+    "text": "Sigue en directo la última hora de la corrida de toros en Valencia con Morante de la Puebl",
+    "pages": 1
+   },
+   {
+    "outlet_id": "es_abc",
+    "text": "Sigue en directo la última hora de la novillada en Las Ventas de Madrid por la Feria de Ot",
+    "pages": 1
+   },
+   {
+    "outlet_id": "pe_diariocorreo",
+    "text": "BTS en Lima: cientos de fans disfrutan del segundo concierto desde los exteriores del Esta",
+    "pages": 1
+   },
+   {
+    "outlet_id": "pe_diariocorreo",
+    "text": "Amazonas, Cajamarca, Huánuco, Loreto, Madre de Dios, Pasco, San Martín y Ucayali están com",
+    "pages": 1
+   },
+   {
+    "outlet_id": "pe_diariocorreo",
+    "text": "El líder de la boyband rechazó la actitud de quienes usaron láseres afuera de su alojamien",
+    "pages": 1
+   },
+   {
+    "outlet_id": "sv_el_diario_de_hoy",
+    "text": "La Defensoría del Consumidor y la Superintendencia de Regulación Sanitaria ordenaron el ci",
+    "pages": 1
+   }
+  ],
+  "subtitle_examples": {
+   "fewer": [
+    {
+     "outlet_id": "ar_clarin",
+     "url": "https://www.clarin.com/cultura/semana-negra-ba-borges-transformo-literatura-policial-argentina_0_5gub6m50DT.html",
+     "fetch": "17f1ff5ebb537ad2",
+     "title_0_3_0": "Semana Negra BA: cómo Borges transformó la literatura policial argentina",
+     "0_2_0": [
+      "La tercera edición de Semana Negra BA reunió a Juan Sasturain, Sylvia Iparraguirre y Carlos Gamerro.",
+      "La tercera edición de Semana Negra BA reunió a Juan Sasturain, Sylvia Iparraguirre y Carlos Gamerro. Foto: gentileza."
+     ],
+     "0_3_0": [
+      "La tercera edición de Semana Negra BA reunió a Juan Sasturain, Sylvia Iparraguirre y Carlos Gamerro."
+     ]
+    },
+    {
+     "outlet_id": "ar_clarin",
+     "url": "https://www.clarin.com/estados-unidos/pareja-nueva-jersey-dedico-40-anos-proteger-propiedad-90-acres-urbanizacion-despues-donar-finca-terreno-ahora-reserva-publica-gratuita-arbol-201-anos_0_dtAD0dl5Ma.html",
+     "fetch": "a385000ad580ec00",
+     "title_0_3_0": "Una pareja de Nueva Jersey dedicó más de 40 años a proteger su propiedad de 90 acres de la urbanización; después de dona",
+     "0_2_0": [
+      "Richard y Elizabeth Scudder pasaron más de cuatro décadas protegiendo su propiedad de la urbanización hasta que donaron las 90 acres para conservarlas.",
+      "Richard y Elizabeth Scudder pasaron más de cuatro décadas protegiendo su propiedad. Foto: MCF"
+     ],
+     "0_3_0": [
+      "Richard y Elizabeth Scudder pasaron más de cuatro décadas protegiendo su propiedad de la urbanización hasta que donaron las 90 acres para conservarlas."
+     ]
+    },
+    {
+     "outlet_id": "ar_rio_negro",
+     "url": "https://www.rionegro.com.ar/servicios/servicio-a-la-comunidad-calf-anuncio-un-corte-de-luz-para-este-domingo-11-de-octubre-en-neuquen-4754830/",
+     "fetch": "eb516bf8ac381c58",
+     "title_0_3_0": "Servicio a la comunidad: CALF anunció un corte de luz para este domingo 11 de octubre en Neuquén",
+     "0_2_0": [
+      "Las interrupción responde a una adecuación de la infraestructura solicitada por el Municipio por la obra en Avenida Mosconi. Mirá el detalle con los horarios y ",
+      "La Cooperativa de Agua, Luz y Fuerza de Neuquén (CALF) anunció un corte programado de energía eléctrica que afectarán a distintos sectores de la capital provinc",
+      "La Cooperativa de Agua, Luz y Fuerza de Neuquén (CALF) anunció un corte programado de energía eléctrica que afectarán a distintos sectores de la capital provinc"
+     ],
+     "0_3_0": [
+      "Las interrupción responde a una adecuación de la infraestructura solicitada por el Municipio por la obra en Avenida Mosconi. Mirá el detalle con los horarios y ",
+      "La Cooperativa de Agua, Luz y Fuerza de Neuquén (CALF) anunció un corte programado de energía eléctrica que afectarán a distintos sectores de la capital provinc"
+     ]
+    },
+    {
+     "outlet_id": "ar_rio_negro",
+     "url": "https://www.rionegro.com.ar/gastronomia/flan-de-manzana-para-acompanar-con-crema-y-o-dulce-de-leche-3722054/",
+     "fetch": "4fb39de6886f1d63",
+     "title_0_3_0": "Flan de manzana con crema y/o dulce de leche: fácil, rico y tentador",
+     "0_2_0": [
+      "Un postre que no tiene comparación. Delicioso por donde se lo mire. La propuesta es de @coco.carreno.",
+      "Un postre que no tiene comparación. Delicioso por donde se lo mire. La propuesta es de @coco.carreno."
+     ],
+     "0_3_0": [
+      "Un postre que no tiene comparación. Delicioso por donde se lo mire. La propuesta es de @coco.carreno."
+     ]
+    },
+    {
+     "outlet_id": "ar_rio_negro",
+     "url": "https://www.rionegro.com.ar/gastronomia/bunuelos-super-esponjosos-en-menos-de-15-minutos-4345901/",
+     "fetch": "146ce41a78929c2d",
+     "title_0_3_0": "Buñuelos bien aireados y esponjosos en unos minutos",
+     "0_2_0": [
+      "Fáciles hasta el cansancio, ricos como todo lo que se hace frito. La sugerencia es de @matycocinaok.",
+      "Fáciles hasta el cansancio, ricos como todo lo que se hace frito. La sugerencia es de @matycocinaok."
+     ],
+     "0_3_0": [
+      "Fáciles hasta el cansancio, ricos como todo lo que se hace frito. La sugerencia es de @matycocinaok."
+     ]
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/mundo/europa/rusia-y-las-dudas-sobre-una-misteriosa-muerte-que-avivan-temores-de-encubrimiento/",
+     "fetch": "8f7460ff589de8e8",
+     "title_0_3_0": "Rusia y las dudas sobre una misteriosa muerte que avivan temores de encubrimiento",
+     "0_2_0": [
+      "La posible muerte por peste de una científica en Siberia reavivó las dudas sobre la transparencia de Rusia. La falta de información oficial y los antecedentes d",
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": [
+      "La posible muerte por peste de una científica en Siberia reavivó las dudas sobre la transparencia de Rusia. La falta de información oficial y los antecedentes d"
+     ]
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/politica/derecha-e-izquierda-miden-fuerzas-con-marchas-del-14-de-octubre-y-regulacion-de-la-protesta/",
+     "fetch": "9df3bc95a21335dd",
+     "title_0_3_0": "Derecha e izquierda miden sus fuerzas en las calles y con la regulación de las protestas",
+     "0_2_0": [
+      "El anticipado pulso por el poder regional se calienta con las marchas del 14 de octubre próximo. Ya hay nuevos protocolos para que la Policía actúe en casos de ",
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": [
+      "El anticipado pulso por el poder regional se calienta con las marchas del 14 de octubre próximo. Ya hay nuevos protocolos para que la Policía actúe en casos de "
+     ]
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/bogota/un-mes-para-probar-otra-salida-al-trancon-que-castiga-la-calle-13/",
+     "fetch": "e6abec94637bdeec",
+     "title_0_3_0": "Un mes para probar otra salida al trancón que castiga la Calle 13",
+     "0_2_0": [
+      "Un piloto de un mes reorganiza el tráfico entre Mosquera y Bogotá para intentar reducir los tiempos de entrada por la Calle 13. La medida llega a un corredor qu",
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": [
+      "Un piloto de un mes reorganiza el tráfico entre Mosquera y Bogotá para intentar reducir los tiempos de entrada por la Calle 13. La medida llega a un corredor qu"
+     ]
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/el-magazin-cultural/el-instituto-caro-y-cuervo-bajo-la-direccion-de-sergio-velez-denuncias-de-funcionarios-y-proyectos-en-riesgo/",
+     "fetch": "5adc82331052d1cc",
+     "title_0_3_0": "El Caro y Cuervo bajo la dirección de Vélez: denuncias de funcionarios y proyectos en riesgo",
+     "0_2_0": [
+      "Desde la llegada de Sergio Vélez a la dirección del Instituto, funcionarios consultados por El Espectador describen un ambiente de desconfianza y dificultades a",
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": [
+      "Desde la llegada de Sergio Vélez a la dirección del Instituto, funcionarios consultados por El Espectador describen un ambiente de desconfianza y dificultades a"
+     ]
+    },
+    {
+     "outlet_id": "co_el_nuevo_siglo",
+     "url": "https://www.elnuevosiglo.com.co/economia/ventas-de-vivienda-nueva-cayeron-117-en-colombia-durante-2026",
+     "fetch": "74ed93045eda8125",
+     "title_0_3_0": "Ventas de vivienda nueva cayeron 11,7% en Colombia durante 2026",
+     "0_2_0": [
+      "A nivel nacional, el sector acumula 79.226 lanzamientos de vivienda, 105.226 ventas y 70.264 iniciaciones de obra en lo corrido de 2026. Estas cifras representa",
+      "A nivel nacional, el sector acumula 79.226 lanzamientos de vivienda, 105.226 ventas y 70.264 iniciaciones de obra en lo corrido de 2026. Estas cifras representa"
+     ],
+     "0_3_0": [
+      "A nivel nacional, el sector acumula 79.226 lanzamientos de vivienda, 105.226 ventas y 70.264 iniciaciones de obra en lo corrido de 2026. Estas cifras representa"
+     ]
+    },
+    {
+     "outlet_id": "co_semana",
+     "url": "https://www.semana.com/nacion/articulo/capturado-alias-chichero-presunto-reclutador-de-menores-del-frente-dagoberto-ramos-de-las-disidencias-de-las-farc/202602/",
+     "fetch": "2f7274c27bf61797",
+     "title_0_3_0": "Capturado alias Chichero, presunto reclutador de menores del frente Dagoberto Ramos de las disidencias de las Farc",
+     "0_2_0": [
+      "El sujeto fue retenido por la fuerza pública en medio de un operativo adelantado en Santander de Quilichao, Cauca.",
+      "Capturado alias Chichero, presunto reclutador de menores del frente Dagoberto Ramos de las disidencias de las Farc en Santander de Quilichao. Foto: Tomada de @A"
+     ],
+     "0_3_0": [
+      "El sujeto fue retenido por la fuerza pública en medio de un operativo adelantado en Santander de Quilichao, Cauca."
+     ]
+    },
+    {
+     "outlet_id": "do_listin_diario",
+     "url": "https://listindiario.com/la-republica/20261010/emiten-alerta-verde-gran-santo-domingo-aumento-lluvias-e-inundaciones_925585.html",
+     "fetch": "6133650e698a9b04",
+     "title_0_3_0": "Emiten alerta verde para el Gran Santo Domingo por aumento de lluvias este sábado",
+     "0_2_0": [
+      "El Centro de Operaciones de Emergencias (COE) emitió alerta verde para el Gran Santo Domingo por posibles inundaciones urbanas.",
+      "El Centro de Operaciones de Emergencias (COE) emitió alerta verde para el Gran Santo Domingo por posibles inundaciones urbanas.Fuente Externa"
+     ],
+     "0_3_0": [
+      "El Centro de Operaciones de Emergencias (COE) emitió alerta verde para el Gran Santo Domingo por posibles inundaciones urbanas."
+     ]
+    }
+   ],
+   "removed_all": [
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/deportes/ciclismo/nairo-quintana-en-entrevista/",
+     "fetch": "dcf263e57c33ed75",
+     "title_0_3_0": "“No quedé en deuda al no ganar el Tour, di todo lo que tenía”: Nairo Quintana, en entrevista",
+     "0_2_0": [
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/opinion/columnistas/oscar-alarcon/microlingotes-263/",
+     "fetch": "a2a3bf44dec6cefd",
+     "title_0_3_0": "MICROLINGOTES",
+     "0_2_0": [
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/opinion/caricaturistas/garzon/la-transparente-cristina/",
+     "fetch": "3a87bf75b2ae4c4f",
+     "title_0_3_0": "La transparente Cristina",
+     "0_2_0": [
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/mundo/america/desconfiar-salvo-a-unos-pero-otros-perdieron-miles-de-dolares-por-ueno-bank-en-paraguay/",
+     "fetch": "2c90fd8c566f235a",
+     "title_0_3_0": "Desconfiar salvó a unos, pero otros perdieron miles de dólares por Ueno Bank en Paraguay",
+     "0_2_0": [
+      "Lo bueno que es estar informado y de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "co_el_espectador",
+     "url": "https://www.elespectador.com/deportes/futbol-colombiano/millonarios/millonarios-clasifico-a-los-cuadrangulares-de-la-liga-betplay-vea-las-fotos-del-partido/",
+     "fetch": "f81d16c386befbad",
+     "title_0_3_0": "Millonarios clasificó a los cuadrangulares de la Liga BetPlay: vea las fotos del partido",
+     "0_2_0": [
+      "Conoce nuestra oferta de Newsletter e infórmate de una manera diferente desde tu correo electrónico."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/escudo-americas-simposio-seguridad-geopolitica_1_1131685.html",
+     "fetch": "89ee488e0a8eaf55",
+     "title_0_3_0": "El Escudo de las Américas: simposio sobre seguridad y geopolítica hemisférica en Miami",
+     "0_2_0": [
+      "Lugar: Biblioteca Regional de Westchester, salón del segundo piso, 9445 Coral Way, Miami, Florida 33165, Estados Unidos.",
+      "Entrada: Gratuita, con estacionamiento sin costo."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/katherine-bisquet-jorge-luis-porrata_1_1131729.html",
+     "fetch": "58924775a0d10f72",
+     "title_0_3_0": "Katherine Bisquet y Jorge Luis Porrata conversan sobre la literatura cubana en el exilio",
+     "0_2_0": [
+      "Lugar: Taller d’Luis, Schlesische Straße 20, 10997, Berlín, Alemania."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/omar-quesada-presenta-mexico-exposicion_1_1131772.html",
+     "fetch": "7499d4a6cbb06e49",
+     "title_0_3_0": "Omar Quesada presenta en México su exposición ‘El mundo al revés’",
+     "0_2_0": [
+      "Lugar: Galería Renart, Centro Regional de Expresión Artística (CREA), avenida Guerrero 2955, colonia Las Plazas, Irapuato, Guanajuato, México."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/mina-barcenas-explora-memoria-exilio_1_1131786.html",
+     "fetch": "833823ec90724d05",
+     "title_0_3_0": "Mina Bárcenas explora la memoria del exilio cubano en ‘Bordes, trayectos y mudanzas’",
+     "0_2_0": [
+      "Lugar: Centro Contemporáneo del Mayab (CCM), calle 63, número 503-A, entre 64 y 66, Centro Histórico, Mérida, Yucatán, México.",
+      "Horario: De lunes a viernes, de 11:00 am a 6:00 pm."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/aymee-nuviola-lleva-sabor-musica_1_1131781.html",
+     "fetch": "d32b903f6880a242",
+     "title_0_3_0": "Aymée Nuviola lleva el sabor de la música cubana a la Hispanidad 2026 en Madrid",
+     "0_2_0": [
+      "Lugar: Explanada multiusos de Madrid Río, Los Pinos, distrito de Arganzuela, Madrid, España."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/mabel-poblet-explora-identidad-memoria_1_1131792.html",
+     "fetch": "8b0d89f256c1dc0f",
+     "title_0_3_0": "Mabel Poblet explora la identidad y la memoria en una exposición en Santa Fe",
+     "0_2_0": [
+      "Lugar: Artes de Cuba Gallery, 1700 A Lena Street, Santa Fe, Nuevo México, Estados Unidos."
+     ],
+     "0_3_0": []
+    },
+    {
+     "outlet_id": "cu_14ymedio",
+     "url": "https://www.14ymedio.com/cartelera/xiomara-laugart-rumbanza-rinden-homenaje_1_1131789.html",
+     "fetch": "82dcc8b69a786ec9",
+     "title_0_3_0": "Xiomara Laugart y Rumbanza rinden homenaje a Celia Cruz en Nueva York",
+     "0_2_0": [
+      "Lugar: The Claire Shulman Theater, Queens Theatre, 14 United Nations Avenue South, Flushing Meadows Corona Park, Corona, Queens, Nueva York, Estados Unidos."
+     ],
+     "0_3_0": []
+    }
+   ],
+   "added": [
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/ciencia-tecnologia/investigadores-ecuatorianos-control-chinchorro-enfermedad-chagas-microbiota-134421/",
+     "fetch": "43c72da09d32b3cd",
+     "title_0_3_0": "Estudios de los chinches buscan una manera de frenar la enfermedad de Chagas sin usar insecticidas en Ecuador",
+     "0_2_0": [],
+     "0_3_0": [
+      "Papers del Centro de Investigación para la Salud en América Latina de la PUCE y la Universidad de Ohio abren el camino para potenciales métodos de control bioló"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/autos/actualidad/hyundai-tucson-ecuador-versiones-gasolina-hibrida-132576/",
+     "fetch": "712ced6199c7b80a",
+     "title_0_3_0": "Hyundai TUCSON amplía su oferta en Ecuador con versiones a gasolina e híbrida",
+     "0_2_0": [],
+     "0_3_0": [
+      "Con una variante a gasolina de 154 caballos de fuerza (HP) y otra híbrida de 235 HP, Hyundai ofrece en Ecuador distintas alternativas de su modelo TUCSON para q"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/internacional/colombia-fenomeno-nino-declaratoria-8octubre-ideam-lluvias-sequia-134571/",
+     "fetch": "efeade352310b1e1",
+     "title_0_3_0": "El Niño llega oficialmente a Colombia y se prevé que tenga una intensidad de fuerte a muy fuerte",
+     "0_2_0": [],
+     "0_3_0": [
+      "Colombia reunió las condiciones técnicas para declarar la entrada del fenómeno de El Niño desde este 8 de octubre de 2026, que podrá extenderse hasta mediados d"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/sucesos/policia-incauta-1-6-toneladas-cocaina-puerto-guayaquil-detiene-empleados-empresa-exportadora-134572/",
+     "fetch": "425f6e89d44c2d0d",
+     "title_0_3_0": "Policía incauta 1,6 toneladas de cocaína en puerto de Guayaquil y detiene a empleados de empresa exportadora",
+     "0_2_0": [],
+     "0_3_0": [
+      "El cargamento de 1.684 bloques de cocaína iba oculto en maquinaria industrial dentro de un contenedor con destino a México."
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/entretenimiento/cultura/que-hacer-quito-feriado-planes-9octubre-cine-concierto-teatro-134503/",
+     "fetch": "13af5ee2aa7d338d",
+     "title_0_3_0": "¿Qué hacer en Quito este feriado? Planes del 9 al 11 de octubre de 2026",
+     "0_2_0": [],
+     "0_3_0": [
+      "Ecuador vivirá un feriado nacional este fin de semana, por el 9 de Octubre, que se recuerda la Independencia de Guayaquil. Aquí una lista de planes para disfrut"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/guayaquil/descendientes-patriotas-independencia-guayaquil-106904/",
+     "fetch": "3e6be2f24cb0e54c",
+     "title_0_3_0": "“Llevar la sangre de un prócer es un orgullo”, dicen descendientes de los patriotas de la independencia de Guayaquil",
+     "0_2_0": [],
+     "0_3_0": [
+      "Dos guayaquileños, una economista y un abogado, descienden del prócer José de Villamil, en cuya casa se formó la llamada Fragua de Vulcano, que permitió la ansi"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/entretenimiento/final-miss-grand-international-shyare-andrade-ecuador-tailandia-fecha-horario-134550/",
+     "fetch": "c73bb1fb477a4642",
+     "title_0_3_0": "Todo lo que debe saber de la final de Miss Grand International donde compite Shyare Andrade, de Ecuador",
+     "0_2_0": [],
+     "0_3_0": [
+      "El certamen Miss Grand International tendrá su gala final, en un evento que se realizará en Tailandia. Ecuador tiene los ojos puestos en su representante Shyare"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/deportes/futbol/cristiano-ronaldo-rui-borges-director-tecnico-sporting-seleccion-portugal-jorge-jesus-134510/",
+     "fetch": "2fa9c3a045bce9b1",
+     "title_0_3_0": "\"Cristiano se despedirá como él quiera y entienda\", dice el técnico del Sporting",
+     "0_2_0": [],
+     "0_3_0": [
+      "Rui Borges, director técnico del Sporting se refirió a la polémica que existe entre Cristiano Ronaldo y la selección de Portugal. Ratificó su apoyo al ahora jug"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/sucesos/detenido-interpol-quito-narcotrafico-lavado-activos-cocaina-estados-unidos-134470/",
+     "fetch": "6f098b6022fbd7ac",
+     "title_0_3_0": "Capturan en Quito a buscado por Interpol por el envío de más de una tonelada de cocaína a Estados Unidos",
+     "0_2_0": [],
+     "0_3_0": [
+      "Carlos G. era buscado desde 2020 por la Interpol y tenía una notificación roja con fines de extradición pasiva. Según la Policía, habría coordinado el traslado "
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/seguridad/policia-ecuador-espana-desmantelan-red-narcotrafico-cocaina-espana-portugal-belgica-paises-bajos-134474/",
+     "fetch": "fbe7045ad85441c5",
+     "title_0_3_0": "Golpe a Los Lobos: Ecuador y España desmantelan red de narcotráfico, entre los 21 detenidos está el financista de alias ",
+     "0_2_0": [],
+     "0_3_0": [
+      "Un operativo coordinado con Europol dejó 21 detenidos, entre ellos dos policías ecuatorianos en servicio activo, tras 23 allanamientos en los que se incautaron "
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/sociedad/cuenca-proyecto-casa-larga-bienal-arquitectura-colombia-patrimonio-restauracion-134552/",
+     "fetch": "e258c3e8e9c9782a",
+     "title_0_3_0": "Casa Larga, el proyecto de Cuenca premiado en la Bienal Latinoamericana de Arquitectura de Colombia",
+     "0_2_0": [],
+     "0_3_0": [
+      "El proyecto de restauración de Casa Larga, un inmueble patrimonial de Cuenca de 120 años de antiguedad, recibió un reconocimiento en la Bienal Latinoamericana d"
+     ]
+    },
+    {
+     "outlet_id": "ec_primicias",
+     "url": "https://www.primicias.ec/sucesos/temblor-sismo-ecuador-samborondon-guayaquil-guayas-9octubre-134607/",
+     "fetch": "9e1ad28167af0293",
+     "title_0_3_0": "Temblor en Ecuador se reporta la noche del 9 de octubre, con epicentro en Guayas",
+     "0_2_0": [],
+     "0_3_0": [
+      "El Instituto Geofísico del Ecuador reportó un temblor de 3,6 de magnitud, que ocurrió pasadas las 22:00 del viernes 9 de octubre."
+     ]
+    }
+   ]
+  }
+ },
+ "quality": {
+  "ruleset": "content-quality/3",
+  "on_0_2_0": {
+   "ACCEPT": 4066,
+   "REJECT": 693
+  },
+  "on_0_3_0": {
+   "ACCEPT": 4066,
+   "REJECT": 693
+  },
+  "transitions": {
+   "ACCEPT->ACCEPT": 4066,
+   "REJECT->REJECT": 693
+  },
+  "pages_with_any_change_in_decision_or_reasons": 0,
+  "changed": [],
+  "features_equal_but_title": 4759
+ },
+ "unchanged_layers": {
+  "pages_with_the_same_layer_record": {
+   "section-iptc/1": 4759,
+   "editorial-scope/1": 4759,
+   "genre-placement/1": 4759,
+   "genre-declared/1": 4759,
+   "ai-disclosure/1": 4759
+  },
+  "of": 4759,
+  "ai_changes": []
+ },
+ "agency_credit": {
+  "rules": [
+   "agency-credit/1",
+   "agency-credit/2"
+  ],
+  "pages_known": {
+   "1": 407,
+   "2": 407
+  },
+  "same_agencies_where_both_known": 407,
+  "agencies_2": {
+   "efe": 247,
+   "afp": 74,
+   "ap": 47,
+   "unspecified": 25,
+   "europa_press": 11,
+   "aton": 2,
+   "ips": 2,
+   "acan": 2,
+   "colprensa": 1
+  },
+  "pages_with_several_agencies_2": 4,
+  "use_1": {
+   "credit_only": 376,
+   "joint_credit": 16,
+   "edited_declared": 15
+  },
+  "roles_2": {
+   "credited": 368,
+   "material_source": 12,
+   "co_credited": 21,
+   "credited+co_credited": 1,
+   "credited+material_source": 5
+  },
+  "use_declared_2": {
+   "not_stated": 390,
+   "material_used_declared": 17
+  },
+  "transitions_1_to_2": {
+   "credit_only -> credited / not_stated": 368,
+   "joint_credit -> co_credited / not_stated": 16,
+   "edited_declared -> material_source / material_used_declared": 10,
+   "credit_only -> co_credited / not_stated": 5,
+   "edited_declared -> credited+material_source / material_used_declared": 5,
+   "credit_only -> material_source / material_used_declared": 2,
+   "credit_only -> credited+co_credited / not_stated": 1
+  },
+  "unknown_reasons_2": {
+   "no_agency_credit_observed": 4286,
+   "agency_named_as_quoted_source_only": 66
+  },
+  "edited_declared_1_read_again": [
+   {
+    "outlet_id": "ec_el_comercio",
+    "url": "https://www.elcomercio.com/actualidad/mundo/mas-de-cien-replicas-tras-el-fuerte-terremoto-de-magnitud-77-que-sacudio-panama/",
+    "fetch": "4550ad235df56a25",
+    "credit": [
+     "Con información de EFE."
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ec_el_comercio",
+    "url": "https://www.elcomercio.com/actualidad/mundo/como-evito-panama-tragedia-terremoto/",
+    "fetch": "f6a1c687ab51eef5",
+    "credit": [
+     "Con información de EFE"
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ec_el_comercio",
+    "url": "https://www.elcomercio.com/actualidad/mundo/elon-musk-y-mas-de-120-000-personas-piden-que-jensen-huang-regrese-a-nvidia/",
+    "fetch": "16ec9d0d382e0b5f",
+    "credit": [
+     "Elaborado con información de EFE"
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "mx_el_universal",
+    "url": "https://www.eluniversal.com.mx/tendencias/video-montanistas-viven-momento-de-panico-al-presenciar-terremoto-de-77-en-panama-desde-las-alturas-asi-reaccionaron/",
+    "fetch": "331f6612df933270",
+    "credit": [
+     "Con información de EFE"
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ni_confidencial",
+    "url": "https://confidencial.digital/noticias/familiares-denuncian-pesimas-condiciones-de-ocho-guardabosques-indigenas-presos-politicos/",
+    "fetch": "35ac327bde821b9d",
+    "credit": [
+     "Con información de EFE"
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ni_despacho_505",
+    "url": "https://despacho505.com/nacionales/69405-diputados-parlamento-centroamericano-tachan-inviable-salida-unilateral-nicaragua/",
+    "fetch": "cbcd0d153035346b",
+    "credit": [
+     "Con información de Efe."
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ni_despacho_505",
+    "url": "https://despacho505.com/internacionales/69424-terremoto-panama-27-heridos-400-edificios-danados/",
+    "fetch": "df347639f833ad89",
+    "credit": [
+     "Con información de EFE"
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "pr_metro_puerto_rico",
+    "url": "https://www.metro.pr/entretenimiento/2026/10/10/britney-spears-lanza-cancion-inedita-por-los-25-anos-de-su-album-britney/",
+    "fetch": "374676d36a27e328",
+    "credit": [
+     "EFE EFE",
+     "EFE EFE",
+     "Por EFE EFE",
+     "Con información de la Agencia EFE (EFE)."
+    ],
+    "2": "credited+material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "pr_metro_puerto_rico",
+    "url": "https://www.metro.pr/noticias/2026/10/10/colapsan-un-hotel-y-una-iglesia-tras-terremoto-de-magnitud-77-en-panama/",
+    "fetch": "890aae43014f9df7",
+    "credit": [
+     "EFE EFE",
+     "EFE EFE",
+     "Por EFE EFE",
+     "Con información de la Agencia EFE (EFE)."
+    ],
+    "2": "credited+material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "sv_el_diario_de_hoy",
+    "url": "https://www.elsalvador.com/noticias/internacional/christa-pike-ejecucion-fallida/1298019/2026/",
+    "fetch": "e18e2ecb8b5a0d04",
+    "credit": [
+     "Con información de EFE."
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "uy_el_observador",
+    "url": "https://www.elobservador.com.uy/mundo/uruguayo-baleado-tiroteo-washington-dc-fue-dado-alta-su-operacion-n6063885",
+    "fetch": "f6b8b343f9606758",
+    "credit": [
+     "Con información de EFE."
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "uy_montevideo_portal",
+    "url": "https://www.montevideo.com.uy/auc.aspx?977980",
+    "fetch": "c6f39c1699e577d0",
+    "credit": [
+     "Con información de EFE."
+    ],
+    "2": "material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ve_efecto_cocuyo",
+    "url": "https://efectococuyo.com/internacionales/rubio-se-reunira-este-viernes-con-dinorah-figuera-en-washington/",
+    "fetch": "8614478b6f7fa026",
+    "credit": [
+     "Con información de EFE",
+     "Por Efe | @EFEnoticias"
+    ],
+    "2": "credited+material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ve_efecto_cocuyo",
+    "url": "https://efectococuyo.com/politica/mas-de-100-personas-se-postulan-para-participar-en-la-renovacion-del-tsj/",
+    "fetch": "ca9c4da3609a4a3f",
+    "credit": [
+     "Con información de EFE",
+     "Por Efe | @EFEnoticias"
+    ],
+    "2": "credited+material_source / material_used_declared"
+   },
+   {
+    "outlet_id": "ve_efecto_cocuyo",
+    "url": "https://efectococuyo.com/internacionales/trump-considera-increible-no-ser-el-ganador-del-premio-nobel-de-la-paz/",
+    "fetch": "f891349c77af757b",
+    "credit": [
+     "Con información de EFE",
+     "Por Efe | @EFEnoticias"
+    ],
+    "2": "credited+material_source / material_used_declared"
+   }
+  ],
+  "joint_credit_1_read_again": [
+   {
+    "outlet_id": "cl_cooperativa",
+    "fetch": "30e2c6e2286a2725",
+    "credit": [
+     "Cooperativa.cl/ATON"
+    ],
+    "credited_with": [
+     "Cooperativa.cl"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "cl_cooperativa",
+    "fetch": "20c15e42b363d5a2",
+    "credit": [
+     "Cooperativa.cl/ATON"
+    ],
+    "credited_with": [
+     "Cooperativa.cl"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "co_elpais",
+    "fetch": "935c7d60df5a94ec",
+    "credit": [
+     "Colprensa / El País Colprensa"
+    ],
+    "credited_with": [
+     "El País Colprensa"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "fetch": "761a51ff08ffb3bf",
+    "credit": [
+     "EFE/ 14ymedio"
+    ],
+    "credited_with": [
+     "14ymedio"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "fetch": "51d9dad1743b96cc",
+    "credit": [
+     "EFE/14ymedio"
+    ],
+    "credited_with": [
+     "14ymedio"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "2fa9c3a045bce9b1",
+    "credit": [
+     "EFE / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "4aeb75e7fa0f28f0",
+    "credit": [
+     "EFE / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "b69339ab206c78cf",
+    "credit": [
+     "AFP / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "c5e979177737a7ce",
+    "credit": [
+     "AFP / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "c0106871339bd4dc",
+    "credit": [
+     "EFE / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "6fc06c4f280990ae",
+    "credit": [
+     "EFE / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "164c1df1d66559de",
+    "credit": [
+     "Agencias / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "ec_primicias",
+    "fetch": "1600602c0038d6c1",
+    "credit": [
+     "AFP / Redacción Primicias"
+    ],
+    "credited_with": [
+     "Redacción Primicias"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "gt_lahora",
+    "fetch": "dc41e2442f37f762",
+    "credit": [
+     "Redacción La Hora, Agencia EFE",
+     "Redacción La Hora, Agencia EFE"
+    ],
+    "credited_with": [
+     "Redacción La Hora"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "pa_critica",
+    "fetch": "64cafa4bb4e49775",
+    "credit": [
+     "Redacción / EFE",
+     "Por: Redacción / EFE - Sábado 26 de Abril de 2025 2:47 AM"
+    ],
+    "credited_with": [
+     "Redacción"
+    ],
+    "2": "co_credited / not_stated"
+   },
+   {
+    "outlet_id": "pa_panama_america",
+    "fetch": "308c3ebe893122e5",
+    "credit": [
+     "Panamá / EFE / PanamaAmerica"
+    ],
+    "credited_with": [
+     "PanamaAmerica"
+    ],
+    "2": "co_credited / not_stated"
+   }
+  ],
+  "quoted_only_examples": [
+   {
+    "outlet_id": "es_el_mundo",
+    "fetch": "b16f94a684a3db66",
+    "mention": " dos meses en detectar y comunicar el incidente, informa la agencia AFP."
+   },
+   {
+    "outlet_id": "ni_despacho_505",
+    "fetch": "9a1664d9ca9060b2",
+    "mention": "ión de la oposición. Eso no se va a dar”, dijo Murillo a la agencia EFE."
+   },
+   {
+    "outlet_id": "sv_el_diario_de_hoy",
+    "fetch": "b1eb8712aff78759",
+    "mention": "n extraordinaria del Consejo de Ministros, según informó la agencia EFE."
+   },
+   {
+    "outlet_id": "ar_rio_negro",
+    "fetch": "641828405bbe7fc3",
+    "mention": "a y que seguirán de cerca su recuperación, según detalló la agencia AP."
+   },
+   {
+    "outlet_id": "ar_infobae",
+    "fetch": "f3cf81e5e49ebbff",
+    "mention": "aron una restricción global de suministros de combustibles, según Reuters, en un escenario que presiona los precios energéticos estad"
+   },
+   {
+    "outlet_id": "cl_la_discusion",
+    "fetch": "529fe1cf5a8517c9",
+    "mention": "ea bancaria fueron desalojados preventivamente, constató la agencia de noticias EFE."
+   },
+   {
+    "outlet_id": "ve_el_nacional",
+    "fetch": "e35546ef0a673700",
+    "mention": "m, limitaron la difusión de sus contenidos, según reseñó la agencia AFP."
+   },
+   {
+    "outlet_id": "pa_diaadia",
+    "fetch": "3d29a46a1a315240",
+    "mention": " balance del terremoto. Mientras espera ese informe, Mulino dijo a EFE que el Gobierno ofrece \"todo el apoyo solidario\" a los afec"
+   },
+   {
+    "outlet_id": "cu_juventud_rebelde",
+    "fetch": "31e2bc02e3df0551",
+    "mention": " de la profunda crisis económica que vive el país helénico, según ANSA."
+   },
+   {
+    "outlet_id": "pa_la_prensa",
+    "fetch": "a6c76f134d21ccd8",
+    "mention": "s se dirigieron rápidamente al aeropuerto, según informó la agencia de noticias Reuters citando a un testigo presencial."
+   },
+   {
+    "outlet_id": "gt_lahora",
+    "fetch": "7297605df17446f8",
+    "mention": "nálisis de exposición de la misma institución citado por la agencia Reuters, alrededor de 43 mil personas estuvieron en áreas con sacud"
+   },
+   {
+    "outlet_id": "ar_perfil",
+    "fetch": "b15f421c8c27b113",
+    "mention": "as en el suelo, cerca de una puerta de embarque. Un viajero declaró a Reuters que vio un objeto cruzar el cielo antes de que parte del te"
+   }
+  ],
+  "positions_2": {
+   "json_ld_author:credited": 290,
+   "byline_block:credited": 126,
+   "meta_author:credited": 122,
+   "meta_article_author:credited": 64,
+   "body_dateline:credited": 20,
+   "material_note:material_source": 15,
+   "json_ld_author:co_credited": 11,
+   "byline_block:co_credited": 8,
+   "json_ld_creator:credited": 4,
+   "meta_author:co_credited": 3,
+   "credit_note:material_source": 2,
+   "json_ld_creator:co_credited": 2
+  }
+ },
+ "text_reuse": {
+  "rules": [
+   "text-reuse/1",
+   "text-reuse/2"
+  ],
+  "relations": {
+   "1": 547,
+   "2": 547,
+   "same_pairs": 547
+  },
+  "classes_2": {
+   "syndicated_copy_of|contained": 81,
+   "duplicate_of|near_identical": 3,
+   "syndicated_copy_of|exact": 9,
+   "syndicated_copy_of|near_identical": 102,
+   "duplicate_of|contained": 5,
+   "duplicate_of|exact": 347
+  },
+  "transitions_1_to_2": {
+   "syndicated_copy_of|contained -> contained": 81,
+   "duplicate_of|identical -> near_identical": 3,
+   "syndicated_copy_of|identical -> exact": 9,
+   "syndicated_copy_of|identical -> near_identical": 102,
+   "duplicate_of|contained -> contained": 5,
+   "duplicate_of|identical -> exact": 347
+  },
+  "near_identical_word_sequence_ratio": {
+   "min": 0.9069,
+   "median": 0.9717,
+   "max": 0.9997
+  },
+  "exact_but_case_or_punctuation_only_difference_impossible": "exact = equal canonical strings; any difference in case, punctuation or wording makes a pair near_identical or contained",
+  "pairs_with_same_words_different_text": 10,
+  "boilerplate_check": {
+   "rule": "share of the pair's shared 8-word shingles that one of the two outlets prints in at least three of its documents that are not copies of one another (three text-reuse clusters): the outlet's furniture, not reused text",
+   "pairs_at_or_over_half": 0,
+   "pairs_over_a_tenth": 18,
+   "by_class_over_a_tenth": {
+    "syndicated_copy_of|contained": 6,
+    "syndicated_copy_of|near_identical": 9,
+    "syndicated_copy_of|exact": 2,
+    "duplicate_of|exact": 1
+   },
+   "examples": [
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "e7b2db640bdbbe74",
+     "target": "65c50f2c9da0105d",
+     "outlets": [
+      "pa_diaadia",
+      "gt_lahora"
+     ],
+     "containment": [
+      0.9605,
+      0.7328
+     ],
+     "words": [
+      184,
+      239
+     ],
+     "differing_words": [
+      0,
+      55
+     ],
+     "word_sequence_ratio": 0.8683,
+     "differing_segments": 3,
+     "shared_outlet_furniture_share": 0.359,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "7,7",
+       "target": "7.7"
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "#AhoraLH I Luego de registrarse un nuevo sismo, decenas de pasajeros que esperan a abordar sus vuelos son evacuados en el Aeropuerto de Tocumen en Panamá. Esta "
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "En Tendencia 1 2 3 4 5"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "aa92ef9d57b55950",
+     "target": "0bc61ff5d6bae7e4",
+     "outlets": [
+      "bo_el_deber",
+      "uy_el_observador"
+     ],
+     "containment": [
+      0.6614,
+      0.9906
+     ],
+     "words": [
+      326,
+      220
+     ],
+     "differing_words": [
+      108,
+      2
+     ],
+     "word_sequence_ratio": 0.8044,
+     "differing_segments": 2,
+     "shared_outlet_furniture_share": 0.308,
+     "first_differences": [
+      {
+       "op": "delete",
+       "this": "Un terremoto de magnitud 7,7 sacudió una amplia zona de Panamá en horas de la tarde de este viernes. De acuerdo al Servicio Geológico de EE.UU. (USGS, por sus s",
+       "target": ""
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "FUENTE: BBC"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "137ffb7dd4767795",
+     "target": "de619fcd6f2524ac",
+     "outlets": [
+      "bo_el_deber",
+      "gt_prensa_libre"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      535,
+      535
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 0.968,
+     "differing_segments": 17,
+     "shared_outlet_furniture_share": 0.188,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "\"Lamentamos",
+       "target": "“Lamentamos"
+      },
+      {
+       "op": "replace",
+       "this": "vida\",",
+       "target": "vida”,"
+      },
+      {
+       "op": "replace",
+       "this": "\"Estamos",
+       "target": "“Estamos"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "exact",
+     "document": "890b57b891721ef1",
+     "target": "c978068538565da7",
+     "outlets": [
+      "pa_diaadia",
+      "pa_panama_america"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      543,
+      543
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 1.0,
+     "differing_segments": 0,
+     "shared_outlet_furniture_share": 0.187,
+     "first_differences": []
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "ca9c4da3609a4a3f",
+     "target": "aa1ce05abe0a8e21",
+     "outlets": [
+      "ve_efecto_cocuyo",
+      "ve_eldiario"
+     ],
+     "containment": [
+      0.9119,
+      0.8252
+     ],
+     "words": [
+      302,
+      333
+     ],
+     "differing_words": [
+      2,
+      33
+     ],
+     "word_sequence_ratio": 0.9323,
+     "differing_segments": 8,
+     "shared_outlet_furniture_share": 0.175,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "Gobierno.",
+       "target": "gobierno."
+      },
+      {
+       "op": "replace",
+       "this": "viernes,",
+       "target": "viernes 9 de octubre,"
+      },
+      {
+       "op": "replace",
+       "this": "Publicidad “Nos",
+       "target": "«Nos"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "44c4d8fb7a881a92",
+     "target": "1668a9b7ef134ce8",
+     "outlets": [
+      "pa_diaadia",
+      "ec_el_universo"
+     ],
+     "containment": [
+      0.9551,
+      0.9313
+     ],
+     "words": [
+      475,
+      487
+     ],
+     "differing_words": [
+      0,
+      12
+     ],
+     "word_sequence_ratio": 0.9789,
+     "differing_segments": 8,
+     "shared_outlet_furniture_share": 0.163,
+     "first_differences": [
+      {
+       "op": "insert",
+       "this": "",
+       "target": "Noticias relacionadas hace 15 horas hace un día"
+      },
+      {
+       "op": "replace",
+       "this": "\"La",
+       "target": "“La"
+      },
+      {
+       "op": "replace",
+       "this": "detener\",",
+       "target": "detener”,"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "6c3b9fcea9c4299c",
+     "target": "a086106e6cbb3a2e",
+     "outlets": [
+      "pa_diaadia",
+      "pr_el_nuevo_dia"
+     ],
+     "containment": [
+      0.9543,
+      0.8085
+     ],
+     "words": [
+      467,
+      580
+     ],
+     "differing_words": [
+      0,
+      113
+     ],
+     "word_sequence_ratio": 0.8829,
+     "differing_segments": 7,
+     "shared_outlet_furniture_share": 0.159,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "7,7",
+       "target": "7.7"
+      },
+      {
+       "op": "replace",
+       "this": "\"Los",
+       "target": "RELACIONADAS Por El Tiempo / GDA Por The Associated Press “Los"
+      },
+      {
+       "op": "replace",
+       "this": "desaparecidas\",",
+       "target": "desaparecidas”,"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "6c3b9fcea9c4299c",
+     "target": "c98331dca05355bd",
+     "outlets": [
+      "pa_diaadia",
+      "ve_el_nacional"
+     ],
+     "containment": [
+      0.95,
+      0.9318
+     ],
+     "words": [
+      467,
+      476
+     ],
+     "differing_words": [
+      2,
+      11
+     ],
+     "word_sequence_ratio": 0.9776,
+     "differing_segments": 5,
+     "shared_outlet_furniture_share": 0.158,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "(SINAPROC)",
+       "target": "(Sinaproc)"
+      },
+      {
+       "op": "replace",
+       "this": "comunicado.",
+       "target": "comunicado citado por EFE."
+      },
+      {
+       "op": "replace",
+       "this": "centenar.",
+       "target": "centenar"
+      }
+     ]
+    }
+   ]
+  },
+  "same_address": {
+   "what": "both documents of the relation are fetches of one address (study key: no scheme, www, query, fragment or trailing slash): a re-fetch of one page, not a relation between two documents",
+   "by_class": {
+    "syndicated_copy_of|contained|different_address": 81,
+    "duplicate_of|near_identical|different_address": 3,
+    "syndicated_copy_of|exact|different_address": 9,
+    "syndicated_copy_of|near_identical|different_address": 102,
+    "duplicate_of|contained|different_address": 5,
+    "duplicate_of|exact|different_address": 317,
+    "duplicate_of|exact|same_address": 30
+   }
+  },
+  "cross_outlet_by_class": {
+   "contained": 81,
+   "exact": 9,
+   "near_identical": 102
+  },
+  "within_outlet_by_class": {
+   "near_identical": 3,
+   "contained": 5,
+   "exact": 347
+  },
+  "examples": {
+   "exact": [
+    {
+     "relation": "duplicate_of",
+     "text_match": "exact",
+     "document": "347e53496ea33a96",
+     "target": "92445bc4b5ad97b6",
+     "outlets": [
+      "py_la_nacion",
+      "py_la_nacion"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      212,
+      212
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 1.0,
+     "differing_segments": 0,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": []
+    },
+    {
+     "relation": "duplicate_of",
+     "text_match": "exact",
+     "document": "1cee9636fd943f8c",
+     "target": "f81abcf13a000887",
+     "outlets": [
+      "gt_prensa_libre",
+      "gt_prensa_libre"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      524,
+      524
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 1.0,
+     "differing_segments": 0,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": []
+    },
+    {
+     "relation": "duplicate_of",
+     "text_match": "exact",
+     "document": "2c90fd8c566f235a",
+     "target": "8f7460ff589de8e8",
+     "outlets": [
+      "co_el_espectador",
+      "co_el_espectador"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      107,
+      107
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 1.0,
+     "differing_segments": 0,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": []
+    },
+    {
+     "relation": "duplicate_of",
+     "text_match": "exact",
+     "document": "c5f5cf5998b39edf",
+     "target": "b39037bb3b899e81",
+     "outlets": [
+      "pr_el_nuevo_dia",
+      "pr_el_nuevo_dia"
+     ],
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "words": [
+      154,
+      154
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "word_sequence_ratio": 1.0,
+     "differing_segments": 0,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": []
+    }
+   ],
+   "near_identical": [
+    {
+     "relation": "duplicate_of",
+     "text_match": "near_identical",
+     "document": "8486648af5d9a69d",
+     "target": "cf3c0175bcf6b163",
+     "outlets": [
+      "pa_metro_libre",
+      "pa_metro_libre"
+     ],
+     "containment": [
+      0.9292,
+      0.9292
+     ],
+     "words": [
+      120,
+      120
+     ],
+     "differing_words": [
+      1,
+      1
+     ],
+     "word_sequence_ratio": 0.9914,
+     "differing_segments": 1,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "replace",
+       "this": "cerrado",
+       "target": "cerrrado"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "a1573ed62dbece29",
+     "target": "e855c18b5769ecba",
+     "outlets": [
+      "bo_el_deber",
+      "do_hoy"
+     ],
+     "containment": [
+      0.9935,
+      0.9048
+     ],
+     "words": [
+      160,
+      175
+     ],
+     "differing_words": [
+      0,
+      15
+     ],
+     "word_sequence_ratio": 0.9605,
+     "differing_segments": 2,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "insert",
+       "this": "",
+       "target": "Publicado por Actualizado: 10.10.2026 | 15:55 En: Washington, 10 oct (EFE).-"
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "El Mundo"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "cf631913185312f6",
+     "target": "0752ecc96a5b77e1",
+     "outlets": [
+      "pa_midiario",
+      "pa_la_prensa"
+     ],
+     "containment": [
+      0.9274,
+      0.9156
+     ],
+     "words": [
+      241,
+      244
+     ],
+     "differing_words": [
+      3,
+      6
+     ],
+     "word_sequence_ratio": 0.9793,
+     "differing_segments": 3,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "delete",
+       "this": "Escuchar audio noticia",
+       "target": ""
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "+info"
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "— FEPAFUT (@fepafut) October 10, 2026"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "near_identical",
+     "document": "e855c18b5769ecba",
+     "target": "2a8e4a04374c774b",
+     "outlets": [
+      "do_hoy",
+      "do_listin_diario"
+     ],
+     "containment": [
+      0.9048,
+      1.0
+     ],
+     "words": [
+      175,
+      159
+     ],
+     "differing_words": [
+      16,
+      0
+     ],
+     "word_sequence_ratio": 0.9573,
+     "differing_segments": 2,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "delete",
+       "this": "Publicado por Actualizado: 10.10.2026 | 15:55 En: Washington, 10 oct (EFE).-",
+       "target": ""
+      },
+      {
+       "op": "delete",
+       "this": "El Mundo EFE",
+       "target": ""
+      }
+     ]
+    }
+   ],
+   "contained": [
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "28734d6d07c6117c",
+     "target": "c6b486ea60998953",
+     "outlets": [
+      "ve_eldiario",
+      "es_abc"
+     ],
+     "containment": [
+      0.85,
+      0.9051
+     ],
+     "words": [
+      467,
+      439
+     ],
+     "differing_words": [
+      38,
+      10
+     ],
+     "word_sequence_ratio": 0.9224,
+     "differing_segments": 6,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "delete",
+       "this": "El terremoto de magnitud 7,7 que sacudió este viernes Panamá dejó al menos 27 heridos leves, unos 300 evacuados y más de 400 edificaciones afectadas, entre ella",
+       "target": ""
+      },
+      {
+       "op": "replace",
+       "this": "(…)",
+       "target": "(...)"
+      },
+      {
+       "op": "replace",
+       "this": "(Sinaproc)",
+       "target": "(SINAPROC)"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "a3cbab89f694c7ea",
+     "target": "b631916581cd568c",
+     "outlets": [
+      "ni_despacho_505",
+      "ec_la_republica_ec"
+     ],
+     "containment": [
+      0.5089,
+      0.9525
+     ],
+     "words": [
+      1084,
+      576
+     ],
+     "differing_words": [
+      511,
+      3
+     ],
+     "word_sequence_ratio": 0.6867,
+     "differing_segments": 4,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "insert",
+       "this": "",
+       "target": "Jueces con valentía"
+      },
+      {
+       "op": "delete",
+       "this": "Esperanza a las víctimas de la violencia y los conflictos",
+       "target": ""
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "Ruanda, Myammar"
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "9104fd2b95cd06c0",
+     "target": "d05f02fcf26038c8",
+     "outlets": [
+      "ar_perfil",
+      "ar_el_tribuno"
+     ],
+     "containment": [
+      0.4987,
+      0.9636
+     ],
+     "words": [
+      751,
+      392
+     ],
+     "differing_words": [
+      359,
+      0
+     ],
+     "word_sequence_ratio": 0.6754,
+     "differing_segments": 3,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "delete",
+       "this": "Caída del empleo",
+       "target": ""
+      },
+      {
+       "op": "replace",
+       "this": "Chaco, publicado por NA. Cuáles son las tres provincias que generaron empleos",
+       "target": "Chaco."
+      },
+      {
+       "op": "delete",
+       "this": "En la primera, la suba está explicada casi en su totalidad por la rama de elaboración de alimentos, que registró un alza del 19,7% equivalente a 448 puestos de ",
+       "target": ""
+      }
+     ]
+    },
+    {
+     "relation": "syndicated_copy_of",
+     "text_match": "contained",
+     "document": "a1573ed62dbece29",
+     "target": "1e789baf95375103",
+     "outlets": [
+      "bo_el_deber",
+      "gt_prensa_libre"
+     ],
+     "containment": [
+      0.915,
+      0.2703
+     ],
+     "words": [
+      160,
+      525
+     ],
+     "differing_words": [
+      1,
+      366
+     ],
+     "word_sequence_ratio": 0.4591,
+     "differing_segments": 3,
+     "shared_outlet_furniture_share": 0.0,
+     "first_differences": [
+      {
+       "op": "insert",
+       "this": "",
+       "target": "pasado"
+      },
+      {
+       "op": "insert",
+       "this": "",
+       "target": "10 de octubre"
+      },
+      {
+       "op": "replace",
+       "this": "EFE",
+       "target": "Circunstancias “profundamente perturbadoras” El gobernador del estado, Josh Shapiro, publicó un breve mensaje en redes sociales respecto al tiroteo. “He hablado"
+      }
+     ]
+    }
+   ]
+  },
+  "quality_of_the_later_document": {
+   "syndicated_copy_of|contained|ACCEPT": 76,
+   "duplicate_of|near_identical|ACCEPT": 2,
+   "syndicated_copy_of|exact|ACCEPT": 8,
+   "syndicated_copy_of|near_identical|ACCEPT": 98,
+   "duplicate_of|contained|REJECT": 4,
+   "duplicate_of|exact|REJECT": 346,
+   "syndicated_copy_of|contained|REJECT": 5,
+   "syndicated_copy_of|near_identical|REJECT": 4,
+   "syndicated_copy_of|exact|REJECT": 1,
+   "duplicate_of|near_identical|REJECT": 1,
+   "duplicate_of|contained|ACCEPT": 1,
+   "duplicate_of|exact|ACCEPT": 1
+  }
+ },
+ "timing_seconds": {
+  "extract_0_2_0": 49.4,
+  "extract_0_3_0": 49.8,
+  "metadata_1_on_0_2_0": 3.2,
+  "metadata_2_on_0_3_0": 4.1,
+  "text_reuse_1": 2.2,
+  "text_reuse_2": 3.5
+ }
+}

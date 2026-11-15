@@ -201,6 +201,12 @@ containment of at least 0.9; the target is the earlier document and the `basis` 
 an order of appearance, not a finding of origin. An agency credit is a different kind of evidence
 (a document layer) and never makes a relation.
 
+*2026-11-15, later (CPD-0040):* CO.PRE.PAN's preferred rule is `text-reuse/2` — the same relations
+and the same kinds, with the kind of match written at the head of `basis` (`exact`: the same
+canonical BODY text; `near_identical`; `contained`). Fields are not added here: an optional
+`match_class` / `match_rule` is a [change request](RELATION_MATCH_CLASS_CHANGE_REQUEST_2026-11-15.md)
+to this proposal, a joint decision.
+
 ### 5.7 Derived layers
 
 One table per layer, declared by the release: layer id, `target_level`, `rule_version`, the

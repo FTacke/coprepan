@@ -635,3 +635,18 @@ row restates its defining record; nothing is defined anew.*
 | **AI disclosure** values | article text: `generated`, `assisted`, `translated`, `unclear`; components: `summary`, `audio`, `image`; absent: state `unknown` (`no_disclosure_observed`, `components_only`, `site_wide_statement_only`) | `provenance.py` |
 | **agency credit** | agencies (closed list in `provenance.AGENCIES`, `unspecified` for "Agencias"); `agency_use`: `verbatim_declared` (reserved), `edited_declared`, `joint_credit`, `credit_only` | `provenance.py` |
 | **text reuse** (term) | the same BODY text in two documents (8-word shingle containment ≥ 0.9): `syndicated_copy_of` across outlets, `duplicate_of` within one; an order of appearance, not a finding of origin | `text_reuse.py` |
+
+## 27. Additions of 2026-11-15, later (CPD-0040)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| extractor version | `article_html/0.3.0` (`extraction/2`, `CANDIDATE`, the preferred one): the title is the `h1` that is the stated headline, or none; bounded subtitle paths | `extraction_article.py` |
+| **title unknown** (state) | a page with no title block: no `h1` is the article's headline (a logo, the site's name, a section label); the page's own headline statement stays in `metadata.title` with its basis | CPD-0040 §1 |
+| layer id / artifact | `agency-credit/2`; `editorial-metadata/2` (= `/1` with `agency-credit/2` in place of `/1`) | CPD-0040 §2, `enrichment.py` |
+| **agency role** values | `credited` (author or source of the published text), `co_credited` (with the outlet's newsroom or publisher, named in `credited_with`), `material_source` (named as the source of material used) | `provenance.py` |
+| **declared use** values | `verbatim_declared`, `edited_declared`, `material_used_declared`, `not_stated` -- only an explicit statement sets one | same |
+| agency unknown reasons | `agency_named_as_quoted_source_only`, `no_agency_credit_observed` | same |
+| rule version | `text-reuse/2` | CPD-0040 §3, `text_reuse.py` |
+| **text match** values | `exact` (the same canonical BODY text: NFC, invisible characters removed, white space folded; nothing else), `near_identical` (each ≥ 0.9 of its shingles in the other, not exact), `contained` (only the shorter one is) | same |
+| **canonical BODY text** (term) | the BODY with the technical normalisations of `text-reuse/2` only; case, punctuation, quotation marks, digits and wording are kept | same |
+| **blind control** (term) | a human control sample frozen before review: cases, questions and the machine's answers fixed by digest; the reader sees page evidence, never the machine's answer; random and targeted components reported apart | CPD-0040 §5 |

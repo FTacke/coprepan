@@ -1,0 +1,5621 @@
+{
+ "schema": "coprepan-phase3-blind-key/v1",
+ "seed": "phase3-blind-control-2026-11-15",
+ "cases": [
+  {
+   "case_id": "C01",
+   "component": "targeted",
+   "stratum": "T04_subtitle_markup",
+   "fetch_ids": [
+    "ft1:96e45708bfee0fe544fa6f70209417e30867a4c0f21e3bbc28662c90a3357722"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "c797c096d42f482fd2f1afe21a1c523273fc52af0169ad2b8f144575e4be47b0"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Hace 50 años: el Ministerio de Seguridad Pública ordenó redadas en San José",
+     "metadata_title": "Hace 50 años: el Ministerio de Seguridad Pública ordenó redadas en San José",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 89,
+      "basis": "subtitle_markup",
+      "text": "Hace medio siglo, las autoridades policiales intensificaron operativos nocturnos y de madrugada para detener a sospechosos en San José"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 294,
+      "function_word_share": 0.48,
+      "body_characters": 1841,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.993,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C02",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:3eb787f3c2dba33256900e814db93621fd007d30b3becf73ba5fae8d906f8766"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "c6fb1068179ec67c31efc31d12dfc1cf356c668fe8b667598c754d760e0104bf"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "audio",
+    "AGENCY_ROLE": "credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "La Policía se despliega en la playa de El Guano de Ceuta para desalojar el último gran asentamiento ilegal de inmigrantes",
+     "metadata_title": "La Policía se despliega en la playa de El Guano de Ceuta para desalojar el último gran asentamiento ilegal de inmigrantes",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 276,
+      "basis": "subtitle_markup",
+      "text": "Allí acampan menos de un millar de marroquíes desde el desalojo de los asentamientos chabolistas en las playas del Trampolín y de Benítez"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 532,
+      "function_word_share": 0.519,
+      "body_characters": 3239,
+      "stated_body_characters": 3309,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "components_only",
+     "statements": [
+      {
+       "value": "audio",
+       "form": "audio",
+       "scope": "audio",
+       "text": "Audio generado con IA",
+       "block_index": 284,
+       "block_role": "non_body",
+       "block_kind": "unstructured_text",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": []
+      }
+     ]
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "unspecified"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencias",
+        "agencies": [
+         "unspecified"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencias",
+        "agencies": [
+         "unspecified"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C03",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:438addb6139ea77146245b9da04462400c92a3619dd3200a4399c16081188b03"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "4ba491c692f0e2ee45096231285cfae8beca42587659e5c6445d99de60e9daa7"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Ideam confirmó El Niño: podría ser fuerte hasta marzo de 2027",
+     "metadata_title": "Ideam confirmó El Niño: podría ser fuerte hasta marzo de 2027",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 582,
+      "function_word_share": 0.483,
+      "body_characters": 3915,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.991,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "generic_or_template_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C04",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:21157fd112c4afec22d080af22a1827ae6ba3212bac2ab6d62caecda4990a6d3"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "f5109cc6e496d534b6bdf0880ff3eebfc927ae4c2d8c91de239a5f71ddbfbc4e"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "La lista de mujeres asesinadas sigue creciendo ante la indiferencia social",
+     "metadata_title": "La lista de mujeres asesinadas sigue creciendo ante la indiferencia social - Diario Libre",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 154,
+      "basis": "stated_by_page",
+      "text": "En buena medida, la justificación del feminicidio y la de las ejecuciones extrajudiciales se interceptan. La vida vale cada vez menos en el país"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 2853,
+      "function_word_share": 0.435,
+      "body_characters": 17795,
+      "stated_body_characters": 2177,
+      "distinct_5gram_ratio": 0.958,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C05",
+   "component": "targeted",
+   "stratum": "T13_reuse_exact",
+   "fetch_ids": [
+    "ft1:2160f8214da36c00c2b1040956c7d854fd7d800f6b6562209137d1d5a9b0dfec",
+    "ft1:9c260681314c308c7026305dede93472d770ec9faf08066100cce4b6be35e227"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "0e773ed371923279a81c4e3a0b163e4b366a004b70c078b372da9bc912643c19",
+    "0d11ed585a07473c544752aeef0470af58b6c56bedad343a14d6f795f735afe7"
+   ],
+   "predictions": {
+    "REUSE": "exact"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "duplicate_of",
+     "rule": "text-reuse/2",
+     "text_match": "exact",
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "shingles": [
+      517,
+      517
+     ],
+     "shared_shingles": 517,
+     "words": [
+      524,
+      524
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "basis": "text-reuse/2: exact -- canonical BODY text equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 1.000 of this document in the target, 1.000 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C06",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:2bce3156ad647c12f7ded27c108d4377acd0c901d2de03020dddc1e4c13f3f74"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "b5083de8d84e0aa8e453b3231a5ac594105023f1a4a5e15dabc7bd3c0a0b994a"
+   ],
+   "predictions": {
+    "TITLE": "B",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Investigan trata laboral tras rescate de familia argentina retenida en Hernandarias",
+     "metadata_title": "Investigan trata laboral tras rescate de familia argentina retenida en Hernandarias",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 382,
+      "function_word_share": 0.484,
+      "body_characters": 2325,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C07",
+   "component": "targeted",
+   "stratum": "T06_ai_article",
+   "fetch_ids": [
+    "ft1:a9c5bfcf021b27382de1e029480370d8297456a3960584201f24a0f7f1aff959"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "d03905870698f418a21fad7872d9a94febb5bc2d013abbb2a8db39e1db17c090"
+   ],
+   "predictions": {
+    "AI_TEXT": "assisted",
+    "AI_COMPONENT": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Régimen intensifica campaña de fin de año tras severa caída en ingresos por turismo",
+     "metadata_title": "Régimen intensifica campaña de fin de año tras severa caída en ingresos por turismo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 66,
+      "basis": "stated_by_page",
+      "text": "Nicaragua está desesperada por levantar el turismo aprovechando la temporada de diciembre. Mara Stotti busca viajeros a granel y promete un país «en paz»."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 512,
+      "function_word_share": 0.443,
+      "body_characters": 3404,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 1
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:04000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "known",
+     "reason": null,
+     "statements": [
+      {
+       "value": "assisted",
+       "form": "text_assisted",
+       "scope": "article",
+       "text": "*Este artículo fue elaborado mediante la colaboración estratégica entre nuestro equipo editorial y herramientas de inteligencia artificial.",
+       "block_index": 88,
+       "block_role": "body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": []
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C08",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:f80f21f86ef7d2013c1e667eef563c7e3f349e7ff66a0770d58fba3d0b88046d"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "ae4352c84d869ade6d18ce8962724c4c751af6199475010754eea45bed66d4f5"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "15000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Mariano Rivera envía mensaje de apoyo a Panamá: ‘ustedes no están solos’",
+     "metadata_title": "Mariano Rivera envía mensaje de apoyo a Panamá: ‘ustedes no están solos’",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 7,
+      "basis": "stated_by_page",
+      "text": "El exlanzador panameño expresó su solidaridad con las personas y familias afectadas por el sismo de este 9 de octubre en Panamá y aseguró que sigue pendiente de la situación desde Nueva York."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 310,
+      "function_word_share": 0.474,
+      "body_characters": 1876,
+      "stated_body_characters": 1877,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:15000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C09",
+   "component": "targeted",
+   "stratum": "T07_ai_component",
+   "fetch_ids": [
+    "ft1:d42254b254e371dacf33c180890893c9622abfe17a91273939936fff0a343e6b"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "1835862c437557aa79001165719ca82699d54313a9eaa160dbd4063c6cfa3f6f"
+   ],
+   "predictions": {
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "audio,summary"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Gobierno denuncia atentado a funcionarios del Inpec en Barraquilla y amenazas al presidente",
+     "metadata_title": "Gobierno denuncia atentado a funcionarios del Inpec en Barraquilla y amenazas al presidente",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 1015,
+      "function_word_share": 0.466,
+      "body_characters": 6993,
+      "stated_body_characters": 547,
+      "distinct_5gram_ratio": 0.864,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:02000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "components_only",
+     "statements": [
+      {
+       "value": "summary",
+       "form": "summary",
+       "scope": "summary",
+       "text": "Resumen generado por IA. Para más detalles, consulte el artículo completo.",
+       "block_index": 198,
+       "block_role": "non_body",
+       "block_kind": "unstructured_text",
+       "module": "ai_summary",
+       "human_review_stated": false,
+       "tools_named": []
+      },
+      {
+       "value": "audio",
+       "form": "audio",
+       "scope": "audio",
+       "text": "Audio generado con IA de Google",
+       "block_index": 208,
+       "block_role": "non_body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": [
+        "Google"
+       ]
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C10",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:310a05a12710c8cca88885f6d4dcc73070e0748e6de6a10f303b4b65e7d88386"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "002edfca95c134e77e9b9067479c21c9fb39948c335e8f851ca7e97d1903515c"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Director de la Policía dice que personas con órdenes de arresto del 2012 y 2014 se han entregado",
+     "metadata_title": "Director de la Policía dice que personas con órdenes de arresto del 2012 y 2014 se han entregado",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 122,
+      "basis": "stated_by_page",
+      "text": "Las declaraciones fueron ofrecidas durante el lanzamiento de una intervención integral en el sector Cienfuegos, en Santiago Oeste, encabezada por la ministra de Interior y Policía, Faride Raful."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 421,
+      "function_word_share": 0.468,
+      "body_characters": 2874,
+      "stated_body_characters": 2864,
+      "distinct_5gram_ratio": 0.995,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C11",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:7a8e8294071c30fea09ecc657053a4e31b9028a8f9ffec2f9c65bac98672463f"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "d2187b52bca781a96c15f2b1545f408600f2ff6ff47f9b80672d0dd60d8f703e"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "11000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Vente Venezuela exige levantar inhabilitación de Machado tras denuncia de exmagistrada",
+     "metadata_title": "Vente Venezuela exige levantar inhabilitación de Machado tras denuncia de exmagistrada",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 249,
+      "basis": "stated_by_page",
+      "text": "La inhabilitación de Machado ocurrió en el 2015, la Contraloría de la República -órgano adscrito al Poder Ciudadano- le negó la participación a la líder opositora a cargos públicos por 12 meses. En ese año se iban a celebrar unas elecciones parlamentarias."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 454,
+      "function_word_share": 0.452,
+      "body_characters": 2997,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.996,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:11000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C12",
+   "component": "targeted",
+   "stratum": "T14_reuse_near_identical",
+   "fetch_ids": [
+    "ft1:52169d38aeef9666059307aac04972e08d3773daa27ba8f7cec6b1fafa173292",
+    "ft1:6fe8ed9031cba0035644d463c4045f706427f79d8f95cb74783dccc5e537a9d8"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "a71a2fe3c0c14d416e83b3f898453ff0105b777d1c8b41a1d9d83aaad90e3e0f",
+    "d3c1ae3470336edbe4d700fd4b4c9101e2d81f929d86c8c8d63e84e95baa1322"
+   ],
+   "predictions": {
+    "REUSE": "near_identical"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "near_identical",
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "shingles": [
+      310,
+      310
+     ],
+     "shared_shingles": 310,
+     "words": [
+      317,
+      317
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "basis": "text-reuse/2: near_identical -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 1.000 of this document in the target, 1.000 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C13",
+   "component": "targeted",
+   "stratum": "T14_reuse_near_identical",
+   "fetch_ids": [
+    "ft1:6addd67583fb2bde23873faf8a900db0864bcd15d059f108d92e0acb80f22d28",
+    "ft1:7e2b9639b65b1c603f11ba781a6558cdfc976567e9b25b67a2643a2042a25561"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "f1eeddfac443f9c7113774e8db88211fb1eccba5d753f9683e7c39d848d0e543",
+    "05acd5aa4c69bf96ac02353028ce95e527dee9fcd08746133a959995d564c777"
+   ],
+   "predictions": {
+    "REUSE": "near_identical"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "near_identical",
+     "containment": [
+      0.9429,
+      0.9272
+     ],
+     "shingles": [
+      473,
+      481
+     ],
+     "shared_shingles": 446,
+     "words": [
+      480,
+      488
+     ],
+     "differing_words": [
+      11,
+      19
+     ],
+     "basis": "text-reuse/2: near_identical -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 0.943 of this document in the target, 0.927 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C14",
+   "component": "targeted",
+   "stratum": "T12_iptc_not_known",
+   "fetch_ids": [
+    "ft1:df1719ad6993707547371202d445ff73e6290bbc425c09c6a9500f74f4c52e3f"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "563107f1f9493d8521d04d4b7698d59e3387c518494161051118503d314d5d3c"
+   ],
+   "predictions": {
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Masacre en Pensilvania: al menos nueve muertos tras tiroteo",
+     "metadata_title": "Masacre en Pensilvania: al menos nueve muertos tras tiroteo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 117,
+      "basis": "stated_by_page",
+      "text": "La Policía indicó que el presunto agresor también había fallecido"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 295,
+      "function_word_share": 0.437,
+      "body_characters": 1822,
+      "stated_body_characters": 1746,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.027,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "ap"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "The Associated Press",
+        "agencies": [
+         "ap"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       },
+       {
+        "position": "byline_block",
+        "text": "Por The Associated Press",
+        "agencies": [
+         "ap"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "The Associated Press",
+        "agencies": [
+         "ap"
+        ]
+       },
+       {
+        "position": "byline_block",
+        "text": "Por The Associated Press",
+        "agencies": [
+         "ap"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C15",
+   "component": "targeted",
+   "stratum": "T02_subtitle_removed",
+   "fetch_ids": [
+    "ft1:664b004352a2beba3f55aa9c6d1b062f7a6b89b34de7a970fafa53f24328930b"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "758284d22cc3275ca2e093006894de00a7e08462db46b766c32e57816cab4036"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "El huracán Isaías se degrada a ciclón postropical tras tocar tierra en EE. UU.",
+     "metadata_title": "El huracán Isaías se degrada a ciclón postropical tras tocar tierra en EE. UU.",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 125,
+      "basis": "stated_by_page",
+      "text": "El huracán Isaías se debilitó y pasó a ser un ciclón postropical el sábado, después de tocar tierra en el noroeste de Florida, donde azotó la costa estadounidense del Golfo de México con lluvias intensas y fuertes vientos."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 540,
+      "function_word_share": 0.431,
+      "body_characters": 3425,
+      "stated_body_characters": 3384,
+      "distinct_5gram_ratio": 0.998,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "afp"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencia AFP",
+        "agencies": [
+         "afp"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencia AFP",
+        "agencies": [
+         "afp"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C16",
+   "component": "targeted",
+   "stratum": "T08_agency_reclassified",
+   "fetch_ids": [
+    "ft1:1600602c0038d6c1d054e434f425cffca5443092388ba6b2dbc2f45a89bb2825"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "4fa9946b97fcd26e4393e4a7e5ca8445dd09ea36810042c0d3c559753c100f00"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "co_credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Argentina pierde contra Uruguay en La Bombonera en su primer partido tras el retiro de Messi",
+     "metadata_title": "Argentina pierde contra Uruguay en La Bombonera en su primer partido tras el retiro de Messi",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 222,
+      "basis": "stated_by_page",
+      "text": "En el primer partido de la era post Lionel Messi, la selección argentina cayó este viernes 1-2 en un amistoso ante Uruguay en el estadio La Bombonera de Buenos Aires."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 467,
+      "function_word_share": 0.445,
+      "body_characters": 2937,
+      "stated_body_characters": 2659,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:20001065"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "afp"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "co_credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "AFP / Redacción Primicias",
+        "agencies": [
+         "afp"
+        ],
+        "role": "co_credited",
+        "use_declared": "not_stated",
+        "credited_with": [
+         "Redacción Primicias"
+        ]
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "joint_credit",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "AFP / Redacción Primicias",
+        "agencies": [
+         "afp"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C17",
+   "component": "targeted",
+   "stratum": "T04_subtitle_markup",
+   "fetch_ids": [
+    "ft1:4d3bbf790741f3eb7e94184e08e0c2ed71471ebb3d5ac536e25bf9a37da804b9"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "39c8eac0c3372ffab2ff999e2c358883e6745b12f28271b373b3660b7ce2ca7c"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "La nueva caída de El Pablo: un túnel en el jardín de su mansión y viviendas clandestinas por valor de 20 millones de euros",
+     "metadata_title": "La nueva caída de El Pablo: un túnel en el jardín de su mansión y viviendas clandestinas por valor de 20 millones de euros",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 267,
+      "basis": "subtitle_markup",
+      "text": "La enésima redada contra la organización de 'El Pablo' en el barrio palmesano de La Soledad movilizó a 200 policías. Se salda con 21 personas detenidas y una acusación por blanqueo de capitales"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 696,
+      "function_word_share": 0.46,
+      "body_characters": 4448,
+      "stated_body_characters": 4566,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C18",
+   "component": "targeted",
+   "stratum": "T03_subtitle_stated",
+   "fetch_ids": [
+    "ft1:c92644b044b1ab0d791b80110e169d9e667f41a8a82978aba987fcb946d2223b"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "da611d5515246e23bbf98ab06e2deb0d7d7ffc68c17fd5757c8983e36fcf89f3"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Juan Esmoris: “Cuando soy periodista, sigo siendo de Nacional, pero soy más hincha mío”",
+     "metadata_title": "Juan Esmoris: “Cuando soy periodista, sigo siendo de Nacional, pero soy más hincha mío”",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 75,
+      "basis": "stated_by_page",
+      "text": "Es hijo del reconocido humorista Jorge Esmoris, pero Juan ya tiene voz propia. Relata deportes, pero sueña con hacer entretenimiento."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 5340,
+      "function_word_share": 0.531,
+      "body_characters": 29008,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.955,
+      "repeated_block_share": 0.002,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "unmapped_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C19",
+   "component": "targeted",
+   "stratum": "T01_title_changed",
+   "fetch_ids": [
+    "ft1:a0013bcfeab7da1a1a8a4596c1ea616ff98c4182d58921de450c56586d9dc49d"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "f21cd61175d78375cc87b72849d5409cd5d8c16b1d9b790836312ff81349099c"
+   ],
+   "predictions": {
+    "TITLE": "B",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Identificaciones garantiza atención normal y aclara sobre fallas informáticas",
+     "metadata_title": "Identificaciones garantiza atención normal y aclara sobre fallas informáticas",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 230,
+      "function_word_share": 0.439,
+      "body_characters": 1661,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.996,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C20",
+   "component": "targeted",
+   "stratum": "T05_no_subtitle_accepted",
+   "fetch_ids": [
+    "ft1:e2f47137f3fc397c9c1c70fb973ed38b4cd19b66ec02fd0722eddc2bf9c40ae8"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "9094bce92812b4b860efe6017a9cd83921844f02aa26e4f2476a93b7b9dd6cf5"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "CMP rechaza la violencia y reafirma la libertad de expresión como pilar de la democracia",
+     "metadata_title": "CMP rechaza la violencia y reafirma la libertad de expresión como pilar de la democracia",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 376,
+      "function_word_share": 0.452,
+      "body_characters": 2610,
+      "stated_body_characters": 2602,
+      "distinct_5gram_ratio": 0.997,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C21",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:60aba7821c13e42cf4f2a175a879e10e925c9eece26f97f3106a6e13f32a31a3"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "5a6a6baa2e6e993d51786c5f8512e4c57ad29fc350b66fcd25f7d4197cdff27d"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no",
+    "IPTC": "02000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Operativos: Demoraron a 145 personas en Salta",
+     "metadata_title": "Operativos: Demoraron a 145 personas en Salta",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 23,
+      "basis": "stated_by_page",
+      "text": "Se hicieron operativos en los barrios Miguel Ortiz y Palermo."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short"
+     ],
+     "evidence": {
+      "words": 122,
+      "function_word_share": 0.459,
+      "body_characters": 858,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:02000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C22",
+   "component": "targeted",
+   "stratum": "T10_agency_quoted_only",
+   "fetch_ids": [
+    "ft1:466ec6dcff286d050cecd38c010b709d478d741e8cd4039f3959ffbb744e2513"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "b66060adfb4fa9ab6f021365ca16df77fbb79314781e19c396141a5c30fa009d"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "quoted_only",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Panamá destina hasta 100 millones de dólares para atender daños causados por terremoto",
+     "metadata_title": "Panamá destina hasta 100 millones de dólares para atender daños causados por terremoto",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 483,
+      "function_word_share": 0.474,
+      "body_characters": 3080,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.996,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "agency_named_as_quoted_source_only",
+     "value": null,
+     "attributes": {
+      "quoted_source_mentions": [
+       {
+        "block_index": 75,
+        "agencies": [
+         "efe"
+        ],
+        "text": "an, aseveró que el país no se va a detener, según reseñó la agencia EFE."
+       }
+      ]
+     },
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C23",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:d4eeb075700a45331891e7ac81900220cfe850c4b8a1448c441d7fe3b5c2d107"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "fb3c07d6e6386c4e1c55434e79b8dce07ed37dbea1f7f91e63bfe55656315b1e"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Isaías podría acercarse a categoría 3 antes de tocar tierra",
+     "metadata_title": "Isaías podría acercarse a categoría 3 antes de tocar tierra",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 37,
+      "basis": "stated_by_page",
+      "text": "El huracán continúa fortaleciéndose en el Golfo y mantiene bajo amenaza Florida, Alabama y Mississippi."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 217,
+      "function_word_share": 0.41,
+      "body_characters": 1454,
+      "stated_body_characters": 1417,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C24",
+   "component": "targeted",
+   "stratum": "T10_agency_quoted_only",
+   "fetch_ids": [
+    "ft1:203add02712c20f44b1d6643a6d546b9a8282886aa54223906c8611ad4e2e583"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "87f02455183c133d5baaa7a273e2cc097ea2f10e86f6f32fe736c1b542997bc4"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "quoted_only",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "“Complot premeditado”: el copiloto de Flydubai buscaba estrellar el avión contra el aeropuerto internacional de Tel Aviv",
+     "metadata_title": "“Complot premeditado”: el copiloto de Flydubai buscaba estrellar el avión contra el aeropuerto internacional de Tel Aviv",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 15,
+      "basis": "stated_by_page",
+      "text": "La fiscalía emiratí concluyó que el agresor omaní pretendía causar la mayor cantidad posible de muertes y que se inspiró en los atentados suicidas de Al-Qaeda del 11 de septiembre de 2001"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 644,
+      "function_word_share": 0.439,
+      "body_characters": 4189,
+      "stated_body_characters": 4008,
+      "distinct_5gram_ratio": 0.98,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "agency_named_as_quoted_source_only",
+     "value": null,
+     "attributes": {
+      "quoted_source_mentions": [
+       {
+        "block_index": 36,
+        "agencies": [
+         "reuters"
+        ],
+        "text": "el incidente del vuelo FZ1073, según indicaron fuentes a la agencia Reuters."
+       }
+      ]
+     },
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C25",
+   "component": "targeted",
+   "stratum": "T01_title_changed",
+   "fetch_ids": [
+    "ft1:53522dce4a9d84d01f1bebb038d3905b6d88560d8fc42a7b04ff0b9bcb46b299"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "3683c20bae204b0d59bf2defb78886dc33985204b55b7f61109a85d97e5f03ad"
+   ],
+   "predictions": {
+    "TITLE": "N",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": null,
+     "metadata_title": "Sostiene Raúl encuentro con el Canciller de Bolivia",
+     "basis": "open_graph"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 157,
+      "function_word_share": 0.427,
+      "body_characters": 986,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C26",
+   "component": "targeted",
+   "stratum": "T04_subtitle_markup",
+   "fetch_ids": [
+    "ft1:1742a8fa7390809a8437127307b52c1196a2a0a8cf03ad1b2690aed652b1bd6a"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "ddb1cc9f6d4de527627d4551b9d668cb716b413dadaf55a35ceaaf3af27f12f8"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Inauguraron el Parque Lineal Río Guaire en Colinas de Bello Monte",
+     "metadata_title": "Inauguraron el Parque Lineal Río Guaire en Colinas de Bello Monte",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 23,
+      "basis": "subtitle_markup",
+      "text": "El alcalde Darwin González anunció la entrega del espacio recreativo, que busca ampliar las áreas destinadas a peatones y ciclistas en el municipio Baruta"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 473,
+      "function_word_share": 0.452,
+      "body_characters": 2988,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.957,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C27",
+   "component": "targeted",
+   "stratum": "T09_agency_credited",
+   "fetch_ids": [
+    "ft1:67d75fa4aae613722fcb37ba06a21acd27ef9c32516eed69cb563093ebb497dd"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "06977acc490b7cec13efed097e6d7338a3833684fff23fb5154a755d968bcc7f"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "La tormenta Isaías deja al menos cuatro muertos en Alabama y Florida",
+     "metadata_title": "La tormenta Isaías deja al menos cuatro muertos en Alabama y Florida",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 305,
+      "function_word_share": 0.466,
+      "body_characters": 1904,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "efe"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencia EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       },
+       {
+        "position": "meta_author",
+        "text": "Agencia EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       },
+       {
+        "position": "byline_block",
+        "text": "Por Agencia EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencia EFE",
+        "agencies": [
+         "efe"
+        ]
+       },
+       {
+        "position": "meta_author",
+        "text": "Agencia EFE",
+        "agencies": [
+         "efe"
+        ]
+       },
+       {
+        "position": "byline_block",
+        "text": "Por Agencia EFE",
+        "agencies": [
+         "efe"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C28",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:c8ce9bf1a40eaaabd3451c9086639b97ee41ee9ed8cacd4f5bad3194e49eb435"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "42e745b42be1890c9fa1f025e94bef7965aa9f92144aab0fba26a8e33dff82e4"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Lula da Silva dominó el voto en las cárceles brasileñas con el 72,57% de los sufragios",
+     "metadata_title": "Lula da Silva dominó el voto en las cárceles brasileñas con el 72,57% de los sufragios",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 10,
+      "basis": "stated_by_page",
+      "text": "En Brasil pueden votar las personas que permanecen en prisión preventiva y todavía no tienen una condena firme, así como los adolescentes de 16 y 17 años."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 328,
+      "function_word_share": 0.463,
+      "body_characters": 2248,
+      "stated_body_characters": 2200,
+      "distinct_5gram_ratio": 0.997,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C29",
+   "component": "targeted",
+   "stratum": "T14_reuse_near_identical",
+   "fetch_ids": [
+    "ft1:542ac25c5b3906bf0d25cb9ae6068cd141634525fd9f2b5816a8f5ddf6166ad8",
+    "ft1:d16818eeffbc4dec0bd8982c68150ddaabb7231928177a7ebcc3e445ec98e67d"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "0d5b08d2518405819a331a0df287b4719b7f7f0632f53e9db6055010cd1bc81a",
+    "2ca801c9b1914cc9a46fab46183a35d3d564fa11091dde2f69b8d779c5f554bd"
+   ],
+   "predictions": {
+    "REUSE": "near_identical"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "near_identical",
+     "containment": [
+      0.925,
+      0.9453
+     ],
+     "shingles": [
+      280,
+      274
+     ],
+     "shared_shingles": 259,
+     "words": [
+      288,
+      282
+     ],
+     "differing_words": [
+      6,
+      0
+     ],
+     "basis": "text-reuse/2: near_identical -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 0.925 of this document in the target, 0.945 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C30",
+   "component": "targeted",
+   "stratum": "T05_no_subtitle_accepted",
+   "fetch_ids": [
+    "ft1:f7d5269ede039e37a9e96e398da6a0edf220a1476e980aa00314061454be879b"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "23b38cb773a51a0033a015fded281b52149094dcf4a0ba60bbb90d8eb7b28ce1"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Minera Poderosa pierde demanda ante Poder Judicial",
+     "metadata_title": "Minera Poderosa pierde demanda ante Poder Judicial",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 537,
+      "function_word_share": 0.441,
+      "body_characters": 3747,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.989,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:11000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C31",
+   "component": "targeted",
+   "stratum": "T05_no_subtitle_accepted",
+   "fetch_ids": [
+    "ft1:9defe72c669d8d5ab153161e9359b2a9e03ea4601a4c06e95a3382015e8df299"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "57ff9983fede316f89df34c26847aacfa92dcdb7e928acd097c9f88058568096"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "¡Llega la ayuda a Las Tablas! Aterrizan helicópteros tras fuerte sismo",
+     "metadata_title": "¡Llega la ayuda a Las Tablas! Aterrizan helicópteros tras fuerte sismo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 341,
+      "function_word_share": 0.481,
+      "body_characters": 2233,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.997,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C32",
+   "component": "targeted",
+   "stratum": "T03_subtitle_stated",
+   "fetch_ids": [
+    "ft1:4ab3e4fd3da9744916d81a86c4f0b4ea85b5047a46db04a0d24e82cfeeece418"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "17d399df12ba6de15f112c6334b6ce591fa1f2570afea4109170698d9aeccb7e"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Arequipa: Destruyen 10 bocaminas y 15 campamentos de minería ilegal en Caylloma",
+     "metadata_title": "Arequipa: Destruyen 10 bocaminas y 15 campamentos de minería ilegal en Caylloma",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 34,
+      "basis": "stated_by_page",
+      "text": "Operación “Auríferos del Sur II” se realizó en el distrito de Lluta, provincia de Caylloma (Arequipa). Los bienes decomisados suman S/243,860.00."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short"
+     ],
+     "evidence": {
+      "words": 119,
+      "function_word_share": 0.403,
+      "body_characters": 824,
+      "stated_body_characters": 801,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C33",
+   "component": "targeted",
+   "stratum": "T02_subtitle_removed",
+   "fetch_ids": [
+    "ft1:9df3bc95a21335dd9d577008695e2a802c64f4f5b17ff1a0c2c6a780a686f5ff"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "a9b7e71719405f8d10a66206515173c80ed017203614e3bdedddc5ee2eca2b14"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Derecha e izquierda miden sus fuerzas en las calles y con la regulación de las protestas",
+     "metadata_title": "Derecha e izquierda miden sus fuerzas en las calles y con la regulación de las protestas",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 179,
+      "basis": "stated_by_page",
+      "text": "El anticipado pulso por el poder regional se calienta con las marchas del 14 de octubre próximo. Ya hay nuevos protocolos para que la Policía actúe en casos de violencia. ¿Qué está en juego entre dos fuerzas que tensionan el debate público?"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short",
+      "template_body"
+     ],
+     "evidence": {
+      "words": 98,
+      "function_word_share": 0.337,
+      "body_characters": 759,
+      "stated_body_characters": 549,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:11000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "components_only",
+     "statements": [
+      {
+       "value": "summary",
+       "form": "summary",
+       "scope": "summary",
+       "text": "Resumen generado por IA. Para más detalles, consulte el artículo completo.",
+       "block_index": 199,
+       "block_role": "non_body",
+       "block_kind": "unstructured_text",
+       "module": "ai_summary",
+       "human_review_stated": false,
+       "tools_named": []
+      },
+      {
+       "value": "audio",
+       "form": "audio",
+       "scope": "audio",
+       "text": "Audio generado con IA de Google",
+       "block_index": 209,
+       "block_role": "non_body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": [
+        "Google"
+       ]
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C34",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:6d9038fcd707830b6b8c7e6e9347925a3e9cb1c2f0f750c7c369e05b084f8211"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "b1f19147b7bf348c7879845c379334e2d74ee0515771f198b4f99bec6c3d653a"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "La Libertad: Ingenieros de minas exigen mano dura tras el último atentado en Pataz",
+     "metadata_title": "La Libertad: Ingenieros de minas exigen mano dura tras el último atentado en Pataz",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 34,
+      "basis": "stated_by_page",
+      "text": "Mediante un comunicado, la entidad que los agrupa invocó a las autoridades a restablecer el orden. “La minería ilegal es crimen organizado”, resaltó"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 258,
+      "function_word_share": 0.496,
+      "body_characters": 1584,
+      "stated_body_characters": 1625,
+      "distinct_5gram_ratio": 0.984,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C35",
+   "component": "targeted",
+   "stratum": "T10_agency_quoted_only",
+   "fetch_ids": [
+    "ft1:3d29a46a1a315240c5a60a0087cde3a82a00c8c94c8b94c6c2ed94e461bfbd72"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "21f2db15eeb9b411ef957ffdd02ccc861f3242569534134f4a425d606e39ba65"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "quoted_only",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "'Hay miedo' en Tonosí, el epicentro del terremoto de 7,7 que sacudió Panamá",
+     "metadata_title": "'Hay miedo' en Tonosí, el epicentro del terremoto de 7,7 que sacudió Panamá",
+     "basis": "open_graph"
+    },
+    "SUBTITLE": [
+     {
+      "index": 19,
+      "basis": "stated_by_page",
+      "text": "El presidente de Panamá, José Raúl Mulino, dijo que espera poder llegar Tonosí este sábado, en una declaraciones a EFE mientras recorría Penonomé, una de las zonas más afectadas por el terremoto y situada a unos 180 kilómetros del epicentro del evento sísmico."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 330,
+      "function_word_share": 0.464,
+      "body_characters": 2038,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "agency_named_as_quoted_source_only",
+     "value": null,
+     "attributes": {
+      "quoted_source_mentions": [
+       {
+        "block_index": 33,
+        "agencies": [
+         "efe"
+        ],
+        "text": " balance del terremoto. Mientras espera ese informe, Mulino dijo a EFE que el Gobierno ofrece \"todo el apoyo solidario\" a los afec"
+       }
+      ]
+     },
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C36",
+   "component": "targeted",
+   "stratum": "T15_reuse_contained",
+   "fetch_ids": [
+    "ft1:6c3b9fcea9c4299cce740e23828ae8b93726f27062b6c285318a493ce1a244e8",
+    "ft1:c6b486ea6099895316e46a28a8dab661b2c7c371192b5bd56465b76d1aa324c1"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "241989a50c18054706e3b54c898c0e644c442d18aff5ad13a5040b15f50d9e4f",
+    "dc9fbd35b0ea5751fb11de38762606725ead206439f572e48f547845ff34aab7"
+   ],
+   "predictions": {
+    "REUSE": "contained"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "contained",
+     "containment": [
+      0.85,
+      0.9051
+     ],
+     "shingles": [
+      460,
+      432
+     ],
+     "shared_shingles": 391,
+     "words": [
+      467,
+      439
+     ],
+     "differing_words": [
+      38,
+      10
+     ],
+     "basis": "text-reuse/2: contained -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 0.850 of this document in the target, 0.905 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C37",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:82176eb3f2f2c7ba75ecb56992d3a45219f638c9ec354cd36701bd37995fa6ae"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "ff4c9ed10ff046ebed98d7dd1b95291a4a99fd9fc7d391567561aa746edab6c4"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "2",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "EEUU-Rusia: Trump anuncia un acuerdo con Putin para suministrar diésel al \"mercado estadounidense y mundial\"",
+     "metadata_title": "EEUU-Rusia: Trump anuncia un acuerdo con Putin para suministrar diésel al &amp;quot;mercado estadounidense y mundial&amp;quot;",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 15,
+      "basis": "stated_by_page",
+      "text": "El anuncio del acuerdo Estados Unidos-Rusia sobre diésel hecho el viernes llega tres semanas antes de las elecciones de mitad de mandato a las que Trump llega en una posición muy delicada, y mientras los negociadores ucranianos y representantes de países europeos están en Miami para reunirse con Jar"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 346,
+      "function_word_share": 0.434,
+      "body_characters": 2307,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C38",
+   "component": "targeted",
+   "stratum": "T11_core_rejected",
+   "fetch_ids": [
+    "ft1:e69967d81cbf82aef2b310bab4c7d41d70f814d4cd203fac930d1458553de56e"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "7ca02e49b767d4c7d9222cc27c6d15e313cc29fea369284309a13d6e95d6596a"
+   ],
+   "predictions": {
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+     "metadata_title": "LA TRAMPA DE ESTAR SIEMPRE OCUPADO",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "duplicate_of_earlier"
+     ],
+     "evidence": {
+      "words": 312,
+      "function_word_share": 0.462,
+      "body_characters": 1936,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C39",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:c75457c7d230c8ebf6dfe709b8108bae81a74ac5cb147c37c9bf5e8a3176a022"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+   ],
+   "predictions": {
+    "TITLE": "N",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no",
+    "IPTC": "10000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": null,
+     "metadata_title": "EL UNIVERSAL",
+     "basis": "html_title"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "no_body"
+     ],
+     "evidence": {
+      "words": 0,
+      "function_word_share": 0.0,
+      "body_characters": 0,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:20000568"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C40",
+   "component": "targeted",
+   "stratum": "T09_agency_credited",
+   "fetch_ids": [
+    "ft1:ec9b8a6a016e5daaaaa9e39de74159c7ce2b9a42bf4100735c77811f17b1ab0f"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "ed3868393cc675e97748878d3377dc8ecf37f63cc9702cf08a3a9d2d7586e9a7"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Muere el abogado Joan Piqué Vidal, que defendió a Pujol en el caso Banca Catalana",
+     "metadata_title": "Muere el abogado Joan Piqué Vidal, que defendió a Pujol en el caso Banca Catalana",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 107,
+      "basis": "stated_by_page",
+      "text": "El funeral por el letrado, que murió el pasado miércoles, 7 de octubre en Castelldefels (Barcelona), se ha oficiado este sábado en esta población barcelonesa"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 291,
+      "function_word_share": 0.478,
+      "body_characters": 1789,
+      "stated_body_characters": 1784,
+      "distinct_5gram_ratio": 0.962,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:11000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "components_only",
+     "statements": [
+      {
+       "value": "audio",
+       "form": "audio",
+       "scope": "audio",
+       "text": "Audio generado por IA",
+       "block_index": 114,
+       "block_role": "non_body",
+       "block_kind": "unstructured_text",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": []
+      }
+     ]
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "unspecified"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencias",
+        "agencies": [
+         "unspecified"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Agencias",
+        "agencies": [
+         "unspecified"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C41",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:a1b7ddafcc9338ca5e599ea16ea39e257365ca67022ba9c6b174ddc87d94681b"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "a3bdeed7277edeffe88c1505d6ab2a0de9f269d4026dc2286e657a65c4e9ca1e"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "04000000",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "¿Al pensionarse por vejez en el IGSS tiene derecho a indemnización de su patrono? Estos son los tres escenarios que contempla el Código de Trabajo",
+     "metadata_title": "¿Al pensionarse por vejez en el IGSS tiene derecho a indemnización de su patrono? Estos son los tres escenarios que contempla el Código de Trabajo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 955,
+      "basis": "stated_by_page",
+      "text": "El Mintrab explica cuándo corresponde el 100% o el 50% de la indemnización, en qué casos el patrono debe pagar una diferencia y qué sucede si el trabajador renuncia después de pensionarse."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 950,
+      "function_word_share": 0.489,
+      "body_characters": 6240,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.978,
+      "repeated_block_share": 0.017,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:04000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C42",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:b8a6e2ec3642ca4390dda21f23cb81fe31c377f9ac251eb0883341146df114c1"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "5fb7e40bee54ce4cbe7448bcf66d69e95c2bd95e1b8d2a698e4d0e9af59a68c7"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no",
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "none",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "España le ganó sobre el final a Portugal y pasó a cuartos de final del Mundial",
+     "metadata_title": "España le ganó sobre el final a Portugal y pasó a cuartos de final del Mundial",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 17,
+      "basis": "stated_by_page",
+      "text": "Con un gol de Mikel Merino a los 45 minutos del segundo tiempo, consiguió la clasificación a los cuartos de final de un Mundial por primera vez en 16 años. La última vez que lo había logrado fue en Sudáfrica 2010, cuando se quedó con su primer y único título hasta ahora en una Copa del Mundo."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short",
+      "not_running_prose",
+      "template_body"
+     ],
+     "evidence": {
+      "words": 24,
+      "function_word_share": 0.292,
+      "body_characters": 220,
+      "stated_body_characters": 898,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C43",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:70eb24c1121f187ee289fa14ac84bc6ff7f1101ddc4bea60d2013a0dd9091941"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "5f15ade29a47a443943044dc417310736ac27b7c608d9e6bf3ff2bac45bafe97"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "none",
+    "AGENCY_ROLE": "credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Grupo Cox lanza en México su fundación con un programa para rehabilitar canchas de fútbol",
+     "metadata_title": "Grupo Cox lanza en México su fundación con un programa para rehabilitar canchas de fútbol",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 614,
+      "function_word_share": 0.446,
+      "body_characters": 4037,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.989,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "efe"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       },
+       {
+        "position": "meta_author",
+        "text": "EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "EFE",
+        "agencies": [
+         "efe"
+        ]
+       },
+       {
+        "position": "meta_author",
+        "text": "EFE",
+        "agencies": [
+         "efe"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C44",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:5e8d9b962b62afa0141187c27e893b15fc4a231718d66ba07be9d45748aa537e"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "b6d7c8c1760a004c720d4daa5bac338d7d4256c84db1167011daf72a032a5f8a"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "15000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Tras volver de la gira asiática con la selección uruguaya, Federico Viñas volvió a anotar con el Toluca por la Liga MX: mirá el nuevo gol del uruguayo",
+     "metadata_title": "Tras volver de la gira asiática con la selección uruguaya, Federico Viñas volvió a anotar con el Toluca por la Liga MX: mirá el nuevo gol del uruguayo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 26,
+      "basis": "stated_by_page",
+      "text": "Los uruguayos Emiliano Gómez y Fernando Gorriarán fueron claves para la victoria 3-2 de Tigres contra Toluca, con una asistencia cada uno"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 304,
+      "function_word_share": 0.451,
+      "body_characters": 1791,
+      "stated_body_characters": 1596,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:20001065"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C45",
+   "component": "targeted",
+   "stratum": "T12_iptc_not_known",
+   "fetch_ids": [
+    "ft1:4989f2a23c4192ab9dd532b51b28501235b6def14434b797bb05afed1b0b4d26"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "8f0f09f505e66b174eeef2aab9f8f13022fa7e5eb3c316a84f70c220af2e8a05"
+   ],
+   "predictions": {
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Bariloche a la Carta 2026: todas las actividades y horarios de este domingo 11 de octubre",
+     "metadata_title": "Bariloche a la Carta 2026: todas las actividades y horarios de este domingo 11 de octubre",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 16,
+      "basis": "stated_by_page",
+      "text": "Clases de cocina, talleres infantiles, chefs invitados y música en vivo forman parte de la programación en el Centro Cívico. La feria abrirá de 12 a 24 y ofrecerá propuestas para toda la familia."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 848,
+      "function_word_share": 0.44,
+      "body_characters": 5685,
+      "stated_body_characters": 496,
+      "distinct_5gram_ratio": 0.981,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "undecided",
+     "reason": "ambiguous_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C46",
+   "component": "targeted",
+   "stratum": "T02_subtitle_removed",
+   "fetch_ids": [
+    "ft1:246d3316ede0745db448274d3fe32d8bac13e3fbf9bf6d5382fc92822b34edde"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "57caf1beb1c96be2781bc9d0ddda305d657728622efc45c828f6773d7f2003ad"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "El cine cubano de Miñuca y Fernando Villaverde llega restaurado a Madrid",
+     "metadata_title": "El cine cubano de Miñuca y Fernando Villaverde llega restaurado a Madrid",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 383,
+      "function_word_share": 0.428,
+      "body_characters": 2586,
+      "stated_body_characters": 2574,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:01000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C47",
+   "component": "targeted",
+   "stratum": "T15_reuse_contained",
+   "fetch_ids": [
+    "ft1:350fdbb6ddfde537dbc3df70907e9ae2039049f9f18f870c22191d282e1864c0",
+    "ft1:431bcf4a9e25ded2d3526848304c70397843eee5e5659bc5983b1530205014dd"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "640636353f74c754507ff648f057838186ea9f6ccfdfbd80a7964f0c3643eee0",
+    "e6d25992cf4be08f8ffa036cdcd3f206f87e166199b18762a1d24166dd6e4537"
+   ],
+   "predictions": {
+    "REUSE": "contained"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "contained",
+     "containment": [
+      0.9554,
+      0.6687
+     ],
+     "shingles": [
+      224,
+      320
+     ],
+     "shared_shingles": 214,
+     "words": [
+      231,
+      332
+     ],
+     "differing_words": [
+      3,
+      104
+     ],
+     "basis": "text-reuse/2: contained -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 0.955 of this document in the target, 0.669 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C48",
+   "component": "targeted",
+   "stratum": "T11_core_rejected",
+   "fetch_ids": [
+    "ft1:c4f66bd8bb65c1c3ef180a50ee12382f517274c566a0f297ae8ff3cc7e8c3ffd"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "9016567ea141d51e1402bbfee20f5b9df4578b28d3b7b95be0b9ad021a626232"
+   ],
+   "predictions": {
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Gobierno declara Estado de Emergencia tras terremoto de 7.5; monto es hasta $100 millones",
+     "metadata_title": "Gobierno declara Estado de Emergencia tras terremoto de 7.5; monto es hasta $100 millones",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 80,
+      "basis": "stated_by_page",
+      "text": "El ministro de la Presidencia, Juan Carlos Orillac, informó este sábado que se aprobó en Consejo de Gabinete declarar Estado de Emergencia, tras el sismo de este viernes, de magnitud 7.5."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short"
+     ],
+     "evidence": {
+      "words": 42,
+      "function_word_share": 0.405,
+      "body_characters": 299,
+      "stated_body_characters": 187,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "undecided",
+     "reason": "ambiguous_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C49",
+   "component": "targeted",
+   "stratum": "T13_reuse_exact",
+   "fetch_ids": [
+    "ft1:c5f5cf5998b39edf4ee012bc78393784c85efd4d197afe9780095945edeea28a",
+    "ft1:bbb389692218f505f66645ed223036ea378e400ec141d6853892080301a36df2"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "f0a3199f4da165cd46933551c03878dea4525ef4d41ff66ce749eab2d3fd19f3",
+    "da9248bd14d7d6c1671c501114f69e3605f39ad9d32fd3b6840bfb98780b5ea1"
+   ],
+   "predictions": {
+    "REUSE": "exact"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "duplicate_of",
+     "rule": "text-reuse/2",
+     "text_match": "exact",
+     "containment": [
+      1.0,
+      1.0
+     ],
+     "shingles": [
+      147,
+      147
+     ],
+     "shared_shingles": 147,
+     "words": [
+      154,
+      154
+     ],
+     "differing_words": [
+      0,
+      0
+     ],
+     "basis": "text-reuse/2: exact -- canonical BODY text equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 1.000 of this document in the target, 1.000 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C50",
+   "component": "targeted",
+   "stratum": "T01_title_changed",
+   "fetch_ids": [
+    "ft1:4f0d447bba576cfce7fc2ac8de4560a61e49be78d6b3cc6b04b436063c650461"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "c79c2b26c33feefeabced5322c9cf37d3f5652cdb10a486f48b9fea8ac9d93eb"
+   ],
+   "predictions": {
+    "TITLE": "N",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": null,
+     "metadata_title": "Lab-Protec",
+     "basis": "open_graph"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short"
+     ],
+     "evidence": {
+      "words": 29,
+      "function_word_share": 0.586,
+      "body_characters": 203,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C51",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:163dbd55e213160368fc1ccf1e2888c10be0722e48aa5570542940b7cd3977d4"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "f2493a44830d6c74e75629d49f1edfc11976884a55e4f0ad32ffb0f98f271f80"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "none",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Christa Pike, la mujer que sobrevivió a dos inyecciones letales en Tennessee, recibe el alta del hospital",
+     "metadata_title": "Christa Pike, la mujer que sobrevivió a dos inyecciones letales en Tennessee, recibe el alta del hospital",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 151,
+      "basis": "stated_by_page",
+      "text": "Sus abogados han confirmado que ha regresado a prisión después de diez días de su intento de ejecución"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 155,
+      "function_word_share": 0.516,
+      "body_characters": 936,
+      "stated_body_characters": 832,
+      "distinct_5gram_ratio": 0.98,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C52",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:cdb796a4fcb0c950b8ce0976c6a92474463ea2f40aa1cb1bedeb8fd232f575c6"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "fdfecc8f4c1288ea9f330fe0b6060ebe8cb2358d60aa19413b216ad0870ffbf9"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "3,4",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none",
+    "AGENCY_ROLE": "none",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Fontaine calificó de \"balde de agua fría\" hallazgos de falsa producción en Codelco",
+     "metadata_title": "Fontaine calificó de &quot;balde de agua fría&quot; hallazgos de falsa producción en Codelco",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 39,
+      "basis": "stated_by_page",
+      "text": "La máxima autoridad de la minera advirtió que las irregularidades golpearon tanto la reputación institucional como la confianza del sector."
+     },
+     {
+      "index": 40,
+      "basis": "subtitle_markup",
+      "text": "Ante la crisis, remarcó de forma que \"mi deber es proteger y fortalecer Codelco recuperando confianzas\"."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 301,
+      "function_word_share": 0.458,
+      "body_characters": 2051,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.993,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "generic_or_template_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C53",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:2e616ac5a0b888c63ea1ec0668b1bbe4bc8075b7289ec79be540f6be817cbf46"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "3d0b2bdaddcf4b33b784f15d5e19b974de636261e8378752f2a5df97a639d0e0"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "15000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "¡Tres caídas y adiós al reinado! Sergio Mendoza destrona a Ricardo Sandoval",
+     "metadata_title": "¡Tres caídas y adiós al reinado! Sergio Mendoza destrona a Ricardo Sandoval",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 562,
+      "function_word_share": 0.418,
+      "body_characters": 3665,
+      "stated_body_characters": 3146,
+      "distinct_5gram_ratio": 0.993,
+      "repeated_block_share": 0.024,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:15000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C54",
+   "component": "targeted",
+   "stratum": "T11_core_rejected",
+   "fetch_ids": [
+    "ft1:313c7157339503ed8fea8df34aff6c7bb254b69249487d73a5fb446bcacce0f6"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "4c98fa247f4600285ba66c46e868209292ee039a7ef7c75b5490ec9bbeaf0077"
+   ],
+   "predictions": {
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "no"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "EN VIVO | Real Madrid busca recuperarse ante Villarreal en el Bernabéu: siga el partido de LaLiga",
+     "metadata_title": "EN VIVO | Real Madrid busca recuperarse ante Villarreal en el Bernabéu: siga el partido de LaLiga",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "not_running_prose",
+      "live_coverage",
+      "template_body"
+     ],
+     "evidence": {
+      "words": 524,
+      "function_word_share": 0.01,
+      "body_characters": 4071,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:15000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C55",
+   "component": "targeted",
+   "stratum": "T02_subtitle_removed",
+   "fetch_ids": [
+    "ft1:1fef06f16d812ed3bacb65c3a381c71bf6e475a46bc9a112a2667e3448bcd793"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "bba83b9b4629bc11a5a935c9197d549f10a309490510af9d50f66d744e503bf7"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "DIARIO LOS ANDES AREQUIPA: 14/11/26",
+     "metadata_title": "DIARIO LOS ANDES AREQUIPA: 14/11/26",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short",
+      "template_body"
+     ],
+     "evidence": {
+      "words": 25,
+      "function_word_share": 0.48,
+      "body_characters": 145,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "unmapped_label",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C56",
+   "component": "targeted",
+   "stratum": "T06_ai_article",
+   "fetch_ids": [
+    "ft1:c202ab6bffe2145b45f44f6088358a6d2841c546e19e4a79b783928d512e0330"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "175d22bf830ff43d863e49a984c1be2a2778661bd5f0d9b2189a0d28e24480b7"
+   ],
+   "predictions": {
+    "AI_TEXT": "translated",
+    "AI_COMPONENT": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Perros de terapia aportan tranquilidad y alegría a estudiantes tras tiroteo en escuela de Colorado",
+     "metadata_title": "Perros de terapia aportan tranquilidad y alegría a estudiantes tras tiroteo en escuela de Colorado",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 117,
+      "basis": "stated_by_page",
+      "text": "Dos golden retrievers, Norene y Polenta, ofrecen consuelo y apoyo a los alumnos que intentan superar la tragedia"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 1086,
+      "function_word_share": 0.476,
+      "body_characters": 6695,
+      "stated_body_characters": 5970,
+      "distinct_5gram_ratio": 0.97,
+      "repeated_block_share": 0.007,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "known",
+     "reason": null,
+     "statements": [
+      {
+       "value": "translated",
+       "form": "text_translated",
+       "scope": "article",
+       "text": "Esta historia fue traducida del inglés al español con una herramienta de inteligencia artificial y fue revisada por un editor antes de su publicación.",
+       "block_index": 170,
+       "block_role": "body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": true,
+       "tools_named": []
+      }
+     ]
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "ap"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "The Associated Press",
+        "agencies": [
+         "ap"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       },
+       {
+        "position": "byline_block",
+        "text": "Por The Associated Press",
+        "agencies": [
+         "ap"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "credit_only",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "The Associated Press",
+        "agencies": [
+         "ap"
+        ]
+       },
+       {
+        "position": "byline_block",
+        "text": "Por The Associated Press",
+        "agencies": [
+         "ap"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C57",
+   "component": "targeted",
+   "stratum": "T01_title_changed",
+   "fetch_ids": [
+    "ft1:3d8cca64c3aa679d4a531166ce2ae8426532327ac9c098cc57d5b5eb3ec7d5ac"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "d9b81f6ac20d873bd5e93bb24d6fd7cb6cb395a6c8f5889a4a7a1eae5910e4a3"
+   ],
+   "predictions": {
+    "TITLE": "N",
+    "SUBTITLE": "0"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": null,
+     "metadata_title": "Oviedo denuncia que Mariaca organizó y financió el bloqueo de 53 días junto a la COB, campesinos y mineros",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 218,
+      "function_word_share": 0.486,
+      "body_characters": 1368,
+      "stated_body_characters": 1363,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C58",
+   "component": "targeted",
+   "stratum": "T08_agency_reclassified",
+   "fetch_ids": [
+    "ft1:935c7d60df5a94ec9ad740bd08fcfc6dfc44b51e7a8da57589b66cc73d6ecdea"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "d9fa380487814b87873023e5b892519c3c513fdf0f7b1dd134c5d0b23aecfc92"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "co_credited",
+    "AGENCY_USE": "not_stated"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Supersalud prioriza control al giro directo y auditorías a EPS",
+     "metadata_title": "Supersalud prioriza control al giro directo y auditorías a EPS",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 80,
+      "basis": "stated_by_page",
+      "text": "La entidad presentó una ruta de inspección, vigilancia y control para lo que resta de 2026 y comienzos de 2027."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 382,
+      "function_word_share": 0.445,
+      "body_characters": 2640,
+      "stated_body_characters": 2615,
+      "distinct_5gram_ratio": 0.987,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "colprensa"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "co_credited"
+      ],
+      "use_declared": "not_stated",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Colprensa / El País Colprensa",
+        "agencies": [
+         "colprensa"
+        ],
+        "role": "co_credited",
+        "use_declared": "not_stated",
+        "credited_with": [
+         "El País Colprensa"
+        ]
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "joint_credit",
+      "evidence": [
+       {
+        "position": "json_ld_author",
+        "text": "Colprensa / El País Colprensa",
+        "agencies": [
+         "colprensa"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C59",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:a0877df2b6675d0d9aa795cfca95ed7b3a2f5c224914d8fae96e66ea33478fa9"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "4983eb15c265030f0fd2cfc0a029560d172dacdee58b1481a3c4e8f296fc630f"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "01000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "El Ballet Español de Cuba rinde homenaje a Manuel de Falla en el Teatro Nacional",
+     "metadata_title": "El Ballet Español de Cuba rinde homenaje a Manuel de Falla en el Teatro Nacional",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 284,
+      "function_word_share": 0.447,
+      "body_characters": 1906,
+      "stated_body_characters": 1893,
+      "distinct_5gram_ratio": 0.993,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:01000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C60",
+   "component": "targeted",
+   "stratum": "T01_title_changed",
+   "fetch_ids": [
+    "ft1:89f42b1494518ddf63abefcad77f456f3a98187570859c1abcdeedfe119ac9a7"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "17b1c7463c6ff2a2d1e22e067cbf54049187942a0f01506470afc210276625cd"
+   ],
+   "predictions": {
+    "TITLE": "B",
+    "SUBTITLE": "9"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Miss Grand International 2026 EN VIVO: Shyare Andrade disputa la final y busca la corona para Ecuador",
+     "metadata_title": "Miss Grand International 2026 EN VIVO: Shyare Andrade disputa la final y busca la corona para Ecuador",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 221,
+      "basis": "stated_by_page",
+      "text": "Shyare Andrade lidera con el 55,82% el último balance de Country’s Power of the Year, competencia que otorga un pase directo en el Miss Grand International 2026. El resultado oficial está pendiente. Siga en vivo la final desde Bangkok, Tailandia."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short",
+      "incomplete_against_stated_body"
+     ],
+     "evidence": {
+      "words": 118,
+      "function_word_share": 0.398,
+      "body_characters": 753,
+      "stated_body_characters": 1539,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C61",
+   "component": "targeted",
+   "stratum": "T15_reuse_contained",
+   "fetch_ids": [
+    "ft1:aae63404d3622d6131cbeaf4c25511b03182a2e4b180818dce5556b25deaf819",
+    "ft1:4aeb75e7fa0f28f0a84c08eb2ff70c2dd3a1b1a49971191edc1189cce19d38a3"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "2e3721d192a2c87f0e672bfad4799e685a4b782bbe5327d75953bc3b17c84864",
+    "6fe3523fabe66f67063a91a8bb8fb6cf389db348d5daadb7f79e062100d9fbf3"
+   ],
+   "predictions": {
+    "REUSE": "contained"
+   },
+   "evidence": {
+    "REUSE": {
+     "relation": "syndicated_copy_of",
+     "rule": "text-reuse/2",
+     "text_match": "contained",
+     "containment": [
+      0.7143,
+      0.9398
+     ],
+     "shingles": [
+      175,
+      133
+     ],
+     "shared_shingles": 125,
+     "words": [
+      194,
+      140
+     ],
+     "differing_words": [
+      54,
+      0
+     ],
+     "basis": "text-reuse/2: contained -- canonical BODY text not equal (NFC, invisible characters removed, white space folded); 8-word shingle containment 0.714 of this document in the target, 0.940 of the target in this document; target = earlier in this corpus by publication date, fetch time, id -- an order of appearance, not a finding of origin or authorship"
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C62",
+   "component": "targeted",
+   "stratum": "T06_ai_article",
+   "fetch_ids": [
+    "ft1:6a247f978ef8cfef4e695d7aba5ca5b304dafa61e06cbe4c7cdebb83b116a1ac"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "3317022514c5f449947b672f275ee216e1f865a6ca1f6fb4c38f86a5c24268d7"
+   ],
+   "predictions": {
+    "AI_TEXT": "assisted",
+    "AI_COMPONENT": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Deportivo Cali sumó nuevamente en condición de visitante y se ilusiona con la clasificación a los ocho; así va la tabla",
+     "metadata_title": "Deportivo Cali sumó nuevamente en condición de visitante y se ilusiona con la clasificación a los ocho; así va la tabla",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 80,
+      "basis": "stated_by_page",
+      "text": "Empate sin goles en las Atalayas: Cali sigue segundo pese a la expulsión."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 430,
+      "function_word_share": 0.398,
+      "body_characters": 2832,
+      "stated_body_characters": 2046,
+      "distinct_5gram_ratio": 0.988,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 1
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:15000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "known",
+     "reason": null,
+     "statements": [
+      {
+       "value": "assisted",
+       "form": "text_assisted",
+       "scope": "article",
+       "text": "*Este artículo fue creado con ayuda de una inteligencia artificial que utiliza machine learning para producir texto similar al humano, y curado por un periodista especializado de El País.",
+       "block_index": 132,
+       "block_role": "body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": true,
+       "tools_named": []
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C63",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:3e6ab2d0e856262aec15506b6be41f9b65c9985971d443251a43148fee2d1e28"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "84672c42de5c779c32fda942cd23afea85c349563f4331c782c1bff789a10a66"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Video | Vendaval golpea el norte de Cali y sectores de Yumbo: árboles caídos, comercios afectados y vías inundadas",
+     "metadata_title": "Video | Vendaval golpea el norte de Cali y sectores de Yumbo: árboles caídos, comercios afectados y vías inundadas",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 80,
+      "basis": "stated_by_page",
+      "text": "Las intensas lluvias de esta tarde provocaron varias emergencias en distintos puntos de la ciudad."
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 405,
+      "function_word_share": 0.459,
+      "body_characters": 2724,
+      "stated_body_characters": 2705,
+      "distinct_5gram_ratio": 0.998,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C64",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:a660e241bc1f31e7bf10c8dac498d38b79c9b41a0bd5f9987657264dab2bec55"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "a72cca87b98a73ad8c5027d19af32f93dff355b85d46215c17a1b89ad4667846"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "04000000"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Davivienda y Visa llenan de magia y alegría navideña a City Mall con Bright Christmas 2026",
+     "metadata_title": "Davivienda y Visa llenan de magia y alegría navideña a City Mall con Bright Christmas 2026",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 257,
+      "function_word_share": 0.455,
+      "body_characters": 1738,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:04000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C65",
+   "component": "targeted",
+   "stratum": "T03_subtitle_stated",
+   "fetch_ids": [
+    "ft1:da473e56beb36812bf9aae0618140540d428d5747c12dba9226955637613040b"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "4d2309a006329d595b3a271eed1f0bdc7b12662d6cc44a07b2ac45dcd612e6f0"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "1"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Arrestan a hombre que conducía vehículo desaparecido y tenía arma hurtada en Naranjito",
+     "metadata_title": "Arrestan a hombre que conducía vehículo desaparecido y tenía arma hurtada en Naranjito",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 37,
+      "basis": "stated_by_page",
+      "text": "El hombre de 39 años fue intervenido mientras conducía un Alfa Romeo con gravamen de desaparecido"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "too_short"
+     ],
+     "evidence": {
+      "words": 113,
+      "function_word_share": 0.442,
+      "body_characters": 759,
+      "stated_body_characters": 737,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "unknown",
+     "reason": "no_agency_credit_observed",
+     "value": null,
+     "attributes": {},
+     "agency_credit_1": {}
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C66",
+   "component": "targeted",
+   "stratum": "T08_agency_reclassified",
+   "fetch_ids": [
+    "ft1:df347639f833ad89b86fa3d0afbc7ce8320d13bdfe27991ee973503953d8a0b9"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "e4d8a91b11441470b7e3f82253036ffc298af0a17086d007d4f4b9fa971e8982"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "material_source",
+    "AGENCY_USE": "material_used_declared"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Terremoto de 7,7 en Panamá: 27 heridos, más de 400 edificios dañados y cinco comunidades incomunicadas",
+     "metadata_title": "Terremoto de 7,7 en Panamá: 27 heridos, más de 400 edificios dañados y cinco comunidades incomunicadas",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 659,
+      "function_word_share": 0.44,
+      "body_characters": 4330,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 0.994,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "no_disclosure_observed",
+     "statements": []
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "efe"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "material_source"
+      ],
+      "use_declared": "material_used_declared",
+      "evidence": [
+       {
+        "position": "material_note",
+        "text": "Con información de EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "material_source",
+        "use_declared": "material_used_declared",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "edited_declared",
+      "evidence": [
+       {
+        "position": "edited_note",
+        "text": "Con información de EFE",
+        "agencies": [
+         "efe"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C67",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_ids": [
+    "ft1:6ff563a4a19146e53a399475d8c7444bae237fc88ba37d32e2f741bb3909ddba"
+   ],
+   "inclusion_probability": 0.005188,
+   "extracted_text_sha256": [
+    "53730c5af1ff2b7be829a7ef9ce134a48aa9b2a0f4578cd5ed8e8eb05b39582d"
+   ],
+   "predictions": {
+    "TITLE": "A",
+    "SUBTITLE": "0",
+    "BODY_COMPLETE": "(judgement of the extracted BODY shown; no prediction)",
+    "BODY_CLEAN": "(judgement of the extracted BODY shown; no prediction)",
+    "CORE": "yes",
+    "IPTC": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "¿Qué le espera a Guatemala en los próximos dos años?",
+     "metadata_title": "¿Qué le espera a Guatemala en los próximos dos años? - El Siglo",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 470,
+      "function_word_share": 0.449,
+      "body_characters": 3186,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C68",
+   "component": "targeted",
+   "stratum": "T07_ai_component",
+   "fetch_ids": [
+    "ft1:b033b9ed8422d93721cf0c5e4f320ec8e60e8638a4fe89c1766034802e105e0c"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "c7abbb0a783dfb2560aaa3711c56aafc63ab354e2e8afb2023a83b7b5e53efcb"
+   ],
+   "predictions": {
+    "AI_TEXT": "none",
+    "AI_COMPONENT": "summary"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "\"Su presente se sacudirá\": \"Betty la Fea: La Historia Continúa 2\" libera tráiler y fecha de estreno",
+     "metadata_title": "\"Su presente se sacudirá\": \"Betty la Fea: La Historia Continúa 2\" libera tráiler y fecha de estreno",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [
+      "incomplete_against_stated_body"
+     ],
+     "evidence": {
+      "words": 269,
+      "function_word_share": 0.435,
+      "body_characters": 1696,
+      "stated_body_characters": 4213,
+      "distinct_5gram_ratio": 0.981,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:01000000"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "unknown",
+     "reason": "components_only",
+     "statements": [
+      {
+       "value": "summary",
+       "form": "summary",
+       "scope": "summary",
+       "text": "Resumen generado con una herramienta de Inteligencia Artificial desarrollada por BioBioChile y revisado por el autor de este artículo.",
+       "block_index": 264,
+       "block_role": "non_body",
+       "block_kind": "unstructured_text",
+       "module": "ai_summary",
+       "human_review_stated": true,
+       "tools_named": []
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C69",
+   "component": "targeted",
+   "stratum": "T06_ai_article",
+   "fetch_ids": [
+    "ft1:9aef7084141bdc377d19b0f2abf80f111949dff3ac1db07db94665cc62a2b119"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "46446436891f735b535502ad86a3657c1607f5d81da806bdfb2df058386776f7"
+   ],
+   "predictions": {
+    "AI_TEXT": "assisted",
+    "AI_COMPONENT": "none"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Según la psicología, los que le hablan a las mascotas como si fueran personas tienen una marcada sensibilidad hacia su entorno",
+     "metadata_title": "Según la psicología, los que le hablan a las mascotas como si fueran personas tienen una marcada sensibilidad hacia su entorno",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 86,
+      "basis": "stated_by_page",
+      "text": "Se trata de una práctica cotidiana que consolida el lazo emocional entre humanos y animales, con un impacto directo y profundo en la salud mental de los dos"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 599,
+      "function_word_share": 0.427,
+      "body_characters": 4066,
+      "stated_body_characters": 4043,
+      "distinct_5gram_ratio": 0.913,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 1
+     }
+    },
+    "IPTC": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "medtop:20000565"
+     ],
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AI": {
+     "state": "known",
+     "reason": null,
+     "statements": [
+      {
+       "value": "assisted",
+       "form": "text_assisted",
+       "scope": "article",
+       "text": "Este contenido fue producido por un equipo de LA NACION con la asistencia de la IA",
+       "block_index": 110,
+       "block_role": "body",
+       "block_kind": "paragraph",
+       "module": null,
+       "human_review_stated": false,
+       "tools_named": []
+      }
+     ]
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  },
+  {
+   "case_id": "C70",
+   "component": "targeted",
+   "stratum": "T08_agency_reclassified",
+   "fetch_ids": [
+    "ft1:8614478b6f7fa0260fb7331bcb7f46e4c77a92dcde40c343ec807f2459ed1965"
+   ],
+   "inclusion_probability": null,
+   "extracted_text_sha256": [
+    "dc9f7be4355feb8dccfd24fafba156f5288a2b9e26c61413d0573a4578567322"
+   ],
+   "predictions": {
+    "AGENCY_ROLE": "credited,material_source",
+    "AGENCY_USE": "material_used_declared"
+   },
+   "evidence": {
+    "TITLE": {
+     "title_0_3_0": "Rubio se reunirá este viernes con Dinorah Figuera en Washington",
+     "metadata_title": "Rubio se reunirá este viernes con Dinorah Figuera en Washington",
+     "basis": "json_ld"
+    },
+    "SUBTITLE": [
+     {
+      "index": 41,
+      "basis": "subtitle_markup",
+      "text": "La reunión se produce un día luego de que la Fiscalia de EEUU imputó nuevos cargos a Nicolás Maduro y Cilia Flores"
+     }
+    ],
+    "CORE": {
+     "ruleset": "content-quality/3",
+     "reasons": [],
+     "evidence": {
+      "words": 334,
+      "function_word_share": 0.488,
+      "body_characters": 2063,
+      "stated_body_characters": 0,
+      "distinct_5gram_ratio": 1.0,
+      "repeated_block_share": 0.0,
+      "frame_hits": 0,
+      "paywall_hits": 0,
+      "machine_text_hits": 0
+     }
+    },
+    "IPTC": {
+     "state": "unknown",
+     "reason": "section_names_no_topic",
+     "value": null,
+     "rule": {
+      "mapping": "section-map/1",
+      "path": "config/taxonomy/section-map_1.json",
+      "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+      "taxonomy": {
+       "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+       "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+       "date_released": "2026-09-30T12:00:00+00:00",
+       "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+      }
+     }
+    },
+    "AGENCY": {
+     "state": "known",
+     "reason": null,
+     "value": [
+      "efe"
+     ],
+     "attributes": {
+      "agency_roles": [
+       "credited",
+       "material_source"
+      ],
+      "use_declared": "material_used_declared",
+      "evidence": [
+       {
+        "position": "material_note",
+        "text": "Con información de EFE",
+        "agencies": [
+         "efe"
+        ],
+        "role": "material_source",
+        "use_declared": "material_used_declared",
+        "credited_with": []
+       },
+       {
+        "position": "byline_block",
+        "text": "Por Efe | @EFEnoticias",
+        "agencies": [
+         "efe"
+        ],
+        "role": "credited",
+        "use_declared": "not_stated",
+        "credited_with": []
+       }
+      ],
+      "quoted_source_mentions": [],
+      "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, a dateline or a text comparison"
+     },
+     "agency_credit_1": {
+      "agency_use": "edited_declared",
+      "evidence": [
+       {
+        "position": "edited_note",
+        "text": "Con información de EFE",
+        "agencies": [
+         "efe"
+        ]
+       },
+       {
+        "position": "byline_block",
+        "text": "Por Efe | @EFEnoticias",
+        "agencies": [
+         "efe"
+        ]
+       }
+      ],
+      "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"
+     }
+    }
+   },
+   "versions": {
+    "extractor": "article_html/0.3.0",
+    "quality": "content-quality/3",
+    "metadata": "editorial-metadata/2",
+    "agency": "agency-credit/2",
+    "ai": "ai-disclosure/1",
+    "section": "section-iptc/1",
+    "reuse": "text-reuse/2"
+   }
+  }
+ ]
+}

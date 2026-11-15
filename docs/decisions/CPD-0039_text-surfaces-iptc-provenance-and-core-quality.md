@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-15 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the operator's scientific decisions (§1) are in force. **Every component built for them is a `CANDIDATE` / `NOT_VALIDATED` layer and binds nothing**: `extraction/2` with `article_html/0.2.0`, `content-quality/3`, `section-map/1` and the six metadata layers. Their activation is the operator's, after the human review (*Not decided here*) |
 | Decided by | the operator's brief of 2026-11-15 ("CO.PRE.PAN_v3 – Phase-3-Integration", §1, §3–§11: the scientific decisions are authorised there); the rules and mappings are the commissioned agent's |
 | Kind | architecture · scientific policy |
@@ -12,6 +12,14 @@
 | Does not change | `extraction/1`, `baseline_html/0.1.0`, `article_html/0.1.0` and every stored record; `content-quality/2`; `admission-technical/1`; the pinned joint release contract `crosscorpus-release/v1` (the subtitle is a change *request* to it, §5); any release view or gate; the advertising rules (`sponsored` unchanged) |
 | Run report | [`2026-11-15 phase-3 integration`](../agent-runs/2026-11-15_coprepan-phase3-text-surfaces-iptc-provenance.md) |
 | Evidence | [study record](../intake/quality/phase3_metadata_study_2026-11-15.json) (4,759 stored item pages, 91 outlets, 20 countries), [human review sample](../intake/quality/phase3_review_2026-11-15.md) |
+
+*Status line 2026-11-15 (later the same day):* **partially superseded by
+[CPD-0040](CPD-0040_phase3-repair-title-surface-agency-roles-text-match-and-blind-control.md)** for three components only: the
+preferred candidates are now `article_html/0.3.0` (the title chosen among the `h1` blocks, bounded subtitle paths; BODY identical
+on all 4,759 pages), `agency-credit/2` (the agency's role and the declared use apart; in `editorial-metadata/2`) and
+`text-reuse/2` (`exact` · `near_identical` · `contained`). The scientific decisions of §1, `content-quality/3`, `section-map/1`
+and the other layers stay in force as written; `article_html/0.2.0`, `agency-credit/1`, `text-reuse/1`, the study record and the
+review sample stay as they were, as the evidence of this record.
 
 ## Context
 

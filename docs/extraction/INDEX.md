@@ -32,6 +32,7 @@ storage of extractions and replay. Design background:
 | Review codebook, version 1 (draft) | [`REVIEW_CODEBOOK_v1.md`](REVIEW_CODEBOOK_v1.md) | — |
 | *2026-11-15:* the candidate `article_html/0.1.0` (densest running-text container; CPD-0038) | `src/coprepan/extraction_article.py` | `tests/test_content_quality.py` |
 | *2026-11-15:* schema **`coprepan-extraction/v2`** (block kind `subtitle` with a `basis`, block field `module: ai_summary`; digests as in v1) and the candidate **`article_html/0.2.0`** writing it; `Extractor.record_schema`, `extraction.record_problems` (CPD-0039) | `src/coprepan/extraction.py`, `src/coprepan/extraction_article.py` | `tests/test_phase3_metadata.py` |
+| *2026-11-15, later:* the candidate **`article_html/0.3.0`** (`PREFERRED`, same schema): the title is the `h1` that is the stated headline -- never a logo, the site's name or a section label; otherwise no title block -- and bounded subtitle paths (no event fields, newsletter boxes, repeated texts, captions or far marked blocks); BODY identical to 0.2.0 on all 4,759 stored pages (CPD-0040) | `src/coprepan/extraction_article.py` | `tests/test_phase3_repair.py` |
 
 ## 2. Record (`coprepan-extraction/v1`; `/v2` adds the `subtitle` kind and the `module` field, CPD-0039)
 

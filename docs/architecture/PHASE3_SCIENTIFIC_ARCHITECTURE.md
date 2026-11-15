@@ -119,6 +119,11 @@ assumed away.
   `unit_kind = title`. An *entradilla* that opens the running text is BODY; nothing uncertain is
   separated. A machine summary shown beside the article is a non-body block with
   `module: ai_summary` and never stands in, or for, the BODY.
+- **The title is the article's headline or it is unknown** (*2026-11-15, CPD-0040,
+  `article_html/0.3.0`*): the title block is the `h1` that is the headline the page states; a
+  logo, the site's name or a section label is never the TITLE. Where no printed headline can be
+  told, the page has no title block (the stated headline stays in `metadata.title` with its
+  basis) — the BODY is not touched and CORE does not depend on it.
 - **Non-body blocks** (captions, navigation remnants, embeds) are not annotated by default. If a
   later decision annotates them, they are units with their own `unit_kind` and surface.
 - Every unit, sentence and token therefore carries a **`surface`**: `body` · `title` ·
@@ -201,10 +206,14 @@ classification** of the content (not built).
 | `genre-declared/1` | the genre the page declares, with its IPTC Genre code | a genre inferred from the section |
 | `ai-disclosure/1` | `generated` · `assisted` · `translated` · `unclear` for the article text, and AI components beside it (`summary`, `audio`, `image`), each with the statement | "made without AI" (no disclosure is `unknown`) |
 | `agency-credit/1` | credited agencies and how the page says it used them (`edited_declared`, `joint_credit`, `credit_only`) | "own reporting" (no credit is `unknown`); an agency quoted in the text, a photo credit |
+| `agency-credit/2` (*CPD-0040, preferred*) | the agency's **role** (`credited` · `co_credited` with the newsroom named · `material_source`) and, apart, the **declared use** (`verbatim_declared` · `edited_declared` · `material_used_declared` · `not_stated`), each credit verbatim with its place | editing or a verbatim take-over the page does not state; a co-credit from a place, a date or a handle; an agency quoted in the text (a reason of `unknown`) |
 | `text-reuse/1` | that two documents carry the same BODY text (`syndicated_copy_of`, `duplicate_of`) | who wrote it; that either copy is less of a publication event |
+| `text-reuse/2` (*CPD-0040, preferred*) | the same relations with the kind of match: `exact` (the same canonical text), `near_identical`, `contained`, and the measured values | exactness from overlap; origin or authorship; that the earlier copy in the corpus is the original |
 
 The table of §7 still holds; `section_mapped` is `section-iptc/1`, `article_type` keeps its row
 (a content classification), and the declared genre is a publisher statement, not `article_type`.
+The six layers travel as one artifact per page: `editorial-metadata/1` (with `agency-credit/1`) or
+`editorial-metadata/2` (with `agency-credit/2`; every other layer the same rule).
 
 ## 8. Where human gold attaches
 
@@ -239,7 +248,7 @@ annotation under the shared pins → equivalence and bridge samples → enrichme
 | the language identifier, its validation, the label rule | scientific, Phase 3 |
 | press sentence-boundary policy id | joint / scientific, Phase 4 |
 | whether titles are annotated in the first release | scientific |
-| adoption of `article_html/0.2.0`, `content-quality/3`, `section-map/1` and the provenance rules (CPD-0039 *Not decided here*) | scientific, the operator's |
-| the unit kind `subtitle` in the joint release contract | joint, with CO.RA.PAN |
+| adoption of `article_html/0.3.0`, `content-quality/3`, `section-map/1` and the provenance rules, after the [blind control](../intake/quality/phase3_blind_control_2026-11-15/README.md) (CPD-0040 *Not decided here*) | scientific, the operator's |
+| the unit kind `subtitle` in the joint release contract; the relation match class in the analysis contract | joint, with CO.RA.PAN |
 | vocabularies of `article_type` and `opinion`; whether they are built at all | scientific, Phase 4 |
 | durable home of the layers | technical; needs O-3 |
