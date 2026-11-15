@@ -274,5 +274,136 @@ def agency_credit(record: Mapping[str, Any], harvest: Mapping[str, Any]) -> dict
                              "note": "credited agencies; whether the text was taken over unchanged is stated by agency_use only"})
 
 
-__all__ = ["ai_disclosure", "ai_statements", "site_wide_statements", "agency_credit", "agencies_in", "AGENCIES", "AI_VALUES",
-           "AI_COMPONENTS", "AGENCY_USES", "LAYER_AI", "LAYER_AGENCY"]
+# --- agency-credit/2 (CPD-0040): the agency's role and the declared use of its material, two properties -----------------------
+#
+# /1 put "Con información de EFE" into ``edited_declared`` -- stronger than the statement: it says that agency material was used,
+# not that an agency text was edited. /2 reads the same positions (and only those) and records, per credit and for the page:
+#
+# * ``agency_roles`` -- how the agency is named: ``credited`` (as author or source of the published text: author fields, a
+#   byline, a wire dateline, the JSON-LD source / provider / copyright / credit text), ``co_credited`` (credited together with
+#   the outlet's newsroom or the publisher), ``material_source`` (named as the source of material the text uses: "Con
+#   información de EFE", "Con datos de AFP", "La información es de Reuters");
+# * ``use_declared`` -- what the page states about how the material was used, the most explicit statement first:
+#   ``verbatim_declared`` (reproduced unchanged), ``edited_declared`` (edited or adapted by the newsroom), ``material_used_declared``
+#   (agency material used), ``not_stated``. Only an explicit statement sets one; nothing is inferred from a role, a dateline or a
+#   text comparison;
+# * ``credited_with`` -- the other parts of a joint credit, verbatim ("Redacción Primicias").
+#
+# Unknown has two reasons: ``agency_named_as_quoted_source_only`` (the running text names an agency as a source --
+# "según informó la agencia EFE" -- and nothing credits it) and ``no_agency_credit_observed``. A quoted source is never a credit,
+# and a photo credit is never read. The credit text is kept verbatim with its position. /1 is unchanged (its records stay as
+# they were written).
+
+LAYER_AGENCY_2 = "agency-credit/2"
+AGENCY_ROLES = ("credited", "co_credited", "material_source")
+AGENCY_USE_DECLARED = ("verbatim_declared", "edited_declared", "material_used_declared", "not_stated")
+_NAMES = "|".join(f"(?:{names})" for agency, names in AGENCIES.items() if agency != "unspecified")
+_VERBATIM = re.compile(r"(?:reproducid[oa]|publicad[oa]|transcrit[oa])\s+(?:de\s+forma\s+)?(?:íntegr[oa]|íntegramente|textualmente|"
+                       r"sin\s+(?:cambios|modificaciones))|texto\s+íntegro\s+de|sin\s+(?:cambios|modificaciones)\s+(?:de|del\s+texto\s+de)", re.I)
+_EDITED_2 = re.compile(r"(?:editad[oa]|adaptad[oa]|ampliad[oa]|reelaborad[oa]|reescrit[oa])\s+(?:y\s+\w+\s+)?(?:por|en)\s+(?:la\s+|el\s+|nuestr[oa]\s+)?"
+                       r"(?:redacci[oó]n|equipo|mesa|editor)|con\s+edici[oó]n\s+de", re.I)
+_QUOTED = re.compile(r"(?:\bagencias?\s+(?:de\s+noticias\s+)?|\bsegún\s+(?:la\s+agencia\s+)?|\b(?:dijo|declaró|informó|confirmó|explicó|indicó)\s+a\s+"
+                     r"(?:la\s+agencia\s+)?)(" + _NAMES + r")\b")
+
+
+def _co_credited(name: str, own_names: Iterable[str]) -> list[str]:
+    """The parts of a joint credit that make it joint -- the newsroom or the publisher named beside the agency -- verbatim
+    (a place, a date or a handle in the same credit is not a party; ``agencies_in``'s rule)."""
+    def fold(text: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower())
+
+    name = re.sub(r"\([^()]*\)", " ", name).strip()
+    own = [fold(n) for n in own_names if n and len(fold(n)) >= 3]
+    parts = [p.strip(" .") for p in _SPLIT.split(name) if p.strip(" .")]
+    # the publisher's name stands in the part ("Redacción Primicias", "PanamaAmerica"); a place that is only a piece of the
+    # publisher's name ("Panamá" of "Panamá América") is not the publisher
+    # "Redacción EFE" is the agency's own desk, not the outlet's newsroom
+    return [p for p in parts if not p.startswith("@") and not any(pattern.match(p) for pattern in _AGENCY_NAME.values())
+            and not agencies_in(_NEWSROOM.sub(" ", p).strip())[0]
+            and (_NEWSROOM.search(p) or any(o in fold(p) for o in own))]
+
+
+def quoted_agency_mentions(record: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Agencies the running text names as a source ("según la agencia EFE", "dijo a AFP"): never a credit."""
+    out = []
+    for block in record.get("blocks", []):
+        if block["role"] != E.ROLE_BODY:
+            continue
+        for match in _QUOTED.finditer(block["text"]):
+            agencies = agencies_in(match.group(1))[0]
+            if agencies:
+                start = max(0, match.start() - 60)
+                out.append({"block_index": block["index"], "agencies": agencies, "text": block["text"][start:match.end() + 60]})
+    return out
+
+
+def agency_credit_2(record: Mapping[str, Any], harvest: Mapping[str, Any]) -> dict[str, Any]:
+    """``agency-credit/2`` for one page: the agency's role and the declared use of its material, kept apart."""
+    rule = {"rule": LAYER_AGENCY_2, "agencies": sorted(AGENCIES), "roles": list(AGENCY_ROLES), "use_declared": list(AGENCY_USE_DECLARED)}
+    evidence: list[dict[str, Any]] = []
+
+    def credit(position: str, text: str, agencies: list[str], role: str, *, use: str = "not_stated", credited_with=()) -> None:
+        if agencies:
+            evidence.append({"position": position, "text": text[:200], "agencies": agencies, "role": role, "use_declared": use,
+                             "credited_with": list(credited_with)})
+
+    own = [o["name"] for o in harvest.get("organisations", []) if o["role"] == "publisher"]
+
+    def named(position: str, name: str, text: str | None = None) -> None:
+        agencies = agencies_in(name, own_names=own)[0]
+        others = _co_credited(name, own) if agencies else []
+        credit(position, text or name, agencies, "co_credited" if others else "credited", credited_with=others)
+
+    for author in harvest.get("authors", []):
+        named(author["basis"], author["name"])
+    for organisation in harvest.get("organisations", []):
+        if organisation["role"] in ("sourceOrganization", "copyrightHolder", "provider"):
+            credit(f"json_ld_{organisation['role']}", organisation["name"], agencies_in(organisation["name"])[0], "credited")
+    for text in harvest.get("credit_text", []):
+        credit("json_ld_creditText", text, agencies_in(text)[0], "credited")
+    for text in harvest.get("dateline", []):
+        match = re.search(r"\((" + _AGENCY_GROUP + r")\)", text)
+        credit("json_ld_dateline", text, agencies_in(match.group(1))[0] if match else [], "credited")
+    blocks = record.get("blocks", [])
+    first_body = next((b for b in blocks if b["role"] == E.ROLE_BODY), None)
+    if first_body is not None:
+        match = _DATELINE.match(first_body["text"]) or _OPENING.match(first_body["text"])
+        if match:
+            credit("body_dateline", first_body["text"][:120], agencies_in(match.group(1))[0], "credited")
+    for block in blocks:
+        if block["kind"] == "caption" or len(block["text"]) > 200 or block.get("module"):
+            continue
+        text = block["text"]
+        use = "verbatim_declared" if _VERBATIM.search(text) else "edited_declared" if _EDITED_2.search(text) else None
+        byline = _BYLINE.match(text)
+        if byline and block["role"] != E.ROLE_BODY:
+            agencies = agencies_in(byline.group(1), own_names=own)[0]
+            # the whole credit line counts for the parties: "Redacción / EFE" names the newsroom in the byline's own opening
+            others = _co_credited(re.sub(r"^\s*Por\s*:?\s*", "", text), own) if agencies else []
+            credit("byline_block", text, agencies, "co_credited" if others else "credited", use=use or "not_stated", credited_with=others)
+        note = _EDITED.match(text) or _CREDIT_NOTE.match(text)
+        if note:
+            credit("material_note" if _EDITED.match(text) else "credit_note", text, agencies_in(note.group(1))[0], "material_source",
+                   use=use or "material_used_declared", credited_with=[p for p in re.findall(r"^\s*(redacci[oó]n[^,]*?)\s+con\b", text, re.I)])
+        elif use and not byline:
+            mentioned = sorted({a for m in re.finditer(_NAMES, text) for a in agencies_in(m.group(0))[0]})
+            credit("use_statement", text, mentioned, "material_source", use=use)
+    quoted = quoted_agency_mentions(record)
+    if not evidence:
+        reason = "agency_named_as_quoted_source_only" if quoted else "no_agency_credit_observed"
+        return layer(LAYER_AGENCY_2, None, UNKNOWN, basis=[], rule=rule, reason=reason,
+                     attributes={"quoted_source_mentions": quoted[:5]} if quoted else None)
+    order = AGENCY_USE_DECLARED
+    use_declared = min((item["use_declared"] for item in evidence), key=order.index)
+    roles = sorted({item["role"] for item in evidence}, key=AGENCY_ROLES.index)
+    return layer(LAYER_AGENCY_2, sorted({a for item in evidence for a in item["agencies"]}), KNOWN,
+                 basis=[{"basis": item["position"], "text": item["text"]} for item in evidence], rule=rule,
+                 attributes={"agency_roles": roles, "use_declared": use_declared, "evidence": evidence,
+                             "quoted_source_mentions": quoted[:5],
+                             "note": "the agencies the page credits; use_declared is what the page states, never inferred from a role, "
+                                     "a dateline or a text comparison"})
+
+
+__all__ = ["ai_disclosure", "ai_statements", "site_wide_statements", "agency_credit", "agency_credit_2", "agencies_in",
+           "quoted_agency_mentions", "AGENCIES", "AI_VALUES", "AI_COMPONENTS", "AGENCY_USES", "AGENCY_ROLES", "AGENCY_USE_DECLARED",
+           "LAYER_AI", "LAYER_AGENCY", "LAYER_AGENCY_2"]

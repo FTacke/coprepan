@@ -430,9 +430,281 @@ def extract_v2(body: bytes, *, body_sha256: str, content_type: str, declared_cha
 ARTICLE_2 = E.Extractor(NAME, VERSION_2, extract_v2, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_2)
 
 
+# --- article_html/0.3.0 (CPD-0040): the title surface repaired -- 0.2.0 with the title chosen, not assumed -------------------
+#
+# The operator's review of the 0.2.0 sample (2026-11-15) found three wrong title surfaces; the study of the 4,759 stored pages
+# found their general form (CPD-0040 §2). 0.3.0 keeps 0.2.0's body rule, machine-summary modules and record schema
+# (``extraction/2``) and changes only which blocks stand on the title surface:
+#
+# 1. **Title.** 0.1.0 and 0.2.0 take the first ``h1``. 0.3.0 takes the first ``h1`` that is the headline the page states
+#    (JSON-LD ``headline``, ``og:title``, ``twitter:title``, ``<title>``; equal, or one contains the other, or equal to one part
+#    of a stated title split at `` | `` / `` - `` / `` / ``); a page whose ``h1`` is its logo or edition label before the article's
+#    own ``h1`` (``py_la_nacion``, ``ec_primicias``) gets the article's. Where no ``h1`` is a stated headline, the first ``h1``
+#    stays the title -- the printed headline often differs from the search title (``ar_clarin``, ``mx_el_universal``) --
+#    unless it is the page's branding or a section label: the site name the page states (``og:site_name``,
+#    ``application-name``, the JSON-LD publisher), what remains of a stated title once a stated headline is taken out of it
+#    (``La Nación / <headline>``), or a section the page states (``articleSection``, ``article:section``, a breadcrumb item
+#    but the last). Then the page has **no title block**: the title is unknown on the text surface (the record's
+#    ``metadata.title`` keeps what the page states, with its basis) -- never the newspaper's name, never a reconstruction.
+#    An ``h1`` that is not the title is a ``heading`` and never BODY (as the first ``h1`` never was).
+# 2. **Subtitle.** 0.2.0's two paths, and only where the chosen title is the stated headline (or the page states none), with
+#    five exclusions found on the stored pages:
+#    a. a block inside a newsletter, subscription or promotion module (``PROMO_MARKS`` on any enclosing element) --
+#       "Lo bueno que es estar informado ... desde tu correo electrónico" (``co_el_espectador``);
+#    b. a field of a data sheet: a block that opens with a short label and a colon and stands next to another such block
+#       ("Lugar: …", "Fecha de inicio: …", "Horario: …" of an event listing, ``cu_14ymedio``);
+#    c. a caption, a credit or a gallery element (``NOT_SUBTITLE_MARKS_3``), on the page-statement path too (0.2.0 checked
+#       it on the markup path only);
+#    d. one subtitle per stated text: the same description repeated further down (a gallery's captions, a share box, the
+#       paywalled copy) is not a second subtitle, and a stated "description" that is the headline itself is not a subtitle
+#       source;
+#    e. by markup alone, only in the header: at most ``MAX_MARKED_GAP`` blocks after the title (measured on 0.2.0: every
+#       marked subtitle within 9 blocks; the 13 beyond 30 were newsletter boxes and teasers of other articles).
+#
+# BODY is 0.2.0's, except where the chosen title was a body block under 0.1.0's rule (it is the headline; measured and named in
+# CPD-0040). Structural and markup rules only; the one textual form read is the field label of (b). ``CANDIDATE``.
+
+VERSION_3 = "0.3.0"
+MAX_MARKED_GAP = 12
+PROMO_MARKS = frozenset({"newsletter", "newsletters", "boletin", "boletines", "suscripcion", "suscripciones", "suscribete",
+                         "subscribe", "subscription", "subscriptions", "promo", "promocion", "signup", "registro"})
+NOT_SUBTITLE_MARKS_3 = NOT_SUBTITLE_MARKS | {"gallery", "galeria", "slider", "carousel", "slide", "slideshow", "epigraphe"}
+_FIELD = _re.compile(r"^\s*[A-ZÁÉÍÓÚÑ][\wáéíóúñü]*(?:\s+[\wáéíóúñü]+){0,2}\s*:\s+\S")
+_TITLE_PARTS = _re.compile(r"\s+(?:\||/|-|–|—|·|::)\s+")
+_SEPARATOR_EDGE = _re.compile(r"^\s*(?:\||/|-|–|—|·|::)\s+|\s+(?:\||/|-|–|—|·|::)\s*$")
+
+
+class _Parser3(_Parser2):
+    """0.2.0's parser; the title is chosen among the ``h1`` blocks and the subtitle paths are bounded (``article_html/0.3.0``)."""
+
+    def site_names(self) -> set[str]:
+        names = [*self.meta.get("og:site_name", []), *self.meta.get("application-name", [])]
+        for document in self.json_ld:
+            try:
+                nodes = [_json.loads(document)]
+            except ValueError:
+                continue
+            while nodes:
+                node = nodes.pop()
+                if isinstance(node, list):
+                    nodes += node
+                elif isinstance(node, dict):
+                    publisher = node.get("publisher")
+                    for item in publisher if isinstance(publisher, list) else [publisher]:
+                        if isinstance(item, dict) and isinstance(item.get("name"), str):
+                            names.append(item["name"])
+                    if node.get("@type") in ("WebSite", "Organization", "NewsMediaOrganization") and isinstance(node.get("name"), str):
+                        names.append(node["name"])
+                    nodes += [node.get("@graph"), node.get("mainEntity")]
+        headlines = {_norm(v) for v in [*self._json_ld_strings("headline"), *self.meta.get("og:title", []), *self.meta.get("twitter:title", [])]}
+        # what a stated title keeps besides a stated headline: "La Nación / <headline>" -> "la nación",
+        # "<headline> - Juventud Rebelde - Diario de la juventud cubana" -> "juventud rebelde - diario de la juventud cubana"
+        for title in {_norm(t) for t in [*self.meta.get("title", []), *self.meta.get("og:title", [])]}:
+            for headline in headlines - {title}:
+                if not headline or headline == title:
+                    continue
+                for rest in (title[len(headline):] if title.startswith(headline) else None,
+                             title[:-len(headline)] if title.endswith(headline) else None):
+                    if rest is None:
+                        continue
+                    stripped = _SEPARATOR_EDGE.sub("", rest)
+                    if stripped and stripped != rest.strip():        # the headline was set off by a separator
+                        names += [stripped, *_TITLE_PARTS.split(stripped)]
+        return {_norm(name) for name in names if name and _norm(name)}
+
+    def _json_ld_strings(self, key: str) -> list[str]:
+        out = []
+        for document in self.json_ld:
+            try:
+                nodes = [_json.loads(document)]
+            except ValueError:
+                continue
+            while nodes:
+                node = nodes.pop()
+                if isinstance(node, list):
+                    nodes += node
+                elif isinstance(node, dict):
+                    value = node.get(key)
+                    out += [value] if isinstance(value, str) else [v for v in value if isinstance(v, str)] if isinstance(value, list) else []
+                    nodes += [node.get("@graph"), node.get("mainEntity")]
+        return out
+
+    def section_labels(self) -> set[str]:
+        labels = [*self._json_ld_strings("articleSection"), *self.meta.get("article:section", [])]
+        for document in self.json_ld:
+            try:
+                nodes = [_json.loads(document)]
+            except ValueError:
+                continue
+            while nodes:
+                node = nodes.pop()
+                if isinstance(node, list):
+                    nodes += node
+                elif isinstance(node, dict):
+                    if node.get("@type") == "BreadcrumbList" and isinstance(node.get("itemListElement"), list):
+                        items = [i for i in node["itemListElement"] if isinstance(i, dict)]
+                        for item in items[:-1]:
+                            name = item.get("name")
+                            if not isinstance(name, str) and isinstance(item.get("item"), dict):
+                                name = item["item"].get("name")
+                            if isinstance(name, str):
+                                labels.append(name)
+                    nodes += [node.get("@graph"), node.get("mainEntity")]
+        return {_norm(label) for label in labels if isinstance(label, str) and _norm(label)}
+
+    def _is_stated_headline(self, text: str) -> bool:
+        stated, text = self.stated_headlines() + [_norm(t) for t in self.meta.get("title", [])], _norm(text)
+        for value in stated:
+            if text == value or (len(text) >= 15 and (text in value or value in text)):
+                return True
+            if len(text) >= 15 and text in _TITLE_PARTS.split(value):
+                return True
+        return False
+
+    def choose_title(self, blocks: list[dict[str, Any]]) -> int | None:
+        """The index of the title block among the ``h1`` blocks, or ``None`` (no ``h1`` is the article's headline)."""
+        h1 = [i for i, item in enumerate(self.raw) if item["tag"] == "h1"]
+        if not h1:
+            return None
+        names = self.site_names() | self.section_labels()      # branding and section labels are never the headline
+        if self.stated_headlines():
+            for i in h1:
+                if _norm(blocks[i]["text"]) not in names and self._is_stated_headline(blocks[i]["text"]):
+                    return i
+        return None if _norm(blocks[h1[0]]["text"]) in names else h1[0]
+
+    def _field_like(self, blocks: list[dict[str, Any]], i: int) -> bool:
+        """A field of a data sheet: label and colon, beside another such block of the same element kind (same tag, same marks)."""
+        if not _FIELD.match(blocks[i]["text"]):
+            return False
+
+        def shape(j: int) -> tuple[str, frozenset[str]]:
+            return self.raw[j]["tag"], frozenset(self.marks_of.get(self.raw[j].get("own"), set()))
+
+        return any(0 <= j < len(blocks) and _FIELD.match(blocks[j]["text"]) and shape(j) == shape(i) for j in (i - 1, i + 1))
+
+    def _excluded(self, blocks: list[dict[str, Any]], i: int, title: int) -> bool:
+        item = self.raw[i]
+        ids = item.get("ids") or ()
+        # a module of its own: marked as a newsletter / subscription / promotion box, and not the element around the title too
+        around_title = set(self.raw[title].get("ids") or ())
+        enclosing = [element for element in [*ids, *([item["own"]] if item.get("own") else [])] if element not in around_title]
+        if any(self.marks_of.get(element, set()) & PROMO_MARKS for element in enclosing):
+            return True
+        near = [item["own"]] if item.get("own") else []
+        near += [ids[-1]] if ids else []
+        if any(self.marks_of.get(element, set()) & NOT_SUBTITLE_MARKS_3 for element in near):
+            return True
+        return self._field_like(blocks, i)
+
+    def blocks(self) -> list[dict[str, Any]]:
+        if getattr(self, "_blocks", None) is not None:
+            return [dict(block) for block in self._blocks]
+        blocks = _Parser.blocks(self)
+        for block, item in zip(blocks, self.raw):
+            if self._in_ai_summary(item):
+                block["role"], block["module"] = E.ROLE_NON_BODY, E.MODULE_AI_SUMMARY
+        chosen = self.choose_title(blocks)
+        for i, block in enumerate(blocks):
+            if block["kind"] == "title" and i != chosen:
+                block["kind"], block["role"] = "heading", E.ROLE_NON_BODY        # an h1 that is not the headline: never body
+            elif i == chosen:
+                block["kind"], block["role"] = "title", E.ROLE_TITLE
+        self._blocks = blocks
+        first_body = next((i for i, block in enumerate(blocks) if block["role"] == E.ROLE_BODY), None)
+        if chosen is None or first_body is None or first_body < chosen or not self._title_is_the_headline(blocks[chosen]["text"]):
+            return [dict(block) for block in blocks]
+        title_text = _norm(blocks[chosen]["text"])
+        headlines = set(self.stated_headlines()) | {title_text}
+        # a stated "description" that is the headline itself is no subtitle source
+        stated = [v for v in self.stated_subtitles() if not self._states(v, list(headlines)) and not any(
+            self._states(h, [v]) for h in headlines)]
+        used: set[str] = set()
+
+        def stated_value(text: str) -> str | None:
+            return next((v for v in stated if self._states(text, [v])), None)
+
+        marked = False
+        for i in range(chosen + 1, first_body):          # the header, in page order (it comes before the body)
+            block, item = blocks[i], self.raw[i]
+            if block["role"] != E.ROLE_NON_BODY or "module" in block or block["kind"] not in SUBTITLE_KINDS \
+                    or len(block["text"]) < MIN_SUBTITLE_CHARACTERS or _norm(block["text"]) in headlines \
+                    or item.get("link", 0) > MAX_LINK_SHARE * len(block["text"]) or self._excluded(blocks, i, chosen):
+                continue
+            value = stated_value(block["text"])
+            if value is not None:
+                if value not in used:
+                    block.update(kind=E.KIND_SUBTITLE, role=E.ROLE_TITLE, basis=E.SUBTITLE_STATED_BY_PAGE)
+                    used.add(value)
+            elif not marked and i - chosen <= MAX_MARKED_GAP and len(block["text"]) >= MIN_MARKED_SUBTITLE_CHARACTERS \
+                    and self._subtitle_marks(item, SUBTITLE_MARKS):
+                block.update(kind=E.KIND_SUBTITLE, role=E.ROLE_TITLE, basis=E.SUBTITLE_BY_MARKUP)
+                marked = True
+        # the leading body blocks that are an explicitly marked subtitle element, or a stated heading (0.2.0's rule)
+        position = first_body
+        while position < len(blocks) and blocks[position]["role"] == E.ROLE_BODY and blocks[position]["kind"] in SUBTITLE_KINDS:
+            block = blocks[position]
+            if self._excluded(blocks, position, chosen):
+                break
+            value = stated_value(block["text"]) if block["kind"] == "heading" and len(block["text"]) >= MIN_SUBTITLE_CHARACTERS else None
+            if self._subtitle_marks(self.raw[position], LEADING_BODY_MARKS):
+                block.update(kind=E.KIND_SUBTITLE, role=E.ROLE_TITLE, basis=E.SUBTITLE_BY_MARKUP)
+            elif value is not None and value not in used:
+                block.update(kind=E.KIND_SUBTITLE, role=E.ROLE_TITLE, basis=E.SUBTITLE_STATED_BY_PAGE)
+                used.add(value)
+            else:
+                break
+            position += 1
+        return [dict(block) for block in blocks]
+
+
+def extract_v3(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = E.UNKNOWN,
+               content_encoding: str = E.IDENTITY) -> E.Extraction:
+    """``article_html/0.3.0``: 0.2.0 with the title chosen among the ``h1`` blocks and bounded subtitle paths (``extraction/2``)."""
+    if not isinstance(body, bytes):
+        raise E.ExtractionError("a body is bytes")
+    if sha256_bytes(body) != require_sha256(body_sha256, "body_sha256"):
+        raise E.ExtractionError("the body offered is not the body the digest names")
+    if not isinstance(content_type, str) or not content_type:
+        raise E.ExtractionError("content_type is the declared media type or 'unknown'")
+    record: dict[str, Any] = {
+        "schema": E.EXTRACTION_SCHEMA_2,
+        "extractor": {"name": NAME, "version": VERSION_3},
+        "input": {"body_sha256": body_sha256, "body_size_bytes": len(body), "declared_content_type": content_type,
+                  "declared_charset": declared_charset, "content_encoding": content_encoding},
+        "outcome": E.OUTCOME_EXTRACTED,
+        "reason": E.NOT_APPLICABLE,
+        "decoding": {"charset": E.NOT_APPLICABLE, "basis": E.NOT_APPLICABLE, "replaced_characters": 0},
+        "metadata": {name: {"value": E.UNKNOWN, "basis": E.UNKNOWN, "candidates": []} for name in E.METADATA_FIELDS},
+        "blocks": [],
+    }
+    try:
+        body = E.decode_content(body, content_encoding) if body else body
+        reason = E._refusal(body, content_type)
+    except E.ContentDecodingError as error:
+        reason = error.reason
+    if reason is None:
+        text, record["decoding"] = E._decode(body, declared_charset)
+        parser = _Parser3()
+        parser.feed(text)
+        parser.close()
+        record["blocks"] = parser.blocks()
+        record["metadata"] = E._metadata(parser)
+    else:
+        record["outcome"], record["reason"] = E.OUTCOME_NOT_EXTRACTABLE, reason
+    record["extracted_text_sha256"] = sha256_bytes(E.extracted_text_bytes(record["blocks"]))
+    record["body_text_sha256"] = sha256_bytes(E.body_text(record["blocks"]).encode("utf-8"))
+    return E.Extraction(record)
+
+
+ARTICLE_3 = E.Extractor(NAME, VERSION_3, extract_v3, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_2)
+PREFERRED = ARTICLE_3      # the candidate the operator is asked to adopt (CPD-0040); not binding
+
+
 def subtitles(record: Any) -> list[str]:
     """The subtitle texts of an extraction record, in order (none under ``extraction/1``)."""
     return [block["text"] for block in record["blocks"] if block["kind"] == E.KIND_SUBTITLE]
 
 
-__all__ = ["ARTICLE", "ARTICLE_2", "extract", "extract_v2", "subtitles", "NAME", "VERSION", "VERSION_2"]
+__all__ = ["ARTICLE", "ARTICLE_2", "ARTICLE_3", "PREFERRED", "extract", "extract_v2", "extract_v3", "subtitles", "NAME", "VERSION",
+           "VERSION_2", "VERSION_3"]
