@@ -194,7 +194,8 @@ def extract(body: bytes, *, body_sha256: str, content_type: str, declared_charse
     return E.Extraction(record)
 
 
+# Not entered into extraction.EXTRACTORS (the registry of record of the package's adopted pipeline): a candidate of a comparison
+# carries its lifecycle itself, and importing it changes nothing elsewhere.
 ARTICLE = E.Extractor(NAME, VERSION, extract, E.LIFECYCLE_CANDIDATE)
-E.EXTRACTORS.setdefault(ARTICLE.stage_version, ARTICLE)
 
 __all__ = ["ARTICLE", "extract", "NAME", "VERSION"]

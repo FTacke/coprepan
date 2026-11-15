@@ -3,19 +3,24 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-15 |
-| Status | `PROPOSED` — implemented, measured, **not active**: the scientific activation of a content-admission standard and of an extractor is the operator's (§5) |
+| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| What is active | the two candidates exist, implemented and measured, as `CANDIDATE`s; **they are not binding**: the scientific activation of a content-admission standard and of an extractor is the operator's (*Not decided here*) |
 | Execution | `extraction_article.py` (`article_html/0.1.0`, lifecycle `CANDIDATE`), `content_quality.py` (`content-features/1`, `content-quality/2`, lifecycle `CANDIDATE`), `scripts/study_content_quality.py`; `tests/test_content_quality.py` |
 | Builds on / amends / supersedes | builds on CPD-0005 (the extraction contract), CPD-0007 (technical admission labels, extractor lifecycle), CPD-0018 (the extraction comparison); amends nothing; supersedes nothing |
 | Does not change | `baseline_html/0.1.0` and every stored extraction; `admission-technical/1` and its labels; any release view or release gate; the raw evidence (nothing is deleted or relabelled; a rejection says only that this extraction is not taken into the analysis corpus under this rule set) |
 | Decided by | the operator's brief of 2026-11-15 (§2 "Qualität vor Recall", §4–§7); the rules are the commissioned agent's, the activation is the operator's |
 | Run report | `docs/agent-runs/2026-11-15_coprepan-weekend-source-qualification.md` §4–§6 |
 
-## Three states, kept apart
+## Context
 
-Raw archiving (`RAW_PRESERVED`, the ledger), technical usability (`admission-technical/1`: an extracted text exists), content quality
+The baseline extractor fails on measured page structures (CPD-0018 diagnosis of the weekend), and nothing separated coherent
+editorial texts from frames, section pages, walls and machine text: `admission-technical/1` only says that a text exists. The brief
+of 2026-11-15 asks for a simple, deterministic, precision-first selection. Three states are kept apart: raw archiving (`RAW_PRESERVED`, the ledger), technical usability (`admission-technical/1`: an extracted text exists), content quality
 (this record: the extracted body is a coherent editorial text). None implies another.
 
-## The extractor
+## Decision
+
+### The extractor
 
 `article_html/0.1.0` keeps the baseline's contract and changes one structural rule: the body container is the element that carries
 the most running text (block text without link text counts for its element and half for the parent), its parent when that carries a
@@ -25,7 +30,7 @@ measured defects of the baseline (teaser `<article>` cards before the article; a
 unclosed paragraphs; an article split into sibling elements). On the 2,413 stored pages that state a JSON-LD `articleBody` it lands
 within 85–125 % of it on 1,987 (baseline: 899).
 
-## The gate (`content-quality/2`)
+### The gate (`content-quality/2`)
 
 A page is **rejected** -- with every reason that applies, machine-readable -- when: the answer is not 2xx; nothing was extracted;
 the body is empty; it has fewer than 150 words; its function-word share is below 0.30 (lists, names, menus, another language); it
@@ -48,7 +53,21 @@ closed in `/2` (commit `f1a0103`), which was read blind on a second, unseen draw
 promotional texts (native advertising) -- the residual class simple rules do not separate. Of the rejected pages about half were
 good texts, nearly all complete briefs under 150 words: the recall the rule set gives up by design.
 
-## For the operator's decision
+## Alternatives considered
+
+- **A length threshold alone** (150 words): 7 bad pages accepted on the development reading — frames in full sentences, terms of
+  use, live previews pass it.
+- **A lower or higher minimum** (100/120 or 200/250 words): one more false accept at 100–120; 11–29 more good pages lost at 200–250
+  for no measured precision gain.
+- **Lexical diversity (type-token ratio)**: falls with length and separated nothing the function-word share and the 5-gram ratio do
+  not; not used.
+- **JSON-LD `articleBody` as the text**: a publisher-stated field that is often a summary (`ar_rio_negro`: 77 of 79 pages) or absent;
+  used only as a comparison value (the shortfall rule).
+- **A classifier or an LLM**: not needed for the precision reached, against the brief's preference for simple rules; not used.
+- **Rescue rules per outlet** (CSS or XPath for `hn_la_prensa`, `pa_laestrelladepanama`, client-rendered `ar_pagina12`): not built —
+  the gate rejects those pages, and enough other material exists.
+
+## Not decided here (the operator's decision)
 
 1. Whether `content-quality/2` (or a later rule set) becomes binding for corpus admission or for a release view, after the human
    review sample (`docs/intake/quality/content_quality_review_2026-11-15.md`).

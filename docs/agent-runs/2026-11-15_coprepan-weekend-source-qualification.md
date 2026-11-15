@@ -11,7 +11,7 @@
 | Start | `main` = `origin/main`, clean, after the published report of the source-health run of 2026-11-14; worktree `C:\dev\panhispanic_media_corpora\worktrees\coprepan\weekend-qualification`, branch `qualification/2026-11-14-weekend` |
 | Operator briefs | (1) "CO.PRE.PAN_v3 – Wochenend-Qualifikation aller zugänglichen Pressequellen mit lokalem Spooling und autonomen Reparaturen" (2026-11-14); (2) "CO.PRE.PAN_v3 – Autonome Qualitäts- und Performance-Optimierung bis zur produktionsreifen Vorzugslösung" (2026-11-15) |
 | Authorisations | `DOA-2026-11-14-2` (waves wq-1…wq-7), `DOA-2026-11-15-1` (confirmation wave wc-1); both valid to 2026-11-15; one ceiling of 1,600 transport requests for both |
-| Decisions | CPD-0036 (deferred local preservation; amended for `canary-driver/7`), CPD-0037 (incremental checks, `intake-controller/3`), CPD-0038 (candidate extractor and gate, `PROPOSED`) |
+| Decisions | CPD-0036 (deferred local preservation; amended for `canary-driver/7`), CPD-0037 (incremental checks, `intake-controller/3`), CPD-0038 (candidate extractor and gate; candidates only, not binding) |
 
 The sections follow the second brief (§16, 1–15); the first brief's A–J are contained: A = §1, B = §2, C = §3, D = §4–§6,
 E = §11, F = §10, G = §14 and §3, H = §3 and §12, I = §13, J = §15.

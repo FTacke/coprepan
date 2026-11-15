@@ -876,13 +876,13 @@ def _interleaved_cycle(env: "Environment", plan: Mapping[str, Any], state: dict[
                 break
             queue = queues[outlet["outlet_id"]]
             if set(outlet["web_origins"]) & set(fetcher.access_holds):
-                turn.remove(outlet)
+                turn = [o for o in turn if o is not outlet]        # leaves the round
                 continue
             summary = acquire(outlet, [], 1, queue)
             if too_many_errors():
                 return None, _stop(state_dir, state, FAILED, "more than a third of the outlets failed in one cycle: a systemic fault, not an outlet's")
             if summary is None or not summary["candidates_requested"] or queue.exhausted:
-                turn.remove(outlet)
+                turn = [o for o in turn if o is not outlet]        # leaves the round
     if turn:                                                   # the cycle ended before these outlets' items: they stay due
         cut = state.setdefault("items_left_at_cycle_end", {})
         for outlet in turn:

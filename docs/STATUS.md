@@ -59,7 +59,7 @@ fetches (112 packs, 51 MB) are **`PRESERVATION_PENDING` in the runtime workspace
 `QUALIFIED_WITH_LIMITS`, 18 `NOT_QUALIFIED`, each with its reason. Built and tested offline, **not run for real yet**:
 `canary-driver/8` and `intake-controller/3` with incremental workspace checks instead of the whole-workspace diagnose at every
 stage, outlets interleaved, allowances per outlet (CPD-0037); a candidate extractor `article_html/0.1.0` and a candidate
-content-quality gate `content-quality/2` (CPD-0038, **PROPOSED**: 97 of 100 accepted pages good in a blind control, the scientific
+content-quality gate `content-quality/2` (CPD-0038, **candidates, not binding**: 97 of 100 accepted pages good in a blind control, the scientific
 activation is the operator's); a [validated draft plan](intake/wave/in2-24h-wave_REVISION_2026-11-15.md) of the 24-hour wave under
 /3, not authorized. Report: [`2026-11-15 weekend`](agent-runs/2026-11-15_coprepan-weekend-source-qualification.md).
 

@@ -63,6 +63,24 @@ The October intake served the outlets one after another, so each origin's 10 sec
   same twelve items fell from 140 s (/2) to 80 s (/3); each origin's releases stayed at least 10 s apart.
 - Every existing intake test passes on a /3 plan.
 
+## Alternatives considered
+
+- **A cache rebuilt at every check** (e.g. a fresh index of every pack): the same linear cost in another place; rejected by the brief
+  and by measurement.
+- **Checking only the run's own packs and nothing else** (no anchors, no derivation state): misses a lost or damaged earlier object
+  and a duplicate written with a valid chain; rejected.
+- **Trusting size and mtime of old packs** (CO.RA.PAN's stat signature): stat calls on every pack are still linear, and for
+  write-once packs whose identity is their manifest digest the signature adds little; replaced by not touching verified packs on the
+  fast path plus the rotating audit.
+- **Threads or several processes for interleaving**: the workspace's tables, ledger and packs are single-writer; rejected in favour of
+  round-robin slices in one process, one request at a time.
+
+## Not decided here
+
+The canary budget split for outlets with two origins (`cr_crhoy`, run report §12); a `paced_until` instant in the fetch record (a
+schema change); the authorisations of the first canary under `canary-driver/8`, the first intake under `intake-controller/3` and the
+24-hour wave.
+
 ## Validation debt
 
 The first real canary under `canary-driver/8` and the first intake under `intake-controller/3` (each needs its own authorisation);
