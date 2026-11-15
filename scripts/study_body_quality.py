@@ -11,6 +11,7 @@ Usage:
   python scripts/study_body_quality.py draw      --rows <rows.jsonl.gz> (--runtime … | --page-cache …) --out-dir <evidence dir>
                                                  --sheet <local reading sheet .html>
   python scripts/study_body_quality.py merge     --out-dir <evidence dir> --verdicts <filled form .csv> --out <result.json>
+                                                 [--sheet <local reading sheet .html>]
 
 The page cache is ``study_phase3_metadata.py cache``'s (publisher bytes: local only, outside the repository, deleted after the
 study). ``templates`` builds the pinned table from the BODY blocks of ``0.4.0`` *without* templates: a block is a template
@@ -294,6 +295,7 @@ def main(argv=None) -> int:
     command.add_argument("--out-dir", type=Path, required=True)
     command.add_argument("--verdicts", type=Path, required=True)
     command.add_argument("--out", type=Path, required=True)
+    command.add_argument("--sheet", type=Path, help="the local reading sheet, for word counts (numbers only reach the result)")
     arguments = parser.parse_args(argv)
     return {"templates": templates, "derive": derive, "summarize": summarize, "show": show, "draw": draw,
             "merge": merge}[arguments.command](arguments)
@@ -584,41 +586,115 @@ def _sheet(cases) -> str:
 
 
 def _set(value: str) -> set[str]:
-    return {v for v in (value or "").replace(" ", "").split(",") if v and v != "0"}
-
-
-def merge(arguments) -> int:
-    manifest = json.loads((arguments.out_dir / "manifest.json").read_text(encoding="utf-8"))
-    key_path = arguments.out_dir / "KEY_machine_predictions_open_only_after_the_verdicts.json"
-    if P3._sha(key_path.read_bytes()) != manifest["files"][key_path.name]:
-        raise SystemExit("the key is not the frozen key")
-    key = {c["case_id"]: c for c in json.loads(key_path.read_text(encoding="utf-8"))["cases"]}
-    verdicts = list(csv.DictReader(arguments.verdicts.open(encoding="utf-8-sig")))
-    table = defaultdict(Counter)
-    for v in verdicts:
-        case, q, answer = key[v["case_id"]], v["question"], v["answer"].strip().lower()
-        if not answer:
-            table[(case["component"], q)]["no_answer"] += 1
+    """Block numbers from a FOREIGN answer: '3,9-12' (a hyphen or an en dash makes a range); '0' and '' are the empty set."""
+    out: set[str] = set()
+    for v in (value or "").replace(" ", "").replace("–", "-").split(","):
+        if not v or v == "0":
             continue
+        a, _, b = v.partition("-")
+        out |= {str(n) for n in range(int(a), int(b or a) + 1)}
+    return out
+
+
+# The bases a filled form may give an answer (CPD-0042): only OPERATOR_CONFIRMED is human gold.
+BASES = ("OPERATOR_CONFIRMED", "TECHNICALLY_VERIFIED", "AGENT_ASSESSED", "UNRESOLVED")
+
+
+def _coarse_missing(value: str) -> str:
+    return value if value in ("complete", "not_an_article") else ("text_missing" if value.endswith("_missing") else value)
+
+
+def _score(key, labels, words=None):
+    """``labels``: {(case, question): (answer, block numbers left out)}. Counts per component and version, and the cases."""
+    table, cases = defaultdict(Counter), {}
+    for (cid, q), (answer, excluded) in sorted(labels.items()):
+        case = key[cid]
+        detail = cases.setdefault(cid, {"component": case["component"], "stratum": case["stratum"]})
         for version in ("0_4_0", "0_3_0"):
             predicted = case[f"predictions_{version}"].get(q)
             if predicted is None:
                 continue
+            t = table[(case["component"], f"{q}|{version}")]
             if q == "FOREIGN":
-                human, machine = _set(answer), _set(predicted)
+                human, machine = _set(answer) - excluded, _set(predicted) - excluded
                 # machine "foreign" = kept out of the BODY by that version; human "foreign" = not article text
-                t = table[(case["component"], f"FOREIGN|{version}")]
-                t["blocks_kept_out_and_foreign"] += len(human & machine)
-                t["blocks_kept_out_but_article_text (false deletion)"] += len(machine - human)
-                t["blocks_kept_in_but_foreign (residual)"] += len(human - machine)
+                parts = {"kept_out_and_foreign": human & machine, "false_deletion": machine - human, "residual": human - machine}
+                for name, blocks in parts.items():
+                    t[f"blocks_{name}"] += len(blocks)
+                    if words is not None:
+                        t[f"words_{name}"] += sum(words[cid].get(int(b), 0) for b in blocks)
+                    if blocks and name != "kept_out_and_foreign":
+                        detail[f"{name}|{version}"] = sorted(int(b) for b in blocks)
+                t["cases_with_false_deletion"] += bool(parts["false_deletion"])
+                t["cases_with_residual"] += bool(parts["residual"])
+            elif q == "MISSING":
+                t["agree" if answer == predicted else "disagree"] += 1
+                t["agree_coarse" if _coarse_missing(answer) == _coarse_missing(predicted) else "disagree_coarse"] += 1
+                if _coarse_missing(answer) != _coarse_missing(predicted):
+                    detail[f"MISSING|{version}"] = {"label": answer, "predicted": predicted}
             else:
-                table[(case["component"], f"{q}|{version}")]["unsure" if answer == "unsure" else
-                                                             ("agree" if answer == predicted else "disagree")] += 1
-    result = {"schema": "coprepan-body-quality-result/v1", "manifest_sha256": P3._sha((arguments.out_dir / "manifest.json").read_bytes()),
-              "by_component": {f"{c}|{q}": dict(t) for (c, q), t in sorted(table.items())},
-              "note": "random and targeted components apart; only the random component speaks to the population, and only coarsely"}
+                outcome = "unsure" if answer == "unsure" else ("agree" if answer == predicted else "disagree")
+                t[outcome] += 1
+                t[f"label_{answer}|predicted_{predicted}"] += 1
+                if outcome == "disagree":
+                    detail[f"CORE|{version}"] = {"label": answer, "predicted": predicted}
+    return {f"{c}|{q}": dict(t) for (c, q), t in sorted(table.items())}, cases
+
+
+def merge(arguments) -> int:
+    """Score a filled form against the frozen key. A form with a ``basis`` column (CPD-0042) is scored twice: on the operator's
+    confirmed verdicts alone (human gold; blocks the operator left open are left out of that question) and on every answer
+    (gold plus what the run verified or assessed, the basis counted); a form without it as before, every answer alike."""
+    manifest = json.loads((arguments.out_dir / "manifest.json").read_text(encoding="utf-8"))
+    key_path = arguments.out_dir / "KEY_machine_predictions_open_only_after_the_verdicts.json"
+    if P3._sha(key_path.read_bytes()) != manifest["files"][key_path.name]:
+        raise SystemExit("the key is not the frozen key")
+    form_path = arguments.out_dir / "verdicts_form.csv"
+    if P3._sha(form_path.read_bytes()) != manifest["files"][form_path.name]:
+        raise SystemExit("the blank form is not the frozen form")
+    key = {c["case_id"]: c for c in json.loads(key_path.read_text(encoding="utf-8"))["cases"]}
+    verdicts = list(csv.DictReader(arguments.verdicts.open(encoding="utf-8-sig")))
+    if {(v["case_id"], v["question"]) for v in verdicts} != {(r["case_id"], r["question"]) for r in csv.DictReader(form_path.open(encoding="utf-8"))}:
+        raise SystemExit("the filled form does not hold the frozen form's cases and questions")
+    words = None
+    if arguments.sheet is not None:
+        if P3._sha(arguments.sheet.read_bytes()) != manifest["files"]["reading_sheet (local only, publisher text)"]:
+            raise SystemExit("the reading sheet is not the frozen sheet")
+        src = arguments.sheet.read_text(encoding="utf-8")
+        words = {cid: {int(n): len(_html.unescape(t).split()) for n, t in re.findall(r'<li value="(\d+)">(.*?)</li>', body, re.S)}
+                 for cid, body in re.findall(r'<section id="(B\d\d)">(.*?)</section>', src, re.S)}
+    with_basis = "basis" in (verdicts[0] if verdicts else {})
+    all_labels, gold, bases, unanswered = {}, {}, Counter(), Counter()
+    for v in verdicts:
+        cid, q, answer = v["case_id"], v["question"], v["answer"].strip().lower()
+        basis = (v.get("basis") or "").strip() if with_basis else "OPERATOR_CONFIRMED"
+        if with_basis and basis not in BASES:
+            raise SystemExit(f"{cid} {q}: basis {basis!r} is not one of {BASES}")
+        bases[f"{q}|{basis}"] += 1
+        if not answer or basis == "UNRESOLVED":
+            unanswered[f"{key[cid]['component']}|{q}"] += 1
+        else:
+            all_labels[(cid, q)] = (answer, set())
+        operator = (v.get("operator_answer") or "").strip().lower() if with_basis else answer
+        opened = _set(v.get("operator_open") or "") if with_basis else set()
+        if q == "FOREIGN" and with_basis and (operator or opened):
+            gold[(cid, q)] = (operator or "0", opened)
+        elif operator and (q != "FOREIGN" or not with_basis):
+            gold[(cid, q)] = (operator, set())
+    every, every_cases = _score(key, all_labels, words)
+    result = {"schema": "coprepan-body-quality-result/v2", "manifest_sha256": P3._sha((arguments.out_dir / "manifest.json").read_bytes()),
+              "verdicts_sha256": P3._sha(arguments.verdicts.read_bytes()), "bases": dict(sorted(bases.items())),
+              "unanswered": dict(unanswered)}
+    if with_basis:
+        result["operator_confirmed_only"], _ = _score(key, gold, words)
+    result["all_answers"] = every
+    result["cases"] = every_cases
+    result["note"] = ("random (16) and targeted (29) components apart; only the random component speaks to the population, and "
+                      "only coarsely; the targeted strata look for errors and estimate no precision. 'operator_confirmed_only' is the "
+                      "human gold (blocks the operator left open are left out); 'all_answers' adds the answers the run established "
+                      "from the stored pages (the basis column says which)")
     arguments.out.write_bytes((json.dumps(result, ensure_ascii=False, indent=1) + "\n").encode("utf-8"))
-    print(json.dumps(result["by_component"], ensure_ascii=False)[:800])
+    print(json.dumps({k: result[k] for k in ("bases", "unanswered")}, ensure_ascii=False))
     return 0
 
 

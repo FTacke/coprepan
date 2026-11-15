@@ -282,27 +282,75 @@ def test_the_envelope_3_carries_agency_credit_3_and_2_is_unchanged():
 # --- the frozen BODY control ---------------------------------------------------------------------------------------------------
 
 
-def test_merge_counts_false_deletions_and_residuals_and_refuses_a_changed_key(tmp_path):
+_KEY_NAME = "KEY_machine_predictions_open_only_after_the_verdicts.json"
+
+
+def _control(tmp_path, rows, fields=("case_id", "question", "allowed", "answer", "note")):
+    """A frozen control in ``tmp_path`` (key, blank form, manifest) and a filled form with ``rows``."""
     key = {"cases": [{"case_id": "B01", "component": "random", "stratum": "R00_random", "fetch_id": "ft1:x",
                       "predictions_0_4_0": {"FOREIGN": "2,5", "MISSING": "complete", "CORE": "yes"},
                       "predictions_0_3_0": {"FOREIGN": "0", "CORE": "yes"}}]}
     key_bytes = json.dumps(key).encode("utf-8")
-    name = "KEY_machine_predictions_open_only_after_the_verdicts.json"
-    (tmp_path / name).write_bytes(key_bytes)
-    (tmp_path / "manifest.json").write_text(json.dumps({"files": {name: hashlib.sha256(key_bytes).hexdigest()}}), encoding="utf-8")
+    (tmp_path / _KEY_NAME).write_bytes(key_bytes)
+    blank = "case_id,question,allowed,answer,note\n" + "".join(f"B01,{q},,,\n" for q in ("FOREIGN", "MISSING", "CORE"))
+    (tmp_path / "verdicts_form.csv").write_bytes(blank.encode("utf-8"))
+    (tmp_path / "manifest.json").write_text(json.dumps({"files": {_KEY_NAME: hashlib.sha256(key_bytes).hexdigest(),
+                                                                  "verdicts_form.csv": hashlib.sha256(blank.encode()).hexdigest()}}),
+                                            encoding="utf-8")
     verdicts = tmp_path / "v.csv"
     with verdicts.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["case_id", "question", "allowed", "answer", "note"])
+        writer = csv.DictWriter(handle, fieldnames=list(fields))
         writer.writeheader()
-        writer.writerows([{"case_id": "B01", "question": "FOREIGN", "allowed": "", "answer": "2, 7", "note": ""},
-                          {"case_id": "B01", "question": "CORE", "allowed": "", "answer": "yes", "note": ""}])
+        writer.writerows([{f: r.get(f, "") for f in fields} for r in rows])
+    return key_bytes, verdicts
+
+
+def _merge(tmp_path, verdicts):
     out = tmp_path / "r.json"
     assert STUDY.main(["merge", "--out-dir", str(tmp_path), "--verdicts", str(verdicts), "--out", str(out)]) == 0
-    result = json.loads(out.read_text(encoding="utf-8"))["by_component"]
+    return json.loads(out.read_text(encoding="utf-8"))
+
+
+def test_merge_counts_false_deletions_and_residuals_and_refuses_a_changed_key(tmp_path):
+    key_bytes, verdicts = _control(tmp_path, [{"case_id": "B01", "question": "FOREIGN", "answer": "2, 7"},
+                                              {"case_id": "B01", "question": "MISSING", "answer": "middle_missing"},
+                                              {"case_id": "B01", "question": "CORE", "answer": "yes"}])
+    result = _merge(tmp_path, verdicts)["all_answers"]
     new = result["random|FOREIGN|0_4_0"]
-    assert (new["blocks_kept_out_and_foreign"], new["blocks_kept_out_but_article_text (false deletion)"],
-            new["blocks_kept_in_but_foreign (residual)"]) == (1, 1, 1)
-    assert result["random|FOREIGN|0_3_0"]["blocks_kept_in_but_foreign (residual)"] == 2 and result["random|CORE|0_4_0"]["agree"] == 1
-    (tmp_path / name).write_bytes(key_bytes.replace(b'"yes"', b'"no"'))
+    assert (new["blocks_kept_out_and_foreign"], new["blocks_false_deletion"], new["blocks_residual"]) == (1, 1, 1)
+    assert result["random|FOREIGN|0_3_0"]["blocks_residual"] == 2 and result["random|CORE|0_4_0"]["agree"] == 1
+    assert result["random|MISSING|0_4_0"] == {"disagree": 1, "disagree_coarse": 1}
+    (tmp_path / _KEY_NAME).write_bytes(key_bytes.replace(b'"yes"', b'"no"'))
     with pytest.raises(SystemExit):
-        STUDY.main(["merge", "--out-dir", str(tmp_path), "--verdicts", str(verdicts), "--out", str(out)])
+        _merge(tmp_path, verdicts)
+
+
+def test_merge_keeps_the_operators_gold_apart_from_what_the_run_established(tmp_path):
+    fields = ("case_id", "question", "allowed", "answer", "basis", "operator_answer", "operator_open", "note")
+    # the operator: blocks 2-3 foreign, block 5 left open (the run then judged it article text); CORE not given (the run: no)
+    _, verdicts = _control(tmp_path, [
+        {"case_id": "B01", "question": "FOREIGN", "answer": "2-3", "basis": "AGENT_ASSESSED", "operator_answer": "2–3", "operator_open": "5"},
+        {"case_id": "B01", "question": "MISSING", "answer": "complete", "basis": "TECHNICALLY_VERIFIED"},
+        {"case_id": "B01", "question": "CORE", "answer": "no", "basis": "TECHNICALLY_VERIFIED"}], fields)
+    result = _merge(tmp_path, verdicts)
+    gold = result["operator_confirmed_only"]
+    assert gold["random|FOREIGN|0_4_0"]["blocks_false_deletion"] == 0       # block 5 is out of the gold
+    assert gold["random|FOREIGN|0_4_0"]["blocks_residual"] == 1             # block 3
+    assert "random|CORE|0_4_0" not in gold and "random|MISSING|0_4_0" not in gold
+    every = result["all_answers"]
+    assert every["random|FOREIGN|0_4_0"]["blocks_false_deletion"] == 1      # block 5 with the run's answer
+    assert every["random|CORE|0_4_0"]["disagree"] == 1
+    assert result["bases"] == {"CORE|TECHNICALLY_VERIFIED": 1, "FOREIGN|AGENT_ASSESSED": 1, "MISSING|TECHNICALLY_VERIFIED": 1}
+    assert result["cases"]["B01"]["false_deletion|0_4_0"] == [5]
+
+
+def test_merge_refuses_an_unknown_basis_and_a_form_with_other_questions(tmp_path):
+    fields = ("case_id", "question", "allowed", "answer", "basis", "operator_answer", "operator_open", "note")
+    rows = [{"case_id": "B01", "question": q, "answer": "0" if q == "FOREIGN" else "yes", "basis": "OPERATOR_CONFIRMED"}
+            for q in ("FOREIGN", "MISSING", "CORE")]
+    _, verdicts = _control(tmp_path, rows[:2] + [{**rows[2], "basis": "GUESSED"}], fields)
+    with pytest.raises(SystemExit):
+        _merge(tmp_path, verdicts)
+    _, verdicts = _control(tmp_path, rows[:2], fields)
+    with pytest.raises(SystemExit):
+        _merge(tmp_path, verdicts)
