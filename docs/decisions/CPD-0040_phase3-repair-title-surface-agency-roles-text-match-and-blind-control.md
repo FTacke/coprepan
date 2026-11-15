@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-15 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the repaired rules as **the preferred candidates** beside the versions they repair: `article_html/0.3.0`, `agency-credit/2` (in `editorial-metadata/2`), `text-reuse/2`. **None is validated or activated**; nothing binds a release, an admission or a stored record. Their activation, and that of `content-quality/3` and `section-map/1`, is the operator's after the blind control (*Not decided here*) |
 | Decided by | the operator's brief of 2026-11-15 ("CO.PRE.PAN_v3 – Gezielter Phase-3-Repair und wissenschaftliche Blindvalidierung": the three repairs and their validation are authorised; the scientific decisions of CPD-0039 §1 are not reopened); the rules are the commissioned agent's |
 | Kind | scientific method · extraction · provenance |
@@ -12,6 +12,8 @@
 | Does not change | `extraction/2` (no schema change), `article_html/0.1.0` / `0.2.0`, every stored record; `content-quality/3` and its 150-word minimum (decisions measured identical, §4); `section-map/1`, the IPTC extracts, `editorial-scope/1`, `genre-placement/1`, `genre-declared/1`, `ai-disclosure/1` (records identical on every page, §4); the relation kinds `duplicate_of` / `syndicated_copy_of` and the joint contracts (the match class is a [change request](../crosscorpus/RELATION_MATCH_CLASS_CHANGE_REQUEST_2026-11-15.md)); the intake controller, storage and preservation contracts |
 | Run report | [`2026-11-15 phase-3 repair`](../agent-runs/2026-11-15_coprepan-phase3-repair-blind-control.md) |
 | Evidence | [study record](../intake/quality/phase3_repair_study_2026-11-15.json) (the 4,759 stored item pages of CPD-0039); [blind control](../intake/quality/phase3_blind_control_2026-11-15/manifest.json) (frozen before review) |
+
+*Status line 2026-11-15 (evening):* **partially superseded by [CPD-0041](CPD-0041_body-selection-contamination-status-and-no-llm-stage.md)** for two components: the preferred extractor is now `article_html/0.4.0` (0.3.0's title surface and container rule, the BODY selected block by block on `extraction/3`), the preferred metadata envelope `editorial-metadata/3` (with `agency-credit/3`). `agency-credit/2` and `text-reuse/2` stay as written; the blind control of §5 is development material now -- its key, manifest and form are unchanged.
 
 ## Context
 

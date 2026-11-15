@@ -124,6 +124,14 @@ assumed away.
   logo, the site's name or a section label is never the TITLE. Where no printed headline can be
   told, the page has no title block (the stated headline stays in `metadata.title` with its
   basis) — the BODY is not touched and CORE does not depend on it.
+- **The BODY is selected, and every selection is on the record** (*2026-11-15, CPD-0041,
+  `article_html/0.4.0`, `extraction/3`*): page furniture inside the article container — page
+  modules by markup, production notes, outlet templates, label headings, repeated labels — leaves
+  the BODY block by block, and a lead or stated-body paragraph outside the container joins it;
+  each such block keeps its text and position and names the rule and the reason, so the BODY
+  before the selection is read back from the record. No block is split or rewritten: foreign
+  material inside a block stays and `body-quality/1` reports it. The contamination status is a
+  statement about the extraction; CORE stays the gate's.
 - **Non-body blocks** (captions, navigation remnants, embeds) are not annotated by default. If a
   later decision annotates them, they are units with their own `unit_kind` and surface.
 - Every unit, sentence and token therefore carries a **`surface`**: `body` · `title` ·
@@ -248,7 +256,7 @@ annotation under the shared pins → equivalence and bridge samples → enrichme
 | the language identifier, its validation, the label rule | scientific, Phase 3 |
 | press sentence-boundary policy id | joint / scientific, Phase 4 |
 | whether titles are annotated in the first release | scientific |
-| adoption of `article_html/0.3.0`, `content-quality/3`, `section-map/1` and the provenance rules, after the [blind control](../intake/quality/phase3_blind_control_2026-11-15/README.md) (CPD-0040 *Not decided here*) | scientific, the operator's |
+| adoption of `article_html/0.4.0` (with `body-templates/1`), `content-quality/3`, `section-map/1` and the provenance rules, after the [BODY control](../intake/quality/body_quality_control_2026-11-15/README.md) (CPD-0041 *Not decided here*; the [phase-3 blind control](../intake/quality/phase3_blind_control_2026-11-15/README.md) is development material now) | scientific, the operator's |
 | the unit kind `subtitle` in the joint release contract; the relation match class in the analysis contract | joint, with CO.RA.PAN |
 | vocabularies of `article_type` and `opinion`; whether they are built at all | scientific, Phase 4 |
 | durable home of the layers | technical; needs O-3 |

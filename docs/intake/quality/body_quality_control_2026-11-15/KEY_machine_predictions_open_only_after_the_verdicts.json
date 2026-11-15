@@ -1,0 +1,2396 @@
+{
+ "schema": "coprepan-body-quality-key/v1",
+ "seed": "body-quality-control-2026-11-15",
+ "cases": [
+  {
+   "case_id": "B01",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:d1c46bcc4e0585f9ac7b7592162a7e46035ba4bcf331447dae3592e1d3ffdb6a",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 306,
+     "words_before_selection": 306,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.468,
+     "stated_body_characters": 0,
+     "body_characters": 1829
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "7b7a163204dd65d5bdb6c779479f48357ec015b72b07b17fc62f31e436a1e802",
+    "0_4_0": "7b7a163204dd65d5bdb6c779479f48357ec015b72b07b17fc62f31e436a1e802"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B02",
+   "component": "targeted",
+   "stratum": "T02_inclusion",
+   "fetch_id": "ft1:a2a3bf44dec6cefd41dae383d3f5e1001c6323a470d5eea41896495e27599b7f",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "4",
+    "MISSING": "complete",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1,2,3",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "included:stated_article_body",
+    "2": "included:stated_article_body",
+    "3": "included:stated_article_body",
+    "4": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 43,
+     "words_before_selection": 103,
+     "selection": {
+      "included:stated_article_body": 3,
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.558,
+     "stated_body_characters": 355,
+     "body_characters": 211
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "template_body"
+    ],
+    "0_4_0": [
+     "too_short"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "a2322eb647eb930f40ec435df8e819679382637de97e646dc8941204bac10979",
+    "0_4_0": "b01ecc853de32115180c0759519d9c3aa48902b020f7733daacc919d2c1b4058"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B03",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:6357c73704e8e6269bf1c7aead0d8e07eb1dc13273e8172a27a11dee8ebde2d4",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "3,12",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "3": "excluded:outlet_template",
+    "12": "excluded:module_newsletter"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 1164,
+     "words_before_selection": 1167,
+     "selection": {
+      "excluded:outlet_template": 1,
+      "excluded:module_newsletter": 1
+     },
+     "signals": [
+      {
+       "signal": "label_blocks",
+       "block_indexes": [
+        164,
+        166,
+        172
+       ],
+       "count": 3
+      }
+     ],
+     "function_word_share": 0.482,
+     "stated_body_characters": 8143,
+     "body_characters": 7077
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "20a1acfd714516ffd76d48186e908f085985afa8aa53f4669ada9ac3faf25c73",
+    "0_4_0": "21472b052cd4ab1ce2582dc681f7211ec32b8c5c71611be51a5286849e5f34e4"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B04",
+   "component": "targeted",
+   "stratum": "T02_inclusion",
+   "fetch_id": "ft1:4270a82d870a0beb4a24d65ce9b79fbe52c0f619f1dec28a355c95a525db32d5",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "included:lead_paragraph"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 756,
+     "words_before_selection": 672,
+     "selection": {
+      "included:lead_paragraph": 1
+     },
+     "signals": [
+      {
+       "signal": "recurring_text",
+       "block_index": 140
+      },
+      {
+       "signal": "label_blocks",
+       "block_indexes": [
+        139,
+        140,
+        141
+       ],
+       "count": 3
+      }
+     ],
+     "function_word_share": 0.461,
+     "stated_body_characters": 4498,
+     "body_characters": 4521
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "e99b38c71f0399c5966046731974ff4020cfd58c920af2f68f448c2b8e355037",
+    "0_4_0": "40cc741f6164ff5e1ac7aa4a972a0315ea3ab812a9d55431eac2bdae1b9987a3"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B05",
+   "component": "targeted",
+   "stratum": "T07_residual",
+   "fetch_id": "ft1:39514ef084d3384920cc454f3eba241b592d9d601d0cfb62d4ca9c3d087ff496",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_byline"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 1054,
+     "words_before_selection": 1058,
+     "selection": {
+      "excluded:module_byline": 1
+     },
+     "signals": [
+      {
+       "signal": "recurring_text",
+       "block_index": 99
+      }
+     ],
+     "function_word_share": 0.445,
+     "stated_body_characters": 7129,
+     "body_characters": 7155
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "508e51496c44b77aeacaf9b65b4dd15aaa00b059ef48c6a632e0e9efdb9614b0",
+    "0_4_0": "a4434e3ef0ce1446c57fae3448f4efe7c23d4655d20eff56ac4d51593280fc32"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B06",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:8ade1cd83c00cdb35ba1bf71428f2c2f5bfb18045718428823db0a24f28ae434",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "4,11",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "4": "excluded:outlet_template",
+    "11": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 305,
+     "words_before_selection": 309,
+     "selection": {
+      "excluded:outlet_template": 2
+     },
+     "signals": [],
+     "function_word_share": 0.462,
+     "stated_body_characters": 0,
+     "body_characters": 2002
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "613b7491409545870b5fdd04b4e44497490f06b36fd8394e2ae349e312a5b45c",
+    "0_4_0": "27784c40cb21032d30d53cef2863903136fc5c5f706c38ba2f720192b1dc7835"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B07",
+   "component": "targeted",
+   "stratum": "T01_large_removal",
+   "fetch_id": "ft1:73a15b5430c9cf52b7bd74a76832f7bd80e85a2a53f349815fd9cd35d10b66d7",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "3,4,8,9",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "3": "excluded:module_social_embed",
+    "4": "excluded:module_social_embed",
+    "8": "excluded:module_social_embed",
+    "9": "excluded:module_social_embed"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 217,
+     "words_before_selection": 324,
+     "selection": {
+      "excluded:module_social_embed": 4
+     },
+     "signals": [],
+     "function_word_share": 0.44,
+     "stated_body_characters": 1381,
+     "body_characters": 1385
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "08919a8b404232549139c33406c0b8e28333a644e070dd6be14ab5d023c48365",
+    "0_4_0": "4fe2f694d3726fd5e54bde47eeb8e870d1a19232283dee29ab159b9aa4b4db01"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B08",
+   "component": "targeted",
+   "stratum": "T09_not_article_or_incomplete",
+   "fetch_id": "ft1:1955871aa657348525d7b17c4a6da17e1f74e277a91b6b8ddd956907960e641c",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,4,5,6,7,8",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_share",
+    "2": "excluded:module_share",
+    "3": "excluded:module_share",
+    "4": "excluded:module_share",
+    "5": "excluded:module_share",
+    "6": "excluded:module_share",
+    "7": "excluded:module_share",
+    "8": "excluded:module_share"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 0,
+     "words_before_selection": 24,
+     "selection": {
+      "excluded:module_share": 8
+     },
+     "signals": [],
+     "function_word_share": 0.0,
+     "stated_body_characters": 818,
+     "body_characters": 0
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "not_running_prose",
+     "template_body"
+    ],
+    "0_4_0": [
+     "no_body"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "6f65790d7a41b2c34afb07db9e15ef49568d5897b80a13cef7011ae289ec07e7",
+    "0_4_0": "9e3949d6ee7bbd1112220db80a06f66003c9779d588e1e401250af6688ae0472"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B09",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:351d466385cad9a4462c8731867dda5491078dc53f7d8ebd6ff471a5e9170340",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "2,8,9",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "2": "excluded:module_related",
+    "8": "excluded:module_social_embed",
+    "9": "excluded:module_social_embed"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 236,
+     "words_before_selection": 291,
+     "selection": {
+      "excluded:module_related": 1,
+      "excluded:module_social_embed": 2
+     },
+     "signals": [],
+     "function_word_share": 0.511,
+     "stated_body_characters": 1614,
+     "body_characters": 1541
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "1a95eb1753a088137fbf28e8a4ce7884a9c081bb66204c1d9b7b56715c392815",
+    "0_4_0": "48f3c32ee7044e38624884c7ff04f733dfecddee7348da57502af2d73974c1d6"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B10",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:670ad5794eebe8f5c4daede74a0e43bad8ddff5b97cb4cb0dac159e3acd999e0",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 359,
+     "words_before_selection": 359,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.514,
+     "stated_body_characters": 0,
+     "body_characters": 2272
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "3b0ac8608dda5f742d8e8defe3c776de471f49d356b3c1d48390b316ae622d26",
+    "0_4_0": "3b0ac8608dda5f742d8e8defe3c776de471f49d356b3c1d48390b316ae622d26"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B11",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:8a5084082d2804490b5aed9a6ce9f293e279edc8bd194ab8a039f93f892b50ad",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "9,13,14,15,16,17",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "9": "excluded:module_advertising",
+    "13": "excluded:outlet_template",
+    "14": "excluded:module_advertising",
+    "15": "excluded:module_advertising",
+    "16": "excluded:outlet_template",
+    "17": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 355,
+     "words_before_selection": 390,
+     "selection": {
+      "excluded:module_advertising": 3,
+      "excluded:outlet_template": 3
+     },
+     "signals": [
+      {
+       "signal": "credit_opening",
+       "block_index": 24
+      },
+      {
+       "signal": "credit_opening",
+       "block_index": 30
+      }
+     ],
+     "function_word_share": 0.441,
+     "stated_body_characters": 0,
+     "body_characters": 2219
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "a2b50bc99cef843330b2e4ff1ab8e00f50ed6148ccf1e184259734d98125c06b",
+    "0_4_0": "4d4d9c6afeaaea0ee22c3a0eb8cde0466050e4fa83d39851a42b529892f82d9a"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B12",
+   "component": "targeted",
+   "stratum": "T08_unchanged_clean",
+   "fetch_id": "ft1:e272ddb8877088d467f86b3f74caed2c367551edaac9cccb9e88f1f702f18745",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 401,
+     "words_before_selection": 401,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.493,
+     "stated_body_characters": 0,
+     "body_characters": 2339
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "20c63f356477f46c191bf5d6d4dd569de92ccf2af1dd4d7f4a0caaf98449c211",
+    "0_4_0": "20c63f356477f46c191bf5d6d4dd569de92ccf2af1dd4d7f4a0caaf98449c211"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B13",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:c61a0b9178729f97d4186d9f81c3842b2a31f25b817a682bf318fe9f99e8b6c9",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,7,8,16,25,26",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_byline",
+    "2": "excluded:module_byline",
+    "7": "excluded:outlet_template",
+    "8": "excluded:outlet_template",
+    "16": "excluded:outlet_template",
+    "25": "excluded:outlet_template",
+    "26": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 812,
+     "words_before_selection": 825,
+     "selection": {
+      "excluded:module_byline": 2,
+      "excluded:outlet_template": 5
+     },
+     "signals": [
+      {
+       "signal": "recurring_text",
+       "block_index": 58
+      }
+     ],
+     "function_word_share": 0.437,
+     "stated_body_characters": 5177,
+     "body_characters": 5193
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "f5cb7fc2ae10664e8f6eaf811995ae0c92d9f553209797a4b9648b6ca75dc71e",
+    "0_4_0": "41ec80ab225242d64cd2e9f071f74428e290df8bb4220301d19c624da79b26f1"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B14",
+   "component": "targeted",
+   "stratum": "T02_inclusion",
+   "fetch_id": "ft1:e7b97b268ea204644c85bc147a6a83bf49149775e03c733f7e4302fb8747d01c",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "6,7,15",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1,2,3,4",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "included:stated_article_body",
+    "2": "included:stated_article_body",
+    "3": "included:stated_article_body",
+    "4": "included:stated_article_body",
+    "6": "excluded:module_social_embed",
+    "7": "excluded:module_social_embed",
+    "15": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 352,
+     "words_before_selection": 263,
+     "selection": {
+      "included:stated_article_body": 4,
+      "excluded:module_social_embed": 2,
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.497,
+     "stated_body_characters": 2100,
+     "body_characters": 2107
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "f6d84c1af7814d261e3e511b4d99d6bbd2efe6c61b7226bd62a3ee2fab36f179",
+    "0_4_0": "2c12774b4cfdb89cdf9189da811f0475fc6bafb81bbcde6dfdc688ff5d54ee5e"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B15",
+   "component": "targeted",
+   "stratum": "T08_unchanged_clean",
+   "fetch_id": "ft1:d5e83a76b386e6ee088e8f2d5f7518a1d9c5c1e26130598cbe0aacda67a746f4",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 614,
+     "words_before_selection": 614,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.458,
+     "stated_body_characters": 0,
+     "body_characters": 4144
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "f7a6b7ec57f0288c40ec2576ad7357ad65d53a80ce93e9dcdb778c3f84ca0577",
+    "0_4_0": "f7a6b7ec57f0288c40ec2576ad7357ad65d53a80ce93e9dcdb778c3f84ca0577"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B16",
+   "component": "targeted",
+   "stratum": "T04_module",
+   "fetch_id": "ft1:64b0678e9b36a1fbc1fa79c3b5b0395c919970e4afc528145eedd3a641dc3610",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,13,14,23,24",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_byline",
+    "2": "excluded:module_byline",
+    "3": "excluded:module_tags",
+    "13": "excluded:outlet_template",
+    "14": "excluded:outlet_template",
+    "23": "excluded:outlet_template",
+    "24": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 1048,
+     "words_before_selection": 1061,
+     "selection": {
+      "excluded:module_byline": 2,
+      "excluded:module_tags": 1,
+      "excluded:outlet_template": 4
+     },
+     "signals": [],
+     "function_word_share": 0.471,
+     "stated_body_characters": 6662,
+     "body_characters": 6778
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "19e4f18c6cbbe8c72657e7fce8a4c385b32f489f2d752015db46c1a21078a702",
+    "0_4_0": "6e0566feaef3ce9efc4fcee2fa2e528dcebbba112937e3c29b06ececa9aef2e5"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B17",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:7630cd099a6b88067e3b7df9f480d239869e45803390fa54cdc0aa339dfd06c8",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 172,
+     "words_before_selection": 172,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.446,
+     "stated_body_characters": 0,
+     "body_characters": 1038
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "661e7345a948f39c4a597a24c631649dbd657fc02c06e9117641da015c8637b7",
+    "0_4_0": "661e7345a948f39c4a597a24c631649dbd657fc02c06e9117641da015c8637b7"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B18",
+   "component": "targeted",
+   "stratum": "T03_template",
+   "fetch_id": "ft1:dddb3caf08d7cbc745154685dd7af89ab0cf766d5773ea9d4f546744a42a2c62",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "8,22,26,27,28",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "8": "excluded:module_advertising",
+    "22": "excluded:module_advertising",
+    "26": "excluded:outlet_template",
+    "27": "excluded:module_advertising",
+    "28": "excluded:module_advertising"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 431,
+     "words_before_selection": 438,
+     "selection": {
+      "excluded:module_advertising": 4,
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.406,
+     "stated_body_characters": 0,
+     "body_characters": 2811
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "64b85da1ff4adcd147e8c7b31abffb2541c349daa7a0369a187faf7fd871a51e",
+    "0_4_0": "3c3a4dfd4c8811706046920d433068bd080e6d2bbad3a67723f7ce83469f801c"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B19",
+   "component": "targeted",
+   "stratum": "T05_core_newly_rejected",
+   "fetch_id": "ft1:e983464be62ea3b05ca90356a882f5845dfd3f57cfe51836e26ef7115f18f569",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "2,3,6",
+    "MISSING": "complete",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "2": "excluded:module_related",
+    "3": "excluded:module_related",
+    "6": "excluded:module_advertising"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 155,
+     "words_before_selection": 161,
+     "selection": {
+      "excluded:module_related": 2,
+      "excluded:module_advertising": 1
+     },
+     "signals": [],
+     "function_word_share": 0.436,
+     "stated_body_characters": 912,
+     "body_characters": 920
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": [
+     "too_short"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "18b7582faa555c5927b8990f09cbf8a20eded5a51dd1391e4da2b74200dc9fc7",
+    "0_4_0": "7ffbe6d6c615ed8d593d2b2151b3d3cfe0ce7833160a27032b19a14aaec6a717"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B20",
+   "component": "targeted",
+   "stratum": "T05_core_newly_rejected",
+   "fetch_id": "ft1:9c7f213f75a8e281ea638724637914ea05484335c6f57a37d610f76fd1dc6542",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "5,12,13,14",
+    "MISSING": "middle_missing",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "5": "excluded:outlet_template",
+    "12": "excluded:module_social_embed",
+    "13": "excluded:module_social_embed",
+    "14": "excluded:module_social_embed"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "incomplete",
+    "evidence": {
+     "words": 331,
+     "words_before_selection": 365,
+     "selection": {
+      "excluded:outlet_template": 1,
+      "excluded:module_social_embed": 3
+     },
+     "signals": [],
+     "function_word_share": 0.447,
+     "stated_body_characters": 3967,
+     "body_characters": 1971
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": [
+     "incomplete_against_stated_body"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "806939098e6ebd343fb85e869faf11a903f1ff5f6d7f2cffedf503c9023d36c3",
+    "0_4_0": "67ad07d69bebbac80a9442143fedbab30da0651ce803a6d530784d8c65d7fa3a"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B21",
+   "component": "targeted",
+   "stratum": "T03_template",
+   "fetch_id": "ft1:c5a59b4709f810eb4dea45718db2d34dd128c99291777ea8e73813d86f3b4472",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "18,21,24,25,26,27,28,29,30",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "18": "excluded:outlet_template",
+    "21": "excluded:outlet_template",
+    "24": "excluded:module_tags",
+    "25": "excluded:module_page_controls",
+    "26": "excluded:module_page_controls",
+    "27": "excluded:trailing_heading",
+    "28": "excluded:trailing_heading",
+    "29": "excluded:trailing_heading",
+    "30": "excluded:trailing_heading"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 196,
+     "words_before_selection": 212,
+     "selection": {
+      "excluded:outlet_template": 2,
+      "excluded:module_tags": 1,
+      "excluded:module_page_controls": 2,
+      "excluded:trailing_heading": 4
+     },
+     "signals": [
+      {
+       "signal": "recurring_text",
+       "block_index": 16
+      },
+      {
+       "signal": "label_blocks",
+       "block_indexes": [
+        22,
+        24,
+        28
+       ],
+       "count": 3
+      }
+     ],
+     "function_word_share": 0.402,
+     "stated_body_characters": 0,
+     "body_characters": 1062
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "39a87e03f967c1d3b139eb1222acf35036c81baa9d716c75225f538ea6ca1075",
+    "0_4_0": "51b84a346c9168a81a803d461865946bd0caf884c8a08214dc2eaeabce9a386b"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B22",
+   "component": "targeted",
+   "stratum": "T09_not_article_or_incomplete",
+   "fetch_id": "ft1:d4327cda4bba8bda8afd2b734e1ea14c13c37cd190ee39231d7f7dfd8ee6fddc",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 5,
+     "words_before_selection": 5,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.0,
+     "stated_body_characters": 0,
+     "body_characters": 27
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "not_running_prose"
+    ],
+    "0_4_0": [
+     "too_short",
+     "not_running_prose"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "979b8f54caa61ef76177dc3f9c50a3f87f428c6cea77149f82bd023b1b7b117b",
+    "0_4_0": "979b8f54caa61ef76177dc3f9c50a3f87f428c6cea77149f82bd023b1b7b117b"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B23",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:7b7b3f7c75d0d10962eb2cecff37dbf3b3f5c1f761c49f9fd245c08d96ff5641",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "included:lead_paragraph"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 347,
+     "words_before_selection": 309,
+     "selection": {
+      "included:lead_paragraph": 1
+     },
+     "signals": [],
+     "function_word_share": 0.45,
+     "stated_body_characters": 0,
+     "body_characters": 2443
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "6a2b7e76ad01e770e60573dda2de4eb240dbb0d0e2562818172688e501071fdb",
+    "0_4_0": "5de5a0db154b1c418ea5f75426b778dcce22f483a47e2586a5b3acf6fefd9729"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B24",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:df7f8be6f0c0b760f914cf1fefe80d1016892ec59a786ad17b6c07040a0960e3",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 445,
+     "words_before_selection": 445,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.458,
+     "stated_body_characters": 0,
+     "body_characters": 2820
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "1573d22ab3ed0544d2cd2c31f0ed58117374ee996a422f3cf38ff961d4c3b367",
+    "0_4_0": "1573d22ab3ed0544d2cd2c31f0ed58117374ee996a422f3cf38ff961d4c3b367"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B25",
+   "component": "targeted",
+   "stratum": "T04_module",
+   "fetch_id": "ft1:c6b33cdf8fea4a0f6ec58ee141fc53a73d32b95986ec918bfd2218b6fd353b9e",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "6,7,10,11",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "6": "excluded:module_social_embed",
+    "7": "excluded:module_social_embed",
+    "10": "excluded:module_social_embed",
+    "11": "excluded:module_social_embed"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 422,
+     "words_before_selection": 493,
+     "selection": {
+      "excluded:module_social_embed": 4
+     },
+     "signals": [],
+     "function_word_share": 0.469,
+     "stated_body_characters": 2801,
+     "body_characters": 2821
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "529633302c8b8848a9b5f3d873620198cf13f1bacd1b44b8b77a8cfb11951516",
+    "0_4_0": "5caea79e1e5e0b1662402ce6def9638019c7aa680ad538f491dc8695996034c6"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B26",
+   "component": "targeted",
+   "stratum": "T08_unchanged_clean",
+   "fetch_id": "ft1:a333b5deec8b0d6c7f0538f5a5e0fa8aecfdab36707654a323beaaf40bdb5c2e",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 219,
+     "words_before_selection": 219,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.467,
+     "stated_body_characters": 0,
+     "body_characters": 1319
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "dd45df41a2ad3dc5913467587bd3dacb178a34ec4e1b6a0028da124152de45d0",
+    "0_4_0": "dd45df41a2ad3dc5913467587bd3dacb178a34ec4e1b6a0028da124152de45d0"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B27",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:4ae8d427ff80c49b20dcc633067b03ad0b40a9b20d5d7c378c783b6f555727af",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,4,5,6,7,8",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_share",
+    "2": "excluded:module_share",
+    "3": "excluded:module_share",
+    "4": "excluded:module_share",
+    "5": "excluded:module_share",
+    "6": "excluded:module_share",
+    "7": "excluded:module_share",
+    "8": "excluded:module_share"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 0,
+     "words_before_selection": 24,
+     "selection": {
+      "excluded:module_share": 8
+     },
+     "signals": [],
+     "function_word_share": 0.0,
+     "stated_body_characters": 960,
+     "body_characters": 0
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "not_running_prose",
+     "live_coverage",
+     "template_body"
+    ],
+    "0_4_0": [
+     "no_body",
+     "live_coverage"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "41e8fe660e196df599697ae2b4d39d1a771bd69be2945ff00ca27fa6a63ad8d8",
+    "0_4_0": "0f46f090ae9d79f41702bacd4ac6794d3f358d761deeeb65c43761721ca79cd7"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B28",
+   "component": "targeted",
+   "stratum": "T06_core_newly_accepted",
+   "fetch_id": "ft1:0e126f10c6c7911f1c6039609f1e53f5209f52cb2f9bfb37749ef3ac20f6ea74",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1,2,3,7,8,9,10",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "included:stated_article_body",
+    "2": "included:stated_article_body",
+    "3": "included:stated_article_body",
+    "7": "included:stated_article_body",
+    "8": "included:stated_article_body",
+    "9": "included:stated_article_body",
+    "10": "included:stated_article_body"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 336,
+     "words_before_selection": 97,
+     "selection": {
+      "included:stated_article_body": 7
+     },
+     "signals": [],
+     "function_word_share": 0.441,
+     "stated_body_characters": 2665,
+     "body_characters": 2006
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "82a0069aa5af76e2ac3536c262ca7ee7f7dc40a1c583a258ca06cacb227f8144",
+    "0_4_0": "f960c94ea610b4453d06504da7cc8cc6e85cf04ae57ad53ca4fe8f88f0fe23f4"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B29",
+   "component": "targeted",
+   "stratum": "T04_module",
+   "fetch_id": "ft1:a8f59a200802e66784f19c49d1e3deba071cdcca83f0f66d432865e62e2e199e",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,24,25",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "excluded:outlet_template",
+    "24": "excluded:outlet_template",
+    "25": "excluded:module_byline"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 450,
+     "words_before_selection": 464,
+     "selection": {
+      "excluded:outlet_template": 2,
+      "excluded:module_byline": 1
+     },
+     "signals": [],
+     "function_word_share": 0.289,
+     "stated_body_characters": 0,
+     "body_characters": 2831
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "not_running_prose"
+    ],
+    "0_4_0": [
+     "not_running_prose"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "07b36ae50d288f94ef3fa96fb9513cbbe1b7f7c0db7d5b9ec4b64c7cfb62a74e",
+    "0_4_0": "e2d49cadf689917ae55350cf207736340dd7f8cb179039f76083a1e3cb3cdae0"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B30",
+   "component": "targeted",
+   "stratum": "T05_core_newly_rejected",
+   "fetch_id": "ft1:5e522f6265e32839a45ccdd301b1dcb80702d052f182d9edb4c2e06339a6e56a",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,7,8",
+    "MISSING": "complete",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_byline",
+    "2": "excluded:module_byline",
+    "3": "excluded:module_tags",
+    "7": "excluded:outlet_template",
+    "8": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 150,
+     "words_before_selection": 159,
+     "selection": {
+      "excluded:module_byline": 2,
+      "excluded:module_tags": 1,
+      "excluded:outlet_template": 2
+     },
+     "signals": [],
+     "function_word_share": 0.381,
+     "stated_body_characters": 1062,
+     "body_characters": 1062
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": [
+     "too_short"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "15d4d8edded10272d14bf3f02c2d20df6a6e811813304269ebe5abfe2fb6a7ea",
+    "0_4_0": "ad51691593e995780027d7c72db5fed325ddb3d9caf6464145fde06cccb9b6ae"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B31",
+   "component": "targeted",
+   "stratum": "T01_large_removal",
+   "fetch_id": "ft1:f81d16c386befbad33b2013c6f28d83855521d149293bf188b4f46914754437e",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 0,
+     "words_before_selection": 103,
+     "selection": {
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.0,
+     "stated_body_characters": 364,
+     "body_characters": 0
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "template_body"
+    ],
+    "0_4_0": [
+     "no_body"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "bf65591fd82b281898f2e0442e83f1313a66b2d38382262bd2751d0057cbb896",
+    "0_4_0": "678e61a4dbe5b4dc68a0602cdb5ea3f9428ef8f96a932e15396481fd8ff4bc8d"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B32",
+   "component": "targeted",
+   "stratum": "T02_inclusion",
+   "fetch_id": "ft1:7709f9b41a5d047114f09eb3a8d755c7890205bec3f0c01c2b57213cdefe66ab",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "4,10",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "included:stated_article_body",
+    "4": "excluded:outlet_template",
+    "10": "excluded:module_newsletter"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 632,
+     "words_before_selection": 589,
+     "selection": {
+      "included:stated_article_body": 1,
+      "excluded:outlet_template": 1,
+      "excluded:module_newsletter": 1
+     },
+     "signals": [],
+     "function_word_share": 0.497,
+     "stated_body_characters": 3946,
+     "body_characters": 3728
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "8610f8fb0f5aee1e1a7110247692b4d461c1109c993f84a93409b292cdea9bc8",
+    "0_4_0": "9d03fba4346640f568cf1e4d810a5d285307136351d666decb7cc5d2fdc1f439"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B33",
+   "component": "targeted",
+   "stratum": "T01_large_removal",
+   "fetch_id": "ft1:1cee9636fd943f8c3182209ed3f28066bed9cc295e7bf3747cbc6da1c04336c0",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233",
+    "MISSING": "complete",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "234,235,236",
+    "CORE": "no"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 120,
+     "words_before_selection": 136,
+     "selection": {
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.482,
+     "stated_body_characters": 0,
+     "body_characters": 707
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "not_running_prose",
+     "live_coverage",
+     "template_body"
+    ],
+    "0_4_0": [
+     "too_short",
+     "live_coverage"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "859a5854d2c8b3f7d4e182ede2eba67b81f811537da1c34f8de9147680f19ad0",
+    "0_4_0": "0cfae200992951a8904e99f738392bcec631d7859d3716922a8f75b01e780333"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B34",
+   "component": "targeted",
+   "stratum": "T03_template",
+   "fetch_id": "ft1:2811785e82706ce29819302c9bc66d0feaa8e7e27a4ff64cad6eca923dcf46da",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "22",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "22": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 687,
+     "words_before_selection": 689,
+     "selection": {
+      "excluded:outlet_template": 1
+     },
+     "signals": [],
+     "function_word_share": 0.477,
+     "stated_body_characters": 4355,
+     "body_characters": 4375
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "818a2d18ace44ac858367a3c48bf74e784f1c6681c637c5abf3a235110da7790",
+    "0_4_0": "6596eaf3c7c0e902c42c52f4aa4f103cba9ddd25332f766354658ad073122773"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B35",
+   "component": "targeted",
+   "stratum": "T07_residual",
+   "fetch_id": "ft1:1b06b1acc33cbf925f5ca971461aa7521d088f7c4adc5a24e9527fd1deca4dab",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 418,
+     "words_before_selection": 418,
+     "selection": {},
+     "signals": [
+      {
+       "signal": "address_or_path",
+       "block_index": 104
+      }
+     ],
+     "function_word_share": 0.532,
+     "stated_body_characters": 2331,
+     "body_characters": 2347
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "3322b84dcb39f334b0937bb42c4ac93eb4f65e69343892f0f259517568d8c67e",
+    "0_4_0": "3322b84dcb39f334b0937bb42c4ac93eb4f65e69343892f0f259517568d8c67e"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B36",
+   "component": "targeted",
+   "stratum": "T01_large_removal",
+   "fetch_id": "ft1:168f24f007094c2e17bbdea9c2c83bf5dd4656b12c9e6cf68cb9851473e0f7c8",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,4,5,6,7,8,9,10,11,12",
+    "MISSING": "not_an_article",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "excluded:module_newsletter",
+    "2": "excluded:module_newsletter",
+    "3": "excluded:module_newsletter",
+    "4": "excluded:module_newsletter",
+    "5": "excluded:module_newsletter",
+    "6": "excluded:module_newsletter",
+    "7": "excluded:module_newsletter",
+    "8": "excluded:module_newsletter",
+    "9": "excluded:module_newsletter",
+    "10": "excluded:module_newsletter",
+    "11": "excluded:module_newsletter",
+    "12": "excluded:module_newsletter"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "not_article",
+    "evidence": {
+     "words": 0,
+     "words_before_selection": 127,
+     "selection": {
+      "excluded:module_newsletter": 12
+     },
+     "signals": [],
+     "function_word_share": 0.0,
+     "stated_body_characters": 0,
+     "body_characters": 0
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short"
+    ],
+    "0_4_0": [
+     "no_body"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "098c54d6037e2bd19fd41d6af461c3eaf5e5fbf49f66d29bc545ff3e7b0bf117",
+    "0_4_0": "4b6223d191f10427b46123f79410c8c6a9cf9d7eb9ea99645df016d86bc3cced"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B37",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:a412026ffc1c863819b48d0056588fd6ac47d62f5aa617e1ec09588c95874a3b",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "6,17,20",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "1": "included:lead_paragraph",
+    "6": "excluded:outlet_template",
+    "17": "excluded:module_advertising",
+    "20": "excluded:module_advertising"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 1851,
+     "words_before_selection": 1765,
+     "selection": {
+      "included:lead_paragraph": 1,
+      "excluded:outlet_template": 1,
+      "excluded:module_advertising": 2
+     },
+     "signals": [],
+     "function_word_share": 0.505,
+     "stated_body_characters": 10804,
+     "body_characters": 10905
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "c25ef57040f537a5a4f02aed3e1a62a53cada4895bba0419e3705b914e530f0c",
+    "0_4_0": "aa68d35e0d8e144a410f18eff89832d06171804709a1b4e10d02c9b7e073b2ad"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B38",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:ab283734ee7b81d4bf87fce5fc89e0d9285a6f03ad9b5cce39412da9600ba49f",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 380,
+     "words_before_selection": 380,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.473,
+     "stated_body_characters": 2295,
+     "body_characters": 2334
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "fa1b8d624d8a1cd1d6944afac9b5f968e0b01d3a1c3e2e9ec7a99279ec5852dd",
+    "0_4_0": "fa1b8d624d8a1cd1d6944afac9b5f968e0b01d3a1c3e2e9ec7a99279ec5852dd"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B39",
+   "component": "targeted",
+   "stratum": "T06_core_newly_accepted",
+   "fetch_id": "ft1:f6b335805c0430fe8aded3da7b0b3b7d08369d24b2ade0789a792c0bac1f9d23",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "234,235,236,237,238,239,240,241,242,243",
+    "CORE": "no"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "clean",
+    "evidence": {
+     "words": 262,
+     "words_before_selection": 262,
+     "selection": {},
+     "signals": [],
+     "function_word_share": 0.457,
+     "stated_body_characters": 0,
+     "body_characters": 1668
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "e4272489f49b6ec3041534053760b9469f01b9faf84bdfbbcf9ce4192c2a48e3",
+    "0_4_0": "b2899aa907d6068d83870c6bedc1bb2140e3bcbc45b3a3d1976c0239ed54b7c7"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B40",
+   "component": "targeted",
+   "stratum": "T07_residual",
+   "fetch_id": "ft1:8c225835bbee5e2b7ac07d42541daf032583c3b47b258edad94fd678070317c1",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {},
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 1288,
+     "words_before_selection": 1288,
+     "selection": {},
+     "signals": [
+      {
+       "signal": "credit_opening",
+       "block_index": 121
+      }
+     ],
+     "function_word_share": 0.452,
+     "stated_body_characters": 0,
+     "body_characters": 8821
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "duplicate_of_earlier"
+    ],
+    "0_4_0": [
+     "duplicate_of_earlier"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "31977d2208242ffb1926721114d127190d3652e30435365c16b27a6fa63f0c55",
+    "0_4_0": "31977d2208242ffb1926721114d127190d3652e30435365c16b27a6fa63f0c55"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B41",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:29d816de6cbb3082a600354fd5ec1959cd1ab96f6bfb18be8c139abc02bfb8b4",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "6,11",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "6": "excluded:outlet_template",
+    "11": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 336,
+     "words_before_selection": 339,
+     "selection": {
+      "excluded:outlet_template": 2
+     },
+     "signals": [],
+     "function_word_share": 0.458,
+     "stated_body_characters": 2085,
+     "body_characters": 2093
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "15fd9cf590d11e713a7b11ab2969546e15bc0c7a6c166cede0e5efb5901f6f62",
+    "0_4_0": "6d2045e4178298e8722f63a56b4f577bf76cf8050ea9a795800066adec11cb5e"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B42",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:143b3de12656b6f3e06828eb95c7097e3b8a7bb8b256441503b2de98dbf49147",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "6,12,15,18",
+    "MISSING": "middle_missing",
+    "CORE": "no"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "6": "excluded:outlet_template",
+    "12": "excluded:outlet_template",
+    "15": "excluded:outlet_template",
+    "18": "excluded:outlet_template"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "incomplete",
+    "evidence": {
+     "words": 509,
+     "words_before_selection": 517,
+     "selection": {
+      "excluded:outlet_template": 4
+     },
+     "signals": [],
+     "function_word_share": 0.458,
+     "stated_body_characters": 7757,
+     "body_characters": 3203
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "incomplete_against_stated_body"
+    ],
+    "0_4_0": [
+     "incomplete_against_stated_body"
+    ]
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "b59cc290341808b430ebfba228451cdd8112b8dabbfae1678e18d3f22e55bba4",
+    "0_4_0": "a62c528ccea3cae31bd532e810c7a74144542c0a09fdc5eeb335fd5c04858aca"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B43",
+   "component": "targeted",
+   "stratum": "T07_residual",
+   "fetch_id": "ft1:7a0a982640763448c42baa70b630176f90cdcfd36c7156251873e4d5080ce526",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "4,5,6,7,8,9,10,11,12",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "4": "included:stated_article_body",
+    "5": "included:stated_article_body",
+    "6": "included:stated_article_body",
+    "7": "included:stated_article_body",
+    "8": "included:stated_article_body",
+    "9": "included:stated_article_body",
+    "10": "included:stated_article_body",
+    "11": "included:stated_article_body",
+    "12": "included:stated_article_body"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "residual_suspect",
+    "evidence": {
+     "words": 267,
+     "words_before_selection": 49,
+     "selection": {
+      "included:stated_article_body": 9
+     },
+     "signals": [
+      {
+       "signal": "recurring_text",
+       "block_index": 192
+      }
+     ],
+     "function_word_share": 0.477,
+     "stated_body_characters": 2848,
+     "body_characters": 1568
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short",
+     "live_coverage",
+     "incomplete_against_stated_body"
+    ],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "5287d42a940af0c034d01712eab0a943cab5599b557e7999edfd4d5bd55d319a",
+    "0_4_0": "7f4af598dbfa370aaabe4b4b1fe59162919ecdf4a1fcf24a9962d0ec8a61ce9d"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B44",
+   "component": "targeted",
+   "stratum": "T06_core_newly_accepted",
+   "fetch_id": "ft1:da7427b8c278adaa755199a0fe51862e0960d9c7c700e373bcfd7b35a4deec4b",
+   "inclusion_probability": null,
+   "predictions_0_4_0": {
+    "FOREIGN": "0",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "1",
+    "CORE": "no"
+   },
+   "selection_by_number": {
+    "1": "included:lead_paragraph"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 164,
+     "words_before_selection": 133,
+     "selection": {
+      "included:lead_paragraph": 1
+     },
+     "signals": [],
+     "function_word_share": 0.475,
+     "stated_body_characters": 0,
+     "body_characters": 929
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [
+     "too_short"
+    ],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "ba29916dddf4e4961e17c2b1d101836edc5b988a5fe44de213882c8cb40dcfaf",
+    "0_4_0": "38ddb14871af565e3ddb53a409f2d4e29b82657a5099e1cc1b330dfab54c34b7"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  },
+  {
+   "case_id": "B45",
+   "component": "random",
+   "stratum": "R00_random",
+   "fetch_id": "ft1:3514182335a31f183ee1c31eebcb272257db9a8027658446f09800d26418a0c0",
+   "inclusion_probability": 0.003552,
+   "predictions_0_4_0": {
+    "FOREIGN": "140,141,142,143,144,145,146,147",
+    "MISSING": "complete",
+    "CORE": "yes"
+   },
+   "predictions_0_3_0": {
+    "FOREIGN": "0",
+    "CORE": "yes"
+   },
+   "selection_by_number": {
+    "140": "excluded:module_related",
+    "141": "excluded:module_related",
+    "142": "excluded:module_related",
+    "143": "excluded:module_related",
+    "144": "excluded:module_related",
+    "145": "excluded:module_related",
+    "146": "excluded:module_byline",
+    "147": "excluded:module_byline"
+   },
+   "body_quality": {
+    "rule": "body-quality/1",
+    "state": "cleaned",
+    "evidence": {
+     "words": 2320,
+     "words_before_selection": 2371,
+     "selection": {
+      "excluded:module_related": 6,
+      "excluded:module_byline": 2
+     },
+     "signals": [],
+     "function_word_share": 0.405,
+     "stated_body_characters": 13404,
+     "body_characters": 15261
+    }
+   },
+   "core_reasons": {
+    "0_3_0": [],
+    "0_4_0": []
+   },
+   "extracted_text_sha256": {
+    "0_3_0": "24817e67bb191eecec22547f900e452cddc216e64c9ad10e5508fe9577839896",
+    "0_4_0": "6e2dfb7c3989c47526cffeba7d71dae2055904a5e1dcf0922b04c02616a4b45b"
+   },
+   "versions": {
+    "extractor": "article_html/0.4.0 (against 0.3.0)",
+    "quality": "content-quality/3",
+    "body_quality": "body-quality/1",
+    "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+   }
+  }
+ ]
+}

@@ -1,0 +1,306 @@
+{
+ "schema": "coprepan-body-quality-control/v1",
+ "date": "2026-11-15",
+ "decision": "CPD-0041",
+ "seed": "body-quality-control-2026-11-15",
+ "frozen_before_review": true,
+ "population": {
+  "what": "the stored 2xx item pages of the CPD-0039/0040/0041 study, extracted",
+  "pages": 4759,
+  "eligible": 4504,
+  "excluded": "the 109 pages of the 2026-11-15 review, the pages of the phase-3 blind control (now development material), and every page this run opened one by one (DEVELOPMENT_PREFIXES of the script)"
+ },
+ "limits": [
+  "a holdout within the known population, not fresh data: the rules were developed on aggregate measurements and on listings of removed blocks across all pages",
+  "the random component (n=16) supports coarse statements only; the targeted strata find errors and do not estimate population precision",
+  "the sheet shows the blocks either version has in its BODY, without saying which version keeps which: the FOREIGN answer measures the selection's false deletions (a kept-out block that is article text) and residual contamination (a kept block that is not) of both versions; text neither version has can only be reported through MISSING"
+ ],
+ "strata": [
+  {
+   "stratum": "R00_random",
+   "component": "random",
+   "population": 4504,
+   "drawn": 16,
+   "method": "systematic sample with a random start over the eligible pages ordered by country, outlet and sha256(seed + fetch id); inclusion probability n / N for every page",
+   "inclusion_probability": 0.003552
+  },
+  {
+   "stratum": "T01_large_removal",
+   "component": "targeted",
+   "what": "0.4.0 removed at least 30 % of 0.3.0's BODY words",
+   "population": 40,
+   "drawn": 4,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T02_inclusion",
+   "component": "targeted",
+   "what": "0.4.0 included a lead or a stated-body paragraph",
+   "population": 277,
+   "drawn": 4,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T03_template",
+   "component": "targeted",
+   "what": "a block removed as an outlet template",
+   "population": 1015,
+   "drawn": 3,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T04_module",
+   "component": "targeted",
+   "what": "a block removed as a byline, caption, date, embed or related module",
+   "population": 784,
+   "drawn": 3,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T05_core_newly_rejected",
+   "component": "targeted",
+   "what": "CORE accepted on 0.3.0, rejected on 0.4.0",
+   "population": 16,
+   "drawn": 3,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T06_core_newly_accepted",
+   "component": "targeted",
+   "what": "CORE rejected on 0.3.0, accepted on 0.4.0",
+   "population": 22,
+   "drawn": 3,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T07_residual",
+   "component": "targeted",
+   "what": "body-quality/1 residual_suspect",
+   "population": 289,
+   "drawn": 4,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T08_unchanged_clean",
+   "component": "targeted",
+   "what": "BODY unchanged and clean (what the rules may miss)",
+   "population": 1884,
+   "drawn": 3,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  },
+  {
+   "stratum": "T09_not_article_or_incomplete",
+   "component": "targeted",
+   "what": "body-quality/1 not_article or incomplete",
+   "population": 168,
+   "drawn": 2,
+   "method": "the first k by sha256(seed/stratum + fetch id), at most one page per outlet",
+   "inclusion_probability": "not equal within the stratum; not for population estimates"
+  }
+ ],
+ "cases": [
+  {
+   "case_id": "B01",
+   "fetch_id": "ft1:d1c46bcc4e0585f9ac7b7592162a7e46035ba4bcf331447dae3592e1d3ffdb6a"
+  },
+  {
+   "case_id": "B02",
+   "fetch_id": "ft1:a2a3bf44dec6cefd41dae383d3f5e1001c6323a470d5eea41896495e27599b7f"
+  },
+  {
+   "case_id": "B03",
+   "fetch_id": "ft1:6357c73704e8e6269bf1c7aead0d8e07eb1dc13273e8172a27a11dee8ebde2d4"
+  },
+  {
+   "case_id": "B04",
+   "fetch_id": "ft1:4270a82d870a0beb4a24d65ce9b79fbe52c0f619f1dec28a355c95a525db32d5"
+  },
+  {
+   "case_id": "B05",
+   "fetch_id": "ft1:39514ef084d3384920cc454f3eba241b592d9d601d0cfb62d4ca9c3d087ff496"
+  },
+  {
+   "case_id": "B06",
+   "fetch_id": "ft1:8ade1cd83c00cdb35ba1bf71428f2c2f5bfb18045718428823db0a24f28ae434"
+  },
+  {
+   "case_id": "B07",
+   "fetch_id": "ft1:73a15b5430c9cf52b7bd74a76832f7bd80e85a2a53f349815fd9cd35d10b66d7"
+  },
+  {
+   "case_id": "B08",
+   "fetch_id": "ft1:1955871aa657348525d7b17c4a6da17e1f74e277a91b6b8ddd956907960e641c"
+  },
+  {
+   "case_id": "B09",
+   "fetch_id": "ft1:351d466385cad9a4462c8731867dda5491078dc53f7d8ebd6ff471a5e9170340"
+  },
+  {
+   "case_id": "B10",
+   "fetch_id": "ft1:670ad5794eebe8f5c4daede74a0e43bad8ddff5b97cb4cb0dac159e3acd999e0"
+  },
+  {
+   "case_id": "B11",
+   "fetch_id": "ft1:8a5084082d2804490b5aed9a6ce9f293e279edc8bd194ab8a039f93f892b50ad"
+  },
+  {
+   "case_id": "B12",
+   "fetch_id": "ft1:e272ddb8877088d467f86b3f74caed2c367551edaac9cccb9e88f1f702f18745"
+  },
+  {
+   "case_id": "B13",
+   "fetch_id": "ft1:c61a0b9178729f97d4186d9f81c3842b2a31f25b817a682bf318fe9f99e8b6c9"
+  },
+  {
+   "case_id": "B14",
+   "fetch_id": "ft1:e7b97b268ea204644c85bc147a6a83bf49149775e03c733f7e4302fb8747d01c"
+  },
+  {
+   "case_id": "B15",
+   "fetch_id": "ft1:d5e83a76b386e6ee088e8f2d5f7518a1d9c5c1e26130598cbe0aacda67a746f4"
+  },
+  {
+   "case_id": "B16",
+   "fetch_id": "ft1:64b0678e9b36a1fbc1fa79c3b5b0395c919970e4afc528145eedd3a641dc3610"
+  },
+  {
+   "case_id": "B17",
+   "fetch_id": "ft1:7630cd099a6b88067e3b7df9f480d239869e45803390fa54cdc0aa339dfd06c8"
+  },
+  {
+   "case_id": "B18",
+   "fetch_id": "ft1:dddb3caf08d7cbc745154685dd7af89ab0cf766d5773ea9d4f546744a42a2c62"
+  },
+  {
+   "case_id": "B19",
+   "fetch_id": "ft1:e983464be62ea3b05ca90356a882f5845dfd3f57cfe51836e26ef7115f18f569"
+  },
+  {
+   "case_id": "B20",
+   "fetch_id": "ft1:9c7f213f75a8e281ea638724637914ea05484335c6f57a37d610f76fd1dc6542"
+  },
+  {
+   "case_id": "B21",
+   "fetch_id": "ft1:c5a59b4709f810eb4dea45718db2d34dd128c99291777ea8e73813d86f3b4472"
+  },
+  {
+   "case_id": "B22",
+   "fetch_id": "ft1:d4327cda4bba8bda8afd2b734e1ea14c13c37cd190ee39231d7f7dfd8ee6fddc"
+  },
+  {
+   "case_id": "B23",
+   "fetch_id": "ft1:7b7b3f7c75d0d10962eb2cecff37dbf3b3f5c1f761c49f9fd245c08d96ff5641"
+  },
+  {
+   "case_id": "B24",
+   "fetch_id": "ft1:df7f8be6f0c0b760f914cf1fefe80d1016892ec59a786ad17b6c07040a0960e3"
+  },
+  {
+   "case_id": "B25",
+   "fetch_id": "ft1:c6b33cdf8fea4a0f6ec58ee141fc53a73d32b95986ec918bfd2218b6fd353b9e"
+  },
+  {
+   "case_id": "B26",
+   "fetch_id": "ft1:a333b5deec8b0d6c7f0538f5a5e0fa8aecfdab36707654a323beaaf40bdb5c2e"
+  },
+  {
+   "case_id": "B27",
+   "fetch_id": "ft1:4ae8d427ff80c49b20dcc633067b03ad0b40a9b20d5d7c378c783b6f555727af"
+  },
+  {
+   "case_id": "B28",
+   "fetch_id": "ft1:0e126f10c6c7911f1c6039609f1e53f5209f52cb2f9bfb37749ef3ac20f6ea74"
+  },
+  {
+   "case_id": "B29",
+   "fetch_id": "ft1:a8f59a200802e66784f19c49d1e3deba071cdcca83f0f66d432865e62e2e199e"
+  },
+  {
+   "case_id": "B30",
+   "fetch_id": "ft1:5e522f6265e32839a45ccdd301b1dcb80702d052f182d9edb4c2e06339a6e56a"
+  },
+  {
+   "case_id": "B31",
+   "fetch_id": "ft1:f81d16c386befbad33b2013c6f28d83855521d149293bf188b4f46914754437e"
+  },
+  {
+   "case_id": "B32",
+   "fetch_id": "ft1:7709f9b41a5d047114f09eb3a8d755c7890205bec3f0c01c2b57213cdefe66ab"
+  },
+  {
+   "case_id": "B33",
+   "fetch_id": "ft1:1cee9636fd943f8c3182209ed3f28066bed9cc295e7bf3747cbc6da1c04336c0"
+  },
+  {
+   "case_id": "B34",
+   "fetch_id": "ft1:2811785e82706ce29819302c9bc66d0feaa8e7e27a4ff64cad6eca923dcf46da"
+  },
+  {
+   "case_id": "B35",
+   "fetch_id": "ft1:1b06b1acc33cbf925f5ca971461aa7521d088f7c4adc5a24e9527fd1deca4dab"
+  },
+  {
+   "case_id": "B36",
+   "fetch_id": "ft1:168f24f007094c2e17bbdea9c2c83bf5dd4656b12c9e6cf68cb9851473e0f7c8"
+  },
+  {
+   "case_id": "B37",
+   "fetch_id": "ft1:a412026ffc1c863819b48d0056588fd6ac47d62f5aa617e1ec09588c95874a3b"
+  },
+  {
+   "case_id": "B38",
+   "fetch_id": "ft1:ab283734ee7b81d4bf87fce5fc89e0d9285a6f03ad9b5cce39412da9600ba49f"
+  },
+  {
+   "case_id": "B39",
+   "fetch_id": "ft1:f6b335805c0430fe8aded3da7b0b3b7d08369d24b2ade0789a792c0bac1f9d23"
+  },
+  {
+   "case_id": "B40",
+   "fetch_id": "ft1:8c225835bbee5e2b7ac07d42541daf032583c3b47b258edad94fd678070317c1"
+  },
+  {
+   "case_id": "B41",
+   "fetch_id": "ft1:29d816de6cbb3082a600354fd5ec1959cd1ab96f6bfb18be8c139abc02bfb8b4"
+  },
+  {
+   "case_id": "B42",
+   "fetch_id": "ft1:143b3de12656b6f3e06828eb95c7097e3b8a7bb8b256441503b2de98dbf49147"
+  },
+  {
+   "case_id": "B43",
+   "fetch_id": "ft1:7a0a982640763448c42baa70b630176f90cdcfd36c7156251873e4d5080ce526"
+  },
+  {
+   "case_id": "B44",
+   "fetch_id": "ft1:da7427b8c278adaa755199a0fe51862e0960d9c7c700e373bcfd7b35a4deec4b"
+  },
+  {
+   "case_id": "B45",
+   "fetch_id": "ft1:3514182335a31f183ee1c31eebcb272257db9a8027658446f09800d26418a0c0"
+  }
+ ],
+ "questions": {
+  "FOREIGN": "the number(s) of the blocks that are NOT text of this article (navigation, teasers, promotion, credits, embeds, repeated copies ...), comma-separated; 0 if every block is article text",
+  "MISSING": "complete | beginning_missing | end_missing | middle_missing | not_an_article  (is article text missing from the blocks shown, compared with the page?)",
+  "CORE": "yes | no | unsure  (a complete Spanish press text of running prose, at least 150 words; not a live ticker, list, page frame, paywall stub, page about the publication or paid content -- provenance does not matter)"
+ },
+ "files": {
+  "verdicts_form.csv": "93e6d9e620e437fb4c09f419d8e51740efabae7efca61d229425baab17e9f77a",
+  "KEY_machine_predictions_open_only_after_the_verdicts.json": "626704d0fc2545c262c68894076d91ba5cad8f4a447f4f7d9c5a42d04784865e",
+  "reading_sheet (local only, publisher text)": "d1a95131cfc8fe5c7e616c2350f16be026cf20e51e489a6ae6c3675d5263dbe6"
+ },
+ "code": {
+  "script": "scripts/study_body_quality.py",
+  "extractor": "article_html/0.4.0",
+  "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+ }
+}

@@ -650,3 +650,18 @@ row restates its defining record; nothing is defined anew.*
 | **text match** values | `exact` (the same canonical BODY text: NFC, invisible characters removed, white space folded; nothing else), `near_identical` (each ≥ 0.9 of its shingles in the other, not exact), `contained` (only the shorter one is) | same |
 | **canonical BODY text** (term) | the BODY with the technical normalisations of `text-reuse/2` only; case, punctuation, quotation marks, digits and wording are kept | same |
 | **blind control** (term) | a human control sample frozen before review: cases, questions and the machine's answers fixed by digest; the reader sees page evidence, never the machine's answer; random and targeted components reported apart | CPD-0040 §5 |
+
+## 28. Additions of 2026-11-15, evening (CPD-0041)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| extraction schema | `extraction/3`: `extraction/2` plus the optional block field `selection` (`rule`, `decision`, `reason`) | `extraction.py` |
+| **BODY selection** (term) | the block-by-block decision of a versioned rule about BODY membership against the container rule; every changed block keeps its text and position and names the rule and the reason, so the BODY before the selection is read back from the record | CPD-0041 §1, `extraction_body.py` |
+| selection decisions | `excluded` (role `non_body`), `included` (role `body`) | `extraction.py` |
+| selection reasons (excluded) | `form_control`, `no_text`, `module_advertising`, `module_share`, `module_related`, `module_newsletter`, `module_breadcrumb`, `module_tags`, `module_byline`, `module_caption`, `module_date`, `module_social_embed`, `module_media_controls`, `module_page_controls`, `module_channel_promo`, `provenance_ai_note`, `provenance_agency_note`, `duplicate_block`, `trailing_heading`, `outlet_template`, `repeated_label` | same |
+| selection reasons (included) | `lead_paragraph`, `stated_article_body` | same |
+| rule versions | `body-select/1` (the structural rules), `body-templates/1` (the template table's rule) | `extraction_body.py` |
+| extractor version | `article_html/0.4.0` (`extraction/3`, `CANDIDATE`, the preferred one) | same |
+| **outlet template** (term) | a block one outlet prints in at least 5 unrelated articles of the reference population (articles sharing more than 0.2 of their other 8-word shingles count as one story); pinned as digests, never texts, in `config/extraction/body-templates_1.json`; 3-4 unrelated articles: **recurring**, kept and reported | CPD-0041 §1 |
+| layer id | `body-quality/1`: `clean`, `cleaned`, `residual_suspect`, `incomplete`, `not_article` -- a statement about the extraction, apart from the CORE decision | `body_quality.py` |
+| layer id / artifact | `agency-credit/3` (`/2` that does not read blocks excluded as foreign page modules); `editorial-metadata/3` | `provenance.py`, `enrichment.py` |

@@ -1,0 +1,1926 @@
+{
+ "schema": "coprepan-body-quality-study/v1",
+ "date": "2026-11-15",
+ "decision": "CPD-0041",
+ "population": {
+  "pages": 4759,
+  "outlets": 91,
+  "what": "every stored 2xx item page of the CPD-0039/0040 study, read from the local packs, offline"
+ },
+ "versions": {
+  "before": "article_html/0.3.0 + editorial-metadata/2",
+  "after": "article_html/0.4.0 + editorial-metadata/3",
+  "quality": "content-quality/3",
+  "body_quality": "body-quality/1",
+  "text_reuse": "text-reuse/2",
+  "templates": {
+   "path": "config/extraction/body-templates_1.json",
+   "sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4",
+   "digests": 102
+  }
+ },
+ "derivation": {
+  "pages": 4759,
+  "seconds": {
+   "extract_0_3_0": 55.1,
+   "extract_0_4_0": 60.8,
+   "body_quality": 10.1,
+   "text_reuse_both": 7.4
+  },
+  "templates": 102,
+  "relations": [
+   547,
+   293
+  ]
+ },
+ "body": {
+  "body_changed": 2286,
+  "body_same": 2473,
+  "container_changed_pages": 23,
+  "schema_problems": 0,
+  "title_changed": 0,
+  "subtitles_changed": 18,
+  "words": {
+   "0_3_0": 2553275,
+   "0_4_0": 2527879
+  },
+  "selection": {
+   "excluded:outlet_template": {
+    "blocks": 2815,
+    "pages": 1092,
+    "words": 11244
+   },
+   "excluded:module_social_embed": {
+    "blocks": 765,
+    "pages": 269,
+    "words": 14465
+   },
+   "excluded:module_advertising": {
+    "blocks": 759,
+    "pages": 238,
+    "words": 884
+   },
+   "excluded:module_related": {
+    "blocks": 695,
+    "pages": 276,
+    "words": 2062
+   },
+   "excluded:module_tags": {
+    "blocks": 630,
+    "pages": 374,
+    "words": 1861
+   },
+   "excluded:module_byline": {
+    "blocks": 603,
+    "pages": 362,
+    "words": 3719
+   },
+   "excluded:module_share": {
+    "blocks": 477,
+    "pages": 146,
+    "words": 1492
+   },
+   "included:stated_article_body": {
+    "blocks": 437,
+    "pages": 165,
+    "words": 18932
+   },
+   "excluded:form_control": {
+    "blocks": 405,
+    "pages": 214,
+    "words": 1058
+   },
+   "excluded:repeated_label": {
+    "blocks": 383,
+    "pages": 48,
+    "words": 604
+   },
+   "excluded:module_media_controls": {
+    "blocks": 305,
+    "pages": 66,
+    "words": 1484
+   },
+   "excluded:trailing_heading": {
+    "blocks": 264,
+    "pages": 238,
+    "words": 560
+   },
+   "excluded:module_newsletter": {
+    "blocks": 211,
+    "pages": 106,
+    "words": 1981
+   },
+   "excluded:module_channel_promo": {
+    "blocks": 182,
+    "pages": 92,
+    "words": 1914
+   },
+   "included:lead_paragraph": {
+    "blocks": 146,
+    "pages": 146,
+    "words": 9467
+   },
+   "excluded:module_caption": {
+    "blocks": 133,
+    "pages": 43,
+    "words": 1632
+   },
+   "excluded:no_text": {
+    "blocks": 111,
+    "pages": 61,
+    "words": 116
+   },
+   "excluded:module_date": {
+    "blocks": 95,
+    "pages": 9,
+    "words": 142
+   },
+   "excluded:module_page_controls": {
+    "blocks": 89,
+    "pages": 85,
+    "words": 175
+   },
+   "excluded:provenance_ai_note": {
+    "blocks": 35,
+    "pages": 35,
+    "words": 794
+   },
+   "excluded:duplicate_block": {
+    "blocks": 29,
+    "pages": 15,
+    "words": 1118
+   },
+   "excluded:provenance_agency_note": {
+    "blocks": 15,
+    "pages": 15,
+    "words": 67
+   },
+   "excluded:module_breadcrumb": {
+    "blocks": 1,
+    "pages": 1,
+    "words": 9
+   }
+  },
+  "checked_against_stated_article_body": {
+   "excluded:duplicate_block|checkable": 18,
+   "excluded:duplicate_block|in_stated_body": 0,
+   "excluded:form_control|checkable": 301,
+   "excluded:form_control|in_stated_body": 0,
+   "excluded:module_advertising|checkable": 505,
+   "excluded:module_advertising|in_stated_body": 0,
+   "excluded:module_byline|checkable": 576,
+   "excluded:module_byline|in_stated_body": 0,
+   "excluded:module_caption|checkable": 122,
+   "excluded:module_caption|in_stated_body": 0,
+   "excluded:module_channel_promo|checkable": 74,
+   "excluded:module_channel_promo|in_stated_body": 0,
+   "excluded:module_date|checkable": 81,
+   "excluded:module_date|in_stated_body": 0,
+   "excluded:module_media_controls|checkable": 226,
+   "excluded:module_media_controls|in_stated_body": 0,
+   "excluded:module_newsletter|checkable": 56,
+   "excluded:module_newsletter|in_stated_body": 0,
+   "excluded:module_page_controls|checkable": 83,
+   "excluded:module_page_controls|in_stated_body": 0,
+   "excluded:module_related|checkable": 443,
+   "excluded:module_related|in_stated_body": 0,
+   "excluded:module_share|checkable": 404,
+   "excluded:module_share|in_stated_body": 0,
+   "excluded:module_social_embed|checkable": 444,
+   "excluded:module_social_embed|in_stated_body": 9,
+   "excluded:module_tags|checkable": 622,
+   "excluded:module_tags|in_stated_body": 0,
+   "excluded:no_text|checkable": 36,
+   "excluded:no_text|in_stated_body": 0,
+   "excluded:outlet_template|checkable": 2001,
+   "excluded:outlet_template|in_stated_body": 33,
+   "excluded:provenance_agency_note|checkable": 3,
+   "excluded:provenance_agency_note|in_stated_body": 2,
+   "excluded:provenance_ai_note|checkable": 17,
+   "excluded:provenance_ai_note|in_stated_body": 15,
+   "excluded:repeated_label|checkable": 383,
+   "excluded:repeated_label|in_stated_body": 0,
+   "excluded:trailing_heading|checkable": 141,
+   "excluded:trailing_heading|in_stated_body": 0,
+   "included:lead_paragraph|checkable": 84,
+   "included:lead_paragraph|in_stated_body": 54,
+   "included:stated_article_body|checkable": 437,
+   "included:stated_article_body|in_stated_body": 437
+  }
+ },
+ "quality": {
+  "ruleset": "content-quality/3",
+  "on_0_3_0": {
+   "ACCEPT": 4066,
+   "REJECT": 693
+  },
+  "on_0_4_0": {
+   "ACCEPT": 4067,
+   "REJECT": 692
+  },
+  "transitions": {
+   "ACCEPT->ACCEPT": 4040,
+   "REJECT->REJECT": 666,
+   "REJECT->ACCEPT": 27,
+   "ACCEPT->REJECT": 26
+  },
+  "changed": [
+   {
+    "fetch": "879a3599254e67b3",
+    "outlet_id": "ar_la_nacion",
+    "url": "https://www.lanacion.com.ar/deportes/futbol/river-plate/river-vs-estudiantes-de-rio-cuarto-en-vivo-nid10102026/",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     106,
+     501
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 11
+    }
+   },
+   {
+    "fetch": "79b7b10770802299",
+    "outlet_id": "ar_la_nacion",
+    "url": "https://www.lanacion.com.ar/estados-unidos/temblor-en-mexico-ultimos-reportes-de-sismos-hoy-domingo-15-de-noviembre-nid15112026/",
+    "on_0_3_0": [
+     "incomplete_against_stated_body",
+     "duplicate_of_earlier"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     229,
+     864
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 8
+    }
+   },
+   {
+    "fetch": "03b033c8e5c4e9b1",
+    "outlet_id": "bo_opinion",
+    "url": "https://www.opinion.com.bo/pais/disponen-asueto-media-jornada-lunes-12-octubre-dia-mujer-boliviana/20261010182359997455.html",
+    "on_0_3_0": [
+     "too_short"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     126,
+     154
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 1
+    }
+   },
+   {
+    "fetch": "e017daf22fc16f99",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/noticias/deportes/futbol/universidad-catolica/2025/07/22/los-toques-finales-claro-arena-de-la-uc-luce-novedades-en-la-cancha-y-enciende-sus-luces.shtml",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "incomplete_against_stated_body"
+    ],
+    "words": [
+     333,
+     286
+    ],
+    "body_quality": "incomplete",
+    "excluded": {
+     "module_social_embed": 5,
+     "outlet_template": 1,
+     "no_text": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "e41714353f9d5a56",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/noticias/nacional/denuncias/2025/07/22/denuncian-ataque-a-perro-viral-de-tiktok-por-otro-de-raza-akita-en-centro-de-concepcion-hay-mas-casos.shtml",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "incomplete_against_stated_body"
+    ],
+    "words": [
+     783,
+     721
+    ],
+    "body_quality": "incomplete",
+    "excluded": {
+     "module_social_embed": 2,
+     "outlet_template": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "9c7f213f75a8e281",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/especial/bio-bio-tuercas/noticias/2025/07/22/lamborghini-queda-envuelto-en-llamas-tras-accidente-en-el-gt-world-challenge-piloto-resulta-ileso.shtml",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "incomplete_against_stated_body"
+    ],
+    "words": [
+     365,
+     331
+    ],
+    "body_quality": "incomplete",
+    "excluded": {
+     "outlet_template": 1,
+     "module_social_embed": 3
+    },
+    "included": {}
+   },
+   {
+    "fetch": "c57baea25cfa15a0",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/noticias/internacional/europa/2025/07/22/sectores-energetico-bancario-y-militar-la-nueva-serie-de-sanciones-de-la-union-europea-contra-rusia.shtml",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "incomplete_against_stated_body"
+    ],
+    "words": [
+     982,
+     917
+    ],
+    "body_quality": "incomplete",
+    "excluded": {
+     "outlet_template": 5,
+     "module_social_embed": 3
+    },
+    "included": {}
+   },
+   {
+    "fetch": "fb76eb6ebff8ae56",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/deportes/america-de-cali-vs-independiente-medellin-hora-y-por-donde-ver-el-juego-de-la-fecha-14-de-la-liga-betplay-dimayor-0940.html",
+    "on_0_3_0": [
+     "too_short",
+     "not_running_prose"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     168,
+     387
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 5
+    }
+   },
+   {
+    "fetch": "787736f002a4b5d6",
+    "outlet_id": "co_semana",
+    "url": "https://www.semana.com/deportes/articulo/cuestionan-a-vinicius-junior-por-su-agresion-a-saliba-escandalo-en-real-madrid-vs-villarreal/202606/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     181,
+     142
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {
+     "module_social_embed": 2,
+     "outlet_template": 9,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "e66d9f0c3b264006",
+    "outlet_id": "co_semana",
+    "url": "https://www.semana.com/confidenciales/articulo/las-revelaciones-del-exfiscal-julio-ospino-uno-de-los-primeros-en-investigar-el-caso-odebrecht-en-colombia/202657/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     160,
+     107
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 2,
+     "repeated_label": 7,
+     "outlet_template": 3,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "d6406dcc04fa6888",
+    "outlet_id": "co_semana",
+    "url": "https://www.semana.com/nacion/articulo/jose-manuel-restrepo-lanzo-duro-mensaje-a-gustavo-petro-por-los-incendios-en-el-tolima-cuanta-ignorancia/202635/",
+    "on_0_3_0": [
+     "repetitive"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     932,
+     620
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {
+     "module_social_embed": 4,
+     "outlet_template": 8,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "8548374d3a3aaa65",
+    "outlet_id": "co_semana",
+    "url": "https://www.semana.com/gente/articulo/stream-fighters-5-en-vivo-asi-avanza-el-primer-combate-entre-el-agropecuario-y-daren-en-el-coliseo-medplus/202640/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "live_coverage"
+    ],
+    "words": [
+     439,
+     427
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {
+     "repeated_label": 10,
+     "outlet_template": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "da6e725d74095d1d",
+    "outlet_id": "cr_la_nacion",
+    "url": "https://www.nacion.com/puro-deporte/mourinho-vuelve-a-las-andadas-esto-hizo-con-la/YRYNZ6XQ4RH2ZL47F2OOQDTYVU/story/",
+    "on_0_3_0": [
+     "too_short"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     140,
+     172
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "lead_paragraph": 1
+    }
+   },
+   {
+    "fetch": "da7427b8c278adaa",
+    "outlet_id": "cr_la_nacion",
+    "url": "https://www.nacion.com/viva/el-chinamo-lanzo-un-reto-para-parejas-que-aman/MQIRLPVHFBHZTGI3AIQGD7TAQQ/story/",
+    "on_0_3_0": [
+     "too_short"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     133,
+     164
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "lead_paragraph": 1
+    }
+   },
+   {
+    "fetch": "88d145d39a7817f3",
+    "outlet_id": "do_diario_libre",
+    "url": "https://www.diariolibre.com/actualidad/sucesos/2026/11/14/incendio-de-camioneta-ford-en-santo-domingo-genera-caos/3720899",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     152,
+     114
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 1,
+     "module_tags": 2,
+     "module_byline": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "328df8f322017760",
+    "outlet_id": "do_el_nacional",
+    "url": "https://elnacional.com.do/fama-y-vida/farandula/seis-semanas-puro-sentimiento-nacho-estrella-arranca-esperada-gira-estados-unidos_583076.html",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     160,
+     150
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_byline": 2,
+     "module_tags": 1,
+     "outlet_template": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "0b493b81c3a01004",
+    "outlet_id": "do_el_nacional",
+    "url": "https://elnacional.com.do/nacionales/gran-santo-domingo-continua-alerta-meteorologica-riesgo-inundaciones_583112.html",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     154,
+     146
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_byline": 2,
+     "outlet_template": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "5e522f6265e32839",
+    "outlet_id": "do_hoy",
+    "url": "https://hoy.com.do/el-pais/diez-sectores-distrito-nacional-tendran-interrupciones-electricas-sabado_1105124.html",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     159,
+     150
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_byline": 2,
+     "module_tags": 1,
+     "outlet_template": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "e983464be62ea3b0",
+    "outlet_id": "ec_el_universo",
+    "url": "https://eluniverso.com/deportes/futbol/fc-barcelona-no-afloja-el-liderato-y-golea-3-0-al-getafe-en-laliga-nota/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     161,
+     155
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_related": 2,
+     "module_advertising": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "89f42b1494518ddf",
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/internacional/miss-grand-international-final-shyare-andrade-ecuador-134606/",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     123,
+     177
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 2
+    }
+   },
+   {
+    "fetch": "518699b15c3b0622",
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/internacional/terremoto-panama-temblor-danos-victimas-134608/",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     114,
+     211
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 3
+    }
+   },
+   {
+    "fetch": "3f12edcd78369293",
+    "outlet_id": "ec_primicias",
+    "url": "https://www.primicias.ec/deportes/futbol/piero-hincapie-lesion-tobillo-partido-arsenal-leeds-premier-league-134636/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     180,
+     141
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "72c4e4ad7cf7779a",
+    "outlet_id": "es_abc",
+    "url": "https://www.abc.es/cultura/toros/toros-morante-puebla-roca-rey-tomas-rufo-valencia-hoy-directo-20261009144205-di.html",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     119,
+     960
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 34
+    }
+   },
+   {
+    "fetch": "b054b534a33c3431",
+    "outlet_id": "es_abc",
+    "url": "https://www.abc.es/cultura/toros/toros-ventas-madrid-feria-otono-directo-novillos-alvaro-serrano-20261010145804-di.html",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     150,
+     517
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 12
+    }
+   },
+   {
+    "fetch": "c3013a4f42b3b0d9",
+    "outlet_id": "es_abc",
+    "url": "https://www.abc.es/deportes/futbol/barcelona-getafe-directo-resultado-ganador-goles-partido-20261010180254-di.html",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     56,
+     1658
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 62
+    }
+   },
+   {
+    "fetch": "7a0a982640763448",
+    "outlet_id": "es_abc",
+    "url": "https://www.abc.es/deportes/real-madrid/real-madrid-villarreal-directo-resultado-ganador-goles-20261010203210-di.html",
+    "on_0_3_0": [
+     "too_short",
+     "live_coverage",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     49,
+     267
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 9
+    }
+   },
+   {
+    "fetch": "ec11db4a0550a72f",
+    "outlet_id": "gt_lahora",
+    "url": "https://lahora.gt/nacionales/ralvarado/2026/10/09/ataques-armados-en-mixco-y-zona-18-dejan-cuatro-personas-fallecidas-now/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     180,
+     156
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 4
+    },
+    "included": {}
+   },
+   {
+    "fetch": "bc2edf7abc65c338",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/internacional/marejadas-y-vientos-devastadores-asi-golpeara-el-huracan-isaias-a-ee-uu-este-fin-de-semana/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     303
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "9c260681314c308c",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/deportes/futbol-internacional/cristiano-ronaldo-expediente-disciplinario-portugal-breaking/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     177
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "642d3ff87236c97a",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/deportes/futbol-nacional/concacaf-eligio-el-gol-de-matts-evans-como-el-mejor-de-la-fase-de-grupos-de-la-liga-de-naciones-breaking/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     300
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 2,
+     "outlet_template": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "7de809a22aaf3402",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/guatemala/comunitario/conred-advierte-que-2-mil-763-personas-corren-riesgo-en-villa-hermosa-de-san-miguel-petapa/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     243
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "9901fa71688e5ab8",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/deportes/futbol-internacional/barcelona-golea-3-0-al-getafe-y-firma-un-inicio-historico-en-laliga-con-ocho-victorias-consecutivas-breaking/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     222
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "2160f8214da36c00",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/deportes/futbol-internacional/real-madrid-sufre-pero-vence-1-0-al-villarreal-pese-a-la-expulsion-de-vinicius-en-el-bernabeu-breaking/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     297
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "19fe48b27d1e0c06",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/vida/escenario/sonora-dinamita-muere-alvaro-pava-a-los-65-anos/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     263
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "202e246693c9359c",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/vida/ciencia/que-hay-detras-de-las-senales-de-radio-detectadas-en-un-planeta-fuera-del-sistema-solar/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     263
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "f6b335805c0430fe",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/internacional/rusia-levanta-parcialmente-su-prohibicion-de-exportacion-de-diesel-segun-acuerdo-con-trump/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     262
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "49604c03de1910a3",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/vida/escenario/feria-de-las-flores-en-que-consiste-las-flores-trail-run-2026-que-une-deporte-naturaleza-aventura-y-mascotas/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     279
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "5635f2f16ab0fffc",
+    "outlet_id": "gt_prensa_libre",
+    "url": "https://www.prensalibre.com/deportes/futbol-nacional/municipal-se-impone-de-visita-1-0-a-malacateco-con-gol-de-elvi-elington-breaking/",
+    "on_0_3_0": [
+     "not_running_prose",
+     "template_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     523,
+     315
+    ],
+    "body_quality": "clean",
+    "excluded": {},
+    "included": {}
+   },
+   {
+    "fetch": "eee054f8e66d7fb0",
+    "outlet_id": "gt_publinews",
+    "url": "https://www.publinews.gt/tendencias/2026/10/10/ximena-carrillo-hace-historia-para-guatemala-al-entrar-en-el-top-5-de-miss-grand-international/",
+    "on_0_3_0": [
+     "repetitive"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     209,
+     170
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "duplicate_block": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "c70b378f47cb792e",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/mundo/174926-fuerte-terremoto-de-magnitud-8-sacude-centroamerica-con-epicentro-en-panama/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     188,
+     146
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 2,
+     "module_advertising": 1,
+     "outlet_template": 1,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "f11cc8e4dced0113",
+    "outlet_id": "pa_critica",
+    "url": "https://www.critica.com.pa/sucesos/el-sismo-no-fue-impedimento-para-matar-un-hombre-en-puerto-escondido-517823",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     177,
+     140
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_channel_promo": 2,
+     "outlet_template": 1,
+     "module_date": 5
+    },
+    "included": {}
+   },
+   {
+    "fetch": "78c843098127a52d",
+    "outlet_id": "pa_critica",
+    "url": "https://www.critica.com.pa/show/farruko-se-solidariza-con-el-pueblo-panameno-afectado-por-sismo-517839",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     164,
+     145
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_channel_promo": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "d0a897a8924afee6",
+    "outlet_id": "pa_la_prensa",
+    "url": "https://www.prensa.com/sociedad/imagenes-del-terremoto-que-sacudio-a-panama/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     261,
+     100
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_social_embed": 10,
+     "outlet_template": 3
+    },
+    "included": {}
+   },
+   {
+    "fetch": "6d2235ad294fb96d",
+    "outlet_id": "pa_la_prensa",
+    "url": "https://www.prensa.com/sociedad/tras-el-terremoto-cinco-hospitales-atienden-fuera-de-sus-instalaciones/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     187,
+     145
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 3
+    },
+    "included": {}
+   },
+   {
+    "fetch": "44259a3ee073af7a",
+    "outlet_id": "pa_la_prensa",
+    "url": "https://www.prensa.com/sociedad/terremoto-meduca-suspende-las-clases-del-lunes-a-nivel-nacional/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     172,
+     130
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 3
+    },
+    "included": {}
+   },
+   {
+    "fetch": "2912549e392331af",
+    "outlet_id": "pe_diariocorreo",
+    "url": "https://diariocorreo.pe/edicion/ica/ica-forado-lleva-mas-de-una-semana-sin-reparacion-y-pone-en-riesgo-a-conductores-noticia/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     191,
+     143
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 1,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "78cf11c3cce824a3",
+    "outlet_id": "pe_diariocorreo",
+    "url": "https://diariocorreo.pe/edicion/ica/solicitan-evaluar-cancelacion-de-las-actividades-por-aniversario-provincial-tras-crimen-en-chincha-noticia/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     171,
+     123
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 1,
+     "trailing_heading": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "f790c3bfebc0d8c4",
+    "outlet_id": "pe_el_buho",
+    "url": "https://elbuho.pe/2026/10/pide-que-se-porten-bien-keiko-visita-penal-de-trujillo-y-ofrece-beneficios-a-reclusos-a-cambio-de-informacion-video/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short",
+     "not_running_prose"
+    ],
+    "words": [
+     183,
+     119
+    ],
+    "body_quality": "not_article",
+    "excluded": {
+     "outlet_template": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "6e1c5fdda617aa3a",
+    "outlet_id": "pr_el_nuevo_dia",
+    "url": "https://www.elnuevodia.com/noticias/estados-unidos/notas/un-policia-muere-y-otro-resulta-herido-tras-responder-a-un-reporte-de-un-hombre-armado-en-filadelfia/",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     234,
+     145
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "module_related": 4,
+     "module_caption": 4,
+     "form_control": 1
+    },
+    "included": {}
+   },
+   {
+    "fetch": "0bc61ff5d6bae7e4",
+    "outlet_id": "uy_el_observador",
+    "url": "https://www.elobservador.com.uy/bbc-news-mundo/en-imagenes-los-graves-destrozos-que-dejo-el-potente-terremoto-que-sacudio-panama-este-viernes-n6060073",
+    "on_0_3_0": [
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     220,
+     267
+    ],
+    "body_quality": "residual_suspect",
+    "excluded": {
+     "outlet_template": 2
+    },
+    "included": {
+     "stated_article_body": 4
+    }
+   },
+   {
+    "fetch": "0e126f10c6c7911f",
+    "outlet_id": "uy_el_observador",
+    "url": "https://www.elobservador.com.uy/futbol/penarol-vs-progreso-vivo-el-torneo-clausura-el-carbonero-busca-ampliar-su-ventaja-la-tabla-anual-un-gaucho-al-borde-del-descenso-n6060098",
+    "on_0_3_0": [
+     "too_short",
+     "incomplete_against_stated_body"
+    ],
+    "on_0_4_0": [],
+    "words": [
+     97,
+     336
+    ],
+    "body_quality": "cleaned",
+    "excluded": {},
+    "included": {
+     "stated_article_body": 7
+    }
+   },
+   {
+    "fetch": "f1ab99d1451339a0",
+    "outlet_id": "uy_montevideo_portal",
+    "url": "https://www.montevideo.com.uy/auc.aspx?978141",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     150,
+     146
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 2
+    },
+    "included": {}
+   },
+   {
+    "fetch": "d5b352f2b5dd6b76",
+    "outlet_id": "uy_montevideo_portal",
+    "url": "https://www.montevideo.com.uy/auc.aspx?978160",
+    "on_0_3_0": [],
+    "on_0_4_0": [
+     "too_short"
+    ],
+    "words": [
+     179,
+     146
+    ],
+    "body_quality": "cleaned",
+    "excluded": {
+     "outlet_template": 2,
+     "module_social_embed": 2,
+     "module_byline": 1
+    },
+    "included": {}
+   }
+  ]
+ },
+ "body_quality": {
+  "states": {
+   "clean": 2255,
+   "incomplete": 27,
+   "cleaned": 1986,
+   "not_article": 159,
+   "residual_suspect": 332
+  },
+  "states_by_core": {
+   "clean|ACCEPT": 1921,
+   "clean|REJECT": 334,
+   "incomplete|REJECT": 27,
+   "cleaned|ACCEPT": 1851,
+   "not_article|REJECT": 159,
+   "residual_suspect|ACCEPT": 295,
+   "residual_suspect|REJECT": 37,
+   "cleaned|REJECT": 135
+  },
+  "signals": {
+   "address_or_path": 94,
+   "recurring_text": 296,
+   "label_blocks": 127,
+   "credit_opening": 36
+  },
+  "residual_pages_by_outlet": {
+   "es_abc": 23,
+   "co_semana": 21,
+   "co_el_espectador": 18,
+   "ec_expreso": 18,
+   "mx_el_universal": 17,
+   "es_el_correo": 16,
+   "do_hoy": 11,
+   "py_la_nacion": 11,
+   "bo_el_deber": 8,
+   "pe_diario_uno": 8,
+   "uy_el_observador": 8,
+   "ar_clarin": 7,
+   "do_el_nacional": 7,
+   "gt_elsiglo": 7,
+   "gt_prensa_libre": 7,
+   "ve_eldiario": 7,
+   "ar_la_nacion": 6,
+   "es_el_mundo": 6,
+   "hn_contracorriente": 6,
+   "pe_el_buho": 6
+  }
+ },
+ "layers_same_value": {
+  "pages": {
+   "section-iptc/1 -> section-iptc/1": 4759,
+   "editorial-scope/1 -> editorial-scope/1": 4759,
+   "genre-placement/1 -> genre-placement/1": 4759,
+   "genre-declared/1 -> genre-declared/1": 4759,
+   "ai-disclosure/1 -> ai-disclosure/1": 4759,
+   "agency-credit/2 -> agency-credit/3": 4759
+  },
+  "of": 4759
+ },
+ "text_reuse": {
+  "rule": "text-reuse/2",
+  "relations": {
+   "0_3_0": 547,
+   "0_4_0": 293,
+   "kept": 260
+  },
+  "classes_0_3_0": {
+   "syndicated_copy_of|contained": 81,
+   "duplicate_of|near_identical": 3,
+   "syndicated_copy_of|exact": 9,
+   "syndicated_copy_of|near_identical": 102,
+   "duplicate_of|contained": 5,
+   "duplicate_of|exact": 347
+  },
+  "classes_0_4_0": {
+   "syndicated_copy_of|contained": 64,
+   "duplicate_of|near_identical": 2,
+   "syndicated_copy_of|near_identical": 146,
+   "syndicated_copy_of|exact": 15,
+   "duplicate_of|contained": 8,
+   "duplicate_of|exact": 58
+  },
+  "lost": {
+   "duplicate_of|exact|gt_prensa_libre|bodies now differ": 153,
+   "duplicate_of|exact|co_el_espectador|a body now under 50 words": 75,
+   "duplicate_of|exact|gt_prensa_libre|a body now under 50 words": 37,
+   "duplicate_of|exact|pr_el_nuevo_dia|a body now under 50 words": 12,
+   "duplicate_of|exact|co_el_espectador|bodies now differ": 3,
+   "duplicate_of|exact|pe_la_republica|bodies now differ": 3,
+   "duplicate_of|exact|pr_el_nuevo_dia|bodies now differ": 3,
+   "duplicate_of|exact|ar_rio_negro|bodies now differ": 1
+  },
+  "new": {
+   "syndicated_copy_of|contained": 20,
+   "syndicated_copy_of|near_identical": 12,
+   "syndicated_copy_of|exact": 1
+  },
+  "kept_class_moves": {
+   "syndicated_copy_of|contained->contained": 44,
+   "syndicated_copy_of|near_identical->near_identical": 99,
+   "duplicate_of|exact->exact": 58,
+   "syndicated_copy_of|contained->near_identical": 35,
+   "syndicated_copy_of|exact->exact": 9,
+   "duplicate_of|contained->contained": 5,
+   "duplicate_of|near_identical->near_identical": 2,
+   "duplicate_of|exact->contained": 2,
+   "syndicated_copy_of|contained->exact": 2,
+   "syndicated_copy_of|near_identical->exact": 3,
+   "duplicate_of|near_identical->contained": 1
+  }
+ },
+ "named_blind_cases": [
+  {
+   "case": "C01",
+   "outlet_id": "cr_la_nacion",
+   "fetch": "96e45708bfee0fe5",
+   "words": [
+    298,
+    352
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {},
+   "included": {
+    "lead_paragraph": 1
+   },
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C04",
+   "outlet_id": "do_diario_libre",
+   "fetch": "21157fd112c4afec",
+   "words": [
+    2696,
+    2653
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "residual_suspect",
+   "excluded": {
+    "outlet_template": 1,
+    "module_tags": 6,
+    "module_byline": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C05",
+   "outlet_id": "gt_prensa_libre",
+   "fetch": "2160f8214da36c00",
+   "words": [
+    523,
+    297
+   ],
+   "core": [
+    "REJECT",
+    "ACCEPT"
+   ],
+   "body_quality": "clean",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    12,
+    0
+   ]
+  },
+  {
+   "case": "C05",
+   "outlet_id": "gt_prensa_libre",
+   "fetch": "9c260681314c308c",
+   "words": [
+    523,
+    177
+   ],
+   "core": [
+    "REJECT",
+    "ACCEPT"
+   ],
+   "body_quality": "clean",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    3,
+    0
+   ]
+  },
+  {
+   "case": "C14",
+   "outlet_id": "pr_el_nuevo_dia",
+   "fetch": "df1719ad69937075",
+   "words": [
+    298,
+    289
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_related": 3
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C18",
+   "outlet_id": "uy_montevideo_portal",
+   "fetch": "c92644b044b1ab0d",
+   "words": [
+    5364,
+    5352
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_byline": 2,
+    "module_caption": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C24",
+   "outlet_id": "ar_infobae",
+   "fetch": "203add02712c20f4",
+   "words": [
+    655,
+    634
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "form_control": 3,
+    "module_share": 2,
+    "module_advertising": 5,
+    "module_page_controls": 1,
+    "module_tags": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C28",
+   "outlet_id": "ec_el_universo",
+   "fetch": "c8ce9bf1a40eaaab",
+   "words": [
+    372,
+    358
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_related": 4,
+    "module_advertising": 3
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C30",
+   "outlet_id": "pe_diario_uno",
+   "fetch": "f7d5269ede039e37",
+   "words": [
+    547,
+    538
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_breadcrumb": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C31",
+   "outlet_id": "pa_critica",
+   "fetch": "9defe72c669d8d5a",
+   "words": [
+    351,
+    314
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_channel_promo": 2,
+    "module_related": 6
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C32",
+   "outlet_id": "pe_diariocorreo",
+   "fetch": "4ab3e4fd3da97449",
+   "words": [
+    123,
+    121
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "trailing_heading": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C33",
+   "outlet_id": "co_el_espectador",
+   "fetch": "9df3bc95a21335dd",
+   "words": [
+    103,
+    0
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "not_article",
+   "excluded": {
+    "outlet_template": 1
+   },
+   "included": {},
+   "relations": [
+    1,
+    0
+   ]
+  },
+  {
+   "case": "C39",
+   "outlet_id": "ve_eluniversal",
+   "fetch": "c75457c7d230c8eb",
+   "words": [
+    0,
+    0
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "not_article",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C42",
+   "outlet_id": "ar_pagina12",
+   "fetch": "b8a6e2ec3642ca43",
+   "words": [
+    24,
+    0
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "not_article",
+   "excluded": {
+    "module_share": 8
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C48",
+   "outlet_id": "pa_panama_america",
+   "fetch": "c4f66bd8bb65c1c3",
+   "words": [
+    42,
+    42
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "clean",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C49",
+   "outlet_id": "pr_el_nuevo_dia",
+   "fetch": "c5f5cf5998b39edf",
+   "words": [
+    151,
+    69
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "outlet_template": 1
+   },
+   "included": {
+    "stated_article_body": 1
+   },
+   "relations": [
+    4,
+    0
+   ]
+  },
+  {
+   "case": "C49",
+   "outlet_id": "pr_el_nuevo_dia",
+   "fetch": "bbb389692218f505",
+   "words": [
+    151,
+    41
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "outlet_template": 1
+   },
+   "included": {
+    "stated_article_body": 1
+   },
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C51",
+   "outlet_id": "es_abc",
+   "fetch": "163dbd55e2131603",
+   "words": [
+    158,
+    153
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "outlet_template": 1,
+    "form_control": 2
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C53",
+   "outlet_id": "pa_midiario",
+   "fetch": "2e616ac5a0b888c6",
+   "words": [
+    575,
+    528
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "form_control": 1,
+    "module_social_embed": 4
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C54",
+   "outlet_id": "gt_prensa_libre",
+   "fetch": "313c7157339503ed",
+   "words": [
+    523,
+    152
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "outlet_template": 1
+   },
+   "included": {},
+   "relations": [
+    8,
+    0
+   ]
+  },
+  {
+   "case": "C55",
+   "outlet_id": "pe_diario_los_andes",
+   "fetch": "1fef06f16d812ed3",
+   "words": [
+    25,
+    25
+   ],
+   "core": [
+    "REJECT",
+    "REJECT"
+   ],
+   "body_quality": "clean",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C62",
+   "outlet_id": "co_elpais",
+   "fetch": "6a247f978ef8cfef",
+   "words": [
+    504,
+    468
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_social_embed": 1,
+    "provenance_ai_note": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C64",
+   "outlet_id": "hn_hondudiario",
+   "fetch": "a660e241bc1f31e7",
+   "words": [
+    261,
+    261
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "clean",
+   "excluded": {},
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C66",
+   "outlet_id": "ni_despacho_505",
+   "fetch": "df347639f833ad89",
+   "words": [
+    678,
+    674
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "provenance_agency_note": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C69",
+   "outlet_id": "ar_la_nacion",
+   "fetch": "9aef7084141bdc37",
+   "words": [
+    599,
+    581
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "provenance_ai_note": 1,
+    "outlet_template": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  },
+  {
+   "case": "C70",
+   "outlet_id": "ve_efecto_cocuyo",
+   "fetch": "8614478b6f7fa026",
+   "words": [
+    342,
+    337
+   ],
+   "core": [
+    "ACCEPT",
+    "ACCEPT"
+   ],
+   "body_quality": "cleaned",
+   "excluded": {
+    "module_advertising": 1,
+    "provenance_agency_note": 1
+   },
+   "included": {},
+   "relations": [
+    0,
+    0
+   ]
+  }
+ ],
+ "cost": {
+  "seconds": {
+   "extract_0_3_0": 55.1,
+   "extract_0_4_0": 60.8,
+   "body_quality": 10.1,
+   "text_reuse_both": 7.4
+  },
+  "ms_per_page": {
+   "extract_0_3_0": 11.58,
+   "extract_0_4_0": 12.78,
+   "body_quality": 2.12
+  }
+ }
+}
