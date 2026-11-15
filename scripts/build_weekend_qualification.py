@@ -33,7 +33,8 @@ from pathlib import Path
 REPOSITORY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY / "src"))
 
-from coprepan import canary_driver as D, core_pipeline, extraction as E, http_acquisition as H, pack, storage_roots  # noqa: E402
+from coprepan import canary_driver as D, content_quality as Q, core_pipeline, extraction as E, extraction_article as A  # noqa: E402
+from coprepan import http_acquisition as H, pack, storage_roots  # noqa: E402
 
 SCHEMA = "coprepan-weekend-qualification/v1"
 SCREENING = {"recent_window_hours": 72, "stale_after_days": 7, "short_body_characters": 500, "good_median_characters": 1500,
@@ -125,7 +126,8 @@ def _rule_chars(text):
     return as_is, rule_a, rule_b
 
 
-def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc: dict, matrix: dict) -> dict:
+def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc: dict, matrix: dict,
+          excluded: dict[str, str] | None = None) -> dict:
     by_id = {o["outlet_id"]: o for o in registry_doc["outlets"]}
     run_ids = {r["run_id"] for r in receipts}
     records = [r for r in D.fetch_records(workspace) if r["run_id"] in run_ids]
@@ -146,7 +148,11 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
         for entry in pack.scan(path, identifier):
             locate[entry.fetch_id] = (path, entry)
     outlets = {}
-    for receipt in receipts:
+    pages_of_outlet: dict[str, list[dict]] = defaultdict(list)
+    evidence_runs: dict[str, list[str]] = defaultdict(list)
+    for receipt in sorted(receipts, key=lambda r: r["started_at"]):          # a later run of an outlet is its current evidence
+        for oid in receipt["outlets"]:
+            evidence_runs[oid].append((receipt.get("operator_authorization") or {}).get("wave") or receipt["run_id"])
         started = _instant(receipt["started_at"])
         window = started - timedelta(hours=SCREENING["recent_window_hours"])
         weekend = started.astimezone(timezone(timedelta(hours=1))).weekday() >= 5
@@ -170,6 +176,7 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
             robots = [r for r in mine if r["fetch_kind"] == "robots_txt"]
             bodies, as_is_l, a_l, b_l, titles, dated, short = [], [], [], [], 0, 0, 0
             raw_lengths = []
+            quality_pages = []
             for r in ok_items:
                 if r["fetch_id"] not in locate:
                     continue
@@ -190,7 +197,12 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
                     x, a, b = _rule_chars(decoded)
                     as_is_l.append(x), a_l.append(a), b_l.append(b)
                 except Exception:  # noqa: BLE001 -- a diagnostic; a page it cannot read is counted out, not guessed
-                    pass
+                    decoded = None
+                art = A.ARTICLE.run(body, body_sha256=stored["body_sha256"], **core_pipeline._extraction_arguments(stored))
+                quality_pages.append({"fetch_id": r["fetch_id"], "outlet_id": oid, "url": r["request"]["requested_url"],
+                                      "fetched_at": r["fetch_started_at"], "extracted": art.outcome == E.OUTCOME_EXTRACTED,
+                                      "features": Q.features(art.record, http_status=r["response"]["status"], html=decoded)
+                                      if art.outcome == E.OUTCOME_EXTRACTED else None})
             discovery = ("FUNCTIONAL" if any(c["status"].startswith("2") and c["entries_listed"] for c in channels)
                          else "ANSWERED_WITHOUT_ENTRIES" if any(c["status"].startswith("2") for c in channels)
                          else "FAILED" if channels and any(c["status"] != "not requested" for c in channels) else "NOT_REACHED")
@@ -202,6 +214,21 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
             quality = ("NOT_MEASURED" if not bodies else "POOR" if (med or 0) < SCREENING["short_body_characters"] or share > SCREENING["short_share_poor"]
                        else "LIMITED" if (med or 0) < SCREENING["good_median_characters"] or share > SCREENING["short_share_limited"] else "GOOD")
             prior = matrix.get(oid, {})
+            pages_of_outlet[oid] += quality_pages                       # the content quality of every weekend page of the outlet
+            judged = Q.assess_corpus(pages_of_outlet[oid]) if pages_of_outlet[oid] else {}
+            accepted = sum(1 for d in judged.values() if d["decision"] == Q.ACCEPT)
+            share_ok = accepted / len(judged) if judged else None
+            content = ("NOT_MEASURED" if not judged else "ACCEPTED_MOST" if share_ok >= 2 / 3 else "ACCEPTED_SOME" if accepted else "ACCEPTED_NONE")
+            qualified, why = qualification_of(discovery, coverage, raw, share_ok)
+            earlier = outlets.get(oid)
+            if discovery == "NOT_REACHED" and earlier is not None and earlier["DISCOVERY_FUNCTIONAL"] != "NOT_REACHED":
+                # a later wave that did not reach the outlet (robots unreachable, a timeout) does not erase what an earlier one found
+                earlier["latest_wave_not_reached"] = {"run_id": receipt["run_id"], "robots": [str(r["response"]["status"]) if r["outcome"] == "FETCHED"
+                                                                                               else r["failure_reason"] for r in robots]}
+                earlier["evidence_runs"] = list(evidence_runs[oid])
+                earlier["content_quality"].update(pages=len(judged), accepted=accepted,
+                                                  first_reasons=dict(Counter(d["reasons"][0] for d in judged.values() if d["reasons"])))
+                continue
             outlets[oid] = {
                 "outlet_id": oid, "country_id": by_id[oid]["country_id"],
                 "name": (by_id[oid].get("display_names") or [oid])[0] if isinstance(by_id[oid].get("display_names"), list) else oid,
@@ -213,22 +240,82 @@ def build(workspace: core_pipeline.Workspace, receipts: list[dict], registry_doc
                                "candidate_rules_median": {"as_is": _median(as_is_l), "rule_a": _median(a_l), "rule_b": _median(b_l)}},
                 "preservation": {"pending_in_workspace": sum(1 for r in mine if states.get(r["fetch_id"]) == "PRESERVATION_PENDING"),
                                  "raw_preserved": sum(1 for r in mine if states.get(r["fetch_id"]) == "RAW_PRESERVED")},
+                "content_quality": {"ruleset": Q.RULESET, "extractor": A.ARTICLE.stage_version, "pages": len(judged), "accepted": accepted,
+                                    "first_reasons": dict(Counter(d["reasons"][0] for d in judged.values() if d["reasons"]))},
+                "evidence_runs": list(evidence_runs[oid]),
                 "DISCOVERY_FUNCTIONAL": discovery, "NEW_ARTICLE_COVERAGE": coverage, "RAW_ACQUISITION_FUNCTIONAL": raw,
-                "TEXT_EXTRACTION_QUALITY": quality, "access_signals": access,
+                "TEXT_EXTRACTION_QUALITY": quality, "CONTENT_QUALITY_ACCEPTED": content,
+                "QUALIFIED_FOR_NEXT_INTAKE": qualified, "qualification_reason": why, "access_signals": access,
             }
     budget = {"transport_requests": sum(r["requests"]["total"] for r in receipts), "item_requests": sum(r["requests"]["item"] for r in receipts),
               "fetcher_transport_calls": sum(r.get("fetcher_transport_calls") or 0 for r in receipts),
               "by_run": {r["run_id"]: {"wave": (r.get("operator_authorization") or {}).get("wave"), "requests": r["requests"]["total"],
                                        "status": r.get("status")} for r in receipts}}
+    not_tested = {}
+    for outlet in registry_doc["outlets"]:
+        oid = outlet["outlet_id"]
+        if oid in outlets:
+            continue
+        status = outlet.get("registration_status")
+        not_tested[oid] = {"outlet_id": oid, "country_id": outlet["country_id"], "registration_status": status,
+                           "prior_recommendation": matrix.get(oid, {}).get("recommendation"),
+                           "why": (excluded or {}).get(oid) or ("not registered (proposed or other): offline only" if status != "registered"
+                                                                 else "registered, not in a wave of the weekend")}
     return {"schema": SCHEMA, "screening": SCREENING, "runs": sorted(run_ids), "budget": budget, "outlets": outlets,
+            "not_tested": dict(sorted(not_tested.items())),
             "totals": {dim: dict(Counter(o[dim] for o in outlets.values())) for dim in
-                       ("DISCOVERY_FUNCTIONAL", "NEW_ARTICLE_COVERAGE", "RAW_ACQUISITION_FUNCTIONAL", "TEXT_EXTRACTION_QUALITY")}}
+                       ("DISCOVERY_FUNCTIONAL", "NEW_ARTICLE_COVERAGE", "RAW_ACQUISITION_FUNCTIONAL", "TEXT_EXTRACTION_QUALITY",
+                        "CONTENT_QUALITY_ACCEPTED", "QUALIFIED_FOR_NEXT_INTAKE")}}
+
+
+def qualification_of(discovery: str, coverage: str, raw: str, accepted_share: float | None) -> tuple[str, str]:
+    """``QUALIFIED_FOR_NEXT_INTAKE`` -- the six dimensions read together for one outlet, with the first reason that stops it."""
+    if discovery != "FUNCTIONAL":
+        return "NOT_QUALIFIED", f"discovery {discovery}"
+    if coverage in ("STALE_CHANNEL", "NO_ENTRIES"):
+        return "NOT_QUALIFIED", f"coverage {coverage}: a current channel is needed (registry amendment)"
+    if raw != "FUNCTIONAL":
+        return "NOT_QUALIFIED", f"raw acquisition {raw}"
+    if accepted_share is None or accepted_share == 0:
+        return "NOT_QUALIFIED", "no page accepted by the content-quality gate"
+    if accepted_share < 0.5:
+        return "QUALIFIED_WITH_LIMITS", f"only {accepted_share:.0%} of the pages accepted: low yield"
+    if coverage == "UNDATED":
+        return "QUALIFIED_WITH_LIMITS", "the channels state no dates: what is new cannot be told from the channel"
+    return "QUALIFIED", "every dimension holds"
+
+
+def render(result: dict) -> str:
+    """The matrix as a table for a person: one row per tested outlet, its six dimensions, and the untested outlets with why."""
+    lines = ["# Source matrix after the weekend qualification (2026-11-14/15)", "",
+             f"Built by `scripts/build_weekend_qualification.py` from the evidence of {len(result['runs'])} waves "
+             f"({result['budget']['transport_requests']} transport requests). Six dimensions, kept apart; no single READY. Coverage: "
+             "a weekend without new entries is `NO_RECENT_ENTRY_AT_THE_WEEKEND`, not a defect. Content quality: share of the outlet's "
+             "answered pages that `content-quality/2` (CANDIDATE) accepts on `article_html/0.1.0` (CANDIDATE). Screening thresholds "
+             "are stated in the JSON; they are choices, not scientific criteria.", "",
+             "| Outlet | Waves | Discovery | Coverage | Raw | Extraction (baseline) | Content quality | Accepted | Next intake | Reason |",
+             "|---|---|---|---|---|---|---|---:|---|---|"]
+    for oid, o in sorted(result["outlets"].items()):
+        cq = o["content_quality"]
+        lines.append(f"| `{oid}` | {', '.join(o['evidence_runs'])} | {o['DISCOVERY_FUNCTIONAL']} | {o['NEW_ARTICLE_COVERAGE']} | "
+                     f"{o['RAW_ACQUISITION_FUNCTIONAL']} | {o['TEXT_EXTRACTION_QUALITY']} | {o['CONTENT_QUALITY_ACCEPTED']} | "
+                     f"{cq['accepted']}/{cq['pages']} | **{o['QUALIFIED_FOR_NEXT_INTAKE']}** | {o['qualification_reason']} |")
+    lines += ["", "## Totals", ""]
+    for dim, counts in result["totals"].items():
+        lines.append(f"- **{dim}**: " + ", ".join(f"{k} {v}" for k, v in sorted(counts.items(), key=lambda kv: -kv[1])))
+    lines += ["", f"## Documented outlets without live evidence this weekend ({len(result['not_tested'])})", "",
+              "| Outlet | Registration | Prior recommendation | Why not tested |", "|---|---|---|---|"]
+    for oid, o in result["not_tested"].items():
+        lines.append(f"| `{oid}` | {o['registration_status']} | {o['prior_recommendation'] or '—'} | {o['why']} |")
+    return "\n".join(lines) + "\n"
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--authorization-id", required=True)
+    parser.add_argument("--authorization-id", required=True, action="append",
+                        help="repeatable: the waves of every named record are read together, a later run of an outlet over an earlier")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--markdown", type=Path, default=None, help="also write the matrix as a table")
     parser.add_argument("--evidence", type=Path, default=REPOSITORY / "docs" / "canary" / "evidence",
                         help="the directory of the canaries' evidence (default: this checkout's)")
     parser.add_argument("--runtime", type=Path, default=None,
@@ -237,7 +324,7 @@ def main(argv=None) -> int:
     receipts = []
     for path in sorted(arguments.evidence.glob("*/canary-receipt-*.json")):
         receipt = json.loads(path.read_text(encoding="utf-8"))
-        if (receipt.get("operator_authorization") or {}).get("authorization_id") == arguments.authorization_id:
+        if (receipt.get("operator_authorization") or {}).get("authorization_id") in arguments.authorization_id:
             receipts.append(receipt)
     # Read only: the runtime root is taken as configured, without the write probe of storage_roots.resolve_root.
     runtime = arguments.runtime or Path(storage_roots.workstation_environment().get("COPREPAN_RUNTIME_ROOT") or ".")
@@ -246,8 +333,12 @@ def main(argv=None) -> int:
     workspace = core_pipeline.Workspace(runtime)
     registry_doc = json.loads((REPOSITORY / "config" / "outlet_registry.json").read_text(encoding="utf-8"))
     matrix = {r["outlet_id"]: r for r in json.loads((REPOSITORY / "docs/intake/source_health/source_health_2026-11-14.json").read_text(encoding="utf-8"))["outlets"]}
-    result = build(workspace, receipts, registry_doc, matrix)
+    waves = REPOSITORY / "docs" / "intake" / "qualification" / "weekend_waves_2026-11-14.json"
+    excluded = {e["outlet_id"]: e["why"] for e in json.loads(waves.read_text(encoding="utf-8")).get("excluded", [])} if waves.exists() else {}
+    result = build(workspace, receipts, registry_doc, matrix, excluded)
     arguments.out.write_text(json.dumps(result, indent=1, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
+    if arguments.markdown is not None:
+        arguments.markdown.write_text(render(result), encoding="utf-8")
     print(json.dumps({"runs": len(result["runs"]), "outlets": len(result["outlets"]), "totals": result["totals"]}, indent=1))
     return 0
 

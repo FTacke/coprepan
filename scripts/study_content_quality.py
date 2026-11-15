@@ -133,6 +133,54 @@ def decide(arguments) -> int:
     return 0
 
 
+def review(arguments) -> int:
+    """The human review sample of a rule set: a few pages of every kind of decision, drawn deterministically, for a person to open
+    and judge. Identifiers, addresses, decisions and measured values only -- no text of a page."""
+    import hashlib
+    from collections import defaultdict
+    rows = {json.loads(line)["fetch_id"]: json.loads(line) for line in open(arguments.features, encoding="utf-8")}
+    decisions = [json.loads(line) for line in open(arguments.decisions, encoding="utf-8")]
+    h = lambda text: hashlib.sha256((arguments.seed + text).encode()).hexdigest()  # noqa: E731
+    strata: dict[str, list[str]] = defaultdict(list)
+    for d in sorted(decisions, key=lambda d: h(d["fetch_id"])):
+        f = rows[d["fetch_id"]]["features"] or {}
+        if d["decision"] == Q.ACCEPT:
+            borderline = f.get("words", 0) < 200 or f.get("function_word_share", 1) < 0.36
+            strata["accepted, borderline (150-199 words or function-word share under 0.36)" if borderline else "accepted"].append(d["fetch_id"])
+        else:
+            strata[f"rejected: {d['reasons'][0]}"].append(d["fetch_id"])
+    quota = {"accepted": 24}
+    lines = [f"# Content-quality review sample — `{Q.RULESET}` (CANDIDATE)", "",
+             "**For the operator's scientific decision (CPD-0038 §5).** A small sample of every kind of decision the rule set made on",
+             f"the stored item pages, drawn deterministically (seed `{arguments.seed}`, at most two pages of one outlet in a group). Open",
+             "each address (or, locally, `python scripts/study_content_quality.py show --runtime <workspace> --fetch <fetch id>`), and",
+             "note whether the page is a coherent editorial text fit for linguistic analysis (`yes` / `no`, and why if no). The",
+             "agent's own blind control is in the run report; this sample is drawn separately and is the human check of it.", ""]
+    total = 0
+    for name in sorted(strata, key=lambda n: (not n.startswith("accepted"), n)):
+        want = quota.get(name, 8 if name.startswith("accepted, borderline") else 3)
+        chosen, per = [], defaultdict(int)
+        for fid in strata[name]:
+            outlet = rows[fid]["outlet_id"]
+            if per[outlet] < 2:
+                chosen.append(fid)
+                per[outlet] += 1
+            if len(chosen) == want:
+                break
+        total += len(chosen)
+        lines += [f"## {name} ({len(strata[name])} pages; {len(chosen)} drawn)", "",
+                  "| # | Outlet | Address | Words | Fn-word share | Reasons | Fetch id | Your verdict |", "|---:|---|---|---:|---:|---|---|---|"]
+        for i, fid in enumerate(chosen, 1):
+            r, f = rows[fid], rows[fid]["features"] or {}
+            reasons = next(d for d in decisions if d["fetch_id"] == fid)["reasons"]
+            lines.append(f"| {i} | `{r['outlet_id']}` | {r['url']} | {f.get('words', 0)} | {f.get('function_word_share', 0)} | "
+                         f"{', '.join(reasons) or '—'} | `{fid[:24]}…` | |")
+        lines.append("")
+    arguments.out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(json.dumps({"pages": total, "groups": len(strata)}))
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -147,8 +195,13 @@ def main(argv=None) -> int:
     three = sub.add_parser("decide")
     three.add_argument("--features", type=Path, required=True)
     three.add_argument("--out", type=Path, required=True)
+    four = sub.add_parser("review")
+    four.add_argument("--features", type=Path, required=True)
+    four.add_argument("--decisions", type=Path, required=True)
+    four.add_argument("--out", type=Path, required=True)
+    four.add_argument("--seed", default="operator-review-2026-11-15")
     arguments = parser.parse_args(argv)
-    return {"features": features, "show": show, "decide": decide}[arguments.command](arguments)
+    return {"features": features, "show": show, "decide": decide, "review": review}[arguments.command](arguments)
 
 
 if __name__ == "__main__":
