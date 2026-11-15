@@ -17,6 +17,10 @@ States (closed vocabulary, first match wins):
 
 Every state names its evidence (``signals``, the selection's reasons and counts, words before and after). The signals are
 indicators, never deletions; a short genuine block (an interview question) is not a signal by itself.
+
+``body-quality/2`` (CPD-0042) is /1 with ``incomplete`` read as ``content-quality/4`` reads it: against the stated articleBody
+*as text* (``content-features/2``'s ``stated_body_text_characters``) -- a body stated as HTML is not twice as long as its
+text. Every other state and signal is /1's; /1 is unchanged.
 """
 
 from __future__ import annotations
@@ -29,6 +33,9 @@ from . import content_quality as Q
 from . import extraction as E
 
 VERSION = "body-quality/1"
+VERSION_2 = "body-quality/2"
+VERSIONS = (VERSION, VERSION_2)
+PREFERRED = VERSION_2                # the candidate the operator is asked to adopt (CPD-0042); not binding
 STATES = ("clean", "cleaned", "residual_suspect", "incomplete", "not_article")
 MAX_REMOVED_SHARE = 0.9              # the selection removed at least this share of the container rule's words: furniture, not an article
 MIN_BEFORE_WORDS = 50
@@ -61,11 +68,14 @@ def recurring_digests() -> frozenset[str]:
     return recurring_digests._cache
 
 
-def assess(record: Mapping[str, Any], *, html: str | None = None, recurring: frozenset[str] | None = None) -> dict[str, Any]:
-    """``body-quality/1`` for one extraction record (any schema; the selection is read under ``extraction/3``). ``recurring``:
-    the recurring-but-kept digests (the pinned table's unless given)."""
+def assess(record: Mapping[str, Any], *, html: str | None = None, recurring: frozenset[str] | None = None,
+           version: str = VERSION) -> dict[str, Any]:
+    """``body-quality/1`` (or ``/2``) for one extraction record (any schema; the selection is read under ``extraction/3``).
+    ``recurring``: the recurring-but-kept digests (the pinned table's unless given)."""
     from . import extraction_body as B   # noqa: PLC0415
 
+    if version not in VERSIONS:
+        raise ValueError(f"not a body-quality version: {version!r}")
     recurring = recurring_digests() if recurring is None else recurring
     blocks = record["blocks"]
     body = [b for b in blocks if b["role"] == E.ROLE_BODY]
@@ -85,15 +95,16 @@ def assess(record: Mapping[str, Any], *, html: str | None = None, recurring: fro
     if len(labels) >= MIN_LABEL_BLOCKS:
         signals.append({"signal": "label_blocks", "block_indexes": labels[:20], "count": len(labels)})
     features = Q.features(record, html=html)
+    stated_key = "stated_body_text_characters" if version == VERSION_2 else "stated_body_characters"
     evidence = {"words": words, "words_before_selection": before, "selection": dict(selection), "signals": signals,
-                "function_word_share": features["function_word_share"], "stated_body_characters": features["stated_body_characters"],
+                "function_word_share": features["function_word_share"], stated_key: features[stated_key],
                 "body_characters": features["body_characters"]}
     t = Q.THRESHOLDS
+    stated = features[stated_key] or 0
     if not words or features["function_word_share"] < t["min_function_word_share"] or (
             before >= MIN_BEFORE_WORDS and words <= (1 - MAX_REMOVED_SHARE) * before):
         state = "not_article"
-    elif (features["stated_body_characters"] or 0) >= t["min_stated_body_characters"] and \
-            features["body_characters"] < t["max_stated_body_shortfall"] * features["stated_body_characters"]:
+    elif stated >= t["min_stated_body_characters"] and features["body_characters"] < t["max_stated_body_shortfall"] * stated:
         state = "incomplete"
     elif signals:
         state = "residual_suspect"
@@ -101,7 +112,7 @@ def assess(record: Mapping[str, Any], *, html: str | None = None, recurring: fro
         state = "cleaned"
     else:
         state = "clean"
-    return {"rule": VERSION, "state": state, "evidence": evidence}
+    return {"rule": version, "state": state, "evidence": evidence}
 
 
-__all__ = ["assess", "VERSION", "STATES"]
+__all__ = ["assess", "VERSION", "VERSION_2", "VERSIONS", "PREFERRED", "STATES"]

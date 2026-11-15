@@ -390,7 +390,7 @@ def test_3_does_not_reject_a_declared_ai_text_and_2_still_does():
     assert decision["decision"] == Q.ACCEPT and decision["ruleset"] == "content-quality/3" and decision["evidence"]["machine_text_hits"]
     with pytest.raises(ValueError):
         Q.assess(f, url=url, ruleset="content-quality/9")
-    assert Q.PREFERRED == Q.RULESET_3 and Q.LIFECYCLE == E.LIFECYCLE_CANDIDATE
+    assert Q.PREFERRED in (Q.RULESET_3, Q.RULESET_4) and Q.LIFECYCLE == E.LIFECYCLE_CANDIDATE   # /4 since CPD-0042
 
 
 def test_core_quality_does_not_depend_on_provenance_or_placement():

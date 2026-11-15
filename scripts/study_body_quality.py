@@ -12,6 +12,8 @@ Usage:
                                                  --sheet <local reading sheet .html>
   python scripts/study_body_quality.py merge     --out-dir <evidence dir> --verdicts <filled form .csv> --out <result.json>
                                                  [--sheet <local reading sheet .html>]
+  python scripts/study_body_quality.py repair    (--runtime … | --page-cache …) --out <repairs.json> [--review <local .tsv>]
+                                                 [--control-dir <evidence dir> --verdicts <filled form .csv>]
 
 The page cache is ``study_phase3_metadata.py cache``'s (publisher bytes: local only, outside the repository, deleted after the
 study). ``templates`` builds the pinned table from the BODY blocks of ``0.4.0`` *without* templates: a block is a template
@@ -269,14 +271,17 @@ def show(arguments) -> int:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("templates", "derive", "show", "draw"):
+    for name in ("templates", "derive", "show", "draw", "repair"):
         command = sub.add_parser(name)
         source = command.add_mutually_exclusive_group(required=True)
         source.add_argument("--runtime", type=Path)
         source.add_argument("--page-cache", type=Path)
-        if name == "templates":
+        if name in ("templates", "repair"):
             command.add_argument("--out", type=Path, required=True)
             command.add_argument("--review", type=Path)
+            if name == "repair":
+                command.add_argument("--control-dir", type=Path, help="the frozen control, to score the candidate on it (not blind)")
+                command.add_argument("--verdicts", type=Path, help="the filled form of the control")
         elif name == "derive":
             command.add_argument("--out", type=Path, required=True)
             command.add_argument("--templates", type=Path)
@@ -298,7 +303,193 @@ def main(argv=None) -> int:
     command.add_argument("--sheet", type=Path, help="the local reading sheet, for word counts (numbers only reach the result)")
     arguments = parser.parse_args(argv)
     return {"templates": templates, "derive": derive, "summarize": summarize, "show": show, "draw": draw,
-            "merge": merge}[arguments.command](arguments)
+            "merge": merge, "repair": repair}[arguments.command](arguments)
+
+
+# --- the repairs of the BODY control (CPD-0042) ------------------------------------------------------------------------------
+
+
+def repair(arguments) -> int:
+    """``article_html/0.4.1`` against ``0.4.0``, ``content-quality/4`` against ``/3`` (each change apart and together),
+    ``body-quality/2`` against ``/1``, the metadata layers and text reuse where the BODY changed -- on every stored page. The
+    result holds numbers, outlets and fetch-id prefixes; ``--review`` writes the changed pages with their text, locally."""
+    registry = json.loads((REPOSITORY / "config" / "outlet_registry.json").read_text(encoding="utf-8"))
+    country = {o["outlet_id"]: o["country_id"] for o in registry["outlets"]}
+    section_map = M.load_section_map()
+    rows, bodies = [], {"0_4_0": [], "0_4_1": []}
+    timing = Counter()
+    for page, body in S3.stored_pages(arguments):
+        four = B.ARTICLE_4.run(body, body_sha256=page["body_sha256"], **page["args"])
+        t = time.perf_counter()
+        new = B.ARTICLE_4_1.run(body, body_sha256=page["body_sha256"], **page["args"])
+        timing["extract_0_4_1"] += time.perf_counter() - t
+        html = _decoded(page, body)
+        ok = four.outcome == E.OUTCOME_EXTRACTED
+        f4 = Q.features(four.record, http_status=page["status"], html=html) if ok else None
+        f41 = Q.features(new.record, http_status=page["status"], html=html) if new.outcome == E.OUTCOME_EXTRACTED else None
+        row = {"fetch_id": page["fetch_id"], "outlet_id": page["outlet_id"], "url": page["url"], "fetched_at": page["fetched_at"],
+               "f4": f4, "f41": f41, "body_changed": four.body_text_sha256 != new.body_text_sha256,
+               "bq1": BQ.assess(four.record, html=html)["state"] if ok else None,
+               "bq2": BQ.assess(new.record, html=html, version=BQ.VERSION_2)["state"] if ok else None}
+        if row["body_changed"]:
+            b4 = {b["index"] for b in four.record["blocks"] if b["role"] == E.ROLE_BODY}
+            b41 = {b["index"] for b in new.record["blocks"] if b["role"] == E.ROLE_BODY}
+            gone = [b for b in four.record["blocks"] if b["index"] in b4 - b41]
+            row["gone"] = [{"index": b["index"], "reason": (b.get("selection") or {}).get("reason"), "words": len(b["text"].split()),
+                            "text": b["text"][:300]} for b in gone]
+            row["added"] = [{"index": b["index"], "reason": (b.get("selection") or {}).get("reason"), "words": len(b["text"].split()),
+                             "text": b["text"][:300]} for b in new.record["blocks"] if b["index"] in b41 - b4]
+            common = dict(html=html, url=page["url"], outlet_id=page["outlet_id"], country_id=country.get(page["outlet_id"], "unknown"),
+                          section_map=section_map)
+            l4 = enrichment.derive(record=four.record, version=enrichment.VERSION_3, **common)["layers"]
+            l41 = enrichment.derive(record=new.record, version=enrichment.VERSION_3, **common)["layers"]
+            row["layers_changed"] = sorted(n for n in l4 if (l4[n]["value"], l4[n]["value_state"]) != (l41[n]["value"], l41[n]["value_state"]))
+        if f4 and f4["declares_live_blog"]:
+            row["title"] = (f4["title_text"] or "")[:160]
+        published = new.record["metadata"]["publication_date"]["value"]
+        published = published[:19] if DATE.match(published or "") else None
+        for key, x in (("0_4_0", four), ("0_4_1", new)):
+            if x.outcome == E.OUTCOME_EXTRACTED:
+                bodies[key].append({"document_id": page["fetch_id"], "outlet_id": page["outlet_id"], "body_text": x.body_text,
+                                    "published": published, "fetched_at": page["fetched_at"]})
+        rows.append(row)
+
+    def decide(key, ruleset):
+        return Q.assess_corpus([{"fetch_id": r["fetch_id"], "outlet_id": r["outlet_id"], "url": r["url"], "fetched_at": r["fetched_at"] or "",
+                                 "features": r[key], "extracted": r[key] is not None} for r in rows], ruleset=ruleset)
+
+    runs = {"3_on_0_4_0": decide("f4", Q.RULESET_3), "4_on_0_4_0": decide("f4", Q.RULESET_4), "3_on_0_4_1": decide("f41", Q.RULESET_3),
+            "4_on_0_4_1": decide("f41", Q.RULESET_4)}
+    base, cand = runs["3_on_0_4_0"], runs["4_on_0_4_1"]
+    t = time.perf_counter()
+    reuse = {k: R.relations(v, version=R.VERSION_2) for k, v in bodies.items()}
+    timing["text_reuse_both"] = time.perf_counter() - t
+    pairs = {k: {(x["document_id"], x["target_document_id"]) for x in v} for k, v in reuse.items()}
+    flips = [r for r in rows if base[r["fetch_id"]]["decision"] != cand[r["fetch_id"]]["decision"]]
+
+    def cause(r):
+        fid = r["fetch_id"]
+        out = []
+        if runs["3_on_0_4_1"][fid]["decision"] != base[fid]["decision"]:
+            out.append("extractor_0_4_1")
+        if runs["4_on_0_4_0"][fid]["decision"] != base[fid]["decision"]:
+            out.append("gate_4")
+        return "+".join(out) or "both_together"
+
+    live = [r for r in rows if r["f4"] and r["f4"]["declares_live_blog"]]
+    markup = [r for r in rows if r["f4"] and (r["f4"]["stated_body_characters"] or 0) != (r["f4"]["stated_body_text_characters"] or 0)]
+    out = {
+        "schema": "coprepan-body-control-repairs/v1", "decision": "CPD-0042", "date": "2026-11-15",
+        "population": {"pages": len(rows), "extracted": sum(1 for r in rows if r["f4"])},
+        "versions": {"extractor": ["article_html/0.4.0", "article_html/0.4.1"], "quality": [Q.RULESET_3, Q.RULESET_4],
+                     "features": Q.FEATURES_VERSION, "body_quality": [BQ.VERSION, BQ.VERSION_2], "metadata": enrichment.VERSION_3,
+                     "text_reuse": R.VERSION_2, "templates_sha256": B.body_templates_sha256()},
+        "extractor_0_4_1": {
+            "body_changed": sum(1 for r in rows if r["body_changed"]),
+            "blocks_left_out": sum(len(r.get("gone", [])) for r in rows), "blocks_added": sum(len(r.get("added", [])) for r in rows),
+            "words_left_out": sum(b["words"] for r in rows for b in r.get("gone", [])),
+            "words_added": sum(b["words"] for r in rows for b in r.get("added", [])),
+            "left_out_by_former_reason": dict(Counter(b["reason"] for r in rows for b in r.get("gone", []))),
+            "added_by_reason": dict(Counter(b["reason"] for r in rows for b in r.get("added", []))),
+            "pages_left_out": sum(1 for r in rows if r.get("gone")), "pages_added": sum(1 for r in rows if r.get("added")),
+            "by_outlet": dict(Counter(r["outlet_id"] for r in rows if r["body_changed"]).most_common()),
+            "pages_with_a_layer_changed": sum(1 for r in rows if r.get("layers_changed")),
+            "layers_changed": dict(Counter(n for r in rows for n in r.get("layers_changed", []))),
+            "fetch_prefixes": sorted(r["fetch_id"][4:14] for r in rows if r["body_changed"])},
+        "core": {
+            "accepted": {k: sum(1 for d in v.values() if d["decision"] == Q.ACCEPT) for k, v in runs.items()},
+            "flips_3_on_0_4_0_to_4_on_0_4_1": {
+                "accepted_to_rejected": sum(1 for r in flips if cand[r["fetch_id"]]["decision"] == Q.REJECT),
+                "rejected_to_accepted": sum(1 for r in flips if cand[r["fetch_id"]]["decision"] == Q.ACCEPT),
+                "by_cause": dict(Counter(cause(r) for r in flips)),
+                "pages": [{"fetch": r["fetch_id"][4:14], "outlet": r["outlet_id"], "from": base[r["fetch_id"]]["reasons"],
+                           "to": cand[r["fetch_id"]]["reasons"], "cause": cause(r)} for r in flips]}},
+        "live_blog_declared": {
+            "pages": len(live), "by_outlet": dict(Counter(r["outlet_id"] for r in live).most_common()),
+            "accepted_by_3_on_0_4_0": sum(1 for r in live if base[r["fetch_id"]]["decision"] == Q.ACCEPT),
+            "already_live_coverage_under_3": sum(1 for r in live if "live_coverage" in base[r["fetch_id"]]["reasons"])},
+        "stated_body_markup": {
+            "pages_whose_stated_body_carries_markup": len(markup), "by_outlet": dict(Counter(r["outlet_id"] for r in markup).most_common()),
+            "incomplete_under_3_on_0_4_0": sum(1 for r in markup if "incomplete_against_stated_body" in base[r["fetch_id"]]["reasons"]),
+            "incomplete_under_4_on_0_4_1": sum(1 for r in markup if "incomplete_against_stated_body" in cand[r["fetch_id"]]["reasons"])},
+        "body_quality": {"states_1_on_0_4_0": dict(Counter(r["bq1"] for r in rows if r["bq1"])),
+                         "states_2_on_0_4_1": dict(Counter(r["bq2"] for r in rows if r["bq2"])),
+                         "transitions": dict(Counter(f"{r['bq1']}->{r['bq2']}" for r in rows if r["bq1"] != r["bq2"]))},
+        "text_reuse": {"relations": {k: len(v) for k, v in reuse.items()}, "kept": len(pairs["0_4_0"] & pairs["0_4_1"]),
+                       "lost": len(pairs["0_4_0"] - pairs["0_4_1"]), "new": len(pairs["0_4_1"] - pairs["0_4_0"])},
+        "cost": {"seconds": {k: round(v, 1) for k, v in timing.items()},
+                 "ms_per_page_extract_0_4_1": round(1000 * timing["extract_0_4_1"] / max(1, len(rows)), 2)},
+    }
+    if arguments.control_dir is not None:
+        out["control_rescored"] = _rescore_control(arguments, cand, {r["fetch_id"]: r for r in rows})
+    arguments.out.write_bytes((json.dumps(out, ensure_ascii=False, indent=1) + "\n").encode("utf-8"))
+    if arguments.review:
+        with arguments.review.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write("kind\tfetch\toutlet\turl\tdetail\n")
+            for r in rows:
+                for b in r.get("gone", []):
+                    handle.write(f"gone\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t[{b['reason']}] {b['text']}\n".replace("\r", " "))
+                for b in r.get("added", []):
+                    handle.write(f"added\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t[{b['reason']}] {b['text']}\n".replace("\r", " "))
+            for r in live:
+                handle.write(f"live\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t{base[r['fetch_id']]['decision']} "
+                             f"{base[r['fetch_id']]['reasons']} | {r.get('title', '')}\n")
+            for r in flips:
+                handle.write(f"flip\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t{base[r['fetch_id']]['reasons']} -> "
+                             f"{cand[r['fetch_id']]['reasons']} ({cause(r)})\n")
+    print(json.dumps({k: out[k] for k in ("extractor_0_4_1", "core", "live_blog_declared", "stated_body_markup")}, ensure_ascii=False)[:1500])
+    return 0
+
+
+def _rescore_control(arguments, decisions, rows_by_id):
+    """The candidate (0.4.1, content-quality/4, body-quality/2) on the 45 control cases, in the sheet's numbering, scored with
+    the filled form like the frozen key. NOT blind: the repairs were written after the key was opened (CPD-0042)."""
+    manifest = json.loads((arguments.control_dir / "manifest.json").read_text(encoding="utf-8"))
+    key_path = arguments.control_dir / "KEY_machine_predictions_open_only_after_the_verdicts.json"
+    if P3._sha(key_path.read_bytes()) != manifest["files"][key_path.name]:
+        raise SystemExit("the key is not the frozen key")
+    frozen = {c["case_id"]: c for c in json.loads(key_path.read_text(encoding="utf-8"))["cases"]}
+    by_fetch = {c["fetch_id"]: c["case_id"] for c in manifest["cases"]}
+    key, outside = {}, {}
+    for page, body in S3.stored_pages(arguments):
+        cid = by_fetch.get(page["fetch_id"])
+        if cid is None:
+            continue
+        three = A.ARTICLE_3.run(body, body_sha256=page["body_sha256"], **page["args"])
+        four = B.ARTICLE_4.run(body, body_sha256=page["body_sha256"], **page["args"])
+        new = B.ARTICLE_4_1.run(body, body_sha256=page["body_sha256"], **page["args"])
+        union, _, _ = _union_blocks(three, four)
+        b41 = {b["index"] for b in new.record["blocks"] if b["role"] == E.ROLE_BODY}
+        shown = {i for _, i, _ in union}
+        if b41 - shown:              # a block neither 0.3.0 nor 0.4.0 has: the sheet cannot show it; judged against MISSING
+            outside[cid] = [{"block_index": b["index"], "reason": (b.get("selection") or {}).get("reason"),
+                             "words": len(b["text"].split())} for b in new.record["blocks"] if b["index"] in b41 - shown]
+        state = rows_by_id[page["fetch_id"]]["bq2"]
+        key[cid] = {**frozen[cid], "predictions_0_4_1": {
+            "FOREIGN": ",".join(str(n) for n, i, _ in union if i not in b41) or "0",
+            "MISSING": {"not_article": "not_an_article", "incomplete": "middle_missing"}.get(state, "complete"),
+            "CORE": "yes" if decisions[page["fetch_id"]]["decision"] == Q.ACCEPT else "no"}}
+    verdicts = list(csv.DictReader(arguments.verdicts.open(encoding="utf-8-sig")))
+    gold, every = {}, {}
+    for v in verdicts:
+        answer = v["answer"].strip().lower()
+        if answer and v.get("basis") != "UNRESOLVED":
+            every[(v["case_id"], v["question"])] = (answer, set())
+        operator, opened = (v.get("operator_answer") or "").strip().lower(), _set(v.get("operator_open") or "")
+        if v["question"] == "FOREIGN" and (operator or opened):
+            gold[(v["case_id"], v["question"])] = (operator or "0", opened)
+        elif operator and v["question"] != "FOREIGN":
+            gold[(v["case_id"], v["question"])] = (operator, set())
+    versions = ("0_4_1", "0_4_0")
+    gold_table, _ = _score(key, gold, versions=versions)
+    every_table, cases = _score(key, every, versions=versions)
+    return {"not_blind": "the repairs were written after the key was opened; these counts check the repairs, they do not "
+                         "validate them", "verdicts_sha256": P3._sha(arguments.verdicts.read_bytes()),
+            "operator_confirmed_only": gold_table, "all_answers": every_table,
+            "blocks_outside_the_sheet": {c: {"blocks": v, "missing_label": next((x["answer"] for x in verdicts if x["case_id"] == c
+                                                                                  and x["question"] == "MISSING"), None)}
+                                         for c, v in sorted(outside.items())},
+            "cases": {c: d for c, d in cases.items() if len(d) > 2}}
 
 
 def _decisions(rows, key):
@@ -604,13 +795,13 @@ def _coarse_missing(value: str) -> str:
     return value if value in ("complete", "not_an_article") else ("text_missing" if value.endswith("_missing") else value)
 
 
-def _score(key, labels, words=None):
+def _score(key, labels, words=None, versions=("0_4_0", "0_3_0")):
     """``labels``: {(case, question): (answer, block numbers left out)}. Counts per component and version, and the cases."""
     table, cases = defaultdict(Counter), {}
     for (cid, q), (answer, excluded) in sorted(labels.items()):
         case = key[cid]
         detail = cases.setdefault(cid, {"component": case["component"], "stratum": case["stratum"]})
-        for version in ("0_4_0", "0_3_0"):
+        for version in versions:
             predicted = case[f"predictions_{version}"].get(q)
             if predicted is None:
                 continue

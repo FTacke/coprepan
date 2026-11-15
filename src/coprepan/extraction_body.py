@@ -47,6 +47,20 @@ and dropped: a third of what it added on pages with a stated articleBody was not
 
 No block is split, shortened or rewritten; foreign material *inside* a block stays and is reported by
 ``coprepan.body_quality``. Structural rules and digest matches only; no outlet rule, no lexical deletion. ``CANDIDATE``.
+
+``article_html/0.4.1`` (CPD-0042) is 0.4.0 with two corrections of the inclusions, both found by the BODY control of
+2026-11-15 and checked on every stored page:
+
+* **no copy**: a paragraph is never included when its text, a trailing ellipsis set aside, is the *beginning* of a block the
+  BODY already holds -- the hidden teaser a paywall prints before the full text, cut off with "…" (``co_el_espectador``'s
+  ``ee-gated-content__teaser``), was taken as the lead and the BODY began twice (case B37). Only the beginning: a text that
+  merely stands somewhere inside a BODY block may stand there in an embed the rules do not see, and then the article's own
+  paragraph is the one to keep;
+* **teaser cards are not a list**: 0.4.0 took an ``<article>`` that holds other ``<article>`` elements for a list and gave up
+  the lead; 0.4.1 does so only when those nested articles hold at least ``MODULE_MAX_SHARE`` of its text. A "Noticia
+  relacionada" card inside the article (``es_abc``) no longer costs the article its opening paragraph (case B03).
+
+Every other rule is 0.4.0's; 0.4.0 is unchanged.
 """
 
 from __future__ import annotations
@@ -64,6 +78,7 @@ from . import extraction_article as A
 from .canonical import require_sha256, sha256_bytes, sha256_file
 
 VERSION_4 = "0.4.0"
+VERSION_4_1 = "0.4.1"
 SELECTION_RULE = "body-select/1"
 TEMPLATE_RULE = "body-templates/1"
 FORM_CONTROLS = frozenset({"select", "option", "optgroup", "datalist", "textarea", "button"})
@@ -94,6 +109,8 @@ MIN_LEAD_WORDS = 25
 MIN_SUBHEADING_FOLLOW_WORDS = 12
 MAX_TRAILING_HEADING_WORDS = 4
 MAX_LABEL_WORDS, MIN_LABEL_REPEATS = 3, 3
+MIN_COPY_CHARACTERS = 40             # 0.4.1: a shorter text at the beginning of a BODY block is not taken for a copy of it
+_TRAILING_ELLIPSIS = re.compile(r"\s*(?:…|\.\.\.)\s*$")
 _SENTENCE_END = re.compile(r"[.!?…:;»”\")]\s*$")
 _NOT_LABEL = re.compile(r"[\d:]")
 TEMPLATES_PATH = "config/extraction/body-templates_1.json"
@@ -150,9 +167,29 @@ def _provenance_note(block: dict[str, Any]) -> str | None:
 class _Parser4(A._Parser3):
     """0.3.0's parser with the BODY selected block by block (``article_html/0.4.0``)."""
 
-    def __init__(self, templates: frozenset[str] = frozenset()) -> None:
+    def __init__(self, templates: frozenset[str] = frozenset(), *, revision: int = 0) -> None:
         super().__init__()
         self.templates = templates
+        self.revision = revision              # 0: article_html/0.4.0; 1: 0.4.1 (no copy, teaser cards are not a list)
+
+    @staticmethod
+    def _copy_of(text: str, body_keys: set[str]) -> bool:
+        """0.4.1: ``text``, a trailing ellipsis set aside, is the beginning of a BODY block -- a cut-off teaser or an echo of
+        the paragraph's opening, not more article text."""
+        key = _TRAILING_ELLIPSIS.sub("", A._norm(text))
+        return len(key) >= MIN_COPY_CHARACTERS and any(body.startswith(key) for body in body_keys)
+
+    def _a_list(self, article: int) -> bool:
+        """The ``<article>`` element holds other articles: a list -- under 0.4.1 only when those nested articles hold at least
+        ``MODULE_MAX_SHARE`` of its text (teaser cards inside an article are not a list)."""
+        nested = [e for e, t in self.tag_of.items() if t == "article" and e != article and article in self._ancestors(e)]
+        if not nested:
+            return False
+        if self.revision < 1:
+            return True
+        outer = [e for e in nested if not any(n in self._ancestors(e) for n in nested)]
+        under = self._text_under()
+        return sum(under.get(e, 0) for e in outer) >= MODULE_MAX_SHARE * under.get(article, 0)
 
     # -- what an element is ------------------------------------------------------------------------------------------------
 
@@ -262,7 +299,7 @@ class _Parser4(A._Parser3):
         article = None
         if container is not None:
             article = next((e for e in [container, *self._ancestors(container)] if self.tag_of.get(e) == "article"), None)
-            if article is not None and any(t == "article" and article in self._ancestors(e) for e, t in self.tag_of.items()):
+            if article is not None and self._a_list(article):
                 article = None                                        # an <article> that holds other articles is a list
         stated = self.stated_article_body()
         descriptions = self.stated_subtitles()
@@ -275,7 +312,8 @@ class _Parser4(A._Parser3):
         for i, (block, item) in enumerate(zip(blocks, self.raw)):
             if block["role"] != E.ROLE_NON_BODY or "selection" in block or "module" in block or block["kind"] != "paragraph" \
                     or len(block["text"].split()) < MIN_INCLUDED_WORDS or item.get("link", 0) > A.MAX_LINK_SHARE * len(block["text"]) \
-                    or self._in_form_control(item) or A._norm(block["text"]) in body_keys:
+                    or self._in_form_control(item) or A._norm(block["text"]) in body_keys \
+                    or (self.revision >= 1 and self._copy_of(block["text"], body_keys)):
                 continue
             ids = list(item.get("ids") or ())
             reason = None
@@ -328,10 +366,11 @@ class _Parser4(A._Parser3):
         return [dict(block) for block in blocks]
 
 
-def _record(body_sha256: str, body: bytes, content_type: str, declared_charset: str, content_encoding: str) -> dict[str, Any]:
+def _record(body_sha256: str, body: bytes, content_type: str, declared_charset: str, content_encoding: str,
+            version: str = VERSION_4) -> dict[str, Any]:
     return {
         "schema": E.EXTRACTION_SCHEMA_3,
-        "extractor": {"name": A.NAME, "version": VERSION_4},
+        "extractor": {"name": A.NAME, "version": version},
         "input": {"body_sha256": body_sha256, "body_size_bytes": len(body), "declared_content_type": content_type,
                   "declared_charset": declared_charset, "content_encoding": content_encoding},
         "outcome": E.OUTCOME_EXTRACTED,
@@ -346,13 +385,26 @@ def extract_v4(body: bytes, *, body_sha256: str, content_type: str, declared_cha
                content_encoding: str = E.IDENTITY, templates: frozenset[str] | None = None) -> E.Extraction:
     """``article_html/0.4.0`` (``extraction/3``). ``templates``: the pinned table unless given (the table itself is built from
     runs with ``frozenset()``)."""
+    return _extract(body, body_sha256=body_sha256, content_type=content_type, declared_charset=declared_charset,
+                    content_encoding=content_encoding, templates=templates, version=VERSION_4)
+
+
+def extract_v4_1(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = E.UNKNOWN,
+                 content_encoding: str = E.IDENTITY, templates: frozenset[str] | None = None) -> E.Extraction:
+    """``article_html/0.4.1`` (``extraction/3``): 0.4.0 with no copy included and teaser cards not taken for a list (CPD-0042)."""
+    return _extract(body, body_sha256=body_sha256, content_type=content_type, declared_charset=declared_charset,
+                    content_encoding=content_encoding, templates=templates, version=VERSION_4_1)
+
+
+def _extract(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str, content_encoding: str,
+             templates: frozenset[str] | None, version: str) -> E.Extraction:
     if not isinstance(body, bytes):
         raise E.ExtractionError("a body is bytes")
     if sha256_bytes(body) != require_sha256(body_sha256, "body_sha256"):
         raise E.ExtractionError("the body offered is not the body the digest names")
     if not isinstance(content_type, str) or not content_type:
         raise E.ExtractionError("content_type is the declared media type or 'unknown'")
-    record = _record(body_sha256, body, content_type, declared_charset, content_encoding)
+    record = _record(body_sha256, body, content_type, declared_charset, content_encoding, version)
     try:
         body = E.decode_content(body, content_encoding) if body else body
         reason = E._refusal(body, content_type)
@@ -360,7 +412,7 @@ def extract_v4(body: bytes, *, body_sha256: str, content_type: str, declared_cha
         reason = error.reason
     if reason is None:
         text, record["decoding"] = E._decode(body, declared_charset)
-        parser = _Parser4(templates=body_templates() if templates is None else templates)
+        parser = _Parser4(templates=body_templates() if templates is None else templates, revision=0 if version == VERSION_4 else 1)
         parser.feed(text)
         parser.close()
         record["blocks"] = parser.blocks()
@@ -373,7 +425,8 @@ def extract_v4(body: bytes, *, body_sha256: str, content_type: str, declared_cha
 
 
 ARTICLE_4 = E.Extractor(A.NAME, VERSION_4, extract_v4, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_3)
-PREFERRED = ARTICLE_4      # the candidate the operator is asked to adopt (CPD-0041); not binding
+ARTICLE_4_1 = E.Extractor(A.NAME, VERSION_4_1, extract_v4_1, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_3)
+PREFERRED = ARTICLE_4_1    # the candidate the operator is asked to adopt (CPD-0042; 0.4.0 was CPD-0041's); not binding
 
 
 def body_before_selection(record: Any) -> str:
@@ -386,5 +439,6 @@ def body_before_selection(record: Any) -> str:
     return "\n\n".join(block["text"] for block in record["blocks"] if original(block) == E.ROLE_BODY)
 
 
-__all__ = ["ARTICLE_4", "PREFERRED", "extract_v4", "body_before_selection", "template_digest", "body_templates",
-           "body_templates_sha256", "MODULE_MARKS", "VERSION_4", "SELECTION_RULE", "TEMPLATE_RULE", "TEMPLATES_PATH"]
+__all__ = ["ARTICLE_4", "ARTICLE_4_1", "PREFERRED", "extract_v4", "extract_v4_1", "body_before_selection", "template_digest",
+           "body_templates", "body_templates_sha256", "MODULE_MARKS", "VERSION_4", "VERSION_4_1", "SELECTION_RULE", "TEMPLATE_RULE",
+           "TEMPLATES_PATH"]

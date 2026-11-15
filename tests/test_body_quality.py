@@ -193,7 +193,7 @@ def test_a_paragraph_the_page_states_as_its_article_body_comes_back():
 
 def test_0_4_0_is_a_candidate_on_extraction_3_deterministic_and_selection_is_checked():
     assert (B.ARTICLE_4.version, B.ARTICLE_4.lifecycle, B.ARTICLE_4.schema) == ("0.4.0", E.LIFECYCLE_CANDIDATE, E.EXTRACTION_SCHEMA_3)
-    assert B.PREFERRED is B.ARTICLE_4 and B.ARTICLE_4.stage_version not in E.EXTRACTORS
+    assert B.ARTICLE_4.stage_version not in E.EXTRACTORS        # PREFERRED is 0.4.1 since CPD-0042 (test_body_control_repairs)
     html = page(body=TEXT + '<p class="ad">PUBLICIDAD</p>')
     assert run(html).record == run(html).record
     record = run(html).record

@@ -24,7 +24,12 @@ from typing import Any, Mapping
 from . import extraction as E
 from .canonical import sha256_bytes
 
-FEATURES_VERSION = "content-features/1"
+FEATURES_VERSION_1 = "content-features/1"
+# /2 (CPD-0042): /1's features unchanged, and two more -- ``stated_body_text_characters`` (the stated articleBody as text:
+# markup and embedded social posts out; /1's ``stated_body_characters`` counts a body some publishers state as HTML -- tags,
+# attributes, addresses -- against an extracted body of plain text) and ``declares_live_blog`` (the page's own JSON-LD says it
+# is a schema.org LiveBlogPosting).
+FEATURES_VERSION = "content-features/2"
 
 _WORD = re.compile(r"[^\W\d_]+", re.UNICODE)
 _SENTENCE_END = re.compile(r"[.!?…:;»\"”’)\]]\s*$")
@@ -110,6 +115,77 @@ def stated_body_characters(html: str) -> int:
     return max(found, default=0)
 
 
+# An embedded social post inside a stated articleBody given as HTML (the BODY keeps such posts out: CPD-0041).
+_EMBEDDED_POST = re.compile(r"<blockquote\b[^>]*\bclass\s*=\s*[\"'][^\"']*(?:twitter-tweet|twitter-video|instagram-media|tiktok-embed)"
+                            r"[^\"']*[\"'][^>]*>.*?</blockquote>", re.S | re.I)
+_SCRIPT_OR_STYLE = re.compile(r"<(script|style)\b.*?</\1\s*>", re.S | re.I)
+_TAG = re.compile(r"<[^>]*>")
+
+
+def _json_ld(html: str) -> list[Any]:
+    import json
+
+    out = []
+    for block in _LD.findall(html):
+        try:
+            out.append(json.loads(block.strip()))
+        except ValueError:
+            continue
+    return out
+
+
+def stated_body_text_characters(html: str) -> int:
+    """content-features/2: the length of the longest stated ``articleBody`` *as text* -- an embedded social post, scripts and
+    styles removed, every tag a space, character references decoded, white space folded. A body stated as plain text measures
+    as /1 measures it."""
+    import html as _html
+
+    found: list[int] = []
+
+    def walk(node: Any) -> None:
+        if isinstance(node, dict):
+            if isinstance(node.get("articleBody"), str):
+                text = _TAG.sub(" ", _SCRIPT_OR_STYLE.sub(" ", _EMBEDDED_POST.sub(" ", node["articleBody"])))
+                found.append(len(re.sub(r"\s+", " ", _html.unescape(text)).strip()))
+            for value in node.values():
+                walk(value)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value)
+
+    for data in _json_ld(html):
+        walk(data)
+    return max(found, default=0)
+
+
+def _static_live_markup(node: Mapping[str, Any]) -> bool:
+    """A LiveBlogPosting whose ``liveBlogUpdate`` items -- at least two -- all carry one publication time (to the minute): a
+    static article a CMS wraps paragraph by paragraph in live-blog markup (``cr_la_nacion``), not a series of updates."""
+    updates = node.get("liveBlogUpdate")
+    updates = updates if isinstance(updates, list) else ([updates] if isinstance(updates, dict) else [])
+    times = [str(u["datePublished"])[:16] for u in updates if isinstance(u, dict) and u.get("datePublished")]
+    return len(times) >= 2 and len(set(times)) == 1
+
+
+def declares_live_blog(html: str) -> bool:
+    """content-features/2: a top-level JSON-LD object of the page (or an item of its ``@graph``) is a schema.org
+    ``LiveBlogPosting`` -- the publisher's own statement that the page is live coverage -- and not a static article in live-blog
+    markup (:func:`_static_live_markup`). A LiveBlogPosting nested inside another object (a page that mentions a live blog)
+    does not count; a declared live blog with one update or none does (precision before recall)."""
+    def types(node: Any) -> set[str]:
+        value = node.get("@type") if isinstance(node, dict) else None
+        return {value} if isinstance(value, str) else ({v for v in value if isinstance(v, str)} if isinstance(value, list) else set())
+
+    for data in _json_ld(html):
+        tops = data if isinstance(data, list) else [data]
+        for top in tops:
+            graph = top.get("@graph") if isinstance(top, dict) else None
+            for node in [top, *(graph if isinstance(graph, list) else [])]:
+                if "LiveBlogPosting" in types(node) and not _static_live_markup(node):
+                    return True
+    return False
+
+
 def features(record: Mapping[str, Any], *, http_status: int | None = None, html: str | None = None) -> dict[str, Any]:
     """The features of one extraction record's body. Pure: the record (and, for ``stated_body_characters``, the decoded page)
     in, numbers out."""
@@ -156,6 +232,8 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
                                if texts else 0.0,
         "body_characters": len(body),
         "stated_body_characters": stated_body_characters(html) if html is not None else None,
+        "stated_body_text_characters": stated_body_text_characters(html) if html is not None else None,
+        "declares_live_blog": declares_live_blog(html) if html is not None else None,
         "title": bool(title) or (meta_title not in (None, E.UNKNOWN)),
         "title_text": (title or (meta_title if meta_title not in (None, E.UNKNOWN) else "") or "")[:200],
         "replaced_characters": (record.get("decoding") or {}).get("replaced_characters", 0),
@@ -176,9 +254,16 @@ RULESET = "content-quality/2"
 # ``article_html/0.2.0`` (subtitles and machine-summary modules are not BODY there). A page that offers only a summary still
 # fails -- on length or completeness, never because of how it was produced. /2 stays as it was (historical evidence).
 RULESET_3 = "content-quality/3"
-RULESETS = (RULESET, RULESET_3)
-PREFERRED = RULESET_3                      # the candidate the operator is asked to adopt (CPD-0039); not binding
-WITHDRAWN = {RULESET_3: frozenset({"machine_text"})}
+# /4 (CPD-0042): /3 with two measurements corrected, found by the BODY control of 2026-11-15 and checked on every stored page --
+# ``incomplete_against_stated_body`` compares the extracted body with the stated articleBody *as text*
+# (``stated_body_text_characters``: cl_biobiochile states its body as HTML, twice its text in characters, and two complete
+# articles failed); ``live_coverage`` also when the page declares itself a schema.org LiveBlogPosting (the time-stamp share
+# alone misses a live blog whose times are not in the BODY, and the stated-body inclusions of article_html/0.4.0 dilute it).
+# Every other rule and threshold is /3's; it reads content-features/2. /3 stays as it was.
+RULESET_4 = "content-quality/4"
+RULESETS = (RULESET, RULESET_3, RULESET_4)
+PREFERRED = RULESET_4                      # the candidate the operator is asked to adopt (CPD-0042; /3 was CPD-0039's); not binding
+WITHDRAWN = {RULESET_3: frozenset({"machine_text"}), RULESET_4: frozenset({"machine_text"})}
 LIFECYCLE = E.LIFECYCLE_CANDIDATE          # not binding for admission or release until the operator decides (CPD-0038 §5)
 ACCEPT, REJECT = "ACCEPT", "REJECT"
 THRESHOLDS = {
@@ -218,6 +303,9 @@ def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = No
     It reads no provenance, section, genre or other metadata layer: CORE quality is decided by the text alone."""
     if ruleset not in RULESETS:
         raise ValueError(f"not a content-quality rule set: {ruleset!r}")
+    four = ruleset == RULESET_4
+    if four and f.get("words") and f.get("version") != FEATURES_VERSION:
+        raise ValueError(f"{RULESET_4} reads {FEATURES_VERSION}, not {f.get('version')!r}")
     t = thresholds
     reasons = []
     status = f.get("http_status")
@@ -241,11 +329,11 @@ def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = No
     if f.get("sponsored_hits") or (url is not None and SPONSORED_URL.search(url)):
         reasons.append("sponsored")
     if (f.get("timestamp_led_share", 0) > t["max_timestamp_led_share"] or (url is not None and LIVE_URL.search(url))
-            or LIVE_TITLE.search(f.get("title_text") or "")):
+            or LIVE_TITLE.search(f.get("title_text") or "") or (four and f.get("declares_live_blog"))):
         reasons.append("live_coverage")
     if url is not None and NOT_EDITORIAL_URL.search(url):
         reasons.append("not_editorial_page")
-    stated = f.get("stated_body_characters") or 0
+    stated = (f.get("stated_body_text_characters") if four else f.get("stated_body_characters")) or 0
     if stated >= t["min_stated_body_characters"] and f.get("body_characters", 0) < t["max_stated_body_shortfall"] * stated:
         reasons.append("incomplete_against_stated_body")
     if f.get("words") and (f["distinct_5gram_ratio"] < t["min_distinct_5gram_ratio"] or f["repeated_block_share"] > t["max_repeated_block_share"]):
@@ -253,6 +341,7 @@ def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = No
     reasons = [reason for reason in reasons if reason not in WITHDRAWN.get(ruleset, ())]
     return {"ruleset": ruleset, "decision": REJECT if reasons else ACCEPT, "reasons": reasons,
             "evidence": {k: f.get(k) for k in ("words", "function_word_share", "body_characters", "stated_body_characters",
+                                                *(("stated_body_text_characters", "declares_live_blog") if four else ()),
                                                 "distinct_5gram_ratio", "repeated_block_share", "frame_hits", "paywall_hits",
                                                 "machine_text_hits")}}
 
@@ -284,5 +373,6 @@ def assess_corpus(pages: list[Mapping[str, Any]], *, thresholds: Mapping[str, An
     return out
 
 
-__all__ = ["features", "assess", "assess_corpus", "stated_body_characters", "FEATURES_VERSION", "FUNCTION_WORDS", "RULESET",
-           "RULESET_3", "RULESETS", "PREFERRED", "WITHDRAWN", "THRESHOLDS", "REASONS", "ACCEPT", "REJECT", "LIFECYCLE"]
+__all__ = ["features", "assess", "assess_corpus", "stated_body_characters", "stated_body_text_characters", "declares_live_blog",
+           "FEATURES_VERSION", "FEATURES_VERSION_1", "FUNCTION_WORDS", "RULESET", "RULESET_3", "RULESET_4", "RULESETS", "PREFERRED",
+           "WITHDRAWN", "THRESHOLDS", "REASONS", "ACCEPT", "REJECT", "LIFECYCLE"]
