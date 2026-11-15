@@ -1,0 +1,85 @@
+{
+  "fetch_records": 142,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 6911299,
+  "received_body_bytes": 6585237,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 29.922014,
+    "median": 9.836611,
+    "n": 142,
+    "p90": 10.263925
+  },
+  "requests": {
+    "by_outlet": {
+      "co_elpais": {
+        "item": 6,
+        "other": 6
+      },
+      "co_semana": {
+        "item": 6,
+        "other": 7
+      },
+      "cr_la_nacion": {
+        "item": 6,
+        "other": 5
+      },
+      "cu_14ymedio": {
+        "item": 6,
+        "other": 4
+      },
+      "cu_havanatimes": {
+        "item": 6,
+        "other": 7
+      },
+      "cu_trabajadores": {
+        "item": 6,
+        "other": 5
+      },
+      "do_diario_libre": {
+        "item": 6,
+        "other": 7
+      },
+      "do_el_nacional": {
+        "item": 6,
+        "other": 2
+      },
+      "do_hoy": {
+        "item": 6,
+        "other": 2
+      },
+      "do_listin_diario": {
+        "item": 6,
+        "other": 8
+      },
+      "ec_el_comercio": {
+        "item": 6,
+        "other": 7
+      },
+      "ec_el_mercurio": {
+        "item": 6,
+        "other": 2
+      },
+      "ec_el_universo": {
+        "item": 6,
+        "other": 4
+      },
+      "ec_expreso": {
+        "item": 6,
+        "other": 2
+      }
+    },
+    "item": 84,
+    "other": 68,
+    "total": 152
+  },
+  "response_classes": {
+    "200": 138,
+    "404": 3,
+    "failed:timeout": 1
+  },
+  "run_id": "acq1-20261115T013553944256Z-099a9e1e8f6e",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
