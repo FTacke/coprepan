@@ -165,7 +165,7 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
 
 # --- the gate ---------------------------------------------------------------------------------------------------------
 
-# /1 (commit b7d5f86): chosen on the calibration and hard-negative samples of one half of the stored pages; its blind control
+# /1 (commit 15fce0d): chosen on the calibration and hard-negative samples of one half of the stored pages; its blind control
 # on the other half: 94 of 100 accepted pages good. /2 closes the five classes of that control's false accepts that have a
 # general form (machine-text disclosures, institutional pages, live pages by slug or title, sponsor marks anywhere in the
 # address); it is measured on a second control drawn after it was written.

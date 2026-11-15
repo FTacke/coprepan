@@ -46,9 +46,9 @@ Every other page is accepted. Deterministic; the thresholds are named in `THRESH
 
 The stored item pages (4,759: the October pilot and 24-hour intake, the weekend waves) were split by `sha256(fetch_id)` into two
 halves. The rules were chosen on the agent's own reading of 108 stratified pages and 40 hard negatives of the first half (not a gold
-standard). `content-quality/1` was frozen (commit `b7d5f86`) and read **blind** on 140 pages of the second half (100 accepted, 40
+standard). `content-quality/1` was frozen (commit `15fce0d`) and read **blind** on 140 pages of the second half (100 accepted, 40
 rejected, shuffled, without decision or features): 94 of 100 accepted pages good. The five general classes of its false accepts were
-closed in `/2` (commit `f1a0103`), which was read blind on a second, unseen draw of the second half: **97 of 100 accepted pages good
+closed in `/2` (commit `18c87ca`), which was read blind on a second, unseen draw of the second half: **97 of 100 accepted pages good
 (95 % Wilson interval 91.5–99.0 %)**, 98 counting only the certain cases. Its false accepts: a lottery results page and two unmarked
 promotional texts (native advertising) -- the residual class simple rules do not separate. Of the rejected pages about half were
 good texts, nearly all complete briefs under 150 words: the recall the rule set gives up by design.

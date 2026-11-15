@@ -31,7 +31,7 @@
  },
  "control_1": {
   "ruleset": "content-quality/1",
-  "commit": "b7d5f86",
+  "commit": "15fce0d",
   "accepted_read": 100,
   "good": 94,
   "false_accepts": 6,
@@ -2656,7 +2656,7 @@
  },
  "control_2": {
   "ruleset": "content-quality/2",
-  "commit": "f1a0103",
+  "commit": "18c87ca",
   "accepted_read": 100,
   "good": 97,
   "false_accepts": 3,

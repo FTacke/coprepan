@@ -122,8 +122,8 @@ the body's beginning and end; no decision, no feature), accepted and rejected pa
 
 | Rule set | Accepted pages read | Good | Precision | 95 % Wilson | Rejected pages read | of them good |
 |---|---:|---:|---:|---|---:|---:|
-| `content-quality/1` (`b7d5f86`) | 100 | 94 | 0.94 | 0.875–0.972 | 40 | 20 |
-| `content-quality/2` (`f1a0103`) | 100 | 97 | 0.97 | 0.915–0.990 | 20 | 10 |
+| `content-quality/1` (`15fce0d`) | 100 | 94 | 0.94 | 0.875–0.972 | 40 | 20 |
+| `content-quality/2` (`18c87ca`) | 100 | 97 | 0.97 | 0.915–0.990 | 20 | 10 |
 
 `/2` closed the five general classes of `/1`'s false accepts (more wordings of AI disclosures; institutional pages; live slugs and
 titles; sponsor marks anywhere in the address). Its three false accepts: a lottery results page and two unmarked promotional texts
@@ -216,8 +216,10 @@ CO.RA.PAN's reservoir workers ran from 05:07 local, its KISSKI supervisor ticks 
 43–99 % CPU. CO.RA.PAN's advisory stayed `SHARE_NORMAL` through every wave. wc-1 was held back for an hour while the load did not
 settle, then run at below-normal priority (CO.PRE.PAN's suites and the driver use one core of 24). At 10:54Z, after wc-1's requests
 had ended, CO.RA.PAN reported `SHARE_SLOW`; CO.PRE.PAN had made no share contact all weekend (deferred preservation) and from then
-on deferred its own heavy local work (the workspace-copy benchmark, the full suite) until the advisory was normal again. No
-CO.RA.PAN job was stopped, changed or started; CO.RA.PAN's repository and its NEW_FS recovery were not touched.
+on deferred its own heavy local work (the workspace-copy benchmark, the full suite). At about 11:30Z the operator stated that the
+share was normal again; CO.RA.PAN's advisory still read `state: SHARE_SLOW` (`mode: NORMAL`) at 11:29:35Z. On the operator's
+statement the two local-only steps ran (local disk, below-normal priority, no share contact). No CO.RA.PAN job was stopped, changed
+or started; CO.RA.PAN's repository and its NEW_FS recovery were not touched.
 
 ## 11. Raw packs and their preservation
 
@@ -240,16 +242,18 @@ Not activated; nothing scheduled.
 
 ## 13. Tests, commits, integration, push
 
-On the branch `qualification/2026-11-14-weekend` (fast-forwarded to `main`; the waves' own commits are on `main` by the canary
-operator): `be989b3` canary-driver/7 · `d1a0a69` uniform shells · `a8fd8c2` the confirmation record and the variant diagnostic ·
-`0a3eabd`, `ff8682e`, `07b749a` capacity, diagnostic and selection template · `34a0aa1` 24-hour revision draft · `49e9cb8`
-incremental checks and canary-driver/8 · `7e097dd` intake-controller/3 · `b7d5f86` article_html and content-quality/1 · `f1a0103`
-content-quality/2 · `97207ca` matrix, study, review, CPD-0037/0038 · `5c0070d` the /3 draft plan; this report and STATUS on top.
-Targeted suites during the work: 358 passed (intake, intake operator, interleaved, incremental, content quality, extraction,
-evidence integrity, ledger, crash recovery, canary driver and evidence, offline e2e). The full suite on the integrated state:
-see the line below.
-
-<!-- FULL-SUITE -->
+Branch `qualification/2026-11-14-weekend`, rebased onto `origin/main` after the last wave (`618deb9`, the disarm after wc-1) and
+fast-forwarded to `main`. The waves' arming, baseline, evidence and disarm commits are on `main` by the canary operator; the
+driver/7 repair (`be989b3`), the uniform-shell rule and the confirmation record were merged to `main` between waves. On the branch
+since `618deb9`: `8241297` variant diagnostic over both records · `14bec4c` capacity measurement · `17b27dc` extraction selection
+template · `2b7605a` 24-hour revision draft · `4c72967` incremental checks and canary-driver/8 · `50d0796` intake-controller/3 ·
+`15fce0d` article_html and content-quality/1 (the rule set of the first control) · `18c87ca` content-quality/2 (the rule set of the
+second control) · `0c199c5` matrix, study, review, CPD-0037/0038 · `57b9b5f` the /3 draft plan · `6214b17` report and STATUS ·
+`e171501` benchmark · `4f265ba` the full-suite findings fixed (decision registry rows and headings; no import-time extractor
+registration; no `list.remove` in the intake) · this report's final state. The rule sets were frozen before their controls in
+commits that the rebase replayed unchanged (`15fce0d`, `18c87ca`). Targeted suites during the work: 358 passed. **Full suite on the
+integrated state (`4f265ba`): 2,001 passed, 15 skipped** (the documented skips of applied registry proposals and rebuilt inventory
+versions); the first full run had found 7 failures, all fixed in `4f265ba`. Pushed to `origin/main`; no force push.
 
 ## 14. Open scientific decisions (the operator's)
 
