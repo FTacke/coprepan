@@ -50,6 +50,18 @@ in 24 h: archive or section channels), 1 `HELD`; none `OPERATIONALLY_STABLE`. Th
 unfetched (the per-outlet cycle allowance, and outlets served one after another). A 24-hour wave is
 [prepared, not authorized](intake/wave/in2-24h-wave_PREPARATION.md). Report:
 [`2026-11-14 source health`](agent-runs/2026-11-14_coprepan-source-health-and-24h-wave-preparation.md).
+**Since the weekend qualification of 2026-11-14/15** (delegated records `DOA-2026-11-14-2` and `DOA-2026-11-15-1`; CPD-0036,
+CPD-0037, CPD-0038): eight qualification waves asked 99 registered outlets **for real** -- 1,100 transport requests of at most
+1,600, 601 item requests, robots, Crawl-delay and every hold kept; the switch is `disabled` again after each. Their 1,018 answered
+fetches (112 packs, 51 MB) are **`PRESERVATION_PENDING` in the runtime workspace on `C:`, none `RAW_PRESERVED`**; the promotion
+(`canary_driver preserve-deferred`) waits for a weekday and every shared-storage gate. A
+[six-dimension source matrix](intake/qualification/weekend_qualification_2026-11-15.md): 72 outlets `QUALIFIED`, 9
+`QUALIFIED_WITH_LIMITS`, 18 `NOT_QUALIFIED`, each with its reason. Built and tested offline, **not run for real yet**:
+`canary-driver/8` and `intake-controller/3` with incremental workspace checks instead of the whole-workspace diagnose at every
+stage, outlets interleaved, allowances per outlet (CPD-0037); a candidate extractor `article_html/0.1.0` and a candidate
+content-quality gate `content-quality/2` (CPD-0038, **PROPOSED**: 97 of 100 accepted pages good in a blind control, the scientific
+activation is the operator's); a [validated draft plan](intake/wave/in2-24h-wave_REVISION_2026-11-15.md) of the 24-hour wave under
+/3, not authorized. Report: [`2026-11-15 weekend`](agent-runs/2026-11-15_coprepan-weekend-source-qualification.md).
 
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
@@ -303,7 +315,7 @@ state of the table.
 None. No model, provider, crawler, extractor or annotator is active. The NLP pins in
 `pyproject.toml` `[tool.coprepan.nlp]` are marked `PLANNED`: they are not installed and not used.
 The package has no runtime dependency. `baseline_html/0.1.0`, `pack-writer/1`, `http-fetcher/1`,
-`channel-parser/6`, `robots-parser/3`, `robots-decision/3`, `access-control/4`, `access-hold-scope/1`, `canary-driver/5`, `intake-controller/2` (`/1` until 2026-11-14, CPD-0033), `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1`, `fetch-planner/1`, `candidate-filter-generic/3`,
+`channel-parser/6`, `robots-parser/3`, `robots-decision/3`, `access-control/4`, `access-hold-scope/1`, `canary-driver/8` (2026-11-15, CPD-0037; the weekend waves ran under `/7`), `intake-controller/3` (2026-11-15, CPD-0037; a `/2` plan runs `/2`'s code; `/1` until 2026-11-14, CPD-0033), `incremental-check/1`, `article_html/0.1.0` (CANDIDATE) and `content-quality/2` (CANDIDATE, CPD-0038), `expansion-order/2`, `candidate-budget-order/1`, `numbered-pagination/1`, `fetch-planner/1`, `candidate-filter-generic/3`,
 `admission-technical/1`, `channel-health/1`, `extraction-eval/1` and `legacy-freeze/1` are component versions recorded in artefacts; none is an
 adopted production component. (List brought to the versions in the code on 2026-10-22; it named `channel-parser/3`, `access-control/2`,
 `canary-driver/4` and `candidate-filter-generic/2`.) `warcio==1.7.5` is a test-only dependency (the independent WARC

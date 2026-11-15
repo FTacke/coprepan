@@ -1,0 +1,275 @@
+{
+ "schema": "coprepan-weekend-capacity/v1",
+ "min_interval_seconds": 10.0,
+ "authorizations": [
+  "DOA-2026-11-14-2",
+  "DOA-2026-11-15-1"
+ ],
+ "projection": {
+  "label": "PROJECTION",
+  "basis": "median exact transport of a first request to an origin over every run; one request at a time; each origin at most one request per 10 s",
+  "median_transport_seconds": 0.367,
+  "one_executor_ceiling_requests_per_hour": 9820,
+  "sequential_by_origin_requests_per_hour_one_origin": 347,
+  "origins_needed_to_fill_one_executor": 28.3,
+  "note": "transport only; parsing, packing and the ledger add time per request; a publisher's Crawl-delay lowers its own share"
+ },
+ "runs": {
+  "acq1-20261114T203842339757Z-20297ef9c2c8": {
+   "requests": 109,
+   "origins": 17,
+   "wall_seconds": 4512.7,
+   "requests_per_minute": 1.45,
+   "received_body_bytes": 8473628,
+   "transport_exact_first_request_per_origin": {
+    "n": 17,
+    "median": 0.759,
+    "p90": 11.851,
+    "max": 31.083,
+    "sum": 57.0
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 92,
+    "median": 1.026,
+    "p90": 10.444,
+    "max": 21.477,
+    "sum": 289.8
+   },
+   "executor_busy_share_at_most": 0.077,
+   "inside_records_seconds": 896.2,
+   "between_records": {
+    "n": 102,
+    "median": 0.067,
+    "p90": 166.264,
+    "max": 469.065,
+    "sum": 3627.4
+   },
+   "wave": "wq-1",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261114T222008470120Z-bf7150d8be63": {
+   "requests": 114,
+   "origins": 15,
+   "wall_seconds": 3945.8,
+   "requests_per_minute": 1.73,
+   "received_body_bytes": 9479349,
+   "transport_exact_first_request_per_origin": {
+    "n": 15,
+    "median": 0.631,
+    "p90": 1.163,
+    "max": 2.038,
+    "sum": 11.6
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 99,
+    "median": 0.88,
+    "p90": 2.087,
+    "max": 13.314,
+    "sum": 178.7
+   },
+   "executor_busy_share_at_most": 0.048,
+   "inside_records_seconds": 845.7,
+   "between_records": {
+    "n": 105,
+    "median": 0.071,
+    "p90": 161.15,
+    "max": 496.477,
+    "sum": 3111.1
+   },
+   "wave": "wq-2",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T000319772506Z-c198b373dc69": {
+   "requests": 127,
+   "origins": 14,
+   "wall_seconds": 3933.8,
+   "requests_per_minute": 1.94,
+   "received_body_bytes": 4765973,
+   "transport_exact_first_request_per_origin": {
+    "n": 14,
+    "median": 0.204,
+    "p90": 0.84,
+    "max": 1.426,
+    "sum": 5.1
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 113,
+    "median": 0.216,
+    "p90": 1.187,
+    "max": 20.137,
+    "sum": 90.3
+   },
+   "executor_busy_share_at_most": 0.024,
+   "inside_records_seconds": 945.6,
+   "between_records": {
+    "n": 118,
+    "median": 0.061,
+    "p90": 171.519,
+    "max": 298.402,
+    "sum": 2988.2
+   },
+   "wave": "wq-3",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T013553944256Z-099a9e1e8f6e": {
+   "requests": 142,
+   "origins": 16,
+   "wall_seconds": 4386.7,
+   "requests_per_minute": 1.94,
+   "received_body_bytes": 6585237,
+   "transport_exact_first_request_per_origin": {
+    "n": 16,
+    "median": 0.212,
+    "p90": 0.84,
+    "max": 1.266,
+    "sum": 5.6
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 126,
+    "median": 0.237,
+    "p90": 1.103,
+    "max": 21.055,
+    "sum": 118.9
+   },
+   "executor_busy_share_at_most": 0.028,
+   "inside_records_seconds": 1008.5,
+   "between_records": {
+    "n": 130,
+    "median": 0.064,
+    "p90": 180.409,
+    "max": 244.694,
+    "sum": 3389.5
+   },
+   "wave": "wq-4",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T031559237344Z-22e7f225d63b": {
+   "requests": 141,
+   "origins": 16,
+   "wall_seconds": 4347.0,
+   "requests_per_minute": 1.95,
+   "received_body_bytes": 7437525,
+   "transport_exact_first_request_per_origin": {
+    "n": 16,
+    "median": 0.247,
+    "p90": 0.442,
+    "max": 0.595,
+    "sum": 4.2
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 125,
+    "median": 0.248,
+    "p90": 0.725,
+    "max": 10.106,
+    "sum": 70.8
+   },
+   "executor_busy_share_at_most": 0.017,
+   "inside_records_seconds": 995.7,
+   "between_records": {
+    "n": 132,
+    "median": 0.034,
+    "p90": 197.16,
+    "max": 242.746,
+    "sum": 3351.3
+   },
+   "wave": "wq-5",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T045716814350Z-3bfd8c42fcca": {
+   "requests": 135,
+   "origins": 15,
+   "wall_seconds": 4362.6,
+   "requests_per_minute": 1.86,
+   "received_body_bytes": 4635288,
+   "transport_exact_first_request_per_origin": {
+    "n": 15,
+    "median": 0.479,
+    "p90": 0.666,
+    "max": 1.593,
+    "sum": 7.7
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 120,
+    "median": 0.557,
+    "p90": 10.718,
+    "max": 30.371,
+    "sum": 416.6
+   },
+   "executor_busy_share_at_most": 0.097,
+   "inside_records_seconds": 1215.5,
+   "between_records": {
+    "n": 124,
+    "median": 0.035,
+    "p90": 183.923,
+    "max": 240.965,
+    "sum": 3147.1
+   },
+   "wave": "wq-6",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T063430632173Z-ada50dbd80ed": {
+   "requests": 143,
+   "origins": 14,
+   "wall_seconds": 4545.7,
+   "requests_per_minute": 1.89,
+   "received_body_bytes": 5285708,
+   "transport_exact_first_request_per_origin": {
+    "n": 14,
+    "median": 0.242,
+    "p90": 0.548,
+    "max": 1.586,
+    "sum": 5.2
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 129,
+    "median": 0.49,
+    "p90": 10.209,
+    "max": 30.541,
+    "sum": 359.0
+   },
+   "executor_busy_share_at_most": 0.08,
+   "inside_records_seconds": 1143.2,
+   "between_records": {
+    "n": 134,
+    "median": 0.045,
+    "p90": 181.007,
+    "max": 389.965,
+    "sum": 3402.4
+   },
+   "wave": "wq-7",
+   "authorization_id": "DOA-2026-11-14-2"
+  },
+  "acq1-20261115T092012103473Z-621c41779dc2": {
+   "requests": 134,
+   "origins": 15,
+   "wall_seconds": 5141.3,
+   "requests_per_minute": 1.56,
+   "received_body_bytes": 12530277,
+   "transport_exact_first_request_per_origin": {
+    "n": 15,
+    "median": 0.5,
+    "p90": 1.566,
+    "max": 26.218,
+    "sum": 36.0
+   },
+   "transport_upper_bound_later_requests": {
+    "n": 119,
+    "median": 0.838,
+    "p90": 3.029,
+    "max": 12.526,
+    "sum": 205.6
+   },
+   "executor_busy_share_at_most": 0.047,
+   "inside_records_seconds": 966.8,
+   "between_records": {
+    "n": 126,
+    "median": 0.067,
+    "p90": 43.125,
+    "max": 655.976,
+    "sum": 4185.0
+   },
+   "wave": "wc-1",
+   "authorization_id": "DOA-2026-11-15-1"
+  }
+ }
+}
