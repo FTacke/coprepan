@@ -1,0 +1,51 @@
+{
+ "plan": "in3-24h-wave-draft_plan.json",
+ "plan_sha256": "9936b883523d40f453bfa2510d6a790f8bb4d5b6502378e95ced75fcf7a7cc5d",
+ "controller": "intake-controller/3",
+ "validate_plan": "PASS",
+ "holds_considered": 24,
+ "outlets": 78,
+ "channels": 110,
+ "countries": 20,
+ "left_out_by_the_plan": {},
+ "qualified_by_the_weekend_but_not_in_the_readiness_file": [
+  "co_elcolombiano",
+  "cr_diario_extra",
+  "uy_el_pais"
+ ],
+ "budget": {
+  "duration_seconds": 86400,
+  "cycle_seconds": 3600,
+  "item_requests_per_outlet": 900,
+  "item_requests_per_outlet_hour": 30,
+  "item_requests_per_origin": 1000,
+  "total_requests": 8000,
+  "items_per_outlet_cycle": 30,
+  "backlog_items_per_outlet_cycle": 0,
+  "discovery_max_depth": 2,
+  "discovery_max_documents": 4,
+  "discovery_max_candidates": 200,
+  "discovery_max_bytes": 4194304,
+  "drain_seconds": 1800
+ },
+ "allowance_classes": {
+  "3 per cycle": 47,
+  "4 per cycle": 12,
+  "5 per cycle": 4,
+  "6 per cycle": 4,
+  "7 per cycle": 4,
+  "8 per cycle": 2,
+  "10 per cycle": 2,
+  "15 per cycle": 1,
+  "29 per cycle": 1,
+  "30 per cycle": 1
+ },
+ "projection": {
+  "label": "PROJECTION from the October 24-hour intake, not a measurement",
+  "new_articles_october_in_these_outlets": 4320,
+  "item_requests_if_october_repeats": 4320,
+  "item_request_ceiling_sum": 9157,
+  "channel_polls": 2301,
+  "total_requests": 6621
+ }
+}
