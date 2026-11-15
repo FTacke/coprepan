@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-15 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the preferred candidates `article_html/0.4.0` (record schema `extraction/3`, the pinned table `body-templates/1`), `body-quality/1`, `agency-credit/3` in `editorial-metadata/3`. **None is validated or activated**; nothing binds a release, an admission or a stored record. Their activation is the operator's, after the BODY control (*Not decided here*) |
 | Decided by | the operator's brief of 2026-11-15 ("CO.PRE.PAN_v3 – Autonome BODY-Qualitätsoptimierung": implementation and offline evaluation authorised; the phase-3 blind control is development material now); the rules are the commissioned agent's |
 | Kind | extraction · scientific method |
@@ -12,6 +12,11 @@
 | Does not change | `extraction/1`–`/2` and `article_html/0.1.0`–`0.3.0` (their code and records); the title and subtitle surface of 0.3.0; `content-quality/3` and its 150-word minimum (applied unchanged to the new BODY); `section-map/1`, the IPTC extracts, the scope, genre and AI layers, `agency-credit/1`–`/2`, `text-reuse/2`; the joint contracts (`release_export` refuses an `extraction/3` record as it refuses `/2`) |
 | Run report | [`2026-11-15 BODY quality`](../agent-runs/2026-11-15_coprepan-body-quality.md) |
 | Evidence | [study record](../intake/quality/body_quality_study_2026-11-15.json) (the 4,759 stored item pages), [BODY control](../intake/quality/body_quality_control_2026-11-15/README.md) (frozen before review) |
+
+*Status line 2026-11-16:* **partially superseded by [CPD-0042](CPD-0042_body-control-evaluated-and-bounded-repairs.md)** (was
+`ACTIVE_WITH_VALIDATION_DEBT`): the BODY control is answered and evaluated there -- 0.4.0 deleted no article text -- and the
+preferred extractor and status are now `article_html/0.4.1` and `body-quality/2`. `0.4.0`, `body-templates/1`, `body-quality/1`,
+`agency-credit/3`, `editorial-metadata/3` and §4 stay as written.
 
 ## Context
 

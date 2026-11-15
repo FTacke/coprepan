@@ -131,7 +131,10 @@ assumed away.
   each such block keeps its text and position and names the rule and the reason, so the BODY
   before the selection is read back from the record. No block is split or rewritten: foreign
   material inside a block stays and `body-quality/1` reports it. The contamination status is a
-  statement about the extraction; CORE stays the gate's.
+  statement about the extraction; CORE stays the gate's. *2026-11-16, CPD-0042:* the BODY control
+  found no false deletion; `article_html/0.4.1` never includes a cut-off copy of a BODY block's
+  beginning and keeps the lead when a teaser card stands inside the article; `body-quality/2`
+  reads completeness against the stated articleBody as text.
 - **Non-body blocks** (captions, navigation remnants, embeds) are not annotated by default. If a
   later decision annotates them, they are units with their own `unit_kind` and surface.
 - Every unit, sentence and token therefore carries a **`surface`**: `body` · `title` ·
@@ -200,7 +203,8 @@ An unvalidated layer may exist and be studied; it does not enter a release as a 
 
 ### 7.1 Built as candidates on 2026-11-15 (CPD-0039; every layer `NOT_VALIDATED`)
 
-**CORE membership is general text quality** (`content-quality/3`, a candidate): no layer below is
+**CORE membership is general text quality** (`content-quality/3`, a candidate; preferred since 2026-11-16
+`content-quality/4`, CPD-0042: completeness against the stated articleBody as text, a declared live blog is live coverage): no layer below is
 read by it, and none excludes anything. Four kinds of evidence are never mixed: the **publisher
 statement** (`publisher-metadata/1`, verbatim, with its place), the **deterministic derivation**
 from it, the **document relation** from a text comparison, and a later **scientific
@@ -256,7 +260,8 @@ annotation under the shared pins → equivalence and bridge samples → enrichme
 | the language identifier, its validation, the label rule | scientific, Phase 3 |
 | press sentence-boundary policy id | joint / scientific, Phase 4 |
 | whether titles are annotated in the first release | scientific |
-| adoption of `article_html/0.4.0` (with `body-templates/1`), `content-quality/3`, `section-map/1` and the provenance rules, after the [BODY control](../intake/quality/body_quality_control_2026-11-15/README.md) (CPD-0041 *Not decided here*; the [phase-3 blind control](../intake/quality/phase3_blind_control_2026-11-15/README.md) is development material now) | scientific, the operator's |
+| adoption of `article_html/0.4.1` (with `body-templates/1`), `content-quality/4`, `body-quality/2`, `section-map/1` and the provenance rules -- the [BODY control](../intake/quality/body_quality_control_2026-11-15/README.md) is answered and evaluated (CPD-0042 *Not decided here*; the [phase-3 blind control](../intake/quality/phase3_blind_control_2026-11-15/README.md) is development material) | scientific, the operator's |
+| structured text types and the 150 words (a recipe accepted on its ingredient list, a match report with tables rejected on function words); the word definition at the threshold; a stated articleBody as the BODY of a script-rendered page (CPD-0042 *Not decided here* 2–4) | scientific, the operator's |
 | the unit kind `subtitle` in the joint release contract; the relation match class in the analysis contract | joint, with CO.RA.PAN |
 | vocabularies of `article_type` and `opinion`; whether they are built at all | scientific, Phase 4 |
 | durable home of the layers | technical; needs O-3 |

@@ -36,3 +36,19 @@ deletions**), blocks kept in that are foreign (**residual contamination**); and 
   targeted strata (large removals, inclusions, templates, modules, CORE changes, residual and unchanged-clean pages, not-article)
   look for errors and estimate no precision.
 - Text that neither version shows as BODY can be reported only through `MISSING`.
+
+## Answered and evaluated (2026-11-16, CPD-0042)
+
+| File | What |
+|---|---|
+| [`verdicts_filled_2026-11-15.csv`](verdicts_filled_2026-11-15.csv) | the frozen form filled: per question `answer`, its `basis` (`OPERATOR_CONFIRMED` 83, `TECHNICALLY_VERIFIED` 46, `AGENT_ASSESSED` 6, `UNRESOLVED` 0), the operator's verdict verbatim (`operator_answer`) and the blocks the operator left open (`operator_open`); committed before the key was read (`81749ba`) |
+| [`result_2026-11-15.json`](result_2026-11-15.json) | `merge` (result `/2`) against the frozen key: the operator's gold alone and all answers, random and targeted apart, block and word counts, the deviations by case |
+| [`../body_control_repairs_2026-11-15.json`](../body_control_repairs_2026-11-15.json) | the repairs (`article_html/0.4.1`, `content-quality/4`, `body-quality/2`) on every stored page, and the candidate scored on this control -- **not blind**: the repairs were written after the key was opened |
+
+```
+python scripts/study_body_quality.py merge --out-dir docs/intake/quality/body_quality_control_2026-11-15 \
+    --verdicts docs/intake/quality/body_quality_control_2026-11-15/verdicts_filled_2026-11-15.csv \
+    --out docs/intake/quality/body_quality_control_2026-11-15/result_2026-11-15.json --sheet <local reading sheet>
+```
+
+The manifest, the blank form, the key and the sheet are unchanged.

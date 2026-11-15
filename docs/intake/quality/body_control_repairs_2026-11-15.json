@@ -1,0 +1,971 @@
+{
+ "schema": "coprepan-body-control-repairs/v1",
+ "decision": "CPD-0042",
+ "date": "2026-11-15",
+ "population": {
+  "pages": 4759,
+  "extracted": 4759
+ },
+ "versions": {
+  "extractor": [
+   "article_html/0.4.0",
+   "article_html/0.4.1"
+  ],
+  "quality": [
+   "content-quality/3",
+   "content-quality/4"
+  ],
+  "features": "content-features/2",
+  "body_quality": [
+   "body-quality/1",
+   "body-quality/2"
+  ],
+  "metadata": "editorial-metadata/3",
+  "text_reuse": "text-reuse/2",
+  "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4"
+ },
+ "extractor_0_4_1": {
+  "body_changed": 45,
+  "blocks_left_out": 21,
+  "blocks_added": 24,
+  "words_left_out": 1160,
+  "words_added": 2297,
+  "left_out_by_former_reason": {
+   "stated_article_body": 3,
+   "lead_paragraph": 18
+  },
+  "added_by_reason": {
+   "lead_paragraph": 24
+  },
+  "pages_left_out": 21,
+  "pages_added": 24,
+  "by_outlet": {
+   "co_el_espectador": 18,
+   "es_abc": 17,
+   "co_el_nuevo_siglo": 5,
+   "bo_opinion": 3,
+   "es_el_correo": 1,
+   "pr_metro_puerto_rico": 1
+  },
+  "pages_with_a_layer_changed": 0,
+  "layers_changed": {},
+  "fetch_prefixes": [
+   "03b033c8e5",
+   "09c6bfe168",
+   "117ac61e24",
+   "1789b61276",
+   "184496dc00",
+   "1b9db2a2b7",
+   "1e5ba4dd96",
+   "2250d6a809",
+   "22a1272ca2",
+   "267cf542b3",
+   "2b5893f175",
+   "3123e9ffa3",
+   "327b5e7712",
+   "335eb03890",
+   "3369bd2543",
+   "384b4b753d",
+   "40737b8ce6",
+   "4475363611",
+   "4729ff6f37",
+   "4a0f4543b0",
+   "4cc0ec8a1d",
+   "4f3138339b",
+   "55f699d78f",
+   "5bc78faab5",
+   "6007476153",
+   "6357c73704",
+   "6528172f0d",
+   "71ee8abdfc",
+   "74bd99baf9",
+   "77b1516dd7",
+   "78040aab77",
+   "888d36d876",
+   "8e33f023bd",
+   "8e6edaab4e",
+   "8f45e62c51",
+   "9c2dd969a8",
+   "9dd78784ae",
+   "a412026ffc",
+   "a62fe158ff",
+   "b76aa84350",
+   "cc2e088174",
+   "ce3c1220dd",
+   "d1e82dae2b",
+   "d42254b254",
+   "fed51d75d1"
+  ]
+ },
+ "core": {
+  "accepted": {
+   "3_on_0_4_0": 4067,
+   "4_on_0_4_0": 4073,
+   "3_on_0_4_1": 4068,
+   "4_on_0_4_1": 4074
+  },
+  "flips_3_on_0_4_0_to_4_on_0_4_1": {
+   "accepted_to_rejected": 12,
+   "rejected_to_accepted": 19,
+   "by_cause": {
+    "gate_4": 28,
+    "extractor_0_4_1": 3
+   },
+   "pages": [
+    {
+     "fetch": "879a359925",
+     "outlet": "ar_la_nacion",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "79b7b10770",
+     "outlet": "ar_la_nacion",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "03b033c8e5",
+     "outlet": "bo_opinion",
+     "from": [],
+     "to": [
+      "too_short"
+     ],
+     "cause": "extractor_0_4_1"
+    },
+    {
+     "fetch": "76391f7ac4",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "b033b9ed84",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "586512bc87",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "8e735cffd8",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "3bb1f74ebc",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "9e17fe79fd",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "e017daf22f",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "e41714353f",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "143b3de126",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "8d387728d4",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "3864f4b4e5",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "9c7f213f75",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "9154f3a98c",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "0647a83341",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "c57baea25c",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "e4b0510d1d",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "d7b7479633",
+     "outlet": "cl_biobiochile",
+     "from": [
+      "incomplete_against_stated_body"
+     ],
+     "to": [],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "4f3138339b",
+     "outlet": "co_el_nuevo_siglo",
+     "from": [
+      "too_short"
+     ],
+     "to": [],
+     "cause": "extractor_0_4_1"
+    },
+    {
+     "fetch": "ce3c1220dd",
+     "outlet": "co_el_nuevo_siglo",
+     "from": [
+      "too_short"
+     ],
+     "to": [],
+     "cause": "extractor_0_4_1"
+    },
+    {
+     "fetch": "6b8e7be6ab",
+     "outlet": "co_elpais",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "f125df5c92",
+     "outlet": "cr_la_nacion",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "89f42b1494",
+     "outlet": "ec_primicias",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "518699b15c",
+     "outlet": "ec_primicias",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "72c4e4ad7c",
+     "outlet": "es_abc",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "b054b534a3",
+     "outlet": "es_abc",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "c3013a4f42",
+     "outlet": "es_abc",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "7a0a982640",
+     "outlet": "es_abc",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    },
+    {
+     "fetch": "0e126f10c6",
+     "outlet": "uy_el_observador",
+     "from": [],
+     "to": [
+      "live_coverage"
+     ],
+     "cause": "gate_4"
+    }
+   ]
+  }
+ },
+ "live_blog_declared": {
+  "pages": 68,
+  "by_outlet": {
+   "ar_pagina12": 30,
+   "ar_la_nacion": 6,
+   "ec_expreso": 6,
+   "ar_clarin": 4,
+   "ec_primicias": 4,
+   "es_abc": 4,
+   "pe_la_republica": 4,
+   "cl_la_tercera": 2,
+   "es_el_correo": 2,
+   "co_elpais": 1,
+   "co_semana": 1,
+   "cr_la_nacion": 1,
+   "es_la_vanguardia": 1,
+   "gt_prensa_libre": 1,
+   "uy_el_observador": 1
+  },
+  "accepted_by_3_on_0_4_0": 11,
+  "already_live_coverage_under_3": 26
+ },
+ "stated_body_markup": {
+  "pages_whose_stated_body_carries_markup": 690,
+  "by_outlet": {
+   "do_diario_libre": 94,
+   "py_abc_color": 74,
+   "es_el_mundo": 72,
+   "ec_el_universo": 61,
+   "ec_primicias": 59,
+   "pa_la_prensa": 50,
+   "cl_biobiochile": 40,
+   "pa_midiario": 40,
+   "pa_panama_america": 37,
+   "ar_pagina12": 28,
+   "do_el_nacional": 26,
+   "ec_expreso": 25,
+   "pa_metro_libre": 19,
+   "do_listin_diario": 11,
+   "do_hoy": 9,
+   "pe_el_buho": 8,
+   "co_el_espectador": 4,
+   "pe_la_republica": 4,
+   "ve_analitica": 4,
+   "ar_clarin": 3,
+   "ar_la_nacion": 3,
+   "ar_rio_negro": 3,
+   "cr_la_nacion": 3,
+   "es_abc": 3,
+   "sv_diario_co_latino": 3,
+   "co_semana": 2,
+   "es_la_vanguardia": 2,
+   "es_el_correo": 1,
+   "gt_prensa_libre": 1,
+   "pr_el_nuevo_dia": 1
+  },
+  "incomplete_under_3_on_0_4_0": 35,
+  "incomplete_under_4_on_0_4_1": 14
+ },
+ "body_quality": {
+  "states_1_on_0_4_0": {
+   "clean": 2255,
+   "incomplete": 27,
+   "cleaned": 1986,
+   "not_article": 159,
+   "residual_suspect": 332
+  },
+  "states_2_on_0_4_1": {
+   "clean": 2252,
+   "incomplete": 10,
+   "cleaned": 2006,
+   "not_article": 159,
+   "residual_suspect": 332
+  },
+  "transitions": {
+   "cleaned->clean": 3,
+   "incomplete->cleaned": 17,
+   "clean->cleaned": 6
+  }
+ },
+ "text_reuse": {
+  "relations": {
+   "0_4_0": 293,
+   "0_4_1": 293
+  },
+  "kept": 293,
+  "lost": 0,
+  "new": 0
+ },
+ "cost": {
+  "seconds": {
+   "extract_0_4_1": 54.5,
+   "text_reuse_both": 6.6
+  },
+  "ms_per_page_extract_0_4_1": 11.44
+ },
+ "control_rescored": {
+  "not_blind": "the repairs were written after the key was opened; these counts check the repairs, they do not validate them",
+  "verdicts_sha256": "d8c51bbce2f7f96c54bf7e1d05d0365868c79904e39be287e377351082e16b51",
+  "operator_confirmed_only": {
+   "random|CORE|0_4_0": {
+    "agree": 15,
+    "label_yes|predicted_yes": 14,
+    "label_no|predicted_no": 1,
+    "disagree": 1,
+    "label_yes|predicted_no": 1
+   },
+   "random|CORE|0_4_1": {
+    "agree": 16,
+    "label_yes|predicted_yes": 15,
+    "label_no|predicted_no": 1
+   },
+   "random|FOREIGN|0_4_0": {
+    "blocks_kept_out_and_foreign": 45,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 15,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 6
+   },
+   "random|FOREIGN|0_4_1": {
+    "blocks_kept_out_and_foreign": 46,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 14,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 6
+   },
+   "targeted|CORE|0_4_0": {
+    "agree": 21,
+    "label_no|predicted_no": 6,
+    "label_yes|predicted_yes": 15,
+    "disagree": 4,
+    "label_yes|predicted_no": 2,
+    "label_no|predicted_yes": 2
+   },
+   "targeted|CORE|0_4_1": {
+    "agree": 24,
+    "label_no|predicted_no": 8,
+    "label_yes|predicted_yes": 16,
+    "disagree": 1,
+    "label_yes|predicted_no": 1
+   },
+   "targeted|FOREIGN|0_4_0": {
+    "blocks_kept_out_and_foreign": 539,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 18,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 8
+   },
+   "targeted|FOREIGN|0_4_1": {
+    "blocks_kept_out_and_foreign": 539,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 18,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 8
+   }
+  },
+  "all_answers": {
+   "random|CORE|0_4_0": {
+    "agree": 15,
+    "label_yes|predicted_yes": 14,
+    "label_no|predicted_no": 1,
+    "disagree": 1,
+    "label_yes|predicted_no": 1
+   },
+   "random|CORE|0_4_1": {
+    "agree": 16,
+    "label_yes|predicted_yes": 15,
+    "label_no|predicted_no": 1
+   },
+   "random|FOREIGN|0_4_0": {
+    "blocks_kept_out_and_foreign": 45,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 15,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 6
+   },
+   "random|FOREIGN|0_4_1": {
+    "blocks_kept_out_and_foreign": 46,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 14,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 6
+   },
+   "random|MISSING|0_4_0": {
+    "agree": 13,
+    "agree_coarse": 13,
+    "disagree": 3,
+    "disagree_coarse": 3
+   },
+   "random|MISSING|0_4_1": {
+    "agree": 14,
+    "agree_coarse": 14,
+    "disagree": 2,
+    "disagree_coarse": 2
+   },
+   "targeted|CORE|0_4_0": {
+    "agree": 23,
+    "label_no|predicted_no": 8,
+    "label_yes|predicted_yes": 15,
+    "disagree": 6,
+    "label_yes|predicted_no": 3,
+    "label_no|predicted_yes": 3
+   },
+   "targeted|CORE|0_4_1": {
+    "agree": 26,
+    "label_no|predicted_no": 10,
+    "label_yes|predicted_yes": 16,
+    "disagree": 3,
+    "label_no|predicted_yes": 1,
+    "label_yes|predicted_no": 2
+   },
+   "targeted|FOREIGN|0_4_0": {
+    "blocks_kept_out_and_foreign": 539,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 18,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 8
+   },
+   "targeted|FOREIGN|0_4_1": {
+    "blocks_kept_out_and_foreign": 539,
+    "blocks_false_deletion": 0,
+    "blocks_residual": 18,
+    "cases_with_false_deletion": 0,
+    "cases_with_residual": 8
+   },
+   "targeted|MISSING|0_4_0": {
+    "disagree": 7,
+    "disagree_coarse": 7,
+    "agree": 22,
+    "agree_coarse": 22
+   },
+   "targeted|MISSING|0_4_1": {
+    "disagree": 6,
+    "disagree_coarse": 6,
+    "agree": 23,
+    "agree_coarse": 23
+   }
+  },
+  "blocks_outside_the_sheet": {
+   "B03": {
+    "blocks": [
+     {
+      "block_index": 160,
+      "reason": "lead_paragraph",
+      "words": 133
+     }
+    ],
+    "missing_label": "beginning_missing"
+   }
+  },
+  "cases": {
+   "B02": {
+    "component": "targeted",
+    "stratum": "T02_inclusion",
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    }
+   },
+   "B03": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     4,
+     5,
+     9,
+     10,
+     11,
+     15,
+     16,
+     17
+    ],
+    "residual|0_4_0": [
+     4,
+     5,
+     9,
+     10,
+     11,
+     15,
+     16,
+     17
+    ],
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    }
+   },
+   "B05": {
+    "component": "targeted",
+    "stratum": "T07_residual",
+    "residual|0_4_1": [
+     31,
+     32
+    ],
+    "residual|0_4_0": [
+     31,
+     32
+    ]
+   },
+   "B06": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     5
+    ],
+    "residual|0_4_0": [
+     5
+    ]
+   },
+   "B08": {
+    "component": "targeted",
+    "stratum": "T09_not_article_or_incomplete",
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "not_an_article"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "not_an_article"
+    }
+   },
+   "B10": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     1
+    ],
+    "residual|0_4_0": [
+     1
+    ]
+   },
+   "B11": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     4,
+     10
+    ],
+    "residual|0_4_0": [
+     4,
+     10
+    ]
+   },
+   "B13": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     17
+    ],
+    "residual|0_4_0": [
+     17
+    ]
+   },
+   "B16": {
+    "component": "targeted",
+    "stratum": "T04_module",
+    "residual|0_4_1": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "residual|0_4_0": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "B18": {
+    "component": "targeted",
+    "stratum": "T03_template",
+    "residual|0_4_1": [
+     12,
+     18,
+     25
+    ],
+    "residual|0_4_0": [
+     12,
+     18,
+     25
+    ]
+   },
+   "B20": {
+    "component": "targeted",
+    "stratum": "T05_core_newly_rejected",
+    "CORE|0_4_0": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "MISSING|0_4_0": {
+     "label": "complete",
+     "predicted": "middle_missing"
+    }
+   },
+   "B21": {
+    "component": "targeted",
+    "stratum": "T03_template",
+    "CORE|0_4_1": {
+     "label": "no",
+     "predicted": "yes"
+    },
+    "CORE|0_4_0": {
+     "label": "no",
+     "predicted": "yes"
+    }
+   },
+   "B22": {
+    "component": "targeted",
+    "stratum": "T09_not_article_or_incomplete",
+    "residual|0_4_1": [
+     1
+    ],
+    "residual|0_4_0": [
+     1
+    ]
+   },
+   "B27": {
+    "component": "random",
+    "stratum": "R00_random",
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "not_an_article"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "not_an_article"
+    }
+   },
+   "B28": {
+    "component": "targeted",
+    "stratum": "T06_core_newly_accepted",
+    "CORE|0_4_0": {
+     "label": "no",
+     "predicted": "yes"
+    },
+    "MISSING|0_4_1": {
+     "label": "middle_missing",
+     "predicted": "complete"
+    },
+    "MISSING|0_4_0": {
+     "label": "middle_missing",
+     "predicted": "complete"
+    }
+   },
+   "B29": {
+    "component": "targeted",
+    "stratum": "T04_module",
+    "CORE|0_4_1": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "CORE|0_4_0": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "MISSING|0_4_1": {
+     "label": "complete",
+     "predicted": "not_an_article"
+    },
+    "MISSING|0_4_0": {
+     "label": "complete",
+     "predicted": "not_an_article"
+    }
+   },
+   "B32": {
+    "component": "targeted",
+    "stratum": "T02_inclusion",
+    "residual|0_4_1": [
+     5,
+     6
+    ],
+    "residual|0_4_0": [
+     5,
+     6
+    ]
+   },
+   "B37": {
+    "component": "random",
+    "stratum": "R00_random",
+    "residual|0_4_1": [
+     21
+    ],
+    "residual|0_4_0": [
+     1,
+     21
+    ]
+   },
+   "B39": {
+    "component": "targeted",
+    "stratum": "T06_core_newly_accepted",
+    "residual|0_4_1": [
+     237
+    ],
+    "residual|0_4_0": [
+     237
+    ],
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    }
+   },
+   "B40": {
+    "component": "targeted",
+    "stratum": "T07_residual",
+    "CORE|0_4_1": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "CORE|0_4_0": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "residual|0_4_1": [
+     2,
+     3,
+     4,
+     24
+    ],
+    "residual|0_4_0": [
+     2,
+     3,
+     4,
+     24
+    ]
+   },
+   "B42": {
+    "component": "random",
+    "stratum": "R00_random",
+    "CORE|0_4_0": {
+     "label": "yes",
+     "predicted": "no"
+    },
+    "MISSING|0_4_0": {
+     "label": "complete",
+     "predicted": "middle_missing"
+    }
+   },
+   "B43": {
+    "component": "targeted",
+    "stratum": "T07_residual",
+    "CORE|0_4_0": {
+     "label": "no",
+     "predicted": "yes"
+    },
+    "residual|0_4_1": [
+     3
+    ],
+    "residual|0_4_0": [
+     3
+    ],
+    "MISSING|0_4_1": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    },
+    "MISSING|0_4_0": {
+     "label": "beginning_missing",
+     "predicted": "complete"
+    }
+   }
+  }
+ }
+}

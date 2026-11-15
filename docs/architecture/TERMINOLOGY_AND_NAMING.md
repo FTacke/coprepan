@@ -665,3 +665,14 @@ row restates its defining record; nothing is defined anew.*
 | **outlet template** (term) | a block one outlet prints in at least 5 unrelated articles of the reference population (articles sharing more than 0.2 of their other 8-word shingles count as one story); pinned as digests, never texts, in `config/extraction/body-templates_1.json`; 3-4 unrelated articles: **recurring**, kept and reported | CPD-0041 §1 |
 | layer id | `body-quality/1`: `clean`, `cleaned`, `residual_suspect`, `incomplete`, `not_article` -- a statement about the extraction, apart from the CORE decision | `body_quality.py` |
 | layer id / artifact | `agency-credit/3` (`/2` that does not read blocks excluded as foreign page modules); `editorial-metadata/3` | `provenance.py`, `enrichment.py` |
+
+## 29. Additions of 2026-11-16 (CPD-0042)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| extractor version | `article_html/0.4.1` (`extraction/3`, `CANDIDATE`, the preferred one): 0.4.0 with no cut-off copy of a BODY block's beginning included and a teaser card inside the article not taken for a list | `extraction_body.py` |
+| feature version | `content-features/2`: `/1`'s features and `stated_body_text_characters` (the stated articleBody as text: markup, scripts and embedded social posts out), `declares_live_blog` (a top-level schema.org `LiveBlogPosting`, not a static article in live-blog markup) | `content_quality.py` |
+| rule set | `content-quality/4` (`/3` with completeness against the stated text and a declared live blog as live coverage; reads `content-features/2`) | same |
+| layer id | `body-quality/2` (`/1` with `incomplete` against the stated text) | `body_quality.py` |
+| **answer basis** (term) | where an answer of a filled control form comes from: `OPERATOR_CONFIRMED` (human gold), `TECHNICALLY_VERIFIED` (a fact from the stored page), `AGENT_ASSESSED` (the agent's judgement), `UNRESOLVED`; only the first is gold, and `merge` scores it apart | CPD-0042 §1, `scripts/study_body_quality.py` |
+| **static live markup** (term) | a `LiveBlogPosting` whose `liveBlogUpdate` items -- at least two -- all carry one publication time: a static article a CMS wraps in live-blog markup | `content_quality.py` |

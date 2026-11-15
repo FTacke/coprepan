@@ -88,8 +88,19 @@ pinned digest table, label headings and repeated labels out; the lead and stated
 of 4,759 pages; CORE under `content-quality/3` 4,066 -> 4,067 accepted (26 out, 27 in); every other layer the same value;
 within-outlet text-reuse relations of page furniture gone (547 -> 293). `body-quality/1` reports what is left (332 pages
 `residual_suspect`). No LLM stage. Still **candidates, nothing validated or activated**; the acceptance is a
-[BODY control](intake/quality/body_quality_control_2026-11-15/README.md) of 45 cases, frozen, waiting for the operator. Report:
+[BODY control](intake/quality/body_quality_control_2026-11-15/README.md) of 45 cases, frozen. Report:
 [`2026-11-15 BODY quality`](agent-runs/2026-11-15_coprepan-body-quality.md).
+
+**Since the BODY control review of 2026-11-16** (CPD-0042; offline, no publisher request, no model call): the operator's verdicts
+are in the control's filled form, held apart by basis (83 confirmed by the operator, 46 verified from the stored pages, 6 the
+agent's, none open) and committed before the key was opened. `article_html/0.4.0` deleted **no article text** in the control (0
+false deletions, random and targeted); residue 2.2 % of the random BODY words. Three bounded repairs, as new versions beside the
+old: `article_html/0.4.1` (no cut-off copy of a BODY block's beginning included; a teaser card inside the article no longer costs
+the lead -- 45 pages), `content-quality/4` on `content-features/2` (completeness against the stated articleBody as text; a declared
+live blog is live coverage) and `body-quality/2`. CORE 4,067 -> 4,074 (19 in, 12 out, each read). The preferred candidates now;
+**nothing validated or activated** -- the scientific acceptance and three questions on structured text, the word definition and
+script-rendered pages are the operator's. Report:
+[`2026-11-16 BODY control review`](agent-runs/2026-11-16_coprepan-body-control-review.md).
 
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran

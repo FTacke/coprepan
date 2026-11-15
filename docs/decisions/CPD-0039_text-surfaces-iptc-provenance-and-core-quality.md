@@ -21,6 +21,10 @@ on all 4,759 pages), `agency-credit/2` (the agency's role and the declared use a
 and the other layers stay in force as written; `article_html/0.2.0`, `agency-credit/1`, `text-reuse/1`, the study record and the
 review sample stay as they were, as the evidence of this record.
 
+*Status line 2026-11-16:* **`content-quality/3` superseded as the preferred CORE gate by `content-quality/4`**
+([CPD-0042](CPD-0042_body-control-evaluated-and-bounded-repairs.md)): completeness is measured against the stated articleBody as
+text, and a declared live blog is live coverage. `/3`, its thresholds and the scientific decisions of §1 are unchanged.
+
 ## Context
 
 CPD-0038 left the AI question open and excluded AI-declared texts; the operator decided it on 2026-11-15. The same brief fixes the
