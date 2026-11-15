@@ -1,0 +1,82 @@
+{
+  "fetch_records": 134,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 13,
+  "pending_pack_and_index_bytes": 7744032,
+  "received_body_bytes": 12530277,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 26.21773,
+    "median": 9.863924,
+    "n": 134,
+    "p90": 10.690898
+  },
+  "requests": {
+    "by_outlet": {
+      "ar_la_nacion": {
+        "item": 6,
+        "other": 7
+      },
+      "ar_pagina12": {
+        "item": 6,
+        "other": 5
+      },
+      "cl_biobiochile": {
+        "item": 6,
+        "other": 4
+      },
+      "cr_crhoy": {
+        "item": 0,
+        "other": 5
+      },
+      "cu_juventud_rebelde": {
+        "item": 0,
+        "other": 1
+      },
+      "hn_criterio": {
+        "item": 6,
+        "other": 6
+      },
+      "hn_el_heraldo": {
+        "item": 6,
+        "other": 7
+      },
+      "hn_la_prensa": {
+        "item": 6,
+        "other": 7
+      },
+      "mx_el_universal": {
+        "item": 6,
+        "other": 5
+      },
+      "pa_el_siglo": {
+        "item": 6,
+        "other": 7
+      },
+      "pa_laestrelladepanama": {
+        "item": 6,
+        "other": 7
+      },
+      "pa_metro_libre": {
+        "item": 6,
+        "other": 7
+      },
+      "pe_elperuano": {
+        "item": 6,
+        "other": 4
+      }
+    },
+    "item": 66,
+    "other": 72,
+    "total": 138
+  },
+  "response_classes": {
+    "200": 121,
+    "404": 2,
+    "failed:body_limit_exceeded": 10,
+    "failed:timeout": 1
+  },
+  "run_id": "acq1-20261115T092012103473Z-621c41779dc2",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
