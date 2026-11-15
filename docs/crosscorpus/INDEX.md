@@ -18,6 +18,7 @@ equivalence test and the tense bridge.
 |---|---|
 | [`ANALYSIS_CONTRACT.md`](ANALYSIS_CONTRACT.md) | the contract: evidence from both repositories, O-6 proposals, tables, tokens and counting, value states, release semantics, compatibility view, NLP alignment, equivalence and bridge designs, comparability matrix, hypotheses, proposal to CO.RA.PAN |
 | [`../architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md`](../architecture/PHASE3_SCIENTIFIC_ARCHITECTURE.md) | COPREPAN's text layers from extraction to the contract export |
+| [`SUBTITLE_UNIT_KIND_CHANGE_REQUEST_2026-11-15.md`](SUBTITLE_UNIT_KIND_CHANGE_REQUEST_2026-11-15.md) | CO.PRE.PAN's request to add the written unit kind `subtitle` to `crosscorpus-release/v1` §8 (CPD-0039); proposed, not applied |
 
 ### 1a. The joint release contract `crosscorpus-release/v1` (added 2026-10-08)
 

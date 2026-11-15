@@ -1,0 +1,4891 @@
+{
+ "schema": "coprepan-phase3-metadata-study/v1",
+ "date": "2026-11-15",
+ "decision": "CPD-0039",
+ "population": {
+  "pages": 4759,
+  "outlets": 91,
+  "countries": 20,
+  "what": "every stored 2xx item page of the workspace (October pilot and 24-hour intake, weekend waves of 2026-11-14/15), read from the local packs, offline"
+ },
+ "derivation": {
+  "pages": 4759,
+  "seconds": {
+   "extract_0_1_0": 32.5,
+   "extract_0_2_0": 50.2,
+   "metadata": 3.3,
+   "features_both": 15.6,
+   "text_reuse": 2.2
+  },
+  "site_wide_ai_statements": {},
+  "section_map": {
+   "mapping": "section-map/1",
+   "path": "config/taxonomy/section-map_1.json",
+   "sha256": "d816260ffea27330411859af547ab7106fb31ada20b7807df511a0a6ff861665",
+   "taxonomy": {
+    "extract": "config/taxonomy/iptc-mediatopic_2026-09-30.json",
+    "sha256": "a63216a5880e68e69aa2d8208c708b6ec5f5828f46b6f321c336ac662e789022",
+    "date_released": "2026-09-30T12:00:00+00:00",
+    "source_sha256": "16216d085254db34ae4c6f620fd27ac0fa67f58caf6da537b5306ba99d2166e8"
+   }
+  },
+  "relations": 547
+ },
+ "text_structure": {
+  "extractors": [
+   "article_html/0.1.0",
+   "article_html/0.2.0"
+  ],
+  "body_same": 4734,
+  "body_changed": 25,
+  "version_same": 1788,
+  "version_changed": 2971,
+  "pages_with_subtitle": 2953,
+  "subtitle_blocks_by_basis": {
+   "stated_by_page": 2789,
+   "subtitle_markup": 249
+  },
+  "outlets_with_subtitle": 66,
+  "subtitle_pages_by_outlet": {
+   "ar_clarin": 59,
+   "ar_el_tribuno": 78,
+   "ar_infobae": 51,
+   "ar_la_nacion": 78,
+   "ar_pagina12": 28,
+   "ar_perfil": 57,
+   "ar_rio_negro": 79,
+   "bo_el_deber": 60,
+   "bo_opinion": 0,
+   "cl_biobiochile": 2,
+   "cl_cooperativa": 47,
+   "cl_la_discusion": 0,
+   "cl_la_tercera": 64,
+   "cl_the_clinic": 29,
+   "co_diario_del_huila": 0,
+   "co_el_espectador": 35,
+   "co_el_nuevo_siglo": 35,
+   "co_elcolombiano": 6,
+   "co_elpais": 72,
+   "co_semana": 77,
+   "cr_diario_extra": 0,
+   "cr_la_nacion": 82,
+   "cu_14ymedio": 48,
+   "cu_havanatimes": 0,
+   "cu_juventud_rebelde": 0,
+   "cu_trabajadores": 0,
+   "do_diario_libre": 94,
+   "do_el_nacional": 63,
+   "do_hoy": 74,
+   "do_listin_diario": 47,
+   "ec_el_comercio": 57,
+   "ec_el_mercurio": 0,
+   "ec_el_universo": 61,
+   "ec_expreso": 74,
+   "ec_la_republica_ec": 0,
+   "ec_primicias": 0,
+   "es_abc": 80,
+   "es_el_correo": 78,
+   "es_el_mundo": 78,
+   "es_el_pais": 5,
+   "es_eldiario_es": 46,
+   "es_la_vanguardia": 60,
+   "gt_elsiglo": 1,
+   "gt_emisoras_unidas": 48,
+   "gt_lahora": 0,
+   "gt_prensa_libre": 48,
+   "gt_publinews": 53,
+   "hn_contracorriente": 0,
+   "hn_criterio": 37,
+   "hn_el_heraldo": 0,
+   "hn_hondudiario": 0,
+   "hn_la_prensa": 0,
+   "hn_radio_progreso": 0,
+   "mx_el_universal": 22,
+   "ni_confidencial": 22,
+   "ni_despacho_505": 0,
+   "ni_nicaragua_investiga": 28,
+   "pa_critica": 54,
+   "pa_diaadia": 37,
+   "pa_el_siglo": 5,
+   "pa_la_prensa": 14,
+   "pa_laestrelladepanama": 0,
+   "pa_metro_libre": 1,
+   "pa_midiario": 17,
+   "pa_panama_america": 4,
+   "pe_diario_los_andes": 2,
+   "pe_diario_uno": 1,
+   "pe_diariocorreo": 79,
+   "pe_el_buho": 39,
+   "pe_elperuano": 0,
+   "pe_la_republica": 25,
+   "pr_el_nuevo_dia": 69,
+   "pr_metro_puerto_rico": 59,
+   "pr_noticel": 0,
+   "py_abc_color": 75,
+   "py_la_nacion": 0,
+   "py_noticias_cde": 0,
+   "py_ultima_hora": 24,
+   "sv_diario_co_latino": 0,
+   "sv_el_diario_de_hoy": 67,
+   "uy_el_observador": 50,
+   "uy_el_pais": 3,
+   "uy_ladiaria": 59,
+   "uy_montevideo_portal": 56,
+   "ve_analitica": 0,
+   "ve_correo_del_caroni": 43,
+   "ve_efecto_cocuyo": 24,
+   "ve_el_nacional": 5,
+   "ve_eldiario": 45,
+   "ve_eluniversal": 0,
+   "ve_ultimas_noticias": 33
+  },
+  "ai_summary_module_blocks": {
+   "cl_biobiochile|body": 6,
+   "cl_biobiochile|non_body": 93,
+   "cl_the_clinic|non_body": 39,
+   "co_el_espectador|body": 207,
+   "co_el_espectador|non_body": 585
+  },
+  "pages_whose_body_lost_an_ai_summary": 25
+ },
+ "section_iptc": {
+  "states": {
+   "unknown|section_names_no_topic": 1959,
+   "known|None": 1655,
+   "unknown|no_section_published": 348,
+   "undecided|ambiguous_label": 303,
+   "unknown|unmapped_label": 276,
+   "unknown|generic_or_template_label": 218
+  },
+  "known_share": 0.348,
+  "by_country": {
+   "ar": {
+    "unknown": 274,
+    "known": 168,
+    "undecided": 49
+   },
+   "bo": {
+    "unknown": 106,
+    "known": 18
+   },
+   "cl": {
+    "known": 39,
+    "unknown": 221,
+    "undecided": 17
+   },
+   "co": {
+    "unknown": 179,
+    "known": 114,
+    "undecided": 16
+   },
+   "cr": {
+    "undecided": 22,
+    "unknown": 22,
+    "known": 45
+   },
+   "cu": {
+    "unknown": 118,
+    "known": 30,
+    "undecided": 3
+   },
+   "do": {
+    "unknown": 162,
+    "known": 136,
+    "undecided": 11
+   },
+   "ec": {
+    "unknown": 159,
+    "known": 162,
+    "undecided": 32
+   },
+   "es": {
+    "unknown": 173,
+    "known": 173,
+    "undecided": 48
+   },
+   "gt": {
+    "known": 112,
+    "unknown": 163,
+    "undecided": 3
+   },
+   "hn": {
+    "unknown": 159,
+    "known": 36,
+    "undecided": 3
+   },
+   "mx": {
+    "unknown": 46,
+    "known": 4
+   },
+   "ni": {
+    "unknown": 87,
+    "undecided": 5,
+    "known": 15
+   },
+   "pa": {
+    "unknown": 236,
+    "known": 132,
+    "undecided": 55
+   },
+   "pe": {
+    "unknown": 156,
+    "known": 75,
+    "undecided": 4
+   },
+   "pr": {
+    "unknown": 91,
+    "known": 68,
+    "undecided": 7
+   },
+   "py": {
+    "known": 91,
+    "unknown": 115
+   },
+   "sv": {
+    "unknown": 63,
+    "undecided": 4,
+    "known": 32
+   },
+   "uy": {
+    "known": 82,
+    "unknown": 112,
+    "undecided": 5
+   },
+   "ve": {
+    "unknown": 159,
+    "known": 123,
+    "undecided": 19
+   }
+  },
+  "by_outlet": {
+   "ar_clarin": {
+    "unknown": 50,
+    "known": 22,
+    "undecided": 8
+   },
+   "ar_el_tribuno": {
+    "unknown": 49,
+    "known": 30,
+    "undecided": 4
+   },
+   "ar_infobae": {
+    "unknown": 49,
+    "known": 2
+   },
+   "ar_la_nacion": {
+    "undecided": 16,
+    "known": 41,
+    "unknown": 29
+   },
+   "ar_pagina12": {
+    "unknown": 36
+   },
+   "ar_perfil": {
+    "unknown": 44,
+    "known": 24,
+    "undecided": 5
+   },
+   "ar_rio_negro": {
+    "known": 49,
+    "undecided": 16,
+    "unknown": 17
+   },
+   "bo_el_deber": {
+    "unknown": 63,
+    "known": 9
+   },
+   "bo_opinion": {
+    "unknown": 43,
+    "known": 9
+   },
+   "cl_biobiochile": {
+    "known": 11,
+    "unknown": 26,
+    "undecided": 3
+   },
+   "cl_cooperativa": {
+    "unknown": 67
+   },
+   "cl_la_discusion": {
+    "unknown": 44
+   },
+   "cl_la_tercera": {
+    "unknown": 53,
+    "undecided": 14,
+    "known": 15
+   },
+   "cl_the_clinic": {
+    "known": 13,
+    "unknown": 31
+   },
+   "co_diario_del_huila": {
+    "unknown": 30,
+    "known": 6
+   },
+   "co_el_espectador": {
+    "unknown": 41,
+    "known": 32,
+    "undecided": 2
+   },
+   "co_el_nuevo_siglo": {
+    "known": 14,
+    "unknown": 28
+   },
+   "co_elcolombiano": {
+    "known": 2,
+    "unknown": 4
+   },
+   "co_elpais": {
+    "unknown": 45,
+    "known": 27
+   },
+   "co_semana": {
+    "known": 33,
+    "unknown": 31,
+    "undecided": 14
+   },
+   "cr_diario_extra": {
+    "undecided": 3,
+    "unknown": 2,
+    "known": 1
+   },
+   "cr_la_nacion": {
+    "undecided": 19,
+    "unknown": 20,
+    "known": 44
+   },
+   "cu_14ymedio": {
+    "unknown": 31,
+    "known": 21
+   },
+   "cu_havanatimes": {
+    "unknown": 36,
+    "undecided": 3,
+    "known": 2
+   },
+   "cu_juventud_rebelde": {
+    "unknown": 24,
+    "known": 7
+   },
+   "cu_trabajadores": {
+    "unknown": 27
+   },
+   "do_diario_libre": {
+    "unknown": 41,
+    "known": 48,
+    "undecided": 5
+   },
+   "do_el_nacional": {
+    "known": 42,
+    "unknown": 25
+   },
+   "do_hoy": {
+    "known": 11,
+    "unknown": 57,
+    "undecided": 6
+   },
+   "do_listin_diario": {
+    "unknown": 39,
+    "known": 35
+   },
+   "ec_el_comercio": {
+    "unknown": 30,
+    "known": 24,
+    "undecided": 3
+   },
+   "ec_el_mercurio": {
+    "known": 11,
+    "unknown": 26,
+    "undecided": 3
+   },
+   "ec_el_universo": {
+    "unknown": 33,
+    "known": 31,
+    "undecided": 1
+   },
+   "ec_expreso": {
+    "unknown": 39,
+    "known": 38
+   },
+   "ec_la_republica_ec": {
+    "undecided": 9,
+    "known": 13,
+    "unknown": 14
+   },
+   "ec_primicias": {
+    "known": 45,
+    "unknown": 17,
+    "undecided": 16
+   },
+   "es_abc": {
+    "unknown": 45,
+    "known": 30,
+    "undecided": 7
+   },
+   "es_el_correo": {
+    "unknown": 29,
+    "known": 37,
+    "undecided": 14
+   },
+   "es_el_mundo": {
+    "known": 46,
+    "unknown": 35
+   },
+   "es_el_pais": {
+    "known": 3,
+    "unknown": 2
+   },
+   "es_eldiario_es": {
+    "unknown": 25,
+    "known": 19,
+    "undecided": 22
+   },
+   "es_la_vanguardia": {
+    "known": 38,
+    "unknown": 37,
+    "undecided": 5
+   },
+   "gt_elsiglo": {
+    "known": 9,
+    "unknown": 25
+   },
+   "gt_emisoras_unidas": {
+    "known": 48
+   },
+   "gt_lahora": {
+    "unknown": 60,
+    "known": 9
+   },
+   "gt_prensa_libre": {
+    "known": 35,
+    "unknown": 36,
+    "undecided": 3
+   },
+   "gt_publinews": {
+    "unknown": 42,
+    "known": 11
+   },
+   "hn_contracorriente": {
+    "unknown": 19,
+    "known": 2
+   },
+   "hn_criterio": {
+    "unknown": 23,
+    "known": 18
+   },
+   "hn_el_heraldo": {
+    "unknown": 35,
+    "known": 4
+   },
+   "hn_hondudiario": {
+    "unknown": 29,
+    "known": 9,
+    "undecided": 3
+   },
+   "hn_la_prensa": {
+    "unknown": 37,
+    "known": 3
+   },
+   "hn_radio_progreso": {
+    "unknown": 16
+   },
+   "mx_el_universal": {
+    "unknown": 46,
+    "known": 4
+   },
+   "ni_confidencial": {
+    "unknown": 43,
+    "undecided": 5
+   },
+   "ni_despacho_505": {
+    "unknown": 25,
+    "known": 6
+   },
+   "ni_nicaragua_investiga": {
+    "unknown": 19,
+    "known": 9
+   },
+   "pa_critica": {
+    "unknown": 42,
+    "known": 7,
+    "undecided": 7
+   },
+   "pa_diaadia": {
+    "unknown": 38,
+    "known": 2
+   },
+   "pa_el_siglo": {
+    "unknown": 24,
+    "known": 16
+   },
+   "pa_la_prensa": {
+    "known": 21,
+    "undecided": 22,
+    "unknown": 22
+   },
+   "pa_laestrelladepanama": {
+    "unknown": 32,
+    "known": 8
+   },
+   "pa_metro_libre": {
+    "unknown": 45,
+    "known": 37
+   },
+   "pa_midiario": {
+    "unknown": 22,
+    "known": 31
+   },
+   "pa_panama_america": {
+    "known": 10,
+    "unknown": 11,
+    "undecided": 26
+   },
+   "pe_diario_los_andes": {
+    "unknown": 20
+   },
+   "pe_diario_uno": {
+    "known": 21,
+    "unknown": 28
+   },
+   "pe_diariocorreo": {
+    "unknown": 63,
+    "known": 22
+   },
+   "pe_el_buho": {
+    "undecided": 4,
+    "unknown": 29,
+    "known": 7
+   },
+   "pe_elperuano": {
+    "unknown": 16
+   },
+   "pe_la_republica": {
+    "known": 25
+   },
+   "pr_el_nuevo_dia": {
+    "unknown": 38,
+    "known": 28,
+    "undecided": 4
+   },
+   "pr_metro_puerto_rico": {
+    "unknown": 46,
+    "known": 20
+   },
+   "pr_noticel": {
+    "known": 20,
+    "undecided": 3,
+    "unknown": 7
+   },
+   "py_abc_color": {
+    "known": 55,
+    "unknown": 20
+   },
+   "py_la_nacion": {
+    "unknown": 59,
+    "known": 22
+   },
+   "py_noticias_cde": {
+    "unknown": 15,
+    "known": 1
+   },
+   "py_ultima_hora": {
+    "unknown": 21,
+    "known": 13
+   },
+   "sv_diario_co_latino": {
+    "unknown": 27,
+    "undecided": 4,
+    "known": 1
+   },
+   "sv_el_diario_de_hoy": {
+    "known": 31,
+    "unknown": 36
+   },
+   "uy_el_observador": {
+    "known": 25,
+    "unknown": 38
+   },
+   "uy_el_pais": {
+    "unknown": 4,
+    "known": 2
+   },
+   "uy_ladiaria": {
+    "known": 35,
+    "unknown": 35
+   },
+   "uy_montevideo_portal": {
+    "unknown": 35,
+    "known": 20,
+    "undecided": 5
+   },
+   "ve_analitica": {
+    "unknown": 15,
+    "known": 7
+   },
+   "ve_correo_del_caroni": {
+    "known": 30,
+    "unknown": 9,
+    "undecided": 4
+   },
+   "ve_efecto_cocuyo": {
+    "known": 9,
+    "undecided": 9,
+    "unknown": 12
+   },
+   "ve_el_nacional": {
+    "known": 38,
+    "unknown": 31,
+    "undecided": 3
+   },
+   "ve_eldiario": {
+    "known": 11,
+    "unknown": 35,
+    "undecided": 1
+   },
+   "ve_eluniversal": {
+    "unknown": 13,
+    "known": 10
+   },
+   "ve_ultimas_noticias": {
+    "unknown": 44,
+    "known": 18,
+    "undecided": 2
+   }
+  },
+  "top_concepts": {
+   "medtop:15000000": 566,
+   "medtop:11000000": 276,
+   "medtop:01000000": 256,
+   "medtop:04000000": 256,
+   "medtop:02000000": 123,
+   "medtop:10000000": 54,
+   "medtop:13000000": 40,
+   "medtop:07000000": 31,
+   "medtop:17000000": 18,
+   "medtop:14000000": 14,
+   "medtop:05000000": 12,
+   "medtop:09000000": 12,
+   "medtop:06000000": 11
+  },
+  "bases": {
+   "json_ld_articleSection": 1356,
+   "meta_article_section": 79,
+   "breadcrumb": 43,
+   "url_path": 122,
+   "meta_section": 55
+  },
+  "unmapped_labels_top": [
+   {
+    "outlet_id": "ve_ultimas_noticias",
+    "label": "Actualidad",
+    "pages": 28
+   },
+   {
+    "outlet_id": "pe_diario_los_andes",
+    "label": "DIARIO DIGITAL",
+    "pages": 16
+   },
+   {
+    "outlet_id": "hn_criterio",
+    "label": "Actualidad",
+    "pages": 12
+   },
+   {
+    "outlet_id": "cl_biobiochile",
+    "label": "programas",
+    "pages": 5
+   },
+   {
+    "outlet_id": "ni_confidencial",
+    "label": "PxMolinA",
+    "pages": 5
+   },
+   {
+    "outlet_id": "pr_el_nuevo_dia",
+    "label": "Washington D. C.",
+    "pages": 4
+   },
+   {
+    "outlet_id": "es_el_correo",
+    "label": "Gente Estilo",
+    "pages": 3
+   },
+   {
+    "outlet_id": "ve_ultimas_noticias",
+    "label": "Destacado",
+    "pages": 3
+   },
+   {
+    "outlet_id": "ar_clarin",
+    "label": "Fama",
+    "pages": 2
+   },
+   {
+    "outlet_id": "ar_la_nacion",
+    "label": "LN+",
+    "pages": 2
+   },
+   {
+    "outlet_id": "cl_biobiochile",
+    "label": "servicios",
+    "pages": 2
+   },
+   {
+    "outlet_id": "cl_the_clinic",
+    "label": "Correo",
+    "pages": 2
+   },
+   {
+    "outlet_id": "co_semana",
+    "label": "Vehículos",
+    "pages": 2
+   },
+   {
+    "outlet_id": "cr_la_nacion",
+    "label": "Por tanto",
+    "pages": 2
+   },
+   {
+    "outlet_id": "cu_14ymedio",
+    "label": "Consejos",
+    "pages": 2
+   },
+   {
+    "outlet_id": "cu_havanatimes",
+    "label": "Dmitri Prieto",
+    "pages": 2
+   },
+   {
+    "outlet_id": "do_diario_libre",
+    "label": "revista,sociales",
+    "pages": 2
+   },
+   {
+    "outlet_id": "do_hoy",
+    "label": "Vivir",
+    "pages": 2
+   },
+   {
+    "outlet_id": "do_listin_diario",
+    "label": "La Vida",
+    "pages": 2
+   },
+   {
+    "outlet_id": "ec_el_comercio",
+    "label": "Redes sociales",
+    "pages": 2
+   },
+   {
+    "outlet_id": "ec_expreso",
+    "label": "Trámites y servicios",
+    "pages": 2
+   },
+   {
+    "outlet_id": "es_abc",
+    "label": "play",
+    "pages": 2
+   },
+   {
+    "outlet_id": "es_abc",
+    "label": "bienestar",
+    "pages": 2
+   },
+   {
+    "outlet_id": "es_el_correo",
+    "label": "Jantour",
+    "pages": 2
+   },
+   {
+    "outlet_id": "es_el_mundo",
+    "label": "Actualidad",
+    "pages": 2
+   },
+   {
+    "outlet_id": "es_la_vanguardia",
+    "label": "Más Valorados",
+    "pages": 2
+   },
+   {
+    "outlet_id": "gt_lahora",
+    "label": "LH Bienestar",
+    "pages": 2
+   },
+   {
+    "outlet_id": "gt_publinews",
+    "label": "mujer",
+    "pages": 2
+   },
+   {
+    "outlet_id": "hn_contracorriente",
+    "label": "crónica periodística, agresión, Denuncias, género, justicia,",
+    "pages": 2
+   },
+   {
+    "outlet_id": "hn_criterio",
+    "label": "Datos",
+    "pages": 2
+   },
+   {
+    "outlet_id": "hn_radio_progreso",
+    "label": "Blogueros y blogueras, Johan Mejía, Estado Laico, Honduras, ",
+    "pages": 2
+   },
+   {
+    "outlet_id": "hn_radio_progreso",
+    "label": "Breves informativas, Enfoque de fe",
+    "pages": 2
+   },
+   {
+    "outlet_id": "pa_panama_america",
+    "label": "Variedades",
+    "pages": 2
+   },
+   {
+    "outlet_id": "pe_el_buho",
+    "label": "Verificación",
+    "pages": 2
+   },
+   {
+    "outlet_id": "pe_el_buho",
+    "label": "Pasó en el Perú",
+    "pages": 2
+   },
+   {
+    "outlet_id": "pr_el_nuevo_dia",
+    "label": "Destinos",
+    "pages": 2
+   },
+   {
+    "outlet_id": "uy_el_observador",
+    "label": "Agro",
+    "pages": 2
+   },
+   {
+    "outlet_id": "uy_el_observador",
+    "label": "Café y Negocios",
+    "pages": 2
+   },
+   {
+    "outlet_id": "uy_ladiaria",
+    "label": "Maldonado › Sociedad",
+    "pages": 2
+   },
+   {
+    "outlet_id": "uy_ladiaria",
+    "label": "Lento › Editorial",
+    "pages": 2
+   }
+  ],
+  "outlet_constant_labels": [
+   {
+    "outlet_id": "ar_infobae",
+    "label": "Mundo",
+    "pages": 50,
+    "of": 51,
+    "distinct_first_url_segments": 1,
+    "verdict": "channel_constant"
+   },
+   {
+    "outlet_id": "cl_cooperativa",
+    "label": "noticias",
+    "pages": 67,
+    "of": 67,
+    "distinct_first_url_segments": 1,
+    "verdict": "channel_constant"
+   },
+   {
+    "outlet_id": "gt_emisoras_unidas",
+    "label": "Deportes",
+    "pages": 48,
+    "of": 48,
+    "distinct_first_url_segments": 1,
+    "verdict": "channel_constant"
+   },
+   {
+    "outlet_id": "pe_la_republica",
+    "label": "Economía",
+    "pages": 25,
+    "of": 25,
+    "distinct_first_url_segments": 1,
+    "verdict": "channel_constant"
+   },
+   {
+    "outlet_id": "py_noticias_cde",
+    "label": "ACTUALIDAD",
+    "pages": 16,
+    "of": 16,
+    "distinct_first_url_segments": 10,
+    "verdict": "template_suspect"
+   },
+   {
+    "outlet_id": "ve_eluniversal",
+    "label": "EL UNIVERSAL",
+    "pages": 23,
+    "of": 23,
+    "distinct_first_url_segments": 17,
+    "verdict": "template_suspect"
+   }
+  ]
+ },
+ "legacy_comparison": [
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 779
+  },
+  {
+   "legacy": "sports",
+   "iptc_tops": "medtop:15000000",
+   "scope": "unknown",
+   "pages": 494
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "unknown",
+   "scope": "international",
+   "pages": 444
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "unknown",
+   "scope": "national",
+   "pages": 301
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "national",
+   "pages": 212
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:11000000",
+   "scope": "unknown",
+   "pages": 188
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "international",
+   "pages": 184
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:04000000",
+   "scope": "unknown",
+   "pages": 162
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:01000000",
+   "scope": "unknown",
+   "pages": 160
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "undecided",
+   "scope": "unknown",
+   "pages": 122
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "undecided",
+   "scope": "unknown",
+   "pages": 121
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "subnational",
+   "pages": 119
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "unknown",
+   "scope": "subnational",
+   "pages": 90
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:01000000",
+   "scope": "unknown",
+   "pages": 82
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:02000000",
+   "scope": "unknown",
+   "pages": 52
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "unknown",
+   "scope": "local",
+   "pages": 51
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:11000000",
+   "scope": "unknown",
+   "pages": 47
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:04000000",
+   "scope": "unknown",
+   "pages": 43
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "local",
+   "pages": 42
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "undecided",
+   "scope": "unknown",
+   "pages": 42
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:02000000",
+   "scope": "unknown",
+   "pages": 38
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:15000000",
+   "scope": "unknown",
+   "pages": 34
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:10000000",
+   "scope": "unknown",
+   "pages": 32
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:13000000",
+   "scope": "unknown",
+   "pages": 31
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 27
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:07000000",
+   "scope": "unknown",
+   "pages": 14
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:10000000",
+   "scope": "unknown",
+   "pages": 14
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:14000000",
+   "scope": "unknown",
+   "pages": 12
+  },
+  {
+   "legacy": "service_misc",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 11
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "unknown",
+   "scope": "national",
+   "pages": 10
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:06000000",
+   "scope": "unknown",
+   "pages": 10
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:13000000",
+   "scope": "unknown",
+   "pages": 9
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "unknown",
+   "scope": "regional",
+   "pages": 9
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:04000000,medtop:09000000",
+   "scope": "unknown",
+   "pages": 9
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:07000000",
+   "scope": "unknown",
+   "pages": 8
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "undecided",
+   "scope": "subnational",
+   "pages": 8
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:02000000",
+   "scope": "national",
+   "pages": 7
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:17000000",
+   "scope": "unknown",
+   "pages": 6
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:07000000",
+   "scope": "national",
+   "pages": 6
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:04000000",
+   "scope": "national",
+   "pages": 6
+  },
+  {
+   "legacy": "sports",
+   "iptc_tops": "medtop:15000000",
+   "scope": "national",
+   "pages": 5
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 4
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 3
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:05000000",
+   "scope": "unknown",
+   "pages": 3
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "undecided",
+   "scope": "national",
+   "pages": 3
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:05000000",
+   "scope": "national",
+   "pages": 3
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:11000000",
+   "scope": "national",
+   "pages": 3
+  },
+  {
+   "legacy": "sports",
+   "iptc_tops": "unknown",
+   "scope": "unknown",
+   "pages": 3
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "undecided",
+   "scope": "national",
+   "pages": 3
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "unknown",
+   "scope": "regional",
+   "pages": 3
+  },
+  {
+   "legacy": "culture_lifestyle",
+   "iptc_tops": "medtop:11000000",
+   "scope": "unknown",
+   "pages": 3
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:09000000",
+   "scope": "unknown",
+   "pages": 3
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:02000000",
+   "scope": "subnational",
+   "pages": 2
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:04000000",
+   "scope": "international",
+   "pages": 2
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "undecided",
+   "scope": "international",
+   "pages": 2
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:05000000",
+   "scope": "unknown",
+   "pages": 2
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:11000000",
+   "scope": "subnational",
+   "pages": 2
+  },
+  {
+   "legacy": "other_unclear",
+   "iptc_tops": "medtop:07000000,medtop:14000000",
+   "scope": "unknown",
+   "pages": 2
+  },
+  {
+   "legacy": "local_regional",
+   "iptc_tops": "medtop:02000000",
+   "scope": "national",
+   "pages": 2
+  },
+  {
+   "legacy": "hard_news",
+   "iptc_tops": "medtop:05000000",
+   "scope": "unknown",
+   "pages": 2
+  }
+ ],
+ "editorial_scope": {
+  "states": {
+   "unknown|no_scope_label": 2683,
+   "known|None": 1728,
+   "unknown|no_section_published": 348
+  },
+  "known_share": 0.363,
+  "by_country": {
+   "ar": {
+    "known": 190,
+    "unknown": 301
+   },
+   "bo": {
+    "known": 98,
+    "unknown": 26
+   },
+   "cl": {
+    "unknown": 223,
+    "known": 54
+   },
+   "co": {
+    "unknown": 199,
+    "known": 110
+   },
+   "cr": {
+    "unknown": 77,
+    "known": 12
+   },
+   "cu": {
+    "unknown": 79,
+    "known": 72
+   },
+   "do": {
+    "known": 135,
+    "unknown": 174
+   },
+   "ec": {
+    "known": 116,
+    "unknown": 237
+   },
+   "es": {
+    "known": 130,
+    "unknown": 264
+   },
+   "gt": {
+    "unknown": 174,
+    "known": 104
+   },
+   "hn": {
+    "unknown": 159,
+    "known": 39
+   },
+   "mx": {
+    "unknown": 48,
+    "known": 2
+   },
+   "ni": {
+    "unknown": 52,
+    "known": 55
+   },
+   "pa": {
+    "known": 151,
+    "unknown": 272
+   },
+   "pe": {
+    "unknown": 152,
+    "known": 83
+   },
+   "pr": {
+    "unknown": 100,
+    "known": 66
+   },
+   "py": {
+    "known": 134,
+    "unknown": 72
+   },
+   "sv": {
+    "unknown": 46,
+    "known": 53
+   },
+   "uy": {
+    "unknown": 161,
+    "known": 38
+   },
+   "ve": {
+    "known": 86,
+    "unknown": 215
+   }
+  },
+  "by_outlet": {
+   "ar_clarin": {
+    "known": 40,
+    "unknown": 40
+   },
+   "ar_el_tribuno": {
+    "known": 50,
+    "unknown": 33
+   },
+   "ar_infobae": {
+    "known": 51
+   },
+   "ar_la_nacion": {
+    "unknown": 65,
+    "known": 21
+   },
+   "ar_pagina12": {
+    "unknown": 36
+   },
+   "ar_perfil": {
+    "unknown": 50,
+    "known": 23
+   },
+   "ar_rio_negro": {
+    "unknown": 77,
+    "known": 5
+   },
+   "bo_el_deber": {
+    "known": 57,
+    "unknown": 15
+   },
+   "bo_opinion": {
+    "known": 41,
+    "unknown": 11
+   },
+   "cl_biobiochile": {
+    "unknown": 24,
+    "known": 16
+   },
+   "cl_cooperativa": {
+    "unknown": 67
+   },
+   "cl_la_discusion": {
+    "unknown": 44
+   },
+   "cl_la_tercera": {
+    "unknown": 60,
+    "known": 22
+   },
+   "cl_the_clinic": {
+    "unknown": 28,
+    "known": 16
+   },
+   "co_diario_del_huila": {
+    "unknown": 27,
+    "known": 9
+   },
+   "co_el_espectador": {
+    "known": 15,
+    "unknown": 60
+   },
+   "co_el_nuevo_siglo": {
+    "unknown": 16,
+    "known": 26
+   },
+   "co_elcolombiano": {
+    "unknown": 3,
+    "known": 3
+   },
+   "co_elpais": {
+    "known": 31,
+    "unknown": 41
+   },
+   "co_semana": {
+    "unknown": 52,
+    "known": 26
+   },
+   "cr_diario_extra": {
+    "unknown": 4,
+    "known": 2
+   },
+   "cr_la_nacion": {
+    "unknown": 73,
+    "known": 10
+   },
+   "cu_14ymedio": {
+    "unknown": 26,
+    "known": 26
+   },
+   "cu_havanatimes": {
+    "known": 25,
+    "unknown": 16
+   },
+   "cu_juventud_rebelde": {
+    "known": 21,
+    "unknown": 10
+   },
+   "cu_trabajadores": {
+    "unknown": 27
+   },
+   "do_diario_libre": {
+    "known": 34,
+    "unknown": 60
+   },
+   "do_el_nacional": {
+    "known": 28,
+    "unknown": 39
+   },
+   "do_hoy": {
+    "unknown": 34,
+    "known": 40
+   },
+   "do_listin_diario": {
+    "unknown": 41,
+    "known": 33
+   },
+   "ec_el_comercio": {
+    "known": 16,
+    "unknown": 41
+   },
+   "ec_el_mercurio": {
+    "unknown": 18,
+    "known": 22
+   },
+   "ec_el_universo": {
+    "known": 25,
+    "unknown": 40
+   },
+   "ec_expreso": {
+    "known": 31,
+    "unknown": 46
+   },
+   "ec_la_republica_ec": {
+    "unknown": 27,
+    "known": 9
+   },
+   "ec_primicias": {
+    "unknown": 65,
+    "known": 13
+   },
+   "es_abc": {
+    "known": 39,
+    "unknown": 43
+   },
+   "es_el_correo": {
+    "unknown": 60,
+    "known": 20
+   },
+   "es_el_mundo": {
+    "unknown": 50,
+    "known": 31
+   },
+   "es_el_pais": {
+    "unknown": 4,
+    "known": 1
+   },
+   "es_eldiario_es": {
+    "known": 25,
+    "unknown": 41
+   },
+   "es_la_vanguardia": {
+    "unknown": 66,
+    "known": 14
+   },
+   "gt_elsiglo": {
+    "unknown": 33,
+    "known": 1
+   },
+   "gt_emisoras_unidas": {
+    "unknown": 48
+   },
+   "gt_lahora": {
+    "known": 54,
+    "unknown": 15
+   },
+   "gt_prensa_libre": {
+    "unknown": 34,
+    "known": 40
+   },
+   "gt_publinews": {
+    "unknown": 44,
+    "known": 9
+   },
+   "hn_contracorriente": {
+    "unknown": 17,
+    "known": 4
+   },
+   "hn_criterio": {
+    "unknown": 41
+   },
+   "hn_el_heraldo": {
+    "unknown": 39
+   },
+   "hn_hondudiario": {
+    "known": 31,
+    "unknown": 10
+   },
+   "hn_la_prensa": {
+    "unknown": 36,
+    "known": 4
+   },
+   "hn_radio_progreso": {
+    "unknown": 16
+   },
+   "mx_el_universal": {
+    "unknown": 48,
+    "known": 2
+   },
+   "ni_confidencial": {
+    "unknown": 37,
+    "known": 11
+   },
+   "ni_despacho_505": {
+    "known": 25,
+    "unknown": 6
+   },
+   "ni_nicaragua_investiga": {
+    "known": 19,
+    "unknown": 9
+   },
+   "pa_critica": {
+    "known": 41,
+    "unknown": 15
+   },
+   "pa_diaadia": {
+    "known": 30,
+    "unknown": 10
+   },
+   "pa_el_siglo": {
+    "known": 6,
+    "unknown": 34
+   },
+   "pa_la_prensa": {
+    "unknown": 59,
+    "known": 6
+   },
+   "pa_laestrelladepanama": {
+    "unknown": 35,
+    "known": 5
+   },
+   "pa_metro_libre": {
+    "unknown": 48,
+    "known": 34
+   },
+   "pa_midiario": {
+    "known": 22,
+    "unknown": 31
+   },
+   "pa_panama_america": {
+    "unknown": 40,
+    "known": 7
+   },
+   "pe_diario_los_andes": {
+    "unknown": 16,
+    "known": 4
+   },
+   "pe_diario_uno": {
+    "unknown": 46,
+    "known": 3
+   },
+   "pe_diariocorreo": {
+    "known": 60,
+    "unknown": 25
+   },
+   "pe_el_buho": {
+    "unknown": 24,
+    "known": 16
+   },
+   "pe_elperuano": {
+    "unknown": 16
+   },
+   "pe_la_republica": {
+    "unknown": 25
+   },
+   "pr_el_nuevo_dia": {
+    "unknown": 50,
+    "known": 20
+   },
+   "pr_metro_puerto_rico": {
+    "known": 40,
+    "unknown": 26
+   },
+   "pr_noticel": {
+    "unknown": 24,
+    "known": 6
+   },
+   "py_abc_color": {
+    "known": 74,
+    "unknown": 1
+   },
+   "py_la_nacion": {
+    "known": 27,
+    "unknown": 54
+   },
+   "py_noticias_cde": {
+    "known": 16
+   },
+   "py_ultima_hora": {
+    "known": 17,
+    "unknown": 17
+   },
+   "sv_diario_co_latino": {
+    "unknown": 8,
+    "known": 24
+   },
+   "sv_el_diario_de_hoy": {
+    "unknown": 38,
+    "known": 29
+   },
+   "uy_el_observador": {
+    "unknown": 47,
+    "known": 16
+   },
+   "uy_el_pais": {
+    "unknown": 6
+   },
+   "uy_ladiaria": {
+    "unknown": 63,
+    "known": 7
+   },
+   "uy_montevideo_portal": {
+    "known": 15,
+    "unknown": 45
+   },
+   "ve_analitica": {
+    "known": 2,
+    "unknown": 20
+   },
+   "ve_correo_del_caroni": {
+    "unknown": 35,
+    "known": 8
+   },
+   "ve_efecto_cocuyo": {
+    "unknown": 20,
+    "known": 10
+   },
+   "ve_el_nacional": {
+    "unknown": 40,
+    "known": 32
+   },
+   "ve_eldiario": {
+    "unknown": 23,
+    "known": 24
+   },
+   "ve_eluniversal": {
+    "unknown": 21,
+    "known": 2
+   },
+   "ve_ultimas_noticias": {
+    "unknown": 56,
+    "known": 8
+   }
+  },
+  "values": {
+   "international": 675,
+   "local": 94,
+   "subnational": 224,
+   "national": 722,
+   "regional": 13
+  }
+ },
+ "genre_placement": {
+  "states": {
+   "unknown|no_genre_section": 4047,
+   "known|None": 364,
+   "unknown|no_section_published": 348
+  },
+  "known_share": 0.076,
+  "by_country": {
+   "ar": {
+    "unknown": 466,
+    "known": 25
+   },
+   "bo": {
+    "unknown": 119,
+    "known": 5
+   },
+   "cl": {
+    "unknown": 245,
+    "known": 32
+   },
+   "co": {
+    "unknown": 276,
+    "known": 33
+   },
+   "cr": {
+    "unknown": 81,
+    "known": 8
+   },
+   "cu": {
+    "unknown": 138,
+    "known": 13
+   },
+   "do": {
+    "unknown": 282,
+    "known": 27
+   },
+   "ec": {
+    "unknown": 322,
+    "known": 31
+   },
+   "es": {
+    "unknown": 375,
+    "known": 19
+   },
+   "gt": {
+    "unknown": 240,
+    "known": 38
+   },
+   "hn": {
+    "unknown": 180,
+    "known": 18
+   },
+   "mx": {
+    "unknown": 50
+   },
+   "ni": {
+    "unknown": 86,
+    "known": 21
+   },
+   "pa": {
+    "unknown": 391,
+    "known": 32
+   },
+   "pe": {
+    "unknown": 234,
+    "known": 1
+   },
+   "pr": {
+    "unknown": 158,
+    "known": 8
+   },
+   "py": {
+    "unknown": 200,
+    "known": 6
+   },
+   "sv": {
+    "unknown": 98,
+    "known": 1
+   },
+   "uy": {
+    "unknown": 168,
+    "known": 31
+   },
+   "ve": {
+    "unknown": 286,
+    "known": 15
+   }
+  },
+  "by_outlet": {
+   "ar_clarin": {
+    "unknown": 77,
+    "known": 3
+   },
+   "ar_el_tribuno": {
+    "unknown": 81,
+    "known": 2
+   },
+   "ar_infobae": {
+    "unknown": 51
+   },
+   "ar_la_nacion": {
+    "unknown": 82,
+    "known": 4
+   },
+   "ar_pagina12": {
+    "unknown": 36
+   },
+   "ar_perfil": {
+    "unknown": 61,
+    "known": 12
+   },
+   "ar_rio_negro": {
+    "unknown": 78,
+    "known": 4
+   },
+   "bo_el_deber": {
+    "unknown": 67,
+    "known": 5
+   },
+   "bo_opinion": {
+    "unknown": 52
+   },
+   "cl_biobiochile": {
+    "unknown": 37,
+    "known": 3
+   },
+   "cl_cooperativa": {
+    "unknown": 67
+   },
+   "cl_la_discusion": {
+    "unknown": 44
+   },
+   "cl_la_tercera": {
+    "unknown": 63,
+    "known": 19
+   },
+   "cl_the_clinic": {
+    "unknown": 34,
+    "known": 10
+   },
+   "co_diario_del_huila": {
+    "unknown": 34,
+    "known": 2
+   },
+   "co_el_espectador": {
+    "unknown": 57,
+    "known": 18
+   },
+   "co_el_nuevo_siglo": {
+    "unknown": 42
+   },
+   "co_elcolombiano": {
+    "unknown": 6
+   },
+   "co_elpais": {
+    "unknown": 59,
+    "known": 13
+   },
+   "co_semana": {
+    "unknown": 78
+   },
+   "cr_diario_extra": {
+    "unknown": 6
+   },
+   "cr_la_nacion": {
+    "unknown": 75,
+    "known": 8
+   },
+   "cu_14ymedio": {
+    "unknown": 52
+   },
+   "cu_havanatimes": {
+    "unknown": 29,
+    "known": 12
+   },
+   "cu_juventud_rebelde": {
+    "unknown": 30,
+    "known": 1
+   },
+   "cu_trabajadores": {
+    "unknown": 27
+   },
+   "do_diario_libre": {
+    "unknown": 91,
+    "known": 3
+   },
+   "do_el_nacional": {
+    "unknown": 65,
+    "known": 2
+   },
+   "do_hoy": {
+    "unknown": 60,
+    "known": 14
+   },
+   "do_listin_diario": {
+    "known": 8,
+    "unknown": 66
+   },
+   "ec_el_comercio": {
+    "unknown": 51,
+    "known": 6
+   },
+   "ec_el_mercurio": {
+    "unknown": 32,
+    "known": 8
+   },
+   "ec_el_universo": {
+    "unknown": 56,
+    "known": 9
+   },
+   "ec_expreso": {
+    "unknown": 72,
+    "known": 5
+   },
+   "ec_la_republica_ec": {
+    "unknown": 34,
+    "known": 2
+   },
+   "ec_primicias": {
+    "unknown": 77,
+    "known": 1
+   },
+   "es_abc": {
+    "unknown": 81,
+    "known": 1
+   },
+   "es_el_correo": {
+    "unknown": 80
+   },
+   "es_el_mundo": {
+    "unknown": 80,
+    "known": 1
+   },
+   "es_el_pais": {
+    "unknown": 5
+   },
+   "es_eldiario_es": {
+    "unknown": 66
+   },
+   "es_la_vanguardia": {
+    "unknown": 63,
+    "known": 17
+   },
+   "gt_elsiglo": {
+    "unknown": 10,
+    "known": 24
+   },
+   "gt_emisoras_unidas": {
+    "unknown": 48
+   },
+   "gt_lahora": {
+    "unknown": 63,
+    "known": 6
+   },
+   "gt_prensa_libre": {
+    "unknown": 66,
+    "known": 8
+   },
+   "gt_publinews": {
+    "unknown": 53
+   },
+   "hn_contracorriente": {
+    "unknown": 20,
+    "known": 1
+   },
+   "hn_criterio": {
+    "known": 7,
+    "unknown": 34
+   },
+   "hn_el_heraldo": {
+    "unknown": 39
+   },
+   "hn_hondudiario": {
+    "unknown": 41
+   },
+   "hn_la_prensa": {
+    "unknown": 40
+   },
+   "hn_radio_progreso": {
+    "known": 10,
+    "unknown": 6
+   },
+   "mx_el_universal": {
+    "unknown": 50
+   },
+   "ni_confidencial": {
+    "unknown": 27,
+    "known": 21
+   },
+   "ni_despacho_505": {
+    "unknown": 31
+   },
+   "ni_nicaragua_investiga": {
+    "unknown": 28
+   },
+   "pa_critica": {
+    "unknown": 56
+   },
+   "pa_diaadia": {
+    "unknown": 40
+   },
+   "pa_el_siglo": {
+    "unknown": 32,
+    "known": 8
+   },
+   "pa_la_prensa": {
+    "unknown": 51,
+    "known": 14
+   },
+   "pa_laestrelladepanama": {
+    "unknown": 37,
+    "known": 3
+   },
+   "pa_metro_libre": {
+    "unknown": 77,
+    "known": 5
+   },
+   "pa_midiario": {
+    "unknown": 53
+   },
+   "pa_panama_america": {
+    "unknown": 45,
+    "known": 2
+   },
+   "pe_diario_los_andes": {
+    "unknown": 20
+   },
+   "pe_diario_uno": {
+    "unknown": 49
+   },
+   "pe_diariocorreo": {
+    "unknown": 84,
+    "known": 1
+   },
+   "pe_el_buho": {
+    "unknown": 40
+   },
+   "pe_elperuano": {
+    "unknown": 16
+   },
+   "pe_la_republica": {
+    "unknown": 25
+   },
+   "pr_el_nuevo_dia": {
+    "unknown": 63,
+    "known": 7
+   },
+   "pr_metro_puerto_rico": {
+    "unknown": 65,
+    "known": 1
+   },
+   "pr_noticel": {
+    "unknown": 30
+   },
+   "py_abc_color": {
+    "unknown": 75
+   },
+   "py_la_nacion": {
+    "unknown": 75,
+    "known": 6
+   },
+   "py_noticias_cde": {
+    "unknown": 16
+   },
+   "py_ultima_hora": {
+    "unknown": 34
+   },
+   "sv_diario_co_latino": {
+    "unknown": 31,
+    "known": 1
+   },
+   "sv_el_diario_de_hoy": {
+    "unknown": 67
+   },
+   "uy_el_observador": {
+    "unknown": 45,
+    "known": 18
+   },
+   "uy_el_pais": {
+    "known": 3,
+    "unknown": 3
+   },
+   "uy_ladiaria": {
+    "unknown": 60,
+    "known": 10
+   },
+   "uy_montevideo_portal": {
+    "unknown": 60
+   },
+   "ve_analitica": {
+    "unknown": 11,
+    "known": 11
+   },
+   "ve_correo_del_caroni": {
+    "unknown": 43
+   },
+   "ve_efecto_cocuyo": {
+    "unknown": 28,
+    "known": 2
+   },
+   "ve_el_nacional": {
+    "unknown": 71,
+    "known": 1
+   },
+   "ve_eldiario": {
+    "unknown": 47
+   },
+   "ve_eluniversal": {
+    "unknown": 22,
+    "known": 1
+   },
+   "ve_ultimas_noticias": {
+    "unknown": 64
+   }
+  },
+  "values": {
+   "opinion": 278,
+   "editorial": 16,
+   "letters": 15,
+   "reportage": 21,
+   "cartoon": 4,
+   "interview": 1,
+   "analysis": 9,
+   "obituary": 16,
+   "essay": 4
+  }
+ },
+ "genre_declared": {
+  "states": {
+   "unknown|no_genre_declared": 4370,
+   "unknown|genre_values_not_read": 263,
+   "known|None": 126
+  },
+  "known_share": 0.026,
+  "by_country": {
+   "ar": {
+    "unknown": 444,
+    "known": 47
+   },
+   "bo": {
+    "unknown": 124
+   },
+   "cl": {
+    "unknown": 275,
+    "known": 2
+   },
+   "co": {
+    "unknown": 307,
+    "known": 2
+   },
+   "cr": {
+    "unknown": 86,
+    "known": 3
+   },
+   "cu": {
+    "unknown": 151
+   },
+   "do": {
+    "unknown": 309
+   },
+   "ec": {
+    "unknown": 343,
+    "known": 10
+   },
+   "es": {
+    "unknown": 359,
+    "known": 35
+   },
+   "gt": {
+    "unknown": 277,
+    "known": 1
+   },
+   "hn": {
+    "unknown": 198
+   },
+   "mx": {
+    "unknown": 50
+   },
+   "ni": {
+    "unknown": 107
+   },
+   "pa": {
+    "unknown": 423
+   },
+   "pe": {
+    "unknown": 231,
+    "known": 4
+   },
+   "pr": {
+    "unknown": 151,
+    "known": 15
+   },
+   "py": {
+    "unknown": 206
+   },
+   "sv": {
+    "unknown": 99
+   },
+   "uy": {
+    "unknown": 197,
+    "known": 2
+   },
+   "ve": {
+    "unknown": 296,
+    "known": 5
+   }
+  },
+  "by_outlet": {
+   "ar_clarin": {
+    "unknown": 73,
+    "known": 7
+   },
+   "ar_el_tribuno": {
+    "unknown": 83
+   },
+   "ar_infobae": {
+    "unknown": 51
+   },
+   "ar_la_nacion": {
+    "unknown": 76,
+    "known": 10
+   },
+   "ar_pagina12": {
+    "known": 30,
+    "unknown": 6
+   },
+   "ar_perfil": {
+    "unknown": 73
+   },
+   "ar_rio_negro": {
+    "unknown": 82
+   },
+   "bo_el_deber": {
+    "unknown": 72
+   },
+   "bo_opinion": {
+    "unknown": 52
+   },
+   "cl_biobiochile": {
+    "unknown": 40
+   },
+   "cl_cooperativa": {
+    "unknown": 67
+   },
+   "cl_la_discusion": {
+    "unknown": 44
+   },
+   "cl_la_tercera": {
+    "unknown": 80,
+    "known": 2
+   },
+   "cl_the_clinic": {
+    "unknown": 44
+   },
+   "co_diario_del_huila": {
+    "unknown": 36
+   },
+   "co_el_espectador": {
+    "unknown": 75
+   },
+   "co_el_nuevo_siglo": {
+    "unknown": 42
+   },
+   "co_elcolombiano": {
+    "unknown": 6
+   },
+   "co_elpais": {
+    "unknown": 71,
+    "known": 1
+   },
+   "co_semana": {
+    "unknown": 77,
+    "known": 1
+   },
+   "cr_diario_extra": {
+    "unknown": 6
+   },
+   "cr_la_nacion": {
+    "unknown": 80,
+    "known": 3
+   },
+   "cu_14ymedio": {
+    "unknown": 52
+   },
+   "cu_havanatimes": {
+    "unknown": 41
+   },
+   "cu_juventud_rebelde": {
+    "unknown": 31
+   },
+   "cu_trabajadores": {
+    "unknown": 27
+   },
+   "do_diario_libre": {
+    "unknown": 94
+   },
+   "do_el_nacional": {
+    "unknown": 67
+   },
+   "do_hoy": {
+    "unknown": 74
+   },
+   "do_listin_diario": {
+    "unknown": 74
+   },
+   "ec_el_comercio": {
+    "unknown": 57
+   },
+   "ec_el_mercurio": {
+    "unknown": 40
+   },
+   "ec_el_universo": {
+    "unknown": 65
+   },
+   "ec_expreso": {
+    "unknown": 71,
+    "known": 6
+   },
+   "ec_la_republica_ec": {
+    "unknown": 36
+   },
+   "ec_primicias": {
+    "unknown": 74,
+    "known": 4
+   },
+   "es_abc": {
+    "unknown": 75,
+    "known": 7
+   },
+   "es_el_correo": {
+    "unknown": 76,
+    "known": 4
+   },
+   "es_el_mundo": {
+    "unknown": 77,
+    "known": 4
+   },
+   "es_el_pais": {
+    "unknown": 5
+   },
+   "es_eldiario_es": {
+    "unknown": 66
+   },
+   "es_la_vanguardia": {
+    "unknown": 60,
+    "known": 20
+   },
+   "gt_elsiglo": {
+    "unknown": 34
+   },
+   "gt_emisoras_unidas": {
+    "unknown": 48
+   },
+   "gt_lahora": {
+    "unknown": 69
+   },
+   "gt_prensa_libre": {
+    "unknown": 73,
+    "known": 1
+   },
+   "gt_publinews": {
+    "unknown": 53
+   },
+   "hn_contracorriente": {
+    "unknown": 21
+   },
+   "hn_criterio": {
+    "unknown": 41
+   },
+   "hn_el_heraldo": {
+    "unknown": 39
+   },
+   "hn_hondudiario": {
+    "unknown": 41
+   },
+   "hn_la_prensa": {
+    "unknown": 40
+   },
+   "hn_radio_progreso": {
+    "unknown": 16
+   },
+   "mx_el_universal": {
+    "unknown": 50
+   },
+   "ni_confidencial": {
+    "unknown": 48
+   },
+   "ni_despacho_505": {
+    "unknown": 31
+   },
+   "ni_nicaragua_investiga": {
+    "unknown": 28
+   },
+   "pa_critica": {
+    "unknown": 56
+   },
+   "pa_diaadia": {
+    "unknown": 40
+   },
+   "pa_el_siglo": {
+    "unknown": 40
+   },
+   "pa_la_prensa": {
+    "unknown": 65
+   },
+   "pa_laestrelladepanama": {
+    "unknown": 40
+   },
+   "pa_metro_libre": {
+    "unknown": 82
+   },
+   "pa_midiario": {
+    "unknown": 53
+   },
+   "pa_panama_america": {
+    "unknown": 47
+   },
+   "pe_diario_los_andes": {
+    "unknown": 20
+   },
+   "pe_diario_uno": {
+    "unknown": 49
+   },
+   "pe_diariocorreo": {
+    "unknown": 85
+   },
+   "pe_el_buho": {
+    "unknown": 40
+   },
+   "pe_elperuano": {
+    "unknown": 16
+   },
+   "pe_la_republica": {
+    "unknown": 21,
+    "known": 4
+   },
+   "pr_el_nuevo_dia": {
+    "unknown": 55,
+    "known": 15
+   },
+   "pr_metro_puerto_rico": {
+    "unknown": 66
+   },
+   "pr_noticel": {
+    "unknown": 30
+   },
+   "py_abc_color": {
+    "unknown": 75
+   },
+   "py_la_nacion": {
+    "unknown": 81
+   },
+   "py_noticias_cde": {
+    "unknown": 16
+   },
+   "py_ultima_hora": {
+    "unknown": 34
+   },
+   "sv_diario_co_latino": {
+    "unknown": 32
+   },
+   "sv_el_diario_de_hoy": {
+    "unknown": 67
+   },
+   "uy_el_observador": {
+    "unknown": 62,
+    "known": 1
+   },
+   "uy_el_pais": {
+    "unknown": 6
+   },
+   "uy_ladiaria": {
+    "unknown": 69,
+    "known": 1
+   },
+   "uy_montevideo_portal": {
+    "unknown": 60
+   },
+   "ve_analitica": {
+    "unknown": 22
+   },
+   "ve_correo_del_caroni": {
+    "unknown": 43
+   },
+   "ve_efecto_cocuyo": {
+    "unknown": 30
+   },
+   "ve_el_nacional": {
+    "unknown": 72
+   },
+   "ve_eldiario": {
+    "unknown": 42,
+    "known": 5
+   },
+   "ve_eluniversal": {
+    "unknown": 23
+   },
+   "ve_ultimas_noticias": {
+    "unknown": 64
+   }
+  },
+  "values": {
+   "live_coverage": {
+    "pages": 70,
+    "outlets": {
+     "ar_pagina12": 30,
+     "ar_la_nacion": 6,
+     "ec_expreso": 6,
+     "ar_clarin": 4,
+     "ec_primicias": 4,
+     "es_abc": 4,
+     "pe_la_republica": 4,
+     "cr_la_nacion": 3,
+     "cl_la_tercera": 2,
+     "es_el_correo": 2,
+     "co_elpais": 1,
+     "co_semana": 1,
+     "es_la_vanguardia": 1,
+     "gt_prensa_libre": 1,
+     "uy_el_observador": 1
+    }
+   },
+   "opinion": {
+    "pages": 50,
+    "outlets": {
+     "es_la_vanguardia": 19,
+     "pr_el_nuevo_dia": 12,
+     "ve_eldiario": 5,
+     "es_el_mundo": 4,
+     "ar_clarin": 3,
+     "es_abc": 3,
+     "ar_la_nacion": 2,
+     "es_el_correo": 2
+    }
+   },
+   "analysis": {
+    "pages": 2,
+    "outlets": {
+     "ar_la_nacion": 2
+    }
+   },
+   "editorial": {
+    "pages": 1,
+    "outlets": {
+     "es_la_vanguardia": 1
+    }
+   },
+   "background": {
+    "pages": 2,
+    "outlets": {
+     "pr_el_nuevo_dia": 2
+    }
+   },
+   "review": {
+    "pages": 1,
+    "outlets": {
+     "pr_el_nuevo_dia": 1
+    }
+   },
+   "satire": {
+    "pages": 1,
+    "outlets": {
+     "uy_ladiaria": 1
+    }
+   }
+  },
+  "placement_vs_declared": {
+   "opinion / -": 249,
+   "- / live_coverage": 70,
+   "opinion / opinion": 27,
+   "reportage / -": 21,
+   "- / opinion": 20,
+   "obituary / -": 16,
+   "letters / -": 15,
+   "editorial / -": 14,
+   "analysis / -": 9,
+   "cartoon / -": 4,
+   "essay / -": 4,
+   "editorial / opinion": 2,
+   "- / background": 2,
+   "- / analysis": 1,
+   "opinion / analysis": 1,
+   "interview / -": 1,
+   "opinion / editorial,opinion": 1,
+   "- / review": 1,
+   "- / satire": 1
+  },
+  "json_ld_types_by_outlet": {
+   "NewsArticle": {
+    "pages": 3512,
+    "top_outlets": {
+     "do_diario_libre": 94,
+     "ar_el_tribuno": 83,
+     "cr_la_nacion": 83,
+     "ar_la_nacion": 82,
+     "es_el_mundo": 81
+    },
+    "outlet_share": {
+     "do_diario_libre": 1.0,
+     "ar_el_tribuno": 1.0,
+     "cr_la_nacion": 1.0,
+     "ar_la_nacion": 0.95,
+     "es_el_mundo": 1.0
+    }
+   },
+   "Article": {
+    "pages": 594,
+    "top_outlets": {
+     "gt_lahora": 69,
+     "ve_ultimas_noticias": 64,
+     "pe_diario_uno": 49,
+     "cl_the_clinic": 44,
+     "cu_havanatimes": 41
+    },
+    "outlet_share": {
+     "gt_lahora": 1.0,
+     "ve_ultimas_noticias": 1.0,
+     "pe_diario_uno": 1.0,
+     "cl_the_clinic": 1.0,
+     "cu_havanatimes": 1.0
+    }
+   },
+   "ReportageNewsArticle": {
+    "pages": 273,
+    "top_outlets": {
+     "es_el_mundo": 77,
+     "pe_diariocorreo": 63,
+     "pr_el_nuevo_dia": 37,
+     "ve_eldiario": 31,
+     "ar_rio_negro": 26
+    },
+    "outlet_share": {
+     "es_el_mundo": 0.95,
+     "pe_diariocorreo": 0.74,
+     "pr_el_nuevo_dia": 0.53,
+     "ve_eldiario": 0.66,
+     "ar_rio_negro": 0.32
+    }
+   },
+   "BlogPosting": {
+    "pages": 223,
+    "top_outlets": {
+     "sv_el_diario_de_hoy": 67,
+     "ve_correo_del_caroni": 43,
+     "ar_pagina12": 30,
+     "pr_noticel": 30,
+     "hn_radio_progreso": 16
+    },
+    "outlet_share": {
+     "sv_el_diario_de_hoy": 1.0,
+     "ve_correo_del_caroni": 1.0,
+     "ar_pagina12": 0.83,
+     "pr_noticel": 1.0,
+     "hn_radio_progreso": 1.0
+    }
+   },
+   "LiveBlogPosting": {
+    "pages": 70,
+    "top_outlets": {
+     "ar_pagina12": 30,
+     "ar_la_nacion": 6,
+     "ec_expreso": 6,
+     "ar_clarin": 4,
+     "ec_primicias": 4
+    },
+    "outlet_share": {
+     "ar_pagina12": 0.83,
+     "ar_la_nacion": 0.07,
+     "ec_expreso": 0.08,
+     "ar_clarin": 0.05,
+     "ec_primicias": 0.05
+    }
+   },
+   "OpinionNewsArticle": {
+    "pages": 50,
+    "top_outlets": {
+     "es_la_vanguardia": 19,
+     "pr_el_nuevo_dia": 12,
+     "ve_eldiario": 5,
+     "es_el_mundo": 4,
+     "ar_clarin": 3
+    },
+    "outlet_share": {
+     "es_la_vanguardia": 0.24,
+     "pr_el_nuevo_dia": 0.17,
+     "ve_eldiario": 0.11,
+     "es_el_mundo": 0.05,
+     "ar_clarin": 0.04
+    }
+   },
+   "AnalysisNewsArticle": {
+    "pages": 2,
+    "top_outlets": {
+     "ar_la_nacion": 2
+    },
+    "outlet_share": {
+     "ar_la_nacion": 0.02
+    }
+   },
+   "BackgroundNewsArticle": {
+    "pages": 2,
+    "top_outlets": {
+     "pr_el_nuevo_dia": 2
+    },
+    "outlet_share": {
+     "pr_el_nuevo_dia": 0.03
+    }
+   },
+   "ReviewNewsArticle": {
+    "pages": 1,
+    "top_outlets": {
+     "pr_el_nuevo_dia": 1
+    },
+    "outlet_share": {
+     "pr_el_nuevo_dia": 0.01
+    }
+   },
+   "SatiricalArticle": {
+    "pages": 1,
+    "top_outlets": {
+     "uy_ladiaria": 1
+    },
+    "outlet_share": {
+     "uy_ladiaria": 0.01
+    }
+   }
+  }
+ },
+ "ai_disclosure": {
+  "layer_states": {
+   "unknown|no_disclosure_observed": 4486,
+   "unknown|components_only": 239,
+   "known|assisted": 23,
+   "known|translated": 10,
+   "known|generated": 1
+  },
+  "pages_with_any_statement": 273,
+  "article_level_by_outlet": {
+   "ar_clarin": {
+    "generated": 1
+   },
+   "ar_la_nacion": {
+    "assisted": 3
+   },
+   "bo_el_deber": {
+    "translated": 2
+   },
+   "co_elpais": {
+    "assisted": 7
+   },
+   "gt_prensa_libre": {
+    "translated": 3
+   },
+   "ni_nicaragua_investiga": {
+    "assisted": 12
+   },
+   "pa_la_prensa": {
+    "translated": 1
+   },
+   "pr_el_nuevo_dia": {
+    "translated": 4
+   },
+   "ve_eldiario": {
+    "assisted": 1
+   }
+  },
+  "components_by_outlet": {
+   "ar_la_nacion": {
+    "image": 7
+   },
+   "cl_biobiochile": {
+    "summary": 33,
+    "image": 1
+   },
+   "cl_the_clinic": {
+    "audio": 22,
+    "summary": 4
+   },
+   "co_el_espectador": {
+    "audio": 66,
+    "summary": 66
+   },
+   "cr_la_nacion": {
+    "image": 2
+   },
+   "ec_expreso": {
+    "image": 3
+   },
+   "es_el_mundo": {
+    "audio": 14
+   },
+   "es_el_pais": {
+    "audio": 4
+   },
+   "es_la_vanguardia": {
+    "audio": 74
+   },
+   "mx_el_universal": {
+    "image": 6
+   },
+   "ni_nicaragua_investiga": {
+    "image": 1
+   },
+   "pa_critica": {
+    "image": 1
+   },
+   "pa_el_siglo": {
+    "image": 1
+   },
+   "pa_la_prensa": {
+    "image": 1
+   },
+   "pa_metro_libre": {
+    "image": 1
+   }
+  },
+  "distinct_statements": [
+   {
+    "text": "Audio generado por IA",
+    "pages": 74,
+    "outlets": {
+     "es_la_vanguardia": 74
+    },
+    "value": "audio",
+    "form": "audio",
+    "positions": {
+     "non_body/unstructured_text": 74
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Resumen generado por IA. Para más detalles, consulte el artículo completo.",
+    "pages": 66,
+    "outlets": {
+     "co_el_espectador": 66
+    },
+    "value": "summary",
+    "form": "summary",
+    "positions": {
+     "non_body/unstructured_text/ai_summary": 66
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Audio generado con IA de Google",
+    "pages": 66,
+    "outlets": {
+     "co_el_espectador": 66
+    },
+    "value": "audio",
+    "form": "audio",
+    "positions": {
+     "body/paragraph": 23,
+     "non_body/paragraph": 43
+    },
+    "tools_named": [
+     "Google"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "Resumen generado con una herramienta de Inteligencia Artificial desarrollada por BioBioChile y revisado por el autor de este artículo.",
+    "pages": 33,
+    "outlets": {
+     "cl_biobiochile": 33
+    },
+    "value": "summary",
+    "form": "summary",
+    "positions": {
+     "non_body/unstructured_text/ai_summary": 33
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "Escucha esta nota Audio generado por IA",
+    "pages": 22,
+    "outlets": {
+     "cl_the_clinic": 22
+    },
+    "value": "audio",
+    "form": "audio",
+    "positions": {
+     "body/unstructured_text": 22
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Audio generado con IA",
+    "pages": 14,
+    "outlets": {
+     "es_el_mundo": 14
+    },
+    "value": "audio",
+    "form": "audio",
+    "positions": {
+     "non_body/unstructured_text": 13,
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "*Este artículo fue elaborado mediante la colaboración estratégica entre nuestro equipo editorial y herramientas de inteligencia artificial.",
+    "pages": 12,
+    "outlets": {
+     "ni_nicaragua_investiga": 12
+    },
+    "value": "assisted",
+    "form": "text_assisted",
+    "positions": {
+     "body/paragraph": 12
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "*Este artículo fue creado con ayuda de una inteligencia artificial que utiliza machine learning para producir texto similar al humano, y curado por un periodista especializado de El País.",
+    "pages": 7,
+    "outlets": {
+     "co_elpais": 7
+    },
+    "value": "assisted",
+    "form": "text_assisted",
+    "positions": {
+     "body/paragraph": 7
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "Este artículo fue escrito originalmente en inglés y usamos una herramienta de inteligencia artificial para traducirlo. Un periodista de la BBC revisó el texto antes de su publicación. Más información sobre cómo usamos IA.",
+    "pages": 5,
+    "outlets": {
+     "bo_el_deber": 2,
+     "gt_prensa_libre": 3
+    },
+    "value": "translated",
+    "form": "text_translated",
+    "positions": {
+     "body/paragraph": 5
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "Estos resúmenes son generados por inteligencia artificial y chequeados por el periodista a cargo.",
+    "pages": 4,
+    "outlets": {
+     "cl_the_clinic": 4
+    },
+    "value": "summary",
+    "form": "summary",
+    "positions": {
+     "non_body/unstructured_text/ai_summary": 4
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "El audio de esta noticia utiliza una voz sintética generada por Inteligencia Artificial y podría tener algunas inconsistencias.",
+    "pages": 4,
+    "outlets": {
+     "es_el_pais": 4
+    },
+    "value": "audio",
+    "form": "audio",
+    "positions": {
+     "non_body/unstructured_text": 4
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen generada con IA",
+    "pages": 4,
+    "outlets": {
+     "pa_el_siglo": 4
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 4
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Esta historia fue traducida del inglés al español con una herramienta de inteligencia artificial y fue revisada por un editor antes de su publicación.",
+    "pages": 4,
+    "outlets": {
+     "pr_el_nuevo_dia": 4
+    },
+    "value": "translated",
+    "form": "text_translated",
+    "positions": {
+     "body/paragraph": 4
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "Este contenido fue producido por un equipo de LA NACION con la asistencia de la IA",
+    "pages": 3,
+    "outlets": {
+     "ar_la_nacion": 3
+    },
+    "value": "assisted",
+    "form": "text_assisted",
+    "positions": {
+     "body/paragraph": 3
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Nota generada con inteligencia artificial bajo supervisión y edición humana.",
+    "pages": 1,
+    "outlets": {
+     "ar_clarin": 1
+    },
+    "value": "generated",
+    "form": "text_generated",
+    "positions": {
+     "body/paragraph": 1
+    },
+    "tools_named": [],
+    "human_review_stated": true
+   },
+   {
+    "text": "Sentadillas en silla a máxima velocidad Foto:Imagen generada con IA para EL TIEMPO. 2026",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "David Jolly, candidato demócrata a gobernador de Florida, afirmó que puede ganar pese a la diferencia de recursos económicos con Byron DonaldsFotomontaje editado con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "El nuevo centro de distribución de Amazon en Chicago estará ubicado en 1237 W. Division St. cerca de Goose IslandImagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Pasajeros esperan frente al área de CBP en la Terminal G del Aeropuerto Internacional de San Francisco, donde fueron identificadas las detenciones prolongadasFotomontaje editado con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Al menos 19 residentes con Green Card fueron retenidos más de 72 horas en SFO; autoridades de San Francisco reclaman atención médica y abogados.Imagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Carmel-by-the-Sea comenzó a incorporar números en las direcciones de sus viviendas después de más de un siglo de utilizar referencias entre calles y avenidasFotomontaje editado con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Muchos inmigrantes con dinero quedan afuera del sistema hipotecario de California debido a la imposibilidad de demostrar el origen de sus ingresosImagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Las agencias prestamistas de California no pueden aceptar dinero en efectivo sin una cadena documental formal que demuestre su origenImagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "En California existen programas de asistencia para comprar una casa, pero los límites de ingreso colocan en una situación compleja a las familias de inmigrantesImagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Con la ley firmada por Greg Abbott, en los casos de apelación, las partes cuentan con cinco días posteriores a la sentencia para interponer el recursoFotomontaje generado con IA (AFP)",
+    "pages": 1,
+    "outlets": {
+     "ar_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen creada mediante Inteligencia Artificial (IA)",
+    "pages": 1,
+    "outlets": {
+     "cl_biobiochile": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "¿Le vendieron su deuda a otra empresa? Conozca qué debe notificarse, cuáles documentos puede exigir y qué derechos tiene el deudor en Costa Rica. (Imagen con fines ilustrativos generada con IA) (ChatGPT/La Nación)",
+    "pages": 1,
+    "outlets": {
+     "cr_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [
+     "ChatGPT"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "Dos juzgados señalaron que se debe cumplir con un requisito fundamental para cobrar a un deudor una deuda que fue cedida a un nuevo acreedor. (Imagen con fines ilustrativos generada con IA) (Gemini/La Nación)",
+    "pages": 1,
+    "outlets": {
+     "cr_la_nacion": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [
+     "Gemini"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "El debate sobre las condiciones de las cárceles de máxima seguridad pone en el centro los límites del Estado y la protección de los derechos de las personas privadas de libertad.Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "ec_expreso": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/paragraph": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen, trabajada con IA, para graficar una consulta entre psicólogo y paciente.Imagen generada con Gemini, de Google.",
+    "pages": 1,
+    "outlets": {
+     "ec_expreso": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/paragraph": 1
+    },
+    "tools_named": [
+     "Gemini",
+     "Google"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "El civismo comienza con el compromiso de los ciudadanos de cuidar los espacios públicos y formar a las nuevas generaciones en el respeto y el amor por su ciudad.Imagen generada con CHATGPT",
+    "pages": 1,
+    "outlets": {
+     "ec_expreso": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/paragraph": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Conoce los tonos que le pueden dar un aspecto otoñal a tu mirada. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Delineador rojo sencillo. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Delineador borgoña en ojos verdes. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Delineador dorado en ojos miel. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Delineador morado profundo. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Delineador en tono chocolate. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Aporta suavidad inmediata y mejora temporalmente la apariencia de la epidermis. Foto: Imagen creada con IA.",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Un café, un atole o un chocolate pueden transformar el sabor y las calorías del pan de muerto. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "El procedimiento consta de cinco pasos consecutivos. Foto: Imagen creada con IA.",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "La flor de cempasúchil destaca como el elemento más representativo de esta tradición por su característico color y aroma, los cuales guían a las almas hacia las ofrendas. Foto: Imagen creada con IA.",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "La preparación de esta manualidad destaca por requerir elementos básicos que suelen encontrarse en cualquier hogar o papelería. Foto: Imagen creada con IA.",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "El 2026 está a la vuelta de la esquina y con ello, miles de adultos mayores buscan claridad sobre la vigencia de su credencial INAPAM Foto: Imagen creada con IA ( ChatGPT)",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [
+     "ChatGPT"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "Conoce los requisitos para cobrar el aguinaldo 2025 del programa Vinculación Productiva de INAPAM. Foto: Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "mx_el_universal": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen con fines ilustrativos generada con IA. Grok/NI",
+    "pages": 1,
+    "outlets": {
+     "ni_nicaragua_investiga": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [
+     "Grok"
+    ],
+    "human_review_stated": false
+   },
+   {
+    "text": "Se inicia la investigación en el sector donde se dio el ataque. / Imagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "pa_critica": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/paragraph": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen ilustrativa generada con IA( Imagen ilustrativa generada con IA )",
+    "pages": 1,
+    "outlets": {
+     "pa_el_siglo": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen ilustrativa generada con IA",
+    "pages": 1,
+    "outlets": {
+     "pa_el_siglo": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "/Imagen generada con IA",
+    "pages": 1,
+    "outlets": {
+     "pa_el_siglo": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Jóvenes exploran nuevas aplicaciones para la IA. Imagen generada con inteligencia artificial.",
+    "pages": 1,
+    "outlets": {
+     "pa_la_prensa": 1
+    },
+    "value": "image",
+    "form": "image_caption",
+    "positions": {
+     "non_body/caption": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Este artículo fue escrito originalmente en inglés y usamos una herramienta de inteligencia artificial para traducirlo. Periodistas de la BBC revisaron el texto antes de su publicación. Más información sobre cómo usamos IA.",
+    "pages": 1,
+    "outlets": {
+     "pa_la_prensa": 1
+    },
+    "value": "translated",
+    "form": "text_translated",
+    "positions": {
+     "body/paragraph": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Imagen generada por IA | Una adulta mayor mirando hacia afuera de su ventana.",
+    "pages": 1,
+    "outlets": {
+     "pa_metro_libre": 1
+    },
+    "value": "image",
+    "form": "image",
+    "positions": {
+     "non_body/unstructured_text": 1
+    },
+    "tools_named": [],
+    "human_review_stated": false
+   },
+   {
+    "text": "Este contenido incluye redacción realizada con la inteligencia artificial de ChatGPT. Supervisado y verificado por el equipo editorial. Conoce nuestra política de uso de IA aquí.",
+    "pages": 1,
+    "outlets": {
+     "ve_eldiario": 1
+    },
+    "value": "assisted",
+    "form": "text_assisted",
+    "positions": {
+     "body/paragraph": 1
+    },
+    "tools_named": [
+     "ChatGPT"
+    ],
+    "human_review_stated": true
+   }
+  ],
+  "weekend_machine_text_pages_v1": [
+   "ft1:fd671770ce216ebbebb9de5332484981531b41304521348e2f683c1a00648c98",
+   "ft1:b1ed47baeef20bfe72ecbda80bd8731ac424688337b800b8b283bba977e4344f",
+   "ft1:d51e0a53401ec4c69ff7f0805d0e8d9524edb48641eb84eefab81539c97aa264",
+   "ft1:9aef7084141bdc377d19b0f2abf80f111949dff3ac1db07db94665cc62a2b119",
+   "ft1:b2477e00323705f6ab3a6918677c0ac4721237f0b2d06e0fc5a4a81b79df6617",
+   "ft1:0e27ae578923eaac0b17945460ed41b6fbec1b63fc4b1d7a58c94c343ff4bc41",
+   "ft1:7355dcd846f94d8db831019a659b5f5710bdb542f71ccd937c32ac0218b6ca1a",
+   "ft1:227c3c1e66cd8aeb3bd792e65d16fa9f9cae0e1f387030bd283084c2b59bef49",
+   "ft1:442595e0a0a0514efc3a3be3e40c7163f6fe70a0069313be808b454ea45f9834",
+   "ft1:e195e98b9e2387493c5ca0553662330d88db553e15125d00b97e043f850e40e5",
+   "ft1:b171c0fe34c11de684ca51339ec7617ed0a09af6058b26c5a18643033cede17e",
+   "ft1:35acecc6a2e2c3ae5107652d427855a0a43c37b6e7136ce384f9ad08244a62bc",
+   "ft1:4b27718743a89dd47abe7ce40a3c5653b8c519c898869cead9011ba38360144c",
+   "ft1:d9d5fcd506c8468d81181f11a83fb158bfb35719ad79bc162d27cad87e28eabe",
+   "ft1:68823a6aee1b5815ba0effeb8d946e1a0ef91935d4f00466b5a0b0f6c6835a13",
+   "ft1:83cecba2229f114213014b9e04cbfe22a7983b0a6690955e7a82db4eaf7cafe2",
+   "ft1:92b6bac33ec45c78f9287ada2e2dc7f2122b517d850949b4eebbd4acfe3e4a3b",
+   "ft1:0dd5ad7bf4ee7cb525607036eb05548556dd727bfdffae0544be1250e18d6760",
+   "ft1:0ebab46a5f4f6808b946b4147d6adee92020406cef6d8145129edb9145b99793",
+   "ft1:28bbd3ed12ac063353c0394829799b86b6c5a489e586afd13dfcf9581fa0b435",
+   "ft1:7955dd34ff996903b58a6053963fb3cb4915fc0d489a354edd54353318aafb25",
+   "ft1:f1772ef38435a26412eaea1a5f7a5623e5325adfe40ad6d4dbf3ad449b9f07df",
+   "ft1:465c80c1d9f5aa1fe5ba925f13271be716484345e992d3fa8310bd7eaa046ff4",
+   "ft1:92d69992b2dd501ceaa328f6a38120ca0f808775b36a6ff53706d56147672c05",
+   "ft1:17f7a9004864b4c240787cdf6754931e001ce42c26171fb10f3e732d865a3da5",
+   "ft1:9dcccd8e06986fef5e903141fc41558d023ba3ce4b8a87898254c33b4b8cbcc7",
+   "ft1:c8f434f328ad007d4a14cc9353be13dcf30a36029e78b41f02b1c8154987fda7",
+   "ft1:479e263821f05e2361ad68d3189603f95cadfec4b54c79d289831f69c9cc7c66",
+   "ft1:c06d1c5536d6241bbcf59ad9ec312ba1696c143979ec0d5828917fb85f61c04a",
+   "ft1:c8f882b09f735d32dac13734c2418f2925a45e82a9341a1be4656f80a8ab927f",
+   "ft1:c575c40e2b6a3706df1a463e1597da735b536c6144170395642e191fbea2d3f4",
+   "ft1:1e4334b6e9a2cb02b8f2260737d61549cc3f40ff7df7d3c1ae5fd5c5a403ffdf",
+   "ft1:fa9752e56f25fa56ad377eb38246083c17e89ef5facbe12c9030a0936547c692",
+   "ft1:8fbc90b58a79139e3de68cb345dee396666277c435f2380c23556956917fbf52",
+   "ft1:6a247f978ef8cfef4e695d7aba5ca5b304dafa61e06cbe4c7cdebb83b116a1ac",
+   "ft1:2a4c967515f151d44df784d9cef5f92d4dc5d2df3abeee064749ca7ff3eada2f",
+   "ft1:8b045d4500f5d9f176f5c65e7f6d63df7ceb95c84ecd178f526477afa215218d",
+   "ft1:93c82d1b433e9ae30b54eb823671edf72200d1ba59c553c408b2791583b11dfa",
+   "ft1:a9c5bfcf021b27382de1e029480370d8297456a3960584201f24a0f7f1aff959",
+   "ft1:20877e0a3743692cf9ddfab07b281185d31b2d48e22378ef5bb46d919ccc1ecd",
+   "ft1:f145b5e429d5c922fff4118a9e9e1bb4bf2fecfbd10aa741cf76f5c5575d88d6",
+   "ft1:d248b4eb21ba708cf7125edce46cfce9b1b1dc0551aec1ae48460aa2ff4a594d",
+   "ft1:c285c591b1ef20d08a17f99010eef48eed8d469541ea2386b70b815ad2c433fe",
+   "ft1:1cbe528c77dd0230bc73aa7491991fb3b2d7f51b120afe4342af9bcd53210036",
+   "ft1:e4d5a65eda70110650f0e52ff81635d93b5f098ce15dacaead55f2a25646ac15",
+   "ft1:4ec1d5c8c119773aa58b8c54d4a3a1536aa48998fe4d4a355a713fdabdcf59e6",
+   "ft1:5282a4e6dfa0cda2a393e087a08cba83b9cbc31fff333921071cf274f9554ead",
+   "ft1:f586cbda194440096d79e96ccd9894b139f3c9c1a723bfec3c88c2fe5588c15a",
+   "ft1:cb1f83d2d8402b16cce0e5576adfdcac0ee1611c7c8277f20f431c77a9076dff"
+  ],
+  "site_wide": {},
+  "machine_text_pages_v1_read_again": {
+   "co_el_espectador: components_only + audio,summary": 23,
+   "ni_nicaragua_investiga: assisted": 11,
+   "co_elpais: assisted": 7,
+   "ar_la_nacion: assisted": 3,
+   "cl_biobiochile: components_only + summary": 2,
+   "ar_clarin: generated": 1,
+   "do_diario_libre: no_disclosure_observed": 1,
+   "ni_nicaragua_investiga: assisted + image": 1
+  }
+ },
+ "agency_credit": {
+  "pages_with_credit": 407,
+  "share": 0.086,
+  "agencies": {
+   "efe": 247,
+   "afp": 74,
+   "ap": 47,
+   "unspecified": 25,
+   "europa_press": 11,
+   "aton": 2,
+   "ips": 2,
+   "acan": 2,
+   "colprensa": 1
+  },
+  "agency_use": {
+   "credit_only": 376,
+   "joint_credit": 16,
+   "edited_declared": 15
+  },
+  "positions": {
+   "json_ld_author": 301,
+   "byline_block": 134,
+   "meta_author": 125,
+   "meta_article_author": 64,
+   "body_dateline": 20,
+   "edited_note": 15,
+   "json_ld_creator": 6,
+   "credit_note": 2
+  },
+  "by_outlet": {
+   "ar_clarin": {
+    "pages": 20,
+    "of": 80
+   },
+   "ar_la_nacion": {
+    "pages": 1,
+    "of": 86
+   },
+   "bo_el_deber": {
+    "pages": 18,
+    "of": 72
+   },
+   "cl_biobiochile": {
+    "pages": 2,
+    "of": 40
+   },
+   "cl_cooperativa": {
+    "pages": 6,
+    "of": 67
+   },
+   "co_el_espectador": {
+    "pages": 1,
+    "of": 75
+   },
+   "co_el_nuevo_siglo": {
+    "pages": 4,
+    "of": 42
+   },
+   "co_elpais": {
+    "pages": 1,
+    "of": 72
+   },
+   "cr_la_nacion": {
+    "pages": 9,
+    "of": 83
+   },
+   "cu_14ymedio": {
+    "pages": 10,
+    "of": 52
+   },
+   "cu_havanatimes": {
+    "pages": 2,
+    "of": 41
+   },
+   "do_diario_libre": {
+    "pages": 35,
+    "of": 94
+   },
+   "do_el_nacional": {
+    "pages": 14,
+    "of": 67
+   },
+   "do_hoy": {
+    "pages": 20,
+    "of": 74
+   },
+   "do_listin_diario": {
+    "pages": 23,
+    "of": 74
+   },
+   "ec_el_comercio": {
+    "pages": 7,
+    "of": 57
+   },
+   "ec_expreso": {
+    "pages": 3,
+    "of": 77
+   },
+   "ec_primicias": {
+    "pages": 8,
+    "of": 78
+   },
+   "es_abc": {
+    "pages": 3,
+    "of": 82
+   },
+   "es_el_mundo": {
+    "pages": 10,
+    "of": 81
+   },
+   "es_eldiario_es": {
+    "pages": 9,
+    "of": 66
+   },
+   "es_la_vanguardia": {
+    "pages": 11,
+    "of": 80
+   },
+   "gt_lahora": {
+    "pages": 12,
+    "of": 69
+   },
+   "gt_prensa_libre": {
+    "pages": 5,
+    "of": 74
+   },
+   "mx_el_universal": {
+    "pages": 1,
+    "of": 50
+   },
+   "ni_confidencial": {
+    "pages": 8,
+    "of": 48
+   },
+   "ni_despacho_505": {
+    "pages": 9,
+    "of": 31
+   },
+   "ni_nicaragua_investiga": {
+    "pages": 5,
+    "of": 28
+   },
+   "pa_critica": {
+    "pages": 8,
+    "of": 56
+   },
+   "pa_el_siglo": {
+    "pages": 1,
+    "of": 40
+   },
+   "pa_la_prensa": {
+    "pages": 6,
+    "of": 65
+   },
+   "pa_metro_libre": {
+    "pages": 29,
+    "of": 82
+   },
+   "pa_midiario": {
+    "pages": 3,
+    "of": 53
+   },
+   "pa_panama_america": {
+    "pages": 7,
+    "of": 47
+   },
+   "pe_diariocorreo": {
+    "pages": 3,
+    "of": 85
+   },
+   "pr_el_nuevo_dia": {
+    "pages": 19,
+    "of": 70
+   },
+   "pr_metro_puerto_rico": {
+    "pages": 24,
+    "of": 66
+   },
+   "pr_noticel": {
+    "pages": 5,
+    "of": 30
+   },
+   "py_abc_color": {
+    "pages": 6,
+    "of": 75
+   },
+   "sv_el_diario_de_hoy": {
+    "pages": 1,
+    "of": 67
+   },
+   "uy_el_observador": {
+    "pages": 1,
+    "of": 63
+   },
+   "uy_montevideo_portal": {
+    "pages": 1,
+    "of": 60
+   },
+   "ve_correo_del_caroni": {
+    "pages": 10,
+    "of": 43
+   },
+   "ve_efecto_cocuyo": {
+    "pages": 17,
+    "of": 30
+   },
+   "ve_el_nacional": {
+    "pages": 1,
+    "of": 72
+   },
+   "ve_eldiario": {
+    "pages": 8,
+    "of": 47
+   }
+  }
+ },
+ "text_reuse": {
+  "relations": {
+   "syndicated_copy_of|contained": 81,
+   "duplicate_of|identical": 350,
+   "syndicated_copy_of|identical": 111,
+   "duplicate_of|contained": 5
+  },
+  "cross_outlet_pairs_with_agency_credit_on_either_side": 147,
+  "cross_outlet_pairs": 192,
+  "outlet_pairs": {
+   "bo_el_deber + gt_prensa_libre": 5,
+   "do_diario_libre + do_listin_diario": 5,
+   "hn_hondudiario + pr_metro_puerto_rico": 5,
+   "pa_la_prensa + pa_midiario": 5,
+   "bo_el_deber + do_listin_diario": 4,
+   "do_hoy + do_listin_diario": 4,
+   "ar_clarin + do_diario_libre": 3,
+   "bo_el_deber + ni_despacho_505": 3,
+   "do_diario_libre + do_hoy": 3,
+   "pa_diaadia + ve_eldiario": 3,
+   "ni_despacho_505 + pa_diaadia": 3,
+   "ec_la_republica_ec + pa_diaadia": 3,
+   "gt_prensa_libre + pa_la_prensa": 3,
+   "ve_correo_del_caroni + ve_el_nacional": 3,
+   "bo_el_deber + ec_la_republica_ec": 2,
+   "bo_el_deber + pa_la_prensa": 2,
+   "do_el_nacional + ni_despacho_505": 2,
+   "do_hoy + ni_confidencial": 2,
+   "do_hoy + hn_criterio": 2,
+   "ec_la_republica_ec + gt_emisoras_unidas": 2,
+   "ec_la_republica_ec + pa_panama_america": 2,
+   "ar_clarin + es_el_mundo": 2,
+   "do_diario_libre + hn_hondudiario": 2,
+   "es_el_mundo + hn_hondudiario": 2,
+   "hn_el_heraldo + hn_la_prensa": 2,
+   "ni_despacho_505 + ve_efecto_cocuyo": 2,
+   "ec_la_republica_ec + ni_despacho_505": 2,
+   "pa_diaadia + ve_efecto_cocuyo": 2,
+   "bo_el_deber + pa_diaadia": 2,
+   "pa_diaadia + pr_el_nuevo_dia": 2
+  },
+  "clusters": 78
+ },
+ "quality": {
+  "before": {
+   "ruleset": "content-quality/2",
+   "extractor": "article_html/0.1.0",
+   "ACCEPT": 4017,
+   "REJECT": 742
+  },
+  "after": {
+   "ruleset": "content-quality/3",
+   "extractor": "article_html/0.2.0",
+   "ACCEPT": 4066,
+   "REJECT": 693
+  },
+  "transitions": {
+   "ACCEPT->ACCEPT": 4017,
+   "REJECT->REJECT": 693,
+   "REJECT->ACCEPT": 49
+  },
+  "changed": [
+   {
+    "fetch_id": "ft1:fd671770ce216ebbebb9de5332484981531b41304521348e2f683c1a00648c98",
+    "outlet_id": "ar_clarin",
+    "url": "https://www.clarin.com/internacional/juan-roig-empresario-espanol-presidente-mercadona-cajera-valencia-paga-impuestos-madrid-deberiamos-pagar-mismo_0_5VDbBgv2EW.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "generated",
+    "ai_components": [],
+    "words_v1": 386,
+    "words_v2": 386
+   },
+   {
+    "fetch_id": "ft1:b1ed47baeef20bfe72ecbda80bd8731ac424688337b800b8b283bba977e4344f",
+    "outlet_id": "ar_la_nacion",
+    "url": "https://www.lanacion.com.ar/estados-unidos/de-ser-abandonado-en-un-basurero-a-convertirse-en-un-magnate-tecnologico-la-impresionante-vida-de-nid10102026/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 450,
+    "words_v2": 450
+   },
+   {
+    "fetch_id": "ft1:d51e0a53401ec4c69ff7f0805d0e8d9524edb48641eb84eefab81539c97aa264",
+    "outlet_id": "ar_la_nacion",
+    "url": "https://www.lanacion.com.ar/lifestyle/joan-mengual-tecnico-de-emergencias-hay-cosas-a-las-que-nunca-llegas-a-acostumbrarte-del-todo-nid10102026/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 413,
+    "words_v2": 413
+   },
+   {
+    "fetch_id": "ft1:9aef7084141bdc377d19b0f2abf80f111949dff3ac1db07db94665cc62a2b119",
+    "outlet_id": "ar_la_nacion",
+    "url": "https://www.lanacion.com.ar/lifestyle/mascotas/segun-la-psicologia-los-que-le-hablan-a-las-mascotas-como-si-fueran-personas-tienen-una-marcada-nid07102026/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 599,
+    "words_v2": 599
+   },
+   {
+    "fetch_id": "ft1:b2477e00323705f6ab3a6918677c0ac4721237f0b2d06e0fc5a4a81b79df6617",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/biobiotv/programas/expreso-bio-bio/2025/07/22/regulacion-antigua-y-frenar-alza-significativa-experto-y-colchon-para-compensaciones-en-tarifas.shtml",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "summary"
+    ],
+    "words_v1": 824,
+    "words_v2": 707
+   },
+   {
+    "fetch_id": "ft1:0e27ae578923eaac0b17945460ed41b6fbec1b63fc4b1d7a58c94c343ff4bc41",
+    "outlet_id": "cl_biobiochile",
+    "url": "https://www.biobiochile.cl/biobiotv/programas/expreso-bio-bio/2025/07/22/la-extension-de-la-frontera-hace-que-sea-100-permeable-fiscal-carrera-por-fuga-de-sicario.shtml",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "summary"
+    ],
+    "words_v1": 767,
+    "words_v2": 694
+   },
+   {
+    "fetch_id": "ft1:7355dcd846f94d8db831019a659b5f5710bdb542f71ccd937c32ac0218b6ca1a",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/colombia/medellin/descubren-el-cadaver-de-un-estadounidense-en-apartamento-de-envigado-antioquia/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 458,
+    "words_v2": 376
+   },
+   {
+    "fetch_id": "ft1:227c3c1e66cd8aeb3bd792e65d16fa9f9cae0e1f387030bd283084c2b59bef49",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/especiales/medellin-sera-epicentro-del-debate-iberoamericano-sobre-el-futuro-de-la-educacion-superior/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 656,
+    "words_v2": 572
+   },
+   {
+    "fetch_id": "ft1:442595e0a0a0514efc3a3be3e40c7163f6fe70a0069313be808b454ea45f9834",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/cristina-nicholls/efectos-politicos/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 723,
+    "words_v2": 650
+   },
+   {
+    "fetch_id": "ft1:e195e98b9e2387493c5ca0553662330d88db553e15125d00b97e043f850e40e5",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/gastronomia-y-recetas/waffle-de-arroz-con-aguacate-y-huevo/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 510,
+    "words_v2": 432
+   },
+   {
+    "fetch_id": "ft1:b171c0fe34c11de684ca51339ec7617ed0a09af6058b26c5a18643033cede17e",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/sorayda-peguero/descubridores-de-tesoros/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 758,
+    "words_v2": 684
+   },
+   {
+    "fetch_id": "ft1:35acecc6a2e2c3ae5107652d427855a0a43c37b6e7136ce384f9ad08244a62bc",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/politica/este-es-el-plan-de-jose-manuel-restrepo-con-las-milagro-weeks-asi-se-prepara-para-su-nueva-visita-a-nueva-york/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 576,
+    "words_v2": 492
+   },
+   {
+    "fetch_id": "ft1:4b27718743a89dd47abe7ce40a3c5653b8c519c898869cead9011ba38360144c",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/gastronomia-y-recetas/ensalada-de-atun-con-pega-de-arroz-crocante-en-freidora-de-aire/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 581,
+    "words_v2": 498
+   },
+   {
+    "fetch_id": "ft1:d9d5fcd506c8468d81181f11a83fb158bfb35719ad79bc162d27cad87e28eabe",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/punto-de-encuentro/fundacion-plan-fortalece-la-atencion-a-la-infancia-afectada-por-el-terremoto/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 767,
+    "words_v2": 684
+   },
+   {
+    "fetch_id": "ft1:68823a6aee1b5815ba0effeb8d946e1a0ef91935d4f00466b5a0b0f6c6835a13",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/colombia/cali/cali-avanza-en-la-recuperacion-del-centro-con-demoliciones-y-oferta-social/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 527,
+    "words_v2": 444
+   },
+   {
+    "fetch_id": "ft1:83cecba2229f114213014b9e04cbfe22a7983b0a6690955e7a82db4eaf7cafe2",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/ambiente/construyen-en-alemania-la-turbina-eolica-mas-alta-del-mundo-mide-365-metros/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 584,
+    "words_v2": 501
+   },
+   {
+    "fetch_id": "ft1:92b6bac33ec45c78f9287ada2e2dc7f2122b517d850949b4eebbd4acfe3e4a3b",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/colombia/mas-regiones/lluvias-en-pereira-y-dosquebradas-causan-inundaciones-caida-de-arboles-y-danos-en-viviendas/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 538,
+    "words_v2": 453
+   },
+   {
+    "fetch_id": "ft1:0dd5ad7bf4ee7cb525607036eb05548556dd727bfdffae0544be1250e18d6760",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/colombia/cali/viaja-a-cali-este-puente-festivo-conozca-los-horarios-por-placa-y-los-cierres-viales/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 428,
+    "words_v2": 342
+   },
+   {
+    "fetch_id": "ft1:0ebab46a5f4f6808b946b4147d6adee92020406cef6d8145129edb9145b99793",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/politica/piden-explicaciones-tras-tension-por-declaraciones-de-ferrer-sobre-gobierno-petro/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 592,
+    "words_v2": 510
+   },
+   {
+    "fetch_id": "ft1:28bbd3ed12ac063353c0394829799b86b6c5a489e586afd13dfcf9581fa0b435",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/economia/empresas/terremoto-en-panama-que-esta-haciendo-copa-airlines-con-los-vuelos-y-sus-pasajeros/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 501,
+    "words_v2": 416
+   },
+   {
+    "fetch_id": "ft1:7955dd34ff996903b58a6053963fb3cb4915fc0d489a354edd54353318aafb25",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/politica/cuanto-gasta-el-estado-en-empleados-la-nomina-crece-un-93-y-los-costos-de-contratistas-un-160/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 3241,
+    "words_v2": 3156
+   },
+   {
+    "fetch_id": "ft1:f1772ef38435a26412eaea1a5f7a5623e5325adfe40ad6d4dbf3ad449b9f07df",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/gastronomia-y-recetas/receta-de-chuleta-de-cerdo-apanada-como-la-de-la-abuela/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 674,
+    "words_v2": 592
+   },
+   {
+    "fetch_id": "ft1:465c80c1d9f5aa1fe5ba925f13271be716484345e992d3fa8310bd7eaa046ff4",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/armando-montenegro/compra-de-votos-con-recursos-publicos/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 699,
+    "words_v2": 622
+   },
+   {
+    "fetch_id": "ft1:92d69992b2dd501ceaa328f6a38120ca0f808775b36a6ff53706d56147672c05",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/tola-y-maruja/tola-y-maruja-capotean-la-inflacion-en-colombia/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 759,
+    "words_v2": 680
+   },
+   {
+    "fetch_id": "ft1:17f7a9004864b4c240787cdf6754931e001ce42c26171fb10f3e732d865a3da5",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/piedad-bonnett/una-cultura-contra-el-mal/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 653,
+    "words_v2": 577
+   },
+   {
+    "fetch_id": "ft1:9dcccd8e06986fef5e903141fc41558d023ba3ce4b8a87898254c33b4b8cbcc7",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/opinion/columnistas/eduardo-sarmiento/se-requiere-una-economia-con-mayor-ahorro/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 651,
+    "words_v2": 573
+   },
+   {
+    "fetch_id": "ft1:c8f434f328ad007d4a14cc9353be13dcf30a36029e78b41f02b1c8154987fda7",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/autos/nissan-kicks-e-power-llega-a-colombia-precio-motor-y-equipo/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 443,
+    "words_v2": 361
+   },
+   {
+    "fetch_id": "ft1:479e263821f05e2361ad68d3189603f95cadfec4b54c79d289831f69c9cc7c66",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/ciencia/en-imagenes-la-mision-sin-precedentes-para-que-la-nave-starship-regresara-a-la-tierra/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 612,
+    "words_v2": 526
+   },
+   {
+    "fetch_id": "ft1:c06d1c5536d6241bbcf59ad9ec312ba1696c143979ec0d5828917fb85f61c04a",
+    "outlet_id": "co_el_espectador",
+    "url": "https://www.elespectador.com/deportes/futbol-colombiano/asi-quedaron-los-grupos-de-los-cuadrangulares-de-la-liga-betplay/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "components_only",
+    "ai_components": [
+     "audio",
+     "summary"
+    ],
+    "words_v1": 438,
+    "words_v2": 356
+   },
+   {
+    "fetch_id": "ft1:c8f882b09f735d32dac13734c2418f2925a45e82a9341a1be4656f80a8ab927f",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/cali/la-armada-nacional-se-toma-unicentro-asi-sera-la-muestra-naval-y-de-tecnologia-que-se-vivira-este-fin-de-semana-en-cali-0829.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 483,
+    "words_v2": 483
+   },
+   {
+    "fetch_id": "ft1:c575c40e2b6a3706df1a463e1597da735b536c6144170395642e191fbea2d3f4",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/cali/concierto-gratuito-de-kapo-en-el-barrio-obrero-por-la-reactivacion-de-cali-asi-puede-asistir-1016.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 500,
+    "words_v2": 500
+   },
+   {
+    "fetch_id": "ft1:1e4334b6e9a2cb02b8f2260737d61549cc3f40ff7df7d3c1ae5fd5c5a403ffdf",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/deportes/federacion-portuguesa-tomo-accion-disciplinaria-contra-cristiano-ronaldo-tras-abandonar-la-concentracion-1025.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 467,
+    "words_v2": 467
+   },
+   {
+    "fetch_id": "ft1:fa9752e56f25fa56ad377eb38246083c17e89ef5facbe12c9030a0936547c692",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/deportes/seleccion-colombia-femenina-vencio-a-venezuela-y-suma-confianza-antes-del-segundo-amistoso-1029.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 507,
+    "words_v2": 507
+   },
+   {
+    "fetch_id": "ft1:8fbc90b58a79139e3de68cb345dee396666277c435f2380c23556956917fbf52",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/deportes/rafael-dudamel-destaco-la-actitud-del-equipo-tras-un-duro-encuentro-en-yopal-el-punto-sigue-siendo-muy-valioso-1037.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 515,
+    "words_v2": 515
+   },
+   {
+    "fetch_id": "ft1:6a247f978ef8cfef4e695d7aba5ca5b304dafa61e06cbe4c7cdebb83b116a1ac",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/deportes/deportivo-cali-sumo-nuevamente-en-condicion-de-visitante-y-se-ilusiona-con-la-clasificacion-a-los-ocho-asi-va-la-tabla-1045.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 430,
+    "words_v2": 430
+   },
+   {
+    "fetch_id": "ft1:2a4c967515f151d44df784d9cef5f92d4dc5d2df3abeee064749ca7ff3eada2f",
+    "outlet_id": "co_elpais",
+    "url": "https://www.elpais.com.co/cali/kapo-ofrecera-un-show-en-vivo-gratis-hoy-10-de-octubre-en-el-barrio-obrero-de-cali-asi-puede-asistir-1004.html",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 497,
+    "words_v2": 497
+   },
+   {
+    "fetch_id": "ft1:8b045d4500f5d9f176f5c65e7f6d63df7ceb95c84ecd178f526477afa215218d",
+    "outlet_id": "do_diario_libre",
+    "url": "https://www.diariolibre.com/revista/musica/2026/10/10/tendencia-dame-hombro-llega-a-netanyahu-con-video-viral/3685380",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "no_disclosure_observed",
+    "ai_components": [],
+    "words_v1": 576,
+    "words_v2": 576
+   },
+   {
+    "fetch_id": "ft1:93c82d1b433e9ae30b54eb823671edf72200d1ba59c553c408b2791583b11dfa",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/politica/174882-rafael-solis-confiesa-reeleccion-ortega/?utm_source=rss&utm_medium=rss&utm_campaign=rafael-solis-confiesa-reeleccion-ortega",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 762,
+    "words_v2": 762
+   },
+   {
+    "fetch_id": "ft1:a9c5bfcf021b27382de1e029480370d8297456a3960584201f24a0f7f1aff959",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/economia/174896-turismo-caida-nicaragua-desesperada-diciembre/?utm_source=rss&utm_medium=rss&utm_campaign=turismo-caida-nicaragua-desesperada-diciembre",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 512,
+    "words_v2": 512
+   },
+   {
+    "fetch_id": "ft1:20877e0a3743692cf9ddfab07b281185d31b2d48e22378ef5bb46d919ccc1ecd",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/nacion/174953-cierran-transitada-calle-de-managua-un-mes-de-obras-para-sustituir-adoquines-por-asfalto-en-distrito-ii/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 306,
+    "words_v2": 306
+   },
+   {
+    "fetch_id": "ft1:f145b5e429d5c922fff4118a9e9e1bb4bf2fecfbd10aa741cf76f5c5575d88d6",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/portada/174944-restriccion-de-remesas-a-nicaragua-la-propuesta-que-podria-actuar-como-un-embargo-economico-al-cortar-casi-el-30-del-pib/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 580,
+    "words_v2": 580
+   },
+   {
+    "fetch_id": "ft1:d248b4eb21ba708cf7125edce46cfce9b1b1dc0551aec1ae48460aa2ff4a594d",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/nacion/174941-francesa-suiza-y-nicaraguense-mueren-ahogadas-al-ser-arrastrada-su-camioneta-en-el-rio-nahualapa-el-viejo/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 258,
+    "words_v2": 258
+   },
+   {
+    "fetch_id": "ft1:c285c591b1ef20d08a17f99010eef48eed8d469541ea2386b70b815ad2c433fe",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/nacion/174935-vuelos-desvio-de-panama-nicaragua-terremoto/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 361,
+    "words_v2": 361
+   },
+   {
+    "fetch_id": "ft1:1cbe528c77dd0230bc73aa7491991fb3b2d7f51b120afe4342af9bcd53210036",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/nacion/174931-tsunami-alerta-nicaragua-terremoto-panama/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 429,
+    "words_v2": 429
+   },
+   {
+    "fetch_id": "ft1:e4d5a65eda70110650f0e52ff81635d93b5f098ce15dacaead55f2a25646ac15",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/economia/174909-billeteras-digitales-caen-nicaragua-2026/?utm_source=rss&utm_medium=rss&utm_campaign=billeteras-digitales-caen-nicaragua-2026",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 578,
+    "words_v2": 578
+   },
+   {
+    "fetch_id": "ft1:4ec1d5c8c119773aa58b8c54d4a3a1536aa48998fe4d4a355a713fdabdcf59e6",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/portada/174890-que-hace-general-amarrando-creditos-bielorrusia/?utm_source=rss&utm_medium=rss&utm_campaign=que-hace-general-amarrando-creditos-bielorrusia",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 434,
+    "words_v2": 434
+   },
+   {
+    "fetch_id": "ft1:5282a4e6dfa0cda2a393e087a08cba83b9cbc31fff333921071cf274f9554ead",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/ocio/174965-mourinho-planta-a-la-prensa-tras-el-1-0-del-madrid-al-villarreal-por-la-roja-a-vinicius/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 299,
+    "words_v2": 299
+   },
+   {
+    "fetch_id": "ft1:f586cbda194440096d79e96ccd9894b139f3c9c1a723bfec3c88c2fe5588c15a",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/nacion/175652-adolescente-de-14-anos-hallado-sin-vida-en-managua-policia-investiga-acoso-por-su-peso-o-reto-viral/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [
+     "image"
+    ],
+    "words_v1": 465,
+    "words_v2": 465
+   },
+   {
+    "fetch_id": "ft1:cb1f83d2d8402b16cce0e5576adfdcac0ee1611c7c8277f20f431c77a9076dff",
+    "outlet_id": "ni_nicaragua_investiga",
+    "url": "https://nicaraguainvestiga.com/politica/175639-felix-maradiaga-anuncia-su-disposicion-a-regresar-a-nicaragua-pese-a-los-riesgos-para-impulsar-la-democracia-desde-dentro/",
+    "before": [
+     "machine_text"
+    ],
+    "after": [],
+    "ai": "assisted",
+    "ai_components": [],
+    "words_v1": 429,
+    "words_v2": 429
+   }
+  ],
+  "first_reasons_after": {
+   "too_short": 540,
+   "duplicate_of_earlier": 38,
+   "not_running_prose": 32,
+   "no_body": 23,
+   "incomplete_against_stated_body": 17,
+   "live_coverage": 16,
+   "not_editorial_page": 8,
+   "template_body": 6,
+   "sponsored": 5,
+   "repetitive": 5,
+   "paywall_text": 3
+  },
+  "accepted_by_ai_value": {
+   "unknown": 4032,
+   "generated": 1,
+   "assisted": 23,
+   "translated": 10
+  },
+  "accepted_by_agency": {
+   "credited": 391,
+   "unknown": 3675
+  }
+ },
+ "core_candidate_coverage": {
+  "pages": 4066,
+  "metadata_known_share": {
+   "section-iptc/1": 0.363,
+   "editorial-scope/1": 0.387,
+   "genre-placement/1": 0.075,
+   "genre-declared/1": 0.011,
+   "ai-disclosure/1": 0.008,
+   "agency-credit/1": 0.096
+  },
+  "by_country": {
+   "ar": {
+    "section-iptc/1": 0.36,
+    "editorial-scope/1": 0.438,
+    "genre-placement/1": 0.059,
+    "genre-declared/1": 0.016,
+    "ai-disclosure/1": 0.009,
+    "agency-credit/1": 0.047,
+    "pages": 425
+   },
+   "bo": {
+    "section-iptc/1": 0.138,
+    "editorial-scope/1": 0.793,
+    "genre-placement/1": 0.043,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.017,
+    "agency-credit/1": 0.155,
+    "pages": 116
+   },
+   "cl": {
+    "section-iptc/1": 0.142,
+    "editorial-scope/1": 0.204,
+    "genre-placement/1": 0.124,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.031,
+    "pages": 225
+   },
+   "co": {
+    "section-iptc/1": 0.381,
+    "editorial-scope/1": 0.348,
+    "genre-placement/1": 0.1,
+    "genre-declared/1": 0.004,
+    "ai-disclosure/1": 0.026,
+    "agency-credit/1": 0.022,
+    "pages": 270
+   },
+   "cr": {
+    "section-iptc/1": 0.544,
+    "editorial-scope/1": 0.101,
+    "genre-placement/1": 0.101,
+    "genre-declared/1": 0.038,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.101,
+    "pages": 79
+   },
+   "cu": {
+    "section-iptc/1": 0.211,
+    "editorial-scope/1": 0.496,
+    "genre-placement/1": 0.098,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.09,
+    "pages": 133
+   },
+   "do": {
+    "section-iptc/1": 0.442,
+    "editorial-scope/1": 0.435,
+    "genre-placement/1": 0.092,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.31,
+    "pages": 294
+   },
+   "ec": {
+    "section-iptc/1": 0.448,
+    "editorial-scope/1": 0.329,
+    "genre-placement/1": 0.087,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.052,
+    "pages": 310
+   },
+   "es": {
+    "section-iptc/1": 0.437,
+    "editorial-scope/1": 0.332,
+    "genre-placement/1": 0.05,
+    "genre-declared/1": 0.074,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.087,
+    "pages": 380
+   },
+   "gt": {
+    "section-iptc/1": 0.406,
+    "editorial-scope/1": 0.397,
+    "genre-placement/1": 0.151,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.013,
+    "agency-credit/1": 0.059,
+    "pages": 239
+   },
+   "hn": {
+    "section-iptc/1": 0.277,
+    "editorial-scope/1": 0.347,
+    "genre-placement/1": 0.099,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.0,
+    "pages": 101
+   },
+   "mx": {
+    "section-iptc/1": 0.08,
+    "editorial-scope/1": 0.04,
+    "genre-placement/1": 0.0,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.02,
+    "pages": 50
+   },
+   "ni": {
+    "section-iptc/1": 0.15,
+    "editorial-scope/1": 0.54,
+    "genre-placement/1": 0.21,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.12,
+    "agency-credit/1": 0.21,
+    "pages": 100
+   },
+   "pa": {
+    "section-iptc/1": 0.343,
+    "editorial-scope/1": 0.387,
+    "genre-placement/1": 0.07,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.003,
+    "agency-credit/1": 0.165,
+    "pages": 315
+   },
+   "pe": {
+    "section-iptc/1": 0.323,
+    "editorial-scope/1": 0.379,
+    "genre-placement/1": 0.005,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.015,
+    "pages": 195
+   },
+   "pr": {
+    "section-iptc/1": 0.432,
+    "editorial-scope/1": 0.432,
+    "genre-placement/1": 0.008,
+    "genre-declared/1": 0.016,
+    "ai-disclosure/1": 0.032,
+    "agency-credit/1": 0.352,
+    "pages": 125
+   },
+   "py": {
+    "section-iptc/1": 0.455,
+    "editorial-scope/1": 0.663,
+    "genre-placement/1": 0.032,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.032,
+    "pages": 187
+   },
+   "sv": {
+    "section-iptc/1": 0.319,
+    "editorial-scope/1": 0.538,
+    "genre-placement/1": 0.011,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.011,
+    "pages": 91
+   },
+   "uy": {
+    "section-iptc/1": 0.455,
+    "editorial-scope/1": 0.212,
+    "genre-placement/1": 0.073,
+    "genre-declared/1": 0.0,
+    "ai-disclosure/1": 0.0,
+    "agency-credit/1": 0.012,
+    "pages": 165
+   },
+   "ve": {
+    "section-iptc/1": 0.402,
+    "editorial-scope/1": 0.305,
+    "genre-placement/1": 0.053,
+    "genre-declared/1": 0.015,
+    "ai-disclosure/1": 0.004,
+    "agency-credit/1": 0.135,
+    "pages": 266
+   }
+  }
+ }
+}

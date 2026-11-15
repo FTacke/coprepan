@@ -176,6 +176,14 @@ never promoted to a linguistic one by renaming; if either corpus defines a lingu
 segmentation, it is a new unit kind with its own contract. `surface` is `primary` (body text;
 speech), `title` or `auxiliary` (non-body blocks).
 
+*Amendment of this proposal, 2026-11-15 (CO.PRE.PAN, [CPD-0039](../decisions/CPD-0039_text-surfaces-iptc-provenance-and-core-quality.md)):*
+the press unit kind **`subtitle`** (`editorial`) — a subtitle, bajada or standfirst the publisher
+sets apart from the title and the running text — on the existing surface `title`. No surface is
+added and the denominator (§6.3) is unchanged: a subtitle is never `primary` and never counted;
+the title alone is `unit_kind = title`. The validator (`analysis_contract.py`) knows the kind.
+The pinned joint release contract does not list it among the written anchor kinds; adding it there
+is a joint change ([request](SUBTITLE_UNIT_KIND_CHANGE_REQUEST_2026-11-15.md)), not made here.
+
 ### 5.5 `sentences`
 
 `sentence_id`, `unit_id`, `document_id`, `surface`, `order_index`, `previous_sentence_id`°,
@@ -186,6 +194,12 @@ speech), `title` or `auxiliary` (non-body blocks).
 `relation` (`duplicate_of` · `syndicated_copy_of` · `earlier_version_of`), `document_id`,
 `target_document_id`, `target_in_release`, `basis`. A relation may point outside the release and
 says so.
+
+*2026-11-15 (CPD-0039):* on CO.PRE.PAN's side `syndicated_copy_of` and `duplicate_of` come from
+`text-reuse/1` — the same BODY text in two documents (across outlets / within one), 8-word shingle
+containment of at least 0.9; the target is the earlier document and the `basis` says that this is
+an order of appearance, not a finding of origin. An agency credit is a different kind of evidence
+(a document layer) and never makes a relation.
 
 ### 5.7 Derived layers
 

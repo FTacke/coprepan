@@ -30,8 +30,10 @@ storage of extractions and replay. Design background:
 | Wrappers of the three selected candidates (not adopted, not runtime dependencies; CPD-0018) | `src/coprepan/extractor_candidates.py` | `tests/test_extractor_candidates.py` |
 | Review-package builder from preserved item fetches; the first, **pilot** package (§9) | `scripts/phase3_review_package.py`, `docs/extraction/phase3/` | same (blinding) |
 | Review codebook, version 1 (draft) | [`REVIEW_CODEBOOK_v1.md`](REVIEW_CODEBOOK_v1.md) | — |
+| *2026-11-15:* the candidate `article_html/0.1.0` (densest running-text container; CPD-0038) | `src/coprepan/extraction_article.py` | `tests/test_content_quality.py` |
+| *2026-11-15:* schema **`coprepan-extraction/v2`** (block kind `subtitle` with a `basis`, block field `module: ai_summary`; digests as in v1) and the candidate **`article_html/0.2.0`** writing it; `Extractor.record_schema`, `extraction.record_problems` (CPD-0039) | `src/coprepan/extraction.py`, `src/coprepan/extraction_article.py` | `tests/test_phase3_metadata.py` |
 
-## 2. Record (`coprepan-extraction/v1`)
+## 2. Record (`coprepan-extraction/v1`; `/v2` adds the `subtitle` kind and the `module` field, CPD-0039)
 
 | Field | Content |
 |---|---|

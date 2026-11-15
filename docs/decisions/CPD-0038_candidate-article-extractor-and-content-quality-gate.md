@@ -3,13 +3,19 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-15 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the two candidates exist, implemented and measured, as `CANDIDATE`s; **they are not binding**: the scientific activation of a content-admission standard and of an extractor is the operator's (*Not decided here*) |
 | Execution | `extraction_article.py` (`article_html/0.1.0`, lifecycle `CANDIDATE`), `content_quality.py` (`content-features/1`, `content-quality/2`, lifecycle `CANDIDATE`), `scripts/study_content_quality.py`; `tests/test_content_quality.py` |
 | Builds on / amends / supersedes | builds on CPD-0005 (the extraction contract), CPD-0007 (technical admission labels, extractor lifecycle), CPD-0018 (the extraction comparison); amends nothing; supersedes nothing |
 | Does not change | `baseline_html/0.1.0` and every stored extraction; `admission-technical/1` and its labels; any release view or release gate; the raw evidence (nothing is deleted or relabelled; a rejection says only that this extraction is not taken into the analysis corpus under this rule set) |
 | Decided by | the operator's brief of 2026-11-15 (§2 "Qualität vor Recall", §4–§7); the rules are the commissioned agent's, the activation is the operator's |
 | Run report | `docs/agent-runs/2026-11-15_coprepan-weekend-source-qualification.md` §4–§6 |
+
+*Status line 2026-11-15 (later the same day):* **partially superseded by
+[CPD-0039](CPD-0039_text-surfaces-iptc-provenance-and-core-quality.md).** The operator decided open question 2: texts that declare
+AI use belong in the corpus. The preferred candidate is now `content-quality/3` (the `machine_text` rejection withdrawn, read on
+`article_html/0.2.0`); `content-quality/2`, `article_html/0.1.0`, their controls and every statement below stay as they were, as the
+historical record. Everything else in this record is unchanged and still in force as a candidate.
 
 ## Context
 

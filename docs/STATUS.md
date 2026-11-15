@@ -62,6 +62,16 @@ stage, outlets interleaved, allowances per outlet (CPD-0037); a candidate extrac
 content-quality gate `content-quality/2` (CPD-0038, **candidates, not binding**: 97 of 100 accepted pages good in a blind control, the scientific
 activation is the operator's); a [validated draft plan](intake/wave/in2-24h-wave_REVISION_2026-11-15.md) of the 24-hour wave under
 /3, not authorized. Report: [`2026-11-15 weekend`](agent-runs/2026-11-15_coprepan-weekend-source-qualification.md).
+**Since the Phase-3 integration of 2026-11-15** (CPD-0039; offline, no publisher request): the operator's decisions are in force --
+CORE is text quality, not origin or metadata; AI and agency texts are wanted; unknown is not negative; IPTC Media Topics / Genre
+are the reference taxonomies. Built as **candidates, nothing validated or activated**: `extraction/2` with the unit kind `subtitle`
+and the `ai_summary` module, extractor `article_html/0.2.0` (BODY unchanged on 4,734 of 4,759 stored pages; the 25 others lost a
+machine summary); `section-map/1` on a pinned IPTC extract; layers for scope, genre placement, declared genre, AI disclosure,
+agency credit and text reuse (`enrichment`, `editorial-metadata/1`); `content-quality/3` (`machine_text` withdrawn: 4,066 accepted
+against 4,017, exactly the 49 AI-declared pages more). The native export stays on `extraction/1` until the joint contract names
+`subtitle` (a [change request](crosscorpus/SUBTITLE_UNIT_KIND_CHANGE_REQUEST_2026-11-15.md)). A
+[human review sample](intake/quality/phase3_review_2026-11-15.md) waits for the operator. Report:
+[`2026-11-15 phase 3`](agent-runs/2026-11-15_coprepan-phase3-text-surfaces-iptc-provenance.md).
 
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
@@ -208,11 +218,11 @@ visit, the outage path and a crash have never happened on real material.
 | 7 | admission labels | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 8 | normalisation | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
 | 9 | NLP | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
-| 10 | validated enrichment | `NOT_STARTED` | `NOT_VALIDATED` | `INACTIVE` |
+| 10 | validated enrichment | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 11 | release | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 | 12 | cross-corpus contract | `PARTIAL` | `NOT_VALIDATED` | `INACTIVE` |
 
-What `PARTIAL` means for the nine stages, exactly:
+What `PARTIAL` means for the nine stages (ten since enrichment, 2026-11-15), exactly:
 
 | Stage | Exists | Does not exist |
 |---|---|---|
@@ -223,10 +233,11 @@ What `PARTIAL` means for the nine stages, exactly:
 | document identity | id serialisation and canonical URL key (CPD-0003); document and version assignment, append-only identity tables, collision refusal, `duplicate_of` and `moved_to` relations (CPD-0005 §4) — on recorded exchanges | syndication clusters; URL-key aliases after a rule change; a durable home for the tables; any id minted for corpus material |
 | extraction | the extraction record and its digests; storage by fingerprint; replay from the preservation root; a **baseline** extractor (`baseline_html/0.1.0`, lifecycle `EXPERIMENTAL`); an evaluation harness and review-package generator; a gold-sample design | an adopted extractor; a gold sample; any quality measurement; per-outlet rules; date parsing |
 | admission labels | the technical label (`coprepan-admission-label/v2`, chained; rule set `admission-technical/1`): usable / unusable with reasons and evidence, append-only | every content-level label: article / not article, access class, language from content, length, type; any label on corpus material |
+| enrichment (*2026-11-15*) | candidate layers from publisher statements (CPD-0039): `publisher-metadata/1`, `section-iptc/1` on `section-map/1` and a pinned IPTC extract, `editorial-scope/1`, `genre-placement/1`, `genre-declared/1`, `ai-disclosure/1`, `agency-credit/1`, `text-reuse/1`; one write-once artifact per fingerprint (`enrichment.py`); measured offline on 4,759 stored pages | any validated layer; any review by a person; any layer stored for corpus material; language identification, article type, opinion |
 | release | the native export object `coprepan-export/v1` (builder, verifier); release manifest builder and explicit freeze; package and study-population builders; CO.PRE.PAN's own checks of `crosscorpus-release/v1` — on synthetic pages, on temporary directories | **any corpus export** (refused while no extractor is `ACTIVE`); a selection policy; an annotation layer and token counts; a date parser; an exports root on a real target; any release, distribution copy or deposit |
 | cross-corpus contract | `crosscorpus-analysis/v1` as a proposal: vocabularies, table schemas, a fail-closed validator, manifest sealing, the token denominator, a compatibility view; COPREPAN's adapter from extraction records and a *supplied* annotation; a press and a radio fixture, both synthetic | **adoption by CO.RA.PAN** (O-6 is a joint decision); any export of corpus material; any annotation by an instrument; the selection-policy content; columnar storage; **the joint freeze of `crosscorpus-release/v1`** (adopted here by CPD-0012, not by CO.RA.PAN; *2026-11-14: revision 2 adopted here by CPD-0034, still not by CO.RA.PAN*) |
 
-`PARTIAL` for stages 2, 3, 7, 11 and 12 means "code and tests exist, offline". It is not a step towards
+`PARTIAL` for stages 2, 3, 7, 10, 11 and 12 means "code and tests exist, offline". It is not a step towards
 `ACTIVE`: activation needs validation on real material and the operator decisions of §5.
 
 **Since the canary of 2026-10-08 the "does not exist" column above is out of date in four cells, and stays as
@@ -584,7 +595,7 @@ run report that carries the evidence.
 ```json
 {
   "schema": "coprepan-status-assertions/v1",
-  "as_of": "2026-11-14",
+  "as_of": "2026-11-15",
   "production_pipeline_exists": false,
   "external_api_in_production_path": false,
   "git_initialised_by_bootstrap": false,
@@ -598,7 +609,7 @@ run report that carries the evidence.
     "admission_labels":      {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "normalisation":         {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "nlp":                   {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
-    "enrichment":            {"implementation": "NOT_STARTED", "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
+    "enrichment":            {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "release":               {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"},
     "cross_corpus_contract": {"implementation": "PARTIAL",     "validation": "NOT_VALIDATED", "activation": "INACTIVE"}
   },

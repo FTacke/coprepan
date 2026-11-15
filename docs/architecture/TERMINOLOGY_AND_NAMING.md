@@ -616,3 +616,22 @@ row restates its defining record; nothing is defined anew.*
 | source-health recommendation (term) | `READY`, `READY_WITH_LIMITATIONS`, `REPAIR_REQUIRED`, `REQUALIFICATION_REQUIRED`, `HELD`, `NOT_REGISTERED`: a technical screening from stored evidence, schema `coprepan-source-health/v1`; not a quality judgement, not an access decision, not `OPERATIONALLY_STABLE` | `scripts/build_source_health.py` (2026-11-14) |
 | source-health channel status | `OK`, `PARTIALLY_UNAVAILABLE`, `UNAVAILABLE`, `HISTORICAL_ENTRIES_ONLY` (every entry first listed was dated before the window), `STOCK_ONLY`, `NO_NEW_ENTRIES`, `NOT_POLLED`, `HELD`, `DISABLED_BY_POLICY`, `NOT_USABLE`, `NOT_QUALIFIED` | same |
 | fetch limit (added) | `total_seconds`: one request in all, besides `timeout_seconds` per socket operation | CPD-0035 amendment, `fetcher.py` |
+
+## 26. Additions of 2026-11-15 (CPD-0038, CPD-0039)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **CORE** (term) | the quality-assured Spanish-language press text of CO.PRE.PAN: the documents a content-quality rule set accepts. Membership is a property of the text alone -- never of section, scope, genre, metadata completeness, declared AI use or agency origin. *Candidate rule set*: `content-quality/3`; no rule set is binding yet | CPD-0039 §1 |
+| content-quality rule sets | `content-quality/1` (frozen, history), `/2` (CPD-0038, history), `/3` (CPD-0039, preferred candidate: `/2` without `machine_text`); lifecycle `CANDIDATE` | `content_quality.py` |
+| extraction schema | `extraction/2`: `extraction/1` plus the block kind `subtitle` and the optional block field `module` | CPD-0039 §2, `extraction.py` |
+| block / unit kind | **`subtitle`**: a subtitle, bajada or standfirst the publisher sets apart; role `title`, surface `title`, never counted; `basis` `stated_by_page` or `subtitle_markup` | CPD-0039 §2; analysis contract §5.4 |
+| block module | `ai_summary`: a block inside a summary the page declares machine-made; never BODY | CPD-0039 §2 |
+| extractor versions | `article_html/0.1.0` (`extraction/1`, CPD-0038), `article_html/0.2.0` (`extraction/2`, CPD-0039); both `CANDIDATE` | `extraction_article.py` |
+| **publisher statement** (term) | a value copied verbatim from the page's markup with the place it came from (`publisher-metadata/1`); distinct from a derivation, a text relation and a content classification | CPD-0039 §3 |
+| layer ids | `section-iptc/1`, `editorial-scope/1`, `genre-placement/1`, `genre-declared/1`, `ai-disclosure/1`, `agency-credit/1`, `text-reuse/1`; one artifact `editorial-metadata/1` (stage `enrichment`) | CPD-0039 §3 |
+| mapping and taxonomy ids | `section-map/1` (`config/taxonomy/section-map_1.json`); IPTC extracts `config/taxonomy/iptc-mediatopic_2026-09-30.json`, `iptc-genre_2024-02-13.json` (schema `coprepan-iptc-extract/v1`) | CPD-0039 §3, `iptc.py` |
+| **editorial scope** values | `local`, `regional`, `subnational` (below the country, local or regional not decided from the name), `national`, `international` | `editorial_metadata.py` |
+| **genre placement** vs **declared genre** | a section that names a kind of text (`opinion`, `editorial`, `letters`, `analysis`, `interview`, `reportage`, `essay`, `cartoon`, `obituary`) vs a genre the page declares for the article (`opinion`, `editorial`, `analysis`, `background`, `review`, `satire`, `live_coverage`, `ask_public`, `interview`, `reportage`) | same |
+| **AI disclosure** values | article text: `generated`, `assisted`, `translated`, `unclear`; components: `summary`, `audio`, `image`; absent: state `unknown` (`no_disclosure_observed`, `components_only`, `site_wide_statement_only`) | `provenance.py` |
+| **agency credit** | agencies (closed list in `provenance.AGENCIES`, `unspecified` for "Agencias"); `agency_use`: `verbatim_declared` (reserved), `edited_declared`, `joint_credit`, `credit_only` | `provenance.py` |
+| **text reuse** (term) | the same BODY text in two documents (8-word shingle containment ≥ 0.9): `syndicated_copy_of` across outlets, `duplicate_of` within one; an order of appearance, not a finding of origin | `text_reuse.py` |

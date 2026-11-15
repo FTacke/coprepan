@@ -113,6 +113,12 @@ assumed away.
 - **The title is a second, separate surface.** It may be annotated — headlines are linguistically
   interesting and syntactically unlike prose — but as its own unit, never prefixed to the body.
   Its tokens are not body tokens and do not enter the body token count.
+- **The subtitle stands on the title surface as a unit of its own** (*2026-11-15, CPD-0039*): a
+  subtitle, bajada or standfirst the publisher sets apart is the block kind and unit kind
+  `subtitle` (`extraction/2`), surface `title`, never counted. A study takes headlines alone by
+  `unit_kind = title`. An *entradilla* that opens the running text is BODY; nothing uncertain is
+  separated. A machine summary shown beside the article is a non-body block with
+  `module: ai_summary` and never stands in, or for, the BODY.
 - **Non-body blocks** (captions, navigation remnants, embeds) are not annotated by default. If a
   later decision annotates them, they are units with their own `unit_kind` and surface.
 - Every unit, sentence and token therefore carries a **`surface`**: `body` · `title` ·
@@ -179,6 +185,27 @@ Every such layer has the same shape:
 An unvalidated layer may exist and be studied; it does not enter a release as a default field
 (target architecture §8).
 
+### 7.1 Built as candidates on 2026-11-15 (CPD-0039; every layer `NOT_VALIDATED`)
+
+**CORE membership is general text quality** (`content-quality/3`, a candidate): no layer below is
+read by it, and none excludes anything. Four kinds of evidence are never mixed: the **publisher
+statement** (`publisher-metadata/1`, verbatim, with its place), the **deterministic derivation**
+from it, the **document relation** from a text comparison, and a later **scientific
+classification** of the content (not built).
+
+| Layer | Says | Never says |
+|---|---|---|
+| `section-iptc/1` | which IPTC Media Topic the published *placement* corresponds to (`section-map/1`, SKOS `closeMatch` / `broadMatch`) | what the article is about |
+| `editorial-scope/1` | `local` · `regional` · `subnational` · `national` · `international`, from a section naming a reach or a place | anything read from place names in the text; the regional variety |
+| `genre-placement/1` | the kind of text a section names (Opinión, Editorial, Cartas, …) | that the text argues |
+| `genre-declared/1` | the genre the page declares, with its IPTC Genre code | a genre inferred from the section |
+| `ai-disclosure/1` | `generated` · `assisted` · `translated` · `unclear` for the article text, and AI components beside it (`summary`, `audio`, `image`), each with the statement | "made without AI" (no disclosure is `unknown`) |
+| `agency-credit/1` | credited agencies and how the page says it used them (`edited_declared`, `joint_credit`, `credit_only`) | "own reporting" (no credit is `unknown`); an agency quoted in the text, a photo credit |
+| `text-reuse/1` | that two documents carry the same BODY text (`syndicated_copy_of`, `duplicate_of`) | who wrote it; that either copy is less of a publication event |
+
+The table of §7 still holds; `section_mapped` is `section-iptc/1`, `article_type` keeps its row
+(a content classification), and the declared genre is a publisher statement, not `article_type`.
+
 ## 8. Where human gold attaches
 
 | Layer | Gold unit | Instrument | State |
@@ -212,5 +239,7 @@ annotation under the shared pins → equivalence and bridge samples → enrichme
 | the language identifier, its validation, the label rule | scientific, Phase 3 |
 | press sentence-boundary policy id | joint / scientific, Phase 4 |
 | whether titles are annotated in the first release | scientific |
+| adoption of `article_html/0.2.0`, `content-quality/3`, `section-map/1` and the provenance rules (CPD-0039 *Not decided here*) | scientific, the operator's |
+| the unit kind `subtitle` in the joint release contract | joint, with CO.RA.PAN |
 | vocabularies of `article_type` and `opinion`; whether they are built at all | scientific, Phase 4 |
 | durable home of the layers | technical; needs O-3 |
