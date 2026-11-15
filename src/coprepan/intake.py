@@ -34,15 +34,25 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 from urllib.parse import urlsplit
 
-from . import (access_control, acquisition, canary_driver, core_pipeline, discovery, extraction, fetcher as F, http_acquisition, naming,
-               outage_spool, pack, policy as policy_module, preservation, recovery, schedule)
+from . import (access_control, acquisition, canary_driver, core_pipeline, discovery, extraction, fetcher as F, http_acquisition,
+               incremental_check, naming, outage_spool, pack, policy as policy_module, preservation, recovery, schedule)
 from .canonical import record_json, sha256_bytes, write_bytes_atomic
 from .exclusive import WorkspaceBusy, exclusive
 from .identity import format_instant
 
 #: /2 (CPD-0033): pending within the resource policy's bounds no longer stops the requests; PAUSE_IO and the RUNTIME floor
 #: pause them; the finalizer re-hashes only its own packs' masters on the root. A plan of /1 is history and is not run by /2.
-CONTROLLER_VERSION = "intake-controller/2"
+#: /3 (CPD-0037, 2026-11-15): a cycle polls the outlets one after another and then requests their items **interleaved** --
+#: one item per outlet and turn, round the outlets, so that the next request goes to another origin while one waits out its
+#: pacing (one request at a time, every origin's interval and Crawl-delay as before); an allowance per outlet in the plan
+#: (by measured volume); the items still due at the cycle's end stay due; a drain period at the end polls nothing; the check
+#: after a cycle is incremental (incremental_check); the request log, the qualification table and the ledger are held across
+#: the calls of the process (the only writer). A plan of /2 is run by /2's code path unchanged (the prepared canary
+#: in2-20261114-canary is a /2 plan).
+CONTROLLER_VERSION = "intake-controller/3"
+CONTROLLER_2 = "intake-controller/2"
+CONTROLLERS = (CONTROLLER_2, CONTROLLER_VERSION)
+ALLOWANCE_KEYS = ("items_per_cycle", "item_requests_per_hour", "item_requests")
 PLAN_SCHEMA = naming.schema_id("intake-plan", 1)
 STATE_SCHEMA = naming.schema_id("intake-state", 1)
 RECEIPT_SCHEMA = naming.schema_id("intake-receipt", 1)
@@ -78,18 +88,23 @@ class IntakeBudget:
     discovery_max_documents: int = 4
     discovery_max_candidates: int = 200
     discovery_max_bytes: int = 4 * 1024 * 1024
+    drain_seconds: int = 0                 # /3: the last seconds of an intake poll nothing; items listed before are requested
 
     def __post_init__(self) -> None:
-        for name, value in self.as_record().items():
+        for name in self.__dataclass_fields__:
+            value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 0:
                 raise ValueError(f"{name} must be a non-negative integer: {value!r}")
         if self.items_per_outlet_cycle > self.item_requests_per_outlet_hour or self.backlog_items_per_outlet_cycle > self.items_per_outlet_cycle:
             raise ValueError("a cycle asks an outlet for no more than its hourly limit, and for no more backlog than items")
         if self.cycle_seconds < 60 or self.duration_seconds < self.cycle_seconds:
             raise ValueError("a cycle is at least a minute and an intake at least a cycle")
+        if self.drain_seconds and self.drain_seconds >= self.duration_seconds - self.cycle_seconds:
+            raise ValueError("the drain period leaves at least one cycle of polls")
 
     def as_record(self) -> dict[str, int]:
-        return {name: getattr(self, name) for name in self.__dataclass_fields__}
+        # drain_seconds is written only when it is used: a /2 plan's budget stays the record it was
+        return {name: getattr(self, name) for name in self.__dataclass_fields__ if name != "drain_seconds" or self.drain_seconds}
 
     @property
     def discovery(self) -> discovery.DiscoveryBudget:
@@ -116,8 +131,14 @@ def channel_class(channel: Mapping[str, Any]) -> str:
     return "feed"
 
 
+def default_allowance(budget: IntakeBudget) -> dict[str, int]:
+    return {"items_per_cycle": budget.items_per_outlet_cycle, "item_requests_per_hour": budget.item_requests_per_outlet_hour,
+            "item_requests": budget.item_requests_per_outlet}
+
+
 def build_plan(readiness: Mapping[str, Any], *, intake_id: str, budget: IntakeBudget, policy: Mapping[str, Any], registry_sha256: str,
-               readiness_sha256: str, outlets: Sequence[str] | None = None) -> dict[str, Any]:
+               readiness_sha256: str, outlets: Sequence[str] | None = None, allowances: Mapping[str, Mapping[str, int]] | None = None,
+               controller: str = CONTROLLER_VERSION) -> dict[str, Any]:
     """The plan of an intake from an intake-readiness file: its outlets (all, or the named ones), their usable
     channels with a poll interval each, and the budgets. Deterministic; decides nothing the readiness file did not.
 
@@ -149,10 +170,14 @@ def build_plan(readiness: Mapping[str, Any], *, intake_id: str, budget: IntakeBu
         chosen.append({"outlet_id": entry["outlet_id"], "country_id": entry["country_id"], "tier": entry["tier"], "web_origins": entry["web_origins"],
                        "channels": channels, "bulk_channels_not_polled": dropped, "candidate_rule": entry.get("candidate_rule"),
                        "robots_crawl_delay_seconds_observed": entry["limits"].get("robots_crawl_delay_seconds_observed")})
+        if controller != CONTROLLER_2:
+            chosen[-1]["allowance"] = {**default_allowance(budget), **dict((allowances or {}).get(entry["outlet_id"]) or {})}
     if outlets is not None and {o["outlet_id"] for o in chosen} | set(left_out) != set(outlets):
         raise IntakeStopped("an outlet named for the plan is not in the readiness file")
+    if controller not in CONTROLLERS:
+        raise IntakeStopped(f"not a controller this package runs: {controller}")
     chosen.sort(key=lambda outlet: outlet["outlet_id"])
-    return {"schema": PLAN_SCHEMA, "intake_id": intake_id, "controller": CONTROLLER_VERSION, "budget": budget.as_record(),
+    return {"schema": PLAN_SCHEMA, "intake_id": intake_id, "controller": controller, "budget": budget.as_record(),
             "poll_seconds_by_class": dict(POLL_SECONDS), "policy_version": policy["policy_version"],
             "derived_from": {"readiness_version": readiness["readiness_version"], "readiness_sha256": readiness_sha256, "registry_sha256": registry_sha256},
             "totals": {"outlets": len(chosen), "channels": sum(len(o["channels"]) for o in chosen), "countries": sorted({o["country_id"] for o in chosen}),
@@ -162,12 +187,28 @@ def build_plan(readiness: Mapping[str, Any], *, intake_id: str, budget: IntakeBu
 
 def validate_plan(plan: Mapping[str, Any], registry_: Any, policy: Mapping[str, Any], holds: Mapping[str, str]) -> IntakeBudget:
     """A plan can be run only against the registry, the policy and the holds as they are now. Raises with the reason."""
-    if plan.get("schema") != PLAN_SCHEMA or plan.get("controller") != CONTROLLER_VERSION:
-        raise IntakeStopped(f"not a {PLAN_SCHEMA} of {CONTROLLER_VERSION}")
+    if plan.get("schema") != PLAN_SCHEMA or plan.get("controller") not in CONTROLLERS:
+        raise IntakeStopped(f"not a {PLAN_SCHEMA} of {' or '.join(CONTROLLERS)}")
     if plan["policy_version"] != policy["policy_version"]:
         raise IntakeStopped(f"the plan was made under policy {plan['policy_version']}; the policy is {policy['policy_version']}")
     budget = IntakeBudget(**plan["budget"])
+    if plan["controller"] == CONTROLLER_2 and budget.drain_seconds:
+        raise IntakeStopped(f"{CONTROLLER_2} has no drain period")
+    maxima = default_allowance(budget)
     for outlet in plan["outlets"]:
+        allowance = outlet.get("allowance")
+        if plan["controller"] == CONTROLLER_2:
+            if allowance is not None:
+                raise IntakeStopped(f"{CONTROLLER_2} has no allowance per outlet")
+        else:
+            if not isinstance(allowance, Mapping) or set(allowance) != set(ALLOWANCE_KEYS):
+                raise IntakeStopped(f"{outlet['outlet_id']}: an allowance of exactly {list(ALLOWANCE_KEYS)}")
+            for key in ALLOWANCE_KEYS:
+                value = allowance[key]
+                if isinstance(value, bool) or not isinstance(value, int) or not 0 <= value <= maxima[key]:
+                    raise IntakeStopped(f"{outlet['outlet_id']}: {key} {value!r} is not a whole number up to the budget's {maxima[key]}")
+            if allowance["items_per_cycle"] > allowance["item_requests_per_hour"]:
+                raise IntakeStopped(f"{outlet['outlet_id']}: a cycle asks for no more than the outlet's hour allows")
         registered = registry_.resolve(outlet["outlet_id"])                 # registered, or a refusal
         known = {c["channel_id"]: c["url_history"][-1]["url"] for c in registered["channels"]}
         for channel in outlet["channels"]:
@@ -259,13 +300,16 @@ def intake_pin(plan: Mapping[str, Any], plan_path: str, authorization: Mapping[s
         raise IntakeStopped("the preservation target has no identity")
     return {
         "authorization": dict(authorization),
-        "intake": {"controller": CONTROLLER_VERSION, "intake_id": plan["intake_id"], "plan": plan_path, "plan_sha256": sha256_bytes(record_json(dict(plan))),
+        "intake": {"controller": plan["controller"], "intake_id": plan["intake_id"], "plan": plan_path, "plan_sha256": sha256_bytes(record_json(dict(plan))),
                    "budget": dict(plan["budget"]), "totals": dict(plan["totals"]), "poll_seconds_by_class": dict(POLL_SECONDS),
                    "pace_margin_seconds": PACE_MARGIN_SECONDS, "retries_of_a_failed_candidate": RETRIES_OF_A_FAILED_CANDIDATE,
                    "fetch_limits": {name: getattr(canary_driver.CANARY_LIMITS, name) for name in ("timeout_seconds", "total_seconds", "max_redirects", "max_body_bytes", "max_attempts")},
                    "selection": "never a page fetched before; first what was first listed during the intake and is dated inside its window (newest first), "
                                 "then what a later poll listed first without a date, then at most backlog_items_per_outlet_cycle of the rest",
-                   "extractor": extraction.BASELINE.stage_version},
+                   "extractor": extraction.BASELINE.stage_version,
+                   **({"interleaving": "polls outlet after outlet; then one item per outlet and turn, round the outlets, until every "
+                                       "outlet's allowance is spent, nothing is due or the cycle ends; what is still due stays due",
+                       "workspace_check": incremental_check.CHECK_VERSION} if plan["controller"] != CONTROLLER_2 else {})},
         "research_tdm": policy_module.research_tdm_pin(acquisition_policy),
         "access_control_classifier": access_control.CLASSIFIER_VERSION,
         "robots_parser": F.robots.PARSER_VERSION,
@@ -286,9 +330,11 @@ class IntakeFetcher(F.HttpFetcher):
     """
 
     def __init__(self, *, budget: IntakeBudget, deadline: datetime, used: Mapping[str, Any] | None = None,
-                 permitted: Callable[[], str | None] | None = None, **kwargs: Any) -> None:
+                 permitted: Callable[[], str | None] | None = None, allowances: Mapping[str, Mapping[str, int]] | None = None,
+                 **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.budget, self.deadline, self.permitted = budget, deadline, permitted
+        self.allowances = dict(allowances or {})            # /3: an outlet's own item limits (none above the budget's)
         # A request is decided, then paced, then sent. Nothing is decided so late that its pacing could carry it past the deadline.
         self.last_decision_at = deadline - timedelta(seconds=PACE_MARGIN_SECONDS)
         used = used or {}
@@ -312,9 +358,10 @@ class IntakeFetcher(F.HttpFetcher):
         if self.total >= self.budget.total_requests:
             return "intake_budget_exhausted: total"
         if kind == acquisition.FETCH_KIND_ITEM and outlet_id is not None:
-            if self.items_by_outlet[outlet_id] >= self.budget.item_requests_per_outlet:
+            own = self.allowances.get(outlet_id) or {}
+            if self.items_by_outlet[outlet_id] >= own.get("item_requests", self.budget.item_requests_per_outlet):
                 return "intake_budget_exhausted: outlet"
-            if self._in_the_last_hour(outlet_id) >= self.budget.item_requests_per_outlet_hour:
+            if self._in_the_last_hour(outlet_id) >= own.get("item_requests_per_hour", self.budget.item_requests_per_outlet_hour):
                 return "intake_budget_exhausted: outlet_hour"
             if self.items_by_origin[_origin(url)] >= self.budget.item_requests_per_origin:
                 return "intake_budget_exhausted: origin"
@@ -466,7 +513,7 @@ def write_state(state_dir: Path, state: Mapping[str, Any]) -> None:
 def initial_state(plan: Mapping[str, Any], *, started_at: datetime, baseline: Mapping[str, Any]) -> dict[str, Any]:
     """The state an intake starts with. The clock starts here: the deadline is fixed now and never moved."""
     deadline = started_at + timedelta(seconds=plan["budget"]["duration_seconds"])
-    return {"schema": STATE_SCHEMA, "intake_id": plan["intake_id"], "controller": CONTROLLER_VERSION, "status": RUNNING,
+    return {"schema": STATE_SCHEMA, "intake_id": plan["intake_id"], "controller": plan["controller"], "status": RUNNING,
             "started_at_utc": format_instant(started_at), "deadline_at_utc": format_instant(deadline),
             "started_at_local": started_at.astimezone().isoformat(timespec="seconds"), "deadline_at_local": deadline.astimezone().isoformat(timespec="seconds"),
             "plan_sha256": sha256_bytes(record_json(dict(plan))), "baseline": dict(baseline),
@@ -596,9 +643,14 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
         _finish_open_packs(env, [o["outlet_id"] for o in plan["outlets"]])
         fetcher = IntakeFetcher(budget=budget, deadline=deadline, used=used_from_evidence(env.workspace, state["run_ids"], env.clock()), permitted=env.still_permitted,
                                 identity=env.identity, gate=policy_module.PolicyGate(env.policy, env.registry, env.identity),
-                                limits=canary_driver.CANARY_LIMITS, clock=env.clock, sleep=env.sleep, access_holds=holds, **dict(env.fetcher_options or {}))
+                                limits=canary_driver.CANARY_LIMITS, clock=env.clock, sleep=env.sleep, access_holds=holds,
+                                allowances={o["outlet_id"]: o["allowance"] for o in plan["outlets"] if "allowance" in o},
+                                **dict(env.fetcher_options or {}))
         # Read, and authenticated, once: this process is the workspace's only writer for as long as it runs.
         tables = http_acquisition.discovery_tables(env.workspace)
+        interleaved = plan["controller"] != CONTROLLER_2
+        loaded = _held_evidence(env, tables) if interleaved else None
+        check: dict[str, Any] = {}
         _log(state_dir, f"controller started: cycle {state['cycle']}, {fetcher.total} requests used, deadline {state['deadline_at_utc']}")
         while env.clock() < fetcher.last_decision_at and not (state_dir / STOP_FILE).exists():
             cycle_started = env.clock()
@@ -635,7 +687,12 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
             acquisition.open_run(env.workspace.root, run_)
             counts: Counter[str] = Counter()
             blocked: str | None = None
-            for outlet in outlets:
+            if interleaved:
+                blocked, stopped = _interleaved_cycle(env, plan, state, state_dir, budget, fetcher, run_, outlets, loaded, started_at,
+                                                      cycle_started, deadline, waiting, holds, counts)
+                if stopped is not None:
+                    return stopped
+            for outlet in ([] if interleaved else outlets):
                 if env.clock() >= fetcher.last_decision_at or (state_dir / STOP_FILE).exists() or blocked is not None:
                     break
                 refusal = env.still_permitted() if env.still_permitted is not None else None
@@ -681,10 +738,18 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
                 write_state(state_dir, state)
             acquisition.close_run(env.workspace.root, run_, finished_at=env.clock(), status="COMPLETED", counts=dict(counts),
                                   pack_ids=[], errors=[e["error"] for e in state["errors"] if e["cycle"] == state["cycle"]][:20])
-            diagnosis = recovery.diagnose(env.workspace.root)
-            if diagnosis["classification"] == recovery.NEEDS_REPAIR:
-                recovery.repair(env.workspace.root)
+            if interleaved:                                     # /3: what this cycle (and anything since the last check) added
+                diagnosis, check["state"] = incremental_check.checkpoint(env.workspace.root, check.get("state"), now=env.clock())
+                if diagnosis["classification"] == recovery.NEEDS_REPAIR:
+                    recovery.repair(env.workspace.root)
+                    diagnosis, check["state"] = incremental_check.checkpoint(env.workspace.root, None, now=env.clock())
+                    loaded = _held_evidence(env, None)          # a repair moved bytes aside: read the evidence again
+                state["last_check"] = (diagnosis.get("check") or {}).get("mode")
+            else:
                 diagnosis = recovery.diagnose(env.workspace.root)
+                if diagnosis["classification"] == recovery.NEEDS_REPAIR:
+                    recovery.repair(env.workspace.root)
+                    diagnosis = recovery.diagnose(env.workspace.root)
             if diagnosis["classification"] in (recovery.DAMAGED, recovery.NEEDS_REPAIR):
                 return _stop(state_dir, state, FAILED, f"after cycle {state['cycle']} the workspace is {diagnosis['classification']}: {diagnosis.get('damaged') or diagnosis.get('needs_repair')}")
             _log(state_dir, f"cycle {state['cycle']} done: {fetcher.total} requests in all, {sum(fetcher.items_by_outlet.values())} item requests")
@@ -698,6 +763,156 @@ def run(plan: Mapping[str, Any], state_dir: Path, environment: Environment) -> d
         write_state(state_dir, state)
         _log(state_dir, f"no further request: the deadline is {state['deadline_at_utc']}")
         return state
+
+
+_OUTLET_ERRORS = (acquisition.AcquisitionError, pack.PackError, preservation.PreservationError, discovery.DiscoveryError, OSError,
+                  ValueError, KeyError)
+
+
+def _held_evidence(env: "Environment", tables: Any) -> dict[str, Any]:
+    """/3: the evidence the only writer holds across its calls, each read in full once and then extended by what is appended."""
+    return {"tables": tables if tables is not None else http_acquisition.discovery_tables(env.workspace),
+            "log": http_acquisition.RequestLog(env.workspace), "qualifications": http_acquisition.qualification_table(env.workspace),
+            "ledger": env.workspace.ledger()}
+
+
+class _Queue:
+    """/3: an outlet's items of one cycle -- chosen once, by the intake's selector, up to its allowance -- handed out one at a
+    time, each only while the planner still says it is due."""
+
+    def __init__(self, select: Callable[[Sequence[schedule.CandidateState], Any], list[schedule.CandidateState]], allowance: int) -> None:
+        self.select, self.allowance, self.order, self.given = select, allowance, None, 0
+
+    @property
+    def exhausted(self) -> bool:
+        return self.given >= self.allowance or (self.order is not None and not self.order)
+
+    def __call__(self, due: Sequence[schedule.CandidateState], tables: Any) -> list[schedule.CandidateState]:
+        if self.order is None:
+            self.order = [state.candidate_id for state in self.select(due, tables)][:self.allowance]
+        allowed = {state.candidate_id: state for state in due}
+        while self.order and self.given < self.allowance:
+            candidate = self.order.pop(0)
+            if candidate in allowed:
+                self.given += 1
+                return [allowed[candidate]]
+        return []
+
+
+def _interleaved_cycle(env: "Environment", plan: Mapping[str, Any], state: dict[str, Any], state_dir: Path, budget: IntakeBudget,
+                       fetcher: IntakeFetcher, run_: Any, outlets: Sequence[Mapping[str, Any]], loaded: dict[str, Any], started_at: datetime,
+                       cycle_started: datetime, deadline: datetime, waiting: set[str], holds: Mapping[str, str],
+                       counts: Counter[str]) -> tuple[str | None, dict[str, Any] | None]:
+    """One cycle of intake-controller/3. Returns ``(why no more is asked, or None; the state of a stopped intake, or None)``.
+
+    1. **Polls**, outlet after outlet (the outlets in the cycle's rotated order): every due channel of an outlet in one call.
+       In the drain period nothing is polled.
+    2. **Items, interleaved**: round the outlets, one item per outlet and turn, so that consecutive requests go to different
+       origins and each origin's pacing runs while the others are asked. An outlet leaves the round when its allowance of the
+       cycle is spent or nothing more is due; the round ends with the cycle. What is still due then stays due.
+    3. **Preservation**, outlet by outlet, as in /2.
+    """
+    cycle_end = min(cycle_started + timedelta(seconds=budget.cycle_seconds), fetcher.last_decision_at)
+    draining = bool(budget.drain_seconds) and cycle_started >= deadline - timedelta(seconds=budget.drain_seconds)
+    packs_of: dict[str, set[str]] = {o["outlet_id"]: set() for o in outlets}
+
+    def stop_requested() -> bool:
+        return env.clock() >= fetcher.last_decision_at or (state_dir / STOP_FILE).exists()
+
+    def acquire(outlet: Mapping[str, Any], channels: list[str], items: int, select: Any) -> dict[str, Any] | None:
+        try:
+            summary = http_acquisition.run_http_acquisition(
+                env.workspace, env.registry, run_, outlet["outlet_id"], fetcher=fetcher, channel_ids=channels, budget=budget.discovery,
+                max_item_fetches=items, schedule_policy=env.schedule_policy, clock=env.clock, candidate_rules=env.candidate_rules,
+                select_due=select, tables=loaded["tables"], request_log=loaded["log"], qualifications=loaded["qualifications"],
+                ledger=loaded["ledger"])
+        except _OUTLET_ERRORS as error:
+            state["errors"].append({"at": format_instant(env.clock()), "cycle": state["cycle"], "outlet_id": outlet["outlet_id"],
+                                    "error": f"{type(error).__name__}: {str(error)[:300]}"})
+            _log(state_dir, f"outlet error {outlet['outlet_id']}: {type(error).__name__}: {str(error)[:200]}")
+            loaded.update(_held_evidence(env, None))          # as it is on disk, whatever the failed call left in memory
+            return None
+        packs_of[outlet["outlet_id"]].update(summary["open_pack_ids"])
+        counts.update({f"requests_{key}": value for key, value in summary["requests"].items()})
+        counts["candidates_requested"] += summary["candidates_requested"]
+        return summary
+
+    def too_many_errors() -> bool:
+        return len([e for e in state["errors"] if e["cycle"] == state["cycle"]]) > max(5, len(outlets) // 3)
+
+    # 1. polls
+    reachable = []
+    for outlet in outlets:
+        if stop_requested():
+            break
+        refusal = env.still_permitted() if env.still_permitted is not None else None
+        if refusal is not None:
+            return None, _stop(state_dir, state, BLOCKED, refusal)
+        if set(outlet["web_origins"]) & set(fetcher.access_holds):
+            state["holds"][outlet["outlet_id"]] = "an origin of the outlet is held"
+            continue
+        channels = [] if draining else [c for c in _due_channels(outlet, state, env.clock())
+                                        if next(x["url"] for x in outlet["channels"] if x["channel_id"] == c) not in fetcher.access_holds]
+        if channels:
+            acquire(outlet, channels, 0, None)
+            if too_many_errors():
+                return None, _stop(state_dir, state, FAILED, "more than a third of the outlets failed in one cycle: a systemic fault, not an outlet's")
+            now = env.clock()
+            for channel_id in channels:
+                state["channel_last_poll"][channel_id] = format_instant(cycle_started)
+                state["first_poll_done"].setdefault(channel_id, format_instant(now))
+        reachable.append(outlet)
+
+    # 2. items, interleaved
+    queues = {o["outlet_id"]: _Queue(selector(started_at, state["first_poll_done"], budget.backlog_items_per_outlet_cycle),
+                                     (o.get("allowance") or default_allowance(budget))["items_per_cycle"]) for o in reachable}
+    turn = [o for o in reachable if queues[o["outlet_id"]].allowance > 0]
+    while turn and env.clock() < cycle_end and not stop_requested():
+        refusal = env.still_permitted() if env.still_permitted is not None else None
+        if refusal is not None:
+            return None, _stop(state_dir, state, BLOCKED, refusal)
+        for outlet in list(turn):
+            if env.clock() >= cycle_end or stop_requested():
+                break
+            queue = queues[outlet["outlet_id"]]
+            if set(outlet["web_origins"]) & set(fetcher.access_holds):
+                turn.remove(outlet)
+                continue
+            summary = acquire(outlet, [], 1, queue)
+            if too_many_errors():
+                return None, _stop(state_dir, state, FAILED, "more than a third of the outlets failed in one cycle: a systemic fault, not an outlet's")
+            if summary is None or not summary["candidates_requested"] or queue.exhausted:
+                turn.remove(outlet)
+    if turn:                                                   # the cycle ended before these outlets' items: they stay due
+        cut = state.setdefault("items_left_at_cycle_end", {})
+        for outlet in turn:
+            left = len(queues[outlet["outlet_id"]].order or [])
+            if left:
+                cut[outlet["outlet_id"]] = cut.get(outlet["outlet_id"], 0) + left
+
+    # 3. preservation, outlet by outlet
+    blocked: str | None = None
+    for outlet in reachable:
+        identifier = outlet["outlet_id"]
+        try:
+            preserved = canary_driver._preserve(env.workspace, sorted(packs_of[identifier]), env.preservation_root, env.spool_root, env.spool_policy, env.clock)
+            canary_driver._derive(env.workspace, env.registry, env.preservation_root, preserved, extraction.BASELINE, env.clock)
+            for pack_id, result in preserved.items():
+                (waiting.discard if result["state"] == preservation.STATE_PRESERVED else waiting.add)(pack_id)
+        except _OUTLET_ERRORS as error:
+            state["errors"].append({"at": format_instant(env.clock()), "cycle": state["cycle"], "outlet_id": identifier,
+                                    "error": f"{type(error).__name__}: {str(error)[:300]}"})
+            _log(state_dir, f"preservation error {identifier}: {type(error).__name__}: {str(error)[:200]}")
+        now = env.clock()
+        state["preservation"] = _pending_text(waiting)
+        state["outlets_done_in_cycle"].append(identifier)
+        state["requests_total"], state["items_by_outlet"] = fetcher.total, dict(sorted(fetcher.items_by_outlet.items()))
+        state["holds"].update({key: value for key, value in fetcher.access_holds.items() if key not in holds})
+        state["last_checkpoint_at"] = format_instant(now)
+        blocked = pending_refusal(env, sorted(waiting), now) or io_refusal(env)
+        state["held_because"] = blocked
+        write_state(state_dir, state)
+    return blocked, None
 
 
 def _hourly(state: dict[str, Any], key: str, now: datetime, limit: int) -> int:

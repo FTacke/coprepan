@@ -68,6 +68,46 @@ def request_rows(workspace: Workspace) -> list[dict[str, Any]]:
     return read_chained(request_log_path(workspace), REQUEST_LOG_SCHEMA)
 
 
+class RequestLog:
+    """The request log for the workspace's only writer (CPD-0037): read and authenticated in full once, then only what was
+    appended since, each new line authenticated against the line before it. A log shorter than this object read it, or whose
+    last read line is no longer where it was, is refused. For a caller that makes many calls in one process and holds the
+    writer role (the intake controller); everyone else reads with :func:`request_rows`."""
+
+    def __init__(self, workspace: Workspace) -> None:
+        self.path = request_log_path(workspace)
+        self._rows: list[dict[str, Any]] = []
+        self._size, self._last, self._last_len = 0, None, 0
+
+    def rows(self) -> list[dict[str, Any]]:
+        import json
+
+        from .canonical import sha256_bytes
+        from .jsonl import CHAIN_FIELD, ChainBroken, JsonlError, TornTail
+        size = self.path.stat().st_size if self.path.exists() else 0
+        if size == self._size:
+            return self._rows
+        if size < self._size:
+            raise JsonlError(f"{self.path.name}: shorter than it was read ({size} < {self._size} bytes)")
+        with open(self.path, "rb") as handle:
+            if self._size:
+                handle.seek(self._size - self._last_len)
+                if sha256_bytes(handle.read(self._last_len)) != self._last:
+                    raise ChainBroken(f"{self.path.name}: the last row read is no longer where it was")
+            handle.seek(self._size)
+            data = handle.read(size - self._size)
+        if not data.endswith(b"\n"):
+            raise TornTail(f"{self.path.name}: ends in an incomplete line")
+        for line in data.split(b"\n")[:-1]:
+            row = json.loads(line.decode("utf-8"))
+            if row.get("schema") != REQUEST_LOG_SCHEMA or row.get(CHAIN_FIELD) != self._last:
+                raise ChainBroken(f"{self.path.name}: an appended row does not follow the row before it")
+            self._rows.append(row)
+            self._last, self._last_len = sha256_bytes(line + b"\n"), len(line) + 1
+        self._size = size
+        return self._rows
+
+
 def discovery_tables(workspace: Workspace) -> discovery.DiscoveryTables:
     return discovery.DiscoveryTables(workspace.root / "discovery")
 
@@ -161,8 +201,15 @@ def run_http_acquisition(
     use_robots_sitemaps: bool = False,
     select_due: Callable[[Sequence[schedule.CandidateState], Any], Sequence[schedule.CandidateState]] | None = None,
     tables: discovery.DiscoveryTables | None = None,
+    request_log: RequestLog | None = None,
+    qualifications: candidate_filter.QualificationTable | None = None,
+    ledger: Any = None,
 ) -> dict[str, Any]:
     """Discover through the given channels of one registered outlet and fetch what is due.
+
+    ``request_log``, ``qualifications`` and ``ledger``: as ``tables``, the request log (:class:`RequestLog`), the qualification
+    table and the preservation ledger as the only writer holds them across its calls (CPD-0037); the ledger is brought up to
+    date with what other steps of the process appended (``Ledger.refresh``). Without them each is read in full at every call.
 
     ``select_due``: which of the due candidates are requested, and in which order — given every due
     candidate and the discovery tables, it returns the ones to ask for; at most ``max_item_fetches``
@@ -190,10 +237,14 @@ def run_http_acquisition(
     if run.kind != acquisition.RUN_KIND_HTTP_FETCH:
         raise acquisition.AcquisitionError(f"an HTTP acquisition needs a run of kind http_fetch, not {run.kind}")
     # The evidence this run adds to must authenticate before the first request is made.
-    request_rows(workspace)
+    rows_now = request_log.rows if request_log is not None else (lambda: request_rows(workspace))
+    rows_now()
     tables = discovery_tables(workspace) if tables is None else tables
     acquisition.open_run(workspace.root, run)
-    ledger = workspace.ledger()
+    if ledger is None:
+        ledger = workspace.ledger()
+    else:
+        ledger.refresh()
     packs: dict[str, pack.OpenPack] = {}
     log = request_log_path(workspace)
     finals: Counter[str] = Counter()
@@ -303,8 +354,8 @@ def run_http_acquisition(
                 discover(source, sitemap, None)
 
     # Qualification: every known candidate gets a decision under the current rules, on record.
-    qualifications = qualification_table(workspace)
-    channel_keys = frozenset(key for key in (_own_key(rules, c["url_history"][-1]["url"]) for c in channels.values()) if key)
+    qualifications = qualification_table(workspace) if qualifications is None else qualifications
+    channel_keys =frozenset(key for key in (_own_key(rules, c["url_history"][-1]["url"]) for c in channels.values()) if key)
     outlet_rules = (candidate_rules or {}).get(outlet_id)
     listing_ids = frozenset(c["channel_id"] for c in channels.values() if c["kind"] in candidate_filter.LISTING_KINDS)
 
@@ -335,7 +386,7 @@ def run_http_acquisition(
     decisions, qualified = qualify_all()
 
     # Schedule: which qualified candidates are due now.
-    due, _ = schedule.plan(qualified, request_rows(workspace), schedule_policy, now=clock(),
+    due, _ = schedule.plan(qualified, rows_now(), schedule_policy, now=clock(),
                            current_policy_version=fetcher.gate.policy["policy_version"],
                            limit=max_item_fetches if select_due is None else len(qualified))
     if select_due is not None:
@@ -355,7 +406,7 @@ def run_http_acquisition(
                            candidate["candidate_id"], **conditional))
 
     decisions, qualified = qualify_all()  # a permanent redirect may have added a candidate during the run
-    _, states = schedule.plan(qualified, request_rows(workspace), schedule_policy, now=clock(),
+    _, states = schedule.plan(qualified, rows_now(), schedule_policy, now=clock(),
                               current_policy_version=fetcher.gate.policy["policy_version"], limit=0)
     return {
         "run_id": run.run_id, "open_pack_ids": sorted(packs), "discovery": discoveries,

@@ -206,6 +206,38 @@ class Ledger:
         self._states[record.subject] = record.new_state
         self._next_seq += 1
 
+    def refresh(self) -> int:
+        """Read what was appended since this object last read or wrote (another ledger object of the same process: the
+        preservation step), checked exactly as at opening: each record against the one before it and against the machine.
+        Returns the number of records read. A file shorter than this object knew it, or whose new part does not follow the
+        last record it read, is refused. For the only writer of a workspace (CPD-0037); everyone else opens a new ledger."""
+        size = self.path.stat().st_size if self.path.exists() else 0
+        if size == self._size:
+            return 0
+        if size < self._size:
+            raise LedgerError(f"{self.path.name}: {size} bytes, {self._size} were read: the ledger was cut")
+        with open(self.path, "rb") as handle:
+            handle.seek(self._size)
+            data = handle.read(size - self._size)
+        if not data.endswith(b"\n"):
+            raise LedgerTornTail(f"{self.path.name}: an incomplete record after byte {self._size}")
+        chain, count = self._chain, 0
+        for line in data.split(b"\n")[:-1]:
+            try:
+                row = json.loads(line.decode("utf-8"))
+                if row["schema"] != LEDGER_RECORD_SCHEMA or row["machine"] != self.machine.name:
+                    raise ValueError(f"schema/machine {row['schema']!r}/{row['machine']!r}")
+                if row["previous_record_sha256"] != chain:
+                    raise ValueError("it does not follow the record before it")
+                record = LedgerRecord(row["seq"], row["subject"], row["previous_state"], row["new_state"], row["at"], row["details"], chain)
+            except (ValueError, KeyError, TypeError) as error:
+                raise LedgerError(f"{self.path.name}: a record appended after byte {self._size} is not a ledger record: {error}") from error
+            self._apply(record)
+            chain = sha256_bytes(line + b"\n")
+            count += 1
+        self._chain, self._size = chain, size
+        return count
+
     def state(self, subject: str) -> str | None:
         """The current state of a subject, or ``None`` if the ledger has never seen it."""
         return self._states.get(subject)

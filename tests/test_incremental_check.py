@@ -302,6 +302,42 @@ def test_a_canary_run_checks_fully_once_and_incrementally_after_and_agrees_with_
     assert diagnosis["check"]["mode"] == "incremental" and diagnosis["classification"] == real(run.workspace.root)["classification"]
 
 
+def test_the_held_request_log_reads_only_what_is_appended_and_refuses_what_does_not_follow(world):
+    from coprepan import http_acquisition as H
+    from coprepan.jsonl import ChainBroken, JsonlError
+    log = H.RequestLog(world.workspace)
+    assert log.rows() == H.request_rows(world.workspace)
+    path = H.request_log_path(world.workspace)
+    planned = next(json.loads(line) for line in lines(path) if json.loads(line)["event"] == "PLANNED")
+    planned = {k: v for k, v in planned.items() if k != CHAIN_FIELD}
+    append_chained_row(path, {**planned, "request_id": planned["request_id"][:-4] + "beef"})
+    assert log.rows() == H.request_rows(world.workspace)                          # the tail only, and the same rows
+    with open(path, "ab") as handle:
+        handle.write(json.dumps({**planned, CHAIN_FIELD: "0" * 64}).encode() + b"\n")
+    with pytest.raises(ChainBroken):
+        log.rows()
+    path.write_bytes(b"".join(i + b"\n" for i in lines(path)[:3]))
+    with pytest.raises(JsonlError):
+        H.RequestLog(world.workspace).rows() and log.rows()
+
+
+def test_a_held_ledger_is_brought_up_to_date_with_what_another_ledger_object_appended(world):
+    from coprepan import ledger as L
+    held, other = world.workspace.ledger(), world.workspace.ledger()
+    subject = "ft1:" + "a" * 64
+    other.transition(subject, "DISCOVERED")
+    other.transition(subject, "FETCH_PLANNED")
+    assert held.state(subject) is None and held.refresh() == 2 and held.state(subject) == "FETCH_PLANNED"
+    held.transition(subject, "FETCH_FAILED")                                       # it appends where the file ends
+    assert world.workspace.ledger().states() == held.states()
+    path = world.workspace.ledger_path
+    row = json.loads(lines(path)[-1])
+    with open(path, "ab") as handle:
+        handle.write(json.dumps({**row, "seq": row["seq"] + 1, "previous_record_sha256": "0" * 64}).encode() + b"\n")
+    with pytest.raises(L.LedgerError):
+        held.refresh()
+
+
 def test_nothing_new_reads_no_pack_and_no_layer(iworld, monkeypatch):
     root = iworld.workspace.root
     state = verified(root)
