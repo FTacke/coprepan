@@ -1,0 +1,85 @@
+{
+  "fetch_records": 135,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 5070691,
+  "received_body_bytes": 4635288,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 39.693225,
+    "median": 9.887377,
+    "n": 135,
+    "p90": 11.586851
+  },
+  "requests": {
+    "by_outlet": {
+      "ni_nicaragua_investiga": {
+        "item": 6,
+        "other": 2
+      },
+      "pa_critica": {
+        "item": 6,
+        "other": 4
+      },
+      "pa_la_prensa": {
+        "item": 6,
+        "other": 5
+      },
+      "pa_midiario": {
+        "item": 6,
+        "other": 3
+      },
+      "pa_panama_america": {
+        "item": 6,
+        "other": 2
+      },
+      "pe_diario_los_andes": {
+        "item": 6,
+        "other": 2
+      },
+      "pe_diario_uno": {
+        "item": 6,
+        "other": 2
+      },
+      "pe_diariocorreo": {
+        "item": 6,
+        "other": 8
+      },
+      "pe_el_buho": {
+        "item": 6,
+        "other": 2
+      },
+      "pe_la_republica": {
+        "item": 6,
+        "other": 3
+      },
+      "pr_el_nuevo_dia": {
+        "item": 6,
+        "other": 8
+      },
+      "pr_metro_puerto_rico": {
+        "item": 6,
+        "other": 7
+      },
+      "pr_noticel": {
+        "item": 6,
+        "other": 3
+      },
+      "py_abc_color": {
+        "item": 6,
+        "other": 8
+      }
+    },
+    "item": 84,
+    "other": 59,
+    "total": 143
+  },
+  "response_classes": {
+    "200": 132,
+    "404": 1,
+    "failed:timeout": 2
+  },
+  "run_id": "acq1-20261115T045716814350Z-3bfd8c42fcca",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
