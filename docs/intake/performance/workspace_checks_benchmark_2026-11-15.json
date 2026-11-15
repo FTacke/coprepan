@@ -1,0 +1,116 @@
+{
+ "schema": "coprepan-workspace-check-benchmark/v1",
+ "what": "scripts/benchmark_workspace_checks.py on a local copy of the runtime workspace (2026-11-15, after the weekend waves) and on synthetic pack inventories; measurements, no projection",
+ "real_copy": {
+  "packs_files": 6948,
+  "sealed_packs": 2316,
+  "full_audit": {
+   "seconds": 93.5,
+   "files_opened": 58496,
+   "packs_verified": 2316,
+   "classification": "CLEAN"
+  },
+  "first_checkpoint_full_and_rebase": {
+   "seconds": 112.14,
+   "files_opened": 63233,
+   "packs_verified": 2316,
+   "mode": "full"
+  },
+  "state_load_once_per_process": {
+   "seconds": 0.08,
+   "files_opened": 1,
+   "packs_verified": 0
+  },
+  "incremental_nothing_new": {
+   "seconds": 0.13,
+   "files_opened": 227,
+   "packs_verified": 8,
+   "mode": "incremental",
+   "scope": {
+    "tables_read_from_anchor": 11,
+    "new_lines": 0,
+    "packs_new": 0,
+    "packs_open_scanned": 0,
+    "packs_audited": 8,
+    "layers_new": 0,
+    "layers_audited": 32,
+    "runs_checked": 0,
+    "packs_skipped_as_verified": 2316,
+    "layers_skipped_as_verified": 4156
+   }
+  },
+  "incremental_100_new_request_rows": {
+   "seconds": 0.16,
+   "files_opened": 227,
+   "packs_verified": 8,
+   "mode": "incremental",
+   "classification": "CLEAN"
+  },
+  "incremental_1000_new_request_rows": {
+   "seconds": 0.14,
+   "files_opened": 227,
+   "packs_verified": 8,
+   "mode": "incremental",
+   "classification": "CLEAN"
+  }
+ },
+ "real_copy_first_attempt_cold_cache": {
+  "full_audit": {
+   "seconds": 276.5,
+   "files_opened": 58496,
+   "packs_verified": 2316,
+   "classification": "CLEAN"
+  },
+  "note": "the first attempt appended malformed synthetic request rows (no channel_id); both checks refused them (full audit: DAMAGED); its growth rows are not used"
+ },
+ "synthetic": {
+  "10000": {
+   "placeholders_made_seconds": 2.2,
+   "incremental_check": {
+    "seconds": 0.06,
+    "files_opened": 0,
+    "packs_verified": 0,
+    "mode": "incremental",
+    "packs_skipped_as_verified": 10000
+   },
+   "state_load": {
+    "seconds": 0.02,
+    "files_opened": 1,
+    "packs_verified": 0
+   },
+   "state_file_bytes": 1780768
+  },
+  "50000": {
+   "placeholders_made_seconds": 10.8,
+   "incremental_check": {
+    "seconds": 0.14,
+    "files_opened": 0,
+    "packs_verified": 0,
+    "mode": "incremental",
+    "packs_skipped_as_verified": 50000
+   },
+   "state_load": {
+    "seconds": 0.08,
+    "files_opened": 1,
+    "packs_verified": 0
+   },
+   "state_file_bytes": 8900768
+  },
+  "100000": {
+   "placeholders_made_seconds": 21.7,
+   "incremental_check": {
+    "seconds": 0.29,
+    "files_opened": 0,
+    "packs_verified": 0,
+    "mode": "incremental",
+    "packs_skipped_as_verified": 100000
+   },
+   "state_load": {
+    "seconds": 0.17,
+    "files_opened": 1,
+    "packs_verified": 0
+   },
+   "state_file_bytes": 17800768
+  }
+ }
+}

@@ -163,9 +163,22 @@ included.) One `recovery.diagnose` of the runtime workspace:
 candidate consistency 23 s), 2 + 2 × outlets times a wave. Median exact transport of a first request to an origin: 0.37 s over all
 waves.
 
-**After:** see §8 for the incremental check (synthetic inventories) and the workspace copy (filled in below when measured).
+**After (measured on a local copy of the runtime workspace, 6,948 pack files, 2,316 sealed packs;
+[`workspace_checks_benchmark_2026-11-15.json`](../intake/performance/workspace_checks_benchmark_2026-11-15.json)):**
 
-<!-- REAL-COPY-BENCHMARK -->
+| Check | Seconds | Files opened | Sealed packs re-hashed | Result |
+|---|---:|---:|---:|---|
+| Full audit `recovery.diagnose` | 93.5 (276.5 on the first, cold attempt) | 58,496 | 2,316 | CLEAN |
+| First checkpoint without state (full audit + rebase), once | 112.1 | 63,233 | 2,316 | — |
+| Incremental, nothing new | 0.13 | 227 | 8 (the rotating audit) | CLEAN |
+| Incremental, 100 new request pairs | 0.16 | 227 | 8 | CLEAN |
+| Incremental, 1,000 new request pairs | 0.14 | 227 | 8 | CLEAN |
+
+A wave of 14 outlets ran 30 checkpoints: under `/7` 30 full audits (2–4 minutes each, about three quarters of the wave's wall
+time); under `/8` one full audit at most (only without a valid state, after a finding, or weekly) and 29 checks of well under a
+second. The first attempt of this benchmark appended malformed synthetic request rows; the incremental check refused them, handed
+over to the full audit, and the full audit classified them `DAMAGED` — the intended behaviour; the measurement was repeated with
+well-formed rows.
 
 ## 8. The incremental consistency architecture
 

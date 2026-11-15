@@ -61,22 +61,24 @@ def timed(call):
     return result, {"seconds": round(seconds, 2), **counts}
 
 
-def append_request_rows(root: Path, n: int) -> None:
+def append_request_rows(root: Path, n: int, offset: int = 0) -> None:
+    """Append ``n`` well-formed request pairs (a PLANNED row and its FINISHED row, built from the log's own last rows of each
+    kind, no redirect), chained: the growth of a request log as a pass would leave it."""
     path = root / "requests" / "requests.jsonl"
-    last = path.read_bytes().rstrip(b"\n").rsplit(b"\n", 1)[-1] + b"\n"
-    template = json.loads(last)
-    previous = sha256_bytes(last)
+    lines = path.read_bytes().split(b"\n")[:-1]
+    rows = [json.loads(line) for line in lines[-400:]]
+    planned = next(r for r in reversed(rows) if r["event"] == "PLANNED")
+    finished = next(r for r in reversed(rows) if r["event"] == "FINISHED" and not (r.get("result") or {}).get("moved_permanently_to")
+                    and r.get("attributed_from") is None)
+    previous = sha256_bytes(lines[-1] + b"\n")
     with open(path, "ab") as handle:
-        for k in range(n):
-            row = {**template, "event": "PLANNED", "request_id": f"rq1:{'b' * 24}{k:08x}", "url": f"https://bench.test/{k}",
-                   CHAIN_FIELD: previous}
-            row.pop("result", None)
-            line = json.dumps(row, sort_keys=True, separators=(",", ":")).encode("utf-8") + b"\n"
-            handle.write(line)
-            previous = sha256_bytes(line)
-        # end each planned request, so that the bench leaves no intent open
-    with open(path, "rb") as handle:
-        pass
+        for k in range(offset, offset + n):
+            rid, url = f"rq1:{'b' * 24}{k:08x}", f"https://bench.test/{k}"
+            for template in (planned, finished):
+                row = {**template, "request_id": rid, "url": url, CHAIN_FIELD: previous}
+                line = json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8") + b"\n"
+                handle.write(line)
+                previous = sha256_bytes(line)
 
 
 def real(arguments) -> dict:
@@ -94,8 +96,8 @@ def real(arguments) -> dict:
     _, out["state_load_once_per_process"] = timed(lambda: I.load(root))
     (d2, state), out["incremental_nothing_new"] = timed(lambda: I.checkpoint(root, state, now=now + timedelta(minutes=1)))
     out["incremental_nothing_new"].update(mode=d2["check"]["mode"], scope=d2["check"].get("scope"))
-    for n in (100, 1000):
-        append_request_rows(root, n)
+    for n, offset in ((100, 0), (1000, 100)):
+        append_request_rows(root, n, offset)
         (dn, state), out[f"incremental_{n}_new_request_rows"] = timed(lambda: I.checkpoint(root, state, now=now + timedelta(minutes=2)))
         out[f"incremental_{n}_new_request_rows"].update(mode=dn["check"]["mode"], classification=dn["classification"])
     return out
