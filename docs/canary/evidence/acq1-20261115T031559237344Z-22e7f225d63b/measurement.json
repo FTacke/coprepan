@@ -1,0 +1,85 @@
+{
+  "fetch_records": 141,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 7751935,
+  "received_body_bytes": 7437525,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 19.927326,
+    "median": 9.908248,
+    "n": 141,
+    "p90": 10.084102
+  },
+  "requests": {
+    "by_outlet": {
+      "ec_la_republica_ec": {
+        "item": 6,
+        "other": 2
+      },
+      "ec_primicias": {
+        "item": 6,
+        "other": 8
+      },
+      "es_abc": {
+        "item": 6,
+        "other": 2
+      },
+      "es_el_correo": {
+        "item": 6,
+        "other": 3
+      },
+      "es_el_mundo": {
+        "item": 6,
+        "other": 3
+      },
+      "es_eldiario_es": {
+        "item": 6,
+        "other": 2
+      },
+      "es_la_vanguardia": {
+        "item": 6,
+        "other": 3
+      },
+      "gt_emisoras_unidas": {
+        "item": 6,
+        "other": 2
+      },
+      "gt_lahora": {
+        "item": 6,
+        "other": 4
+      },
+      "gt_prensa_libre": {
+        "item": 6,
+        "other": 7
+      },
+      "gt_publinews": {
+        "item": 6,
+        "other": 6
+      },
+      "hn_hondudiario": {
+        "item": 6,
+        "other": 7
+      },
+      "ni_confidencial": {
+        "item": 6,
+        "other": 8
+      },
+      "ni_despacho_505": {
+        "item": 6,
+        "other": 2
+      }
+    },
+    "item": 84,
+    "other": 59,
+    "total": 143
+  },
+  "response_classes": {
+    "200": 137,
+    "403": 2,
+    "404": 2
+  },
+  "run_id": "acq1-20261115T031559237344Z-22e7f225d63b",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}

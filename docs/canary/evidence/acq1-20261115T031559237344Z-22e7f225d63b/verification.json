@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "check": "workspace_readback_and_fixity",
+      "detail": "141 bodies of 14 sealed packs re-read in the workspace; all verify",
+      "status": "PASS"
+    },
+    {
+      "check": "pending_matches_received_bytes",
+      "detail": "141 PRESERVATION_PENDING, 0 RAW_PRESERVED, 141 with a body, 141 with verified local bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "extraction_reproducible_from_local_bytes",
+      "detail": "84 baseline extractions run twice from the local bytes with the network unavailable; 0 differ or fail (nothing is stored: the extraction of record is made after promotion)",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt_rederived_from_evidence",
+      "detail": "every count of the stored receipt equals the count derived from the packs, the log and the ledger",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt_request_count_equals_the_runs_own_counter",
+      "detail": "143 transport calls counted by the fetcher, 143 derived from fetch records",
+      "status": "PASS"
+    },
+    {
+      "check": "nothing_spooled",
+      "detail": "0 spooled records (a deferred run writes nothing to the spool)",
+      "status": "PASS"
+    },
+    {
+      "check": "budget_respected",
+      "detail": "84 item requests (ceiling 100), 143 in all",
+      "status": "PASS"
+    }
+  ],
+  "not_shown": [
+    "anything about the preservation target",
+    "replay from preserved bytes",
+    "the recovery diagnosis on the target"
+  ],
+  "preservation": "deferred_local: RAW_AVAILABLE in the workspace, PRESERVATION_PENDING; not RAW_PRESERVED",
+  "run_id": "acq1-20261115T031559237344Z-22e7f225d63b",
+  "schema": "coprepan-canary-verification-deferred/v1",
+  "status": "PASS"
+}
