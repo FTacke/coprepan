@@ -7,6 +7,7 @@ nothing about whether the run's code is merged (see the report itself).
 | Report | Title | Status | Source (branch @ commit) | Published (UTC) |
 |---|---|---|---|---|
 <!-- runs:begin -->
+| [2026-11-16_coprepan-body-control-review.md](2026-11-16_coprepan-body-control-review.md) | 2026-11-16 — CO.PRE.PAN BODY control review: the operator's verdicts, the evaluation, three bounded repairs | PASS | `main` @ `ef221f823` | 2026-11-15 23:29 |
 | [2026-11-15_coprepan-weekend-source-qualification.md](2026-11-15_coprepan-weekend-source-qualification.md) | 2026-11-14/15 — CO.PRE.PAN weekend source qualification, content-quality gate and checks that scale with what is new | PARTIAL | `main` @ `e52d859a9` | 2026-11-15 12:16 |
 | [2026-11-15_coprepan-phase3-text-surfaces-iptc-provenance.md](2026-11-15_coprepan-phase3-text-surfaces-iptc-provenance.md) | 2026-11-15 — CO.PRE.PAN Phase-3 integration: text surfaces, IPTC, AI and agency provenance, CORE quality | PASS | `main` @ `fe0fa23e9` | 2026-11-15 14:52 |
 | [2026-11-15_coprepan-phase3-repair-blind-control.md](2026-11-15_coprepan-phase3-repair-blind-control.md) | 2026-11-15 — CO.PRE.PAN Phase-3 repair: title surface, agency roles, exact against near-identical text, and a frozen blind control | PASS | `main` @ `7edcc9564` | 2026-11-15 18:24 |
