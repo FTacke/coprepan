@@ -1,0 +1,84 @@
+{
+  "fetch_records": 127,
+  "label": "MEASURED",
+  "note": "nothing here is a projection; the preservation target was not contacted",
+  "packs_pending_in_the_workspace": 14,
+  "pending_pack_and_index_bytes": 5184120,
+  "received_body_bytes": 4765973,
+  "request_seconds": {
+    "basis": "fetch_started_at to fetch_finished_at of each fetch record; a redirect chain is one record",
+    "max": 29.972723,
+    "median": 9.906907,
+    "n": 127,
+    "p90": 10.018197
+  },
+  "requests": {
+    "by_outlet": {
+      "ar_clarin": {
+        "item": 6,
+        "other": 8
+      },
+      "ar_el_tribuno": {
+        "item": 6,
+        "other": 3
+      },
+      "ar_infobae": {
+        "item": 6,
+        "other": 2
+      },
+      "ar_perfil": {
+        "item": 6,
+        "other": 2
+      },
+      "ar_rio_negro": {
+        "item": 6,
+        "other": 3
+      },
+      "bo_el_deber": {
+        "item": 6,
+        "other": 4
+      },
+      "bo_opinion": {
+        "item": 6,
+        "other": 3
+      },
+      "cl_cooperativa": {
+        "item": 6,
+        "other": 2
+      },
+      "cl_la_discusion": {
+        "item": 6,
+        "other": 2
+      },
+      "cl_la_tercera": {
+        "item": 6,
+        "other": 5
+      },
+      "cl_the_clinic": {
+        "item": 6,
+        "other": 2
+      },
+      "co_diario_del_huila": {
+        "item": 6,
+        "other": 2
+      },
+      "co_el_espectador": {
+        "item": 6,
+        "other": 7
+      },
+      "co_el_nuevo_siglo": {
+        "item": 6,
+        "other": 2
+      }
+    },
+    "item": 84,
+    "other": 47,
+    "total": 131
+  },
+  "response_classes": {
+    "200": 124,
+    "301": 3
+  },
+  "run_id": "acq1-20261115T000319772506Z-c198b373dc69",
+  "schema": "coprepan-canary-measurement-deferred/v1"
+}
