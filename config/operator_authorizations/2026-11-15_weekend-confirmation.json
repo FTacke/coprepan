@@ -1,0 +1,105 @@
+{
+  "schema": "coprepan-operator-authorization/v1",
+  "authorization_id": "DOA-2026-11-15-1",
+  "kind": "DELEGATED_OPERATOR_AUTHORIZATION",
+  "issued_on": "2026-11-15",
+  "issued_by": "Felix Tacke (operator of CO.PRE.PAN)",
+  "issued_to": "Claude Code agent (Claude Opus 5.5), agent session of 2026-11-14/15 in this repository",
+  "source": {
+    "form": "Written brief given by the operator in the agent session on 2026-11-14, titled 'CO.PRE.PAN_v3 – Wochenend-Qualifikation aller zugänglichen Pressequellen mit lokalem Spooling und autonomen Reparaturen'. The brief is quoted, not paraphrased. This record is written by the commissioned agent from that brief: it is the agent's transcription of the operator's commission, not a document signed by the operator, and it grants nothing the brief does not. The outlets are every registered outlet that is complete enough for a live request (channels, URL rules, time zone), not disabled by the policy, whose origin is not held by evidence, and that has at least one selected channel that is not a held URL. This second record of the same brief holds one confirmation wave only: the outlets of the waves wq-1 and wq-2 of DOA-2026-11-14-2 whose evidence was left incomplete by a defect of canary-driver/6, found in that evidence and repaired in canary-driver/7. It is not a repetition to use up a budget: each outlet is named with the defect its first request met. The transport requests of both records count against the brief's one ceiling of 1,600.",
+    "authorising_clauses": [
+      "Führe am Samstag/Sonntag, 14.–15.11.2026, eine umfassende reale Funktionsqualifikation der dokumentierten CO.PRE.PAN-Pressequellen durch.",
+      "Reale HTTP(S)-Qualifikationsanfragen an die bereits registrierten und nach der bestehenden Policy zulässigen Outlets.",
+      "Abruf kleiner, aussagekräftiger Stichproben aktueller Artikel.",
+      "Neue Rohdaten müssen am Wochenende nicht auf NEW_FS übertragen werden. [...] Keine NEW_FS- oder D:-Schreiboperationen am Wochenende. Keine Share-Vollinventuren, kein Backup, kein Cache-Seeding und keine Preservation-Promotion.",
+      "Diese spätere Preservation innerhalb des hier erzeugten, eindeutig abgegrenzten Qualifikationsbestands ist autorisiert, sobald sie vertragskonform möglich ist; keine Ausweitung auf allgemeines Backfill oder Reprocessing.",
+      "höchstens 1.600 tatsächliche HTTP-Transport-Requests, einschließlich Redirects und Robots; für die normalen Live-Stichproben höchstens 18 Requests je Outlet, darunter höchstens acht Artikelrequests; strengere bestehende Limits haben Vorrang; höchstens eine aktive Qualifikations-Request-Ausführung gleichzeitig; mindestens die bestehende konservative Mindestwartezeit je Origin sowie jedes höhere verbindliche Crawl-delay; keine automatische Wiederholung, nur um ein Budget auszuschöpfen",
+      "Verwende die bestehenden Qualifikations-, Canary- und delegierten Autorisierungsverfahren. Wenn der Vertrag eine Aufteilung in kleine Wellen verlangt, gruppiere entsprechend und führe einen übergreifenden persistenten Budgetzähler. Jede Welle benötigt ihren korrekten Scope und ihre eigene prüfbare Freigabegrundlage.",
+      "Die Live-Freigabe dieses Auftrags gilt nur bis Sonntag, 15.11.2026, 23:59 Uhr Europe/Berlin. Danach keine zusätzlichen Publisher-Requests aus dieser Autorisierung.",
+      "Nicht autorisiert: allgemeiner historischer Backfill, produktiver 24-Stunden-Intake, wiederkehrende Acquisition, Aufhebung bestehender Access-Holds, Umgehung von technischen Zugriffssperren oder Änderungen an CO.RA.PAN.",
+      "keine Paywall-Umgehung; keine Login-, CAPTCHA-, Bot-Challenge- oder sonstige technische Sperrumgehung; 401/403/429 und andere technische Zugangssignale gemäß bestehender Access-Policy behandeln; bestehende Rechtsprüfungs-, Direkt-Opt-out- und evidenzbasierte Access-Holds beachten"
+    ]
+  },
+  "valid_until": "2026-11-15",
+  "policy_versions": [
+    "canary/2026-10-10.1"
+  ],
+  "actions_authorized": [
+    "turn external_acquisition on for exactly one canary per wave and off again",
+    "run the tests on the arming commit, build the canary baseline of that commit and freeze it by its digest under this record",
+    "make the requests the canary driver makes for a wave's outlets within the wave's limits: robots files, at most three registered channel documents per outlet and what they name, at most six item pages per outlet",
+    "keep every received answer sealed and PRESERVATION_PENDING in the runtime workspace (deferred preservation, CPD-0036); verify, measure, commit and push the evidence",
+    "later, on a weekday and within every gate of shared storage, promote exactly the packs these waves left pending (canary_driver preserve-deferred)"
+  ],
+  "not_authorized": [
+    "any outlet outside the waves; co_el_tiempo; any outlet that is not registered; any publisher outside the repository's inventory",
+    "any request to an origin or a URL under a hold, and any way around a bot challenge, a captcha, a paywall, a login or a robots decision",
+    "any request beyond the wave's limits; a second canary of the wave; more than 1600 transport requests under this record and DOA-2026-11-14-2 together (the persistent counter of the run report); any outlet whose first request ended unreached, unavailable or behind a listing rule (asking it again would repeat, not confirm)",
+    "any publisher request after 2026-11-15 23:59 Europe/Berlin",
+    "any write to NEW_FS or D: during the weekend; a backup, a cache seeding, a promotion or a share inventory during the weekend",
+    "a 24-hour intake, a scheduler, a repeated acquisition, general production activation, a change of the acquisition policy other than the switch",
+    "any change to a frozen baseline, a receipt, an earlier authorisation record or a decision record of the past; any claim of a human confirmation"
+  ],
+  "holds_in_force": [
+    "every hold the driver derives from a preserved answer of any run (access-hold-scope/1): 20 on 2026-11-14 (https://efectococuyo.com/rss, https://efectococuyo.com/sitemap.xml, https://elpais.com, https://peru21.pe, https://proceso.hn/rss, https://tiempo.hn/, https://www.adndigital.com.py/feed, https://www.articulo66.com, https://www.cubanet.org, https://www.diarioextra.com/rss/, https://www.el19digital.com/, https://www.elcaribe.com.do, https://www.elimpulso.com, https://www.elpais.com.uy/rss, https://www.elsiglodetorreon.com.mx, https://www.expreso.com.pe, https://www.jornada.com.mx, https://www.jornada.com.mx/feeds/mundo.atom.xml, https://www.milenio.com, https://www.nuestrodiario.com/tu-comunidad)",
+    "ve_efecto_cocuyo: by its feed only (CPD-0028), and its feed is held: in no wave",
+    "the research-TDM override of CPD-0017 applies as it is in the policy in force; this record does not widen it"
+  ],
+  "technical_gates": [
+    "clean working tree and HEAD equal to origin/main before arming",
+    "this record tracked, touched by exactly one commit, unmodified and pushed",
+    "every outlet of the wave registered",
+    "the full test suite passes on the arming commit",
+    "the baseline is READY_TO_FREEZE with nothing blocking, pins this record's id and digest, the wave and its deferred preservation, and is frozen once per wave",
+    "the canary's budget is capped by the wave's limits (CPD-0024, CPD-0036); a wave is at most 24 outlets (CPD-0025)",
+    "the policy's pace: at least ten seconds between requests to one origin, a stated crawl delay as the binding minimum, one attempt per request",
+    "preflight READY with O-3 passed by the local workspace report only (the target and the backup root not resolved)",
+    "verification after the run: local read-back and fixity, pending equals received, extraction reproducible without network, receipt re-derived, budget respected",
+    "disarming read back in the file, in HEAD and on origin/main"
+  ],
+  "stop_conditions": [
+    "any technical gate not met",
+    "the canary is not exactly the wave's outlets, or a limit of its budget exceeds the wave's",
+    "the policy version is not one this record names, or the record is out of date",
+    "the wave already has a frozen baseline",
+    "a measurable impairment of CO.RA.PAN's production (its observation of the share degraded or recovering, or the operator's PAUSE_IO): no further wave is started",
+    "a refusal by the agent environment's own permission layer: recorded, not worked around"
+  ],
+  "disarming": "After a wave's canary, whatever its outcome, external_acquisition is set to disabled, committed and pushed, and the state is read back from the file, HEAD and origin/main. A run that cannot show this ends as not disarmed, never as done.",
+  "decisions": [
+    "one wave of the thirteen outlets named in its note, each with the defect of canary-driver/6 its first request met",
+    "the limits of the first record's waves: six item requests and eight other requests per outlet, three channels",
+    "not asked again: cu_5_de_septiembre, mx_animal_politico, pa_panama_24_horas, cu_periodico26 (not reached), bo_brujula_digital (items answered 500), ve_eluniversal (a script shell), bo_lostiempos, pe_el_comercio, sv_diario_el_mundo (listing channels waiting for an allow rule), and every outlet whose first evidence the repairs do not concern"
+  ],
+  "waves": [
+    {
+      "label": "wc-1",
+      "outlets": [
+        "ar_la_nacion",
+        "ar_pagina12",
+        "cl_biobiochile",
+        "cu_juventud_rebelde",
+        "cr_crhoy",
+        "hn_criterio",
+        "hn_el_heraldo",
+        "hn_la_prensa",
+        "mx_el_universal",
+        "pa_el_siglo",
+        "pa_laestrelladepanama",
+        "pa_metro_libre",
+        "pe_elperuano"
+      ],
+      "registration": null,
+      "canaries": 1,
+      "preservation": "deferred_local",
+      "limits": {
+        "item_requests_total": 78,
+        "item_requests_per_outlet": 6,
+        "other_requests_per_outlet": 8,
+        "total_requests_ceiling": 182,
+        "channels_per_outlet": 3
+      },
+      "note": "confirmation of the two repairs of canary-driver/7 (CPD-0036 decision 6) on the outlets whose wq-1/wq-2 evidence they concern: ar_la_nacion: third channel (sitemap index) selected and never requested; ar_pagina12: items were stock (pages of 2022 and earlier) under the planner's oldest-first order; cl_biobiochile: third channel never requested; items were pages of July 2025; cu_juventud_rebelde: items were stock (a page of 2009 among them) under the planner's oldest-first order; cr_crhoy: the amended news sitemap (weekend_news_channels_amendment_2026-11-14) was selected and never requested; hn_criterio: third channel never requested; extraction review case; hn_el_heraldo: third channel never requested; hn_la_prensa: third channel never requested; mx_el_universal: third channel never requested; extraction review case; pa_el_siglo: third channel never requested; pa_laestrelladepanama: third channel never requested; pa_metro_libre: third channel never requested; extraction review case; pe_elperuano: third channel never requested"
+    }
+  ]
+}
