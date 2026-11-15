@@ -123,7 +123,7 @@ LONG = f"<html><body><article><h1>T</h1>{varied(6)}<p>Párrafo 0.</p><p>Párrafo
 
 def test_a_long_running_text_is_accepted_and_the_decision_says_on_what():
     decision = decide(LONG)
-    assert decision["decision"] == Q.ACCEPT and decision["reasons"] == [] and decision["ruleset"] == "content-quality/1"
+    assert decision["decision"] == Q.ACCEPT and decision["reasons"] == [] and decision["ruleset"] == "content-quality/2"
     assert decision["evidence"]["words"] >= 150
 
 
@@ -134,7 +134,7 @@ CASES = {
                          + "</article></body></html>",
     "page_frame": LONG.replace("Párrafo 0.", "Haz clic en el icono de la extensión del bloqueador de anuncios instalada en tu navegador."),
     "paywall_text": LONG.replace("Párrafo 1.", "Este contenido es exclusivo para suscriptores."),
-    "machine_summary": LONG.replace("<p>", "<p>Resumen generado por IA. ", 1),
+    "machine_text": LONG.replace("<p>", "<p>Resumen generado por IA. ", 1),
     "sponsored": LONG.replace("<p>", "<p>Presentado por Empresa Ejemplo. ", 1),
     "live_coverage": LONG.replace("<p>", "<p>10:45 ", 4),
     "incomplete_against_stated_body": LONG.replace("</body>", '<script type="application/ld+json">{"articleBody": "'
@@ -148,6 +148,32 @@ def test_each_rule_rejects_with_its_reason(reason):
     html = CASES[reason]
     decision = decide(html)
     assert decision["decision"] == Q.REJECT and reason in decision["reasons"], decision
+
+
+@pytest.mark.parametrize("insert", ["Resumen generado con una herramienta de Inteligencia Artificial desarrollada por el diario.",
+                                    "Este texto fue elaborado en colaboración estratégica entre nuestro equipo editorial y herramientas de inteligencia artificial.",
+                                    "Este artículo fue creado con ayuda de una inteligencia artificial que utiliza machine learning.",
+                                    "Nota generada con inteligencia artificial bajo supervisión y edición humana.",
+                                    "Este contenido fue producido por un equipo del diario con la asistencia de la IA."])
+def test_a_machine_text_disclosure_is_rejected(insert):
+    assert "machine_text" in decide(LONG.replace("Párrafo 0.", insert))["reasons"]
+
+
+def test_an_article_about_artificial_intelligence_is_not_a_machine_text():
+    text = "La inteligencia artificial generará nuevos empleos, según el informe que el ministerio presentó con la universidad."
+    assert decide(LONG.replace("Párrafo 0.", text))["decision"] == Q.ACCEPT
+
+
+@pytest.mark.parametrize("url", ["https://d.test/institucionales/preguntas-frecuentes", "https://d.test/suscripcion",
+                                 "https://d.test/terminos-y-condiciones"])
+def test_pages_about_the_publication_are_not_editorial(url):
+    assert "not_editorial_page" in decide(LONG, url=url)["reasons"]
+
+
+def test_a_live_title_or_a_live_slug_is_a_live_page_and_a_sponsor_mark_anywhere_in_the_address_is_sponsorship():
+    assert "live_coverage" in decide(LONG.replace("<h1>T</h1>", "<h1>EN VIVO | La final del certamen</h1>"))["reasons"]
+    assert "live_coverage" in decide(LONG, url="https://d.test/entretenimiento/vivo-la-final-del-certamen-123.html")["reasons"]
+    assert "sponsored" in decide(LONG, url="https://d.test/negocios/banco-ejemplo-contenido-patrocinado-campana/1/")["reasons"]
 
 
 def test_presented_by_in_running_text_is_news_language_not_sponsorship():

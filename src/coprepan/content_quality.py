@@ -53,20 +53,30 @@ FRAME = re.compile(r"\b(bloqueador(?:es)? de anuncios|adblock\w*|desactiva(?:r)?
 
 
 # Text that a machine wrote about the article and the page shows beside it (a generated summary): not the newspaper's text.
-MACHINE = re.compile(r"\b(resumen generado por (?:ia|inteligencia artificial)|generado (?:con|por) inteligencia artificial|"
-                     r"este (?:resumen|texto) (?:fue|ha sido) generado)\b", re.IGNORECASE)
+# /2: also a summary or text "generated / written / produced with a tool of" AI, and the disclosure of an editorial team working
+# with AI tools (both seen in the control of /1). A text *about* AI is not matched: the pattern needs the disclosure's form.
+MACHINE = re.compile(r"(\b(?:resumen|texto|contenido|nota|art[ií]culo)\s+(?:fue\s+|ha sido\s+)?(?:generad|elaborad|cread|redactad|"
+                     r"producid|asistid)[oa]s?\s+(?:con|por|mediante|a partir de|en colaboraci[oó]n con)\b[^.]{0,60}"
+                     r"(?:inteligencia artificial|\bIA\b)|equipo editorial y (?:las |nuestras )?herramientas de inteligencia artificial|"
+                     r"\bgenerado (?:con|por) inteligencia artificial\b)", re.IGNORECASE)
+# /2: pages about the publication, not of it -- institutional sections, FAQs, terms, privacy, subscription and contact pages.
+NOT_EDITORIAL_URL = re.compile(r"/(institucional(?:es)?|preguntas-frecuentes|faq|terminos(?:-y-condiciones)?|condiciones-de-uso[\w-]*|"
+                               r"politica-?de-?privacidad|privacidad|quienes-somos|acerca-de[\w-]*|contacto|contactenos|aviso-legal|"
+                               r"suscripci[oó]n(?:es)?(?:-[\w]+)?|suscribete|mapa-?del-?sitio)(?:/|$|\.)", re.IGNORECASE)
 # Paid content presented as an article: a block that *begins* with the sponsor's mark ("Presentado por Naturgy") -- in running
 # text "presentado por" is ordinary news language (a bill presented by a deputy) -- or an address in an advertising section.
 SPONSORED = re.compile(r"^\s*(presentado por|patrocinado por|contenido patrocinado|publirreportaje|contenido de marca|"
                        r"espacio publicitario|nota pagada|en alianza con|branded content)\b", re.IGNORECASE)
-SPONSORED_URL = re.compile(r"/(?:[a-z]+-)?(comercial|patrocinado|patrocinados|publirreportajes?|branded|contenido-patrocinado|"
-                           r"contenido-de-marca|marcas)(/|-)", re.IGNORECASE)
+SPONSORED_URL = re.compile(r"(/(?:[a-z]+-)?(comercial|patrocinado|patrocinados|publirreportajes?|branded|marcas)(/|-)|"
+                           r"contenido-patrocinado|contenido-de-marca|publirreportaje|branded-content|informacion-comercial)", re.IGNORECASE)
 # A live page: timestamped entries, or an address that says so. Its text is a series of updates or a preview without them.
 _TIMESTAMP_LED = re.compile(r"^\s*(?:\d{1,2}[:.h]\d{2}(?:\s*(?:hs?|horas|a\.?\s?m\.?|p\.?\s?m\.?))?|minuto \d+|\d{1,3}['’]\s)", re.IGNORECASE)
 # Only an address that *is* a live page: a slug that begins with the live mark, or a live section. A slug that merely contains
 # "en-vivo" is as often an article about a live broadcast ("la ejecución en vivo", "un show en vivo").
 _PLAYER_ZERO = re.compile(r"^\s*0?0:00(?::00)?\s*$")
-LIVE_URL = re.compile(r"(/minuto-a-minuto[/-]|/(?:en-?vivo|en-directo|directo)(?:[/-]|$)|/live/)", re.IGNORECASE)
+LIVE_URL = re.compile(r"(/minuto-a-minuto[/-]|/(?:en-?vivo|vivo|en-directo|directo)(?:[/-]|$)|/live/)", re.IGNORECASE)
+# /2: a title that announces a live page ("EN VIVO | ...", "..., minuto a minuto").
+LIVE_TITLE = re.compile(r"(^\s*(?:en vivo|en directo|directo)\b|\bminuto a minuto\b)", re.IGNORECASE)
 _INVISIBLE = dict.fromkeys(map(ord, "­​‌‍⁠﻿"))   # soft hyphen, zero-width characters
 _LD = re.compile(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', re.S | re.I)
 
@@ -147,6 +157,7 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
         "body_characters": len(body),
         "stated_body_characters": stated_body_characters(html) if html is not None else None,
         "title": bool(title) or (meta_title not in (None, E.UNKNOWN)),
+        "title_text": (title or (meta_title if meta_title not in (None, E.UNKNOWN) else "") or "")[:200],
         "replaced_characters": (record.get("decoding") or {}).get("replaced_characters", 0),
         "body_text_sha256": sha256_bytes(_norm(body).encode("utf-8")),
     }
@@ -154,7 +165,11 @@ def features(record: Mapping[str, Any], *, http_status: int | None = None, html:
 
 # --- the gate ---------------------------------------------------------------------------------------------------------
 
-RULESET = "content-quality/1"
+# /1 (commit b7d5f86): chosen on the calibration and hard-negative samples of one half of the stored pages; its blind control
+# on the other half: 94 of 100 accepted pages good. /2 closes the five classes of that control's false accepts that have a
+# general form (machine-text disclosures, institutional pages, live pages by slug or title, sponsor marks anywhere in the
+# address); it is measured on a second control drawn after it was written.
+RULESET = "content-quality/2"
 LIFECYCLE = E.LIFECYCLE_CANDIDATE          # not binding for admission or release until the operator decides (CPD-0038 §5)
 ACCEPT, REJECT = "ACCEPT", "REJECT"
 THRESHOLDS = {
@@ -176,9 +191,11 @@ REASONS = {
     "not_running_prose": "function-word share below the minimum: a list, names, a menu, or not Spanish",
     "page_frame": "the body speaks to the reader about the page (ad blocker, JavaScript, consent, browser)",
     "paywall_text": "the body is a subscription or login wall",
-    "machine_summary": "the body carries a machine-generated summary",
+    "machine_text": "the body carries a machine-generated summary, or the page declares its text made with AI (whether such texts "
+                    "belong in the corpus is the operator's decision; until then they are not admitted)",
     "sponsored": "paid content presented as an article",
-    "live_coverage": "a live page (time-stamped updates, or an address that says live): updates or a preview, not an article",
+    "live_coverage": "a live page (time-stamped updates, or an address or title that says live): updates or a preview, not an article",
+    "not_editorial_page": "a page about the publication (institutional, FAQ, terms, privacy, subscription, contact)",
     "incomplete_against_stated_body": "the extracted body is less than half of the article body the page states",
     "repetitive": "the text repeats itself",
     "template_body": "the same body under several URLs of one outlet: a page template",
@@ -208,11 +225,14 @@ def assess(f: Mapping[str, Any], *, extracted: bool = True, url: str | None = No
     if f.get("paywall_hits"):
         reasons.append("paywall_text")
     if f.get("machine_text_hits"):
-        reasons.append("machine_summary")
+        reasons.append("machine_text")
     if f.get("sponsored_hits") or (url is not None and SPONSORED_URL.search(url)):
         reasons.append("sponsored")
-    if f.get("timestamp_led_share", 0) > t["max_timestamp_led_share"] or (url is not None and LIVE_URL.search(url)):
+    if (f.get("timestamp_led_share", 0) > t["max_timestamp_led_share"] or (url is not None and LIVE_URL.search(url))
+            or LIVE_TITLE.search(f.get("title_text") or "")):
         reasons.append("live_coverage")
+    if url is not None and NOT_EDITORIAL_URL.search(url):
+        reasons.append("not_editorial_page")
     stated = f.get("stated_body_characters") or 0
     if stated >= t["min_stated_body_characters"] and f.get("body_characters", 0) < t["max_stated_body_shortfall"] * stated:
         reasons.append("incomplete_against_stated_body")
