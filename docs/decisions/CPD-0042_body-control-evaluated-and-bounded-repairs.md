@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-16 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the preferred candidates `article_html/0.4.1` (`extraction/3`, the pinned `body-templates/1`), `content-quality/4` (on `content-features/2`) and `body-quality/2`. **None is validated or activated**; nothing binds a release, an admission or a stored record. Scientific acceptance and activation are the operator's (*Not decided here*) |
 | Decided by | the operator's brief of 2026-11-15 ("CO.PRE.PAN_v3 – Operator-Review übernehmen, BODY-Blindkontrolle auswerten und Phase 3 entscheidungsreif abschließen": the operator's verdicts confirmed; clearly evidenced, technically bounded defects may be repaired as new versions; no new broad optimisation); the repairs are the commissioned agent's |
 | Kind | extraction · scientific method · quality gate |
@@ -12,6 +12,10 @@
 | Does not change | `article_html/0.1.0`–`0.4.0`, `extraction/1`–`/3`, `body-templates/1`, `content-quality/1`–`/3` (their thresholds, their reasons), `body-quality/1`, the 150-word minimum, every metadata layer (`editorial-metadata/3`), `text-reuse/2`; the frozen control's manifest, blank form, sheet and key; the joint contracts |
 | Run report | [`2026-11-16 BODY control review`](../agent-runs/2026-11-16_coprepan-body-control-review.md) |
 | Evidence | [filled form](../intake/quality/body_quality_control_2026-11-15/verdicts_filled_2026-11-15.csv) (committed before the key was opened, `81749ba`), [control result](../intake/quality/body_quality_control_2026-11-15/result_2026-11-15.json), [repairs on every stored page](../intake/quality/body_control_repairs_2026-11-15.json) |
+
+*Status line 2026-11-16 (later the same day):* **partially superseded by [CPD-0043](CPD-0043_final-body-candidate-and-local-reviewer.md)**
+(was `ACTIVE_WITH_VALIDATION_DEBT`) as the preferred extractor: `article_html/0.4.2` replaces `0.4.1`. `content-quality/4` and
+`body-quality/2` stay the preferred candidates; the open questions 2–4 are measured there. Nothing here is rewritten.
 
 ## Context
 

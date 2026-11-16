@@ -676,3 +676,16 @@ row restates its defining record; nothing is defined anew.*
 | layer id | `body-quality/2` (`/1` with `incomplete` against the stated text) | `body_quality.py` |
 | **answer basis** (term) | where an answer of a filled control form comes from: `OPERATOR_CONFIRMED` (human gold), `TECHNICALLY_VERIFIED` (a fact from the stored page), `AGENT_ASSESSED` (the agent's judgement), `UNRESOLVED`; only the first is gold, and `merge` scores it apart | CPD-0042 §1, `scripts/study_body_quality.py` |
 | **static live markup** (term) | a `LiveBlogPosting` whose `liveBlogUpdate` items -- at least two -- all carry one publication time: a static article a CMS wraps in live-blog markup | `content_quality.py` |
+
+## 30. Additions of 2026-11-16 (CPD-0043)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| extractor version | `article_html/0.4.2` (`extraction/3`, `CANDIDATE`, the preferred one): 0.4.1 with the stated articleBody read as text, `unstructured_text` includable when stated, linked paragraphs built as prose, the lead past an opening caption | `extraction_body.py` |
+| selection reason | `linked_paragraph` (included): a paragraph the container rule dropped for its link share, built as prose (three unlinked words before the first link, no label colon, a sentence end) between two BODY blocks | `extraction.py`, `extraction_body.py` |
+| **parser revision** (term) | `extraction_body.REVISIONS`: the behaviour of the one BODY parser per extractor version (`0.4.0` → 0, `0.4.1` → 1, `0.4.2` → 2); a version's revision never changes | `extraction_body.py` |
+| schema ids | `coprepan-body-review-package/v1` (a frozen review package: manifest with `package_id` and every file's SHA-256), `coprepan-body-review-case/v1` (a blind case), `coprepan-body-review-key/v1` (the sealed machine labels), `coprepan-body-review-event/v1` (one answer), `coprepan-body-review-judgments/v1` (the export), `coprepan-body-review-result/v1` (the score) | `body_review.py` |
+| **review package** (term) | the frozen set of cases a reviewer judges, written outside the repository; `package_id` is the digest of its case listing (fetch ids, body digests, block indexes and text digests) | same |
+| **blind answer** / **revised after reveal** (terms) | a case answered without its machine labels shown; a case changed after its machine labels were shown is `revised_after_reveal` and not blind; diagnostic mode answers are never blind | same |
+| review vocabularies | block: `article`, `foreign`, `unsure`; title: `correct`, `wrong`, `unsure`; completeness: `complete`, `beginning_missing`, `middle_missing`, `end_missing`, `not_assessable`; CORE: `yes`, `no`, `unsure`; page types: `news_report`, `opinion`, `interview`, `feature`, `live_ticker`, `preview_or_service`, `recipe_or_howto`, `sports_with_tables`, `list_or_ranking`, `gallery_or_video`, `agency_wire`, `sponsored_or_press_release`, `paywall_or_teaser`, `section_or_index_page`, `not_an_article` | same |
+| comparison form | `content_quality.stated_body_text` (one stated articleBody as text, as `content-features/2` measures it); `extraction_body._comparable` (no white space before closing or after opening punctuation): comparison values only | `content_quality.py`, `extraction_body.py` |

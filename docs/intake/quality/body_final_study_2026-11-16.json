@@ -1,0 +1,518 @@
+{
+ "schema": "coprepan-body-final-study/v1",
+ "decision": "CPD-0043",
+ "date": "2026-11-16",
+ "versions": {
+  "extractor": "article_html/0.4.2",
+  "templates_sha256": "826c23d3aad440fc669d98fb5df3611a34f5e715b386a2f2039bdb2a6633eed4",
+  "features": "content-features/2",
+  "quality": "content-quality/4",
+  "body_quality": "body-quality/2"
+ },
+ "population": {
+  "pages": 4759,
+  "accepted": 4075,
+  "body_quality": {
+   "clean": 2235,
+   "incomplete": 8,
+   "cleaned": 2025,
+   "not_article": 159,
+   "residual_suspect": 332
+  }
+ },
+ "coverage": {
+  "pages_stating_1000_characters": 2092,
+  "overall": {
+   "under_0_5": 20,
+   "0_5_to_0_8": 77,
+   "at_least_0_8": 1995
+  },
+  "beginning_under_0_2_overall_at_least_0_6": {
+   "co_el_espectador": 10,
+   "es_abc": 1,
+   "es_el_correo": 1,
+   "es_el_mundo": 1,
+   "pr_el_nuevo_dia": 2
+  },
+  "end_under_0_2_overall_at_least_0_6": {
+   "ar_la_nacion": 1,
+   "co_el_espectador": 1,
+   "co_elpais": 7,
+   "co_semana": 1,
+   "do_diario_libre": 1,
+   "pa_la_prensa": 1,
+   "pe_diariocorreo": 15,
+   "pe_el_buho": 10,
+   "uy_el_observador": 1,
+   "ve_analitica": 1
+  },
+  "accepted_with_overall_under_0_8": 65
+ },
+ "prose_only_variant": {
+  "accept_to_reject": 26,
+  "reject_to_accept": 1,
+  "pages": [
+   {
+    "fetch": "c5a59b4709",
+    "outlet": "ar_rio_negro",
+    "to": "REJECT",
+    "words": 179,
+    "prose_words": 125,
+    "function_word_share": 0.402,
+    "prose_function_word_share": 0.464
+   },
+   {
+    "fetch": "4fb39de688",
+    "outlet": "ar_rio_negro",
+    "to": "REJECT",
+    "words": 154,
+    "prose_words": 132,
+    "function_word_share": 0.442,
+    "prose_function_word_share": 0.477
+   },
+   {
+    "fetch": "586512bc87",
+    "outlet": "cl_biobiochile",
+    "to": "REJECT",
+    "words": 156,
+    "prose_words": 131,
+    "function_word_share": 0.449,
+    "prose_function_word_share": 0.504
+   },
+   {
+    "fetch": "03188564c5",
+    "outlet": "cl_la_discusion",
+    "to": "REJECT",
+    "words": 152,
+    "prose_words": 142,
+    "function_word_share": 0.401,
+    "prose_function_word_share": 0.423
+   },
+   {
+    "fetch": "4f3138339b",
+    "outlet": "co_el_nuevo_siglo",
+    "to": "REJECT",
+    "words": 169,
+    "prose_words": 28,
+    "function_word_share": 0.456,
+    "prose_function_word_share": 0.5
+   },
+   {
+    "fetch": "87df5797e9",
+    "outlet": "cu_trabajadores",
+    "to": "REJECT",
+    "words": 239,
+    "prose_words": 132,
+    "function_word_share": 0.356,
+    "prose_function_word_share": 0.386
+   },
+   {
+    "fetch": "abac92813c",
+    "outlet": "cu_trabajadores",
+    "to": "REJECT",
+    "words": 267,
+    "prose_words": 59,
+    "function_word_share": 0.461,
+    "prose_function_word_share": 0.441
+   },
+   {
+    "fetch": "3e92fc14a4",
+    "outlet": "do_diario_libre",
+    "to": "REJECT",
+    "words": 256,
+    "prose_words": 116,
+    "function_word_share": 0.41,
+    "prose_function_word_share": 0.379
+   },
+   {
+    "fetch": "1c17297a06",
+    "outlet": "do_diario_libre",
+    "to": "REJECT",
+    "words": 166,
+    "prose_words": 137,
+    "function_word_share": 0.404,
+    "prose_function_word_share": 0.365
+   },
+   {
+    "fetch": "77137f2150",
+    "outlet": "do_el_nacional",
+    "to": "REJECT",
+    "words": 174,
+    "prose_words": 149,
+    "function_word_share": 0.466,
+    "prose_function_word_share": 0.456
+   },
+   {
+    "fetch": "b2221301c4",
+    "outlet": "do_hoy",
+    "to": "REJECT",
+    "words": 159,
+    "prose_words": 143,
+    "function_word_share": 0.377,
+    "prose_function_word_share": 0.399
+   },
+   {
+    "fetch": "9a94693f5f",
+    "outlet": "ec_el_mercurio",
+    "to": "REJECT",
+    "words": 197,
+    "prose_words": 35,
+    "function_word_share": 0.386,
+    "prose_function_word_share": 0.429
+   },
+   {
+    "fetch": "0efe77b25d",
+    "outlet": "ec_el_mercurio",
+    "to": "REJECT",
+    "words": 271,
+    "prose_words": 54,
+    "function_word_share": 0.339,
+    "prose_function_word_share": 0.444
+   },
+   {
+    "fetch": "4517be9879",
+    "outlet": "ec_el_mercurio",
+    "to": "REJECT",
+    "words": 386,
+    "prose_words": 86,
+    "function_word_share": 0.337,
+    "prose_function_word_share": 0.488
+   },
+   {
+    "fetch": "65f38c00c7",
+    "outlet": "ec_el_universo",
+    "to": "REJECT",
+    "words": 162,
+    "prose_words": 144,
+    "function_word_share": 0.414,
+    "prose_function_word_share": 0.417
+   },
+   {
+    "fetch": "4b66294e82",
+    "outlet": "ec_expreso",
+    "to": "REJECT",
+    "words": 154,
+    "prose_words": 145,
+    "function_word_share": 0.396,
+    "prose_function_word_share": 0.4
+   },
+   {
+    "fetch": "163dbd55e2",
+    "outlet": "es_abc",
+    "to": "REJECT",
+    "words": 150,
+    "prose_words": 135,
+    "function_word_share": 0.527,
+    "prose_function_word_share": 0.541
+   },
+   {
+    "fetch": "5d299f21b8",
+    "outlet": "gt_elsiglo",
+    "to": "REJECT",
+    "words": 396,
+    "prose_words": 0,
+    "function_word_share": 0.46,
+    "prose_function_word_share": 0.0
+   },
+   {
+    "fetch": "441d7f5436",
+    "outlet": "gt_lahora",
+    "to": "REJECT",
+    "words": 185,
+    "prose_words": 110,
+    "function_word_share": 0.438,
+    "prose_function_word_share": 0.482
+   },
+   {
+    "fetch": "13e1645b8a",
+    "outlet": "gt_prensa_libre",
+    "to": "REJECT",
+    "words": 634,
+    "prose_words": 76,
+    "function_word_share": 0.453,
+    "prose_function_word_share": 0.461
+   },
+   {
+    "fetch": "b239ddf7a8",
+    "outlet": "gt_publinews",
+    "to": "REJECT",
+    "words": 158,
+    "prose_words": 144,
+    "function_word_share": 0.418,
+    "prose_function_word_share": 0.417
+   },
+   {
+    "fetch": "a4a0e36047",
+    "outlet": "pa_critica",
+    "to": "REJECT",
+    "words": 455,
+    "prose_words": 96,
+    "function_word_share": 0.363,
+    "prose_function_word_share": 0.406
+   },
+   {
+    "fetch": "dc3b54e9b7",
+    "outlet": "py_abc_color",
+    "to": "REJECT",
+    "words": 152,
+    "prose_words": 148,
+    "function_word_share": 0.434,
+    "prose_function_word_share": 0.439
+   },
+   {
+    "fetch": "df3a15a4ae",
+    "outlet": "py_noticias_cde",
+    "to": "REJECT",
+    "words": 369,
+    "prose_words": 92,
+    "function_word_share": 0.469,
+    "prose_function_word_share": 0.435
+   },
+   {
+    "fetch": "b7ff2fb3a9",
+    "outlet": "sv_el_diario_de_hoy",
+    "to": "REJECT",
+    "words": 180,
+    "prose_words": 146,
+    "function_word_share": 0.483,
+    "prose_function_word_share": 0.507
+   },
+   {
+    "fetch": "ae5ee671d1",
+    "outlet": "ve_eldiario",
+    "to": "ACCEPT",
+    "words": 859,
+    "prose_words": 329,
+    "function_word_share": 0.222,
+    "prose_function_word_share": 0.517
+   },
+   {
+    "fetch": "eb7c3eb981",
+    "outlet": "ve_ultimas_noticias",
+    "to": "REJECT",
+    "words": 156,
+    "prose_words": 149,
+    "function_word_share": 0.468,
+    "prose_function_word_share": 0.463
+   }
+  ]
+ },
+ "word_definition": {
+  "white_space_tokens": {
+   "flips": 10,
+   "pages": [
+    {
+     "fetch": "c9be12323d",
+     "outlet": "bo_opinion",
+     "letter_words": 149,
+     "tokens": 150
+    },
+    {
+     "fetch": "84475d3314",
+     "outlet": "cl_la_tercera",
+     "letter_words": 148,
+     "tokens": 160
+    },
+    {
+     "fetch": "5a72ad3f0c",
+     "outlet": "co_el_nuevo_siglo",
+     "letter_words": 149,
+     "tokens": 151
+    },
+    {
+     "fetch": "328df8f322",
+     "outlet": "do_el_nacional",
+     "letter_words": 147,
+     "tokens": 150
+    },
+    {
+     "fetch": "5e522f6265",
+     "outlet": "do_hoy",
+     "letter_words": 147,
+     "tokens": 150
+    },
+    {
+     "fetch": "e983464be6",
+     "outlet": "ec_el_universo",
+     "letter_words": 149,
+     "tokens": 155
+    },
+    {
+     "fetch": "ec11db4a05",
+     "outlet": "gt_lahora",
+     "letter_words": 149,
+     "tokens": 156
+    },
+    {
+     "fetch": "4338304505",
+     "outlet": "pa_metro_libre",
+     "letter_words": 147,
+     "tokens": 150
+    },
+    {
+     "fetch": "8655a47423",
+     "outlet": "pr_metro_puerto_rico",
+     "letter_words": 147,
+     "tokens": 159
+    },
+    {
+     "fetch": "d9ce49d82d",
+     "outlet": "ve_ultimas_noticias",
+     "letter_words": 146,
+     "tokens": 153
+    }
+   ]
+  },
+  "word_character_tokens": {
+   "flips": 13,
+   "pages": [
+    {
+     "fetch": "c9be12323d",
+     "outlet": "bo_opinion",
+     "letter_words": 149,
+     "tokens": 151
+    },
+    {
+     "fetch": "84475d3314",
+     "outlet": "cl_la_tercera",
+     "letter_words": 148,
+     "tokens": 160
+    },
+    {
+     "fetch": "5a72ad3f0c",
+     "outlet": "co_el_nuevo_siglo",
+     "letter_words": 149,
+     "tokens": 151
+    },
+    {
+     "fetch": "80ecdb082d",
+     "outlet": "cr_diario_extra",
+     "letter_words": 147,
+     "tokens": 150
+    },
+    {
+     "fetch": "328df8f322",
+     "outlet": "do_el_nacional",
+     "letter_words": 147,
+     "tokens": 150
+    },
+    {
+     "fetch": "5e522f6265",
+     "outlet": "do_hoy",
+     "letter_words": 147,
+     "tokens": 153
+    },
+    {
+     "fetch": "e983464be6",
+     "outlet": "ec_el_universo",
+     "letter_words": 149,
+     "tokens": 157
+    },
+    {
+     "fetch": "e6ff81c169",
+     "outlet": "ec_la_republica_ec",
+     "letter_words": 141,
+     "tokens": 153
+    },
+    {
+     "fetch": "ec11db4a05",
+     "outlet": "gt_lahora",
+     "letter_words": 149,
+     "tokens": 156
+    },
+    {
+     "fetch": "4338304505",
+     "outlet": "pa_metro_libre",
+     "letter_words": 147,
+     "tokens": 151
+    },
+    {
+     "fetch": "88f83fee25",
+     "outlet": "pe_diariocorreo",
+     "letter_words": 147,
+     "tokens": 151
+    },
+    {
+     "fetch": "8655a47423",
+     "outlet": "pr_metro_puerto_rico",
+     "letter_words": 147,
+     "tokens": 161
+    },
+    {
+     "fetch": "d9ce49d82d",
+     "outlet": "ve_ultimas_noticias",
+     "letter_words": 146,
+     "tokens": 154
+    }
+   ]
+  },
+  "accepted_150_to_169_letter_words": 84,
+  "rejected_only_too_short_130_to_149": 72
+ },
+ "stated_body_only": {
+  "pages": 19,
+  "by_outlet": {
+   "ar_pagina12": 11,
+   "uy_el_pais": 4,
+   "ar_clarin": 2,
+   "ar_la_nacion": 1,
+   "ec_el_universo": 1
+  },
+  "pages_whose_stated_text_another_address_of_the_outlet_also_states": 6,
+  "rejected_reasons": {
+   "too_short": 7,
+   "live_coverage": 1,
+   "no_body": 11
+  },
+  "fetch_prefixes": [
+   "0c3d3c27ae",
+   "0e3e251bd2",
+   "1603a754af",
+   "1eacc81462",
+   "2864ddcd5e",
+   "4c6553493f",
+   "76fce1541e",
+   "7ba96232f4",
+   "82f117fbe4",
+   "89ba7e6608",
+   "8f4f07b344",
+   "91e8fff868",
+   "abc96b7edf",
+   "b8ddc4be2d",
+   "bc5e3e90c8",
+   "c26ca40705",
+   "cc031af2f8",
+   "dd4051777f",
+   "e9bb4994df"
+  ]
+ },
+ "residue_patterns": {
+  "accepted_pages": 4075,
+  "body_words": 2414579,
+  "credit_line": {
+   "blocks": 34,
+   "words": 137,
+   "share_of_body_words": 5.7e-05,
+   "pages": 22
+  },
+  "teaser_line": {
+   "blocks": 7,
+   "words": 32,
+   "share_of_body_words": 1.3e-05,
+   "pages": 7
+  },
+  "channel_promotion": {
+   "blocks": 34,
+   "words": 618,
+   "share_of_body_words": 0.000256,
+   "pages": 29
+  }
+ },
+ "live_signals_on_accepted_pages": {
+  "title+address": 17,
+  "time_led": 4,
+  "title": 2,
+  "address": 33,
+  "title+address+time_led": 1
+ }
+}

@@ -102,6 +102,16 @@ live blog is live coverage) and `body-quality/2`. CORE 4,067 -> 4,074 (19 in, 12
 script-rendered pages are the operator's. Report:
 [`2026-11-16 BODY control review`](agent-runs/2026-11-16_coprepan-body-control-review.md).
 
+**Since the final BODY/CORE pass of 2026-11-16** (CPD-0043; offline, no publisher request, no model call): development of the
+BODY extractor and the CORE gate is closed. The preferred extractor is `article_html/0.4.2` (the stated articleBody read as text;
+an interview outside `<p>`; a linked paragraph built as prose; the lead behind the opening caption): 53 pages, 107 blocks added,
+none removed, each read; CORE under `content-quality/4` 4,074 -> 4,075; no metadata layer or text-reuse relation changed.
+`content-quality/4` and `body-quality/2` unchanged. The open questions are measured, not decided (prose-only counting would flip 27
+CORE decisions; white-space words 10; no stated-body fallback). A **local reviewer** exists (`scripts/body_review.py`: frozen
+package outside the repository, blind cases, event log, machine labels after closing, export, scoring) with a **prepared,
+unreviewed** validation package of 120 cases (package `a24462c3c84a7691b2ab12d7`). **Nothing validated or activated.** Report:
+[`2026-11-16 BODY final and reviewer`](agent-runs/2026-11-16_coprepan-body-final-and-reviewer.md).
+
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
 2026-10-10/11 (`COMPLETED`, verification `PASS`, §5g) and nothing has been requested from any publisher since; the PRESERVATION
