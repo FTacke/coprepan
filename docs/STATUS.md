@@ -112,6 +112,17 @@ package outside the repository, blind cases, event log, machine labels after clo
 unreviewed** validation package of 120 cases (package `a24462c3c84a7691b2ab12d7`). **Nothing validated or activated.** Report:
 [`2026-11-16 BODY final and reviewer`](agent-runs/2026-11-16_coprepan-body-final-and-reviewer.md).
 
+**Since the validation design run of 2026-11-16** (CPD-0044; offline, no publisher request, no model call): the 120-case package is
+`DEVELOPMENT_DIAGNOSTIC / NOT_INDEPENDENT_HOLDOUT` -- every stored page (4,759, 91 outlets) was read by development. An independent
+validation is **planned, not run** ([guide](intake/validation/README.md)): new documents of the 81 qualified outlets after the
+development cutoff (document- and time-disjoint; no outlet outside development is reachable), 2 per outlet in two replicates,
+against the baseline `article_html/0.3.0` + `content-quality/3`. Built and tested: a model-independent text view (`docview/1`), a
+gold reviewer without any machine output (`scripts/gold_review.py`, checked in a real browser), gold frozen without publisher text
+and committed before any prediction, word alignment and design-based estimators; holdout runs are invisible to development. The
+plan and the codebook are proposed; the **acquisition is `BLOCKED`** -- it needs the operator's commission with limits (CPD-0023).
+A practice package (5 cases) is in the runtime workspace. Report:
+[`2026-11-16 independent validation`](agent-runs/2026-11-16_coprepan-independent-validation-design.md).
+
 **State as of the consistency audit of 2026-10-22 (history since 2026-11-14; it only restates what §3, §5g and the dated updates below
 record):** the 24-hour intake `in1-20261010-24h` ran
 2026-10-10/11 (`COMPLETED`, verification `PASS`, §5g) and nothing has been requested from any publisher since; the PRESERVATION

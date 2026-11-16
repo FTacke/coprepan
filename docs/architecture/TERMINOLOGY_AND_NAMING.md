@@ -689,3 +689,21 @@ row restates its defining record; nothing is defined anew.*
 | **blind answer** / **revised after reveal** (terms) | a case answered without its machine labels shown; a case changed after its machine labels were shown is `revised_after_reveal` and not blind; diagnostic mode answers are never blind | same |
 | review vocabularies | block: `article`, `foreign`, `unsure`; title: `correct`, `wrong`, `unsure`; completeness: `complete`, `beginning_missing`, `middle_missing`, `end_missing`, `not_assessable`; CORE: `yes`, `no`, `unsure`; page types: `news_report`, `opinion`, `interview`, `feature`, `live_ticker`, `preview_or_service`, `recipe_or_howto`, `sports_with_tables`, `list_or_ranking`, `gallery_or_video`, `agency_wire`, `sponsored_or_press_release`, `paywall_or_teaser`, `section_or_index_page`, `not_an_article` | same |
 | comparison form | `content_quality.stated_body_text` (one stated articleBody as text, as `content-features/2` measures it); `extraction_body._comparable` (no white space before closing or after opening punctuation): comparison values only | `content_quality.py`, `extraction_body.py` |
+
+## 31. Additions of 2026-11-16 (CPD-0044)
+
+| Kind | Form or values | Defined in |
+|---|---|---|
+| **text view** (term) / version | `docview/1`: a page's body text split at HTML block boundaries only, with markup facts per segment; shares no rule with any extractor | `docview.py` |
+| **segment** (term) | the text between two block boundaries of the text view; addressed by index and the SHA-256 of its text | same |
+| **development population** (term) | every stored page development has read (`coprepan-development-population/v1`: ids, address digests, counts) | `scripts/gold_review.py development-population` |
+| **holdout** / **holdout register** (terms) | pages acquired for an independent validation; their runs listed in `config/validation/holdout_runs.json` (`coprepan-holdout-runs/v1`) before any read, never removed, invisible to development studies | `validation_holdout.py` |
+| package kinds | `HOLDOUT` (the independent validation), `DIAGNOSTIC` (development material, not independent), `PRACTICE` (never gold) | `gold_review.py` |
+| classification | `DEVELOPMENT_DIAGNOSTIC / NOT_INDEPENDENT_HOLDOUT`: a review population drawn from the development population | CPD-0044 |
+| codebook id | `gold-body-codebook/1` | [codebook](../intake/validation/GOLD_CODEBOOK_1.md) |
+| gold labels | `body`, `title`, `standfirst`, `caption`, `embed`, `foreign`, `unsure`; unlabelled at closing: `foreign_implicit` | `gold_review.py` |
+| gold case vocabularies | source: `complete`, `truncated`, `not_visible`, `not_an_article_page`, `not_assessable`; outside the view: `beginning`, `middle`, `end`; CORE: `yes`, `no`, `unsure`; CORE reasons: `too_short`, `not_an_article`, `live_or_updates`, `list_or_service`, `mostly_structured`, `paywall_or_truncated`, `sponsored`, `not_editorial`, `not_spanish`, `other` | same |
+| schema ids | `gold-body-package/v1`, `gold-body-case/v1`, `gold-body-event/v1`, `gold-body/v1` (frozen gold: labels by segment and offset, no publisher text), `gold-body-predictions/v1`, `gold-body-result/v1`; `coprepan-body-review-result/v2` (design-weighted); `coprepan-gold-effort/v1` | `gold_review.py`, `gold_score.py`, `body_review.py`, `scripts/study_gold_effort.py` |
+| **replicate** (term) | a document's place in its outlet's draw order; replicate 1 (one per outlet) is a probability sample on its own | `gold_review.draw_per_outlet` |
+| **missed span** (term) | a run of at least 3 consecutive gold BODY words the machine BODY does not cover | `gold_score.py` |
+| estimands | `outlets` (each outlet once) and `documents` (each fetched document once) | `gold_score.py` |

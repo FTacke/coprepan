@@ -1,0 +1,79 @@
+{
+ "schema": "coprepan-gold-effort/v1",
+ "decision": "CPD-0044",
+ "population": "development pages (random sample)",
+ "n": 200,
+ "seed": 44,
+ "measured": {
+  "segments": {
+   "median": 147.5,
+   "p25": 95,
+   "p75": 197,
+   "p90": 290,
+   "mean": 156.6
+  },
+  "view_words": {
+   "median": 1044.0,
+   "p25": 720,
+   "p75": 1367,
+   "p90": 1958,
+   "mean": 1136.6
+  },
+  "article_words": {
+   "median": 446.5,
+   "p25": 264,
+   "p75": 688,
+   "p90": 993,
+   "mean": 541.4
+  },
+  "runs": {
+   "median": 2.0,
+   "p25": 1,
+   "p75": 3,
+   "p90": 5,
+   "mean": 2.6
+  },
+  "overrides_inside": {
+   "median": 2.0,
+   "p25": 0,
+   "p75": 5,
+   "p90": 9,
+   "mean": 3.5
+  },
+  "long_outside": {
+   "median": 15.0,
+   "p25": 8,
+   "p75": 26,
+   "p90": 34,
+   "mean": 18.0
+  }
+ },
+ "actions_per_case": {
+  "median": 38.5,
+  "p25": 27,
+  "p75": 55,
+  "p90": 75,
+  "mean": 43.8
+ },
+ "minutes_per_case_scenarios": {
+  "fast": {
+   "assumptions": {
+    "seconds_per_action": 2.0,
+    "words_per_minute": 400,
+    "fixed_seconds": 45
+   },
+   "minutes_median": 3.2,
+   "minutes_mean": 3.6
+  },
+  "slow": {
+   "assumptions": {
+    "seconds_per_action": 4.0,
+    "words_per_minute": 220,
+    "fixed_seconds": 90
+   },
+   "minutes_median": 6.2,
+   "minutes_mean": 6.9
+  }
+ },
+ "note": "segments, words, runs, overrides and outside checks are measured on development pages with the extractor's BODY as a stand-in for the article; the minutes are scenario assumptions, not a measurement of a human reviewer"
+}

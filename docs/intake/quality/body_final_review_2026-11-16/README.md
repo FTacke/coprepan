@@ -1,5 +1,13 @@
 # The final BODY/CORE validation package of 2026-11-16 (CPD-0043) — prepared, frozen, not reviewed
 
+> **Classification of 2026-11-16, later (CPD-0044): `DEVELOPMENT_DIAGNOSTIC / NOT_INDEPENDENT_HOLDOUT`.** Every page of this
+> package belongs to the development population (all 4,759 stored pages were read by CPD-0038…0043); its targeted strata were
+> chosen with the candidate's output, and its block list came from the candidate. It may serve error diagnosis and the training of
+> the reviewer, never as the independent validation. The package, its manifest and this text below are unchanged; the independent
+> validation is [planned separately](../../validation/README.md). Its scoring is design-weighted since CPD-0044. Durable local copy,
+> verified against the manifest: `C:\dev\panhispanic_media_corpora\coprepan_workspace\review\body_final_review_2026-11-16_a24462c3c84a7691b2ab12d7`
+> (the original under `%LOCALAPPDATA%\Temp\coprepan-body-final-review\package` was left in place).
+
 **Status: prepared and frozen; not reviewed.** No judgment exists. This directory holds only the package manifest (ids, digests,
 the sampling plan, counts -- no publisher text and no address). The package itself, with the stored pages, lives outside the
 repository on the operator's workstation.

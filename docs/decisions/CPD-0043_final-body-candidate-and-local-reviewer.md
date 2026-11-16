@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-11-16 |
-| Status | `ACTIVE_WITH_VALIDATION_DEBT` |
+| Status | `PARTIALLY_SUPERSEDED` |
 | What is active | the preferred candidates `article_html/0.4.2` (`extraction/3`, the pinned `body-templates/1`) with the unchanged `content-quality/4` (`content-features/2`) and `body-quality/2`; the local reviewer `body_review` (package `coprepan-body-review-package/v1`, events `coprepan-body-review-event/v1`, export `coprepan-body-review-judgments/v1`, result `coprepan-body-review-result/v1`); a frozen validation package, prepared and **not reviewed**. **Nothing is validated or activated**; scientific acceptance is the operator's (*Not decided here*) |
 | Decided by | the operator's brief of 2026-11-16 ("CO.PRE.PAN_v3 – Finaler BODY-/CORE-Qualitätsabschluss und HTML-Reviewer": develop until no change has a sufficiently evidenced net benefit, accept `NO_CHANGE` where right; no new blind human control during development; build a local reviewer; no activation); the rules and the tool are the commissioned agent's |
 | Kind | extraction · scientific method · validation tooling |
@@ -12,6 +12,12 @@
 | Does not change | `article_html/0.1.0`–`0.4.1`, `body-templates/1`, `content-quality/1`–`/4` and their thresholds, `content-features/1`–`/2` (measured identically), `body-quality/1`–`/2`, the 150-word minimum and the letter-word definition, every metadata layer, `text-reuse/2`; the frozen controls (manifests, forms, keys, verdicts); the joint contracts |
 | Run report | [`2026-11-16 BODY final and reviewer`](../agent-runs/2026-11-16_coprepan-body-final-and-reviewer.md) |
 | Evidence | [0.4.1 → 0.4.2 on every stored page and on the frozen control](../intake/quality/body_final_candidate_2026-11-16.json), [the final study](../intake/quality/body_final_study_2026-11-16.json), [the frozen validation package](../intake/quality/body_final_review_2026-11-16/README.md) |
+
+*Status line 2026-11-16 (later the same day):* **partially superseded by [CPD-0044](CPD-0044_independent-body-core-validation-design-and-gold-reviewer.md)**
+(was `ACTIVE_WITH_VALIDATION_DEBT`) in §5 only: the prepared 120-case package draws from the development population and is
+`DEVELOPMENT_DIAGNOSTIC / NOT_INDEPENDENT_HOLDOUT`, not the validation; its reviewer annotates the candidate's blocks and is
+replaced for gold by the model-independent `gold_review`; its scoring is design-weighted since then. The candidates
+`article_html/0.4.2`, `content-quality/4`, `body-quality/2` stay the preferred ones, unchanged. Nothing here is rewritten.
 
 ## Context
 
