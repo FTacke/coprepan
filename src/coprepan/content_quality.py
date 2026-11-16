@@ -134,19 +134,24 @@ def _json_ld(html: str) -> list[Any]:
     return out
 
 
-def stated_body_text_characters(html: str) -> int:
-    """content-features/2: the length of the longest stated ``articleBody`` *as text* -- an embedded social post, scripts and
-    styles removed, every tag a space, character references decoded, white space folded. A body stated as plain text measures
-    as /1 measures it."""
+def stated_body_text(article_body: str) -> str:
+    """One stated ``articleBody`` *as text*: an embedded social post, scripts and styles removed, every tag a space, character
+    references decoded, white space folded. A body stated as plain text comes back as it is, white space folded."""
     import html as _html
 
+    text = _TAG.sub(" ", _SCRIPT_OR_STYLE.sub(" ", _EMBEDDED_POST.sub(" ", article_body)))
+    return re.sub(r"\s+", " ", _html.unescape(text)).strip()
+
+
+def stated_body_text_characters(html: str) -> int:
+    """content-features/2: the length of the longest stated ``articleBody`` *as text* (:func:`stated_body_text`). A body
+    stated as plain text measures as /1 measures it."""
     found: list[int] = []
 
     def walk(node: Any) -> None:
         if isinstance(node, dict):
             if isinstance(node.get("articleBody"), str):
-                text = _TAG.sub(" ", _SCRIPT_OR_STYLE.sub(" ", _EMBEDDED_POST.sub(" ", node["articleBody"])))
-                found.append(len(re.sub(r"\s+", " ", _html.unescape(text)).strip()))
+                found.append(len(stated_body_text(node["articleBody"])))
             for value in node.values():
                 walk(value)
         elif isinstance(node, list):

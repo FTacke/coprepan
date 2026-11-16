@@ -97,7 +97,7 @@ def test_a_real_lead_and_a_short_line_are_still_included_by_0_4_1():
             f'<div class="loader"><span>‌</span></div><div class="article-body">{TEXT}</div></article></main></body></html>')
     new = checked(run(html, B.ARTICLE_4_1))
     assert [b["text"] for b in new.record["blocks"] if b["role"] == E.ROLE_BODY][0] == LEAD
-    assert B.PREFERRED is B.ARTICLE_4_1 and B.ARTICLE_4_1.lifecycle == E.LIFECYCLE_CANDIDATE
+    assert B.PREFERRED in (B.ARTICLE_4_1, B.ARTICLE_4_2) and B.ARTICLE_4_1.lifecycle == E.LIFECYCLE_CANDIDATE   # 0.4.2: CPD-0043
     assert B.ARTICLE_4_1.schema == E.EXTRACTION_SCHEMA_3 and B.ARTICLE_4_1.stage_version not in E.EXTRACTORS
     assert B._Parser4._copy_of("Una línea corta…", {"una línea corta del texto que sigue"}) is False   # under 40 characters
     long = "una línea bastante más larga que cuarenta caracteres en total"

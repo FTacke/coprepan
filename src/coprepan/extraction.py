@@ -85,7 +85,7 @@ SELECTION_EXCLUDING = ("form_control", "no_text", "module_advertising", "module_
                        "module_breadcrumb", "module_tags", "module_byline", "module_caption", "module_date", "module_social_embed",
                        "module_media_controls", "module_page_controls", "module_channel_promo", "provenance_ai_note",
                        "provenance_agency_note", "duplicate_block", "trailing_heading", "outlet_template", "repeated_label")
-SELECTION_INCLUDING = ("lead_paragraph", "stated_article_body")
+SELECTION_INCLUDING = ("lead_paragraph", "stated_article_body", "linked_paragraph")   # linked_paragraph: article_html/0.4.2
 SCHEMA_BLOCK_KINDS = {EXTRACTION_SCHEMA: BLOCK_KINDS, EXTRACTION_SCHEMA_2: BLOCK_KINDS + (KIND_SUBTITLE,),
                       EXTRACTION_SCHEMA_3: BLOCK_KINDS + (KIND_SUBTITLE,)}
 EXTRACTION_SCHEMAS = tuple(SCHEMA_BLOCK_KINDS)

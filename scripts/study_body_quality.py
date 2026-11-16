@@ -293,6 +293,17 @@ def main(argv=None) -> int:
             command.add_argument("--rows", type=Path, required=True)
             command.add_argument("--out-dir", type=Path, required=True)
             command.add_argument("--sheet", type=Path, required=True)
+    command = sub.add_parser("compare")
+    source = command.add_mutually_exclusive_group(required=True)
+    source.add_argument("--runtime", type=Path)
+    source.add_argument("--page-cache", type=Path)
+    command.add_argument("--old", choices=sorted(EXTRACTORS), required=True)
+    command.add_argument("--new", choices=sorted(EXTRACTORS), required=True)
+    command.add_argument("--date", required=True, help="the run date, recorded in the result")
+    command.add_argument("--out", type=Path, required=True)
+    command.add_argument("--review", type=Path)
+    command.add_argument("--control-dir", type=Path, help="the frozen control, to score the new version on it (not blind)")
+    command.add_argument("--verdicts", type=Path, help="the filled form of the control")
     command = sub.add_parser("summarize")
     command.add_argument("--rows", type=Path, required=True)
     command.add_argument("--out", type=Path, required=True)
@@ -303,7 +314,7 @@ def main(argv=None) -> int:
     command.add_argument("--sheet", type=Path, help="the local reading sheet, for word counts (numbers only reach the result)")
     arguments = parser.parse_args(argv)
     return {"templates": templates, "derive": derive, "summarize": summarize, "show": show, "draw": draw,
-            "merge": merge, "repair": repair}[arguments.command](arguments)
+            "merge": merge, "repair": repair, "compare": compare}[arguments.command](arguments)
 
 
 # --- the repairs of the BODY control (CPD-0042) ------------------------------------------------------------------------------
@@ -441,9 +452,114 @@ def repair(arguments) -> int:
     return 0
 
 
-def _rescore_control(arguments, decisions, rows_by_id):
-    """The candidate (0.4.1, content-quality/4, body-quality/2) on the 45 control cases, in the sheet's numbering, scored with
-    the filled form like the frozen key. NOT blind: the repairs were written after the key was opened (CPD-0042)."""
+EXTRACTORS = {"0.4.0": B.ARTICLE_4, "0.4.1": B.ARTICLE_4_1, "0.4.2": B.ARTICLE_4_2}
+
+
+def compare(arguments) -> int:
+    """Two ``article_html`` versions on every stored page under ``content-quality/4`` and ``body-quality/2``: the BODY changes
+    block by block, CORE flips, body-quality transitions, the metadata layers where the BODY changed and text reuse. The result
+    holds numbers, outlets and fetch-id prefixes; ``--review`` writes the changed blocks with their text, locally."""
+    old_x, new_x = EXTRACTORS[arguments.old], EXTRACTORS[arguments.new]
+    registry = json.loads((REPOSITORY / "config" / "outlet_registry.json").read_text(encoding="utf-8"))
+    country = {o["outlet_id"]: o["country_id"] for o in registry["outlets"]}
+    section_map = M.load_section_map()
+    rows, bodies, timing = [], {"old": [], "new": []}, Counter()
+    for page, body in S3.stored_pages(arguments):
+        old = old_x.run(body, body_sha256=page["body_sha256"], **page["args"])
+        t = time.perf_counter()
+        new = new_x.run(body, body_sha256=page["body_sha256"], **page["args"])
+        timing["extract_new"] += time.perf_counter() - t
+        html = _decoded(page, body)
+        ok = old.outcome == E.OUTCOME_EXTRACTED and new.outcome == E.OUTCOME_EXTRACTED
+        row = {"fetch_id": page["fetch_id"], "outlet_id": page["outlet_id"], "url": page["url"], "fetched_at": page["fetched_at"],
+               "f_old": Q.features(old.record, http_status=page["status"], html=html) if ok else None,
+               "f_new": Q.features(new.record, http_status=page["status"], html=html) if ok else None,
+               "body_changed": old.body_text_sha256 != new.body_text_sha256,
+               "bq_old": BQ.assess(old.record, html=html, version=BQ.VERSION_2)["state"] if ok else None,
+               "bq_new": BQ.assess(new.record, html=html, version=BQ.VERSION_2)["state"] if ok else None}
+        if row["body_changed"]:
+            b_old = {b["index"] for b in old.record["blocks"] if b["role"] == E.ROLE_BODY}
+            b_new = {b["index"] for b in new.record["blocks"] if b["role"] == E.ROLE_BODY}
+            row["gone"] = [{"index": b["index"], "kind": b["kind"], "reason": (b.get("selection") or {}).get("reason"),
+                            "words": len(b["text"].split()), "text": b["text"][:300]}
+                           for b in new.record["blocks"] if b["index"] in b_old - b_new]
+            row["added"] = [{"index": b["index"], "kind": b["kind"], "reason": (b.get("selection") or {}).get("reason"),
+                             "words": len(b["text"].split()), "text": b["text"][:300]}
+                            for b in new.record["blocks"] if b["index"] in b_new - b_old]
+            common = dict(html=html, url=page["url"], outlet_id=page["outlet_id"], country_id=country.get(page["outlet_id"], "unknown"),
+                          section_map=section_map)
+            l_old = enrichment.derive(record=old.record, version=enrichment.VERSION_3, **common)["layers"]
+            l_new = enrichment.derive(record=new.record, version=enrichment.VERSION_3, **common)["layers"]
+            row["layers_changed"] = sorted(n for n in l_old if (l_old[n]["value"], l_old[n]["value_state"])
+                                           != (l_new[n]["value"], l_new[n]["value_state"]))
+        published = new.record["metadata"]["publication_date"]["value"]
+        published = published[:19] if DATE.match(published or "") else None
+        for key, x in (("old", old), ("new", new)):
+            if x.outcome == E.OUTCOME_EXTRACTED:
+                bodies[key].append({"document_id": page["fetch_id"], "outlet_id": page["outlet_id"], "body_text": x.body_text,
+                                    "published": published, "fetched_at": page["fetched_at"]})
+        rows.append(row)
+
+    def decide(key):
+        return Q.assess_corpus([{"fetch_id": r["fetch_id"], "outlet_id": r["outlet_id"], "url": r["url"], "fetched_at": r["fetched_at"] or "",
+                                 "features": r[key], "extracted": r[key] is not None} for r in rows], ruleset=Q.RULESET_4)
+
+    d_old, d_new = decide("f_old"), decide("f_new")
+    flips = [r for r in rows if d_old[r["fetch_id"]]["decision"] != d_new[r["fetch_id"]]["decision"]]
+    reuse = {k: R.relations(v, version=R.VERSION_2) for k, v in bodies.items()}
+    pairs = {k: {(x["document_id"], x["target_document_id"]) for x in v} for k, v in reuse.items()}
+    changed = [r for r in rows if r["body_changed"]]
+    out = {
+        "schema": "coprepan-body-extractor-comparison/v1", "date": arguments.date,
+        "versions": {"old": f"article_html/{arguments.old}", "new": f"article_html/{arguments.new}", "quality": Q.RULESET_4,
+                     "features": Q.FEATURES_VERSION, "body_quality": BQ.VERSION_2, "metadata": enrichment.VERSION_3,
+                     "text_reuse": R.VERSION_2, "templates_sha256": B.body_templates_sha256()},
+        "population": {"pages": len(rows), "extracted": sum(1 for r in rows if r["f_new"])},
+        "body": {"changed": len(changed), "pages_with_blocks_added": sum(1 for r in changed if r["added"]),
+                 "pages_with_blocks_gone": sum(1 for r in changed if r["gone"]),
+                 "blocks_added": sum(len(r["added"]) for r in changed), "blocks_gone": sum(len(r["gone"]) for r in changed),
+                 "words_added": sum(b["words"] for r in changed for b in r["added"]),
+                 "words_gone": sum(b["words"] for r in changed for b in r["gone"]),
+                 "added_by_reason_and_kind": dict(Counter(f"{b['reason']}|{b['kind']}" for r in changed for b in r["added"])),
+                 "gone_by_reason_and_kind": dict(Counter(f"{b['reason']}|{b['kind']}" for r in changed for b in r["gone"])),
+                 "by_outlet": dict(Counter(r["outlet_id"] for r in changed).most_common()),
+                 "pages_with_a_layer_changed": sum(1 for r in changed if r["layers_changed"]),
+                 "layers_changed": dict(Counter(n for r in changed for n in r["layers_changed"])),
+                 "fetch_prefixes": sorted(r["fetch_id"][4:14] for r in changed)},
+        "core": {"accepted": {"old": sum(1 for d in d_old.values() if d["decision"] == Q.ACCEPT),
+                              "new": sum(1 for d in d_new.values() if d["decision"] == Q.ACCEPT)},
+                 "flips": [{"fetch": r["fetch_id"][4:14], "outlet": r["outlet_id"], "from": d_old[r["fetch_id"]]["reasons"],
+                            "to": d_new[r["fetch_id"]]["reasons"],
+                            "words": [(r["f_old"] or {}).get("words"), (r["f_new"] or {}).get("words")]} for r in flips]},
+        "body_quality": {"transitions": dict(Counter(f"{r['bq_old']}->{r['bq_new']}" for r in rows if r["bq_old"] != r["bq_new"]))},
+        "text_reuse": {"relations": {k: len(v) for k, v in reuse.items()}, "kept": len(pairs["old"] & pairs["new"]),
+                       "lost": len(pairs["old"] - pairs["new"]), "new": len(pairs["new"] - pairs["old"])},
+        "cost": {"ms_per_page_extract_new": round(1000 * timing["extract_new"] / max(1, len(rows)), 2)},
+    }
+    if arguments.control_dir is not None:
+        out["control_rescored"] = _rescore_control(arguments, d_new, {r["fetch_id"]: r for r in rows}, extractor=new_x,
+                                                   state_key="bq_new", label=arguments.new.replace(".", "_"))
+    arguments.out.write_bytes((json.dumps(out, ensure_ascii=False, indent=1) + "\n").encode("utf-8"))
+    if arguments.review:
+        with arguments.review.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write("kind\tfetch\toutlet\turl\tdetail\n")
+            for r in changed:
+                for tag in ("gone", "added"):
+                    for b in r[tag]:
+                        handle.write(f"{tag}\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t[{b['reason']}|{b['kind']}|{b['words']}] "
+                                     f"{b['text']}\n".replace("\r", " "))
+            for r in flips:
+                handle.write(f"flip\t{r['fetch_id'][4:14]}\t{r['outlet_id']}\t{r['url']}\t{d_old[r['fetch_id']]['reasons']} -> "
+                             f"{d_new[r['fetch_id']]['reasons']}\n")
+    print(json.dumps({k: out[k] for k in ("body", "core", "body_quality", "text_reuse")}, ensure_ascii=False)[:2500])
+    return 0
+
+
+def _rescore_control(arguments, decisions, rows_by_id, extractor=None, state_key="bq2", label="0_4_1"):
+    """The candidate (0.4.1 unless ``extractor``, content-quality/4, body-quality/2) on the 45 control cases, in the sheet's
+    numbering, scored with the filled form like the frozen key. NOT blind: the repairs were written after the key was opened
+    (CPD-0042)."""
+    extractor = extractor or B.ARTICLE_4_1
     manifest = json.loads((arguments.control_dir / "manifest.json").read_text(encoding="utf-8"))
     key_path = arguments.control_dir / "KEY_machine_predictions_open_only_after_the_verdicts.json"
     if P3._sha(key_path.read_bytes()) != manifest["files"][key_path.name]:
@@ -457,15 +573,15 @@ def _rescore_control(arguments, decisions, rows_by_id):
             continue
         three = A.ARTICLE_3.run(body, body_sha256=page["body_sha256"], **page["args"])
         four = B.ARTICLE_4.run(body, body_sha256=page["body_sha256"], **page["args"])
-        new = B.ARTICLE_4_1.run(body, body_sha256=page["body_sha256"], **page["args"])
+        new = extractor.run(body, body_sha256=page["body_sha256"], **page["args"])
         union, _, _ = _union_blocks(three, four)
         b41 = {b["index"] for b in new.record["blocks"] if b["role"] == E.ROLE_BODY}
         shown = {i for _, i, _ in union}
         if b41 - shown:              # a block neither 0.3.0 nor 0.4.0 has: the sheet cannot show it; judged against MISSING
             outside[cid] = [{"block_index": b["index"], "reason": (b.get("selection") or {}).get("reason"),
                              "words": len(b["text"].split())} for b in new.record["blocks"] if b["index"] in b41 - shown]
-        state = rows_by_id[page["fetch_id"]]["bq2"]
-        key[cid] = {**frozen[cid], "predictions_0_4_1": {
+        state = rows_by_id[page["fetch_id"]][state_key]
+        key[cid] = {**frozen[cid], f"predictions_{label}": {
             "FOREIGN": ",".join(str(n) for n, i, _ in union if i not in b41) or "0",
             "MISSING": {"not_article": "not_an_article", "incomplete": "middle_missing"}.get(state, "complete"),
             "CORE": "yes" if decisions[page["fetch_id"]]["decision"] == Q.ACCEPT else "no"}}
@@ -480,7 +596,7 @@ def _rescore_control(arguments, decisions, rows_by_id):
             gold[(v["case_id"], v["question"])] = (operator or "0", opened)
         elif operator and v["question"] != "FOREIGN":
             gold[(v["case_id"], v["question"])] = (operator, set())
-    versions = ("0_4_1", "0_4_0")
+    versions = (label, "0_4_0")
     gold_table, _ = _score(key, gold, versions=versions)
     every_table, cases = _score(key, every, versions=versions)
     return {"not_blind": "the repairs were written after the key was opened; these counts check the repairs, they do not "

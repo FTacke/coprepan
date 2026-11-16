@@ -61,6 +61,23 @@ No block is split, shortened or rewritten; foreign material *inside* a block sta
   relacionada" card inside the article (``es_abc``) no longer costs the article its opening paragraph (case B03).
 
 Every other rule is 0.4.0's; 0.4.0 is unchanged.
+
+``article_html/0.4.2`` (CPD-0043) is 0.4.1 with the inclusions widened where the stored pages show genuine article text left
+out, each found by reading the stated articleBody against the BODY on every stored page and each addition read:
+
+* **the stated articleBody read as text** (``content_quality.stated_body_text``) and compared without the white space a tag
+  left before a punctuation mark, and without the backslash a publisher's JSON-LD left before a quote (escaped twice,
+  ``uy_el_observador``) -- comparison values only, no block's text changes. A body stated as HTML (``pa_la_prensa``, ``es_abc``)
+  never matched a block before;
+* **text outside ``<p>``** (``unstructured_text``) the page states as its body may be included as ``stated_article_body`` -- an
+  interview whose questions and answers stand in bare ``<div>`` elements (``es_el_mundo``: 161 of 1,078 words before);
+* **a linked paragraph built as prose** (``linked_paragraph``): the container rule leaves out a block more than half of whose
+  text is link text (a teaser); a paragraph with at least ``MIN_LINKED_HEAD_WORDS`` unlinked words before its first link, no
+  label colon there ("Lea más:", "Le puede interesar:"), a sentence end, standing between two BODY blocks in the container, is a
+  journalist's paragraph that links its source. As the lead, such a paragraph passes the lead rule's own tests;
+* **the lead past a caption**: the photo that opens an article stands between the lead and the BODY; its caption is passed over.
+
+Every other rule is 0.4.1's; 0.4.0 and 0.4.1 are unchanged (``REVISIONS``).
 """
 
 from __future__ import annotations
@@ -79,6 +96,8 @@ from .canonical import require_sha256, sha256_bytes, sha256_file
 
 VERSION_4 = "0.4.0"
 VERSION_4_1 = "0.4.1"
+VERSION_4_2 = "0.4.2"
+REVISIONS = {VERSION_4: 0, VERSION_4_1: 1, VERSION_4_2: 2}
 SELECTION_RULE = "body-select/1"
 TEMPLATE_RULE = "body-templates/1"
 FORM_CONTROLS = frozenset({"select", "option", "optgroup", "datalist", "textarea", "button"})
@@ -111,6 +130,18 @@ MAX_TRAILING_HEADING_WORDS = 4
 MAX_LABEL_WORDS, MIN_LABEL_REPEATS = 3, 3
 MIN_COPY_CHARACTERS = 40             # 0.4.1: a shorter text at the beginning of a BODY block is not taken for a copy of it
 _TRAILING_ELLIPSIS = re.compile(r"\s*(?:…|\.\.\.)\s*$")
+INCLUDABLE_KINDS_2 = frozenset({"paragraph", "unstructured_text"})   # revision 2: text outside <p> the page states as its body
+MIN_LINKED_HEAD_WORDS = 3            # revision 2: unlinked words before the first link of a linked paragraph built as prose
+_PROSE_END = re.compile(r"[.!?…»”\")]\s*$")
+_ESCAPED_QUOTE = re.compile(r"\\([\"'])")
+_SPACE_BEFORE = re.compile(r"\s+([,.;:!?)\]»”’])")
+_SPACE_AFTER = re.compile(r"([(\[«“])\s+")
+
+
+def _comparable(text: str) -> str:
+    """Revision 2's comparison form of a folded text: no white space before a closing punctuation mark or after an opening one.
+    A comparison value only; no block's text is changed."""
+    return _SPACE_AFTER.sub(r"\1", _SPACE_BEFORE.sub(r"\1", text))
 _SENTENCE_END = re.compile(r"[.!?…:;»”\")]\s*$")
 _NOT_LABEL = re.compile(r"[\d:]")
 TEMPLATES_PATH = "config/extraction/body-templates_1.json"
@@ -191,6 +222,24 @@ class _Parser4(A._Parser3):
         under = self._text_under()
         return sum(under.get(e, 0) for e in outer) >= MODULE_MAX_SHARE * under.get(article, 0)
 
+    # -- where a block's links stand (revision 2) ---------------------------------------------------------------------------
+
+    def handle_data(self, data: str) -> None:
+        super().handle_data(data)
+        current = self.current
+        if current is None or self.capture is not None:
+            return
+        if "a" in self.stack:
+            current["_linked"] = True
+        elif not current.get("_linked"):
+            current["_head"] = current.get("_head", "") + data        # the unlinked text before the block's first link
+
+    def _close_block(self) -> None:
+        current, count = self.current, len(self.raw)
+        super()._close_block()
+        if current is not None and len(self.raw) > count:
+            self.raw[-1]["head"] = A._norm(current.get("_head", "")) if current.get("_linked") else None
+
     # -- what an element is ------------------------------------------------------------------------------------------------
 
     def _in_form_control(self, item: dict[str, Any]) -> bool:
@@ -256,8 +305,44 @@ class _Parser4(A._Parser3):
         block["role"] = E.ROLE_NON_BODY if decision == E.SELECTION_EXCLUDED else E.ROLE_BODY
 
     def stated_article_body(self) -> str:
+        """The page's stated articleBody, folded. Revision 2 reads it *as text* (``content_quality.stated_body_text``: an
+        embedded social post, scripts and styles out, every tag a space, character references decoded) -- a body stated as
+        HTML (``cl_biobiochile``, ``pa_la_prensa``) never matched a block's text before."""
         texts = self._json_ld_strings("articleBody")
+        if self.revision >= 2:
+            from . import content_quality as Q     # noqa: PLC0415  (content_quality imports extraction, not this module)
+            # a backslash the publisher's JSON-LD left before a quote (escaped twice: ``uy_el_observador``) is not text; this
+            # is the comparison value only -- no block's text is touched
+            texts = [_ESCAPED_QUOTE.sub(r"\1", Q.stated_body_text(t)) for t in texts]
+            return _comparable(A._norm(" ".join(texts))) if texts else ""
         return A._norm(" ".join(texts)) if texts else ""
+
+    def _in_stated(self, text: str, stated: str) -> bool:
+        """The block's folded text stands in the stated articleBody (revision 2: both compared without the white space a tag
+        left before a punctuation mark or after an opening one -- "25 mujeres , ha" against "25 mujeres, ha")."""
+        key = A._norm(text)
+        return (_comparable(key) if self.revision >= 2 else key) in stated
+
+    def _prose_shape(self, block: dict[str, Any], item: dict[str, Any]) -> bool:
+        """Revision 2: a linked paragraph built as running prose -- at least ``MIN_LINKED_HEAD_WORDS`` unlinked words before its
+        first link, not a label ending in a colon ("Lea más:", "Le puede interesar:"), and a sentence end."""
+        head = item.get("head")
+        return head is not None and len(head.split()) >= MIN_LINKED_HEAD_WORDS and not head.rstrip().endswith(":") \
+            and bool(_PROSE_END.search(block["text"]))
+
+    def _linked_prose(self, i: int, block: dict[str, Any], item: dict[str, Any], span: tuple[int, int] | None,
+                      chosen: list[int]) -> bool:
+        """Revision 2: a paragraph the container rule left out only because more than ``MAX_LINK_SHARE`` of it is link text,
+        built as running prose (:meth:`_prose_shape`), standing between two BODY blocks in the container with no navigation /
+        aside / footer / form / figure / header and no module mark in between. A journalist's paragraph whose phrase links a
+        source; a teaser ("Lea también: <title>") or a list of linked headlines is not."""
+        if span is None or not span[0] < i < span[1] or not self._prose_shape(block, item):
+            return False
+        ids = list(item.get("ids") or ())
+        container = next((c for c in chosen if c in ids), None)
+        if container is None or A.NON_BODY_BELOW_CONTAINER & {self.tag_of[e] for e in ids[ids.index(container) + 1:]}:
+            return False
+        return self._module(item, container) is None
 
     def blocks(self) -> list[dict[str, Any]]:
         if getattr(self, "_blocks4", None) is not None:
@@ -305,24 +390,39 @@ class _Parser4(A._Parser3):
         descriptions = self.stated_subtitles()
         body_keys = {A._norm(b["text"]) for b in blocks if b["role"] == E.ROLE_BODY}
         first_body = next((i for i, b in enumerate(blocks) if b["role"] == E.ROLE_BODY), None)
-        # the lead: the nearest block with text before the first BODY block
+        # the lead: the nearest block with text before the first BODY block (revision 2: a caption between them -- the photo
+        # that opens the article -- is passed over)
         lead = None
         if first_body is not None:
-            lead = next((i for i in range(first_body - 1, -1, -1) if _ALNUM.search(blocks[i]["text"])), None)
+            lead = next((i for i in range(first_body - 1, -1, -1) if _ALNUM.search(blocks[i]["text"])
+                         and not (self.revision >= 2 and blocks[i]["kind"] == "caption")), None)
+        includable = INCLUDABLE_KINDS_2 if self.revision >= 2 else frozenset({"paragraph"})
+        body_now = [i for i, b in enumerate(blocks) if b["role"] == E.ROLE_BODY]
+        span = (body_now[0], body_now[-1]) if body_now else None
         for i, (block, item) in enumerate(zip(blocks, self.raw)):
-            if block["role"] != E.ROLE_NON_BODY or "selection" in block or "module" in block or block["kind"] != "paragraph" \
-                    or len(block["text"].split()) < MIN_INCLUDED_WORDS or item.get("link", 0) > A.MAX_LINK_SHARE * len(block["text"]) \
+            linked = item.get("link", 0) > A.MAX_LINK_SHARE * len(block["text"])
+            if block["role"] != E.ROLE_NON_BODY or "selection" in block or "module" in block or block["kind"] not in includable \
+                    or len(block["text"].split()) < MIN_INCLUDED_WORDS \
                     or self._in_form_control(item) or A._norm(block["text"]) in body_keys \
                     or (self.revision >= 1 and self._copy_of(block["text"], body_keys)):
                 continue
+            # revision 2: a linked paragraph built as prose may be included -- between BODY blocks (linked_paragraph) or as the
+            # lead; any other linked block stays out, as before
+            shaped = linked and self.revision >= 2 and block["kind"] == "paragraph" and self._prose_shape(block, item)
+            if linked and not shaped:
+                continue
+            prose = shaped and self._linked_prose(i, block, item, span, chosen)
+            if linked and not prose and i != lead:
+                continue
             ids = list(item.get("ids") or ())
-            reason = None
-            if i == lead and article is not None and article in ids and len(block["text"].split()) >= MIN_LEAD_WORDS \
+            reason = "linked_paragraph" if prose else None
+            if reason is None and i == lead and block["kind"] == "paragraph" and article is not None and article in ids \
+                    and len(block["text"].split()) >= MIN_LEAD_WORDS \
                     and not self._states(block["text"], descriptions):
                 between = {self.tag_of[e] for e in ids[ids.index(article) + 1:]}
                 if not A.NON_BODY_BELOW_CONTAINER & between and self._module(item, article) is None:
                     reason = "lead_paragraph"
-            if reason is None and stated and len(A._norm(block["text"])) >= 40 and A._norm(block["text"]) in stated \
+            if reason is None and stated and len(A._norm(block["text"])) >= 40 and self._in_stated(block["text"], stated) \
                     and self._module(item, None) is None and not A.NON_BODY_BELOW_CONTAINER & {self.tag_of[e] for e in ids}:
                 reason = "stated_article_body"
             if reason is not None:
@@ -396,6 +496,14 @@ def extract_v4_1(body: bytes, *, body_sha256: str, content_type: str, declared_c
                     content_encoding=content_encoding, templates=templates, version=VERSION_4_1)
 
 
+def extract_v4_2(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str = E.UNKNOWN,
+                 content_encoding: str = E.IDENTITY, templates: frozenset[str] | None = None) -> E.Extraction:
+    """``article_html/0.4.2`` (``extraction/3``): 0.4.1 with the stated articleBody read as text and text outside ``<p>``
+    that the page states as its body included."""
+    return _extract(body, body_sha256=body_sha256, content_type=content_type, declared_charset=declared_charset,
+                    content_encoding=content_encoding, templates=templates, version=VERSION_4_2)
+
+
 def _extract(body: bytes, *, body_sha256: str, content_type: str, declared_charset: str, content_encoding: str,
              templates: frozenset[str] | None, version: str) -> E.Extraction:
     if not isinstance(body, bytes):
@@ -412,7 +520,7 @@ def _extract(body: bytes, *, body_sha256: str, content_type: str, declared_chars
         reason = error.reason
     if reason is None:
         text, record["decoding"] = E._decode(body, declared_charset)
-        parser = _Parser4(templates=body_templates() if templates is None else templates, revision=0 if version == VERSION_4 else 1)
+        parser = _Parser4(templates=body_templates() if templates is None else templates, revision=REVISIONS[version])
         parser.feed(text)
         parser.close()
         record["blocks"] = parser.blocks()
@@ -426,7 +534,8 @@ def _extract(body: bytes, *, body_sha256: str, content_type: str, declared_chars
 
 ARTICLE_4 = E.Extractor(A.NAME, VERSION_4, extract_v4, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_3)
 ARTICLE_4_1 = E.Extractor(A.NAME, VERSION_4_1, extract_v4_1, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_3)
-PREFERRED = ARTICLE_4_1    # the candidate the operator is asked to adopt (CPD-0042; 0.4.0 was CPD-0041's); not binding
+ARTICLE_4_2 = E.Extractor(A.NAME, VERSION_4_2, extract_v4_2, E.LIFECYCLE_CANDIDATE, record_schema=E.EXTRACTION_SCHEMA_3)
+PREFERRED = ARTICLE_4_2    # the candidate the operator is asked to adopt (CPD-0043; 0.4.1 was CPD-0042's, 0.4.0 CPD-0041's); not binding
 
 
 def body_before_selection(record: Any) -> str:
@@ -439,6 +548,6 @@ def body_before_selection(record: Any) -> str:
     return "\n\n".join(block["text"] for block in record["blocks"] if original(block) == E.ROLE_BODY)
 
 
-__all__ = ["ARTICLE_4", "ARTICLE_4_1", "PREFERRED", "extract_v4", "extract_v4_1", "body_before_selection", "template_digest",
-           "body_templates", "body_templates_sha256", "MODULE_MARKS", "VERSION_4", "VERSION_4_1", "SELECTION_RULE", "TEMPLATE_RULE",
-           "TEMPLATES_PATH"]
+__all__ = ["ARTICLE_4", "ARTICLE_4_1", "ARTICLE_4_2", "PREFERRED", "extract_v4", "extract_v4_1", "extract_v4_2",
+           "body_before_selection", "template_digest", "body_templates", "body_templates_sha256", "MODULE_MARKS", "VERSION_4",
+           "VERSION_4_1", "VERSION_4_2", "REVISIONS", "SELECTION_RULE", "TEMPLATE_RULE", "TEMPLATES_PATH"]
