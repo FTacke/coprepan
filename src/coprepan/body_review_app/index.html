@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CO.PRE.PAN BODY-Review</title>
+<link rel="stylesheet" href="/app.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">CO.PRE.PAN · BODY-Review <span id="mode" class="mode"></span></div>
+  <div class="nav">
+    <button id="prev" title="Vorheriger Fall (Alt+←)">◀</button>
+    <select id="caseSelect" aria-label="Fall wählen"></select>
+    <button id="next" title="Nächster Fall (Alt+→)">▶</button>
+    <button id="nextOpen" title="Nächster offener Fall">Nächster offener</button>
+  </div>
+  <div class="progress"><div class="meter"><div id="meterFill" class="meterFill"></div></div><span id="progressText"></span></div>
+  <div class="tools">
+    <span id="saveState" class="save"></span>
+    <button id="exportBtn" title="Abgeschlossene Urteile exportieren">Export</button>
+    <button id="helpBtn" title="Hilfe (?)">?</button>
+  </div>
+</header>
+
+<section id="caseHead" class="casehead">
+  <div><span id="caseId" class="cid"></span> <span id="outlet" class="outlet"></span> <span id="country" class="tag"></span></div>
+  <div class="meta"><span id="url" class="url"></span> · abgerufen <span id="fetched"></span> · veröffentlicht <span id="published"></span></div>
+</section>
+
+<main class="panes">
+  <section class="pane left">
+    <div class="tabs">
+      <button id="tabOriginal" class="tab active">Originalseite (bereinigt)</button>
+      <button id="tabText" class="tab">Seitentext (alle Blöcke)</button>
+    </div>
+    <div class="markbar">
+      <span>Text markieren, dann:</span>
+      <select id="markPart" aria-label="Teil">
+        <option value="">fehlt (Teil offen)</option>
+        <option value="beginning_missing">fehlt am Anfang</option>
+        <option value="middle_missing">fehlt in der Mitte</option>
+        <option value="end_missing">fehlt am Ende</option>
+      </select>
+      <button id="markBtn" title="Markierten Text als fehlenden Artikeltext erfassen (M)">Als fehlend erfassen (M)</button>
+    </div>
+    <iframe id="source" class="source" sandbox="allow-same-origin" title="Gespeicherte Seite, bereinigt"></iframe>
+    <div id="pageText" class="pagetext hidden"></div>
+  </section>
+
+  <section class="pane right">
+    <div class="card">
+      <h2>Titelfläche</h2>
+      <div id="titleBlocks"></div>
+      <div class="choice" id="titleChoice">
+        <span>Titel / Vorspann richtig erkannt?</span>
+        <button data-v="correct">richtig</button><button data-v="wrong">falsch</button><button data-v="unsure">unsicher</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Textblöcke <span class="hint">je Block: 1 Artikeltext · 2 fremd · 3 unsicher · J/K bewegen</span></h2>
+      <div class="blocktools"><button id="allArticle" title="Alle noch offenen Blöcke als Artikeltext (A)">Alle offenen = Artikeltext (A)</button>
+        <span id="blockCount" class="hint"></span></div>
+      <ol id="blocks" class="blocks"></ol>
+    </div>
+
+    <div class="card">
+      <h2>Fehlender Artikeltext</h2>
+      <ul id="marks" class="marks"></ul>
+      <div class="choice multi" id="completeness">
+        <span>Vollständigkeit:</span>
+        <label><input type="checkbox" value="complete"> vollständig</label>
+        <label><input type="checkbox" value="beginning_missing"> Anfang fehlt</label>
+        <label><input type="checkbox" value="middle_missing"> Mittelstück fehlt</label>
+        <label><input type="checkbox" value="end_missing"> Ende fehlt</label>
+        <label><input type="checkbox" value="not_assessable"> nicht beurteilbar</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>CORE <span class="hint">Y ja · N nein · U unsicher</span></h2>
+      <div class="choice" id="coreChoice">
+        <span>Gehört die Seite ins CORE?</span>
+        <button data-v="yes">ja</button><button data-v="no">nein</button><button data-v="unsure">unsicher</button>
+      </div>
+      <input id="coreReason" class="wide" maxlength="2000" placeholder="Kurze Begründung (bei nein / unsicher erforderlich)">
+    </div>
+
+    <div class="card">
+      <h2>Seitentyp <span class="hint">optional, mehrere möglich</span></h2>
+      <div class="choice multi" id="pageTypes"></div>
+      <input id="pageTypeOther" class="wide" maxlength="2000" placeholder="Anderer Typ / Anmerkung zum Typ">
+    </div>
+
+    <div class="card">
+      <h2>Kommentar</h2>
+      <textarea id="comment" class="wide" rows="2" maxlength="2000" placeholder="Optional"></textarea>
+    </div>
+
+    <div class="card final">
+      <div id="openItems" class="open"></div>
+      <button id="finalizeBtn" class="primary" title="Fall abschließen (F)">Fall abschließen (F)</button>
+      <button id="reopenBtn" class="hidden" title="Fall wieder öffnen">Wieder öffnen</button>
+    </div>
+
+    <div id="machine" class="card machine hidden">
+      <h2>Maschinenurteil <span class="hint">erst nach dem Abschluss sichtbar</span></h2>
+      <div id="machineSummary"></div>
+    </div>
+  </section>
+</main>
+
+<div id="help" class="help hidden" role="dialog" aria-label="Hilfe">
+  <div class="helpbox">
+    <h2>So funktioniert das Review</h2>
+    <p>Jeder Fall ist eine gespeicherte Seite. Links steht die Seite selbst (bereinigt: keine Skripte, keine Bilder, keine Links,
+      kein Netzzugriff) oder ihr vollständiger Text. Rechts stehen die Textblöcke, über die zu urteilen ist, in Seitenreihenfolge –
+      <strong>ohne</strong> die Entscheidung der Maschine.</p>
+    <ul>
+      <li><b>Textblöcke:</b> für jeden Block <b>Artikeltext</b> (gehört zum redaktionellen Text des Artikels),
+        <b>fremd</b> (Navigation, Werbung, Verweise, Bildunterschrift, Credits, Teaser, Kommentare, Fremdtext …) oder <b>unsicher</b>.</li>
+      <li><b>Fehlender Artikeltext:</b> Artikeltext, der rechts in keinem Block steht, links markieren und mit <b>M</b> erfassen.</li>
+      <li><b>Vollständigkeit:</b> ist der Artikeltext rechts vollständig? Fehlende Teile dürfen kombiniert werden.</li>
+      <li><b>CORE:</b> gehört die Seite in die wissenschaftliche Kernpopulation – ein redaktioneller Pressetext in zusammenhängender
+        Prosa von mindestens etwa 150 Wörtern Artikeltext; kein Live-Ticker, keine Übersichts- oder Listenseite, kein bezahlter Inhalt,
+        kein Paywall-Teaser, keine Dublette. KI- und Agenturtexte sind zulässig. Im Zweifel: <b>unsicher</b> mit Begründung.</li>
+      <li><b>Abschließen (F):</b> erst danach zeigt das Tool die Maschinenentscheidung. Ein danach geänderter Fall gilt als nicht blind.</li>
+    </ul>
+    <p><b>Tasten:</b> J/K Block · 1/2/3 Label · A alle offenen = Artikeltext · M fehlend erfassen · Y/N/U CORE · F abschließen ·
+      Alt+←/→ Fall · ? Hilfe · Esc schließen. Alles wird sofort gespeichert; ein Review kann jederzeit unterbrochen werden.</p>
+    <button id="helpClose">Schließen</button>
+  </div>
+</div>
+</body>
+</html>
