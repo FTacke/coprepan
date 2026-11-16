@@ -7,6 +7,7 @@ nothing about whether the run's code is merged (see the report itself).
 | Report | Title | Status | Source (branch @ commit) | Published (UTC) |
 |---|---|---|---|---|
 <!-- runs:begin -->
+| [2026-11-16_coprepan-independent-validation-design.md](2026-11-16_coprepan-independent-validation-design.md) | 2026-11-16 — CO.PRE.PAN independent BODY/CORE validation: design, model-independent gold reviewer, acquisition prepared | PARTIAL | `main` @ `5809dd480` | 2026-11-16 13:40 |
 | [2026-11-16_coprepan-body-final-and-reviewer.md](2026-11-16_coprepan-body-final-and-reviewer.md) | 2026-11-16 — CO.PRE.PAN final BODY/CORE pass and a local HTML reviewer | PASS | `main` @ `f0a9404e9` | 2026-11-16 12:23 |
 | [2026-11-16_coprepan-body-control-review.md](2026-11-16_coprepan-body-control-review.md) | 2026-11-16 — CO.PRE.PAN BODY control review: the operator's verdicts, the evaluation, three bounded repairs | PASS | `main` @ `ef221f823` | 2026-11-15 23:29 |
 | [2026-11-15_coprepan-weekend-source-qualification.md](2026-11-15_coprepan-weekend-source-qualification.md) | 2026-11-14/15 — CO.PRE.PAN weekend source qualification, content-quality gate and checks that scale with what is new | PARTIAL | `main` @ `e52d859a9` | 2026-11-15 12:16 |
