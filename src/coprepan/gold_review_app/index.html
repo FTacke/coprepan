@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CO.PRE.PAN Gold-Review</title>
+<link rel="stylesheet" href="/app.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">CO.PRE.PAN · Gold-Review <span id="kind" class="kind"></span></div>
+  <div class="nav">
+    <button id="prev" title="Vorheriger Fall (Alt+←)">◀</button>
+    <select id="caseSelect" aria-label="Fall wählen"></select>
+    <button id="next" title="Nächster Fall (Alt+→)">▶</button>
+    <button id="nextOpen">Nächster offener</button>
+  </div>
+  <div class="progress"><div class="meter"><div id="meterFill" class="meterFill"></div></div><span id="progressText"></span></div>
+  <div class="tools"><span id="saveState" class="save"></span><button id="helpBtn" title="Hilfe und Codebook (?)">?</button></div>
+</header>
+<div id="banner" class="banner hidden"></div>
+
+<section class="casehead">
+  <div><span id="caseId" class="cid"></span> <span id="outlet" class="outlet"></span> <span id="country" class="tag"></span>
+    <span id="counts" class="hint"></span></div>
+  <div class="meta"><span id="url" class="url"></span> · abgerufen <span id="fetched"></span></div>
+</section>
+
+<main class="panes">
+  <section class="pane left">
+    <div class="tabs">
+      <button id="tabOriginal" class="tab active">Originalseite (bereinigt)</button>
+      <button id="tabStated" class="tab">Angaben der Seite</button>
+      <button id="findBtn" title="Im Original markierten Text in der Textansicht suchen (S)">In Textansicht suchen (S)</button>
+    </div>
+    <iframe id="source" class="source" sandbox="allow-same-origin" title="Gespeicherte Seite, bereinigt"></iframe>
+    <div id="stated" class="stated hidden">
+      <p class="hint">Was die Seite in ihren strukturierten Daten (JSON-LD) über sich sagt – nur zur Orientierung, nicht zu annotieren.</p>
+      <h3>Headline</h3><p id="statedHeadline"></p>
+      <h3>Beschreibung</h3><p id="statedDescription"></p>
+      <h3>articleBody</h3><p id="statedBody"></p>
+    </div>
+  </section>
+
+  <section class="pane right">
+    <div class="toolbar" id="toolbar">
+      <span class="hint">Auswahl: Klick · Umschalt+Klick für Bereiche · Text im Segment markieren für Teilspannen</span>
+      <div class="labels" id="labelButtons"></div>
+      <div class="jump"><button id="jumpH1" title="Zur ersten Hauptüberschrift (G)">Zur Überschrift (G)</button>
+        <button id="jumpOpen" title="Nächstes unmarkiertes Segment mit mindestens 8 Wörtern (N)">Nächstes unmarkiertes (N)</button>
+        <button id="toQuestions" title="Zu den Fallangaben (Q)">Fallangaben (Q)</button>
+        <span id="selInfo" class="hint"></span></div>
+    </div>
+    <div id="view" class="view"></div>
+
+    <div id="questions" class="card questions">
+      <h2>Fallangaben</h2>
+      <div class="q"><b>Quelle:</b> Ist der Artikeltext in der gespeicherten Seite sichtbar und vollständig?
+        <div class="choice" id="sourceState"></div></div>
+      <div class="q"><b>Text außerhalb der Textansicht:</b> Artikeltext, der im Original zu sehen ist, aber in der Textansicht fehlt
+        <div class="choice multi" id="outsideParts"></div>
+        <input id="outsideNote" class="wide" maxlength="2000" placeholder="Wo? (kurz, ohne den Text abzuschreiben)"></div>
+      <div class="q"><b>CORE:</b> Gehört die Seite in die wissenschaftliche Kernpopulation?
+        <div class="choice" id="coreChoice"></div>
+        <div class="choice multi" id="coreReasons"></div>
+        <input id="coreNote" class="wide" maxlength="2000" placeholder="Kurze Begründung (bei nein / unsicher: Grund oder Notiz nötig)"></div>
+      <div class="q"><b>Seitentyp</b> (optional, mehrere):<div class="choice multi" id="pageTypes"></div>
+        <input id="pageTypeOther" class="wide" maxlength="2000" placeholder="Anderer Typ / Anmerkung"></div>
+      <div class="q"><b>Kommentar</b> (optional):<textarea id="comment" class="wide" rows="2" maxlength="2000"></textarea></div>
+      <div class="final">
+        <label class="confirm"><input type="checkbox" id="restConfirmed"> Alle nicht markierten Segmente sind kein Artikeltext.</label>
+        <span id="openItems" class="open"></span>
+        <button id="finalizeBtn" class="primary" title="Fall abschließen (Strg+Enter)">Fall abschließen (Strg+Enter)</button>
+        <button id="reopenBtn" class="hidden">Wieder öffnen</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="help" class="help hidden" role="dialog" aria-label="Hilfe">
+  <div class="helpbox">
+    <h2>Gold-Annotation (Codebook <span id="codebookId"></span>)</h2>
+    <p>Rechts steht der <b>gesamte</b> Text der gespeicherten Seite, an den Blockgrenzen des HTML geteilt – unabhängig von jedem
+      Extraktor. Links steht die Seite selbst (bereinigt: keine Skripte, Bilder, Links oder Netzzugriffe). Die Maschine entscheidet hier
+      nichts und zeigt nichts an.</p>
+    <table class="codes">
+      <tr><td><b>B</b></td><td>Artikeltext</td><td>der redaktionelle Fließtext des Artikels, auch Zwischenüberschriften, Listen, Tabellen,
+        Zitate im Text, Rezeptzutaten, Einträge eines Live-Tickers</td></tr>
+      <tr><td><b>T</b></td><td>Titel</td><td>die Überschrift des Artikels</td></tr>
+      <tr><td><b>V</b></td><td>Vorspann</td><td>Unterzeile, Teaser-Vorspann, Lead, der über dem Text steht und kein Absatz des Textes ist</td></tr>
+      <tr><td><b>C</b></td><td>Bildunterschrift</td><td>Bild- und Videounterschriften samt Credits</td></tr>
+      <tr><td><b>E</b></td><td>Einbettung</td><td>eingebettete Social-Media-Posts, fremde Player, eingebettete Fremdinhalte</td></tr>
+      <tr><td><b>F</b></td><td>fremd</td><td>alles andere: Navigation, Autor-, Datums- und Credit-Zeilen, Werbung, Verweise („Lea también“),
+        Newsletter, Teaser anderer Artikel, Kommentare, Pull-Quotes (Wiederholung von Text), Fußzeilen</td></tr>
+      <tr><td><b>U</b></td><td>unsicher</td><td>nicht entscheidbar – ein legitimes Urteil, wird nie umgedeutet</td></tr>
+      <tr><td><b>X</b></td><td>löschen</td><td>Markierung entfernen</td></tr>
+    </table>
+    <p>Arbeitsweise: zum Artikel springen (<b>G</b>), ersten Absatz anklicken, letzten mit Umschalt+Klick, <b>B</b>. Danach innerhalb
+      des Bereichs Fremdes (<b>F</b>, <b>C</b>, <b>E</b>) überschreiben und Titel/Vorspann setzen. Mischt ein Segment Artikeltext mit
+      Fremdem (z. B. eine Credit-Zeile am Ende), den Teil mit der Maus markieren und die Taste drücken. <b>N</b> springt zum nächsten
+      unmarkierten längeren Segment – so bleibt kein Artikeltext übersehen. Nicht markierte Segmente gelten beim Abschluss als „kein
+      Artikeltext“; das bestätigst du ausdrücklich.</p>
+    <p><b>CORE</b>: ein redaktioneller Pressetext in zusammenhängender Prosa von mindestens etwa 150 Wörtern Artikeltext; kein Live-Ticker,
+      keine Übersichts-, Listen- oder Serviceseite, kein bezahlter Inhalt, kein Paywall-Teaser. KI- und Agenturtexte sind zulässig.
+      Dubletten über Seiten hinweg werden nicht hier beurteilt. Im Zweifel: <b>unsicher</b> mit Grund.</p>
+    <p><b>Tasten:</b> J/K oder ↓/↑ Segment · Umschalt+J/K Bereich erweitern · B T V C E F U X Label · G Überschrift · N nächstes
+      unmarkiertes · S im Original Markiertes suchen · Q Fallangaben · Strg+Enter abschließen · Alt+←/→ Fall · ? Hilfe · Esc schließen.
+      Alles wird sofort gespeichert; Unterbrechen ist jederzeit möglich.</p>
+    <button id="helpClose">Schließen</button>
+  </div>
+</div>
+</body>
+</html>

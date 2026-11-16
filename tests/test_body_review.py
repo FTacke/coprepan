@@ -222,7 +222,8 @@ def test_the_export_validates_and_the_score_separates_the_five_classes(tmp_path)
     assert rnd["cases"] == 2 and rnd["blocks_residue"] == 1 and rnd["blocks_false_deletion"] == 1
     assert rnd["core_false_reject"] == 1 and rnd["core_doubt"] == 1 and rnd["cases_incomplete"] == 1
     assert rnd["missing_marks_in_page_text"] == 1
-    assert rnd["rates_case_level_wilson95"]["cases_with_residue"]["interval"][0] > 0
+    residue = rnd["estimates_design_weighted"]["cases_with_residue"]          # CPD-0044: weighted, stratified
+    assert residue["estimate"] == 0.5 and residue["k"] == 1 and residue["interval"][0] < 0.5 < residue["interval"][1]
     assert result["components"]["targeted"]["cases"] == 0 and "no population rate" in result["components"]["targeted"]["note"]
 
 

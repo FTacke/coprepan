@@ -1,0 +1,6 @@
+{
+ "schema": "coprepan-holdout-runs/v1",
+ "decision": "CPD-0044",
+ "note": "Acquisition runs of the independent BODY/CORE validation. A run is listed before anything reads its pages and is never removed. Development studies leave these runs out (scripts/study_content_quality.pages); only the gold tooling reads them, after the gold of their package is frozen. Empty: no holdout has been acquired (the acquisition waits for the operator's commission).",
+ "runs": []
+}

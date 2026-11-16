@@ -54,7 +54,7 @@ CASE_SCHEMA = "coprepan-body-review-case/v1"
 KEY_SCHEMA = "coprepan-body-review-key/v1"
 EVENT_SCHEMA = "coprepan-body-review-event/v1"
 EXPORT_SCHEMA = "coprepan-body-review-judgments/v1"
-RESULT_SCHEMA = "coprepan-body-review-result/v1"
+RESULT_SCHEMA = "coprepan-body-review-result/v2"     # /v2 (CPD-0044): design-weighted estimates; /v1 never produced a result
 
 BLOCK_LABELS = ("article", "foreign", "unsure")
 TITLE_LABELS = ("correct", "wrong", "unsure")
@@ -651,9 +651,10 @@ def score(package: Package, data: Mapping[str, Any], *, include_not_blind: bool 
     """The machine labels of the sealed key against the operator's judgments, the random and the targeted component apart.
     The five classes: article text removed (false deletion), foreign material kept (residue), article text missing (the
     completeness answer and the marked quotes not in the machine BODY), CORE wrong, and doubt (``unsure``). Only blind cases
-    count unless ``include_not_blind``; diagnostic judgments never count. Rates with Wilson 95 % intervals are given for the
-    random component, at the case level (blocks are clustered in cases); the targeted component gives counts only -- it is not a
-    sample of the population."""
+    count unless ``include_not_blind``; diagnostic judgments never count. For the random component, case-level proportions are
+    estimated design-weighted (weights 1 / inclusion probability, strata = countries; ``survey_stats``, CPD-0044) with intervals
+    on the effective sample size (blocks are clustered in cases); the targeted component gives counts only -- it is not a sample
+    of the population. The package's pages were read during development: DEVELOPMENT_DIAGNOSTIC, not an independent holdout."""
     validate_export(package, data)
     key = package.key()
     comp: dict[str, Counter] = {"random": Counter(), "targeted": Counter()}
@@ -710,15 +711,35 @@ def score(package: Package, data: Mapping[str, Any], *, include_not_blind: bool 
            "include_not_blind": include_not_blind, "cases_left_out": left_out, "components": {}}
     for part, n in comp.items():
         entry = {"cases": n["cases"], **dict(sorted(n.items())), **dict(sorted(words[part].items()))}
-        if part == "random":
-            entry["rates_case_level_wilson95"] = {
-                name: {"k": n[name], "n": n["cases"], "share": round(n[name] / n["cases"], 4) if n["cases"] else None,
-                       "interval": _wilson(n[name], n["cases"])}
-                for name in ("cases_with_false_deletion", "cases_with_residue", "cases_incomplete", "core_false_accept",
-                             "core_false_reject", "core_doubt")}
+        if part == "random" and n["cases"]:
+            # CPD-0044: the random component is a stratified sample by country with unequal inclusion probabilities -- the
+            # estimates are weighted (1 / pi), stratified, Korn-Graubard-style Wilson on the effective sample size
+            from . import survey_stats as SS     # noqa: PLC0415
+
+            sample = [c for c in per_case if c["component"] == "random"]
+            pi = {c["case_id"]: key[c["case_id"]]["inclusion_probability"] for c in sample}
+
+            def estimate(rows, outcome):
+                return SS.proportion([1.0 if outcome(c) else 0.0 for c in rows], weights=[1.0 / pi[c["case_id"]] for c in rows],
+                                     strata=[c["stratum"] for c in rows])
+
+            entry["estimates_design_weighted"] = {
+                "cases_with_false_deletion": estimate(sample, lambda c: c.get("false_deletion", 0) > 0),
+                "cases_with_residue": estimate(sample, lambda c: c.get("residue", 0) > 0),
+                "cases_incomplete": estimate(sample, lambda c: c["completeness"] not in (["complete"], ["not_assessable"])),
+                "core_doubt": estimate(sample, lambda c: c["core"][0] == "unsure")}
+            accepted = [c for c in sample if c["core"][1] == "yes" and c["core"][0] in ("yes", "no")]
+            if accepted:
+                entry["estimates_design_weighted"]["core_false_accept_among_accepted"] = estimate(accepted, lambda c: c["core"][0] == "no")
+            gold_yes = [c for c in sample if c["core"][0] == "yes"]
+            if gold_yes:
+                entry["estimates_design_weighted"]["core_false_reject_among_gold_yes"] = estimate(gold_yes, lambda c: c["core"][1] == "no")
             removed = n["blocks_removed_foreign"] + n["blocks_false_deletion"]
-            entry["note"] = (f"stratified random sample by country, proportional allocation; {removed} blocks the machine kept out "
-                             "were judged")
+            entry["note"] = (f"stratified random sample of the development population by country (unequal inclusion probabilities); "
+                             f"design-weighted estimates; {removed} blocks the machine kept out were judged. DEVELOPMENT_DIAGNOSTIC / "
+                             "NOT_INDEPENDENT_HOLDOUT: these pages were read during development (CPD-0044)")
+        elif part == "random":
+            entry["note"] = "no closed random case"
         else:
             entry["note"] = "targeted: counts only, no population rate"
         out["components"][part] = entry

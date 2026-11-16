@@ -55,16 +55,23 @@ def agency_mentions(body_text: str) -> list[str]:
 
 
 def stored_pages(arguments):
-    """``(row, body bytes)`` of every stored 2xx item page, from the workspace packs or from a page cache."""
+    """``(row, body bytes)`` of every stored 2xx item page, from the workspace packs or from a page cache. The validation
+    holdout's runs are left out (CPD-0044) unless ``arguments.include_holdout``; a page cache is refused when it holds one."""
+    from coprepan.validation_holdout import holdout_runs  # noqa: PLC0415
+
+    include = bool(getattr(arguments, "include_holdout", False))
     if getattr(arguments, "page_cache", None):
+        excluded = frozenset() if include else holdout_runs()
         for line in gzip.open(arguments.page_cache, "rt", encoding="utf-8"):
             row = json.loads(line)
+            if row.get("run_id") in excluded:
+                raise SystemExit(f"the page cache holds a validation holdout run ({row['run_id']}): development never reads it")
             yield row, base64.b64decode(row.pop("body_b64"))
         return
     import study_content_quality as S
 
     workspace = core_pipeline.Workspace(arguments.runtime)
-    for record, path, entry in S.pages(workspace):
+    for record, path, entry in S.pages(workspace, include_holdout=include):
         stored = pack.read_fetch_record(path, entry)
         row = {"fetch_id": record["fetch_id"], "run_id": record["run_id"], "outlet_id": record["outlet_id"],
                "url": record["request"]["requested_url"], "status": record["response"]["status"], "fetched_at": record["fetch_started_at"],

@@ -48,10 +48,15 @@ def jsonld_chars(text: str) -> int:
     return max(found) if found else 0
 
 
-def pages(workspace: core_pipeline.Workspace):
-    """Every stored 2xx item fetch with its pack entry, newest packs last."""
+def pages(workspace: core_pipeline.Workspace, *, include_holdout: bool = False):
+    """Every stored 2xx item fetch with its pack entry, newest packs last -- **without the validation holdout's runs**
+    (``config/validation/holdout_runs.json``, CPD-0044) unless ``include_holdout`` (the gold tooling, after the freeze)."""
+    from coprepan.validation_holdout import holdout_runs  # noqa: PLC0415
+
+    excluded = frozenset() if include_holdout else holdout_runs()
     records = {r["fetch_id"]: r for r in D.fetch_records(workspace)
-               if r["fetch_kind"] == "item" and r["outcome"] == "FETCHED" and 200 <= int(r["response"]["status"]) < 300}
+               if r["fetch_kind"] == "item" and r["outcome"] == "FETCHED" and 200 <= int(r["response"]["status"]) < 300
+               and r["run_id"] not in excluded}
     for path in sorted(workspace.packs.glob("*.warc.gz*")):
         if path.name.endswith((".pack.json", ".index.jsonl")) or ".torn-" in path.name:
             continue
